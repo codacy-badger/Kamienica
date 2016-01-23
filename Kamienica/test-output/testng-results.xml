@@ -1,0 +1,285 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testng-results skipped="0" failed="0" total="6" passed="6">
+  <reporter-output>
+  </reporter-output>
+  <suite name="Default suite" duration-ms="3779" started-at="2016-01-14T13:21:14Z" finished-at="2016-01-14T13:21:18Z">
+    <groups>
+    </groups>
+    <test name="Default test" duration-ms="3779" started-at="2016-01-14T13:21:14Z" finished-at="2016-01-14T13:21:18Z">
+      <class name="kamienica.dao.TenantDaoImplTest">
+        <test-method status="PASS" signature="springTestContextBeforeTestClass()[pri:0, instance:kamienica.dao.TenantDaoImplTest@5ae63ade]" name="springTestContextBeforeTestClass" is-config="true" duration-ms="9" started-at="2016-01-14T14:21:14Z" finished-at="2016-01-14T14:21:14Z">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- springTestContextBeforeTestClass -->
+        <test-method status="PASS" signature="springTestContextPrepareTestInstance()[pri:0, instance:kamienica.dao.TenantDaoImplTest@5ae63ade]" name="springTestContextPrepareTestInstance" is-config="true" duration-ms="3196" started-at="2016-01-14T14:21:14Z" depends-on-methods="org.springframework.test.context.testng.AbstractTestNGSpringContextTests.springTestContextBeforeTestClass" finished-at="2016-01-14T14:21:18Z">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- springTestContextPrepareTestInstance -->
+        <test-method status="PASS" signature="springTestContextBeforeTestMethod(java.lang.reflect.Method)[pri:0, instance:kamienica.dao.TenantDaoImplTest@5ae63ade]" name="springTestContextBeforeTestMethod" is-config="true" duration-ms="51" started-at="2016-01-14T14:21:18Z" finished-at="2016-01-14T14:21:18Z">
+          <params>
+            <param index="0">
+              <value>
+                <![CDATA[public void kamienica.dao.TenantDaoImplTest.deleteById()]]>
+              </value>
+            </param>
+          </params>
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- springTestContextBeforeTestMethod -->
+        <test-method status="PASS" signature="setUp()[pri:0, instance:kamienica.dao.TenantDaoImplTest@5ae63ade]" name="setUp" is-config="true" duration-ms="150" started-at="2016-01-14T14:21:18Z" finished-at="2016-01-14T14:21:18Z">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- setUp -->
+        <test-method status="PASS" signature="deleteById()[pri:0, instance:kamienica.dao.TenantDaoImplTest@5ae63ade]" name="deleteById" duration-ms="95" started-at="2016-01-14T14:21:18Z" finished-at="2016-01-14T14:21:18Z">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- deleteById -->
+        <test-method status="PASS" signature="springTestContextAfterTestMethod(java.lang.reflect.Method)[pri:0, instance:kamienica.dao.TenantDaoImplTest@5ae63ade]" name="springTestContextAfterTestMethod" is-config="true" duration-ms="15" started-at="2016-01-14T14:21:18Z" finished-at="2016-01-14T14:21:18Z">
+          <params>
+            <param index="0">
+              <value>
+                <![CDATA[public void kamienica.dao.TenantDaoImplTest.deleteById()]]>
+              </value>
+            </param>
+          </params>
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- springTestContextAfterTestMethod -->
+        <test-method status="PASS" signature="springTestContextBeforeTestMethod(java.lang.reflect.Method)[pri:0, instance:kamienica.dao.TenantDaoImplTest@5ae63ade]" name="springTestContextBeforeTestMethod" is-config="true" duration-ms="3" started-at="2016-01-14T14:21:18Z" finished-at="2016-01-14T14:21:18Z">
+          <params>
+            <param index="0">
+              <value>
+                <![CDATA[public void kamienica.dao.TenantDaoImplTest.deleteInvalidId()]]>
+              </value>
+            </param>
+          </params>
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- springTestContextBeforeTestMethod -->
+        <test-method status="PASS" signature="setUp()[pri:0, instance:kamienica.dao.TenantDaoImplTest@5ae63ade]" name="setUp" is-config="true" duration-ms="17" started-at="2016-01-14T14:21:18Z" finished-at="2016-01-14T14:21:18Z">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- setUp -->
+        <test-method status="PASS" signature="deleteInvalidId()[pri:0, instance:kamienica.dao.TenantDaoImplTest@5ae63ade]" name="deleteInvalidId" duration-ms="6" started-at="2016-01-14T14:21:18Z" finished-at="2016-01-14T14:21:18Z">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- deleteInvalidId -->
+        <test-method status="PASS" signature="springTestContextAfterTestMethod(java.lang.reflect.Method)[pri:0, instance:kamienica.dao.TenantDaoImplTest@5ae63ade]" name="springTestContextAfterTestMethod" is-config="true" duration-ms="2" started-at="2016-01-14T14:21:18Z" finished-at="2016-01-14T14:21:18Z">
+          <params>
+            <param index="0">
+              <value>
+                <![CDATA[public void kamienica.dao.TenantDaoImplTest.deleteInvalidId()]]>
+              </value>
+            </param>
+          </params>
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- springTestContextAfterTestMethod -->
+        <test-method status="PASS" signature="springTestContextBeforeTestMethod(java.lang.reflect.Method)[pri:0, instance:kamienica.dao.TenantDaoImplTest@5ae63ade]" name="springTestContextBeforeTestMethod" is-config="true" duration-ms="4" started-at="2016-01-14T14:21:18Z" finished-at="2016-01-14T14:21:18Z">
+          <params>
+            <param index="0">
+              <value>
+                <![CDATA[public void kamienica.dao.TenantDaoImplTest.findAll()]]>
+              </value>
+            </param>
+          </params>
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- springTestContextBeforeTestMethod -->
+        <test-method status="PASS" signature="setUp()[pri:0, instance:kamienica.dao.TenantDaoImplTest@5ae63ade]" name="setUp" is-config="true" duration-ms="15" started-at="2016-01-14T14:21:18Z" finished-at="2016-01-14T14:21:18Z">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- setUp -->
+        <test-method status="PASS" signature="findAll()[pri:0, instance:kamienica.dao.TenantDaoImplTest@5ae63ade]" name="findAll" duration-ms="4" started-at="2016-01-14T14:21:18Z" finished-at="2016-01-14T14:21:18Z">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- findAll -->
+        <test-method status="PASS" signature="springTestContextAfterTestMethod(java.lang.reflect.Method)[pri:0, instance:kamienica.dao.TenantDaoImplTest@5ae63ade]" name="springTestContextAfterTestMethod" is-config="true" duration-ms="3" started-at="2016-01-14T14:21:18Z" finished-at="2016-01-14T14:21:18Z">
+          <params>
+            <param index="0">
+              <value>
+                <![CDATA[public void kamienica.dao.TenantDaoImplTest.findAll()]]>
+              </value>
+            </param>
+          </params>
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- springTestContextAfterTestMethod -->
+        <test-method status="PASS" signature="springTestContextBeforeTestMethod(java.lang.reflect.Method)[pri:0, instance:kamienica.dao.TenantDaoImplTest@5ae63ade]" name="springTestContextBeforeTestMethod" is-config="true" duration-ms="5" started-at="2016-01-14T14:21:18Z" finished-at="2016-01-14T14:21:18Z">
+          <params>
+            <param index="0">
+              <value>
+                <![CDATA[public void kamienica.dao.TenantDaoImplTest.findById()]]>
+              </value>
+            </param>
+          </params>
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- springTestContextBeforeTestMethod -->
+        <test-method status="PASS" signature="setUp()[pri:0, instance:kamienica.dao.TenantDaoImplTest@5ae63ade]" name="setUp" is-config="true" duration-ms="15" started-at="2016-01-14T14:21:18Z" finished-at="2016-01-14T14:21:18Z">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- setUp -->
+        <test-method status="PASS" signature="findById()[pri:0, instance:kamienica.dao.TenantDaoImplTest@5ae63ade]" name="findById" duration-ms="16" started-at="2016-01-14T14:21:18Z" finished-at="2016-01-14T14:21:18Z">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- findById -->
+        <test-method status="PASS" signature="springTestContextAfterTestMethod(java.lang.reflect.Method)[pri:0, instance:kamienica.dao.TenantDaoImplTest@5ae63ade]" name="springTestContextAfterTestMethod" is-config="true" duration-ms="3" started-at="2016-01-14T14:21:18Z" finished-at="2016-01-14T14:21:18Z">
+          <params>
+            <param index="0">
+              <value>
+                <![CDATA[public void kamienica.dao.TenantDaoImplTest.findById()]]>
+              </value>
+            </param>
+          </params>
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- springTestContextAfterTestMethod -->
+        <test-method status="PASS" signature="springTestContextBeforeTestMethod(java.lang.reflect.Method)[pri:0, instance:kamienica.dao.TenantDaoImplTest@5ae63ade]" name="springTestContextBeforeTestMethod" is-config="true" duration-ms="4" started-at="2016-01-14T14:21:18Z" finished-at="2016-01-14T14:21:18Z">
+          <params>
+            <param index="0">
+              <value>
+                <![CDATA[public void kamienica.dao.TenantDaoImplTest.saveDuplicate()]]>
+              </value>
+            </param>
+          </params>
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- springTestContextBeforeTestMethod -->
+        <test-method status="PASS" signature="setUp()[pri:0, instance:kamienica.dao.TenantDaoImplTest@5ae63ade]" name="setUp" is-config="true" duration-ms="13" started-at="2016-01-14T14:21:18Z" finished-at="2016-01-14T14:21:18Z">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- setUp -->
+        <test-method status="PASS" signature="saveDuplicate()[pri:0, instance:kamienica.dao.TenantDaoImplTest@5ae63ade]" name="saveDuplicate" duration-ms="79" started-at="2016-01-14T14:21:18Z" finished-at="2016-01-14T14:21:18Z">
+          <exception class="org.hibernate.exception.ConstraintViolationException">
+            <message>
+              <![CDATA[could not execute statement]]>
+            </message>
+            <full-stacktrace>
+              <![CDATA[org.hibernate.exception.ConstraintViolationException: could not execute statement
+	at org.hibernate.exception.internal.SQLStateConversionDelegate.convert(SQLStateConversionDelegate.java:129)
+	at org.hibernate.exception.internal.StandardSQLExceptionConverter.convert(StandardSQLExceptionConverter.java:49)
+	at org.hibernate.engine.jdbc.spi.SqlExceptionHelper.convert(SqlExceptionHelper.java:126)
+	at org.hibernate.engine.jdbc.spi.SqlExceptionHelper.convert(SqlExceptionHelper.java:112)
+	at org.hibernate.engine.jdbc.internal.ResultSetReturnImpl.executeUpdate(ResultSetReturnImpl.java:211)
+	at org.hibernate.id.IdentityGenerator$GetGeneratedKeysDelegate.executeAndExtract(IdentityGenerator.java:96)
+	at org.hibernate.id.insert.AbstractReturningDelegate.performInsert(AbstractReturningDelegate.java:58)
+	at org.hibernate.persister.entity.AbstractEntityPersister.insert(AbstractEntityPersister.java:3032)
+	at org.hibernate.persister.entity.AbstractEntityPersister.insert(AbstractEntityPersister.java:3558)
+	at org.hibernate.action.internal.EntityIdentityInsertAction.execute(EntityIdentityInsertAction.java:98)
+	at org.hibernate.engine.spi.ActionQueue.execute(ActionQueue.java:490)
+	at org.hibernate.engine.spi.ActionQueue.addResolvedEntityInsertAction(ActionQueue.java:195)
+	at org.hibernate.engine.spi.ActionQueue.addInsertAction(ActionQueue.java:179)
+	at org.hibernate.engine.spi.ActionQueue.addAction(ActionQueue.java:214)
+	at org.hibernate.event.internal.AbstractSaveEventListener.addInsertAction(AbstractSaveEventListener.java:324)
+	at org.hibernate.event.internal.AbstractSaveEventListener.performSaveOrReplicate(AbstractSaveEventListener.java:288)
+	at org.hibernate.event.internal.AbstractSaveEventListener.performSave(AbstractSaveEventListener.java:194)
+	at org.hibernate.event.internal.AbstractSaveEventListener.saveWithGeneratedId(AbstractSaveEventListener.java:125)
+	at org.hibernate.event.internal.DefaultPersistEventListener.entityIsTransient(DefaultPersistEventListener.java:206)
+	at org.hibernate.event.internal.DefaultPersistEventListener.onPersist(DefaultPersistEventListener.java:149)
+	at org.hibernate.event.internal.DefaultPersistEventListener.onPersist(DefaultPersistEventListener.java:75)
+	at org.hibernate.internal.SessionImpl.firePersist(SessionImpl.java:811)
+	at org.hibernate.internal.SessionImpl.persist(SessionImpl.java:784)
+	at org.hibernate.internal.SessionImpl.persist(SessionImpl.java:789)
+	at kamienica.dao.AbstractDao.save(AbstractDao.java:42)
+	at kamienica.dao.TenantDaoImpl.save(TenantDaoImpl.java:25)
+	at kamienica.dao.TenantDaoImplTest.saveDuplicate(TenantDaoImplTest.java:56)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(Unknown Source)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(Unknown Source)
+	at java.lang.reflect.Method.invoke(Unknown Source)
+	at org.testng.internal.MethodInvocationHelper.invokeMethod(MethodInvocationHelper.java:85)
+	at org.testng.internal.MethodInvocationHelper$1.runTestMethod(MethodInvocationHelper.java:200)
+	at org.springframework.test.context.testng.AbstractTestNGSpringContextTests.run(AbstractTestNGSpringContextTests.java:172)
+	at org.testng.internal.MethodInvocationHelper.invokeHookable(MethodInvocationHelper.java:212)
+	at org.testng.internal.Invoker.invokeMethod(Invoker.java:652)
+	at org.testng.internal.Invoker.invokeTestMethod(Invoker.java:845)
+	at org.testng.internal.Invoker.invokeTestMethods(Invoker.java:1153)
+	at org.testng.internal.TestMethodWorker.invokeTestMethods(TestMethodWorker.java:125)
+	at org.testng.internal.TestMethodWorker.run(TestMethodWorker.java:108)
+	at org.testng.TestRunner.privateRun(TestRunner.java:771)
+	at org.testng.TestRunner.run(TestRunner.java:621)
+	at org.testng.SuiteRunner.runTest(SuiteRunner.java:357)
+	at org.testng.SuiteRunner.runSequentially(SuiteRunner.java:352)
+	at org.testng.SuiteRunner.privateRun(SuiteRunner.java:310)
+	at org.testng.SuiteRunner.run(SuiteRunner.java:259)
+	at org.testng.SuiteRunnerWorker.runSuite(SuiteRunnerWorker.java:52)
+	at org.testng.SuiteRunnerWorker.run(SuiteRunnerWorker.java:86)
+	at org.testng.TestNG.runSuitesSequentially(TestNG.java:1199)
+	at org.testng.TestNG.runSuitesLocally(TestNG.java:1124)
+	at org.testng.TestNG.run(TestNG.java:1032)
+	at org.testng.remote.RemoteTestNG.run(RemoteTestNG.java:111)
+	at org.testng.remote.RemoteTestNG.initAndRun(RemoteTestNG.java:204)
+	at org.testng.remote.RemoteTestNG.main(RemoteTestNG.java:175)
+Caused by: org.h2.jdbc.JdbcSQLException: Unique index or primary key violation: "UK_9O45BCFJYGPYY006SH3A5W7W_INDEX_9 ON PUBLIC.TENANT(EMAIL) VALUES ('c@wp.pl', 3)"; SQL statement:
+insert into Tenant (id, apartment_id, email, firstName, lastName, movementDate, password, phone, role, status) values (null, ?, ?, ?, ?, ?, ?, ?, ?, ?) [23505-187]
+	at org.h2.message.DbException.getJdbcSQLException(DbException.java:345)
+	at org.h2.message.DbException.get(DbException.java:179)
+	at org.h2.message.DbException.get(DbException.java:155)
+	at org.h2.index.BaseIndex.getDuplicateKeyException(BaseIndex.java:102)
+	at org.h2.mvstore.db.MVSecondaryIndex.checkUnique(MVSecondaryIndex.java:233)
+	at org.h2.mvstore.db.MVSecondaryIndex.add(MVSecondaryIndex.java:191)
+	at org.h2.mvstore.db.MVTable.addRow(MVTable.java:638)
+	at org.h2.command.dml.Insert.insertRows(Insert.java:156)
+	at org.h2.command.dml.Insert.update(Insert.java:114)
+	at org.h2.command.CommandContainer.update(CommandContainer.java:78)
+	at org.h2.command.Command.executeUpdate(Command.java:254)
+	at org.h2.jdbc.JdbcPreparedStatement.executeUpdateInternal(JdbcPreparedStatement.java:157)
+	at org.h2.jdbc.JdbcPreparedStatement.executeUpdate(JdbcPreparedStatement.java:143)
+	at org.hibernate.engine.jdbc.internal.ResultSetReturnImpl.executeUpdate(ResultSetReturnImpl.java:208)
+	... 49 more
+]]>
+            </full-stacktrace>
+          </exception> <!-- org.hibernate.exception.ConstraintViolationException -->
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- saveDuplicate -->
+        <test-method status="PASS" signature="springTestContextAfterTestMethod(java.lang.reflect.Method)[pri:0, instance:kamienica.dao.TenantDaoImplTest@5ae63ade]" name="springTestContextAfterTestMethod" is-config="true" duration-ms="6" started-at="2016-01-14T14:21:18Z" finished-at="2016-01-14T14:21:18Z">
+          <params>
+            <param index="0">
+              <value>
+                <![CDATA[public void kamienica.dao.TenantDaoImplTest.saveDuplicate()]]>
+              </value>
+            </param>
+          </params>
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- springTestContextAfterTestMethod -->
+        <test-method status="PASS" signature="springTestContextBeforeTestMethod(java.lang.reflect.Method)[pri:0, instance:kamienica.dao.TenantDaoImplTest@5ae63ade]" name="springTestContextBeforeTestMethod" is-config="true" duration-ms="4" started-at="2016-01-14T14:21:18Z" finished-at="2016-01-14T14:21:18Z">
+          <params>
+            <param index="0">
+              <value>
+                <![CDATA[public void kamienica.dao.TenantDaoImplTest.saveTenant()]]>
+              </value>
+            </param>
+          </params>
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- springTestContextBeforeTestMethod -->
+        <test-method status="PASS" signature="setUp()[pri:0, instance:kamienica.dao.TenantDaoImplTest@5ae63ade]" name="setUp" is-config="true" duration-ms="14" started-at="2016-01-14T14:21:18Z" finished-at="2016-01-14T14:21:18Z">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- setUp -->
+        <test-method status="PASS" signature="saveTenant()[pri:0, instance:kamienica.dao.TenantDaoImplTest@5ae63ade]" name="saveTenant" duration-ms="20" started-at="2016-01-14T14:21:18Z" finished-at="2016-01-14T14:21:18Z">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- saveTenant -->
+        <test-method status="PASS" signature="springTestContextAfterTestMethod(java.lang.reflect.Method)[pri:0, instance:kamienica.dao.TenantDaoImplTest@5ae63ade]" name="springTestContextAfterTestMethod" is-config="true" duration-ms="2" started-at="2016-01-14T14:21:18Z" finished-at="2016-01-14T14:21:18Z">
+          <params>
+            <param index="0">
+              <value>
+                <![CDATA[public void kamienica.dao.TenantDaoImplTest.saveTenant()]]>
+              </value>
+            </param>
+          </params>
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- springTestContextAfterTestMethod -->
+        <test-method status="PASS" signature="springTestContextAfterTestClass()[pri:0, instance:kamienica.dao.TenantDaoImplTest@5ae63ade]" name="springTestContextAfterTestClass" is-config="true" duration-ms="1" started-at="2016-01-14T14:21:18Z" finished-at="2016-01-14T14:21:18Z">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- springTestContextAfterTestClass -->
+      </class> <!-- kamienica.dao.TenantDaoImplTest -->
+    </test> <!-- Default test -->
+  </suite> <!-- Default suite -->
+</testng-results>

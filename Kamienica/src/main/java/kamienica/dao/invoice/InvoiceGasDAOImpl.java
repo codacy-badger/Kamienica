@@ -1,0 +1,69 @@
+package kamienica.dao.invoice;
+
+import java.util.List;
+
+import javax.transaction.Transactional;
+
+import org.hibernate.Query;
+import org.springframework.stereotype.Repository;
+
+import kamienica.dao.AbstractDao;
+import kamienica.model.Invoice;
+import kamienica.model.InvoiceGas;
+import kamienica.model.PaymentGas;
+
+@Repository("invoiceGas")
+@Transactional
+public class InvoiceGasDAOImpl extends AbstractDao<Integer, InvoiceGas> implements InvoiceGasDAO {
+
+	public void deleteByID(int id) {
+		Query query = getSession().createSQLQuery("delete from invoicegas where id = :id");
+		query.setInteger("id", id);
+		query.executeUpdate();
+
+	}
+
+	//
+	//
+	//
+	// public Invoice getGasByID(int id) {
+	// Session session = this.sessionfactory.getCurrentSession();
+	// session.beginTransaction();
+	// Invoice out = (InvoiceGas) session.get(InvoiceGas.class, new
+	// Integer(id));
+	// session.close();
+	// return out;
+	// }
+
+	public InvoiceGas getLatest() {
+		Query query = getSession().createSQLQuery(
+				"select * from kamienica.invoicegas where date = (select MAX(date) from kamienica.invoicegas)");
+		return (InvoiceGas) query.uniqueResult();
+
+	}
+
+	@SuppressWarnings("unchecked")
+	public List<InvoiceGas> getInvoicesForPayment(PaymentGas payment) {
+
+		String sql = "";
+		if (payment.getId() < 1) {
+			sql = "select * from kamienica.invoicegas order by date asc";
+		} else {
+			sql = "select * from kamienica.invoicegas where date >= (select date from kamienica.invoicegas where id = "
+					+ payment.getInvoice().getId() + ") order by date asc ";
+		}
+		Query query = getSession().createSQLQuery(sql).addEntity(InvoiceGas.class);
+		return query.list();
+	}
+
+	public List<Invoice> getInvoicesForCalulation(Invoice first, Invoice second) {
+		Query query = getSession()
+				.createSQLQuery(
+						"select * from kamienica.invoicegas where date >  :date1 and date <= :date2 order by date asc")
+				.addEntity(InvoiceGas.class).setParameter("date1", first.getDate())
+				.setParameter("date2", second.getDate());
+		@SuppressWarnings("unchecked")
+		List<Invoice> invoice = query.list();
+		return invoice;
+	}
+}

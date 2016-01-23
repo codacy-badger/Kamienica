@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<dataset>
+	<apartment id="1"	apartmentNumber="0"	intercom="0000"	description="Część Wpólna"		/>
+	<apartment id="2"	apartmentNumber="1"	intercom="0000"	description="Piwnica"		/>
+	<apartment id="3"	apartmentNumber="2"	intercom="0000"	description="Parter"		/>
+</dataset>

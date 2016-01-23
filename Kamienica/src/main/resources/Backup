@@ -1,0 +1,21 @@
+jdbc.driverClassName = com.mysql.jdbc.Driver
+jdbc.url = jdbc:mysql://localhost:3306/kamienica
+jdbc.username = root
+jdbc.password = maciej
+hibernate.dialect = org.hibernate.dialect.MySQLDialect
+hibernate.show_sql = true
+hibernate.format_sql = true
+hibernate.hbm2ddl.auto=update
+hibernate.current_session_context_class=thread
+
+
+
+jdbc.url = jdbc:postgres://hqdrnjzqodhkfc:O5-O04XYo-M6Xe_vayOGZbQpoq@ec2-107-20-223-116.compute-1.amazonaws.com:5432/d8dtm9df0f99q7
+jdbc.username = hqdrnjzqodhkfc
+jdbc.password = O5-O04XYo-M6Xe_vayOGZbQpoq
+hibernate.dialect = org.hibernate.dialect.PostgreSQLDialect
+hibernate.show_sql = true
+hibernate.format_sql = true
+hibernate.hbm2ddl.auto=update
+hibernate.current_session_context_class=thread
+
