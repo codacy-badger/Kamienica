@@ -17,7 +17,7 @@
 		<div class="content">
 			<h1>Rejestracja Najemcy</h1>
 			<hr>
-			<a href="/Kamienica/Admin/home.html">Strona Główna</a>
+			<a href="../home.html">Strona Główna</a>
 			<c:url var="rejestrujNajemca" value="/Admin/Tenant/tenantSave.html" />
 			<form:form class="myForm" id="rejestrujNajemca"
 				modelAttribute="tenant" method="post" action="${rejestrujNajemca}">
