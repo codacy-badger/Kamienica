@@ -22,7 +22,7 @@
 <td><a href="paymentEnergyList.html">Energia</a></td>
 </tr>
 <tr>
-<td colspan="3" align="center"><a href="/Kamienica/Admin/home.html">Strona głowna</a></td>
+<td colspan="3" align="center"><a href="../home.html">Strona głowna</a></td>
 </tr>
 </table>
 </center>
