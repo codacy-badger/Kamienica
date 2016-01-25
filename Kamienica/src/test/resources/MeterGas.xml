@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<dataset>
+	<meterGas id="1" description="00" serialNumber="1"
+		unit="test" />
+		<meterGas id="2" description="00" serialNumber="2"
+		unit="test" />
+		<meterGas id="3" description="00" serialNumber="3"
+		unit="test"/>
+</dataset>
