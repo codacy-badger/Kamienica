@@ -13,9 +13,9 @@ import kamienica.model.UsageValue;
 
 public class ManagerWater {
 
-	// metoda stworzona gdy¿ nie istnieje fizyczny licznik wody dla czesci
-	// administracyjnej a czeœæ wpólna jest wylczana jako ró¿nica miêdzy
-	// licznikiem g³ownym a poszczególnymi licznikami
+	// metoda stworzona gdyï¿½ nie istnieje fizyczny licznik wody dla czesci
+	// administracyjnej a czeÅ›Ä‡ wpÃ³lna jest wylczana jako rÃ³nica miÄ™dzy
+	// licznikiemgÅ‚Ã³wnym a poszczegÃ³lnymi licznikami
 	public static ReadingWater generateUsageForAdministrativePart(List<ReadingWater> listaOdczytowWody,
 			List<Apartment> apartments) {
 		Apartment apartment = null;
@@ -25,7 +25,7 @@ public class ManagerWater {
 				break;
 			}
 		}
-		MeterWater temporaryWaterMeter = new MeterWater("Czêœæ Wspólna", "N/A", "m3", apartment, false);
+		MeterWater temporaryWaterMeter = new MeterWater("CzÄ™Å›Ä‡ WspÃ³lna", "N/A", "m3", apartment, false);
 		double sumaZuzyciaPozostalychLicznikow = 0;
 		double zuzycieLicznikaGlownego = 0;
 

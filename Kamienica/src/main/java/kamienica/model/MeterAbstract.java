@@ -19,13 +19,13 @@ public abstract class MeterAbstract {
 	@Column
 	protected int id;
 	@Column(nullable = false)
-	@NotEmpty(message="WprowadŸ wartoœæ")
+	@NotEmpty(message="WprowadÅº wartoÅ›Ä‡")
 	protected String description;
 	@Column(nullable = false, unique = true)
-	@NotEmpty(message="WprowadŸ wartoœæ")
+	@NotEmpty(message="WprowadÅº wartoÅ›Ä‡")
 	protected String serialNumber;
 	@Column(nullable = false)
-	@NotEmpty(message="WprowadŸ wartoœæ")
+	@NotEmpty(message="WprowadÅº wartoÅ›Ä‡")
 	protected String unit;
 	@ManyToOne
 	protected Apartment apartment;
