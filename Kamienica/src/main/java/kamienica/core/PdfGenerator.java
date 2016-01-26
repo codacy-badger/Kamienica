@@ -47,7 +47,7 @@
 ////		Date date = new Date();
 ////
 ////		String doDruku="Data: " + dateFormat.format(date);
-////		String doDruku2= "" +oplata.getNajemca().getFullName()+ " ma do zap≥aty: ";
+////		String doDruku2= "" +oplata.getNajemca().getFullName()+ " ma do zap≈Çaty: ";
 ////		String doDruku3= "";
 ////		if (oplata.getOplataZaEnrgie() !=0 ) {
 ////			doDruku3 += "\nEnergia: " + oplata.getOplataZaEnrgie();
@@ -82,7 +82,7 @@
 //		Date date = new Date();
 //
 //		String doDruku="Data: " + dateFormat.format(oplata.getPaymentDate());
-//		String doDruku2= oplata.getTenant().getFullName()+ " ma do zap≥aty: ";
+//		String doDruku2= oplata.getTenant().getFullName()+ " ma do zap≈Çaty: ";
 //		String doDruku3= String.valueOf(oplata.getPaymentAmount());
 //		
 //		String nazwa = oplata.getTenant().getFullName() + " " + dateFormat.format(date) + ".pdf";
@@ -109,7 +109,7 @@
 //		Date date = new Date();
 //
 //		String doDruku="Data: " + dateFormat.format(oplata.getPaymentDate());
-//		String doDruku2= oplata.getTenant().getFullName()+ " ma do zap≥aty: ";
+//		String doDruku2= oplata.getTenant().getFullName()+ " ma do zap≈Çaty: ";
 //		String doDruku3= String.valueOf(oplata.getPaymentAmount());
 //		
 //		String nazwa = oplata.getTenant().getFullName() + " " + dateFormat.format(date) + ".pdf";

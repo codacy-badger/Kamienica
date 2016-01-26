@@ -55,7 +55,7 @@
 //		List<Tenant> tenantList = tenantService.getCurrentTenants();
 //		List<Apartment> apartmentList = apartmentService.getList();
 //		if (tenantList.isEmpty() || apartmentList.isEmpty()) {
-//			model.put("error", "Brakuje danych. Upewnij siê ¿e dane dotycz¹ce mieszkañ i najemców s¹ poprawne");
+//			model.put("error", "Brakuje danych. Upewnij siÄ™ czy dane dotyczÄ…ce mieszkaÅ„ i najemcÃ³w sÄ… poprawne");
 //			return new ModelAndView("/Admin/Division/DivisionRegister", "model", model);
 //		}
 //		ArrayList<Division> divisionList = DivisionManager.prepareDivisionListForRegistration(tenantList,
@@ -79,7 +79,7 @@
 //			return new ModelAndView("redirect:/Admin/Division/divisionList.html");
 //		} else {
 //			Map<String, Object> model = new HashMap<String, Object>();
-//			String error = "B³¹d. SprawdŸ poprawnoœæ danych";
+//			String error = "Bï¿½ï¿½d. Sprawdï¿½ poprawnoï¿½ï¿½ danych";
 //			model.put("error", error);
 //			model.put("apartment", apartmentList);
 //			model.put("tenantList", tenantService.getCurrentTenants());
