@@ -42,7 +42,7 @@ public class ApartmentLogic  {
 //		List<Apartment> apartment = (apartmentService.getList());
 //		Map<String, Object> output = new HashMap<String, Object>();
 //		if (apartment.isEmpty()) {
-//			output.put("error", "Wprowadü przynajmniej jedno mieszkanie do bazy danych");
+//			output.put("error", "Wprowad≈∫ przynajmniej jedno mieszkanie do bazy danych");
 //		}
 //		output.put("apartment", apartment);
 //		ArrayList<String> role = new ArrayList<>();
@@ -66,7 +66,7 @@ public class ApartmentLogic  {
 		try {
 			apartmentService.save(apartment);
 		} catch (ConstraintViolationException e) {
-			result.rejectValue("apartmentNumber", "error.apartment", "Istnieje juø taki numer mieszkania w bazie");
+			result.rejectValue("apartmentNumber", "error.apartment", "Istnieje ju≈º taki numer mieszkania w bazie");
 			url = "/Admin/Apartment/ApartmentRegister";
 		}
 	}
