@@ -95,7 +95,7 @@ public class PaymentController {
 
 	@RequestMapping("/Admin/Payment/paymentRegister")
 	public ModelAndView paymentRegister(@ModelAttribute("paymentForm") PaymentForm paymentForm, BindingResult result) {
-		System.out.println("=================START=========================");
+		
 		boolean gas = true;
 		boolean water = true;
 		boolean energy = true;

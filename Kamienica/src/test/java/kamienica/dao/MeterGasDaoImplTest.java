@@ -17,7 +17,7 @@ public class MeterGasDaoImplTest extends EntityDaoImplTest{
 	@Override
 	protected IDataSet getDataSet() throws Exception {
 		IDataSet dataSet = new FlatXmlDataSet(this.getClass().getClassLoader().
-				getResourceAsStream("MeterEnergy.xml"));
+				getResourceAsStream("MeterGas.xml"));
 		return dataSet;
 	}
 

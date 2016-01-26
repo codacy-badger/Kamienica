@@ -60,7 +60,7 @@ public class MeterWaterDaoImplTest extends EntityDaoImplTest{
 		MeterWater meter = new MeterWater();
 		meter.setApartment(null);
 		meter.setDescription("test");
-		meter.setSerialNumber("7676434211");
+		meter.setSerialNumber("7676");
 		meter.setUnit("test");
 		return meter;
 	}

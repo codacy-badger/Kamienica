@@ -1,12 +1,10 @@
 package kamienica.controller;
 
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
+import static org.mockito.Mockito.when;
+
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Locale;
 
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
@@ -17,11 +15,13 @@ import org.springframework.validation.BindingResult;
 import org.testng.Assert;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
-import static org.mockito.Mockito.when;
 
 import kamienica.controller.view.PaymentController;
 import kamienica.model.Apartment;
 import kamienica.model.Division;
+import kamienica.model.InvoiceEnergy;
+import kamienica.model.InvoiceGas;
+import kamienica.model.InvoiceWater;
 import kamienica.model.MeterEnergy;
 import kamienica.model.MeterGas;
 import kamienica.model.MeterWater;
@@ -80,6 +80,12 @@ public class PaymentControllerTest {
 	List<ReadingGas> readingsGas = new ArrayList<ReadingGas>();
 	@Spy
 	List<ReadingEnergy> readingsEnergy = new ArrayList<ReadingEnergy>();
+	@Spy
+	List<InvoiceWater> invoiceWater = new ArrayList<>();
+	@Spy
+	List<InvoiceGas> invoiceGas = new ArrayList<>();
+	@Spy
+	List<InvoiceEnergy> invoiceEnergy = new ArrayList<>();
 	@Spy
 	HashMap<String, Object> myModel = new HashMap<>();
 
