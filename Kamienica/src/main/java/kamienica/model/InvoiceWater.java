@@ -11,7 +11,7 @@ public class InvoiceWater extends Invoice {
 
 	public InvoiceWater() {
 		super();
-		super.setDescription("Faktura Za Wodê");
+		super.setDescription("Faktura Za WodÄ™");
 	}
 	
 	public InvoiceWater(String serialNumber, String description, Date date, double totalAmount) {
