@@ -112,7 +112,7 @@ public class ReadingController {
 		List<MeterGas> meterGas = meterService.getGasList();
 		HashMap<String, Object> model = new HashMap<>();
 		if (meterGas.isEmpty()) {
-			model.put("error", "Brak licznik�w w bazie danych. Wprowad� brakuj�ce liczniki");
+			model.put("error", "Brak liczników w bazie danych. Wprowadź brakujące liczniki");
 			return new ModelAndView("/Admin/Reading/ReadingEnergyRegister", "model", model);
 		}
 		List<ReadingGas> readings = new ArrayList<>();
