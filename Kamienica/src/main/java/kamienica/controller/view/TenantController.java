@@ -10,8 +10,6 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
-import org.hibernate.engine.transaction.jta.platform.internal.SynchronizationRegistryBasedSynchronizationStrategy;
-import org.hibernate.exception.ConstraintViolationException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.propertyeditors.CustomDateEditor;
 import org.springframework.stereotype.Controller;
@@ -52,11 +50,9 @@ public class TenantController {
 	@Autowired
 	private Validator validator;
 
-
 	public void setValidator(Validator validator) {
 		this.validator = validator;
 	}
-
 
 	@RequestMapping("/Admin/Tenant/tenantRegister")
 	public ModelAndView tenantRegister(@ModelAttribute("tenant") Tenant tenant, BindingResult result) {
@@ -68,7 +64,6 @@ public class TenantController {
 	public ModelAndView tenantSave(@Valid @ModelAttribute("tenant") Tenant tenant, BindingResult result) {
 		TenantValidator.validateTenant(tenant, result);
 
-//		validator.validate(tenant, result);
 		if (result.hasErrors()) {
 			Map<String, Object> model = prepareTenantModel();
 			return new ModelAndView("/Admin/Tenant/TenantRegister", "model", model);
@@ -87,23 +82,12 @@ public class TenantController {
 	}
 
 	@RequestMapping(value = "/Admin/Tenant/tenantEdit", params = { "id" })
-	public ModelAndView tenantEdit(@RequestParam(value = "id") int id ) {
+	public ModelAndView tenantEdit(@RequestParam(value = "id") int id) {
 		Map<String, Object> model = prepareTenantModel();
-	Tenant	tenant  = tenantService.getTenantById(id);
-//	System.out.println(tenant.toString());
-//		Tenant toEdit = tenantService.getTenantById(id);
-//		tenant.setMovementDate(toEdit.getMovementDate());
-//		tenant.setEmail(toEdit.getEmail());
-//		tenant.setId(id);
-//		tenant.setRole(toEdit.getRole());
-//		tenant.setFirstName(toEdit.getFirstName());
-//		tenant.setApartment(toEdit.getApartment());
-//		tenant.setLastName(toEdit.getLastName());
-//		tenant.setPhone(toEdit.getPhone());
-//		model.put("tenant", tenant);
-		ModelAndView mvc =  new ModelAndView("/Admin/Tenant/TenantEdit", "model", model);
-		mvc.addObject("tenant",  tenant );
-		return  mvc;
+		Tenant tenant = tenantService.getTenantById(id);
+		ModelAndView mvc = new ModelAndView("/Admin/Tenant/TenantEdit", "model", model);
+		mvc.addObject("tenant", tenant);
+		return mvc;
 	}
 
 	@RequestMapping("/Admin/Tenant/tenantOverwrite")

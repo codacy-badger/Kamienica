@@ -2,7 +2,6 @@ package kamienica.dao;
 
 import java.io.Serializable;
 import java.lang.reflect.ParameterizedType;
-import java.sql.SQLException;
 import java.util.List;
 
 import org.hibernate.Criteria;

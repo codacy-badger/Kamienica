@@ -13,7 +13,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.propertyeditors.CustomDateEditor;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
-import org.springframework.validation.Validator;
 import org.springframework.web.bind.ServletRequestDataBinder;
 import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -47,13 +46,7 @@ public class InvoiceController {
 	Date date = new Date();
 	SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
 
-	@Autowired
-	private Validator validator;
-
-	public void setValidator(Validator validator) {
-		this.validator = validator;
-	}
-
+	
 	@RequestMapping("/Admin/Invoice/registerInvoice")
 	public ModelAndView invoiceRegistration() {
 		return new ModelAndView("/Admin/Invoice/RegisterInvoice");
@@ -87,7 +80,7 @@ public class InvoiceController {
 	@RequestMapping("/Admin/Invoice/invoiceGasSave")
 	public ModelAndView invoiceGasSave(@Valid @ModelAttribute("invoice") InvoiceGas invoice, BindingResult result) {
 
-		validator.validate(invoice, result);
+	 
 		if (result.hasErrors()) {
 			return new ModelAndView("/Admin/Invoice/InvoiceGasRegister");
 		}
@@ -103,7 +96,7 @@ public class InvoiceController {
 
 	@RequestMapping("/Admin/Invoice/invoiceWaterSave")
 	public ModelAndView invoiceWaterSave(@Valid @ModelAttribute("invoice") InvoiceWater invoice, BindingResult result) {
-		validator.validate(invoice, result);
+	 
 		if (result.hasErrors()) {
 			return new ModelAndView("/Admin/Invoice/InvoiceWaterRegister");
 		}
@@ -119,7 +112,7 @@ public class InvoiceController {
 	@RequestMapping("/Admin/Invoice/invoiceEnergySave")
 	public ModelAndView invoiceEnergySave(@Valid @ModelAttribute("invoice") InvoiceEnergy invoice,
 			BindingResult result) {
-		validator.validate(invoice, result);
+	 
 		if (result.hasErrors()) {
 			return new ModelAndView("/Admin/Invoice/InvoiceEnergyRegister");
 		}
@@ -165,27 +158,16 @@ public class InvoiceController {
 	public ModelAndView invoiceGasEdit(@RequestParam(value = "id") int id) {
 
 		InvoiceGas invoice = (InvoiceGas) invoiceService.getGasByID(id);
-//		invoice.setId(id);
-//		invoice.setDate(toEdit.getDate());
-//		invoice.setSerialNumber(toEdit.getSerialNumber());
-//		invoice.setDescription(toEdit.getDescription());
-//		invoice.setTotalAmount(toEdit.getTotalAmount());
 		ModelAndView mvc = new ModelAndView("/Admin/Invoice/InvoiceGasEdit");
 		mvc.addObject("invoice", invoice);
 		return mvc;
 	}
 
 	@RequestMapping(value = "/Admin/Invoice/invoiceWaterEdit", params = { "id" })
-	public ModelAndView edytujFakturaWoda(@RequestParam(value = "id") int id ) {
+	public ModelAndView edytujFakturaWoda(@RequestParam(value = "id") int id) {
 
 		InvoiceWater invoice = (InvoiceWater) invoiceService.getWaterByID(id);
-//		invoice.setId(id);
-//		invoice.setDate(toEdit.getDate());
-//		invoice.setSerialNumber(toEdit.getSerialNumber());
-//		invoice.setDescription(toEdit.getDescription());
-//		invoice.setTotalAmount(toEdit.getTotalAmount());
-
-		ModelAndView mvc = new ModelAndView("/Admin/Invoice/InvoiceWaterEdit"); 
+		ModelAndView mvc = new ModelAndView("/Admin/Invoice/InvoiceWaterEdit");
 		mvc.addObject("invoice", invoice);
 		return mvc;
 	}
@@ -194,13 +176,7 @@ public class InvoiceController {
 	public ModelAndView edytujFakture(@RequestParam(value = "id") int id) {
 
 		InvoiceEnergy invoice = (InvoiceEnergy) invoiceService.getEnergyByID(id);
-//		invoice.setId(id);
-//		invoice.setDate(toEdit.getDate());
-//		invoice.setSerialNumber(toEdit.getSerialNumber());
-//		invoice.setDescription(toEdit.getDescription());
-//		invoice.setTotalAmount(toEdit.getTotalAmount());
-
-		ModelAndView mvc =  new ModelAndView("/Admin/Invoice/InvoiceEnergyEdit");
+		ModelAndView mvc = new ModelAndView("/Admin/Invoice/InvoiceEnergyEdit");
 		mvc.addObject("invoice", invoice);
 		return mvc;
 	}
@@ -209,7 +185,7 @@ public class InvoiceController {
 	@RequestMapping("/Admin/Invoice/invoiceGasOverwrite")
 	public ModelAndView invoiceGas(@Valid @ModelAttribute("invoice") InvoiceGas invoice, BindingResult result) {
 
-		validator.validate(invoice, result);
+	 
 		if (result.hasErrors()) {
 			return new ModelAndView("/Admin/Invoice/InvoiceGasEdit");
 		}
@@ -224,7 +200,7 @@ public class InvoiceController {
 
 	@RequestMapping("/Admin/Invoice/invoiceWaterOverwrite")
 	public ModelAndView invoiceWater(@Valid @ModelAttribute("invoice") InvoiceWater invoice, BindingResult result) {
-		validator.validate(invoice, result);
+	 
 		if (result.hasErrors()) {
 			return new ModelAndView("/Admin/Invoice/InvoiceWaterEdit");
 		}
@@ -239,7 +215,7 @@ public class InvoiceController {
 
 	@RequestMapping("/Admin/Invoice/invoiceEnergyOverwrite")
 	public ModelAndView invoiceEnergy(@Valid @ModelAttribute("invoice") InvoiceEnergy invoice, BindingResult result) {
-		validator.validate(invoice, result);
+
 		if (result.hasErrors()) {
 			return new ModelAndView("/Admin/Invoice/InvoiceEnergyEdit");
 		}

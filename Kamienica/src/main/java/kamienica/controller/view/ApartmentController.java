@@ -1,6 +1,5 @@
 package kamienica.controller.view;
 
-import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
@@ -39,13 +38,6 @@ public class ApartmentController {
 		binder.registerCustomEditor(Date.class, new CustomDateEditor(sdf, true));
 	}
 
-//	@Autowired
-//	private Validator validator;
-//
-//	public void setValidator(Validator validator) {
-//		this.validator = validator;
-//	}
-
 	@RequestMapping("/Admin/Apartment/apartmentRegister")
 	public ModelAndView ApartmentRegister(@ModelAttribute("apartment") Apartment apartment, BindingResult result) {
 		return new ModelAndView("/Admin/Apartment/ApartmentRegister");
@@ -54,7 +46,6 @@ public class ApartmentController {
 	@RequestMapping("/Admin/Apartment/apartmentSave")
 	public ModelAndView save(@Valid @ModelAttribute("apartment") Apartment apartment, BindingResult result) {
 
-		// validator.validate(apartment, result);
 		if (result.hasErrors()) {
 			System.out.println(result.toString());
 			return new ModelAndView("/Admin/Apartment/ApartmentRegister");
@@ -72,25 +63,15 @@ public class ApartmentController {
 
 	@RequestMapping(value = "/Admin/Apartment/apartmentEdit", params = { "id" })
 	public ModelAndView apartmentEdit(@RequestParam(value = "id") int id) {
-//		Map<String, Object> model = new HashMap<String, Object>();
-	Apartment apartment = apartmentService.getById(id);
-//		Apartment apToEdit = apartmentService.getById(id);
-//		apartment.setIntercom(apToEdit.getIntercom());
-//		apartment.setId(apToEdit.getId());
-//		apartment.setApartmentNumber(apToEdit.getApartmentNumber());
-//		apartment.setDescription(apToEdit.getDescription());
-//		model.put("apartment", apToEdit);
+		Apartment apartment = apartmentService.getById(id);
 		ModelAndView mvc = new ModelAndView("/Admin/Apartment/ApartmentEdit");
 		mvc.addObject("apartment", apartment);
-		
 		return mvc;
 	}
 
 	@RequestMapping("/Admin/Apartment/apartmentOverwrite")
 	public ModelAndView apartmentOverwrite(@Valid @ModelAttribute("apartment") Apartment apartment,
 			BindingResult result) {
-
-//		validator.validate(apartment, result);
 		if (result.hasErrors()) {
 
 			return new ModelAndView("/Admin/Apartment/ApartmentEdit");
