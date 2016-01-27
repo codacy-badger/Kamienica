@@ -2,7 +2,6 @@ package kamienica.controller.view;
 
 import java.sql.SQLException;
 
-import javax.persistence.NoResultException;
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.web.bind.annotation.ControllerAdvice;

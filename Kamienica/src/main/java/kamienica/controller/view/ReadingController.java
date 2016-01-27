@@ -71,7 +71,7 @@ public class ReadingController {
 		List<MeterEnergy> meterEnergy = meterService.getEnergyList();
 		HashMap<String, Object> model = new HashMap<>();
 		if (meterEnergy.isEmpty()) {
-			model.put("error", "Brak licznik�w w bazie danych. Wprowad� brakuj�ce liczniki");
+			model.put("error", "Brak liczników w bazie danych. Wprowadź brakujące liczniki");
 			return new ModelAndView("/Admin/Reading/ReadingEnergyRegister", "model", model);
 		}
 		List<ReadingEnergy> readings = new ArrayList<ReadingEnergy>();
@@ -112,7 +112,7 @@ public class ReadingController {
 		List<MeterGas> meterGas = meterService.getGasList();
 		HashMap<String, Object> model = new HashMap<>();
 		if (meterGas.isEmpty()) {
-			model.put("error", "Brak licznik�w w bazie danych. Wprowad� brakuj�ce liczniki");
+			model.put("error", "Brak liczników w bazie danych. Wprowadź brakujące liczniki");
 			return new ModelAndView("/Admin/Reading/ReadingEnergyRegister", "model", model);
 		}
 		List<ReadingGas> readings = new ArrayList<>();
@@ -153,7 +153,7 @@ public class ReadingController {
 		List<MeterWater> meterWater = meterService.getWaterList();
 		HashMap<String, Object> model = new HashMap<>();
 		if (meterWater.isEmpty()) {
-			model.put("error", "Brak licznik�w w bazie danych. Wprowad� brakuj�ce liczniki");
+			model.put("error", "Brak liczników w bazie danych. Wprowadź brakujące liczniki");
 			return new ModelAndView("/Admin/Reading/ReadingEnergyRegister", "model", model);
 		}
 		List<ReadingWater> readings = new ArrayList<>();

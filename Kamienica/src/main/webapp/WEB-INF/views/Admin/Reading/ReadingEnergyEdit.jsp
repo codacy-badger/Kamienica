@@ -17,7 +17,8 @@
 
 		<br> <br>
 
-		<c:url var="odczyty" value="/Admin/Reading/readingEnergyOverwrite.html" />
+		<c:url var="odczyty"
+			value="/Admin/Reading/readingEnergyOverwrite.html" />
 		<form:form modelAttribute="readingForm" method="post"
 			action="${odczyty}">
 			<table width="400px" height="150px">

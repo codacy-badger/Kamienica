@@ -15,7 +15,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.propertyeditors.CustomDateEditor;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
-import org.springframework.validation.Validator;
 import org.springframework.web.bind.ServletRequestDataBinder;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.InitBinder;
@@ -47,13 +46,7 @@ public class MeterController {
 		binder.registerCustomEditor(MeterEnergy.class, new MeterEnergyIB(this.meterService));
 	}
 
-	@Autowired
-	private Validator validator;
-
-	public void setValidator(Validator validator) {
-		this.validator = validator;
-	}
-
+	
 	@InitBinder
 	public void initBinder(WebDataBinder binder) {
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
@@ -86,7 +79,7 @@ public class MeterController {
 
 	@RequestMapping("/Admin/Meter/meterEnergySave")
 	public ModelAndView meterEnergySave(@Valid @ModelAttribute("meter") MeterEnergy meter, BindingResult result) {
-		validator.validate(meter, result);
+	 
 		if (result.hasErrors()) {
 			Map<String, Object> model = prepareModel();
 			return new ModelAndView("/Admin/Meter/MeterEnergyRegister", "model", model);
@@ -95,7 +88,7 @@ public class MeterController {
 			meterService.saveEnergy(meter);
 		} catch (ConstraintViolationException e) {
 			Map<String, Object> model = prepareModel();
-			result.rejectValue("serialNumber", "error.meter", "Istnieje ju� w bazie licznik z takim numerem seryjnym");
+			result.rejectValue("serialNumber", "error.meter", "Istnieje już w bazie licznik z takim numerem seryjnym");
 			return new ModelAndView("/Admin/Meter/MeterEnergyRegister", "model", model);
 
 		}
@@ -106,9 +99,9 @@ public class MeterController {
 	public ModelAndView meterWaterSave(@Valid @ModelAttribute("meter") MeterWater meter, BindingResult result) {
 		if (meter.getApartment() == null && meter.getIsWarmWater() == true) {
 			result.rejectValue("isWarmWater", "error.meter",
-					"Licznik cz�ci wsp�lnej nie mo�e by� licznikiem ciep�ej wody");
+					"Licznik cz�ci wsp�lnej nie może być licznikiem ciep�ej wody");
 		}
-		validator.validate(meter, result);
+	 
 		if (result.hasErrors()) {
 			Map<String, Object> model = prepareModel();
 			return new ModelAndView("/Admin/Meter/MeterWaterRegister", "model", model);
@@ -117,7 +110,7 @@ public class MeterController {
 			meterService.saveWater(meter);
 		} catch (ConstraintViolationException e) {
 			Map<String, Object> model = prepareModel();
-			result.rejectValue("serialNumber", "error.meter", "Istnieje ju� w bazie licznik z takim numerem seryjnym");
+			result.rejectValue("serialNumber", "error.meter", "Istnieje już w bazie licznik z takim numerem seryjnym");
 			return new ModelAndView("/Admin/Meter/MeterWaterRegister", "model", model);
 
 		}
@@ -126,9 +119,9 @@ public class MeterController {
 
 	@RequestMapping("/Admin/Meter/meterGasSave")
 	public ModelAndView meterGasSave(@Valid @ModelAttribute("meter") MeterGas meter, BindingResult result) {
-		validator.validate(meter, result);
+	 
 		if (meter.getApartment() == null && meter.isCwu() == true) {
-			result.rejectValue("cwu", "error.meter", "Licznik cz�ci wsp�lnej nie mo�e by� licznikiem CWU");
+			result.rejectValue("cwu", "error.meter", "Licznik cz�ci wsp�lnej nie może być licznikiem CWU");
 		}
 		if (result.hasErrors()) {
 			Map<String, Object> model = prepareModel();
@@ -138,7 +131,7 @@ public class MeterController {
 			meterService.saveGas(meter);
 		} catch (ConstraintViolationException e) {
 			Map<String, Object> model = prepareModel();
-			result.rejectValue("serialNumber", "error.meter", "Istnieje ju� w bazie licznik z takim numerem seryjnym");
+			result.rejectValue("serialNumber", "error.meter", "Istnieje już w bazie licznik z takim numerem seryjnym");
 			return new ModelAndView("/Admin/Meter/MeterGasRegister", "model", model);
 
 		}
@@ -152,8 +145,8 @@ public class MeterController {
 	public ModelAndView meterEnergyList() {
 		Map<String, Object> model = new HashMap<String, Object>();
 		model.put("meter", meterService.getEnergyList());
-		
-//		model.put("meter", meterService.getEnergyList());
+
+		// model.put("meter", meterService.getEnergyList());
 		return new ModelAndView("/Admin/Meter/MeterEnergyList", model);
 
 	}
@@ -177,69 +170,45 @@ public class MeterController {
 	// ----------------------EDIT----------------------------------------
 
 	@RequestMapping(value = "/Admin/Meter/meterEnergyEdit", params = { "id" })
-	public ModelAndView meterEnergyEdit(@RequestParam(value = "id") int id,
-			@ModelAttribute("meter") MeterEnergy meter) {
+	public ModelAndView meterEnergyEdit(@RequestParam(value = "id") int id) {
 		Map<String, Object> model = prepareModel();
-		MeterEnergy toEdit = meterService.getEnergyByID(id);
-		meter.setId(id);
-		meter.setUnit(toEdit.getUnit());
-		if (toEdit.getApartment() == null) {
-			meter.setApartment(createNullApartment());
-		} else {
-			meter.setApartment(toEdit.getApartment());
-		}
-		meter.setSerialNumber(toEdit.getSerialNumber());
-		meter.setDescription(toEdit.getDescription());
-		return new ModelAndView("/Admin/Meter/MeterEnergyEdit", "model", model);
+		MeterEnergy meter = meterService.getEnergyByID(id);
+		ModelAndView mvc = new ModelAndView("/Admin/Meter/MeterEnergyEdit", "model", model);
+		mvc.addObject("meter", meter);
+		return mvc;
 	}
 
 	@RequestMapping(value = "/Admin/Meter/meterWaterEdit", params = { "id" })
-	public ModelAndView meterWaterEdit(@RequestParam(value = "id") int id, @ModelAttribute("meter") MeterWater meter) {
+	public ModelAndView meterWaterEdit(@RequestParam(value = "id") int id) {
 		Map<String, Object> model = prepareModel();
-		MeterWater toEdit = meterService.getWaterByID(id);
-		meter.setId(id);
-		meter.setUnit(toEdit.getUnit());
-		if (toEdit.getApartment() == null) {
-			meter.setApartment(createNullApartment());
-		} else {
-			meter.setApartment(toEdit.getApartment());
-		}
-		meter.setSerialNumber(toEdit.getSerialNumber());
-		meter.setDescription(toEdit.getDescription());
-		meter.setIsWarmWater(toEdit.getIsWarmWater());
-		return new ModelAndView("/Admin/Meter/MeterWaterEdit", "model", model);
+		MeterWater meter = meterService.getWaterByID(id);
+			ModelAndView mvc = new ModelAndView("/Admin/Meter/MeterWaterEdit", "model", model);
+		mvc.addObject("meter", meter);
+		return mvc;
 	}
 
 	@RequestMapping(value = "/Admin/Meter/meterGasEdit", params = { "id" })
-	public ModelAndView meterGasEdit(@RequestParam(value = "id") int id, @ModelAttribute("meter") MeterGas meter) {
+	public ModelAndView meterGasEdit(@RequestParam(value = "id") int id) {
 		Map<String, Object> model = prepareModel();
-		MeterGas toEdit = meterService.getGasByID(id);
-		meter.setId(id);
-		meter.setUnit(toEdit.getUnit());
-		if (toEdit.getApartment() == null) {
-			meter.setApartment(createNullApartment());
-		} else {
-			meter.setApartment(toEdit.getApartment());
-		}
-		meter.setSerialNumber(toEdit.getSerialNumber());
-		meter.setDescription(toEdit.getDescription());
-		meter.setCwu(toEdit.isCwu());
-		return new ModelAndView("/Admin/Meter/MeterGasEdit", "model", model);
+		MeterGas meter = meterService.getGasByID(id);
+		ModelAndView mvc = new ModelAndView("/Admin/Meter/MeterGasEdit", "model", model);
+		mvc.addObject("meter", meter);
+		return mvc;
 	}
 	// ------------------------------OVERWRITE-----------------------------------------
 
 	@RequestMapping("/Admin/Meter/meterEnergyOverwrite")
 	public ModelAndView meterEnergyOverwrite(@Valid @ModelAttribute("meter") MeterEnergy meter, BindingResult result) {
-		validator.validate(meter, result);
+	 
 		if (result.hasErrors()) {
 			Map<String, Object> model = prepareModel();
 			return new ModelAndView("/Admin/Meter/MeterEnergyEdit", "model", model);
 		}
 		try {
 			meterService.updateEnergy(meter);
-		} catch (ConstraintViolationException e) {
+		} catch (org.springframework.dao.DataIntegrityViolationException e) {
 			Map<String, Object> model = prepareModel();
-			result.rejectValue("serialNumber", "error.meter", "Istnieje ju� licznik z takim numerem seryjnym");
+			result.rejectValue("serialNumber", "error.meter", "Istnieje już licznik z takim numerem seryjnym");
 			return new ModelAndView("/Admin/Meter/MeterEnergyEdit", "model", model);
 		}
 		return new ModelAndView("redirect:/Admin/Meter/meterEnergyList.html");
@@ -250,19 +219,19 @@ public class MeterController {
 
 		if (meter.getApartment() == null && meter.getIsWarmWater() == true) {
 			result.rejectValue("isWarmWater", "error.meter",
-					"Licznik cz�ci wsp�lnej nie mo�e by� licznikiem ciep�ej wody");
+					"Licznik cz�ci wsp�lnej nie może być licznikiem ciep�ej wody");
 		}
 
-		validator.validate(meter, result);
+	 
 		if (result.hasErrors()) {
 			Map<String, Object> model = prepareModel();
 			return new ModelAndView("/Admin/Meter/MeterWaterEdit", "model", model);
 		}
 		try {
 			meterService.updateWater(meter);
-		} catch (ConstraintViolationException e) {
+		} catch (org.springframework.dao.DataIntegrityViolationException e) {
 			Map<String, Object> model = prepareModel();
-			result.rejectValue("serialNumber", "error.meter", "Istnieje ju� licznik z takim numerem seryjnym");
+			result.rejectValue("serialNumber", "error.meter", "Istnieje już licznik z takim numerem seryjnym");
 			return new ModelAndView("/Admin/Meter/MeterWaterEdit", "model", model);
 		}
 		return new ModelAndView("redirect:/Admin/Meter/meterWaterList.html");
@@ -271,18 +240,18 @@ public class MeterController {
 	@RequestMapping("/Admin/Meter/meterGasOverwrite")
 	public ModelAndView meterGasOverwrite(@Valid @ModelAttribute("meter") MeterGas meter, BindingResult result) {
 		if (meter.getApartment() == null && meter.isCwu() == true) {
-			result.rejectValue("cwu", "error.meter", "Licznik cz�ci wsp�lnej nie mo�e by� licznikiem CWU");
+			result.rejectValue("cwu", "error.meter", "Licznik cz�ci wsp�lnej nie może być licznikiem CWU");
 		}
-		validator.validate(meter, result);
+
 		if (result.hasErrors()) {
 			Map<String, Object> model = prepareModel();
 			return new ModelAndView("/Admin/Meter/MeterGasEdit", "model", model);
 		}
 		try {
 			meterService.updateGas(meter);
-		} catch (ConstraintViolationException e) {
+		} catch (org.springframework.dao.DataIntegrityViolationException e) {
 			Map<String, Object> model = prepareModel();
-			result.rejectValue("serialNumber", "error.meter", "Istnieje ju� licznik z takim numerem seryjnym");
+			result.rejectValue("serialNumber", "error.meter", "Istnieje już licznik z takim numerem seryjnym");
 			return new ModelAndView("/Admin/Meter/MeterGasEdit", "model", model);
 		}
 		return new ModelAndView("redirect:/Admin/Meter/meterGasList.html");
@@ -314,7 +283,7 @@ public class MeterController {
 		Map<String, Object> model = new HashMap<String, Object>();
 		List<Apartment> apartment = (apartmentService.getList());
 		if (apartment.isEmpty()) {
-			model.put("error", "Wprowad� przynajmniej jedno mieszkanie do bazy danych");
+			model.put("error", "Wprowadź przynajmniej jedno mieszkanie do bazy danych");
 		} else {
 			Apartment m = createNullApartment();
 			apartment.add(m);

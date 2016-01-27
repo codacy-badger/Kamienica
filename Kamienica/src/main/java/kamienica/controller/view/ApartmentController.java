@@ -13,7 +13,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.propertyeditors.CustomDateEditor;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
-import org.springframework.validation.Validator;
 import org.springframework.web.bind.ServletRequestDataBinder;
 import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -39,13 +38,6 @@ public class ApartmentController {
 		binder.registerCustomEditor(Date.class, new CustomDateEditor(sdf, true));
 	}
 
-//	@Autowired
-//	private Validator validator;
-//
-//	public void setValidator(Validator validator) {
-//		this.validator = validator;
-//	}
-
 	@RequestMapping("/Admin/Apartment/apartmentRegister")
 	public ModelAndView ApartmentRegister(@ModelAttribute("apartment") Apartment apartment, BindingResult result) {
 		return new ModelAndView("/Admin/Apartment/ApartmentRegister");
@@ -54,7 +46,6 @@ public class ApartmentController {
 	@RequestMapping("/Admin/Apartment/apartmentSave")
 	public ModelAndView save(@Valid @ModelAttribute("apartment") Apartment apartment, BindingResult result) {
 
-		// validator.validate(apartment, result);
 		if (result.hasErrors()) {
 			System.out.println(result.toString());
 			return new ModelAndView("/Admin/Apartment/ApartmentRegister");
@@ -71,24 +62,16 @@ public class ApartmentController {
 	}
 
 	@RequestMapping(value = "/Admin/Apartment/apartmentEdit", params = { "id" })
-	public ModelAndView apartmentEdit(@RequestParam(value = "id") int id,
-			@ModelAttribute("apartment") Apartment apartment) {
-		Map<String, Object> model = new HashMap<String, Object>();
-		Apartment apToEdit = apartmentService.getById(id);
-		System.out.println("PK:  " + id);
-		apartment.setIntercom(apToEdit.getIntercom());
-		apartment.setId(apToEdit.getId());
-		apartment.setApartmentNumber(apToEdit.getApartmentNumber());
-		apartment.setDescription(apToEdit.getDescription());
-		model.put("apartment", apToEdit);
-		return new ModelAndView("/Admin/Apartment/ApartmentEdit");
+	public ModelAndView apartmentEdit(@RequestParam(value = "id") int id) {
+		Apartment apartment = apartmentService.getById(id);
+		ModelAndView mvc = new ModelAndView("/Admin/Apartment/ApartmentEdit");
+		mvc.addObject("apartment", apartment);
+		return mvc;
 	}
 
 	@RequestMapping("/Admin/Apartment/apartmentOverwrite")
 	public ModelAndView apartmentOverwrite(@Valid @ModelAttribute("apartment") Apartment apartment,
 			BindingResult result) {
-
-//		validator.validate(apartment, result);
 		if (result.hasErrors()) {
 
 			return new ModelAndView("/Admin/Apartment/ApartmentEdit");
@@ -96,7 +79,7 @@ public class ApartmentController {
 
 		try {
 			apartmentService.update(apartment);
-		} catch (ConstraintViolationException e) {
+		} catch (org.springframework.dao.DataIntegrityViolationException e) {
 			result.rejectValue("apartmentNumber", "error.apartment", "Istnieje już taki numer mieszkania w bazie");
 			return new ModelAndView("/Admin/Apartment/ApartmentEdit");
 		}
