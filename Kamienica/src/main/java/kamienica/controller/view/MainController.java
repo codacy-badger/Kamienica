@@ -55,7 +55,10 @@ public class MainController {
 	public ModelAndView accesDenied() {
 		return new ModelAndView("403");
 	}
-	
+	@RequestMapping("/404")
+	public ModelAndView notExsists() {
+		return new ModelAndView("404");
+	}
 	
 	
 }

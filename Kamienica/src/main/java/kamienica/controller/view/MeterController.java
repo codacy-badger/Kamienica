@@ -152,8 +152,8 @@ public class MeterController {
 	public ModelAndView meterEnergyList() {
 		Map<String, Object> model = new HashMap<String, Object>();
 		model.put("meter", meterService.getEnergyList());
-		
-//		model.put("meter", meterService.getEnergyList());
+
+		// model.put("meter", meterService.getEnergyList());
 		return new ModelAndView("/Admin/Meter/MeterEnergyList", model);
 
 	}
@@ -177,54 +177,59 @@ public class MeterController {
 	// ----------------------EDIT----------------------------------------
 
 	@RequestMapping(value = "/Admin/Meter/meterEnergyEdit", params = { "id" })
-	public ModelAndView meterEnergyEdit(@RequestParam(value = "id") int id,
-			@ModelAttribute("meter") MeterEnergy meter) {
+	public ModelAndView meterEnergyEdit(@RequestParam(value = "id") int id) {
 		Map<String, Object> model = prepareModel();
-		MeterEnergy toEdit = meterService.getEnergyByID(id);
-		meter.setId(id);
-		meter.setUnit(toEdit.getUnit());
-		if (toEdit.getApartment() == null) {
-			meter.setApartment(createNullApartment());
-		} else {
-			meter.setApartment(toEdit.getApartment());
-		}
-		meter.setSerialNumber(toEdit.getSerialNumber());
-		meter.setDescription(toEdit.getDescription());
-		return new ModelAndView("/Admin/Meter/MeterEnergyEdit", "model", model);
+		MeterEnergy meter = meterService.getEnergyByID(id);
+		// meter.setId(id);
+		// meter.setUnit(toEdit.getUnit());
+		// if (toEdit.getApartment() == null) {
+		// meter.setApartment(createNullApartment());
+		// } else {
+		// meter.setApartment(toEdit.getApartment());
+		// }
+		// meter.setSerialNumber(toEdit.getSerialNumber());
+		// meter.setDescription(toEdit.getDescription());
+		ModelAndView mvc = new ModelAndView("/Admin/Meter/MeterEnergyEdit", "model", model);
+		mvc.addObject("meter", meter);
+		return mvc;
 	}
 
 	@RequestMapping(value = "/Admin/Meter/meterWaterEdit", params = { "id" })
-	public ModelAndView meterWaterEdit(@RequestParam(value = "id") int id, @ModelAttribute("meter") MeterWater meter) {
+	public ModelAndView meterWaterEdit(@RequestParam(value = "id") int id) {
 		Map<String, Object> model = prepareModel();
-		MeterWater toEdit = meterService.getWaterByID(id);
-		meter.setId(id);
-		meter.setUnit(toEdit.getUnit());
-		if (toEdit.getApartment() == null) {
-			meter.setApartment(createNullApartment());
-		} else {
-			meter.setApartment(toEdit.getApartment());
-		}
-		meter.setSerialNumber(toEdit.getSerialNumber());
-		meter.setDescription(toEdit.getDescription());
-		meter.setIsWarmWater(toEdit.getIsWarmWater());
-		return new ModelAndView("/Admin/Meter/MeterWaterEdit", "model", model);
+		MeterWater meter = meterService.getWaterByID(id);
+		// meter.setId(id);
+		// meter.setUnit(toEdit.getUnit());
+		// if (toEdit.getApartment() == null) {
+		// meter.setApartment(createNullApartment());
+		// } else {
+		// meter.setApartment(toEdit.getApartment());
+		// }
+		// meter.setSerialNumber(toEdit.getSerialNumber());
+		// meter.setDescription(toEdit.getDescription());
+		// meter.setIsWarmWater(toEdit.getIsWarmWater());
+		ModelAndView mvc = new ModelAndView("/Admin/Meter/MeterWaterEdit", "model", model);
+		mvc.addObject("meter", meter);
+		return mvc;
 	}
 
 	@RequestMapping(value = "/Admin/Meter/meterGasEdit", params = { "id" })
-	public ModelAndView meterGasEdit(@RequestParam(value = "id") int id, @ModelAttribute("meter") MeterGas meter) {
+	public ModelAndView meterGasEdit(@RequestParam(value = "id") int id) {
 		Map<String, Object> model = prepareModel();
-		MeterGas toEdit = meterService.getGasByID(id);
-		meter.setId(id);
-		meter.setUnit(toEdit.getUnit());
-		if (toEdit.getApartment() == null) {
-			meter.setApartment(createNullApartment());
-		} else {
-			meter.setApartment(toEdit.getApartment());
-		}
-		meter.setSerialNumber(toEdit.getSerialNumber());
-		meter.setDescription(toEdit.getDescription());
-		meter.setCwu(toEdit.isCwu());
-		return new ModelAndView("/Admin/Meter/MeterGasEdit", "model", model);
+		MeterGas meter = meterService.getGasByID(id);
+		// meter.setId(id);
+		// meter.setUnit(toEdit.getUnit());
+		// if (toEdit.getApartment() == null) {
+		// meter.setApartment(createNullApartment());
+		// } else {
+		// meter.setApartment(toEdit.getApartment());
+		// }
+		// meter.setSerialNumber(toEdit.getSerialNumber());
+		// meter.setDescription(toEdit.getDescription());
+		// meter.setCwu(toEdit.isCwu());
+		ModelAndView mvc = new ModelAndView("/Admin/Meter/MeterGasEdit", "model", model);
+		mvc.addObject("meter", meter);
+		return mvc;
 	}
 	// ------------------------------OVERWRITE-----------------------------------------
 
@@ -237,7 +242,7 @@ public class MeterController {
 		}
 		try {
 			meterService.updateEnergy(meter);
-		} catch (ConstraintViolationException e) {
+		} catch (org.springframework.dao.DataIntegrityViolationException e) {
 			Map<String, Object> model = prepareModel();
 			result.rejectValue("serialNumber", "error.meter", "Istnieje ju� licznik z takim numerem seryjnym");
 			return new ModelAndView("/Admin/Meter/MeterEnergyEdit", "model", model);
@@ -260,7 +265,7 @@ public class MeterController {
 		}
 		try {
 			meterService.updateWater(meter);
-		} catch (ConstraintViolationException e) {
+		} catch (org.springframework.dao.DataIntegrityViolationException e) {
 			Map<String, Object> model = prepareModel();
 			result.rejectValue("serialNumber", "error.meter", "Istnieje ju� licznik z takim numerem seryjnym");
 			return new ModelAndView("/Admin/Meter/MeterWaterEdit", "model", model);
@@ -280,7 +285,7 @@ public class MeterController {
 		}
 		try {
 			meterService.updateGas(meter);
-		} catch (ConstraintViolationException e) {
+		} catch (org.springframework.dao.DataIntegrityViolationException e) {
 			Map<String, Object> model = prepareModel();
 			result.rejectValue("serialNumber", "error.meter", "Istnieje ju� licznik z takim numerem seryjnym");
 			return new ModelAndView("/Admin/Meter/MeterGasEdit", "model", model);

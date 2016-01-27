@@ -95,7 +95,7 @@ public class InvoiceController {
 		try {
 			invoiceService.saveGas(invoice);
 		} catch (ConstraintViolationException e) {
-			result.rejectValue("serialNumber", "error.invoice", "Podany numer ju� istnieje");
+			result.rejectValue("serialNumber", "error.invoice", "Podany numer już istnieje");
 			return new ModelAndView("/Admin/Invoice/InvoiceGasRegister");
 		}
 		return new ModelAndView("redirect:/Admin/Invoice/invoiceGasList.html");
@@ -110,7 +110,7 @@ public class InvoiceController {
 		try {
 			invoiceService.saveWater(invoice);
 		} catch (ConstraintViolationException e) {
-			result.rejectValue("serialNumber", "error.invoice", "Podany numer ju� istnieje");
+			result.rejectValue("serialNumber", "error.invoice", "Podany numerjuż istnieje");
 			return new ModelAndView("/Admin/Invoice/InvoiceWaterRegister");
 		}
 		return new ModelAndView("redirect:/Admin/Invoice/invoiceWaterList.html");
@@ -127,7 +127,7 @@ public class InvoiceController {
 		try {
 			invoiceService.saveEnergy(invoice);
 		} catch (ConstraintViolationException e) {
-			result.rejectValue("serialNumber", "error.invoice", "Podany numer ju� istnieje");
+			result.rejectValue("serialNumber", "error.invoice", "Podany numerjuż istnieje");
 			return new ModelAndView("/Admin/Invoice/InvoiceEnergyRegister");
 		}
 		return new ModelAndView("redirect:/Admin/Invoice/invoiceEnergyList.html");
@@ -162,45 +162,47 @@ public class InvoiceController {
 	// -------------------EDYCJA----------------------------------------------
 
 	@RequestMapping(value = "/Admin/Invoice/invoiceGasEdit", params = { "id" })
-	public ModelAndView invoiceGasEdit(@RequestParam(value = "id") int id,
-			@ModelAttribute("invoice") InvoiceGas invoice) {
+	public ModelAndView invoiceGasEdit(@RequestParam(value = "id") int id) {
 
-		InvoiceGas toEdit = (InvoiceGas) invoiceService.getGasByID(id);
-		invoice.setId(id);
-		invoice.setDate(toEdit.getDate());
-		invoice.setSerialNumber(toEdit.getSerialNumber());
-		invoice.setDescription(toEdit.getDescription());
-		invoice.setTotalAmount(toEdit.getTotalAmount());
-
-		return new ModelAndView("/Admin/Invoice/InvoiceGasEdit");
+		InvoiceGas invoice = (InvoiceGas) invoiceService.getGasByID(id);
+//		invoice.setId(id);
+//		invoice.setDate(toEdit.getDate());
+//		invoice.setSerialNumber(toEdit.getSerialNumber());
+//		invoice.setDescription(toEdit.getDescription());
+//		invoice.setTotalAmount(toEdit.getTotalAmount());
+		ModelAndView mvc = new ModelAndView("/Admin/Invoice/InvoiceGasEdit");
+		mvc.addObject("invoice", invoice);
+		return mvc;
 	}
 
 	@RequestMapping(value = "/Admin/Invoice/invoiceWaterEdit", params = { "id" })
-	public ModelAndView edytujFakturaWoda(@RequestParam(value = "id") int id,
-			@ModelAttribute("invoice") InvoiceWater invoice) {
+	public ModelAndView edytujFakturaWoda(@RequestParam(value = "id") int id ) {
 
-		InvoiceWater toEdit = (InvoiceWater) invoiceService.getWaterByID(id);
-		invoice.setId(id);
-		invoice.setDate(toEdit.getDate());
-		invoice.setSerialNumber(toEdit.getSerialNumber());
-		invoice.setDescription(toEdit.getDescription());
-		invoice.setTotalAmount(toEdit.getTotalAmount());
+		InvoiceWater invoice = (InvoiceWater) invoiceService.getWaterByID(id);
+//		invoice.setId(id);
+//		invoice.setDate(toEdit.getDate());
+//		invoice.setSerialNumber(toEdit.getSerialNumber());
+//		invoice.setDescription(toEdit.getDescription());
+//		invoice.setTotalAmount(toEdit.getTotalAmount());
 
-		return new ModelAndView("/Admin/Invoice/InvoiceWaterEdit");
+		ModelAndView mvc = new ModelAndView("/Admin/Invoice/InvoiceWaterEdit"); 
+		mvc.addObject("invoice", invoice);
+		return mvc;
 	}
 
 	@RequestMapping(value = "/Admin/Invoice/invoiceEnergyEdit", params = { "id" })
-	public ModelAndView edytujFakture(@RequestParam(value = "id") int id,
-			@ModelAttribute("invoice") InvoiceEnergy invoice) {
+	public ModelAndView edytujFakture(@RequestParam(value = "id") int id) {
 
-		InvoiceEnergy toEdit = (InvoiceEnergy) invoiceService.getEnergyByID(id);
-		invoice.setId(id);
-		invoice.setDate(toEdit.getDate());
-		invoice.setSerialNumber(toEdit.getSerialNumber());
-		invoice.setDescription(toEdit.getDescription());
-		invoice.setTotalAmount(toEdit.getTotalAmount());
+		InvoiceEnergy invoice = (InvoiceEnergy) invoiceService.getEnergyByID(id);
+//		invoice.setId(id);
+//		invoice.setDate(toEdit.getDate());
+//		invoice.setSerialNumber(toEdit.getSerialNumber());
+//		invoice.setDescription(toEdit.getDescription());
+//		invoice.setTotalAmount(toEdit.getTotalAmount());
 
-		return new ModelAndView("/Admin/Invoice/InvoiceEnergyEdit");
+		ModelAndView mvc =  new ModelAndView("/Admin/Invoice/InvoiceEnergyEdit");
+		mvc.addObject("invoice", invoice);
+		return mvc;
 	}
 
 	// --------------------------NADPIS-------------------------------------------------
@@ -213,8 +215,8 @@ public class InvoiceController {
 		}
 		try {
 			invoiceService.updateGas(invoice);
-		} catch (ConstraintViolationException e) {
-			result.rejectValue("serialNumber", "error.invoice", "Podany numer ju� istnieje");
+		} catch (org.springframework.dao.DataIntegrityViolationException e) {
+			result.rejectValue("serialNumber", "error.invoice", "Podany numerjuż istnieje");
 			return new ModelAndView("/Admin/Invoice/InvoiceGasEdit");
 		}
 		return new ModelAndView("redirect:/Admin/Invoice/invoiceGasList.html");
@@ -228,8 +230,8 @@ public class InvoiceController {
 		}
 		try {
 			invoiceService.updateWater(invoice);
-		} catch (ConstraintViolationException e) {
-			result.rejectValue("serialNumber", "error.invoice", "Podany numer ju� istnieje");
+		} catch (org.springframework.dao.DataIntegrityViolationException e) {
+			result.rejectValue("serialNumber", "error.invoice", "Podany numerjuż istnieje");
 			return new ModelAndView("/Admin/Invoice/InvoiceWaterEdit");
 		}
 		return new ModelAndView("redirect:/Admin/Invoice/invoiceWaterList.html");
@@ -243,8 +245,8 @@ public class InvoiceController {
 		}
 		try {
 			invoiceService.updateEnergy(invoice);
-		} catch (ConstraintViolationException e) {
-			result.rejectValue("serialNumber", "error.invoice", "Podany numer ju� istnieje");
+		} catch (org.springframework.dao.DataIntegrityViolationException e) {
+			result.rejectValue("serialNumber", "error.invoice", "Podany numerjuż istnieje");
 			return new ModelAndView("/Admin/Invoice/InvoiceEnergyEdit");
 		}
 		return new ModelAndView("redirect:/Admin/Invoice/invoiceEnergyList.html");

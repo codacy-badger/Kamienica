@@ -1,5 +1,6 @@
 package kamienica.controller.view;
 
+import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
@@ -13,7 +14,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.propertyeditors.CustomDateEditor;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
-import org.springframework.validation.Validator;
 import org.springframework.web.bind.ServletRequestDataBinder;
 import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -71,17 +71,19 @@ public class ApartmentController {
 	}
 
 	@RequestMapping(value = "/Admin/Apartment/apartmentEdit", params = { "id" })
-	public ModelAndView apartmentEdit(@RequestParam(value = "id") int id,
-			@ModelAttribute("apartment") Apartment apartment) {
-		Map<String, Object> model = new HashMap<String, Object>();
-		Apartment apToEdit = apartmentService.getById(id);
-		System.out.println("PK:  " + id);
-		apartment.setIntercom(apToEdit.getIntercom());
-		apartment.setId(apToEdit.getId());
-		apartment.setApartmentNumber(apToEdit.getApartmentNumber());
-		apartment.setDescription(apToEdit.getDescription());
-		model.put("apartment", apToEdit);
-		return new ModelAndView("/Admin/Apartment/ApartmentEdit");
+	public ModelAndView apartmentEdit(@RequestParam(value = "id") int id) {
+//		Map<String, Object> model = new HashMap<String, Object>();
+	Apartment apartment = apartmentService.getById(id);
+//		Apartment apToEdit = apartmentService.getById(id);
+//		apartment.setIntercom(apToEdit.getIntercom());
+//		apartment.setId(apToEdit.getId());
+//		apartment.setApartmentNumber(apToEdit.getApartmentNumber());
+//		apartment.setDescription(apToEdit.getDescription());
+//		model.put("apartment", apToEdit);
+		ModelAndView mvc = new ModelAndView("/Admin/Apartment/ApartmentEdit");
+		mvc.addObject("apartment", apartment);
+		
+		return mvc;
 	}
 
 	@RequestMapping("/Admin/Apartment/apartmentOverwrite")
@@ -96,7 +98,7 @@ public class ApartmentController {
 
 		try {
 			apartmentService.update(apartment);
-		} catch (ConstraintViolationException e) {
+		} catch (org.springframework.dao.DataIntegrityViolationException e) {
 			result.rejectValue("apartmentNumber", "error.apartment", "Istnieje już taki numer mieszkania w bazie");
 			return new ModelAndView("/Admin/Apartment/ApartmentEdit");
 		}

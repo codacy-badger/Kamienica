@@ -2,6 +2,7 @@ package kamienica.dao;
 
 import java.io.Serializable;
 import java.lang.reflect.ParameterizedType;
+import java.sql.SQLException;
 import java.util.List;
 
 import org.hibernate.Criteria;
@@ -38,7 +39,7 @@ public abstract class AbstractDao<PK extends Serializable, T> {
 		return (T) getSession().get(persistentClass, new Integer((int) id));
 	}
 
-	public void save(T entity) {
+	public void save(T entity)  {
 		getSession().persist(entity);
 
 	}

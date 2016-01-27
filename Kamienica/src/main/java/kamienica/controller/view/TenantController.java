@@ -10,6 +10,7 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
+import org.hibernate.engine.transaction.jta.platform.internal.SynchronizationRegistryBasedSynchronizationStrategy;
 import org.hibernate.exception.ConstraintViolationException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.propertyeditors.CustomDateEditor;
@@ -86,21 +87,23 @@ public class TenantController {
 	}
 
 	@RequestMapping(value = "/Admin/Tenant/tenantEdit", params = { "id" })
-	public ModelAndView tenantEdytuj(@RequestParam(value = "id") int id, @ModelAttribute Tenant tenant) {
+	public ModelAndView tenantEdit(@RequestParam(value = "id") int id ) {
 		Map<String, Object> model = prepareTenantModel();
-		tenant  = tenantService.getTenantById(id);
-		System.out.println(tenant.toString());
-		Tenant toEdit = tenantService.getTenantById(id);
-		tenant.setMovementDate(toEdit.getMovementDate());
-		tenant.setEmail(toEdit.getEmail());
-		tenant.setId(id);
-		tenant.setRole(toEdit.getRole());
-		tenant.setFirstName(toEdit.getFirstName());
-		tenant.setApartment(toEdit.getApartment());
-		tenant.setLastName(toEdit.getLastName());
-		tenant.setPhone(toEdit.getPhone());
-		model.put("tenant", tenant);
-		return new ModelAndView("/Admin/Tenant/TenantEdit", "model", model);
+	Tenant	tenant  = tenantService.getTenantById(id);
+//	System.out.println(tenant.toString());
+//		Tenant toEdit = tenantService.getTenantById(id);
+//		tenant.setMovementDate(toEdit.getMovementDate());
+//		tenant.setEmail(toEdit.getEmail());
+//		tenant.setId(id);
+//		tenant.setRole(toEdit.getRole());
+//		tenant.setFirstName(toEdit.getFirstName());
+//		tenant.setApartment(toEdit.getApartment());
+//		tenant.setLastName(toEdit.getLastName());
+//		tenant.setPhone(toEdit.getPhone());
+//		model.put("tenant", tenant);
+		ModelAndView mvc =  new ModelAndView("/Admin/Tenant/TenantEdit", "model", model);
+		mvc.addObject("tenant",  tenant );
+		return  mvc;
 	}
 
 	@RequestMapping("/Admin/Tenant/tenantOverwrite")
@@ -115,8 +118,8 @@ public class TenantController {
 
 		try {
 			tenantService.updateTenant(tenant);
-		} catch (ConstraintViolationException e) {
-			result.rejectValue("email", "error.tenant", "Podany e-mail ju� istnieje");
+		} catch (org.springframework.dao.DataIntegrityViolationException e) {
+			result.rejectValue("email", "error.tenant", "Podany e-mail już istnieje");
 			Map<String, Object> model = prepareTenantModel();
 			return new ModelAndView("/Admin/Tenant/TenantEdit", "model", model);
 		}
