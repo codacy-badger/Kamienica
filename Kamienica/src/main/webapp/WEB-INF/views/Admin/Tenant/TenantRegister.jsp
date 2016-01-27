@@ -11,6 +11,10 @@
 
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>Rejestracja Najemcy</title>
+ <script type="text/javascript" src="jquery-2.1.0.js"></script>
+        <script type="text/javascript" src="jq.js"></script>
+        <script type="text/javascript" src="jquery.validate.js"></script>
+
 </head>
 <body>
 	<div id="mainWrapper">
