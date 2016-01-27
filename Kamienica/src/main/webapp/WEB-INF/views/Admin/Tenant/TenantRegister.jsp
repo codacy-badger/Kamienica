@@ -14,7 +14,7 @@
 </head>
 <body>
 	<div id="mainWrapper">
-		<div class="content">
+		<div class="c">
 			<h1>Rejestracja Najemcy</h1>
 			<hr>
 			<a href="../home.html">Strona Główna</a>
