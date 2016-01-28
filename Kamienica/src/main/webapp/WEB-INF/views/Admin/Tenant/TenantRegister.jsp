@@ -7,73 +7,132 @@
 <html>
 <head>
 
-<link class="row"  href="<c:url value='/static/css/bootstrap.css' />"
+<link class="row" href="<c:url value='/static/css/bootstrap.css' />"
 	rel="stylesheet">
 
-<link class="row"  href="<c:url value='/static/css/style.css' />"
+<link class="row" href="<c:url value='/static/css/style.css' />"
 	rel="stylesheet">
 
 
-	<script type="text/javascript"
-		src="<c:url value='/static/js/jquery-2.2.0.js' />"></script>
+<script type="text/javascript"
+	src="<c:url value='/static/js/jquery-2.2.0.js' />"></script>
 
 
-	<script type="text/javascript" src="<c:url value='/static/js/jq.js' />"></script>
+<script type="text/javascript" src="<c:url value='/static/js/jq.js' />"></script>
 
-	<script type="text/javascript"
-		src="<c:url value='/static/js/jquery.validate.js' />"></script>
+<script type="text/javascript"
+	src="<c:url value='/static/js/jquery.validate.js' />"></script>
 
-	<script type="text/javascript"
-		src="<c:url value='/static/js/bootstrap.js' />"></script>
+<script type="text/javascript"
+	src="<c:url value='/static/js/bootstrap.js' />"></script>
 
-	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-	
-	<title>Rejestracja Najemcy</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Rejestracja Najemcy</title>
 </head>
 <body>
-	<c:url var="rejestrujNajemca" value="/Admin/Tenant/tenantSave.html" />
-	 <nav class="navbar navbar-inverse navbar-fixed-top">
-      <div class="container">
-        <div class="navbar-header">
-          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
-            <span class="sr-only">Toggle navigation</span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-          </button>
-          <a class="navbar-brand" href="http://getbootstrap.com/examples/theme/#">Bootstrap theme</a>
-        </div>
-        <div id="navbar" class="navbar-collapse collapse">
-          <ul class="nav navbar-nav">
-            <li class="active"><a href="http://getbootstrap.com/examples/theme/#">Home</a></li>
-            <li><a href="http://getbootstrap.com/examples/theme/#about">About</a></li>
-            <li><a href="http://getbootstrap.com/examples/theme/#contact">Contact</a></li>
-            <li class="dropdown">
-              <a href="http://getbootstrap.com/examples/theme/#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Dropdown <span class="caret"></span></a>
-              <ul class="dropdown-menu">
-                <li><a href="http://getbootstrap.com/examples/theme/#">Action</a></li>
-                <li><a href="http://getbootstrap.com/examples/theme/#">Another action</a></li>
-                <li><a href="http://getbootstrap.com/examples/theme/#">Something else here</a></li>
-                <li role="separator" class="divider"></li>
-                <li class="dropdown-header">Nav header</li>
-                <li><a href="http://getbootstrap.com/examples/theme/#">Separated link</a></li>
-                <li><a href="http://getbootstrap.com/examples/theme/#">One more separated link</a></li>
-              </ul>
-            </li>
-          </ul>
-        </div><!--/.nav-collapse -->
-      </div>
-    </nav>
-	
-	<div class="container">
-		<div class="row">
-			<h1>Rejestracja Najemcy</h1>
-			<hr>
-			<a href="../home.html">Strona Główna</a>
+
+
+
+	<nav class="navbar navbar-inverse navbar-fixed-top">
+	<div class="container-fluid">
+		<!-- Brand and toggle get grouped for better mobile display -->
+		<div class="navbar-header">
+			<button type="button" class="navbar-toggle collapsed"
+				data-toggle="collapse" data-target="#bs-example-navbar-collapse-1"
+				aria-expanded="false">
+				<span class="sr-only">Toggle navigation</span> <span
+					class="icon-bar"></span> <span class="icon-bar"></span> <span
+					class="icon-bar"></span>
+			</button>
+			<a class="navbar-brand" href="#">Brand</a>
 		</div>
 
+		<!-- Collect the nav links, forms, and other content for toggling -->
+		<div class="collapse navbar-collapse"
+			id="bs-example-navbar-collapse-1">
+			<ul class="nav navbar-nav">
+				<li class="active"><a href="#">Link <span class="sr-only">(current)</span></a></li>
+				<li><a href="#">Link</a></li>
+				
+
+				<!-- Faktury -->
+				<li class="dropdown"><a href="#" class="dropdown-toggle"
+					data-toggle="dropdown" role="button" aria-haspopup="true"
+					aria-expanded="false">Faktury <span class="caret"></span></a>
+
+					<ul class="dropdown-menu">
+						<li><a href="Reading/readingGasRegister.html">Gaz</a></li>
+						<li><a href="#">Energia</a></li>
+						<li><a href="#">Woda</a></li>
+						<li role="separator" class="divider"></li>
+						<li><a href="#">Gaz</a></li>
+						<li><a href="#">Energia</a></li>
+						<li><a href="#">Woda</a></li>
+					</ul></li>
+
+				<!-- Odczyty -->
+				<li class="dropdown"><a href="#" class="dropdown-toggle"
+					data-toggle="dropdown" role="button" aria-haspopup="true"
+					aria-expanded="false">Odczyty <span class="caret"> </span></a>
+
+					<ul class="dropdown-menu">
+						<li><a href="Reading/readingGasRegister.html">Gaz</a></li>
+						<li><a href="#">Energia</a></li>
+						<li><a href="#">Woda</a></li>
+						<li role="separator" class="divider"></li>
+						<li><a href="#">Gaz</a></li>
+						<li><a href="#">Energia</a></li>
+						<li><a href="#">Woda</a></li>
+					</ul></li>
+<!-- Opłaty -->
+				<li class="dropdown"><a href="#" class="dropdown-toggle"
+					data-toggle="dropdown" role="button" aria-haspopup="true"
+					aria-expanded="false">Opłaty <span class="caret"></span></a>
+
+					<ul class="dropdown-menu">
+						<li><a href="Reading/readingGasRegister.html">Gaz</a></li>
+						<li><a href="#">Energia</a></li>
+						<li><a href="#">Woda</a></li>
+						<li role="separator" class="divider"></li>
+						<li><a href="#">Gaz</a></li>
+						<li><a href="#">Energia</a></li>
+						<li><a href="#">Woda</a></li>
+					</ul></li>
+
+				<li class="dropdown"><a href="#" class="dropdown-toggle"
+					data-toggle="dropdown" role="button" aria-haspopup="true"
+					aria-expanded="false">Faktury <span class="caret"></span></a>
+
+					<ul class="dropdown-menu">
+						<li><a href="Reading/readingGasRegister.html">Gaz</a></li>
+						<li><a href="#">Energia</a></li>
+						<li><a href="#">Woda</a></li>
+						<li role="separator" class="divider"></li>
+						<li><a href="#">Gaz</a></li>
+						<li><a href="#">Energia</a></li>
+						<li><a href="#">Woda</a></li>
+					</ul></li>
+			</ul>
+
+			<ul class="nav navbar-nav navbar-right">
+				<li><a href="#">Link</a></li>
 
 
+			</ul>
+		</div>
+		<!-- /.navbar-collapse -->
+	</div>
+	<!-- /.container-fluid --> </nav>
+
+	<div class="container" role="main">
+
+		<div class="jumbotron">
+			<h1>Kamienica</h1>
+			<p>Wprowadź dane by zarejestrować nowego najemcę</p>
+		</div>
+
+		<c:url var="rejestrujNajemca" value="/Admin/Tenant/tenantSave.html" />
 		<form:form class="myForm" id="rejestrujNajemca"
 			modelAttribute="tenant" method="post" action="${rejestrujNajemca}">
 			<div class="row">
@@ -82,9 +141,16 @@
 
 
 			<div class="row">
-				<form:label path="firstName">Imię</form:label>
-				<form:input path="firstName" name="firstName" />
-				<label for="firstname" generated="true" class="error"></label>
+				<div class="col-md-4">
+					<form:label path="firstName">Imię</form:label>
+				</div>
+				<div class="col-md-4">
+					<form:input path="firstName" name="firstName" />
+				</div>
+				<div class="col-md-4">
+					<label for="firstname" generated="true" class="error"></label>
+
+				</div>
 				<form:errors path="firstName" cssClass="error" />
 			</div>
 
@@ -113,7 +179,7 @@
 				<form:label path="apartment">Mieszkanie</form:label>
 				<form:select path="apartment" items="${model.apartment}"
 					itemValue="id" itemLabel="description" />
-					<label for="apartment" generated="true" class="error"></label>
+				<label for="apartment" generated="true" class="error"></label>
 				<form:errors path="apartment" cssClass="error" />
 			</div>
 
