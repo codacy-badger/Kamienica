@@ -13,8 +13,9 @@
 
 <script type="text/javascript"
 	src="<c:url value='/static/javascript/jquery-2.2.0.js' />"></script>
-<script type="text/javascript" src="<c:url value='/static/javascript/tenant.js' />">
-alert("ggg")
+<script type="text/javascript"
+	src="<c:url value='/static/javascript/tenant.js' />">
+	alert("ggg")
 </script>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>Rejestracja Najemcy</title>
@@ -53,8 +54,9 @@ alert("ggg")
 					<li><form:label path="status">Status</form:label> <form:select
 							path="status" items="${model.status}" /> <form:errors
 							path="status" cssClass="error" /></li>
-					<li><form:label path="password" name="password">Hasło</form:label> <form:input
-							path="password" /> <form:errors path="password" cssClass="error" /></li>
+					<li><form:label path="password" name="password">Hasło</form:label>
+						<form:input path="password" /> <form:errors path="password"
+							cssClass="error" /></li>
 					<li><button class="submit" type="submit">Zapisz</button></li>
 					<li><button class="submit" type="reset">Resetuj</button></li>
 				</ul>
