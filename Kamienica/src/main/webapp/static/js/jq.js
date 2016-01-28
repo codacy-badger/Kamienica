@@ -9,16 +9,20 @@ $(document).ready(function () {
     $('form').validate({
         ignore: '.ignore, :hidden',
         rules: {
-            'firstName': { required: true, minlength: 5 },
-            'form[surname]': { required: true, minlength: 5},
-            'form[email]': { required: true, email: true },
-            'form[phone]': { required: true, digits: true}
+        	//tenant
+            'firstName': { required: true, minlength: 2 },
+            'lastName': { required: true, minlength: 2},
+            'email': { required: true, email: true },
+            'phone': { required: true, digits: true},
+            'password': { required: true,  minlength: 5 }
+           
         },
         messages: {
-            'firstName': 'TTTTTEEEESSST',
-            'form[surname]': 'Podaj Nazwisko',
-            'form[email]': 'Podaj Email',
-            'form[phone]': 'Podaj Swoją Liczbę',
+            'firstName': 'Podaj Imie',
+            'lastName': 'Podaj Nazwisko',
+            'email': 'Podaj Email',
+            'phone': 'Podaj Prawidłowy Nr Telefonu',
+            'password': 'Hasło musi zawierać min. 5 znaków'
         }
     });
     

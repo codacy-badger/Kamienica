@@ -7,67 +7,123 @@
 <html>
 <head>
 
-<link href="<c:url value='/static/css/MyStyle.css' />" rel="stylesheet"></link>
+<link class="row"  href="<c:url value='/static/css/bootstrap.css' />"
+	rel="stylesheet">
+
+<link class="row"  href="<c:url value='/static/css/style.css' />"
+	rel="stylesheet">
 
 
+	<script type="text/javascript"
+		src="<c:url value='/static/js/jquery-2.2.0.js' />"></script>
 
-<script type="text/javascript"
-	src="<c:url value='/static/javascript/jquery-2.2.0.js' />"></script>
-<script type="text/javascript"
-	src="<c:url value='/static/javascript/tenant.js' />">
-	alert("ggg")
-</script>
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>Rejestracja Najemcy</title>
- <script type="text/javascript" src="jquery-2.1.0.js"></script>
-        <script type="text/javascript" src="jq.js"></script>
-        <script type="text/javascript" src="jquery.validate.js"></script>
 
+	<script type="text/javascript" src="<c:url value='/static/js/jq.js' />"></script>
+
+	<script type="text/javascript"
+		src="<c:url value='/static/js/jquery.validate.js' />"></script>
+
+	<script type="text/javascript"
+		src="<c:url value='/static/js/bootstrap.js' />"></script>
+
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	
+	<title>Rejestracja Najemcy</title>
 </head>
 <body>
-	<div id="mainWrapper">
-		<div class="c">
+	<c:url var="rejestrujNajemca" value="/Admin/Tenant/tenantSave.html" />
+	<div class="container">
+
+		<div class="row">
 			<h1>Rejestracja Najemcy</h1>
 			<hr>
 			<a href="../home.html">Strona Główna</a>
-			<c:url var="rejestrujNajemca" value="/Admin/Tenant/tenantSave.html" />
-			<form:form class="myForm" id="rejestrujNajemca"
-				modelAttribute="tenant" method="post" action="${rejestrujNajemca}">
-				<p align="center" class="error">${model.error}</p>
-				<br>
-				<ul>
-					<li><form:label path="firstName">Imię</form:label> <form:input
-							path="firstName" /> <form:errors path="firstName"
-							cssClass="error" /></li>
-					<li><form:label path="lastName">Nazwisko</form:label> <form:input
-							path="lastName" /> <form:errors path="lastName" cssClass="error" /></li>
-					<li><form:label path="email">Email</form:label> <form:input
-							path="email" /> <form:errors path="email" cssClass="error" /></li>
-					<li><form:label path="phone">Telefon</form:label> <form:input
-							path="phone" /> <form:errors path="phone" cssClass="error" /></li>
-					<li><form:label path="apartment">Mieszkanie</form:label> <form:select
-							path="apartment" items="${model.apartment}" itemValue="id"
-							itemLabel="description" /> <form:errors path="apartment"
-							cssClass="error" /></li>
-					<li><form:label path="movementDate">Data Wprowadzenia</form:label>
-						<form:input path="movementDate" type="date" /> <form:errors
-							path="movementDate" cssClass="error" /></li>
-					<li><form:label path="role">Prawa</form:label> <form:select
-							path="role" items="${model.role}" /> <form:errors path="role"
-							cssClass="error" /></li>
-					<li><form:label path="status">Status</form:label> <form:select
-							path="status" items="${model.status}" /> <form:errors
-							path="status" cssClass="error" /></li>
-					<li><form:label path="password" name="password">Hasło</form:label>
-						<form:input path="password" /> <form:errors path="password"
-							cssClass="error" /></li>
-					<li><button class="submit" type="submit">Zapisz</button></li>
-					<li><button class="submit" type="reset">Resetuj</button></li>
-				</ul>
-
-			</form:form>
 		</div>
+
+
+
+		<form:form class="myForm" id="rejestrujNajemca"
+			modelAttribute="tenant" method="post" action="${rejestrujNajemca}">
+			<div class="row">
+				<p align="center" class="error">${model.error}</p>
+			</div>
+
+
+			<div class="row">
+				<form:label path="firstName">Imię</form:label>
+				<form:input path="firstName" name="firstName" />
+				<label for="firstname" generated="true" class="error"></label>
+				<form:errors path="firstName" cssClass="error" />
+			</div>
+
+			<div class="row">
+				<form:label path="lastName">Nazwisko</form:label>
+				<form:input path="lastName" />
+				<label for="lastName" generated="true" class="error"></label>
+				<form:errors path="lastName" cssClass="error" />
+			</div>
+
+			<div class="row">
+				<form:label path="email">Email</form:label>
+				<form:input path="email" />
+				<label for="email" generated="true" class="error"></label>
+				<form:errors path="email" cssClass="error" />
+			</div>
+
+			<div class="row">
+				<form:label path="phone">Telefon</form:label>
+				<form:input path="phone" />
+				<label for="phone" generated="true" class="error"></label>
+				<form:errors path="phone" cssClass="error" />
+			</div>
+
+			<div class="row">
+				<form:label path="apartment">Mieszkanie</form:label>
+				<form:select path="apartment" items="${model.apartment}"
+					itemValue="id" itemLabel="description" />
+					<label for="apartment" generated="true" class="error"></label>
+				<form:errors path="apartment" cssClass="error" />
+			</div>
+
+			<div class="row">
+				<form:label path="movementDate">Data Wprowadzenia</form:label>
+				<form:input path="movementDate" type="date" />
+				<label for="movementDate" generated="true" class="error"></label>
+				<form:errors path="movementDate" cssClass="error" />
+			</div>
+
+			<div class="row">
+				<form:label path="role">Prawa</form:label>
+				<form:select path="role" items="${model.role}" />
+				<form:errors path="role" cssClass="error" />
+				<label for="role" generated="true" class="error"></label>
+			</div>
+
+			<div class="row">
+				<form:label path="status">Status</form:label>
+				<form:select path="status" items="${model.status}" />
+				<label for="status" generated="true" class="error"></label>
+				<form:errors path="status" cssClass="error" />
+			</div>
+
+			<div class="row">
+				<form:label path="password" name="password">Hasło</form:label>
+				<form:input path="password" />
+				<label for="password" generated="true" class="error"></label>
+				<form:errors path="password" cssClass="error" />
+			</div>
+			<div class="row">
+				<button class="btn btn-lg btn-default" type="submit">Zapisz</button>
+			</div>
+
+			<div class="row">
+				<button class="btn btn-lg btn-default" type="reset">Resetuj</button>
+			</div>
+
+
+		</form:form>
 	</div>
+
 
 </body>
 </html>
