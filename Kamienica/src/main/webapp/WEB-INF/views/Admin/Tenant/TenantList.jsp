@@ -133,7 +133,7 @@
 <div class=row>
 		<c:if test="${!empty tenant}">
 			<div class="col-md-12">
-				<table width="100%">
+				<table  class='table table-stripped table-hover' width="100%">
 					<tr>
 						<th>Id</th>
 						<th>Imie</th>

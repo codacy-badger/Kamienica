@@ -130,7 +130,7 @@
 			<p>Wprowadź dane by zarejestrować nowego najemcę</p>
 		</div>
 
-		<c:url var="rejestrujNajemca" value="/Admin/Tenant/tenantSave.html" />
+		<c:url var="rejestrujNajemca" value="${model.url }" />
 		<form:form class="myForm" id="rejestrujNajemca"
 			modelAttribute="tenant" method="post" action="${rejestrujNajemca}">
 			<div class="row">
