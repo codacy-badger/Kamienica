@@ -13,7 +13,8 @@
 <link class="row" href="<c:url value='/static/css/style.css' />"
 	rel="stylesheet">
 
-
+<script type="text/javascript"
+	src="<c:url value='/static/js/bootstrap.js' />"></script>
 <script type="text/javascript"
 	src="<c:url value='/static/js/jquery-2.2.0.js' />"></script>
 
@@ -23,8 +24,7 @@
 <script type="text/javascript"
 	src="<c:url value='/static/js/jquery.validate.js' />"></script>
 
-<script type="text/javascript"
-	src="<c:url value='/static/js/bootstrap.js' />"></script>
+
 
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -62,8 +62,8 @@
 					aria-expanded="false">Faktury <span class="caret"></span></a>
 
 					<ul class="dropdown-menu">
-						<li><a href="Reading/readingGasRegister.html">Gaz</a></li>
-						<li><a href="#">Energia</a></li>
+						<li><a href="../../Admin/Invoice/invoiceGasRegister">Gaz</a></li>
+						<li><a href="../Admin/Invoice/invoiceEnergyRegister">Energia</a></li>
 						<li><a href="#">Woda</a></li>
 						<li role="separator" class="divider"></li>
 						<li><a href="#">Gaz</a></li>
@@ -147,7 +147,7 @@
 				<div class="col-md-6 inputAndError">
 					<form:input path="firstName" name="firstName" />
 					<label for="firstname" generated="true" class="error"></label>
-					<form:errors path="firstName" cssClass="error" />
+					<form:errors path="firstName" class="error" />
 				</div>
 			</div>
 			<div class="row">
@@ -157,7 +157,7 @@
 				<div class="col-md-6 inputAndError">
 					<form:input path="lastName" />
 					<label for="lastName" generated="true" class="error"></label>
-					<form:errors path="lastName" cssClass="error" />
+					<form:errors path="lastName" class="error" />
 				</div>
 			</div>
 
@@ -168,7 +168,7 @@
 				<div class="col-md-6 inputAndError">
 					<form:input path="email" />
 					<label for="email" generated="true" class="error"></label>
-					<form:errors path="email" cssClass="error" />
+					<form:errors path="email" class="error" />
 				</div>
 			</div>
 
@@ -179,7 +179,7 @@
 				<div class="col-md-6 inputAndError">
 					<form:input path="phone" />
 					<label for="phone" generated="true" class="error"></label>
-					<form:errors path="phone" cssClass="error" />
+					<form:errors path="phone" class="error" />
 				</div>
 			</div>
 
@@ -191,7 +191,7 @@
 					<form:select path="apartment" items="${model.apartment}"
 						itemValue="id" itemLabel="description" />
 					<label for="apartment" generated="true" class="error"></label>
-					<form:errors path="apartment" cssClass="error" />
+					<form:errors path="apartment" class="error" />
 				</div>
 			</div>
 
@@ -202,7 +202,7 @@
 				<div class="col-md-6 inputAndError">
 					<form:input path="movementDate" type="date" />
 					<label for="movementDate" generated="true" class="error"></label>
-					<form:errors path="movementDate" cssClass="error" />
+					<form:errors path="movementDate" class="error" />
 				</div>
 			</div>
 
@@ -212,7 +212,7 @@
 				</div>
 				<div class="col-md-6 inputAndError">
 					<form:select path="role" items="${model.role}" />
-					<form:errors path="role" cssClass="error" />
+					<form:errors path="role" class="error" />
 					<label for="role" generated="true" class="error"></label>
 				</div>
 			</div>
@@ -224,7 +224,7 @@
 				<div class="col-md-6 inputAndError">
 					<form:select path="status" items="${model.status}" />
 					<label for="status" generated="true" class="error"></label>
-					<form:errors path="status" cssClass="error" />
+					<form:errors path="status" class="error" />
 				</div>
 			</div>
 
@@ -235,20 +235,16 @@
 				<div class="col-md-6 inputAndError">
 					<form:input path="password" />
 					<label for="password" generated="true" class="error"></label>
-					<form:errors path="password" cssClass="error" />
+					<form:errors path="password" class="error" />
 				</div>
 			</div>
 			<div class="row">
-				<div class="col-md-6 myLabel ">
-					<button class="btn btn-lg btn-default" type="submit">Zapisz</button>
+				<div class="col-md-12  ">
+					<button class="btn btn-primary" type="submit">Zapisz</button>
+					<button class="btn btn-primary" type="reset">Resetuj</button>
 				</div>
 			</div>
 
-			<div class="row">
-				<div class="col-md-12">
-					<button class="btn btn-lg btn-default" type="reset">Resetuj</button>
-				</div>
-			</div>
 		</form:form>
 	</div>
 

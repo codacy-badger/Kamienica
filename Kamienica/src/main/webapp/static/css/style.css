@@ -8,3 +8,7 @@
 	text-align: left;
 	
 }
+
+th, td {
+	text-align: center;
+}
