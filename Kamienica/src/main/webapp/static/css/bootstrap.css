@@ -12,6 +12,7 @@ html {
 body {
   margin: 0;
   padding-top: 40px;
+  text-align: center;
 }
 article,
 aside,
@@ -2537,7 +2538,7 @@ legend {
 }
 label {
   display: inline-block;
-width: 300px;
+
   margin-bottom: 5px;
   font-weight: bold;
 text-align: right;

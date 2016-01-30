@@ -54,7 +54,7 @@
 			<ul class="nav navbar-nav">
 				<li class="active"><a href="#">Link <span class="sr-only">(current)</span></a></li>
 				<li><a href="#">Link</a></li>
-				
+
 
 				<!-- Faktury -->
 				<li class="dropdown"><a href="#" class="dropdown-toggle"
@@ -85,7 +85,7 @@
 						<li><a href="#">Energia</a></li>
 						<li><a href="#">Woda</a></li>
 					</ul></li>
-<!-- Opłaty -->
+				<!-- Opłaty -->
 				<li class="dropdown"><a href="#" class="dropdown-toggle"
 					data-toggle="dropdown" role="button" aria-haspopup="true"
 					aria-expanded="false">Opłaty <span class="caret"></span></a>
@@ -128,7 +128,7 @@
 	<div class="container" role="main">
 
 		<div class="jumbotron">
-			<h1>Kamienica</h1>
+			<h1>Najemca</h1>
 			<p>Wprowadź dane by zarejestrować nowego najemcę</p>
 		</div>
 
@@ -141,84 +141,114 @@
 
 
 			<div class="row">
-				<div class="col-md-4">
+				<div class="col-md-6 myLabel ">
 					<form:label path="firstName">Imię</form:label>
 				</div>
-				<div class="col-md-4">
+				<div class="col-md-6 inputAndError">
 					<form:input path="firstName" name="firstName" />
-				</div>
-				<div class="col-md-4">
 					<label for="firstname" generated="true" class="error"></label>
-
+					<form:errors path="firstName" cssClass="error" />
 				</div>
-				<form:errors path="firstName" cssClass="error" />
+			</div>
+			<div class="row">
+				<div class="col-md-6 myLabel">
+					<form:label path="lastName">Nazwisko</form:label>
+				</div>
+				<div class="col-md-6 inputAndError">
+					<form:input path="lastName" />
+					<label for="lastName" generated="true" class="error"></label>
+					<form:errors path="lastName" cssClass="error" />
+				</div>
 			</div>
 
 			<div class="row">
-				<form:label path="lastName">Nazwisko</form:label>
-				<form:input path="lastName" />
-				<label for="lastName" generated="true" class="error"></label>
-				<form:errors path="lastName" cssClass="error" />
+				<div class="col-md-6 myLabel ">
+					<form:label path="email">Email</form:label>
+				</div>
+				<div class="col-md-6 inputAndError">
+					<form:input path="email" />
+					<label for="email" generated="true" class="error"></label>
+					<form:errors path="email" cssClass="error" />
+				</div>
 			</div>
 
 			<div class="row">
-				<form:label path="email">Email</form:label>
-				<form:input path="email" />
-				<label for="email" generated="true" class="error"></label>
-				<form:errors path="email" cssClass="error" />
+				<div class="col-md-6 myLabel ">
+					<form:label path="phone">Telefon</form:label>
+				</div>
+				<div class="col-md-6 inputAndError">
+					<form:input path="phone" />
+					<label for="phone" generated="true" class="error"></label>
+					<form:errors path="phone" cssClass="error" />
+				</div>
 			</div>
 
 			<div class="row">
-				<form:label path="phone">Telefon</form:label>
-				<form:input path="phone" />
-				<label for="phone" generated="true" class="error"></label>
-				<form:errors path="phone" cssClass="error" />
+				<div class="col-md-6 myLabel ">
+					<form:label path="apartment">Mieszkanie</form:label>
+				</div>
+				<div class="col-md-6 inputAndError">
+					<form:select path="apartment" items="${model.apartment}"
+						itemValue="id" itemLabel="description" />
+					<label for="apartment" generated="true" class="error"></label>
+					<form:errors path="apartment" cssClass="error" />
+				</div>
 			</div>
 
 			<div class="row">
-				<form:label path="apartment">Mieszkanie</form:label>
-				<form:select path="apartment" items="${model.apartment}"
-					itemValue="id" itemLabel="description" />
-				<label for="apartment" generated="true" class="error"></label>
-				<form:errors path="apartment" cssClass="error" />
+				<div class="col-md-6 myLabel ">
+					<form:label path="movementDate">Data Wprowadzenia</form:label>
+				</div>
+				<div class="col-md-6 inputAndError">
+					<form:input path="movementDate" type="date" />
+					<label for="movementDate" generated="true" class="error"></label>
+					<form:errors path="movementDate" cssClass="error" />
+				</div>
 			</div>
 
 			<div class="row">
-				<form:label path="movementDate">Data Wprowadzenia</form:label>
-				<form:input path="movementDate" type="date" />
-				<label for="movementDate" generated="true" class="error"></label>
-				<form:errors path="movementDate" cssClass="error" />
+				<div class="col-md-6 myLabel ">
+					<form:label path="role">Prawa</form:label>
+				</div>
+				<div class="col-md-6 inputAndError">
+					<form:select path="role" items="${model.role}" />
+					<form:errors path="role" cssClass="error" />
+					<label for="role" generated="true" class="error"></label>
+				</div>
 			</div>
 
 			<div class="row">
-				<form:label path="role">Prawa</form:label>
-				<form:select path="role" items="${model.role}" />
-				<form:errors path="role" cssClass="error" />
-				<label for="role" generated="true" class="error"></label>
+				<div class="col-md-6 myLabel ">
+					<form:label path="status">Status</form:label>
+				</div>
+				<div class="col-md-6 inputAndError">
+					<form:select path="status" items="${model.status}" />
+					<label for="status" generated="true" class="error"></label>
+					<form:errors path="status" cssClass="error" />
+				</div>
 			</div>
 
 			<div class="row">
-				<form:label path="status">Status</form:label>
-				<form:select path="status" items="${model.status}" />
-				<label for="status" generated="true" class="error"></label>
-				<form:errors path="status" cssClass="error" />
+				<div class="col-md-6 myLabel ">
+					<form:label path="password" name="password">Hasło</form:label>
+				</div>
+				<div class="col-md-6 inputAndError">
+					<form:input path="password" />
+					<label for="password" generated="true" class="error"></label>
+					<form:errors path="password" cssClass="error" />
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-md-6 myLabel ">
+					<button class="btn btn-lg btn-default" type="submit">Zapisz</button>
+				</div>
 			</div>
 
 			<div class="row">
-				<form:label path="password" name="password">Hasło</form:label>
-				<form:input path="password" />
-				<label for="password" generated="true" class="error"></label>
-				<form:errors path="password" cssClass="error" />
+				<div class="col-md-12">
+					<button class="btn btn-lg btn-default" type="reset">Resetuj</button>
+				</div>
 			</div>
-			<div class="row">
-				<button class="btn btn-lg btn-default" type="submit">Zapisz</button>
-			</div>
-
-			<div class="row">
-				<button class="btn btn-lg btn-default" type="reset">Resetuj</button>
-			</div>
-
-
 		</form:form>
 	</div>
 
