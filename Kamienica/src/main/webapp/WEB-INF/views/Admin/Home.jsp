@@ -28,6 +28,7 @@
 <title>Strona Admina</title>
 </head>
 <body>
+
 	<nav class="navbar navbar-inverse navbar-fixed-top">
 	<div class="container-fluid">
 		<!-- Brand and toggle get grouped for better mobile display -->
@@ -46,7 +47,7 @@
 		<div class="collapse navbar-collapse"
 			id="bs-example-navbar-collapse-1">
 			<ul class="nav navbar-nav">
-				
+
 
 
 				<!-- Faktury -->
@@ -55,8 +56,8 @@
 					aria-expanded="false">Faktury <span class="caret"></span></a>
 
 					<ul class="dropdown-menu">
-					<li class="dropdown-header">Wprowadź nowe</li>
-						<li><a href="../Admin/Invoice/invoiceEnergyRegister">Gaz</a></li>
+						<li class="dropdown-header">Wprowadź nowe</li>
+						<li><a href="../Admin/Invoice/invoiceGasRegister">Gaz</a></li>
 						<li><a href="../Admin/Invoice/invoiceEnergyRegister">Energia</a></li>
 						<li><a href="../Admin/Invoice/invoiceWaterRegister">Woda</a></li>
 						<li role="separator" class="divider"></li>
@@ -66,47 +67,36 @@
 						<li><a href="../Admin/Invoice/invoiceWaterList">Woda</a></li>
 					</ul></li>
 
-				<!-- Odczyty -->
 				<li class="dropdown"><a href="#" class="dropdown-toggle"
 					data-toggle="dropdown" role="button" aria-haspopup="true"
-					aria-expanded="false">Odczyty <span class="caret"> </span></a>
+					aria-expanded="false">Odczyty <span class="caret"></span></a>
 
 					<ul class="dropdown-menu">
-						<li><a href="Reading/readingGasRegister.html">Gaz</a></li>
-						<li><a href="#">Energia</a></li>
-						<li><a href="#">Woda</a></li>
+						<li class="dropdown-header">Wprowadź nowe</li>
+						<li><a href="../Admin/Reading/readingGasRegister">Gaz</a></li>
+						<li><a href="../Admin/Reading/readingEnergyRegister">Energia</a></li>
+						<li><a href="../Admin/Reading/readingWaterRegister">Woda</a></li>
 						<li role="separator" class="divider"></li>
-						<li><a href="#">Gaz</a></li>
-						<li><a href="#">Energia</a></li>
-						<li><a href="#">Woda</a></li>
+						<li class="dropdown-header">Sprawdź/Edytuj</li>
+						<li><a href="../Admin/Reading/readingGasList">Gaz</a></li>
+						<li><a href="../Admin/Reading/readingEnergyList">Energia</a></li>
+						<li><a href="../Admin/Reading/readingWaterList">Woda</a></li>
 					</ul></li>
-				<!-- Opłaty -->
+
 				<li class="dropdown"><a href="#" class="dropdown-toggle"
 					data-toggle="dropdown" role="button" aria-haspopup="true"
 					aria-expanded="false">Opłaty <span class="caret"></span></a>
 
 					<ul class="dropdown-menu">
-						<li><a href="Reading/readingGasRegister.html">Gaz</a></li>
-						<li><a href="#">Energia</a></li>
-						<li><a href="#">Woda</a></li>
-						<li role="separator" class="divider"></li>
-						<li><a href="#">Gaz</a></li>
-						<li><a href="#">Energia</a></li>
-						<li><a href="#">Woda</a></li>
-					</ul></li>
 
-				<li class="dropdown"><a href="#" class="dropdown-toggle"
-					data-toggle="dropdown" role="button" aria-haspopup="true"
-					aria-expanded="false">Faktury <span class="caret"></span></a>
-
-					<ul class="dropdown-menu">
-						<li><a href="Reading/readingGasRegister.html">Gaz</a></li>
-						<li><a href="#">Energia</a></li>
-						<li><a href="#">Woda</a></li>
+						<li><a href="../Admin/Payment/paymentRegister">Wprowadź
+								Nowe</a></li>
 						<li role="separator" class="divider"></li>
-						<li><a href="#">Gaz</a></li>
-						<li><a href="#">Energia</a></li>
-						<li><a href="#">Woda</a></li>
+						<li class="dropdown-header">Sprawdź/Edytuj</li>
+						<li><a href="../Admin/Payment/paymentGasList">Gaz</a></li>
+						<li><a href="../Admin/Payment/paymentEnergyList">Energia</a></li>
+						<li><a href="../Admin/Payment/paymentWaterList">Woda</a></li>
+					
 					</ul></li>
 			</ul>
 
@@ -117,9 +107,9 @@
 
 					<ul class="dropdown-menu">
 						<li><a href="../index">Strona Powitalna</a></li>
-						<li><a href="../User/userHome">User</a></li>
+						<li><a href="../User/userHome">Strona Użytkownika</a></li>
 					</ul></li>
-				
+
 				<li><a href="../logout.html">Wyloguj</a></li>
 
 			</ul>
@@ -180,11 +170,6 @@
 					</div>
 				</div>
 
-				<div class="row">
-					<div class="col-md-12">
-						<a href="../index.html">Powrót do strony powitalnej</a>
-					</div>
-				</div>
 			</div>
 </body>
 </html>

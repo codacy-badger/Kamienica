@@ -12,3 +12,14 @@
 th, td {
 	text-align: center;
 }
+
+.error {
+	border-color: red !important;
+	color: red;
+	text-align: left;
+}
+
+.valid {
+	border-color: green !important;
+	color: green;
+}

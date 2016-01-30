@@ -12,11 +12,11 @@
 
 <link class="row" href="<c:url value='/static/css/style.css' />"
 	rel="stylesheet">
-
-<script type="text/javascript"
-	src="<c:url value='/static/js/bootstrap.js' />"></script>
 <script type="text/javascript"
 	src="<c:url value='/static/js/jquery-2.2.0.js' />"></script>
+<script type="text/javascript"
+	src="<c:url value='/static/js/bootstrap.js' />"></script>
+
 
 
 <script type="text/javascript" src="<c:url value='/static/js/jq.js' />"></script>
@@ -33,7 +33,6 @@
 <body>
 
 
-
 	<nav class="navbar navbar-inverse navbar-fixed-top">
 	<div class="container-fluid">
 		<!-- Brand and toggle get grouped for better mobile display -->
@@ -45,15 +44,14 @@
 					class="icon-bar"></span> <span class="icon-bar"></span> <span
 					class="icon-bar"></span>
 			</button>
-			<a class="navbar-brand" href="#">Brand</a>
+			<a class="navbar-brand" href="../../Admin/home">Strona Główna</a>
 		</div>
 
 		<!-- Collect the nav links, forms, and other content for toggling -->
 		<div class="collapse navbar-collapse"
 			id="bs-example-navbar-collapse-1">
 			<ul class="nav navbar-nav">
-				<li class="active"><a href="#">Link <span class="sr-only">(current)</span></a></li>
-				<li><a href="#">Link</a></li>
+
 
 
 				<!-- Faktury -->
@@ -62,68 +60,68 @@
 					aria-expanded="false">Faktury <span class="caret"></span></a>
 
 					<ul class="dropdown-menu">
+						<li class="dropdown-header">Wprowadź nowe</li>
 						<li><a href="../../Admin/Invoice/invoiceGasRegister">Gaz</a></li>
-						<li><a href="../Admin/Invoice/invoiceEnergyRegister">Energia</a></li>
-						<li><a href="#">Woda</a></li>
+						<li><a href="../../Admin/Invoice/invoiceEnergyRegister">Energia</a></li>
+						<li><a href="../../Admin/Invoice/invoiceWaterRegister">Woda</a></li>
 						<li role="separator" class="divider"></li>
-						<li><a href="#">Gaz</a></li>
-						<li><a href="#">Energia</a></li>
-						<li><a href="#">Woda</a></li>
+						<li class="dropdown-header">Sprawdź/Edytuj</li>
+						<li><a href="../../Admin/Invoice/invoiceGasList">Gaz</a></li>
+						<li><a href="../../Admin/Invoice/invoiceEnergyList">Energia</a></li>
+						<li><a href="../../Admin/Invoice/invoiceWaterList">Woda</a></li>
 					</ul></li>
 
-				<!-- Odczyty -->
 				<li class="dropdown"><a href="#" class="dropdown-toggle"
 					data-toggle="dropdown" role="button" aria-haspopup="true"
-					aria-expanded="false">Odczyty <span class="caret"> </span></a>
+					aria-expanded="false">Odczyty <span class="caret"></span></a>
 
 					<ul class="dropdown-menu">
-						<li><a href="Reading/readingGasRegister.html">Gaz</a></li>
-						<li><a href="#">Energia</a></li>
-						<li><a href="#">Woda</a></li>
+						<li class="dropdown-header">Wprowadź nowe</li>
+						<li><a href="../../Admin/Reading/readingGasRegister">Gaz</a></li>
+						<li><a href="../../Admin/Reading/readingEnergyRegister">Energia</a></li>
+						<li><a href="../../Admin/Reading/readingWaterRegister">Woda</a></li>
 						<li role="separator" class="divider"></li>
-						<li><a href="#">Gaz</a></li>
-						<li><a href="#">Energia</a></li>
-						<li><a href="#">Woda</a></li>
+						<li class="dropdown-header">Sprawdź/Edytuj</li>
+						<li><a href="../../Admin/Reading/readingGasList">Gaz</a></li>
+						<li><a href="../../Admin/Reading/readingEnergyList">Energia</a></li>
+						<li><a href="../../Admin/Reading/readingWaterList">Woda</a></li>
 					</ul></li>
-				<!-- Opłaty -->
+
 				<li class="dropdown"><a href="#" class="dropdown-toggle"
 					data-toggle="dropdown" role="button" aria-haspopup="true"
 					aria-expanded="false">Opłaty <span class="caret"></span></a>
 
 					<ul class="dropdown-menu">
-						<li><a href="Reading/readingGasRegister.html">Gaz</a></li>
-						<li><a href="#">Energia</a></li>
-						<li><a href="#">Woda</a></li>
-						<li role="separator" class="divider"></li>
-						<li><a href="#">Gaz</a></li>
-						<li><a href="#">Energia</a></li>
-						<li><a href="#">Woda</a></li>
-					</ul></li>
 
-				<li class="dropdown"><a href="#" class="dropdown-toggle"
-					data-toggle="dropdown" role="button" aria-haspopup="true"
-					aria-expanded="false">Faktury <span class="caret"></span></a>
-
-					<ul class="dropdown-menu">
-						<li><a href="Reading/readingGasRegister.html">Gaz</a></li>
-						<li><a href="#">Energia</a></li>
-						<li><a href="#">Woda</a></li>
+						<li><a href="../../Admin/Payment/paymentRegister">Wprowadź
+								Nowe</a></li>
 						<li role="separator" class="divider"></li>
-						<li><a href="#">Gaz</a></li>
-						<li><a href="#">Energia</a></li>
-						<li><a href="#">Woda</a></li>
+						<li class="dropdown-header">Sprawdź/Edytuj</li>
+						<li><a href="../../Admin/Payment/paymentGasList">Gaz</a></li>
+						<li><a href="../../Admin/Payment/paymentEnergyList">Energia</a></li>
+						<li><a href="../../Admin/Payment/paymentWaterList">Woda</a></li>
+					
 					</ul></li>
 			</ul>
 
 			<ul class="nav navbar-nav navbar-right">
-				<li><a href="#">Link</a></li>
+				<li class="dropdown"><a href="#" class="dropdown-toggle"
+					data-toggle="dropdown" role="button" aria-haspopup="true"
+					aria-expanded="false">Nawiguj <span class="caret"></span></a>
 
+					<ul class="dropdown-menu">
+						<li><a href="../../index">Strona Powitalna</a></li>
+						<li><a href="../../User/userHome">Strona Użytkownika</a></li>
+					</ul></li>
+
+				<li><a href="../../logout.html">Wyloguj</a></li>
 
 			</ul>
 		</div>
 		<!-- /.navbar-collapse -->
 	</div>
 	<!-- /.container-fluid --> </nav>
+
 
 	<div class="container" role="main">
 
@@ -146,7 +144,7 @@
 				</div>
 				<div class="col-md-6 inputAndError">
 					<form:input path="firstName" name="firstName" />
-					<label for="firstname" generated="true" class="error"></label>
+					
 					<form:errors path="firstName" class="error" />
 				</div>
 			</div>
@@ -156,7 +154,6 @@
 				</div>
 				<div class="col-md-6 inputAndError">
 					<form:input path="lastName" />
-					<label for="lastName" generated="true" class="error"></label>
 					<form:errors path="lastName" class="error" />
 				</div>
 			</div>

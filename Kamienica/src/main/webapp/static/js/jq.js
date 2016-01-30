@@ -24,6 +24,7 @@ $(document).ready(function () {
             'phone': 'Podaj Prawidłowy Nr Telefonu',
             'password': 'Hasło musi zawierać min. 5 znaków'
         }
+
     });
     
 });
