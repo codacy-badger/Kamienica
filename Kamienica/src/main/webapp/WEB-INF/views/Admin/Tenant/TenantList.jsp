@@ -161,10 +161,10 @@
 								<td><c:out value="${tenant.status}" /></td>
 								<td><c:out value="${tenant.password}" /></td>
 								<td><a
-									href="<c:url value="/Admin/Tenant/tenantEdit.html?id=${tenant.id}" />"
+									href='<c:url value="/Admin/Tenant/tenantEdit.html?id=${tenant.id}" />'
 									role="button" class="btn-xs btn-warning">Edytuj</a></td>
 								<td><a
-									href="<c:url value="/Admin/Tenant/tenantDelete.html?id=${tenant.id}"   />"
+									href='<c:url value="/Admin/Tenant/tenantDelete.html?id=${tenant.id}"   />'
 									onclick="return confirm('Na pewno usunąć?')" role="button" class="btn-xs btn-danger">Usuń</a></td>
 
 							</tr>
