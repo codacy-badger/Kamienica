@@ -24,8 +24,12 @@ $(document).ready(function () {
             'description': { required: true},
             'serialNumber': { required: true},
             'unit': { required: true },
-            'apartment': { required: true }
-           
+            'apartment': { required: true },
+           //invoice
+            'serialNumber': { required: true},
+            'totalAmount': { required: true, digits: true}
+            
+            
            
         },
         messages: {

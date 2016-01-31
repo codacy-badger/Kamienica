@@ -84,7 +84,7 @@
 
 			<div class="col-md-6">
 				<div class="list-group">
-					<p class="list-group-item active">Wprowadź</p>
+					<p class="list-group-item active">Sprawdź Dane</p>
 					<a href="userPayment.html" class="list-group-item">OPŁATA</a> <a
 						href="userReadings.html?media=energy" class="list-group-item">ODCZYT
 						- ENERGIA</a> <a href="userReadings.html?media=water"
