@@ -1,4 +1,4 @@
-package kamienica.controller.view.rest;
+package kamienica.controller.rest;
 
 import java.util.List;
 
