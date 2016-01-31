@@ -169,7 +169,7 @@
 						<form:label path="date">Data Faktury</form:label>
 					</div>
 					<div class="col-md-6 inputAndError">
-						<form:input path="date" name="date" value="${model.date }" />
+						<form:input type='date' path="date" name="date" value="${model.date }" />
 						<form:errors path="date" class="error" />
 					</div>
 				</div>

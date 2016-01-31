@@ -27,22 +27,23 @@ $(document).ready(function () {
             'apartment': { required: true },
            //invoice
             'serialNumber': { required: true},
-            'totalAmount': { required: true, digits: true}
+            'totalAmount': { required: true, number: true}, 
+            'date':{ required: true, date: true}
             
             
            
         },
         messages: {
         	//tenant
-            'firstName': 'Podaj Imie',
-            'lastName': 'Podaj Nazwisko',
-            'email': 'Podaj Email',
-            'phone': 'Podaj Prawidłowy Nr Telefonu',
-            'password': 'Hasło musi zawierać min. 5 znaków',
+//            'firstName': 'Podaj Imie',
+//            'lastName': 'Podaj Nazwisko',
+//            'email': 'Podaj Email',
+//            'phone': 'Podaj Prawidłowy Nr Telefonu',
+//            'password': 'Hasło musi zawierać min. 5 znaków',
             //apartment
-            'intercom': 'Intercom musi zawierać 4 cyfry',
-            'apartmentNumber': 'Podaj numer mieszkania',
-            'description': 'Podaj opis'
+//            'intercom': 'Intercom musi zawierać 4 cyfry',
+//            'apartmentNumber': 'Podaj numer mieszkania',
+//            'description': 'Podaj opis'
         }
 
     });
