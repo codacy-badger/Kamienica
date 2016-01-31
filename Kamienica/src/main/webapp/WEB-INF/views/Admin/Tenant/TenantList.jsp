@@ -130,46 +130,49 @@
 		<div class='row'>
 			<a href="tenantRegister.html">Dodaj najemcę</a>
 		</div>
-<div class=row>
-		<c:if test="${!empty tenant}">
-			<div class="col-md-12">
-				<table  class='table table-stripped table-hover' width="100%">
-					<tr>
-						<th>Id</th>
-						<th>Imie</th>
-						<th>Nazwisko</th>
-						<th>E-mail</th>
-						<th>Telefon</th>
-						<th>Mieszkanie</th>
-						<th>Data Wprowadzenia</th>
-						<th>Prawa</th>
-						<th>Status</th>
-						<th>Hasło</th>
-						<th>Usuń</th>
-						<th>Edytuj</th>
-					</tr>
-					<c:forEach items="${tenant}" var="tenant">
+		<div class=row>
+			<c:if test="${!empty tenant}">
+				<div class="col-md-12">
+					<table class='table table-stripped table-hover' width="100%">
 						<tr>
-							<td><c:out value="${tenant.id}" /></td>
-							<td><c:out value="${tenant.firstName}" /></td>
-							<td><c:out value="${tenant.lastName}" /></td>
-							<td><c:out value="${tenant.email}" /></td>
-							<td><c:out value="${tenant.phone}" /></td>
-							<td><c:out value="${tenant.apartment.description}" /></td>
-							<td><c:out value="${tenant.movementDate}" /></td>
-							<td><c:out value="${tenant.role}" /></td>
-							<td><c:out value="${tenant.status}" /></td>
-							<td><c:out value="${tenant.password}" /></td>
-							<td><a
-								href="<c:url value="/Admin/Tenant/tenantDelete.html?id=${tenant.id}"  />"
-								onclick="return confirm('Na pewno usunąć?')">Usuń</a></td>
-							<td><a
-								href="<c:url value="/Admin/Tenant/tenantEdit.html?id=${tenant.id}" />">Edytuj</a></td>
+							<th>Id</th>
+							<th>Imie</th>
+							<th>Nazwisko</th>
+							<th>E-mail</th>
+							<th>Telefon</th>
+							<th>Mieszkanie</th>
+							<th>Data Wprowadzenia</th>
+							<th>Prawa</th>
+							<th>Status</th>
+							<th>Hasło</th>
+							<th>Edytuj</th>
+							<th>Usuń</th>
 						</tr>
-					</c:forEach>
-				</table>
-			</div>
-		</c:if>
+						<c:forEach items="${tenant}" var="tenant">
+							<tr>
+								<td><c:out value="${tenant.id}" /></td>
+								<td><c:out value="${tenant.firstName}" /></td>
+								<td><c:out value="${tenant.lastName}" /></td>
+								<td><c:out value="${tenant.email}" /></td>
+								<td><c:out value="${tenant.phone}" /></td>
+								<td><c:out value="${tenant.apartment.description}" /></td>
+								<td><c:out value="${tenant.movementDate}" /></td>
+								<td><c:out value="${tenant.role}" /></td>
+								<td><c:out value="${tenant.status}" /></td>
+								<td><c:out value="${tenant.password}" /></td>
+								<td><a
+									href="<c:url value="/Admin/Tenant/tenantEdit.html?id=${tenant.id}" />"
+									role="button" class="btn-xs btn-warning">Edytuj</a></td>
+								<td><a
+									href="<c:url value="/Admin/Tenant/tenantDelete.html?id=${tenant.id}"   />"
+									onclick="return confirm('Na pewno usunąć?')" role="button" class="btn-xs btn-danger">Usuń</a></td>
+
+							</tr>
+						</c:forEach>
+						
+					</table>
+				</div>
+			</c:if>
 		</div>
 	</div>
 </body>
