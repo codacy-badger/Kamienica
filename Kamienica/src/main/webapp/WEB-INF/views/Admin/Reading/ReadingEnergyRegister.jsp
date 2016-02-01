@@ -132,24 +132,46 @@
 				<form:form modelAttribute="readingForm" method="post"
 					action="${odczyty}">
 
-					<div class='row'>
-						Data <input name="date" id="date" type="date" required
-							value="${model.date}" min="${model.oldDate}" />
+					<div class="row">
+						<div class="col-md-6 myLabel ">
+							<label>Data</label>
+						</div>
+						<div class="col-md-6 inputAndError">
+							<input name="date" id="date" type="date" class='ignore' required
+								value="${model.date}" min="${model.oldDate}" />
+						</div>
 					</div>
-					<div class='row'>opis licznika Wartosc odczytu</div>
+
+					<div class="row">
+						<div class="col-md-6 myLabel ">
+							<label style="margin-top: 15px; margin-bottom: 15px;">Opis
+								Licznika</label>
+						</div>
+						<div class="col-md-6 inputAndError">
+							<label style="margin-top: 15px; margin-bottom: 15px;">Wartość
+								Odczytu</label>
+						</div>
+					</div>
+
 					<c:forEach items="${readingForm.currentReadings}" varStatus="i"
 						var="reading">
-						<div class='row'>
-							<form:label path="currentReadings[${i.index}].value">${reading.meter.description}</form:label>
-							<input name="currentReadings[${i.index}].meter"
-								value="${reading.meter.id}" type="hidden" /> <input
-								type="number" step="any" min="${reading.value}"
-								name="currentReadings[${i.index}].value"
-								value="${reading.value}" />
+						<div class="row">
+							<div class="col-md-6 myLabel ">
+								<form:label path="currentReadings[${i.index}].value">${reading.meter.description}</form:label>
+							</div>
+							<div class="col-md-6 inputAndError">
+								<input name="currentReadings[${i.index}].meter"
+									value="${reading.meter.id}" type="hidden" /> <input
+									type="number" step="any" min="${reading.value}"
+									name="currentReadings[${i.index}].value"
+									value="${reading.value}" />
+							</div>
 						</div>
 					</c:forEach>
+
+
 					<div class='row'>
-						<input type="submit" value="Zapisz" />
+						<input type="submit" class='btn btn-default' value="Zapisz" />
 					</div>
 				</form:form>
 			</c:if>

@@ -27,8 +27,7 @@ $(document).ready(function () {
             'apartment': { required: true },
            //invoice
             'serialNumber': { required: true},
-            'totalAmount': { required: true, number: true}, 
-            'date':{ required: true, date: true}
+            'totalAmount': { required: true, number: true}
             
             
            
