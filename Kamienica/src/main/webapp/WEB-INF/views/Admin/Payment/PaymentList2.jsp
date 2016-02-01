@@ -136,6 +136,7 @@
 					<th>Data Odczytu</th>
 					<th>Najemca</th>
 					<th>Nr Faktury</th>
+					<th>Usuń</th>
 				</tr>
 				<c:forEach items="${payment}" var="payment">
 					<tr>
@@ -146,6 +147,10 @@
 						<td><c:out value="${payment.tenant.firstName}" /> <c:out
 								value="${payment.tenant.lastName}" /></td>
 						<td><c:out value="${payment.invoice.serialNumber}" /></td>
+						<td><a
+							href="<c:url value=""  />"
+							onclick="return confirm('UWAGA!!! Usunięte zostaną wszystkie opłaty z tą datą!\n Na pewno usunąć?')"
+							role="button" class="btn-xs btn-danger">Usuń</a></td>
 					</tr>
 				</c:forEach>
 			</table>
