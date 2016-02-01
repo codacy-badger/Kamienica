@@ -131,12 +131,12 @@
 				method="post" action="${rejestrujMieszkanie}">
 
 
-				<div class="row">
+				<div class="row  ">
 					<div class="col-md-6 myLabel ">
 						<form:label path="intercom">Domofon</form:label>
 					</div>
 					<div class="col-md-6 inputAndError">
-						<form:input path="intercom" name="intercom" />
+						<form:input  path="intercom" name="intercom" />
 						<form:errors path="intercom" class="error" />
 					</div>
 				</div>

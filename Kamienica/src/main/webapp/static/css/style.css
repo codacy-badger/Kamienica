@@ -1,12 +1,9 @@
 .myLabel {
 	text-align: right;
-	
-	
 }
 
 .inputAndError {
 	text-align: left;
-	
 }
 
 th, td {
@@ -27,16 +24,15 @@ th, td {
 input[type="radio"], input[type="checkbox"] {
 	margin-bottom: 10px;
 	width: 30px;
-	
 }
-select{
+
+select {
 	margin-bottom: 10px;
-height: 26px;
-	
+	height: 26px;
 }
+
 input {
 	margin-bottom: 10px;
-
 }
 
 table input {
@@ -45,10 +41,29 @@ table input {
 }
 
 .tableTitle {
-	background-color:  #999999;
+	background-color: #999999;
 }
 
 .rowTitle {
-	background-color:  #d9d9d9;
+	background-color: #d9d9d9;
+}
+
+.login-container {
+	margin-top: 20px;
+	width: 40%;
+	left: 30%;
+	position: absolute;
+}
+
+.login-card {
+	width: 80%;
+	margin: auto;
+}
+
+.login-form {
+	padding: 10%;
+}
+
+.ignore {
 	
 }

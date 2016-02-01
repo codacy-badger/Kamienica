@@ -7,7 +7,7 @@ $(document).ready(function () {
     );
     
     $('form').validate({
-        ignore: '.ignore, :hidden',
+        ignore: 'ignore, :hidden', 
         rules: {
         	//tenant
             'firstName': { required: true, minlength: 2 },
