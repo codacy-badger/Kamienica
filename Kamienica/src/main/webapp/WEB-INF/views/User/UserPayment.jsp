@@ -80,12 +80,12 @@
 			<div class="col-md-4">
 				<table class="table table-stripped table-hover" style="width: 100%;">
 					<tr>
-						<th colspan="3">Energia</th>
+						<th colspan="3" class='tableTitle'>Energia</th>
 					</tr>
 					<tr>
-						<th>Wartość Opłaty</th>
-						<th>Data Rachunku</th>
-						<th>Nr Faktury</th>
+						<th class='rowTitle'>Wartość Opłaty</th>
+						<th class='rowTitle'>Data Rachunku</th>
+						<th class='rowTitle'>Nr Faktury</th>
 					</tr>
 					<c:forEach items="${model.energy}" var="energy">
 						<tr>
@@ -102,12 +102,12 @@
 			<div class="col-md-4">
 				<table class="table table-stripped table-hover" style="width: 100%;">
 					<tr>
-						<th colspan="3">Woda</th>
+						<th colspan="3" class='tableTitle'>Woda</th>
 					</tr>
 					<tr>
-						<th>Wartość Opłaty</th>
-						<th>Data Rachunku</th>
-						<th>Nr Faktury</th>
+						<th class='rowTitle'>Wartość Opłaty</th>
+						<th class='rowTitle'>Data Rachunku</th>
+						<th class='rowTitle'>Nr Faktury</th>
 					</tr>
 					<c:forEach items="${model.water}" var="water">
 						<tr>
@@ -121,12 +121,12 @@
 			<div class="col-md-4">
 				<table class="table table-stripped table-hover" style="width: 100%;">
 					<tr>
-						<th colspan="3">Gaz</th>
+						<th colspan="3" class='tableTitle'>Gaz</th>
 					</tr>
 					<tr>
-						<th>Wartość Opłaty</th>
-						<th>Data Rachunku</th>
-						<th>Nr Faktury</th>
+						<th class='rowTitle'>Wartość Opłaty</th>
+						<th class='rowTitle'>Data Rachunku</th>
+						<th class='rowTitle'>Nr Faktury</th>
 					</tr>
 					<c:forEach items="${model.water}" var="water">
 						<tr>

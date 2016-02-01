@@ -43,3 +43,12 @@ table input {
 	margin: 0px;
 	padding: 0px;
 }
+
+.tableTitle {
+	background-color:  #999999;
+}
+
+.rowTitle {
+	background-color:  #d9d9d9;
+	
+}

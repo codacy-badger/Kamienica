@@ -14,16 +14,9 @@
 	src="<c:url value='/static/js/jquery-2.2.0.js' />"></script>
 <script type="text/javascript"
 	src="<c:url value='/static/js/bootstrap.js' />"></script>
-
-
-
 <script type="text/javascript" src="<c:url value='/static/js/jq.js' />"></script>
-
 <script type="text/javascript"
 	src="<c:url value='/static/js/jquery.validate.js' />"></script>
-
-
-
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Lista Faktur</title>
@@ -123,7 +116,7 @@
 		<div class='row'>
 			<div class='jumbotron'>
 				<h1>Lista Faktur Energii</h1>
-				<a href="registerInvoice.html">Dodaj fakturę</a>
+				<a href="invoiceEnergyRegister.html">Dodaj nową fakturę</a>
 			</div>
 		</div>
 
@@ -148,8 +141,8 @@
 							<td><c:out value="${invoice.date}" /></td>
 							<td><c:out value="${invoice.totalAmount}" /></td>
 							<td><a
-								href="<c:url value="/Admin/Invoice/invoiceEnergyEdit.html?id=${invoice.id}" /> role="button"
-								class="btn-xs btn-warning"">Edytuj</a></td>
+								href="<c:url value="/Admin/Invoice/invoiceEnergyEdit.html?id=${invoice.id}" />" role="button"
+								class="btn-xs btn-warning">Edytuj</a></td>
 							<td><a
 								href="<c:url value="/Admin/Invoice/invoiceEnergyDelete.html?id=${invoice.id}"  />"
 								onclick="return confirm('Na pewno usunąć?')" role="button"
