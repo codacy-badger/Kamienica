@@ -114,7 +114,8 @@ public class PaymentController {
 		PaymentEnergy latestPaymentEnergy = paymentService.getLatestPaymentEnergy();
 		PaymentWater latestPaymentWater = paymentService.getLatestPaymentWater();
 		PaymentGas latestPaymentGas = paymentService.getLatestPaymentGas();
-
+	
+		
 		ArrayList<Date> readingDatesEnergy = (ArrayList<Date>) readingService
 				.getEnergyReadingDatesForPayment(latestPaymentEnergy);
 		ArrayList<Date> readingDatesWater = (ArrayList<Date>) readingService
