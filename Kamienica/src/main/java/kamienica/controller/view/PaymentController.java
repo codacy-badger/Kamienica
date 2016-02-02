@@ -95,7 +95,7 @@ public class PaymentController {
 
 	@RequestMapping("/Admin/Payment/paymentRegister")
 	public ModelAndView paymentRegister(@ModelAttribute("paymentForm") PaymentForm paymentForm, BindingResult result) {
-		
+
 		boolean gas = true;
 		boolean water = true;
 		boolean energy = true;
@@ -114,8 +114,12 @@ public class PaymentController {
 		PaymentEnergy latestPaymentEnergy = paymentService.getLatestPaymentEnergy();
 		PaymentWater latestPaymentWater = paymentService.getLatestPaymentWater();
 		PaymentGas latestPaymentGas = paymentService.getLatestPaymentGas();
-	
+
 		
+		System.out.println(latestPaymentEnergy.toString());
+		System.out.println(latestPaymentWater.toString());
+		System.out.println(latestPaymentGas.toString());
+
 		ArrayList<Date> readingDatesEnergy = (ArrayList<Date>) readingService
 				.getEnergyReadingDatesForPayment(latestPaymentEnergy);
 		ArrayList<Date> readingDatesWater = (ArrayList<Date>) readingService
@@ -123,13 +127,14 @@ public class PaymentController {
 		ArrayList<Date> readingDatesGas = (ArrayList<Date>) readingService
 				.getGasReadingDatesForPayment(latestPaymentGas);
 
-		List<InvoiceWater> invoiceWater = invoiceService
-				.getInvoicesWaterForPayment(latestPaymentWater);
-		List<InvoiceGas> invoiceGas =  invoiceService.getInvoicesGasForPayment(latestPaymentGas);
-		List<InvoiceEnergy> invoiceEnergy =  invoiceService
-				.getInvoicesEnergyForPayment(latestPaymentEnergy);
+		List<InvoiceWater> invoiceWater = invoiceService.getInvoicesWaterForPayment(latestPaymentWater);
+		List<InvoiceGas> invoiceGas = invoiceService.getInvoicesGasForPayment(latestPaymentGas);
+		List<InvoiceEnergy> invoiceEnergy = invoiceService.getInvoicesEnergyForPayment(latestPaymentEnergy);
 
-		
+		System.out.println(invoiceWater.toString());
+		System.out.println(invoiceGas.toString());
+		System.out.println(invoiceEnergy.toString());
+
 		if (readingDatesEnergy.isEmpty() || invoiceEnergy.isEmpty()) {
 			energy = false;
 		}
@@ -146,7 +151,7 @@ public class PaymentController {
 		}
 
 		if (energy) {
-			
+
 			ManagerPayment.prepareModelForNewEnergyPayment(model, readingDatesEnergy, invoiceEnergy);
 		}
 
@@ -157,6 +162,7 @@ public class PaymentController {
 			ManagerPayment.prepareModelForNewWaterPayment(model, readingDatesWater, invoiceWater);
 
 		}
+		System.out.println(model.values());
 
 		return new ModelAndView("/Admin/Payment/PaymentRegister", "model", model);
 	}
@@ -199,7 +205,7 @@ public class PaymentController {
 		}
 		if (paymentForm.getEnergyFirst() != null && paymentForm.getEnergyLast() != null) {
 
-			List<Invoice> invoiceEnergy =  invoiceService.getInvoicesEnergyForCalulation(
+			List<Invoice> invoiceEnergy = invoiceService.getInvoicesEnergyForCalulation(
 					paymentForm.getEnergyFirst().getInvoice(), paymentForm.getEnergyLast().getInvoice());
 
 			ArrayList<ReadingEnergy> energyOld = (ArrayList<ReadingEnergy>) readingService
@@ -218,7 +224,7 @@ public class PaymentController {
 
 		if (paymentForm.getWaterFirst() != null && paymentForm.getWaterLast() != null) {
 
-			List<Invoice> invoiceWater =  invoiceService.getInvoicesWaterForCalulation(
+			List<Invoice> invoiceWater = invoiceService.getInvoicesWaterForCalulation(
 					paymentForm.getWaterFirst().getInvoice(), paymentForm.getWaterLast().getInvoice());
 
 			ArrayList<ReadingWater> waterOld = (ArrayList<ReadingWater>) readingService

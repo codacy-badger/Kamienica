@@ -11,6 +11,7 @@ import kamienica.dao.AbstractDao;
 import kamienica.model.Invoice;
 import kamienica.model.InvoiceEnergy;
 import kamienica.model.PaymentEnergy;
+import kamienica.model.PaymentStatus;
 
 @Repository("invoiceEnergy")
 @Transactional
@@ -62,6 +63,16 @@ public class InvoiceEnergyDAOImpl extends AbstractDao<Integer, InvoiceEnergy> im
 						"select * from kamienica.invoiceenergy where date >  :date1 and date <= :date2 order by date asc")
 				.addEntity(InvoiceEnergy.class).setParameter("date1", first.getDate())
 				.setParameter("date2", second.getDate());
+		@SuppressWarnings("unchecked")
+		List<Invoice> invoice = query.list();
+		return invoice;
+	}
+
+	@Override
+	public List<Invoice> getUnpaidInvoices() {
+		Query query = getSession()
+				.createSQLQuery("select * from kamienica.invoiceenergy where status =  :stat  order by date asc")
+				.addEntity(InvoiceEnergy.class).setParameter("stat", PaymentStatus.UNPAID.getPaymentStatus());
 		@SuppressWarnings("unchecked")
 		List<Invoice> invoice = query.list();
 		return invoice;

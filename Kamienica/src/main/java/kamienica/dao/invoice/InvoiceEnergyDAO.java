@@ -23,4 +23,6 @@ public interface InvoiceEnergyDAO {
 	public List<InvoiceEnergy> getInvoicesForPayment(PaymentEnergy payment);
 
 	public List<Invoice> getInvoicesForCalulation(Invoice first, Invoice second);
+	
+	public List<Invoice> getUnpaidInvoices();
 }
