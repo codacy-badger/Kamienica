@@ -5,34 +5,141 @@
 
 <html>
 <head>
- <meta charset="utf-8">
-    <title>Payment List</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
-    <!-- Optional Bootstrap theme -->
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap-theme.min.css">
+<meta charset="utf-8">
+<title>Payment List</title>
+<link class="row" href="<c:url value='/static/css/bootstrap.css' />"
+	rel="stylesheet">
+
+<link class="row" href="<c:url value='/static/css/style.css' />"
+	rel="stylesheet">
+
+
+<script type="text/javascript"
+	src="<c:url value='/static/js/jquery-2.2.0.js' />"></script>
+
+
+<script type="text/javascript" src="<c:url value='/static/js/jq.js' />"></script>
+
+<script type="text/javascript"
+	src="<c:url value='/static/js/jquery.validate.js' />"></script>
+
+<script type="text/javascript"
+	src="<c:url value='/static/js/bootstrap.js' />"></script>
+
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 </head>
 <body>
-	<center>
-		<br> <br> <br> <br> <br> <br>
-		<div style="color: teal; font-size: 30px">Lista Mieszkań</div>
-		<br> <br>
+
+	<nav class="navbar navbar-inverse navbar-fixed-top">
+	<div class="container-fluid">
+		<!-- Brand and toggle get grouped for better mobile display -->
+		<div class="navbar-header">
+			<button type="button" class="navbar-toggle collapsed"
+				data-toggle="collapse" data-target="#bs-example-navbar-collapse-1"
+				aria-expanded="false">
+				<span class="sr-only">Toggle navigation</span> <span
+					class="icon-bar"></span> <span class="icon-bar"></span> <span
+					class="icon-bar"></span>
+			</button>
+			<a class="navbar-brand" href="../../Admin/home">Strona Główna</a>
+		</div>
+
+		<!-- Collect the nav links, forms, and other content for toggling -->
+		<div class="collapse navbar-collapse"
+			id="bs-example-navbar-collapse-1">
+			<ul class="nav navbar-nav">
+
+
+
+				<!-- Faktury -->
+				<li class="dropdown"><a href="#" class="dropdown-toggle"
+					data-toggle="dropdown" role="button" aria-haspopup="true"
+					aria-expanded="false">Faktury <span class="caret"></span></a>
+
+					<ul class="dropdown-menu">
+						<li class="dropdown-header">Wprowadź nowe</li>
+						<li><a href="../../Admin/Invoice/invoiceGasRegister">Gaz</a></li>
+						<li><a href="../../Admin/Invoice/invoiceEnergyRegister">Energia</a></li>
+						<li><a href="../../Admin/Invoice/invoiceWaterRegister">Woda</a></li>
+						<li role="separator" class="divider"></li>
+						<li class="dropdown-header">Sprawdź/Edytuj</li>
+						<li><a href="../../Admin/Invoice/invoiceGasList">Gaz</a></li>
+						<li><a href="../../Admin/Invoice/invoiceEnergyList">Energia</a></li>
+						<li><a href="../../Admin/Invoice/invoiceWaterList">Woda</a></li>
+					</ul></li>
+
+				<li class="dropdown"><a href="#" class="dropdown-toggle"
+					data-toggle="dropdown" role="button" aria-haspopup="true"
+					aria-expanded="false">Odczyty <span class="caret"></span></a>
+
+					<ul class="dropdown-menu">
+						<li class="dropdown-header">Wprowadź nowe</li>
+						<li><a href="../../Admin/Reading/readingGasRegister">Gaz</a></li>
+						<li><a href="../../Admin/Reading/readingEnergyRegister">Energia</a></li>
+						<li><a href="../../Admin/Reading/readingWaterRegister">Woda</a></li>
+						<li role="separator" class="divider"></li>
+						<li class="dropdown-header">Sprawdź/Edytuj</li>
+						<li><a href="../../Admin/Reading/readingGasList">Gaz</a></li>
+						<li><a href="../../Admin/Reading/readingEnergyList">Energia</a></li>
+						<li><a href="../../Admin/Reading/readingWaterList">Woda</a></li>
+					</ul></li>
+
+				<li class="dropdown"><a href="#" class="dropdown-toggle"
+					data-toggle="dropdown" role="button" aria-haspopup="true"
+					aria-expanded="false">Opłaty <span class="caret"></span></a>
+
+					<ul class="dropdown-menu">
+
+						<li><a href="../../Admin/Payment/paymentRegister">Wprowadź
+								Nowe</a></li>
+						<li role="separator" class="divider"></li>
+						<li class="dropdown-header">Sprawdź/Edytuj</li>
+						<li><a href="../../Admin/Payment/paymentGasList">Gaz</a></li>
+						<li><a href="../../Admin/Payment/paymentEnergyList">Energia</a></li>
+						<li><a href="../../Admin/Payment/paymentWaterList">Woda</a></li>
+
+					</ul></li>
+			</ul>
+
+			<ul class="nav navbar-nav navbar-right">
+				<li class="dropdown"><a href="#" class="dropdown-toggle"
+					data-toggle="dropdown" role="button" aria-haspopup="true"
+					aria-expanded="false">Nawiguj <span class="caret"></span></a>
+
+					<ul class="dropdown-menu">
+						<li><a href="../../index">Strona Powitalna</a></li>
+						<li><a href="../../User/userHome">Strona Użytkownika</a></li>
+					</ul></li>
+
+				<li><a href="../../logout.html">Wyloguj</a></li>
+
+			</ul>
+		</div>
+		<!-- /.navbar-collapse -->
+	</div>
+	<!-- /.container-fluid --> </nav>
+
+	<div class='container'>
+		<div class='row'>
+			<div class='jumbotron'>
+				<h1>Lista Opłat: ${media}</h1>
+			</div>
+		</div>
+
 		<c:if test="${!empty payment}">
-			<table border="1" bgcolor="black" width="600px">
-				<tr
-					style="background-color: teal; color: white; text-align: center;"
-					height="40px">
-					<td>Id</td>
-					<td>Wartość Opłaty</td>
-					<td>Data Rachunku</td>
-					<td>Data Odczytu</td>
-					<td>Najemca</td>
-					<td>Nr Faktury</td>
+			<table class='table table-stripped table-hover' width="600px">
+				<tr>
+					<th>Id</th>
+					<th>Wartość Opłaty</th>
+					<th>Data Rachunku</th>
+					<th>Data Odczytu</th>
+					<th>Najemca</th>
+					<th>Nr Faktury</th>
+					<th>Usuń</th>
 				</tr>
 				<c:forEach items="${payment}" var="payment">
-					<tr
-						style="background-color: white; color: black; text-align: center;"
-						height="30px">
+					<tr>
 						<td><c:out value="${payment.id}" /></td>
 						<td><c:out value="${payment.paymentAmount}" /></td>
 						<td><c:out value="${payment.paymentDate}" /></td>
@@ -40,12 +147,14 @@
 						<td><c:out value="${payment.tenant.firstName}" /> <c:out
 								value="${payment.tenant.lastName}" /></td>
 						<td><c:out value="${payment.invoice.serialNumber}" /></td>
+						<td><a
+							href="<c:url value=""  />"
+							onclick="return confirm('UWAGA!!! Usunięte zostaną wszystkie opłaty z tą datą!\n Na pewno usunąć?')"
+							role="button" class="btn-xs btn-danger">Usuń</a></td>
 					</tr>
 				</c:forEach>
 			</table>
 		</c:if>
-		<br> <br> <a href="../home.html">Strona Główna</a> <a
-			href="paymentList.html">Sprawdź pozostałe media</a>
-	</center>
+	</div>
 </body>
 </html>

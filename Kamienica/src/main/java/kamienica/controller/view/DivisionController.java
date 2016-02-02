@@ -98,8 +98,14 @@ public class DivisionController {
 		Map<String, Object> model = new HashMap<String, Object>();
 		DivisionForm divisionForm = new DivisionForm();
 		divisionForm.setDivisionList((ArrayList<Division>) divisionService.getList());
-		model.put("tenantList", tenantService.getCurrentTenants());
-		model.put("apartment", apartmentService.getList());
+		List<Tenant> tenants = tenantService.getCurrentTenants();
+		List<Apartment> apartments = apartmentService.getList();
+		if (!DivisionValidator.validateDivisionForPaymentController(apartments, divisionForm.getDivisionList(),
+				tenants)) {
+			model.put("error", "Podział jest nieaktualny. <a href='divisionRegister.html' class='alert alert-danger'><b>Zaktualizuj dane.</b></a> ");
+		}
+		model.put("tenantList", tenants);
+		model.put("apartment", apartments);
 		model.put("divisionForm", divisionForm);
 		return new ModelAndView("/Admin/Division/DivisionList", "model", model);
 

@@ -7,19 +7,44 @@ $(document).ready(function () {
     );
     
     $('form').validate({
-        ignore: '.ignore, :hidden',
+        ignore: '.ignore', 
         rules: {
-            'firstName': { required: true, minlength: 5 },
-            'form[surname]': { required: true, minlength: 5},
-            'form[email]': { required: true, email: true },
-            'form[phone]': { required: true, digits: true}
+        	//tenant
+            'firstName': { required: true, minlength: 2 },
+            'lastName': { required: true, minlength: 2},
+            'email': { required: true, email: true },
+            'phone': { required: true, digits: true},
+            'password': { required: true,  minlength: 5 },
+            
+          //apartment
+            'intercom': { required: true,digits: true, minlength: 4, maxlength: 4},
+            'apartmentNumber': { required: true, digits: true},
+            'description': { required: true },
+            //meters
+            'description': { required: true},
+            'serialNumber': { required: true},
+            'unit': { required: true },
+            'apartment': { required: true },
+           //invoice
+            'serialNumber': { required: true},
+            'totalAmount': { required: true, number: true}
+            
+            
+           
         },
         messages: {
-            'firstName': 'TTTTTEEEESSST',
-            'form[surname]': 'Podaj Nazwisko',
-            'form[email]': 'Podaj Email',
-            'form[phone]': 'Podaj Swoją Liczbę',
+        	//tenant
+//            'firstName': 'Podaj Imie',
+//            'lastName': 'Podaj Nazwisko',
+//            'email': 'Podaj Email',
+//            'phone': 'Podaj Prawidłowy Nr Telefonu',
+//            'password': 'Hasło musi zawierać min. 5 znaków',
+            //apartment
+//            'intercom': 'Intercom musi zawierać 4 cyfry',
+//            'apartmentNumber': 'Podaj numer mieszkania',
+//            'description': 'Podaj opis'
         }
+
     });
     
 });

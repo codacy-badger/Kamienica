@@ -96,7 +96,7 @@ public class UserController {
 	public ModelAndView updatePassword(HttpServletRequest req, @RequestParam String email,
 			@RequestParam String oldPassword, @RequestParam String newPassword, @RequestParam String newPassword2) {
 		HashMap<String, Object> model = new HashMap<>();
-		if (!newPassword.equals(newPassword2)) {
+		if (!newPassword.equals(newPassword2) || newPassword == "" || newPassword2=="") {
 			model.put("error", "Wpisz poprawnie nowe hasło");
 			return new ModelAndView("/User/UserPassword", "model", model);
 		}

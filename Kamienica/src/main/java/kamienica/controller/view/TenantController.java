@@ -57,6 +57,7 @@ public class TenantController {
 	@RequestMapping("/Admin/Tenant/tenantRegister")
 	public ModelAndView tenantRegister(@ModelAttribute("tenant") Tenant tenant, BindingResult result) {
 		Map<String, Object> model = prepareTenantModel();
+		model.put("url", "/Admin/Tenant/tenantSave.html");
 		return new ModelAndView("/Admin/Tenant/TenantRegister", "model", model);
 	}
 
@@ -84,6 +85,7 @@ public class TenantController {
 	@RequestMapping(value = "/Admin/Tenant/tenantEdit", params = { "id" })
 	public ModelAndView tenantEdit(@RequestParam(value = "id") int id) {
 		Map<String, Object> model = prepareTenantModel();
+		model.put("url", "/Admin/Tenant/tenantOverwrite.html");
 		Tenant tenant = tenantService.getTenantById(id);
 		ModelAndView mvc = new ModelAndView("/Admin/Tenant/TenantEdit", "model", model);
 		mvc.addObject("tenant", tenant);
