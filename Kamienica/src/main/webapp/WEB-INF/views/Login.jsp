@@ -11,18 +11,15 @@
 <link class="row" href="<c:url value='/static/css/style.css' />"
 	rel="stylesheet">
 
-
 <script type="text/javascript"
 	src="<c:url value='/static/js/jquery-2.2.0.js' />"></script>
-
-
-<script type="text/javascript" src="<c:url value='/static/js/jq.js' />"></script>
-
-<script type="text/javascript"
-	src="<c:url value='/static/js/jquery.validate.js' />"></script>
-
 <script type="text/javascript"
 	src="<c:url value='/static/js/bootstrap.js' />"></script>
+<script type="text/javascript"
+	src="<c:url value='/static/js/jquery.validate.js' />"></script>
+<script type="text/javascript" src="<c:url value='/static/js/jq.js' />"></script>
+
+
 
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -39,10 +36,11 @@
 		<div class='row'>
 
 			<div class="login-container">
-				<div class="login-card">
-					<div class="form">
+				<div class="login-card  ">
+					<div class="form  ">
 						<c:url var="loginUrl" value="/login" />
-						<form action="${loginUrl}" method="post" class="form-horizontal form">
+						<form action="${loginUrl}" method="post"
+							class="form-horizontal form  ">
 							<c:if test="${param.error != null}">
 								<div class="alert alert-danger">
 									<p>Invalid username and password.</p>
@@ -50,27 +48,27 @@
 							</c:if>
 							<c:if test="${param.logout != null}">
 								<div class="alert alert-success">
-									<p>You have been logged out successfully.</p>
+									<p>Zostałeś wylogowany</p>
 								</div>
 							</c:if>
 							<div class="input-group input-sm">
-								<label class="input-group-addon" for="email"><i
-									class="glyphicon glyphicon-user"></i></label> <input type="text"
-									class="form-control" id="email" name="email"
-									placeholder="Enter Username" required>
+								<label class="input-group-addon ingore" for="email"><i
+									class="glyphicon glyphicon-user  "></i></label> <input type="text"
+									class="  form-control" id="email" name="email"
+									placeholder="Wprowadź email" >
 							</div>
-							<div class="input-group input-sm ignore">
-								<label class="input-group-addon" for="password"><i
-									class="	glyphicon glyphicon-lock"></i></label> <input type="password"
-									class="form-control ignore" id="password" name="password"
-									placeholder="Enter Password" required>
+							<div class="input-group input-sm  ">
+								<label class="input-group-addon ingore" for="password"><i
+									class="	glyphicon glyphicon-lock ingore"></i></label> <input
+									type="password" class="form-control  ignore" id="password"
+									name="password" placeholder="Wprowadź hasło" >
 							</div>
 							<input type="hidden" name="${_csrf.parameterName}"
 								value="${_csrf.token}" />
 
 							<div class="form-actions">
 								<input type="submit"
-									class="btn btn-block btn-primary btn-default" value="Log in">
+									class="btn btn-block btn-primary btn-default" value="Zaloguj">
 							</div>
 						</form>
 					</div>

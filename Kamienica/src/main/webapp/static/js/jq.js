@@ -7,7 +7,7 @@ $(document).ready(function () {
     );
     
     $('form').validate({
-        ignore: 'ignore, :hidden', 
+        ignore: '.ignore', 
         rules: {
         	//tenant
             'firstName': { required: true, minlength: 2 },
@@ -17,7 +17,7 @@ $(document).ready(function () {
             'password': { required: true,  minlength: 5 },
             
           //apartment
-            'intercom': { required: true, minlength: 4, maxlength: 4 },
+            'intercom': { required: true,digits: true, minlength: 4, maxlength: 4},
             'apartmentNumber': { required: true, digits: true},
             'description': { required: true },
             //meters

@@ -48,7 +48,7 @@ public class MainController {
 		if (auth != null){    
 			new SecurityContextLogoutHandler().logout(req, response, auth);
 		}
-		return new ModelAndView("redirect:/index");
+		return new ModelAndView("redirect:/login?logout");
 	}
 	
 	@RequestMapping("/403")

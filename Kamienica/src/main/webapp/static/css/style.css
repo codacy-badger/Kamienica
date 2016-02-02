@@ -64,6 +64,10 @@ table input {
 	padding: 10%;
 }
 
+.form-control{
+	width: 150px;
+}
+
 .ignore {
 	
 }
