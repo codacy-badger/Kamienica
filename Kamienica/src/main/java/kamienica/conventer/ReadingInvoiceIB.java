@@ -1,4 +1,4 @@
-package kamienica.initBinder;
+package kamienica.conventer;
 
 import java.beans.PropertyEditorSupport;
 import java.text.ParseException;

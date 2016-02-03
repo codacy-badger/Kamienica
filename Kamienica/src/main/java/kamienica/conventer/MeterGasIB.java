@@ -1,21 +1,21 @@
-package kamienica.initBinder;
+package kamienica.conventer;
 
 import java.beans.PropertyEditorSupport;
 
-import kamienica.model.MeterEnergy;
+import kamienica.model.MeterGas;
 import kamienica.service.MeterService;
 
-public class MeterEnergyIB extends PropertyEditorSupport {
+public class MeterGasIB extends PropertyEditorSupport {
 
 	private final MeterService licznikService;
 	
-	public MeterEnergyIB(MeterService licznikService) {
+	public MeterGasIB(MeterService licznikService) {
 		this.licznikService= licznikService;
 			}
 	
 	@Override
 	public void setAsText(String text) throws IllegalArgumentException {
-		MeterEnergy licznik = licznikService.getEnergyByID(Integer.valueOf(text));
+		MeterGas licznik = licznikService.getGasByID(Integer.valueOf(text));
         setValue(licznik);
 }
 }

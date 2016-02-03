@@ -1,4 +1,4 @@
-package kamienica.initBinder;
+package kamienica.conventer;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.convert.converter.Converter;

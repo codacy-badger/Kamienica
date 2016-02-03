@@ -21,7 +21,7 @@ import org.springframework.web.servlet.view.ContentNegotiatingViewResolver;
 import org.springframework.web.servlet.view.InternalResourceViewResolver;
 import org.springframework.web.servlet.view.JstlView;
 
-import kamienica.initBinder.ReadingEnergyConverter;
+import kamienica.conventer.ReadingEnergyConverter;
 
 @Configuration
 @EnableWebMvc

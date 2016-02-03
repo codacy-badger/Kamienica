@@ -14,7 +14,7 @@ import org.springframework.validation.Validator;
 import org.springframework.web.bind.ServletRequestDataBinder;
 import org.springframework.web.bind.annotation.InitBinder;
 
-import kamienica.initBinder.ApartmentIB;
+import kamienica.conventer.ApartmentIB;
 import kamienica.model.Apartment;
 import kamienica.service.ApartmentService;
 
