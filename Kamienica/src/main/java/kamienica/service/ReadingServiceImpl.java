@@ -208,7 +208,7 @@ public class ReadingServiceImpl implements ReadingService {
 
 	@Override
 	public ReadingEnergy getEnergyById(int id) {
-		energy.getById(id);
+		return energy.getById(id);
 	}
 
 }

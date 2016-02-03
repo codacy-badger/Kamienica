@@ -12,6 +12,7 @@ import kamienica.model.ReadingGas;
 import kamienica.model.ReadingWater;
 
 public interface ReadingService {
+	
 	public ReadingEnergy getEnergyById(int id);
 
 	public void saveGasList(List<ReadingGas> reading);
