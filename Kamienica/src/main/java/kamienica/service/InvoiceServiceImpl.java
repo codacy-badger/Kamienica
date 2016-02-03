@@ -165,4 +165,17 @@ public class InvoiceServiceImpl implements InvoiceService {
 	public List<Invoice> getInvoicesGasForCalulation(Invoice first, Invoice second) {
 		return gas.getInvoicesForCalulation(first, second);
 	}
+	@Override
+	public List<Invoice> getUnpaidInvoiceEnergy() {
+		
+		return energy.getUnpaidInvoices();
+	}
+	@Override
+	public List<Invoice> getUnpaidInvoiceGas() {
+		return gas.getUnpaidInvoices();
+	}
+	@Override
+	public List<Invoice> getUnpaidInvoiceWater() {
+		return water.getUnpaidInvoices();
+	}
 }

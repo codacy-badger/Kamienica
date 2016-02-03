@@ -43,11 +43,12 @@ public class ReadingServiceImpl implements ReadingService {
 	public List<ReadingGas> getReadingGasForTenant(Apartment aparmtent) {
 		return gas.getListForTenant(aparmtent);
 	}
-	
+
 	@Override
 	public List<ReadingWater> getReadingWaterForTenant(Apartment aparmtent) {
 		return water.getListForTenant(aparmtent);
 	}
+
 	@Override
 	public List<ReadingGas> getReadingGas() {
 		return gas.getList();
@@ -198,6 +199,16 @@ public class ReadingServiceImpl implements ReadingService {
 	public void updateWater(ReadingWater reading) {
 		water.update(reading);
 
+	}
+
+	@Override
+	public List<ReadingEnergy> getUnresolvedReadingsEnergy() {
+		return energy.getUnresolvedReadings();
+	}
+
+	@Override
+	public ReadingEnergy getEnergyById(int id) {
+		energy.getById(id);
 	}
 
 }

@@ -71,7 +71,7 @@ public class InvoiceEnergyDAOImpl extends AbstractDao<Integer, InvoiceEnergy> im
 	@Override
 	public List<Invoice> getUnpaidInvoices() {
 		Query query = getSession()
-				.createSQLQuery("select * from kamienica.invoiceenergy where status =  :stat  order by date asc")
+				.createSQLQuery("select * from invoiceenergy where status =  :stat  order by date asc")
 				.addEntity(InvoiceEnergy.class).setParameter("stat", PaymentStatus.UNPAID.getPaymentStatus());
 		@SuppressWarnings("unchecked")
 		List<Invoice> invoice = query.list();

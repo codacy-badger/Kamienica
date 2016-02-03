@@ -6,9 +6,12 @@ import java.util.List;
 
 import kamienica.model.Apartment;
 import kamienica.model.PaymentAbstract;
+import kamienica.model.PaymentEnergy;
 import kamienica.model.ReadingEnergy;
 
 public interface ReadingEnergyDAO {
+	
+	public ReadingEnergy getById(int id);
 
 	public void save(ReadingEnergy reading);
 
@@ -31,5 +34,7 @@ public interface ReadingEnergyDAO {
 	public List<Date> getReadingDatesForPayment(PaymentAbstract payment);
 
 	public List<ReadingEnergy> getListForTenant(Apartment apartment); 
+	
+	public List<ReadingEnergy> getUnresolvedReadings();
 	
 }

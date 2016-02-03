@@ -3,15 +3,28 @@ package kamienica.model;
 import java.util.Date;
 
 import javax.persistence.Entity;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 @Entity
 @Table
 public class InvoiceEnergy extends Invoice {
+	
+	@OneToOne
+	private ReadingEnergy baseReading;
 
-	@Override
-	public String toString() {
-		return super.toString();
+	
+
+	public ReadingEnergy getBaseReading() {
+		return baseReading;
+	}
+
+	public void setBaseReading(ReadingEnergy baseReading) throws Exception {
+		if(baseReading.getMeter().getApartment() != null ) {
+			throw new Exception();
+			
+		}
+		this.baseReading = baseReading;
 	}
 
 	public InvoiceEnergy() {
@@ -19,9 +32,11 @@ public class InvoiceEnergy extends Invoice {
 		super.setDescription("Faktura Za Energię");
 	}
 
-	public InvoiceEnergy(String serialNumber, String description, Date date, double totalAmount) {
+	public InvoiceEnergy(String serialNumber, String description, Date date, double totalAmount, ReadingEnergy reading) {
 		super(serialNumber, description, date, totalAmount);
 
 	}
+
+	
 
 }

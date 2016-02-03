@@ -27,16 +27,17 @@ public abstract class ReadingAbstract {
 	private Date readingDate;
 	@Column(nullable = false)
 	private double value;
-	@Column(nullable = false)
-	private String status = PaymentStatus.UNPAID.getPaymentStatus();
+	@Column
+	private boolean resolved = false;
 
-	public String getStatus() {
-		return status;
+	public boolean isResolved() {
+		return resolved;
 	}
 
-	public void setStatus(String status) {
-		this.status = status;
+	public void setResolved(boolean resolved) {
+		this.resolved = resolved;
 	}
+
 
 	@Autowired
 	public ReadingAbstract(Date readingDate, double value) {

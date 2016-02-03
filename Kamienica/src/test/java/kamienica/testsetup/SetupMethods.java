@@ -220,12 +220,12 @@ public class SetupMethods {
 	public static List<InvoiceEnergy> getInvoicesEnergy() {
 		List<InvoiceEnergy> list = new ArrayList<>();
 		DateFormat format = new SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH);
-		try {
-			list.add(new InvoiceEnergy("12", "1", format.parse("2015-01-01"), 200));
-			list.add(new InvoiceEnergy("12", "2", format.parse("2015-02-01"), 200));
-		} catch (ParseException e) {
-			e.printStackTrace();
-		}
+//		try {
+//			list.add(new InvoiceEnergy("12", "1", format.parse("2015-01-01"), 200));
+//			list.add(new InvoiceEnergy("12", "2", format.parse("2015-02-01"), 200));
+//		} catch (ParseException e) {
+//			e.printStackTrace();
+//		}
 		return list;
 	}
 

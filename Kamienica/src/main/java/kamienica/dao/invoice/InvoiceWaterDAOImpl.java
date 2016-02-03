@@ -9,7 +9,9 @@ import org.springframework.stereotype.Repository;
 
 import kamienica.dao.AbstractDao;
 import kamienica.model.Invoice;
+import kamienica.model.InvoiceEnergy;
 import kamienica.model.InvoiceWater;
+import kamienica.model.PaymentStatus;
 import kamienica.model.PaymentWater;
 
 @Repository("invoiceWater")
@@ -68,5 +70,14 @@ public class InvoiceWaterDAOImpl extends AbstractDao<Integer, InvoiceWater> impl
 		return invoice;
 	}
 
+	@Override
+	public List<Invoice> getUnpaidInvoices() {
+		Query query = getSession()
+				.createSQLQuery("select * from invoicewater where status =  :stat  order by date asc")
+				.addEntity(InvoiceWater.class).setParameter("stat", PaymentStatus.UNPAID.getPaymentStatus());
+		@SuppressWarnings("unchecked")
+		List<Invoice> invoice = query.list();
+		return invoice;
+	}
 	
 }

@@ -6,10 +6,13 @@ import java.util.List;
 
 import org.hibernate.Query;
 import org.hibernate.criterion.Order;
+import org.hibernate.criterion.Restrictions;
 import org.springframework.stereotype.Repository;
 
 import kamienica.model.Apartment;
 import kamienica.model.PaymentAbstract;
+import kamienica.model.PaymentEnergy;
+import kamienica.model.PaymentStatus;
 import kamienica.model.ReadingEnergy;
 
 @Repository("readingEnergyDao")
@@ -103,9 +106,18 @@ public class ReadingEnergyDAOImpl extends AbstractDao<Integer, ReadingEnergy> im
 	@Override
 	public void saveList(List<ReadingEnergy> reading) {
 		for (int i = 0; i < reading.size(); i++) {
-			System.out.println(reading.get(i));
 			save(reading.get(i));
 		}
+
+	}
+
+	@SuppressWarnings("unchecked")
+	public List<ReadingEnergy> getUnresolvedReadings() {
+		Query query = getSession().createSQLQuery("SELECT r.id, r.readingDate, r.value, r.unit, r.meter_id, r.resolved "
+				+ "FROM readingenergy r join meterEnergy m on r.meter_id = m.id "
+				+ "where r.resolved = 0 and m.apartment_id is null").addEntity(ReadingEnergy.class);;
+
+		return query.list();
 
 	}
 

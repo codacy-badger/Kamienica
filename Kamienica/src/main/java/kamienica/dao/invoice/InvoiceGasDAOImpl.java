@@ -9,8 +9,10 @@ import org.springframework.stereotype.Repository;
 
 import kamienica.dao.AbstractDao;
 import kamienica.model.Invoice;
+import kamienica.model.InvoiceEnergy;
 import kamienica.model.InvoiceGas;
 import kamienica.model.PaymentGas;
+import kamienica.model.PaymentStatus;
 
 @Repository("invoiceGas")
 @Transactional
@@ -62,6 +64,16 @@ public class InvoiceGasDAOImpl extends AbstractDao<Integer, InvoiceGas> implemen
 						"select * from kamienica.invoicegas where date >  :date1 and date <= :date2 order by date asc")
 				.addEntity(InvoiceGas.class).setParameter("date1", first.getDate())
 				.setParameter("date2", second.getDate());
+		@SuppressWarnings("unchecked")
+		List<Invoice> invoice = query.list();
+		return invoice;
+	}
+	
+	@Override
+	public List<Invoice> getUnpaidInvoices() {
+		Query query = getSession()
+				.createSQLQuery("select * from invoicegas where status =  :stat  order by date asc")
+				.addEntity(InvoiceGas.class).setParameter("stat", PaymentStatus.UNPAID.getPaymentStatus());
 		@SuppressWarnings("unchecked")
 		List<Invoice> invoice = query.list();
 		return invoice;

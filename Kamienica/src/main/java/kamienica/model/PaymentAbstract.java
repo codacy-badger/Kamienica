@@ -35,6 +35,7 @@ public abstract class PaymentAbstract {
 	@DateTimeFormat(pattern = "yyyy.MM.dd")
 	private Date readingDate;
 
+
 	public int getId() {
 		return id;
 	}

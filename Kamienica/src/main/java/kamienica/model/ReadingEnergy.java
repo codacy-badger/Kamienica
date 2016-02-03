@@ -42,7 +42,9 @@ public class ReadingEnergy extends ReadingAbstract {
 
 	@Override
 	public String toString() {
-		return "OdczytEnergia dla " + this.meter.getDescription() + " Odczyt: " + this.getValue() +" ID: "+getId();
+		return "ReadingEnergy [unit=" + unit + ", meter=" + meter + ", isResolved()=" + isResolved() + ", toString()="
+				+ super.toString() + ", getReadingDate()=" + getReadingDate() + ", getValue()=" + getValue()
+				+ ", getId()=" + getId() + ", getClass()=" + getClass() + ", hashCode()=" + hashCode() + "]";
 	}
 
 }

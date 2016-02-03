@@ -33,4 +33,13 @@ public class PaymentEnergy extends PaymentAbstract {
 		this.invoice = invoice;
 	}
 
+
+	@Override
+	public String toString() {
+		return "PaymentEnergy [invoice=" + invoice + ", getId()=" + getId() + ", getPaymentDate()=" + getPaymentDate()
+				+ ", getPaymentAmount()=" + getPaymentAmount() + ", getTenant()=" + getTenant() + ", getReadingDate()="
+				+ getReadingDate() + ", toString()=" + super.toString() + ", getClass()=" + getClass() + ", hashCode()="
+				+ hashCode() + "]";
+	}
+
 }

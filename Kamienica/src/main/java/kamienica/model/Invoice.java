@@ -7,6 +7,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Inheritance;
 import javax.persistence.MappedSuperclass;
+import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.validation.constraints.Min;
@@ -40,6 +42,7 @@ public abstract class Invoice {
 	private double totalAmount;
 	@Column(nullable = false)
 	private String status = PaymentStatus.UNPAID.getPaymentStatus();
+	 
 
 	@Autowired
 	public Invoice(String serialNumber, String description, Date date, double totalAmount) {
@@ -107,5 +110,7 @@ public abstract class Invoice {
 		return "Invoice [id=" + id + ", serialNumber=" + serialNumber + ", description=" + description + ", date="
 				+ date + ", totalAmount=" + totalAmount + "]";
 	}
+
+
 
 }

@@ -23,4 +23,6 @@ public interface InvoiceWaterDAO {
 	public List<InvoiceWater> getInvoicesForPayment(PaymentWater payment);
 
 	public List<Invoice> getInvoicesForCalulation(Invoice first, Invoice second);
+
+	List<Invoice> getUnpaidInvoices();
 }

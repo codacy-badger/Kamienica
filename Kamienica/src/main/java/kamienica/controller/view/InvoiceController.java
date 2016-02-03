@@ -3,6 +3,7 @@ package kamienica.controller.view;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
@@ -24,12 +25,15 @@ import kamienica.model.InvoiceEnergy;
 import kamienica.model.InvoiceGas;
 import kamienica.model.InvoiceWater;
 import kamienica.service.InvoiceService;
+import kamienica.service.ReadingService;
 
 @Controller
 public class InvoiceController {
 
 	@Autowired
 	private InvoiceService invoiceService;
+	@Autowired
+	private ReadingService readingService;
 
 	public void setFakturaService(InvoiceService invoiceService) {
 		this.invoiceService = invoiceService;
@@ -46,9 +50,9 @@ public class InvoiceController {
 	Date date = new Date();
 	SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
 
-	
 	@RequestMapping("/Admin/Invoice/registerInvoice")
 	public ModelAndView invoiceRegistration() {
+
 		return new ModelAndView("/Admin/Invoice/RegisterInvoice");
 	}
 
@@ -60,13 +64,17 @@ public class InvoiceController {
 	// -------------------REJESTRACJA----------------------------------------------
 	@RequestMapping("/Admin/Invoice/invoiceGasRegister")
 	public ModelAndView RejestrujFakturaGaz(@ModelAttribute("invoice") InvoiceGas invoice, BindingResult result) {
+
 		return new ModelAndView("/Admin/Invoice/InvoiceGasRegister");
 	}
 
 	@RequestMapping("/Admin/Invoice/invoiceEnergyRegister")
 	public ModelAndView RejestrujFakturaEnergia(@ModelAttribute("invoice") InvoiceEnergy invoice,
 			BindingResult result) {
-		return new ModelAndView("/Admin/Invoice/InvoiceEnergyRegister");
+
+		HashMap<String, Object> model = new HashMap<>();
+		model.put("readings", readingService.getUnresolvedReadingsEnergy());
+		return new ModelAndView("/Admin/Invoice/InvoiceEnergyRegister", "model", model);
 	}
 
 	@RequestMapping("/Admin/Invoice/invoiceWaterRegister")
@@ -80,7 +88,6 @@ public class InvoiceController {
 	@RequestMapping("/Admin/Invoice/invoiceGasSave")
 	public ModelAndView invoiceGasSave(@Valid @ModelAttribute("invoice") InvoiceGas invoice, BindingResult result) {
 
-	 
 		if (result.hasErrors()) {
 			return new ModelAndView("/Admin/Invoice/InvoiceGasRegister");
 		}
@@ -96,7 +103,7 @@ public class InvoiceController {
 
 	@RequestMapping("/Admin/Invoice/invoiceWaterSave")
 	public ModelAndView invoiceWaterSave(@Valid @ModelAttribute("invoice") InvoiceWater invoice, BindingResult result) {
-	 
+
 		if (result.hasErrors()) {
 			return new ModelAndView("/Admin/Invoice/InvoiceWaterRegister");
 		}
@@ -112,7 +119,7 @@ public class InvoiceController {
 	@RequestMapping("/Admin/Invoice/invoiceEnergySave")
 	public ModelAndView invoiceEnergySave(@Valid @ModelAttribute("invoice") InvoiceEnergy invoice,
 			BindingResult result) {
-	 
+
 		if (result.hasErrors()) {
 			return new ModelAndView("/Admin/Invoice/InvoiceEnergyRegister");
 		}
@@ -185,7 +192,6 @@ public class InvoiceController {
 	@RequestMapping("/Admin/Invoice/invoiceGasOverwrite")
 	public ModelAndView invoiceGas(@Valid @ModelAttribute("invoice") InvoiceGas invoice, BindingResult result) {
 
-	 
 		if (result.hasErrors()) {
 			return new ModelAndView("/Admin/Invoice/InvoiceGasEdit");
 		}
@@ -200,7 +206,7 @@ public class InvoiceController {
 
 	@RequestMapping("/Admin/Invoice/invoiceWaterOverwrite")
 	public ModelAndView invoiceWater(@Valid @ModelAttribute("invoice") InvoiceWater invoice, BindingResult result) {
-	 
+
 		if (result.hasErrors()) {
 			return new ModelAndView("/Admin/Invoice/InvoiceWaterEdit");
 		}
