@@ -109,12 +109,17 @@ public class PaymentController {
 		}
 
 		List<InvoiceEnergy> invoiceEnergy = invoiceService.getUnpaidInvoiceEnergy();
+		InvoiceEnergy energyFirst = invoiceEnergy.get(0);
+		invoiceEnergy.remove(0);
+		System.out.println("test");
+		System.out.println(energyFirst.toString());
 		List<InvoiceGas> invoiceGas = invoiceService.getUnpaidInvoiceGas();
 		List<InvoiceWater> invoiceWater = invoiceService.getUnpaidInvoiceWater();
 		
 
 		if (!invoiceEnergy.isEmpty()) {
 			model.put("energy", invoiceEnergy);
+			model.put("energyFirst", energyFirst);
 		}
 		if (!invoiceGas.isEmpty()) {
 			model.put("gas", invoiceGas);
