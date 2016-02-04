@@ -1,4 +1,4 @@
-package kamienica.forms;
+package kamienica.wrapper;
 
 import java.util.Date;
 import java.util.List;

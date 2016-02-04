@@ -9,7 +9,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.servlet.ModelAndView;
 
 import kamienica.core.ManagerPayment;
-import kamienica.forms.PaymentForm;
 import kamienica.model.Apartment;
 import kamienica.model.Division;
 import kamienica.model.InvoiceEnergy;
@@ -27,6 +26,7 @@ import kamienica.service.PaymentService;
 import kamienica.service.ReadingService;
 import kamienica.service.TenantService;
 import kamienica.validator.DivisionValidator;
+import kamienica.wrapper.PaymentForm;
 
 public class PaymentLogic {
 	

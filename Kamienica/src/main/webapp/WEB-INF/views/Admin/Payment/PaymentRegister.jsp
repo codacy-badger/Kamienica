@@ -28,6 +28,9 @@
 			<c:if test="${!empty model.error}">
 				<p>${ model.error}
 			</c:if>
+		
+	<p>	${model.energy }	</p>
+			
 			<table height="150px" width="70%">
 				<tr>
 					<c:if test="${!empty model.energyFirstBinder}">

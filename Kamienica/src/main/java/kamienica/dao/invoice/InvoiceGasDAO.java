@@ -24,5 +24,5 @@ public interface InvoiceGasDAO {
 
 	public List<Invoice> getInvoicesForCalulation(Invoice first, Invoice second);
 
-	List<Invoice> getUnpaidInvoices();
+	List<InvoiceGas> getUnpaidInvoices();
 }

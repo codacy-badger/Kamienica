@@ -24,7 +24,6 @@ import org.springframework.web.servlet.ModelAndView;
 import kamienica.conventer.ApartmentIB;
 import kamienica.conventer.TenantIB;
 import kamienica.core.DivisionManager;
-import kamienica.forms.DivisionForm;
 import kamienica.model.Apartment;
 import kamienica.model.Division;
 import kamienica.model.Tenant;
@@ -32,6 +31,7 @@ import kamienica.service.ApartmentService;
 import kamienica.service.DivisionService;
 import kamienica.service.TenantService;
 import kamienica.validator.DivisionValidator;
+import kamienica.wrapper.DivisionForm;
 
 @Controller
 public class DivisionController {

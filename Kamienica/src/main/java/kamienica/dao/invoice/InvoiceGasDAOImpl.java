@@ -70,12 +70,12 @@ public class InvoiceGasDAOImpl extends AbstractDao<Integer, InvoiceGas> implemen
 	}
 	
 	@Override
-	public List<Invoice> getUnpaidInvoices() {
+	public List<InvoiceGas> getUnpaidInvoices() {
 		Query query = getSession()
 				.createSQLQuery("select * from invoicegas where status =  :stat  order by date asc")
 				.addEntity(InvoiceGas.class).setParameter("stat", PaymentStatus.UNPAID.getPaymentStatus());
 		@SuppressWarnings("unchecked")
-		List<Invoice> invoice = query.list();
+		List<InvoiceGas> invoice = query.list();
 		return invoice;
 	}
 }

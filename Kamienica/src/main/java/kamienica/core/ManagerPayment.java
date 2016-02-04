@@ -6,7 +6,6 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 
-import kamienica.forms.ReadingInvoiceForm;
 import kamienica.model.Division;
 import kamienica.model.Invoice;
 import kamienica.model.InvoiceEnergy;
@@ -17,6 +16,7 @@ import kamienica.model.PaymentGas;
 import kamienica.model.PaymentWater;
 import kamienica.model.Tenant;
 import kamienica.model.UsageValue;
+import kamienica.wrapper.ReadingInvoiceForm;
 
 public class ManagerPayment {
 

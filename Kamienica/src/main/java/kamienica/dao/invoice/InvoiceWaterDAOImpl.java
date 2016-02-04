@@ -71,12 +71,12 @@ public class InvoiceWaterDAOImpl extends AbstractDao<Integer, InvoiceWater> impl
 	}
 
 	@Override
-	public List<Invoice> getUnpaidInvoices() {
+	public List<InvoiceWater> getUnpaidInvoices() {
 		Query query = getSession()
 				.createSQLQuery("select * from invoicewater where status =  :stat  order by date asc")
 				.addEntity(InvoiceWater.class).setParameter("stat", PaymentStatus.UNPAID.getPaymentStatus());
 		@SuppressWarnings("unchecked")
-		List<Invoice> invoice = query.list();
+		List<InvoiceWater> invoice = query.list();
 		return invoice;
 	}
 	

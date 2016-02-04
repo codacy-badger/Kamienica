@@ -26,9 +26,6 @@ import kamienica.conventer.ApartmentIB;
 import kamienica.conventer.MeterEnergyIB;
 import kamienica.conventer.MeterGasIB;
 import kamienica.conventer.MeterWaterIB;
-import kamienica.forms.ReadingEnergyForm;
-import kamienica.forms.ReadingGasForm;
-import kamienica.forms.ReadingWaterForm;
 import kamienica.model.Apartment;
 import kamienica.model.MeterEnergy;
 import kamienica.model.MeterGas;
@@ -39,6 +36,9 @@ import kamienica.model.ReadingWater;
 import kamienica.service.ApartmentService;
 import kamienica.service.MeterService;
 import kamienica.service.ReadingService;
+import kamienica.wrapper.ReadingEnergyForm;
+import kamienica.wrapper.ReadingGasForm;
+import kamienica.wrapper.ReadingWaterForm;
 
 @Controller
 public class ReadingController {
