@@ -9,6 +9,7 @@ import org.hibernate.criterion.Order;
 import org.springframework.stereotype.Repository;
 
 import kamienica.model.Apartment;
+import kamienica.model.InvoiceEnergy;
 import kamienica.model.InvoiceWater;
 import kamienica.model.PaymentAbstract;
 import kamienica.model.ReadingAbstract;
@@ -134,6 +135,16 @@ public class ReadingWaterDAOImpl extends AbstractDao<Integer, ReadingWater> impl
 				.createSQLQuery(
 						"update readingwater set resolved= :res where readingDate = :paramdate")
 				.setParameter("paramdate", invoice.getBaseReading().getReadingDate()).setParameter("res", true);
+		query.executeUpdate();
+		
+	}
+	
+	@Override
+	public void UnresolveReadings(InvoiceWater invoice) {
+		Query query = getSession()
+				.createSQLQuery(
+						"update readingwater set resolved= :res where readingDate = :paramdate")
+				.setParameter("paramdate", invoice.getBaseReading().getReadingDate()).setParameter("res", false);
 		query.executeUpdate();
 		
 	}

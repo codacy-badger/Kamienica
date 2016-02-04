@@ -136,6 +136,7 @@
 					<th>Data</th>
 					<th>Wartość</th>
 					<th>Edytuj</th>
+					<th>Status</th>
 					<th>Usuń</th>
 
 				</tr>
@@ -146,6 +147,7 @@
 						<td><c:out value="${invoice.description}" /></td>
 						<td><c:out value="${invoice.date}" /></td>
 						<td><c:out value="${invoice.totalAmount}" /></td>
+						<td><c:out value="${invoice.status}" /></td>
 						<td><a
 							href="<c:url value="/Admin/Invoice/invoiceWaterEdit.html?id=${invoice.id}" />"
 							role="button" class="btn-xs btn-warning">Edytuj</a></td>

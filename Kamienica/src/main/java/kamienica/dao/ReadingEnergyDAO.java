@@ -39,4 +39,6 @@ public interface ReadingEnergyDAO {
 	
 	public void ResolveReadings(InvoiceEnergy invoice);
 	
+	public void UnresolveReadings(InvoiceEnergy invoice);
+	
 }

@@ -132,4 +132,14 @@ public class ReadingEnergyDAOImpl extends AbstractDao<Integer, ReadingEnergy> im
 		
 	}
 
+	@Override
+	public void UnresolveReadings(InvoiceEnergy invoice) {
+		Query query = getSession()
+				.createSQLQuery(
+						"update readingenergy set resolved= :res where readingDate = :paramdate")
+				.setParameter("paramdate", invoice.getBaseReading().getReadingDate()).setParameter("res", false);
+		query.executeUpdate();
+		
+	}
+
 }

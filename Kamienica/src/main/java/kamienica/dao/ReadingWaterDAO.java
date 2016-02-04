@@ -39,4 +39,6 @@ public interface ReadingWaterDAO {
 	public List<ReadingWater> getUnresolvedReadings();
 	
 	public void ResolveReadings(InvoiceWater invoice);
+	
+	public void UnresolveReadings(InvoiceWater invoice);
 }

@@ -5,6 +5,7 @@ import java.util.HashMap;
 import java.util.List;
 
 import kamienica.model.Apartment;
+import kamienica.model.InvoiceEnergy;
 import kamienica.model.InvoiceGas;
 import kamienica.model.PaymentAbstract;
 import kamienica.model.ReadingEnergy;
@@ -37,4 +38,6 @@ public interface ReadingGasDAO {
 	public List<ReadingGas> getUnresolvedReadings();
 
 	public void ResolveReadings(InvoiceGas invoice);
+	
+	public void UnresolveReadings(InvoiceGas invoice);
 }

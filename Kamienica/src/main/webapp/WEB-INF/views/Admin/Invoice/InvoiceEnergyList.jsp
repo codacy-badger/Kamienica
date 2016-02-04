@@ -130,6 +130,7 @@
 						<th>Opis</th>
 						<th>Data</th>
 						<th>Wartość</th>
+						<th>Status</th>
 						<th>Edytuj</th>
 						<th>Usuń</th>
 					</tr>
@@ -140,9 +141,10 @@
 							<td><c:out value="${invoice.description}" /></td>
 							<td><c:out value="${invoice.date}" /></td>
 							<td><c:out value="${invoice.totalAmount}" /></td>
+							<td><c:out value="${invoice.status}" /></td>
 							<td><a
-								href="<c:url value="/Admin/Invoice/invoiceEnergyEdit.html?id=${invoice.id}" />" role="button"
-								class="btn-xs btn-warning">Edytuj</a></td>
+								href="<c:url value="/Admin/Invoice/invoiceEnergyEdit.html?id=${invoice.id}" />"
+								role="button" class="btn-xs btn-warning">Edytuj</a></td>
 							<td><a
 								href="<c:url value="/Admin/Invoice/invoiceEnergyDelete.html?id=${invoice.id}"  />"
 								onclick="return confirm('Na pewno usunąć?')" role="button"
