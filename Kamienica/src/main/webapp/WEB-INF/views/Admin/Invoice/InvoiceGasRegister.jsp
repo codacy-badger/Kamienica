@@ -130,61 +130,68 @@
 		</div>
 
 		<div class='row'>
-
-			<c:url var="register" value="invoiceGasSave.html" />
-			<form:form id="register" modelAttribute="invoice" method="post"
-				action="${register}">
-
-				<div class="row">
-					<div class="col-md-6 myLabel ">
-						<form:label path="serialNumber">Numer Faktury</form:label>
-					</div>
-					<div class="col-md-6 inputAndError">
-						<form:input path="serialNumber" name="serialNumber" />
-						<form:errors path="serialNumber" class="error" />
-					</div>
-				</div>
-
-				<div class="row">
-					<div class="col-md-6 myLabel ">
-						<form:label path="description">Opis Faktury</form:label>
-					</div>
-					<div class="col-md-6 inputAndError">
-						<form:input path="description" name="description"
-							value="${model.description }" />
-						<form:errors path="description" class="error" />
-					</div>
-				</div>
-
-				<div class="row">
-					<div class="col-md-6 myLabel ">
-						<form:label path="date">Data Faktury</form:label>
-					</div>
-					<div class="col-md-6 inputAndError">
-						<form:input type='date' path="date" name="date"
-							value="${model.date }" />
-						<form:errors path="date" class="error" />
-					</div>
-				</div>
-
-				<div class="row">
-					<div class="col-md-6 myLabel ">
-						<form:label path="totalAmount">Wartosc Faktury</form:label>
-					</div>
-					<div class="col-md-6 inputAndError">
-						<form:input path="totalAmount" name="totalAmount" />
-						<form:errors path="totalAmount" class="error" />
-					</div>
-				</div>
-
-
-				<div class='row'>
-					<input type="submit" class='btn btn-primary' value="Zapisz" />
-				</div>
-
-			</form:form>
+			<c:if test="${!empty model.error}">
+				<p class='alert alert-danger'>${model.error}</p>
+			</c:if>
 		</div>
 
+		<c:if test="${empty model.error}">
+
+			<div class='row'>
+				<c:url var="register" value="invoiceGasSave.html" />
+				<form:form id="register" modelAttribute="invoice" method="post"
+					action="${register}">
+
+					<div class="row">
+						<div class="col-md-6 myLabel ">
+							<form:label path="serialNumber">Numer Faktury</form:label>
+						</div>
+						<div class="col-md-6 inputAndError">
+							<form:input path="serialNumber" name="serialNumber" />
+							<form:errors path="serialNumber" class="error" />
+						</div>
+					</div>
+
+					<div class="row">
+						<div class="col-md-6 myLabel ">
+							<form:label path="description">Opis Faktury</form:label>
+						</div>
+						<div class="col-md-6 inputAndError">
+							<form:input path="description" name="description"
+								value="${model.description }" />
+							<form:errors path="description" class="error" />
+						</div>
+					</div>
+
+					<div class="row">
+						<div class="col-md-6 myLabel ">
+							<form:label path="date">Data Faktury</form:label>
+						</div>
+						<div class="col-md-6 inputAndError">
+							<form:input type='date' path="date" name="date"
+								value="${model.date }" />
+							<form:errors path="date" class="error" />
+						</div>
+					</div>
+
+					<div class="row">
+						<div class="col-md-6 myLabel ">
+							<form:label path="totalAmount">Wartosc Faktury</form:label>
+						</div>
+						<div class="col-md-6 inputAndError">
+							<form:input path="totalAmount" name="totalAmount" />
+							<form:errors path="totalAmount" class="error" />
+						</div>
+					</div>
+
+
+					<div class='row'>
+						<input type="submit" class='btn btn-primary' value="Zapisz" />
+					</div>
+
+				</form:form>
+			</div>
+		</c:if>
 	</div>
 </body>
 </html>

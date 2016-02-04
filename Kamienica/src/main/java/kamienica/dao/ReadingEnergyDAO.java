@@ -5,8 +5,8 @@ import java.util.HashMap;
 import java.util.List;
 
 import kamienica.model.Apartment;
+import kamienica.model.InvoiceEnergy;
 import kamienica.model.PaymentAbstract;
-import kamienica.model.PaymentEnergy;
 import kamienica.model.ReadingEnergy;
 
 public interface ReadingEnergyDAO {
@@ -36,5 +36,7 @@ public interface ReadingEnergyDAO {
 	public List<ReadingEnergy> getListForTenant(Apartment apartment); 
 	
 	public List<ReadingEnergy> getUnresolvedReadings();
+	
+	public void ResolveReadings(InvoiceEnergy invoice);
 	
 }

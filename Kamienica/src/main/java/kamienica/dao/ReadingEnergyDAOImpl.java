@@ -10,6 +10,7 @@ import org.hibernate.criterion.Restrictions;
 import org.springframework.stereotype.Repository;
 
 import kamienica.model.Apartment;
+import kamienica.model.InvoiceEnergy;
 import kamienica.model.PaymentAbstract;
 import kamienica.model.PaymentEnergy;
 import kamienica.model.PaymentStatus;
@@ -119,6 +120,16 @@ public class ReadingEnergyDAOImpl extends AbstractDao<Integer, ReadingEnergy> im
 
 		return query.list();
 
+	}
+
+	@Override
+	public void ResolveReadings(InvoiceEnergy invoice) {
+		Query query = getSession()
+				.createSQLQuery(
+						"update readingenergy set resolved= :res where readingDate = :paramdate")
+				.setParameter("paramdate", invoice.getBaseReading().getReadingDate()).setParameter("res", true);
+		query.executeUpdate();
+		
 	}
 
 }

@@ -9,7 +9,9 @@ import org.hibernate.criterion.Order;
 import org.springframework.stereotype.Repository;
 
 import kamienica.model.Apartment;
+import kamienica.model.InvoiceGas;
 import kamienica.model.PaymentAbstract;
+import kamienica.model.ReadingEnergy;
 import kamienica.model.ReadingGas;
 
 @Repository("readingGasDao")
@@ -103,5 +105,24 @@ public class ReadingGasDAOImpl extends AbstractDao<Integer, ReadingGas> implemen
 		}
 	}
 
+	@SuppressWarnings("unchecked")
+	public List<ReadingGas> getUnresolvedReadings() {
+		Query query = getSession().createSQLQuery("SELECT r.id, r.readingDate, r.value, r.unit, r.meter_id, r.resolved "
+				+ "FROM readinggas r join meterGas m on r.meter_id = m.id "
+				+ "where r.resolved = 0 and m.apartment_id is null").addEntity(ReadingGas.class);;
+
+		return query.list();
+
+	}
+	
+	@Override
+	public void ResolveReadings(InvoiceGas invoice) {
+		Query query = getSession()
+				.createSQLQuery(
+						"update readinggas set resolved= :res where readingDate = :paramdate")
+				.setParameter("paramdate", invoice.getBaseReading().getReadingDate()).setParameter("res", true);
+		query.executeUpdate();
+		
+	}
 	
 }

@@ -24,6 +24,9 @@ import org.springframework.web.servlet.ModelAndView;
 import kamienica.model.InvoiceEnergy;
 import kamienica.model.InvoiceGas;
 import kamienica.model.InvoiceWater;
+import kamienica.model.ReadingEnergy;
+import kamienica.model.ReadingGas;
+import kamienica.model.ReadingWater;
 import kamienica.service.InvoiceService;
 import kamienica.service.ReadingService;
 
@@ -57,30 +60,52 @@ public class InvoiceController {
 	}
 
 	@RequestMapping("/Admin/Invoice/invoiceList")
-	public ModelAndView listaFaktur() {
+	public ModelAndView invoiceLsit() {
 		return new ModelAndView("/Admin/Invoice/InvoiceList");
 	}
 
 	// -------------------REJESTRACJA----------------------------------------------
 	@RequestMapping("/Admin/Invoice/invoiceGasRegister")
-	public ModelAndView RejestrujFakturaGaz(@ModelAttribute("invoice") InvoiceGas invoice, BindingResult result) {
+	public ModelAndView registerInvoiceGas(@ModelAttribute("invoice") InvoiceGas invoice, BindingResult result) {
 
-		return new ModelAndView("/Admin/Invoice/InvoiceGasRegister");
+		HashMap<String, Object> model = new HashMap<>();
+		List<ReadingGas> readings = readingService.getUnresolvedReadingsGas();
+		if (readings.isEmpty()) {
+			model.put("error", "Brakuje odczytów dla nowej faktury");
+		} else {
+			model.put("readings", readings);
+		}
+
+		
+		return new ModelAndView("/Admin/Invoice/InvoiceGasRegister", "model", model);
 	}
 
 	@RequestMapping("/Admin/Invoice/invoiceEnergyRegister")
-	public ModelAndView RejestrujFakturaEnergia(@ModelAttribute("invoice") InvoiceEnergy invoice,
-			BindingResult result) {
+	public ModelAndView registerInvoiceEnergy(@ModelAttribute("invoice") InvoiceEnergy invoice, BindingResult result) {
 
 		HashMap<String, Object> model = new HashMap<>();
-		model.put("readings", readingService.getUnresolvedReadingsEnergy());
+		List<ReadingEnergy> readings = readingService.getUnresolvedReadingsEnergy();
+		if (readings.isEmpty()) {
+			model.put("error", "Brakuje odczytów dla nowej faktury");
+		} else {
+			model.put("readings", readings);
+		}
+
 		return new ModelAndView("/Admin/Invoice/InvoiceEnergyRegister", "model", model);
 	}
 
 	@RequestMapping("/Admin/Invoice/invoiceWaterRegister")
-	public ModelAndView RejestrujFakturaWoda(@ModelAttribute("invoice") InvoiceWater invoice, BindingResult result) {
+	public ModelAndView registerInvoiceWater(@ModelAttribute("invoice") InvoiceWater invoice, BindingResult result) {
+		
+		HashMap<String, Object> model = new HashMap<>();
+		List<ReadingWater> readings = readingService.getUnresolvedReadingsWater();
+		if (readings.isEmpty()) {
+			model.put("error", "Brakuje odczytów dla nowej faktury");
+		} else {
+			model.put("readings", readings);
+		}
 
-		return new ModelAndView("/Admin/Invoice/InvoiceWaterRegister");
+		return new ModelAndView("/Admin/Invoice/InvoiceWaterRegister", "model", model);
 	}
 
 	// -------------------ZAPIS----------------------------------------------

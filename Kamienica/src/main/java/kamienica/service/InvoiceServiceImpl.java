@@ -6,6 +6,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import kamienica.dao.ReadingEnergyDAO;
+import kamienica.dao.ReadingGasDAO;
+import kamienica.dao.ReadingWaterDAO;
 import kamienica.dao.invoice.InvoiceDao;
 import kamienica.dao.invoice.InvoiceEnergyDAO;
 import kamienica.dao.invoice.InvoiceGasDAO;
@@ -30,19 +33,31 @@ public class InvoiceServiceImpl implements InvoiceService {
 	InvoiceGasDAO gas;
 	@Autowired
 	InvoiceWaterDAO water;
+	@Autowired
+	ReadingEnergyDAO readingEnergy;
+	@Autowired
+	ReadingGasDAO readingGas;
+	@Autowired
+	ReadingWaterDAO readingWater;
 
 	@Override
 	public void saveEnergy(InvoiceEnergy invoice) {
 		energy.save(invoice);
+		readingEnergy.ResolveReadings(invoice);
 	}
+
 	@Override
 	public void saveGas(InvoiceGas invoice) {
 		gas.save(invoice);
+		readingGas.ResolveReadings(invoice);
 	}
+
 	@Override
 	public void saveWater(InvoiceWater invoice) {
 		water.save(invoice);
+		readingWater.ResolveReadings(invoice);
 	}
+
 	@Override
 	public void deleteEnergyByID(int id) {
 		energy.deleteByID(id);
@@ -165,15 +180,18 @@ public class InvoiceServiceImpl implements InvoiceService {
 	public List<Invoice> getInvoicesGasForCalulation(Invoice first, Invoice second) {
 		return gas.getInvoicesForCalulation(first, second);
 	}
+
 	@Override
 	public List<Invoice> getUnpaidInvoiceEnergy() {
-		
+
 		return energy.getUnpaidInvoices();
 	}
+
 	@Override
 	public List<Invoice> getUnpaidInvoiceGas() {
 		return gas.getUnpaidInvoices();
 	}
+
 	@Override
 	public List<Invoice> getUnpaidInvoiceWater() {
 		return water.getUnpaidInvoices();

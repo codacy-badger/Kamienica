@@ -9,8 +9,10 @@ import org.hibernate.criterion.Order;
 import org.springframework.stereotype.Repository;
 
 import kamienica.model.Apartment;
+import kamienica.model.InvoiceWater;
 import kamienica.model.PaymentAbstract;
 import kamienica.model.ReadingAbstract;
+import kamienica.model.ReadingGas;
 import kamienica.model.ReadingWater;
 
 @Repository("readingWaterDao")
@@ -114,5 +116,25 @@ public class ReadingWaterDAOImpl extends AbstractDao<Integer, ReadingWater> impl
 						"SELECT * FROM readingwater where readingdate = (select readingdate from readingwater where readingdate < :date GROUP BY readingdate ORDER BY readingdate desc limit 1)")
 				.addEntity(ReadingWater.class).setParameter("date", reading.getReadingDate());
 		return query.list();
+	}
+	
+	@SuppressWarnings("unchecked")
+	public List<ReadingWater> getUnresolvedReadings() {
+		Query query = getSession().createSQLQuery("SELECT r.id, r.readingDate, r.value, r.unit, r.meter_id, r.resolved "
+				+ "FROM readingwater r join meterwater m on r.meter_id = m.id "
+				+ "where r.resolved = 0 and m.apartment_id is null").addEntity(ReadingWater.class);;
+
+		return query.list();
+
+	}
+	
+	@Override
+	public void ResolveReadings(InvoiceWater invoice) {
+		Query query = getSession()
+				.createSQLQuery(
+						"update readingwater set resolved= :res where readingDate = :paramdate")
+				.setParameter("paramdate", invoice.getBaseReading().getReadingDate()).setParameter("res", true);
+		query.executeUpdate();
+		
 	}
 }

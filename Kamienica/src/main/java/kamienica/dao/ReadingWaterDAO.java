@@ -5,11 +5,14 @@ import java.util.HashMap;
 import java.util.List;
 
 import kamienica.model.Apartment;
+import kamienica.model.InvoiceWater;
 import kamienica.model.PaymentAbstract;
 import kamienica.model.ReadingAbstract;
 import kamienica.model.ReadingWater;
 
 public interface ReadingWaterDAO {
+	
+	public ReadingWater getById(int id);
 
 	public void save(ReadingWater reading);
 
@@ -32,4 +35,8 @@ public interface ReadingWaterDAO {
 	public List<ReadingWater> getWaterReadingsForGasConsumption(ReadingAbstract reading);
 	
 	public List<ReadingWater> getListForTenant(Apartment apartment); 
+	
+	public List<ReadingWater> getUnresolvedReadings();
+	
+	public void ResolveReadings(InvoiceWater invoice);
 }

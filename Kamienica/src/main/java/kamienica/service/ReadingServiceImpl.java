@@ -202,13 +202,33 @@ public class ReadingServiceImpl implements ReadingService {
 	}
 
 	@Override
+	public ReadingEnergy getEnergyById(int id) {
+		return energy.getById(id);
+	}
+
+	@Override
+	public ReadingGas getGasById(int id) {
+		return gas.getById(id);
+	}
+
+	@Override
+	public ReadingWater getWaterById(int id) {
+		return water.getById(id);
+	}
+
+	@Override
 	public List<ReadingEnergy> getUnresolvedReadingsEnergy() {
 		return energy.getUnresolvedReadings();
 	}
 
 	@Override
-	public ReadingEnergy getEnergyById(int id) {
-		return energy.getById(id);
+	public List<ReadingGas> getUnresolvedReadingsGas() {
+		return gas.getUnresolvedReadings();
+	}
+
+	@Override
+	public List<ReadingWater> getUnresolvedReadingsWater() {
+		return water.getUnresolvedReadings();
 	}
 
 }
