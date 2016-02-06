@@ -142,7 +142,7 @@
 
 
 							<div class="radio">
-								<label><input type="radio" name="energyFirst" checked>${model.energyFirst.date },
+								<label><input type="radio" name="energyFirst" value='${model.energyFirst.id }' checked>${model.energyFirst.date },
 									${model.energyFirst.totalAmount },
 									${model.energyFirst.baseReading.readingDate}</label>
 							</div>
