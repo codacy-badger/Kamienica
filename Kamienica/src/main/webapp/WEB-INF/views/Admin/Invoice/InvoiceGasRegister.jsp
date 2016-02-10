@@ -154,6 +154,17 @@
 
 					<div class="row">
 						<div class="col-md-6 myLabel ">
+							<form:label path="serialNumber">Okres Rozliczenia</form:label>
+						</div>
+						<div class="col-md-6 inputAndError">
+							<form:select path="baseReading" items="${model.readings}"
+								itemValue="id" itemLabel="readingDate" class='ignore' />
+							<form:errors path="baseReading" class="error" />
+						</div>
+					</div>
+
+					<div class="row">
+						<div class="col-md-6 myLabel ">
 							<form:label path="description">Opis Faktury</form:label>
 						</div>
 						<div class="col-md-6 inputAndError">

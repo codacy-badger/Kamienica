@@ -22,20 +22,25 @@ import org.springframework.web.servlet.view.InternalResourceViewResolver;
 import org.springframework.web.servlet.view.JstlView;
 
 import kamienica.conventer.ReadingEnergyConverter;
+import kamienica.conventer.ReadingGasConverter;
+import kamienica.conventer.ReadingWaterConverter;
 
 @Configuration
 @EnableWebMvc
 @ComponentScan(basePackages = "kamienica.*")
 public class AppConfig extends WebMvcConfigurerAdapter {
 
-	
 	@Autowired
 	ReadingEnergyConverter readingEnergyConverter;
+	@Autowired
+	ReadingGasConverter readingGasConverter;
+	@Autowired
+	ReadingWaterConverter readingWaterConverter;
+	
 	
 	@Override
 	public void configureContentNegotiation(ContentNegotiationConfigurer configurer) {
-		configurer.ignoreAcceptHeader(true).defaultContentType(
-				MediaType.TEXT_HTML);
+		configurer.ignoreAcceptHeader(true).defaultContentType(MediaType.TEXT_HTML);
 	}
 
 	/*
@@ -48,19 +53,18 @@ public class AppConfig extends WebMvcConfigurerAdapter {
 		// Define all possible view resolvers
 		List<ViewResolver> resolvers = new ArrayList<ViewResolver>();
 		resolvers.add(jsonViewResolver());
-		resolvers.add(viewResolver());	
+		resolvers.add(viewResolver());
 		resolver.setViewResolvers(resolvers);
 		return resolver;
 	}
-	
-	
+
 	@Bean
 	public ViewResolver viewResolver() {
 		InternalResourceViewResolver viewResolver = new InternalResourceViewResolver();
 		viewResolver.setViewClass(JstlView.class);
 		viewResolver.setPrefix("/WEB-INF/views/");
 		viewResolver.setSuffix(".jsp");
-//		viewResolver.setContentType("UTF-8");
+		// viewResolver.setContentType("UTF-8");
 		return viewResolver;
 	}
 
@@ -69,12 +73,13 @@ public class AppConfig extends WebMvcConfigurerAdapter {
 		return new JsonViewResolver();
 	}
 
-	 @Override
-	    public void addFormatters(FormatterRegistry registry) {
-	        registry.addConverter(readingEnergyConverter);
-	    }
-	     
-	
+	@Override
+	public void addFormatters(FormatterRegistry registry) {
+		registry.addConverter(readingEnergyConverter);
+		registry.addConverter(readingGasConverter);
+		registry.addConverter(readingWaterConverter);
+	}
+
 	@Bean
 	public MessageSource messageSource() {
 		ResourceBundleMessageSource messageSource = new ResourceBundleMessageSource();
@@ -86,6 +91,5 @@ public class AppConfig extends WebMvcConfigurerAdapter {
 	public void addResourceHandlers(ResourceHandlerRegistry registry) {
 		registry.addResourceHandler("/static/**").addResourceLocations("/static/");
 	}
-
 
 }

@@ -95,30 +95,29 @@ public class PaymentController {
 
 	@RequestMapping("/Admin/Payment/paymentRegister")
 	public ModelAndView paymentRegister(@ModelAttribute("paymentForm") PaymentForm paymentForm, BindingResult result) {
-
+	
 		HashMap<String, Object> model = new HashMap<>();
-
+	
 		ArrayList<Tenant> tenants = (ArrayList<Tenant>) tenantService.getCurrentTenants();
 		ArrayList<Division> division = (ArrayList<Division>) divisionService.getList();
 		ArrayList<Apartment> apartments = (ArrayList<Apartment>) apartmentService.getList();
-
+	
 		if (!DivisionValidator.validateDivisionForPaymentController(apartments, division, tenants)) {
 			String message = "Lista aktualnych najemców i mieszkań się nie zgadza. Sprawdź algorytm podziału";
-			model.put("message", message);
+			model.put("error", message);
+			System.out.println("przed invoicami");
 			return new ModelAndView("/Admin/Payment/PaymentRegister", "model", model);
 		}
+	
 
 		List<InvoiceEnergy> invoiceEnergy = invoiceService.getUnpaidInvoiceEnergy();
-		InvoiceEnergy energyFirst = invoiceEnergy.get(0);
-		invoiceEnergy.remove(0);
-		
+	
 		List<InvoiceGas> invoiceGas = invoiceService.getUnpaidInvoiceGas();
 		List<InvoiceWater> invoiceWater = invoiceService.getUnpaidInvoiceWater();
-		
 
 		if (!invoiceEnergy.isEmpty()) {
+			System.out.println(invoiceEnergy.toString());
 			model.put("energy", invoiceEnergy);
-			model.put("energyFirst", energyFirst);
 		}
 		if (!invoiceGas.isEmpty()) {
 			model.put("gas", invoiceGas);
@@ -127,7 +126,6 @@ public class PaymentController {
 			model.put("water", invoiceWater);
 		}
 
-	
 		//
 		// PaymentEnergy latestPaymentEnergy =
 		// paymentService.getLatestPaymentEnergy();

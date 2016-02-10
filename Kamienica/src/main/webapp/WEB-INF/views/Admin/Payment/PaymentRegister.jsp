@@ -128,7 +128,7 @@
 		</div>
 		<div class='row'>
 			<c:if test="${!empty model.error}">
-				<p>${ model.error}
+				<p>${model.error}
 			</c:if>
 		</div>
 		<c:if test="${empty model.error}">
@@ -139,35 +139,77 @@
 
 					<div class='row'>
 						<div class="col-md-4">
+							<c:if test="${!empty model.energy}">
+								<table class="table table-hover table-condensed">
+									<tr>
+										<th colspan="4">Energia</th>
+									</tr>
+									<tr>
+										<th></th>
+										<th>Data Faktury</th>
+										<th>Wartość</th>
+										<th>Data Odczytu</th>
+									</tr>
+									<c:forEach items="${model.energy }" var="energy">
+										<tr>
 
+											<td><input type="radio" name="energy"></td>
+											<td>${energy.date }</td>
+											<td>${energy.totalAmount }</td>
+											<td>${energy.baseReading.readingDate}</td>
+										<tr>
+									</c:forEach>
+								</table>
+							</c:if>
+						</div>
 
-							<div class="radio">
-								<label><input type="radio" name="energyFirst" value='${model.energyFirst.id }' checked>${model.energyFirst.date },
-									${model.energyFirst.totalAmount },
-									${model.energyFirst.baseReading.readingDate}</label>
-							</div>
+						<div class="col-md-4">
+							<c:if test="${!empty model.water}">
+								<table class="table table-hover table-condensed">
+									<tr>
+										<th colspan="4">Woda</th>
+									</tr>
+									<tr>
+										<th></th>
+										<th>Data Faktury</th>
+										<th>Wartość</th>
+										<th>Data Odczytu</th>
+									</tr>
+									<c:forEach items="${model.water }" var="water">
+										<tr>
 
-
-							<c:forEach items="${model.energy }" var="energy">
-								<div class="radio">
-									<label><input type="radio" name="energyRest" checked>${energy.date },
-										${energy.totalAmount }, ${energy.baseReading.readingDate}</label>
-								</div>
-
-							</c:forEach>
-
+											<td><input type="radio" name="water"></td>
+											<td>${water.date }</td>
+											<td>${water.totalAmount }</td>
+											<td>${water.baseReading.readingDate}</td>
+										<tr>
+									</c:forEach>
+								</table>
+							</c:if>
 						</div>
 						<div class="col-md-4">
+							<c:if test="${!empty model.gas}">
+								<table class="table table-hover table-condensed">
+									<tr>
+										<th colspan="4">Gaz</th>
+									</tr>
+									<tr>
+										<th></th>
+										<th>Data Faktury</th>
+										<th>Wartość</th>
+										<th>Data Odczytu</th>
+									</tr>
+									<c:forEach items="${model.gas }" var="gas">
+										<tr>
 
-
-							lorem
-
-						</div>
-						<div class="col-md-4">
-
-
-							lorem
-
+											<td><input type="radio" name="gas"></td>
+											<td>${gas.date }</td>
+											<td>${gas.totalAmount }</td>
+											<td>${gas.baseReading.readingDate}</td>
+										<tr>
+									</c:forEach>
+								</table>
+							</c:if>
 						</div>
 					</div>
 
