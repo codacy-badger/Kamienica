@@ -27,8 +27,11 @@ $(document).ready(function () {
             'apartment': { required: true },
            //invoice
             'serialNumber': { required: true},
-            'totalAmount': { required: true, number: true}
-            
+            'totalAmount': { required: true, number: true},
+           //payment
+            'paymentWater': { required: true},
+            'paymentGas': { required: true},
+            'paymentEnergy': { required: true}
             
            
         },
