@@ -18,8 +18,8 @@ public class MyUser extends User {
 		this.name = name;
 	}
 
-	public MyUser(String username, String password, Apartment apartment, String name, boolean enabled, boolean accountNonExpired,
-			boolean credentialsNonExpired, boolean accountNonLocked,
+	public MyUser(String username, String password, Apartment apartment, String name, boolean enabled,
+			boolean accountNonExpired, boolean credentialsNonExpired, boolean accountNonLocked,
 			Collection<? extends GrantedAuthority> authorities) {
 		super(username, password, enabled, accountNonExpired, credentialsNonExpired, accountNonLocked, authorities);
 		this.apartment = apartment;
@@ -37,7 +37,8 @@ public class MyUser extends User {
 	@Override
 	public String toString() {
 		return "MyUser [apartment=" + apartment + ", getAuthorities()=" + getAuthorities() + ", getPassword()="
-				+ getPassword() + ", getUsername()=" + getUsername() + "]";
+				+ getPassword() + ", getUsername()=" + getUsername() + "   credentials non expired: "
+				+ isCredentialsNonExpired();
 	}
 
 }

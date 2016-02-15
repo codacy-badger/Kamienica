@@ -28,7 +28,7 @@ public class ManagerPayment {
 		DecimalFormat decimalFormat = new DecimalFormat("#.00");
 
 		double sumaZuzycia = sumaZuzycia(usage);
-
+		System.out.println(sumaZuzycia);
 		for (Tenant tenant : tenants) {
 			HashMap<Integer, Double> podzialDlaNajemcy = tworzPodzialDlaNajemcy(division, tenant);
 			double oplata = 0;
@@ -37,8 +37,9 @@ public class ManagerPayment {
 				double ulamek = w.getUsage() / sumaZuzycia;
 				oplata += sumOfExpences * ulamek * podzialDlaNajemcy.get(w.getMieszkanie().getApartmentNumber());
 			}
-
-			oplata = Double.parseDouble(decimalFormat.format(oplata));
+			System.out.println("manager payemt oplata");
+			System.out.println(oplata);
+//			oplata = Double.parseDouble(decimalFormat.format(oplata));
 
 			PaymentEnergy forList = new PaymentEnergy();
 			forList.setInvoice(invoice.get(invoice.size() - 1));

@@ -13,6 +13,7 @@ import org.springframework.stereotype.Component;
 
 import kamienica.model.MyUser;
 import kamienica.model.Tenant;
+import kamienica.model.UserStatus;
 
 @Component
 public class MyUserDetailsService implements UserDetailsService {
@@ -27,10 +28,11 @@ public class MyUserDetailsService implements UserDetailsService {
 		if (tenant == null) {
 			throw new UsernameNotFoundException("Username not found");
 		}
+
 		List<GrantedAuthority> authorities = new ArrayList<GrantedAuthority>();
 		authorities.add(new SimpleGrantedAuthority("ROLE_" + tenant.getRole()));
 		MyUser myUser = new MyUser(tenant.getEmail(), tenant.getPassword(), tenant.getApartment(), tenant.getFullName(),
-				tenant.getStatus().equals("ACTIVE"), true, true, true, authorities);
+				tenant.getStatus().equals(UserStatus.ACTIVE.getUserStatus()), true, true, true, authorities);
 
 		return myUser;
 	}

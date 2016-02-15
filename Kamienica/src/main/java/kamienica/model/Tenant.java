@@ -19,7 +19,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 
 @Entity
 @Table
-public class Tenant  {
+public class Tenant {
 
 	@Id
 	@GeneratedValue
@@ -62,7 +62,7 @@ public class Tenant  {
 		this.phone = phone;
 
 	}
-	
+
 	public String getStatus() {
 		return status;
 	}
@@ -139,8 +139,9 @@ public class Tenant  {
 
 	@Override
 	public String toString() {
-		return firstName + " " + lastName + ", email=" + email + ", phone=" + phone + ", apartment="
-				+ apartment.getDescription() + ", movementDate=" + movementDate + "]";
+		return "Tenant [id=" + id + ", firstName=" + firstName + ", lastName=" + lastName + ", email=" + email
+				+ ", phone=" + phone + ", apartment=" + apartment + ", role=" + role + ", status=" + status
+				+ ", movementDate=" + movementDate + ", password=" + password + "]";
 	}
 
 	public Apartment getApartment() {
@@ -159,5 +160,4 @@ public class Tenant  {
 		this.password = password;
 	}
 
-	
 }

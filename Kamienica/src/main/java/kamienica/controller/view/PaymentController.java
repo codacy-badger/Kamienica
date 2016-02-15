@@ -208,7 +208,7 @@ public class PaymentController {
 		if (!DivisionValidator.validateDivisionForPaymentController(apartments, division, tenants)) {
 			String message = "Lista aktualnych najemców i mieszkań się nie zgadza. Sprawdź algorytm podziału";
 			model.put("error", message);
-			return new ModelAndView("/admin/PaymentRegister", "model", model);
+			return new ModelAndView("/Admin/Payment/PaymentRegister", "model", model);
 		}
 
 		if (invoiceWrapper.getEnergy() == null && invoiceWrapper.getWater() == null
@@ -238,7 +238,8 @@ public class PaymentController {
 
 			ArrayList<UsageValue> usageEnergy = ManagerEnergy.countEnergyConsupmtion(apartments, readingEnergyOld,
 					readingEnergyNew);
-
+			System.out.println("zuzycie:");
+			System.out.println(usageEnergy.toString());
 			List<PaymentEnergy> paymentEnergy = ManagerPayment.createPaymentEnergyList(tenants,
 					invoicesEnergyForCalculation, division, usageEnergy);
 			

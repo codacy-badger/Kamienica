@@ -22,24 +22,34 @@ public class ManagerEnergy {
 			double sumPrevious = 0;
 			double sumCurrent = 0;
 
-			for (int i = 0; i < oldReadings.size(); i++) {
+			for (int i = 0; i < newReadings.size(); i++) {
 				if (newReadings.get(i).getMeter().getApartment() != null) {
 					if (newReadings.get(i).getMeter().getApartment().getApartmentNumber() == m.getApartmentNumber()) {
 						sumCurrent = sumCurrent + newReadings.get(i).getValue();
 					}
 				}
-
-				if (oldReadings.get(i).getMeter().getApartment() != null) {
-					if (oldReadings.get(i).getMeter().getApartment().getApartmentNumber() == m.getApartmentNumber()) {
-						sumPrevious = sumPrevious + oldReadings.get(i).getValue();
+				if (!oldReadings.isEmpty()) {
+					if (oldReadings.get(i).getMeter().getApartment() != null) {
+						if (oldReadings.get(i).getMeter().getApartment().getApartmentNumber() == m
+								.getApartmentNumber()) {
+							sumPrevious = sumPrevious + oldReadings.get(i).getValue();
+						}
 					}
 				}
 			}
+			System.out.println("managerEnergii");
+			System.out.println(sumCurrent);
+			System.out.println(sumPrevious);
 			double usage = sumCurrent - sumPrevious;
+
 			tmp.setUsage(usage);
 			tmp.setUnit(newReadings.get(0).getUnit());
-			tmp.setDaysBetweenReadings(Days.daysBetween(new DateTime(oldReadings.get(0).getReadingDate()),
-					new DateTime(newReadings.get(0).getReadingDate())).getDays());
+			if (oldReadings.isEmpty()) {
+				tmp.setDaysBetweenReadings(0);
+			} else {
+				tmp.setDaysBetweenReadings(Days.daysBetween(new DateTime(oldReadings.get(0).getReadingDate()),
+						new DateTime(newReadings.get(0).getReadingDate())).getDays());
+			}
 			out.add(tmp);
 		}
 

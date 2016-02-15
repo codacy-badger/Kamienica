@@ -47,7 +47,7 @@ public class TenantDaoImpl extends AbstractDao<Integer, Tenant> implements Tenan
 	@SuppressWarnings("unchecked")
 	public List<Tenant> getActiveTenants() {
 		Criteria criteria = createEntityCriteria();
-		criteria.add(Restrictions.eq("status", "ACTIVE"));
+		criteria.add(Restrictions.eq("status", UserStatus.ACTIVE.getUserStatus()));
 		return (List<Tenant>) criteria.list();
 		//
 		// Query query = getSession().createSQLQuery("Select * from
