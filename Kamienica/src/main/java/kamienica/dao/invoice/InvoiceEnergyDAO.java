@@ -28,4 +28,6 @@ public interface InvoiceEnergyDAO {
 	
 	public InvoiceEnergy getLastResolved();
 	
+	public void resolveInvoice(InvoiceEnergy invoice);
+	
 }

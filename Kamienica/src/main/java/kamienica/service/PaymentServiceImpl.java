@@ -9,6 +9,7 @@ import org.springframework.transaction.annotation.Transactional;
 import kamienica.dao.PaymentEergyDAO;
 import kamienica.dao.PaymentGasDAO;
 import kamienica.dao.PaymentWaterDAO;
+import kamienica.dao.invoice.InvoiceEnergyDAO;
 import kamienica.model.Invoice;
 import kamienica.model.PaymentEnergy;
 import kamienica.model.PaymentGas;
@@ -28,27 +29,8 @@ public class PaymentServiceImpl implements PaymentService {
 	private PaymentEergyDAO energy;
 	@Autowired
 	private PaymentWaterDAO water;
-
-	// @Override
-	// public List<PaymentEnergy> getEnergyByInvoice(Invoice invoice) {
-	// return energy.getEnergyByInvoice(invoice);
-	//
-	// }
-	// @Override
-	// public List<PaymentGas> getGasByInvoice(Invoice invoice) {
-	// return gas.getGasByInvoice(invoice);
-	//
-	// }
-	// @Override
-	// public List<PaymentWater> getWaterByInvoice(Invoice invoice) {
-	// return water.getWaterByInvoice(invoice);
-	//
-	// }
-	// @Override
-	// public PaymentAbstract getPaymentByInvoice(Invoice invoice) {
-	//
-	// return null;
-	// }
+	@Autowired
+	private InvoiceEnergyDAO invoiceEnergy;
 
 	@Override
 	public List<PaymentEnergy> getEnergyPaymentByDate(ReadingEnergy reading) {
@@ -125,7 +107,7 @@ public class PaymentServiceImpl implements PaymentService {
 	@Override
 	public void saveEnergy(List<PaymentEnergy> payment) {
 		energy.saveEnergy(payment);
-
+		invoiceEnergy.resolveInvoice(payment.get(0).getInvoice());
 	}
 
 	@Override
@@ -138,10 +120,12 @@ public class PaymentServiceImpl implements PaymentService {
 	public List<PaymentEnergy> getPaymentEnergyForTenant(Tenant tenant) {
 		return energy.getPaymentEnergyForTenant(tenant);
 	}
+
 	@Override
 	public List<PaymentGas> getPaymentGasForTenant(Tenant tenant) {
 		return gas.getPaymentGasForTenant(tenant);
 	}
+
 	@Override
 	public List<PaymentWater> getPaymentWaterForTenant(Tenant tenant) {
 		return water.getPaymentWaterForTenant(tenant);

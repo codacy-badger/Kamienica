@@ -89,22 +89,22 @@ public class ReadingGasDAOImpl extends AbstractDao<Integer, ReadingGas> implemen
 		return result;
 	}
 
-	@SuppressWarnings("unchecked")
-	public List<Date> getReadingDatesForPayment(PaymentAbstract payment) {
-		if (payment.getReadingDate() != null) {
-			Query query = getSession()
-					.createSQLQuery(
-							"SELECT readingdate FROM readinggas where readingdate >= :date GROUP BY readingdate ORDER BY readingdate asc")
-					.setParameter("date", payment.getReadingDate());
-			return query.list();
-		} else {
-			Query query = getSession()
-					.createSQLQuery(
-							"SELECT readingdate FROM readinggas where readingdate >= :date GROUP BY readingdate ORDER BY readingdate asc")
-					.setParameter("date", "19800101");
-			return query.list();
-		}
-	}
+//	@SuppressWarnings("unchecked")
+//	public List<Date> getReadingDatesForPayment(PaymentAbstract payment) {
+//		if (payment.getReadingDate() != null) {
+//			Query query = getSession()
+//					.createSQLQuery(
+//							"SELECT readingdate FROM readinggas where readingdate >= :date GROUP BY readingdate ORDER BY readingdate asc")
+//					.setParameter("date", payment.getReadingDate());
+//			return query.list();
+//		} else {
+//			Query query = getSession()
+//					.createSQLQuery(
+//							"SELECT readingdate FROM readinggas where readingdate >= :date GROUP BY readingdate ORDER BY readingdate asc")
+//					.setParameter("date", "19800101");
+//			return query.list();
+//		}
+//	}
 
 	@SuppressWarnings("unchecked")
 	public List<ReadingGas> getUnresolvedReadings() {

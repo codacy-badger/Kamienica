@@ -30,10 +30,7 @@ public abstract class PaymentAbstract {
 	private double paymentAmount;
 	@ManyToOne
 	private Tenant tenant;
-	@Column
-	@Temporal(TemporalType.DATE)
-	@DateTimeFormat(pattern = "yyyy.MM.dd")
-	private Date readingDate;
+
 
 
 	public int getId() {
@@ -68,13 +65,7 @@ public abstract class PaymentAbstract {
 		this.tenant = tenant;
 	}
 
-	public Date getReadingDate() {
-		return readingDate;
-	}
 
-	public void setReadingDate(Date readingDate) {
-		this.readingDate = readingDate;
-	}
 
 	@Override
 	public String toString() {
@@ -85,12 +76,12 @@ public abstract class PaymentAbstract {
 	public PaymentAbstract() {
 	}
 
-	public PaymentAbstract(int id, Date paymentDate, double paymentAmount, Tenant tenant, Date readingDate) {
+	public PaymentAbstract(int id, Date paymentDate, double paymentAmount, Tenant tenant) {
 		super();
 		this.id = id;
 		this.paymentDate = paymentDate;
 		this.paymentAmount = paymentAmount;
 		this.tenant = tenant;
-		this.readingDate = readingDate;
+		
 	}
 }

@@ -75,11 +75,11 @@ public interface ReadingService {
 
 	public HashMap<Integer, ReadingWater> getLatestWaterReadings();
 
-	public List<Date> getEnergyReadingDatesForPayment(PaymentAbstract payment);
-
-	public List<Date> getWaterReadingDatesForPayment(PaymentAbstract payment);
-
-	public List<Date> getGasReadingDatesForPayment(PaymentAbstract payment);
+//	public List<Date> getEnergyReadingDatesForPayment(PaymentAbstract payment);
+//
+//	public List<Date> getWaterReadingDatesForPayment(PaymentAbstract payment);
+//
+//	public List<Date> getGasReadingDatesForPayment(PaymentAbstract payment);
 
 	public List<ReadingWater> getWaterReadingsForGasConsumption(ReadingAbstract reading);
 	

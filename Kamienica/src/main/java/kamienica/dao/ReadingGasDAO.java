@@ -31,7 +31,7 @@ public interface ReadingGasDAO {
 
 	public HashMap<Integer, ReadingGas> getLatestReadingsMap();
 
-	public List<Date> getReadingDatesForPayment(PaymentAbstract payment);
+//	public List<Date> getReadingDatesForPayment(PaymentAbstract payment);
 
 	public List<ReadingGas> getListForTenant(Apartment apartment);
 

@@ -22,7 +22,7 @@ public interface InvoiceWaterDAO {
 
 	public List<InvoiceWater> getInvoicesForPayment(PaymentWater payment);
 
-	public List<Invoice> getInvoicesForCalulation(Invoice first, Invoice second);
+	public List<InvoiceWater> getInvoicesForCalulation(Invoice invoice);
 
 	List<InvoiceWater> getUnpaidInvoices();
 }

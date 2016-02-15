@@ -17,13 +17,10 @@ public class PaymentEnergy extends PaymentAbstract {
 
 	}
 
-
-	public PaymentEnergy(int id, Date paymentDate, double paymentAmount, Tenant tenant, Date readingDate,
-			InvoiceEnergy invoice) {
-		super(id, paymentDate, paymentAmount, tenant, readingDate);
+	public PaymentEnergy(int id, Date paymentDate, double paymentAmount, Tenant tenant, InvoiceEnergy invoice) {
+		super(id, paymentDate, paymentAmount, tenant);
 		this.invoice = invoice;
 	}
-
 
 	public InvoiceEnergy getInvoice() {
 		return invoice;
@@ -33,13 +30,11 @@ public class PaymentEnergy extends PaymentAbstract {
 		this.invoice = invoice;
 	}
 
-
 	@Override
 	public String toString() {
 		return "PaymentEnergy [invoice=" + invoice + ", getId()=" + getId() + ", getPaymentDate()=" + getPaymentDate()
-				+ ", getPaymentAmount()=" + getPaymentAmount() + ", getTenant()=" + getTenant() + ", getReadingDate()="
-				+ getReadingDate() + ", toString()=" + super.toString() + ", getClass()=" + getClass() + ", hashCode()="
-				+ hashCode() + "]";
+				+ ", getPaymentAmount()=" + getPaymentAmount() + ", getTenant()=" + getTenant() + ", toString()="
+				+ super.toString() + ", getClass()=" + getClass() + ", hashCode()=" + hashCode() + "]";
 	}
 
 }

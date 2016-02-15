@@ -9,7 +9,6 @@ import org.springframework.stereotype.Repository;
 
 import kamienica.dao.AbstractDao;
 import kamienica.model.Invoice;
-import kamienica.model.InvoiceEnergy;
 import kamienica.model.InvoiceWater;
 import kamienica.model.PaymentStatus;
 import kamienica.model.PaymentWater;
@@ -18,7 +17,6 @@ import kamienica.model.PaymentWater;
 @Transactional
 public class InvoiceWaterDAOImpl extends AbstractDao<Integer, InvoiceWater> implements InvoiceWaterDAO {
 
-	
 	public void deleteByID(int id) {
 		Query query = getSession().createSQLQuery("delete from invoicewater where id = :id");
 		query.setInteger("id", id);
@@ -59,25 +57,24 @@ public class InvoiceWaterDAOImpl extends AbstractDao<Integer, InvoiceWater> impl
 		return query.list();
 	}
 
-	public List<Invoice> getInvoicesForCalulation(Invoice first, Invoice second) {
+	@SuppressWarnings("unchecked")
+	public List<InvoiceWater> getInvoicesForCalulation(Invoice invoice) {
 		Query query = getSession()
 				.createSQLQuery(
-						"select * from kamienica.invoicewater where date >  :date1 and date <= :date2 order by date asc")
-				.addEntity(InvoiceWater.class).setParameter("date1", first.getDate())
-				.setParameter("date2", second.getDate());
-		@SuppressWarnings("unchecked")
-		List<Invoice> invoice = query.list();
-		return invoice;
+						"select * from kamienica.invoiceWater where status = :status and date <= :date order by date asc")
+				.addEntity(InvoiceWater.class).setParameter("date", invoice.getDate())
+				.setParameter("status", PaymentStatus.UNPAID.getPaymentStatus());
+		return query.list();
+
 	}
 
 	@Override
 	public List<InvoiceWater> getUnpaidInvoices() {
-		Query query = getSession()
-				.createSQLQuery("select * from invoicewater where status =  :stat  order by date asc")
+		Query query = getSession().createSQLQuery("select * from invoicewater where status =  :stat  order by date asc")
 				.addEntity(InvoiceWater.class).setParameter("stat", PaymentStatus.UNPAID.getPaymentStatus());
 		@SuppressWarnings("unchecked")
 		List<InvoiceWater> invoice = query.list();
 		return invoice;
 	}
-	
+
 }

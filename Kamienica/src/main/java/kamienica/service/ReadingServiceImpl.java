@@ -140,20 +140,20 @@ public class ReadingServiceImpl implements ReadingService {
 		return water.getLatestList();
 	}
 
-	@Override
-	public List<Date> getEnergyReadingDatesForPayment(PaymentAbstract payment) {
-		return energy.getReadingDatesForPayment(payment);
-	}
-
-	@Override
-	public List<Date> getWaterReadingDatesForPayment(PaymentAbstract payment) {
-		return water.getReadingDatesForPayment(payment);
-	}
-
-	@Override
-	public List<Date> getGasReadingDatesForPayment(PaymentAbstract payment) {
-		return gas.getReadingDatesForPayment(payment);
-	}
+//	@Override
+//	public List<Date> getEnergyReadingDatesForPayment(PaymentAbstract payment) {
+//		return energy.getReadingDatesForPayment(payment);
+//	}
+//
+//	@Override
+//	public List<Date> getWaterReadingDatesForPayment(PaymentAbstract payment) {
+//		return water.getReadingDatesForPayment(payment);
+//	}
+//
+//	@Override
+//	public List<Date> getGasReadingDatesForPayment(PaymentAbstract payment) {
+//		return gas.getReadingDatesForPayment(payment);
+//	}
 
 	@Override
 	public List<ReadingWater> getWaterReadingsForGasConsumption(ReadingAbstract reading) {
@@ -169,7 +169,6 @@ public class ReadingServiceImpl implements ReadingService {
 
 	@Override
 	public void saveWaterList(List<ReadingWater> reading) {
-		System.out.println("jestem w metoddzie");
 		for (ReadingWater i : reading) {
 			water.save(i);
 		}
@@ -178,7 +177,7 @@ public class ReadingServiceImpl implements ReadingService {
 
 	@Override
 	public void saveEnergyList(List<ReadingEnergy> reading) {
-		System.out.println("jestem w metoddzie");
+	
 		energy.saveList(reading);
 
 	}

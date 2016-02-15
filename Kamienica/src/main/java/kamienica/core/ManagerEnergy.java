@@ -1,6 +1,7 @@
 package kamienica.core;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import org.joda.time.DateTime;
 import org.joda.time.Days;
@@ -12,7 +13,7 @@ import kamienica.model.UsageValue;
 public class ManagerEnergy {
 
 	public static ArrayList<UsageValue> countEnergyConsupmtion(ArrayList<Apartment> apartment,
-			ArrayList<ReadingEnergy> oldReadings, ArrayList<ReadingEnergy> newReadings) {
+			List<ReadingEnergy> oldReadings, List<ReadingEnergy> newReadings) {
 		ArrayList<UsageValue> out = new ArrayList<UsageValue>();
 		for (Apartment m : apartment) {
 			UsageValue tmp = new UsageValue();

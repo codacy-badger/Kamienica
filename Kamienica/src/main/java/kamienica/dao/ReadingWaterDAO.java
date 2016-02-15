@@ -30,7 +30,7 @@ public interface ReadingWaterDAO {
 
 	public HashMap<Integer, ReadingWater> getLatestReadingsMap();
 
-	public List<Date> getReadingDatesForPayment(PaymentAbstract payment);
+//	public List<Date> getReadingDatesForPayment(PaymentAbstract payment);
 
 	public List<ReadingWater> getWaterReadingsForGasConsumption(ReadingAbstract reading);
 	

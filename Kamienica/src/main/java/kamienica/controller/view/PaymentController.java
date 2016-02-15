@@ -24,6 +24,8 @@ import kamienica.conventer.MeterEnergyIB;
 import kamienica.conventer.MeterGasIB;
 import kamienica.conventer.MeterWaterIB;
 import kamienica.conventer.ReadingInvoiceIB;
+import kamienica.core.ManagerEnergy;
+import kamienica.core.ManagerPayment;
 import kamienica.model.Apartment;
 import kamienica.model.Division;
 import kamienica.model.InvoiceEnergy;
@@ -32,7 +34,10 @@ import kamienica.model.InvoiceWater;
 import kamienica.model.MeterEnergy;
 import kamienica.model.MeterGas;
 import kamienica.model.MeterWater;
+import kamienica.model.PaymentEnergy;
+import kamienica.model.ReadingEnergy;
 import kamienica.model.Tenant;
+import kamienica.model.UsageValue;
 import kamienica.service.ApartmentService;
 import kamienica.service.DivisionService;
 import kamienica.service.InvoiceService;
@@ -110,6 +115,11 @@ public class PaymentController {
 		List<InvoiceGas> invoiceGas = invoiceService.getUnpaidInvoiceGas();
 		List<InvoiceWater> invoiceWater = invoiceService.getUnpaidInvoiceWater();
 
+		if (invoiceEnergy.isEmpty() && invoiceGas.isEmpty() && invoiceWater.isEmpty()) {
+			model.put("error", "Brak danych do wprowadzenia. Wprowadź nowe odczyty i faktury by kontynuować");
+			return new ModelAndView("/Admin/Payment/PaymentRegister", "model", model);
+		}
+
 		if (!invoiceEnergy.isEmpty()) {
 			model.put("energy", invoiceEnergy);
 		}
@@ -118,11 +128,6 @@ public class PaymentController {
 		}
 		if (!invoiceWater.isEmpty()) {
 			model.put("water", invoiceWater);
-		}
-
-		if (invoiceEnergy.isEmpty() && invoiceGas.isEmpty() && invoiceWater.isEmpty()) {
-			model.put("error", "Brak danych do wprowadzenia. Wprowadź nowe odczyty i faktury by kontynuować");
-			return new ModelAndView("/Admin/Payment/PaymentRegister", "model", model);
 		}
 
 		return new ModelAndView("/Admin/Payment/PaymentRegister", "model", model);
@@ -213,10 +218,33 @@ public class PaymentController {
 			return new ModelAndView("/admin/PaymentRegister", "model", model);
 		}
 
-		List<InvoiceEnergy> invoiceEnergyForCalculation = invoiceService
-				.getInvoicesEnergyForCalulation(invoiceWrapper.getEnergy());
+		if (invoiceWrapper.getEnergy() != null) {
+			List<InvoiceEnergy> invoicesEnergyForCalculation = invoiceService
+					.getInvoicesEnergyForCalulation(invoiceWrapper.getEnergy());
 
-		System.out.println(invoiceEnergyForCalculation.toString());
+			List<ReadingEnergy> readingEnergyOld = new ArrayList<>();
+
+			try {
+				readingEnergyOld = readingService.getReadingEnergyByDate(
+						invoiceService.getLatestPaidEnergy().getBaseReading().getReadingDate().toString());
+			} catch (NullPointerException e) {
+			}
+			List<ReadingEnergy> readingEnergyNew = readingService
+					.getReadingEnergyByDate(invoiceWrapper.getEnergy().getBaseReading().getReadingDate().toString());
+
+			System.out.println("listy:");
+			System.out.println(readingEnergyOld.toString());
+			System.out.println(readingEnergyNew.toString());
+
+			ArrayList<UsageValue> usageEnergy = ManagerEnergy.countEnergyConsupmtion(apartments, readingEnergyOld,
+					readingEnergyNew);
+
+			List<PaymentEnergy> paymentEnergy = ManagerPayment.createPaymentEnergyList(tenants,
+					invoicesEnergyForCalculation, division, usageEnergy);
+			
+			paymentService.saveEnergy(paymentEnergy);
+		}
+
 		// if (invoiceWrapper.getGasFirst() != null &&
 		// invoiceWrapper.getGasLast() != null) {
 		//
