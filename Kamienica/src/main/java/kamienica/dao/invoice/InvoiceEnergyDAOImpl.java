@@ -1,5 +1,7 @@
 package kamienica.dao.invoice;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.List;
 
 import javax.transaction.Transactional;
@@ -57,15 +59,15 @@ public class InvoiceEnergyDAOImpl extends AbstractDao<Integer, InvoiceEnergy> im
 		return query.list();
 	}
 
-	public List<Invoice> getInvoicesForCalulation(Invoice first, Invoice second) {
+	@SuppressWarnings("unchecked")
+	public List<InvoiceEnergy> getInvoicesForCalulation(Invoice invoice) {
 		Query query = getSession()
 				.createSQLQuery(
-						"select * from kamienica.invoiceenergy where date >  :date1 and date <= :date2 order by date asc")
-				.addEntity(InvoiceEnergy.class).setParameter("date1", first.getDate())
-				.setParameter("date2", second.getDate());
-		@SuppressWarnings("unchecked")
-		List<Invoice> invoice = query.list();
-		return invoice;
+						"select * from kamienica.invoiceenergy where status = :status and date <= :date order by date asc")
+				.addEntity(InvoiceEnergy.class).setParameter("date", invoice.getDate())
+				.setParameter("status", PaymentStatus.UNPAID.getPaymentStatus());
+		return query.list();
+
 	}
 
 	@Override
@@ -76,6 +78,14 @@ public class InvoiceEnergyDAOImpl extends AbstractDao<Integer, InvoiceEnergy> im
 		@SuppressWarnings("unchecked")
 		List<InvoiceEnergy> invoice = query.list();
 		return invoice;
+	}
+
+	@Override
+	public InvoiceEnergy getLastResolved() {
+		Query query = getSession()
+				.createSQLQuery("select * from invoiceenergy where status =  :stat  order by date desc limit 1")
+				.addEntity(InvoiceEnergy.class).setParameter("stat", PaymentStatus.PAID.getPaymentStatus());
+		return (InvoiceEnergy) query.uniqueResult();
 	}
 
 }

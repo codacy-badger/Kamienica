@@ -22,7 +22,7 @@ public interface InvoiceGasDAO {
 
 	public List<InvoiceGas> getInvoicesForPayment(PaymentGas payment);
 
-	public List<Invoice> getInvoicesForCalulation(Invoice first, Invoice second);
+	public List<InvoiceGas> getInvoicesForCalulation(Invoice invoice);
 
 	List<InvoiceGas> getUnpaidInvoices();
 }

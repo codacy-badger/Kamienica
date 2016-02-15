@@ -116,7 +116,8 @@ public class ReadingEnergyDAOImpl extends AbstractDao<Integer, ReadingEnergy> im
 	public List<ReadingEnergy> getUnresolvedReadings() {
 		Query query = getSession().createSQLQuery("SELECT r.id, r.readingDate, r.value, r.unit, r.meter_id, r.resolved "
 				+ "FROM readingenergy r join meterEnergy m on r.meter_id = m.id "
-				+ "where r.resolved = 0 and m.apartment_id is null").addEntity(ReadingEnergy.class);;
+				+ "where r.resolved = 0 and m.apartment_id is null").addEntity(ReadingEnergy.class);
+		;
 
 		return query.list();
 
@@ -125,21 +126,30 @@ public class ReadingEnergyDAOImpl extends AbstractDao<Integer, ReadingEnergy> im
 	@Override
 	public void ResolveReadings(InvoiceEnergy invoice) {
 		Query query = getSession()
-				.createSQLQuery(
-						"update readingenergy set resolved= :res where readingDate = :paramdate")
+				.createSQLQuery("update readingenergy set resolved= :res where readingDate = :paramdate")
 				.setParameter("paramdate", invoice.getBaseReading().getReadingDate()).setParameter("res", true);
 		query.executeUpdate();
-		
+
 	}
 
 	@Override
 	public void UnresolveReadings(InvoiceEnergy invoice) {
 		Query query = getSession()
-				.createSQLQuery(
-						"update readingenergy set resolved= :res where readingDate = :paramdate")
+				.createSQLQuery("update readingenergy set resolved= :res where readingDate = :paramdate")
 				.setParameter("paramdate", invoice.getBaseReading().getReadingDate()).setParameter("res", false);
 		query.executeUpdate();
-		
+
+	}
+
+	@Override
+	@SuppressWarnings("unchecked")
+	public List<ReadingEnergy> getLastPaid(InvoiceEnergy invoice) {
+		Query query = getSession()
+				.createSQLQuery(
+						"SELECT * FROM readingenergy where status = :stat order by date desc l")
+				.setParameter("stat", PaymentStatus.PAID.getPaymentStatus());
+		return query.list();
+
 	}
 
 }

@@ -21,6 +21,9 @@ import org.springframework.web.servlet.view.ContentNegotiatingViewResolver;
 import org.springframework.web.servlet.view.InternalResourceViewResolver;
 import org.springframework.web.servlet.view.JstlView;
 
+import kamienica.conventer.InvoiceEnergyConverter;
+import kamienica.conventer.InvoiceGasConverter;
+import kamienica.conventer.InvoiceWaterConverter;
 import kamienica.conventer.ReadingEnergyConverter;
 import kamienica.conventer.ReadingGasConverter;
 import kamienica.conventer.ReadingWaterConverter;
@@ -36,7 +39,12 @@ public class AppConfig extends WebMvcConfigurerAdapter {
 	ReadingGasConverter readingGasConverter;
 	@Autowired
 	ReadingWaterConverter readingWaterConverter;
-	
+	@Autowired
+	InvoiceGasConverter invoiceGasConverter;
+	@Autowired
+	InvoiceWaterConverter invoiceWaterConverter;
+	@Autowired
+	InvoiceEnergyConverter invoiceEnergyConverter;
 	
 	@Override
 	public void configureContentNegotiation(ContentNegotiationConfigurer configurer) {
@@ -78,6 +86,9 @@ public class AppConfig extends WebMvcConfigurerAdapter {
 		registry.addConverter(readingEnergyConverter);
 		registry.addConverter(readingGasConverter);
 		registry.addConverter(readingWaterConverter);
+		registry.addConverter(invoiceEnergyConverter);
+		registry.addConverter(invoiceGasConverter);
+		registry.addConverter(invoiceWaterConverter);
 	}
 
 	@Bean

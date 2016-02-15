@@ -22,7 +22,10 @@ public interface InvoiceEnergyDAO {
 
 	public List<InvoiceEnergy> getInvoicesForPayment(PaymentEnergy payment);
 
-	public List<Invoice> getInvoicesForCalulation(Invoice first, Invoice second);
+	public List<InvoiceEnergy> getInvoicesForCalulation(Invoice invoice);
 	
 	public List<InvoiceEnergy> getUnpaidInvoices();
+	
+	public InvoiceEnergy getLastResolved();
+	
 }

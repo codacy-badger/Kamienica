@@ -153,7 +153,8 @@
 									<c:forEach items="${model.energy }" var="energy">
 										<tr>
 
-											<td><input type="radio" name="paymentEnergy"></td>
+											<td><input type="radio" name="energy"
+												value="${energy.id }" checked="checked"></td>
 											<td>${energy.date }</td>
 											<td>${energy.totalAmount }</td>
 											<td>${energy.baseReading.readingDate}</td>
@@ -178,7 +179,8 @@
 									<c:forEach items="${model.water }" var="water">
 										<tr>
 
-											<td><input type="radio" name="paymentWater"></td>
+											<td><input type="radio" name="water"
+												value="${water.id }" checked="checked"></td>
 											<td>${water.date }</td>
 											<td>${water.totalAmount }</td>
 											<td>${water.baseReading.readingDate}</td>
@@ -202,7 +204,8 @@
 									<c:forEach items="${model.gas }" var="gas">
 										<tr>
 
-											<td><input type="radio" name="paymentGas"></td>
+											<td><input type="radio" name="gas"
+												value="${gas.id }" checked="checked"></td>
 											<td>${gas.date }</td>
 											<td>${gas.totalAmount }</td>
 											<td>${gas.baseReading.readingDate}</td>

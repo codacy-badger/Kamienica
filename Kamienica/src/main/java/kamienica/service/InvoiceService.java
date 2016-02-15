@@ -58,11 +58,13 @@ public interface InvoiceService {
 
 	public List<Invoice> getInvoicesGasForCalulation(Invoice first, Invoice second);
 
-	public List<Invoice> getInvoicesEnergyForCalulation(Invoice first, Invoice second);
+	public List<InvoiceEnergy> getInvoicesEnergyForCalulation(Invoice invoice);
 
 	public List<InvoiceEnergy> getUnpaidInvoiceEnergy();
 
 	public List<InvoiceGas> getUnpaidInvoiceGas();
 
 	public List<InvoiceWater> getUnpaidInvoiceWater();
+	
+	public InvoiceEnergy getLatestPaidEnergy();
 }

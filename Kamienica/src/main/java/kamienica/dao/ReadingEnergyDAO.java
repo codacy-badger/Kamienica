@@ -37,8 +37,12 @@ public interface ReadingEnergyDAO {
 	
 	public List<ReadingEnergy> getUnresolvedReadings();
 	
+	public List<ReadingEnergy> getLastPaid(InvoiceEnergy invoice);
+	
 	public void ResolveReadings(InvoiceEnergy invoice);
 	
 	public void UnresolveReadings(InvoiceEnergy invoice);
+	
+	
 	
 }

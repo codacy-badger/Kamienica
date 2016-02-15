@@ -58,21 +58,19 @@ public class InvoiceGasDAOImpl extends AbstractDao<Integer, InvoiceGas> implemen
 		return query.list();
 	}
 
-	public List<Invoice> getInvoicesForCalulation(Invoice first, Invoice second) {
+	@SuppressWarnings("unchecked")
+	public List<InvoiceGas> getInvoicesForCalulation(Invoice invoice) {
 		Query query = getSession()
 				.createSQLQuery(
-						"select * from kamienica.invoicegas where date >  :date1 and date <= :date2 order by date asc")
-				.addEntity(InvoiceGas.class).setParameter("date1", first.getDate())
-				.setParameter("date2", second.getDate());
-		@SuppressWarnings("unchecked")
-		List<Invoice> invoice = query.list();
-		return invoice;
+						"select * from kamienica.invoicegas where status = :status and date <= :date order by date asc")
+				.addEntity(InvoiceGas.class).setParameter("date", invoice.getDate())
+				.setParameter("status", PaymentStatus.UNPAID.getPaymentStatus());
+		return query.list();
 	}
-	
+
 	@Override
 	public List<InvoiceGas> getUnpaidInvoices() {
-		Query query = getSession()
-				.createSQLQuery("select * from invoicegas where status =  :stat  order by date asc")
+		Query query = getSession().createSQLQuery("select * from invoicegas where status =  :stat  order by date asc")
 				.addEntity(InvoiceGas.class).setParameter("stat", PaymentStatus.UNPAID.getPaymentStatus());
 		@SuppressWarnings("unchecked")
 		List<InvoiceGas> invoice = query.list();

@@ -103,9 +103,9 @@ public class InvoiceServiceImpl implements InvoiceService {
 	}
 
 	@Override
-	public List<Invoice> getInvoicesEnergyForCalulation(Invoice first, Invoice second) {
+	public List<InvoiceEnergy> getInvoicesEnergyForCalulation(Invoice incoice) {
 
-		return energy.getInvoicesForCalulation(first, second);
+		return energy.getInvoicesForCalulation(incoice);
 	}
 
 	// Gas
@@ -218,5 +218,11 @@ public class InvoiceServiceImpl implements InvoiceService {
 	@Override
 	public List<InvoiceWater> getUnpaidInvoiceWater() {
 		return water.getUnpaidInvoices();
+	}
+
+	@Override
+	public InvoiceEnergy getLatestPaidEnergy() {
+
+		return energy.getLastResolved();
 	}
 }
