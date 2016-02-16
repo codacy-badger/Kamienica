@@ -133,7 +133,6 @@
 					<th>Id</th>
 					<th>Wartość Opłaty</th>
 					<th>Data Rachunku</th>
-					<th>Data Odczytu</th>
 					<th>Najemca</th>
 					<th>Nr Faktury</th>
 					<th>Usuń</th>
@@ -143,7 +142,6 @@
 						<td><c:out value="${payment.id}" /></td>
 						<td><c:out value="${payment.paymentAmount}" /></td>
 						<td><c:out value="${payment.paymentDate}" /></td>
-						<td><c:out value="${payment.readingDate}" /></td>
 						<td><c:out value="${payment.tenant.firstName}" /> <c:out
 								value="${payment.tenant.lastName}" /></td>
 						<td><c:out value="${payment.invoice.serialNumber}" /></td>

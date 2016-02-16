@@ -52,5 +52,7 @@ public interface PaymentService {
 	public PaymentWater getLatestPaymentWater();
 
 	public PaymentGas getLatestPaymentGas();
+	
+	public void deleteEnergyByDate(String date);
 
 }

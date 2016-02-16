@@ -128,7 +128,7 @@
 		</div>
 		<div class='row'>
 			<c:if test="${!empty model.error}">
-				<p>${model.error}
+				<div class="alert alert-info">${model.error}</div>
 			</c:if>
 		</div>
 		<c:if test="${empty model.error}">

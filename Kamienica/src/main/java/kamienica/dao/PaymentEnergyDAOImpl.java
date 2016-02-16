@@ -75,4 +75,13 @@ public class PaymentEnergyDAOImpl extends AbstractDao<Integer, PaymentEnergy> im
 
 		}
 	}
+
+	@Override
+	public void deleteByDate(String date) {
+		Query query = getSession().createSQLQuery("delete from paymentenergy where readingdate =:date")
+				.addEntity(PaymentEnergy.class).setString("date", date);
+		 query.executeUpdate();
+	
+		
+	}
 }

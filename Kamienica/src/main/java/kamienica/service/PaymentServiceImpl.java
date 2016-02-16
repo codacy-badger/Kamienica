@@ -139,4 +139,10 @@ public class PaymentServiceImpl implements PaymentService {
 	public List<PaymentWater> getPaymentWaterForTenant(Tenant tenant) {
 		return water.getPaymentWaterForTenant(tenant);
 	}
+
+	@Override
+	public void deleteEnergyByDate(String date) {
+		energy.deleteByDate(date);
+
+	}
 }

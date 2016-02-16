@@ -96,7 +96,7 @@
 						<li><a href="../Admin/Payment/paymentGasList">Gaz</a></li>
 						<li><a href="../Admin/Payment/paymentEnergyList">Energia</a></li>
 						<li><a href="../Admin/Payment/paymentWaterList">Woda</a></li>
-					
+
 					</ul></li>
 			</ul>
 
@@ -119,17 +119,16 @@
 	<!-- /.container-fluid --> </nav>
 
 	<div class="container" role="main">
-
-		<div class="jumbotron">
-			<h1>Kamienica - Strona Admina</h1>
+		<div class='row'>
+			<div class="jumbotron">
+				<h1>Kamienica - Strona Admina</h1>
+			</div>
 		</div>
-
-
 
 		<div class="row">
 			<div class="col-md-6">
 				<div class="list-group">
-					<p class="list-group-item active">Wprowadź</p>
+					<p class="list-group-item active myListGroup">Wprowadź</p>
 					<a href="Payment/paymentRegister.html" class="list-group-item">OPŁATA</a>
 					<a href="Reading/readingEnergyRegister.html"
 						class="list-group-item">ODCZYT - ENERGIA</a> <a
@@ -149,27 +148,26 @@
 			</div>
 
 
-			<div class="row">
-				<div class="col-md-6">
-					<div class="list-group">
-						<p class="list-group-item active">Sprawdź/Edytuj</p>
-						<a href="Payment/paymentList.html" class="list-group-item">OPŁATA</a>
-						<a href="Reading/readingEnergyList.html" class="list-group-item">ODCZYT
-							- ENERGIA</a> <a href="Reading/readingWaterList.html"
-							class="list-group-item">ODCZYT - WODA</a> <a
-							href="Reading/readingGasList.html" class="list-group-item">ODCZYT
-							- GAZ</a> <a href="Invoice/invoiceList.html" class="list-group-item">FAKTURY</a>
-						<a href="Apartment/apartmentList.html" class="list-group-item">MIESZKANIA</a>
-						<a href="Tenant/tenantList.html" class="list-group-item">NAJEMCY</a>
-						<a href="Meter/meterWaterList.html" class="list-group-item">LICZNIKI
-							- WODA</a> <a href="Meter/meterEnergyList.html"
-							class="list-group-item">LICZNIKI - ENERGIA</a> <a
-							href="Meter/meterGasList.html" class="list-group-item">LICZNIKI
-							- GAZ</a> <a href="Division/divisionList.html"
-							class="list-group-item">PODZIAŁ</a>
-					</div>
-				</div>
 
+			<div class="col-md-6">
+				<div class="list-group">
+					<p class="list-group-item active myListGroup">Sprawdź/Edytuj</p>
+					<a href="Payment/paymentList.html" class="list-group-item">OPŁATA</a>
+					<a href="Reading/readingEnergyList.html" class="list-group-item">ODCZYT
+						- ENERGIA</a> <a href="Reading/readingWaterList.html"
+						class="list-group-item">ODCZYT - WODA</a> <a
+						href="Reading/readingGasList.html" class="list-group-item">ODCZYT
+						- GAZ</a> <a href="Invoice/invoiceList.html" class="list-group-item">FAKTURY</a>
+					<a href="Apartment/apartmentList.html" class="list-group-item">MIESZKANIA</a>
+					<a href="Tenant/tenantList.html" class="list-group-item">NAJEMCY</a>
+					<a href="Meter/meterWaterList.html" class="list-group-item">LICZNIKI
+						- WODA</a> <a href="Meter/meterEnergyList.html"
+						class="list-group-item">LICZNIKI - ENERGIA</a> <a
+						href="Meter/meterGasList.html" class="list-group-item">LICZNIKI
+						- GAZ</a> <a href="Division/divisionList.html" class="list-group-item">PODZIAŁ</a>
+				</div>
 			</div>
+		</div>
+	</div>
 </body>
 </html>

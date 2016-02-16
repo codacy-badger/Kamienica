@@ -17,6 +17,7 @@ import org.springframework.web.bind.ServletRequestDataBinder;
 import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import kamienica.conventer.ApartmentIB;
@@ -243,6 +244,13 @@ public class PaymentController {
 		model.put("payment", paymentService.getPaymentWaterList());
 		return new ModelAndView("/Admin/Payment/PaymentList2", model);
 
+	}
+
+	// ------------------------------PAYMENTdelete--------------------------------------------------
+	@RequestMapping(value = "/Admin/Payment/paymentEnergyDelete", params = { "date" })
+	public ModelAndView deleteEnergy(@RequestParam(value = "date") String date) {
+		paymentService.deleteEnergyByDate(date);
+		return new ModelAndView("redirect:/Admin/Payment/paymentEnergyList.html");
 	}
 
 }
