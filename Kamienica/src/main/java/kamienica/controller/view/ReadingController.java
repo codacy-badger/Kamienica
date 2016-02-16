@@ -335,13 +335,11 @@ public class ReadingController {
 	@RequestMapping(value = "/Admin/Reading/readingGasEdit", params = { "date" })
 	public ModelAndView readingGasEdit(@RequestParam(value = "date") String date,
 			@ModelAttribute("readingForm") ReadingGasForm readingForm) {
-		System.out.println("=================GAS EDIT START===========");
+
 		List<ReadingGas> readings = readingService.getReadingGasByDate(date);
 		List<ReadingGas> readings2 = readingService.getReadingGasByDate(date);
 		readingForm.setCurrentReadings(readings);
 		String oldDate = "2000-01-01";
-		System.out.println("--------------test booleab------------------------");
-		System.out.println(readingService.getPreviousReadingGas(date).isEmpty());
 		if (!readingService.getPreviousReadingGas(date).isEmpty()) {
 
 			List<ReadingGas> previousReading = readingService.getPreviousReadingGas(date);

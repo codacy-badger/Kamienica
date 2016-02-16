@@ -10,6 +10,8 @@ import kamienica.dao.PaymentEergyDAO;
 import kamienica.dao.PaymentGasDAO;
 import kamienica.dao.PaymentWaterDAO;
 import kamienica.dao.invoice.InvoiceEnergyDAO;
+import kamienica.dao.invoice.InvoiceGasDAO;
+import kamienica.dao.invoice.InvoiceWaterDAO;
 import kamienica.model.Invoice;
 import kamienica.model.PaymentEnergy;
 import kamienica.model.PaymentGas;
@@ -31,6 +33,10 @@ public class PaymentServiceImpl implements PaymentService {
 	private PaymentWaterDAO water;
 	@Autowired
 	private InvoiceEnergyDAO invoiceEnergy;
+	@Autowired
+	private InvoiceWaterDAO invoiceWater;
+	@Autowired
+	private InvoiceGasDAO invoiceGas;
 
 	@Override
 	public List<PaymentEnergy> getEnergyPaymentByDate(ReadingEnergy reading) {
@@ -95,19 +101,22 @@ public class PaymentServiceImpl implements PaymentService {
 	@Override
 	public void saveGas(List<PaymentGas> payment) {
 		gas.saveGas(payment);
-
+		invoiceGas.resolveInvoice(payment.get(0).getInvoice());
 	}
 
 	@Override
 	public void saveWater(List<PaymentWater> payment) {
 		water.saveWater(payment);
-
+		invoiceWater.resolveInvoice(payment.get(0).getInvoice());
 	}
 
 	@Override
 	public void saveEnergy(List<PaymentEnergy> payment) {
 		energy.saveEnergy(payment);
-		invoiceEnergy.resolveInvoice(payment.get(0).getInvoice());
+		for (PaymentEnergy p : payment) {
+			invoiceEnergy.resolveInvoice(p.getInvoice());
+		}
+
 	}
 
 	@Override

@@ -3,6 +3,7 @@ package kamienica.dao.invoice;
 import java.util.List;
 
 import kamienica.model.Invoice;
+import kamienica.model.InvoiceEnergy;
 import kamienica.model.InvoiceGas;
 import kamienica.model.PaymentGas;
 
@@ -25,4 +26,8 @@ public interface InvoiceGasDAO {
 	public List<InvoiceGas> getInvoicesForCalulation(Invoice invoice);
 
 	List<InvoiceGas> getUnpaidInvoices();
+	
+	public InvoiceGas getLastResolved();
+
+	public void resolveInvoice(InvoiceGas invoice);
 }

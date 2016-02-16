@@ -37,8 +37,8 @@ public class ManagerWater {
 			}
 		}
 		double wartoscZuzyciaCzesciAdministracyjnej = zuzycieLicznikaGlownego - sumaZuzyciaPozostalychLicznikow;
-		ReadingWater tmp = new ReadingWater(listaOdczytowWody.get(0).getReadingDate(), wartoscZuzyciaCzesciAdministracyjnej,
-				temporaryWaterMeter);
+		ReadingWater tmp = new ReadingWater(listaOdczytowWody.get(0).getReadingDate(),
+				wartoscZuzyciaCzesciAdministracyjnej, temporaryWaterMeter);
 		return tmp;
 	}
 
@@ -59,48 +59,53 @@ public class ManagerWater {
 		return output;
 	}
 
-	public static ArrayList<UsageValue> countWaterConsumption(
-			List<Apartment> mieszkanie, List<ReadingWater> odczytWodaStare, List<ReadingWater> odczytWodaNowe) {
+	public static ArrayList<UsageValue> countWaterConsumption(List<Apartment> apartment, List<ReadingWater> oldReading,
+			List<ReadingWater> newRading) {
 
-		ReadingWater czescWspolnaStare = ManagerWater.generateUsageForAdministrativePart(odczytWodaStare, mieszkanie);
-		odczytWodaStare.add(czescWspolnaStare);
-		ReadingWater czescWspolnaNowe = ManagerWater.generateUsageForAdministrativePart(odczytWodaNowe, mieszkanie);
-		odczytWodaNowe.add(czescWspolnaNowe);
+		ReadingWater sharedReadingOld;
+		if (!oldReading.isEmpty()) {
+			sharedReadingOld = ManagerWater.generateUsageForAdministrativePart(oldReading, apartment);
+			oldReading.add(sharedReadingOld);
+		}
+		ReadingWater sharedReadingNew = ManagerWater.generateUsageForAdministrativePart(newRading, apartment);
+		newRading.add(sharedReadingNew);
 
+		ArrayList<UsageValue> usage = new ArrayList<UsageValue>();
+		for (Apartment m : apartment) {
+			UsageValue tmpUsage = new UsageValue();
+			tmpUsage.setDescription("Zuzycie calkowite za: " + m.getDescription());
+			tmpUsage.setApartment(m);
+			double sumPrevious = 0;
+			double sumNew = 0;
 
-		ArrayList<UsageValue> generoWanaListaWartosciZuzycia = new ArrayList<UsageValue>();
-		for (Apartment m : mieszkanie) {
-			UsageValue tmp = new UsageValue();
-			tmp.setDescription("Zuzycie calkowite za: " + m.getDescription());
-			tmp.setApartment(m);
-			double sumaPoprzednichOdczytowZaElement = 0;
-			double sumaNowychOdczytowZaElement = 0;
-
-			for (int indexOdczytow = 0; indexOdczytow < odczytWodaStare.size(); indexOdczytow++) {
-				if (odczytWodaNowe.get(indexOdczytow).getMeter().getApartment() != null) {
-					if (odczytWodaNowe.get(indexOdczytow).getMeter().getApartment().getApartmentNumber() == m
-							.getApartmentNumber()) {
-						sumaNowychOdczytowZaElement = sumaNowychOdczytowZaElement
-								+ odczytWodaNowe.get(indexOdczytow).getValue();
+			for (int idx = 0; idx < newRading.size(); idx++) {
+				if (newRading.get(idx).getMeter().getApartment() != null) {
+					if (newRading.get(idx).getMeter().getApartment().getApartmentNumber() == m.getApartmentNumber()) {
+						sumNew = sumNew + newRading.get(idx).getValue();
 					}
 				}
-				if (odczytWodaStare.get(indexOdczytow).getMeter().getApartment() != null) {
-					if (odczytWodaStare.get(indexOdczytow).getMeter().getApartment().getApartmentNumber() == m
-							.getApartmentNumber()) {
-						sumaPoprzednichOdczytowZaElement = sumaPoprzednichOdczytowZaElement
-								+ odczytWodaStare.get(indexOdczytow).getValue();
+				if (!oldReading.isEmpty()) {
+					if (oldReading.get(idx).getMeter().getApartment() != null) {
+						if (oldReading.get(idx).getMeter().getApartment().getApartmentNumber() == m
+								.getApartmentNumber()) {
+							sumPrevious = sumPrevious + oldReading.get(idx).getValue();
+						}
 					}
 				}
 			}
-			double zuzycie = sumaNowychOdczytowZaElement - sumaPoprzednichOdczytowZaElement;
-			tmp.setUsage(zuzycie);
-			tmp.setUnit(odczytWodaNowe.get(0).getUnit());
-			tmp.setDaysBetweenReadings(Days.daysBetween(new DateTime(odczytWodaStare.get(0).getReadingDate()),
-					new DateTime(odczytWodaNowe.get(0).getReadingDate())).getDays());
-			generoWanaListaWartosciZuzycia.add(tmp);
+			double zuzycie = sumNew - sumPrevious;
+			tmpUsage.setUsage(zuzycie);
+			tmpUsage.setUnit(newRading.get(0).getUnit());
+			if (!oldReading.isEmpty()) {
+				tmpUsage.setDaysBetweenReadings(Days.daysBetween(new DateTime(oldReading.get(0).getReadingDate()),
+						new DateTime(newRading.get(0).getReadingDate())).getDays());
+			} else {
+				tmpUsage.setDaysBetweenReadings(0);
+			}
+			usage.add(tmpUsage);
 		}
 
-		return generoWanaListaWartosciZuzycia;
+		return usage;
 
 	}
 

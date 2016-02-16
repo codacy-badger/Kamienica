@@ -1,6 +1,5 @@
 package kamienica.dao;
 
-import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 
@@ -11,7 +10,6 @@ import org.springframework.stereotype.Repository;
 import kamienica.model.Apartment;
 import kamienica.model.InvoiceEnergy;
 import kamienica.model.InvoiceGas;
-import kamienica.model.PaymentAbstract;
 import kamienica.model.ReadingEnergy;
 import kamienica.model.ReadingGas;
 
@@ -134,6 +132,17 @@ public class ReadingGasDAOImpl extends AbstractDao<Integer, ReadingGas> implemen
 				.setParameter("paramdate", invoice.getBaseReading().getReadingDate()).setParameter("res", false);
 		query.executeUpdate();
 		
+	}
+	
+	@Override
+	@SuppressWarnings("unchecked")
+	public List<ReadingGas> getLastPaid(InvoiceGas invoice) {
+		Query query = getSession()
+				.createSQLQuery(
+						"SELECT * FROM readingGas where status = :stat order by date desc l")
+				.setParameter("stat", true);
+		return query.list();
+
 	}
 	
 }

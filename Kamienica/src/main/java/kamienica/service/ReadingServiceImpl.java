@@ -124,21 +124,21 @@ public class ReadingServiceImpl implements ReadingService {
 	public List<ReadingWater> getReadingWaterByDate(String date) {
 		return water.getByDate(date);
 	}
-
-	@Override
-	public List<ReadingEnergy> getLatestEnergyReadingsList() {
-		return energy.getLatestList();
-	}
-
-	@Override
-	public List<ReadingGas> getLatestGasReadingsList() {
-		return gas.getLatestList();
-	}
-
-	@Override
-	public List<ReadingWater> getLatestWaterReadingsList() {
-		return water.getLatestList();
-	}
+//
+//	@Override
+//	public List<ReadingEnergy> getLatestEnergyReadingsList() {
+//		return energy.getLatestList();
+//	}
+//
+//	@Override
+//	public List<ReadingGas> getLatestGasReadingsList() {
+//		return gas.getLatestList();
+//	}
+//
+//	@Override
+//	public List<ReadingWater> getLatestWaterReadingsList() {
+//		return water.getLatestList();
+//	}
 
 //	@Override
 //	public List<Date> getEnergyReadingDatesForPayment(PaymentAbstract payment) {

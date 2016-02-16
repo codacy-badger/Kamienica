@@ -3,6 +3,7 @@ package kamienica.dao;
 import java.util.List;
 
 import kamienica.model.Invoice;
+import kamienica.model.InvoiceEnergy;
 import kamienica.model.PaymentWater;
 import kamienica.model.ReadingWater;
 import kamienica.model.Tenant;
@@ -20,6 +21,8 @@ public interface PaymentWaterDAO {
 	public List<PaymentWater> getPaymentWater();
 
 	public PaymentWater getLatestPaymentWater();
-	
+
 	public List<PaymentWater> getPaymentWaterForTenant(Tenant tenant);
+
+;
 }

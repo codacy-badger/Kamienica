@@ -91,7 +91,7 @@ public class InvoiceEnergyDAOImpl extends AbstractDao<Integer, InvoiceEnergy> im
 	@Override
 	public void resolveInvoice(InvoiceEnergy invoice) {
 		Query query = getSession()
-				.createSQLQuery("update invoiceenergy set status =  :stat  where status = :stat2 and date = :date")
+				.createSQLQuery("update invoiceenergy set status =  :stat  where status = :stat2 and date <= :date")
 				.addEntity(InvoiceEnergy.class).setParameter("stat", PaymentStatus.PAID.getPaymentStatus())
 				.setParameter("stat2", PaymentStatus.UNPAID.getPaymentStatus()).setParameter("date", invoice.getDate());
 		query.executeUpdate();

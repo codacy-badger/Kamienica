@@ -76,4 +76,22 @@ public class InvoiceGasDAOImpl extends AbstractDao<Integer, InvoiceGas> implemen
 		List<InvoiceGas> invoice = query.list();
 		return invoice;
 	}
+
+	@Override
+	public InvoiceGas getLastResolved() {
+		Query query = getSession()
+				.createSQLQuery("select * from invoicegas where status =  :stat  order by date desc limit 1")
+				.addEntity(InvoiceGas.class).setParameter("stat", PaymentStatus.PAID.getPaymentStatus());
+		return (InvoiceGas) query.uniqueResult();
+	}
+	
+	@Override
+	public void resolveInvoice(InvoiceGas invoice) {
+		Query query = getSession()
+				.createSQLQuery("update invoiceGas set status =  :stat  where status = :stat2 and date <= :date")
+				.addEntity(InvoiceGas.class).setParameter("stat", PaymentStatus.PAID.getPaymentStatus())
+				.setParameter("stat2", PaymentStatus.UNPAID.getPaymentStatus()).setParameter("date", invoice.getDate());
+		query.executeUpdate();
+
+	}
 }

@@ -10,6 +10,7 @@ import org.springframework.stereotype.Repository;
 
 import kamienica.model.Apartment;
 import kamienica.model.InvoiceEnergy;
+import kamienica.model.InvoiceGas;
 import kamienica.model.InvoiceWater;
 import kamienica.model.PaymentAbstract;
 import kamienica.model.ReadingAbstract;
@@ -147,5 +148,16 @@ public class ReadingWaterDAOImpl extends AbstractDao<Integer, ReadingWater> impl
 				.setParameter("paramdate", invoice.getBaseReading().getReadingDate()).setParameter("res", false);
 		query.executeUpdate();
 		
+	}
+	
+	@Override
+	@SuppressWarnings("unchecked")
+	public List<ReadingWater> getLastPaid(InvoiceWater invoice) {
+		Query query = getSession()
+				.createSQLQuery(
+						"SELECT * FROM readingWater where status = :stat order by date desc l")
+				.setParameter("stat", true);
+		return query.list();
+
 	}
 }

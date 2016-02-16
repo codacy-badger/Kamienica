@@ -15,9 +15,7 @@
 	src="<c:url value='/static/js/jquery-2.2.0.js' />"></script>
 <script type="text/javascript"
 	src="<c:url value='/static/js/bootstrap.js' />"></script>
-<script type="text/javascript"
-	src="<c:url value='/static/js/jquery.validate.js' />"></script>
-<script type="text/javascript" src="<c:url value='/static/js/jq.js' />"></script>
+
 
 
 

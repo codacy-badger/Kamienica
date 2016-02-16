@@ -37,9 +37,7 @@ public class ManagerEnergy {
 					}
 				}
 			}
-			System.out.println("managerEnergii");
-			System.out.println(sumCurrent);
-			System.out.println(sumPrevious);
+	
 			double usage = sumCurrent - sumPrevious;
 
 			tmp.setUsage(usage);

@@ -139,6 +139,9 @@
 
 					<div class='row'>
 						<div class="col-md-4">
+							<c:if test="${empty model.energy}">
+								<div class="alert alert-info">Brak danych dla energii</div>
+							</c:if>
 							<c:if test="${!empty model.energy}">
 								<table class="table table-hover table-condensed">
 									<tr>
@@ -165,6 +168,9 @@
 						</div>
 
 						<div class="col-md-4">
+							<c:if test="${empty model.water}">
+								<div class="alert alert-info">Brak danych dla wody</div>
+							</c:if>
 							<c:if test="${!empty model.water}">
 								<table class="table table-hover table-condensed">
 									<tr>
@@ -190,6 +196,9 @@
 							</c:if>
 						</div>
 						<div class="col-md-4">
+							<c:if test="${empty model.gas}">
+								<div class="alert alert-info">Brak danych dla gazu</div>
+							</c:if>
 							<c:if test="${!empty model.gas}">
 								<table class="table table-hover table-condensed">
 									<tr>
@@ -204,8 +213,8 @@
 									<c:forEach items="${model.gas }" var="gas">
 										<tr>
 
-											<td><input type="radio" name="gas"
-												value="${gas.id }" checked="checked"></td>
+											<td><input type="radio" name="gas" value="${gas.id }"
+												checked="checked"></td>
 											<td>${gas.date }</td>
 											<td>${gas.totalAmount }</td>
 											<td>${gas.baseReading.readingDate}</td>

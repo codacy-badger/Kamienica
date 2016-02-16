@@ -1,11 +1,9 @@
 package kamienica.service;
 
-import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 
 import kamienica.model.Apartment;
-import kamienica.model.PaymentAbstract;
 import kamienica.model.ReadingAbstract;
 import kamienica.model.ReadingEnergy;
 import kamienica.model.ReadingGas;
@@ -55,11 +53,11 @@ public interface ReadingService {
 
 	public void deleteReadingWater(int id);
 
-	public List<ReadingEnergy> getLatestEnergyReadingsList();
-
-	public List<ReadingGas> getLatestGasReadingsList();
-
-	public List<ReadingWater> getLatestWaterReadingsList();
+//	public List<ReadingEnergy> getLatestEnergyReadingsList();
+//
+//	public List<ReadingGas> getLatestGasReadingsList();
+//
+//	public List<ReadingWater> getLatestWaterReadingsList();
 	
 	
 

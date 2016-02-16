@@ -25,9 +25,12 @@ import kamienica.conventer.MeterGasIB;
 import kamienica.conventer.MeterWaterIB;
 import kamienica.conventer.ReadingInvoiceIB;
 import kamienica.core.ManagerEnergy;
+import kamienica.core.ManagerGas;
 import kamienica.core.ManagerPayment;
+import kamienica.core.ManagerWater;
 import kamienica.model.Apartment;
 import kamienica.model.Division;
+import kamienica.model.Invoice;
 import kamienica.model.InvoiceEnergy;
 import kamienica.model.InvoiceGas;
 import kamienica.model.InvoiceWater;
@@ -35,7 +38,11 @@ import kamienica.model.MeterEnergy;
 import kamienica.model.MeterGas;
 import kamienica.model.MeterWater;
 import kamienica.model.PaymentEnergy;
+import kamienica.model.PaymentGas;
+import kamienica.model.PaymentWater;
 import kamienica.model.ReadingEnergy;
+import kamienica.model.ReadingGas;
+import kamienica.model.ReadingWater;
 import kamienica.model.Tenant;
 import kamienica.model.UsageValue;
 import kamienica.service.ApartmentService;
@@ -92,26 +99,7 @@ public class PaymentController {
 
 		HashMap<String, Object> model = new HashMap<>();
 
-		// ArrayList<Tenant> tenants = (ArrayList<Tenant>)
-		// tenantService.getCurrentTenants();
-		// ArrayList<Division> division = (ArrayList<Division>)
-		// divisionService.getList();
-		// ArrayList<Apartment> apartments = (ArrayList<Apartment>)
-		// apartmentService.getList();
-		//
-		// if
-		// (!DivisionValidator.validateDivisionForPaymentController(apartments,
-		// division, tenants)) {
-		// String message = "Lista aktualnych najemców i mieszkań się nie
-		// zgadza. Sprawdź algorytm podziału";
-		// model.put("error", message);
-		// System.out.println("przed invoicami");
-		// return new ModelAndView("/Admin/Payment/PaymentRegister", "model",
-		// model);
-		// }
-
 		List<InvoiceEnergy> invoiceEnergy = invoiceService.getUnpaidInvoiceEnergy();
-
 		List<InvoiceGas> invoiceGas = invoiceService.getUnpaidInvoiceGas();
 		List<InvoiceWater> invoiceWater = invoiceService.getUnpaidInvoiceWater();
 
@@ -131,69 +119,6 @@ public class PaymentController {
 		}
 
 		return new ModelAndView("/Admin/Payment/PaymentRegister", "model", model);
-		//
-		// PaymentEnergy latestPaymentEnergy =
-		// paymentService.getLatestPaymentEnergy();
-		// PaymentWater latestPaymentWater =
-		// paymentService.getLatestPaymentWater();
-		// PaymentGas latestPaymentGas = paymentService.getLatestPaymentGas();
-		//
-		//
-		// System.out.println(latestPaymentEnergy.toString());
-		// System.out.println(latestPaymentWater.toString());
-		// System.out.println(latestPaymentGas.toString());
-		//
-		// ArrayList<Date> readingDatesEnergy = (ArrayList<Date>) readingService
-		// .getEnergyReadingDatesForPayment(latestPaymentEnergy);
-		// ArrayList<Date> readingDatesWater = (ArrayList<Date>) readingService
-		// .getWaterReadingDatesForPayment(latestPaymentWater);
-		// ArrayList<Date> readingDatesGas = (ArrayList<Date>) readingService
-		// .getGasReadingDatesForPayment(latestPaymentGas);
-		//
-		// List<InvoiceWater> invoiceWater =
-		// invoiceService.getInvoicesWaterForPayment(latestPaymentWater);
-		// List<InvoiceGas> invoiceGas =
-		// invoiceService.getInvoicesGasForPayment(latestPaymentGas);
-		// List<InvoiceEnergy> invoiceEnergy =
-		// invoiceService.getInvoicesEnergyForPayment(latestPaymentEnergy);
-		//
-		// System.out.println(invoiceWater.toString());
-		// System.out.println(invoiceGas.toString());
-		// System.out.println(invoiceEnergy.toString());
-		//
-		// if (readingDatesEnergy.isEmpty() || invoiceEnergy.isEmpty()) {
-		// energy = false;
-		// }
-		// if (readingDatesWater.isEmpty() || invoiceWater.isEmpty()) {
-		// water = false;
-		// }
-		// if (readingDatesGas.isEmpty() || invoiceGas.isEmpty()) {
-		// gas = false;
-		// }
-		//
-		// if (energy == false && water == false && gas == false) {
-		// model.put("error", "Brak nowych danych do wprowadzenia");
-		// return new ModelAndView("/Admin/Payment/NewPaymentRegister", "model",
-		// model);
-		// }
-		//
-		// if (energy) {
-		//
-		// ManagerPayment.prepareModelForNewEnergyPayment(model,
-		// readingDatesEnergy, invoiceEnergy);
-		// }
-		//
-		// if (gas) {
-		// ManagerPayment.prepareModelForNewGasPayment(model, readingDatesGas,
-		// invoiceGas);
-		// }
-		// if (water) {
-		// ManagerPayment.prepareModelForNewWaterPayment(model,
-		// readingDatesWater, invoiceWater);
-		//
-		// }
-		// System.out.println(model.values());
-
 	}
 
 	@RequestMapping("/Admin/Payment/paymentSave")
@@ -201,6 +126,14 @@ public class PaymentController {
 			BindingResult result) {
 
 		HashMap<String, Object> model = new HashMap<>();
+
+		if (invoiceWrapper.getEnergy() == null && invoiceWrapper.getWater() == null
+				&& invoiceWrapper.getGas() == null) {
+			String message = "Nie wybrano żadnych danych...";
+			model.put("warning", message);
+			return new ModelAndView("/admin/PaymentRegister", "model", model);
+		}
+
 		ArrayList<Tenant> tenants = (ArrayList<Tenant>) tenantService.getCurrentTenants();
 		ArrayList<Division> division = (ArrayList<Division>) divisionService.getList();
 		ArrayList<Apartment> apartments = (ArrayList<Apartment>) apartmentService.getList();
@@ -211,17 +144,9 @@ public class PaymentController {
 			return new ModelAndView("/Admin/Payment/PaymentRegister", "model", model);
 		}
 
-		if (invoiceWrapper.getEnergy() == null && invoiceWrapper.getWater() == null
-				&& invoiceWrapper.getGas() == null) {
-			String message = "Nie wybrano żadnych danych...";
-			model.put("warning", message);
-			return new ModelAndView("/admin/PaymentRegister", "model", model);
-		}
-
 		if (invoiceWrapper.getEnergy() != null) {
 			List<InvoiceEnergy> invoicesEnergyForCalculation = invoiceService
 					.getInvoicesEnergyForCalulation(invoiceWrapper.getEnergy());
-
 			List<ReadingEnergy> readingEnergyOld = new ArrayList<>();
 
 			try {
@@ -232,54 +157,64 @@ public class PaymentController {
 			List<ReadingEnergy> readingEnergyNew = readingService
 					.getReadingEnergyByDate(invoiceWrapper.getEnergy().getBaseReading().getReadingDate().toString());
 
-			System.out.println("listy:");
-			System.out.println(readingEnergyOld.toString());
-			System.out.println(readingEnergyNew.toString());
-
 			ArrayList<UsageValue> usageEnergy = ManagerEnergy.countEnergyConsupmtion(apartments, readingEnergyOld,
 					readingEnergyNew);
-			System.out.println("zuzycie:");
-			System.out.println(usageEnergy.toString());
 			List<PaymentEnergy> paymentEnergy = ManagerPayment.createPaymentEnergyList(tenants,
 					invoicesEnergyForCalculation, division, usageEnergy);
-			
 			paymentService.saveEnergy(paymentEnergy);
 		}
 
-		// if (invoiceWrapper.getGasFirst() != null &&
-		// invoiceWrapper.getGasLast() != null) {
-		//
-		// List<Invoice> invoiceGas = (ArrayList<Invoice>)
-		// invoiceService.getInvoicesGasForCalulation(
-		// invoiceWrapper.getGasFirst().getInvoice(),
-		// invoiceWrapper.getGasLast().getInvoice());
-		//
-		// ArrayList<ReadingGas> gasOld = (ArrayList<ReadingGas>)
-		// readingService
-		// .getReadingGasByDate(df.format(invoiceWrapper.getGasFirst().getDate()));
-		// ArrayList<ReadingGas> gasNew = (ArrayList<ReadingGas>)
-		// readingService
-		// .getReadingGasByDate(df.format(invoiceWrapper.getGasLast().getDate()));
-		//
-		// List<ReadingWater> waterNewForGas =
-		// readingService.getWaterReadingsForGasConsumption(gasNew.get(0));
-		// List<ReadingWater> waterOldForGas =
-		// readingService.getWaterReadingsForGasConsumption(waterNewForGas.get(0));
-		//
-		// ArrayList<UsageValue> usage =
-		// ManagerGas.countGasConsumption(apartments, gasOld, gasNew,
-		// waterOldForGas,
-		// waterNewForGas);
-		//
-		// ArrayList<PaymentGas> paymentGas =
-		// ManagerPayment.createPaymentGasList(tenants, invoiceGas,
-		// division,
-		// usage,
-		// gasNew.get(0).getReadingDate());
-		//
-		// paymentService.saveGas(paymentGas);
-		//
-		// }
+		if (invoiceWrapper.getWater() != null) {
+			System.out.println("-----------------------------energia------------------------------------");
+			List<InvoiceWater> invoicesWaterForCalculation = invoiceService
+					.getInvoicesWaterForCalulation(invoiceWrapper.getWater());
+			List<ReadingWater> readingWaterOld = new ArrayList<>();
+			System.out.println(invoicesWaterForCalculation.toString());
+			try {
+				readingWaterOld = readingService.getReadingWaterByDate(
+						invoiceService.getLatestPaidWater().getBaseReading().getReadingDate().toString());
+			} catch (NullPointerException e) {
+			}
+			List<ReadingWater> readingWaterNew = readingService
+					.getReadingWaterByDate(invoiceWrapper.getWater().getBaseReading().getReadingDate().toString());
+
+			ArrayList<UsageValue> usageWater = ManagerWater.countWaterConsumption(apartments, readingWaterOld,
+					readingWaterNew);
+			System.out.println(usageWater.toString());
+			List<PaymentWater> paymentWater = ManagerPayment.createPaymentWaterList(tenants,
+					invoicesWaterForCalculation, division, usageWater);
+
+			paymentService.saveWater(paymentWater);
+		}
+
+		if (invoiceWrapper.getGas() != null) {
+
+			List<InvoiceGas> invoicesGasForCalculation = invoiceService
+					.getInvoicesGasForCalulation(invoiceWrapper.getGas());
+			List<ReadingGas> readingGasOld = new ArrayList<>();
+			List<ReadingWater> waterOldForGas = new ArrayList<>();
+
+			List<ReadingWater> waterNewForGas = readingService.getWaterReadingsForGasConsumption(gasNew.get(0));
+			List<ReadingWater> waterOldForGas = readingService.getWaterReadingsForGasConsumption(waterNewForGas.get(0));
+
+			try {
+				readingGasOld = readingService.getReadingGasByDate(
+						invoiceService.getLatestPaidGas().getBaseReading().getReadingDate().toString());
+				waterOldForGas = readingService.getWaterReadingsForGasConsumption(readingGasOld.get(0));
+			} catch (NullPointerException e) {
+			}
+			List<ReadingGas> readingGasNew = readingService
+					.getReadingGasByDate(invoiceWrapper.getGas().getBaseReading().getReadingDate().toString());
+
+			ArrayList<UsageValue> usageGas = ManagerGas.countGasConsumption(apartments, readingGasOld, readingGasNew,
+					waterOldForGas, waterNewForGas);
+			List<PaymentGas> paymentGas = ManagerPayment.createPaymentGasList(tenants, invoicesGasForCalculation,
+					division, usageGas);
+			paymentService.saveGas(paymentGas);
+
+		}
+		
+		
 		// if (invoiceWrapper.getEnergyFirst() != null &&
 		// invoiceWrapper.getEnergyLast() != null) {
 		//

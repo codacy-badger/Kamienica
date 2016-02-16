@@ -39,7 +39,7 @@ public class ManagerPayment {
 			}
 			System.out.println("manager payemt oplata");
 			System.out.println(oplata);
-//			oplata = Double.parseDouble(decimalFormat.format(oplata));
+			oplata = Double.parseDouble(decimalFormat.format(oplata));
 
 			PaymentEnergy forList = new PaymentEnergy();
 			forList.setInvoice(invoice.get(invoice.size() - 1));
@@ -84,11 +84,11 @@ public class ManagerPayment {
 		return listToReturn;
 	}
 
-	public static ArrayList<PaymentWater> createPaymentWaterList(ArrayList<Tenant> tenants, List<Invoice> invoice,
+	public static ArrayList<PaymentWater> createPaymentWaterList(ArrayList<Tenant> tenants, List<InvoiceWater> invoice,
 			ArrayList<Division> podzial, ArrayList<UsageValue> usage) {
 		ArrayList<PaymentWater> listToReturn = new ArrayList<PaymentWater>();
 		DecimalFormat decimalFormat = new DecimalFormat("#.00");
-		double sumOfExpences = sumTotalValuesOfInvoices(invoice);
+		double sumOfExpences = sumWater(invoice);
 		double sumaZuzycia = sumaZuzycia(usage);
 
 		for (Tenant tenant : tenants) {
@@ -98,14 +98,13 @@ public class ManagerPayment {
 				double ulamek = w.getUsage() / sumaZuzycia;
 				oplata += sumOfExpences * ulamek * podzialDlaNajemcy.get(w.getMieszkanie().getApartmentNumber());
 			}
-			oplata = Double.parseDouble(decimalFormat.format(oplata));
+	//		oplata = Double.parseDouble(decimalFormat.format(oplata));
 
 			PaymentWater forList = new PaymentWater();
-			forList.setInvoice((InvoiceWater) getLastInvoice(invoice));
+			forList.setInvoice(invoice.get((invoice.size() - 1)));
 			forList.setTenant(tenant);
 			forList.setPaymentAmount(oplata);
 			forList.setPaymentDate(new Date());
-
 			listToReturn.add(forList);
 		}
 		return listToReturn;
@@ -131,13 +130,6 @@ public class ManagerPayment {
 		return output;
 	}
 
-	private static double sumTotalValuesOfInvoices(List<Invoice> invoice) {
-		double sum = 0;
-		for (Invoice inv : invoice) {
-			sum = sum + inv.getTotalAmount();
-		}
-		return sum;
-	}
 
 	private static double sumEnergy(List<InvoiceEnergy> invoice) {
 		double sum = 0;

@@ -42,17 +42,17 @@ public interface InvoiceService {
 
 	public InvoiceEnergy getEnergyByID(int id);
 
-	public InvoiceGas getLatestGas();
+//	public InvoiceGas getLatestGas();
+//
+//	public InvoiceWater getLatestWater();
+//
+//	public InvoiceEnergy getLatestEnergy();
 
-	public InvoiceWater getLatestWater();
-
-	public InvoiceEnergy getLatestEnergy();
-
-	public List<InvoiceWater> getInvoicesWaterForPayment(PaymentWater payment);
-
-	public List<InvoiceGas> getInvoicesGasForPayment(PaymentGas payment);
-
-	public List<InvoiceEnergy> getInvoicesEnergyForPayment(PaymentEnergy payment);
+//	public List<InvoiceWater> getInvoicesWaterForPayment(PaymentWater payment);
+//
+//	public List<InvoiceGas> getInvoicesGasForPayment(PaymentGas payment);
+//
+//	public List<InvoiceEnergy> getInvoicesEnergyForPayment(PaymentEnergy payment);
 
 	public List<InvoiceWater> getInvoicesWaterForCalulation(Invoice invoice);
 
@@ -67,4 +67,8 @@ public interface InvoiceService {
 	public List<InvoiceWater> getUnpaidInvoiceWater();
 
 	public InvoiceEnergy getLatestPaidEnergy();
+	
+	public InvoiceWater getLatestPaidWater();
+	
+	public InvoiceGas getLatestPaidGas();
 }

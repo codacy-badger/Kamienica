@@ -1,18 +1,14 @@
 package kamienica.dao;
 
-import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 
 import org.hibernate.Query;
 import org.hibernate.criterion.Order;
-import org.hibernate.criterion.Restrictions;
 import org.springframework.stereotype.Repository;
 
 import kamienica.model.Apartment;
 import kamienica.model.InvoiceEnergy;
-import kamienica.model.PaymentAbstract;
-import kamienica.model.PaymentEnergy;
 import kamienica.model.PaymentStatus;
 import kamienica.model.ReadingEnergy;
 
@@ -147,7 +143,7 @@ public class ReadingEnergyDAOImpl extends AbstractDao<Integer, ReadingEnergy> im
 		Query query = getSession()
 				.createSQLQuery(
 						"SELECT * FROM readingenergy where status = :stat order by date desc l")
-				.setParameter("stat", PaymentStatus.PAID.getPaymentStatus());
+				.setParameter("stat", true);
 		return query.list();
 
 	}
