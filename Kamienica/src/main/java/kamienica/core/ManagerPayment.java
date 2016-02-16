@@ -70,7 +70,7 @@ public class ManagerPayment {
 				oplata += sumOfExpences * ulamek * podzialDlaNajemcy.get(w.getMieszkanie().getApartmentNumber());
 			}
 
-			oplata = Double.parseDouble(decimalFormat.format(oplata));
+			// oplata = Double.parseDouble(decimalFormat.format(oplata));
 
 			PaymentGas forList = new PaymentGas();
 			forList.setInvoice(invoice.get(invoice.size() - 1));
@@ -98,7 +98,7 @@ public class ManagerPayment {
 				double ulamek = w.getUsage() / sumaZuzycia;
 				oplata += sumOfExpences * ulamek * podzialDlaNajemcy.get(w.getMieszkanie().getApartmentNumber());
 			}
-	//		oplata = Double.parseDouble(decimalFormat.format(oplata));
+			// oplata = Double.parseDouble(decimalFormat.format(oplata));
 
 			PaymentWater forList = new PaymentWater();
 			forList.setInvoice(invoice.get((invoice.size() - 1)));
@@ -129,7 +129,6 @@ public class ManagerPayment {
 		}
 		return output;
 	}
-
 
 	private static double sumEnergy(List<InvoiceEnergy> invoice) {
 		double sum = 0;

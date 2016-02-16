@@ -165,7 +165,7 @@ public class PaymentController {
 		}
 
 		if (invoiceWrapper.getWater() != null) {
-			System.out.println("-----------------------------energia------------------------------------");
+
 			List<InvoiceWater> invoicesWaterForCalculation = invoiceService
 					.getInvoicesWaterForCalulation(invoiceWrapper.getWater());
 			List<ReadingWater> readingWaterOld = new ArrayList<>();
@@ -192,82 +192,26 @@ public class PaymentController {
 			List<InvoiceGas> invoicesGasForCalculation = invoiceService
 					.getInvoicesGasForCalulation(invoiceWrapper.getGas());
 			List<ReadingGas> readingGasOld = new ArrayList<>();
-			List<ReadingWater> waterOldForGas = new ArrayList<>();
 
-			List<ReadingWater> waterNewForGas = readingService.getWaterReadingsForGasConsumption(gasNew.get(0));
-			List<ReadingWater> waterOldForGas = readingService.getWaterReadingsForGasConsumption(waterNewForGas.get(0));
+			HashMap<String, List<ReadingWater>> waterForGas = readingService
+					.getWaterReadingsForGasConsumption2(invoiceWrapper.getGas());
 
 			try {
 				readingGasOld = readingService.getReadingGasByDate(
 						invoiceService.getLatestPaidGas().getBaseReading().getReadingDate().toString());
-				waterOldForGas = readingService.getWaterReadingsForGasConsumption(readingGasOld.get(0));
+
 			} catch (NullPointerException e) {
 			}
 			List<ReadingGas> readingGasNew = readingService
 					.getReadingGasByDate(invoiceWrapper.getGas().getBaseReading().getReadingDate().toString());
 
 			ArrayList<UsageValue> usageGas = ManagerGas.countGasConsumption(apartments, readingGasOld, readingGasNew,
-					waterOldForGas, waterNewForGas);
+					waterForGas.get("old"), waterForGas.get("new"));
 			List<PaymentGas> paymentGas = ManagerPayment.createPaymentGasList(tenants, invoicesGasForCalculation,
 					division, usageGas);
 			paymentService.saveGas(paymentGas);
 
 		}
-		
-		
-		// if (invoiceWrapper.getEnergyFirst() != null &&
-		// invoiceWrapper.getEnergyLast() != null) {
-		//
-		// List<Invoice> invoiceEnergy =
-		// invoiceService.getInvoicesEnergyForCalulation(
-		// invoiceWrapper.getEnergyFirst().getInvoice(),
-		// invoiceWrapper.getEnergyLast().getInvoice());
-		//
-		// ArrayList<ReadingEnergy> energyOld = (ArrayList<ReadingEnergy>)
-		// readingService
-		// .getReadingEnergyByDate(df.format(invoiceWrapper.getEnergyFirst().getDate()));
-		// ArrayList<ReadingEnergy> energyNew = (ArrayList<ReadingEnergy>)
-		// readingService
-		// .getReadingEnergyByDate(df.format(invoiceWrapper.getEnergyLast().getDate()));
-		//
-		// ArrayList<UsageValue> usage =
-		// ManagerEnergy.countEnergyConsupmtion(apartments, energyOld,
-		// energyNew);
-		//
-		// ArrayList<PaymentEnergy> paymentEnergy =
-		// ManagerPayment.createEnergyPaymentList(tenants, invoiceEnergy,
-		// division, usage, energyNew.get(0).getReadingDate());
-		//
-		// paymentService.saveEnergy(paymentEnergy);
-		//
-		// }
-		//
-		// if (invoiceWrapper.getWaterFirst() != null &&
-		// invoiceWrapper.getWaterLast() != null) {
-		//
-		// List<Invoice> invoiceWater =
-		// invoiceService.getInvoicesWaterForCalulation(
-		// invoiceWrapper.getWaterFirst().getInvoice(),
-		// invoiceWrapper.getWaterLast().getInvoice());
-		//
-		// ArrayList<ReadingWater> waterOld = (ArrayList<ReadingWater>)
-		// readingService
-		// .getReadingWaterByDate(df.format(invoiceWrapper.getWaterFirst().getDate()));
-		// ArrayList<ReadingWater> waterNew = (ArrayList<ReadingWater>)
-		// readingService
-		// .getReadingWaterByDate(df.format(invoiceWrapper.getWaterLast().getDate()));
-		//
-		// ArrayList<UsageValue> usage =
-		// ManagerWater.countWaterConsumption(apartments, waterOld,
-		// waterNew);
-		//
-		// ArrayList<PaymentWater> paymentWater =
-		// ManagerPayment.createPaymentWaterList(tenants, invoiceWater,
-		// division, usage, waterNew.get(0).getReadingDate());
-		//
-		// paymentService.saveWater(paymentWater);
-		//
-		// }
 
 		return new ModelAndView("redirect:/Admin/Payment/paymentList.html");
 
