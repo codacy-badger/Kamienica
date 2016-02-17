@@ -132,6 +132,12 @@ public class TenantController {
 
 	private Map<String, Object> prepareTenantModel() {
 		List<Apartment> apartment = (apartmentService.getList());
+		for(int i=0; i<apartment.size();i++) {
+			if(apartment.get(0).getApartmentNumber() == 0) {
+				apartment.remove(i);
+				break;
+			}
+		}
 		Map<String, Object> output = new HashMap<String, Object>();
 		if (apartment.isEmpty()) {
 			output.put("error", "Wprowadź przynajmniej jedno mieszkanie do bazy danych");
