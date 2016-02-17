@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import kamienica.dao.ApartmentDao;
+import kamienica.dao.TenantDao;
 import kamienica.model.Apartment;
 
 @Service
@@ -15,6 +16,8 @@ public class ApartmentServiceImpl implements ApartmentService {
 
 	@Autowired
 	ApartmentDao apartmentDAO;
+	@Autowired
+	TenantDao tenantDAO;
 
 	@Override
 	public void save(Apartment apartment) {
@@ -29,6 +32,7 @@ public class ApartmentServiceImpl implements ApartmentService {
 
 	@Override
 	public void deleteByID(int id) {
+		tenantDAO.deactivateByApparmentId(id);
 		apartmentDAO.deleteByID(id);
 
 	}
@@ -45,13 +49,10 @@ public class ApartmentServiceImpl implements ApartmentService {
 
 	}
 
-	@Override
-	public Apartment getByApartmentNumber(int number) {
-		Apartment apartment = apartmentDAO.getByAparmentNumber(number);
-		if (apartment != null ) {
-		System.out.println(apartment.toString()); 
-		}
-		return apartment;
-	}
+//	@Override
+//	public Apartment getByApartmentNumber(int number) {
+//		Apartment apartment = apartmentDAO.getByAparmentNumber(number);
+//		return apartment;
+//	}
 
 }

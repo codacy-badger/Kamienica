@@ -41,35 +41,35 @@ public class PaymentServiceImpl implements PaymentService {
 	@Autowired
 	private InvoiceGasDAO invoiceGas;
 
-	@Override
-	public List<PaymentEnergy> getEnergyPaymentByDate(ReadingEnergy reading) {
-
-		return energy.getEnergyByReading(reading);
-	}
-
-	@Override
-	public List<PaymentGas> getPaymentGasByInvoice(Invoice invoice) {
-
-		return gas.getGasByInvoice(invoice);
-	}
-
-	@Override
-	public List<PaymentGas> getPaymentGasByReadingDate(ReadingGas reading) {
-
-		return gas.getGasByReading(reading);
-	}
-
-	@Override
-	public List<PaymentWater> getPaymentWaterByInvoice(Invoice invoice) {
-
-		return water.getWaterByInvoice(invoice);
-	}
-
-	@Override
-	public List<PaymentWater> getPaymentWaterByReadingDate(ReadingWater reading) {
-
-		return water.getWaterByReading(reading);
-	}
+//	@Override
+//	public List<PaymentEnergy> getEnergyPaymentByDate(ReadingEnergy reading) {
+//
+//		return energy.getEnergyByReading(reading);
+//	}
+//
+//	@Override
+//	public List<PaymentGas> getPaymentGasByInvoice(Invoice invoice) {
+//
+//		return gas.getGasByInvoice(invoice);
+//	}
+//
+//	@Override
+//	public List<PaymentGas> getPaymentGasByReadingDate(ReadingGas reading) {
+//
+//		return gas.getGasByReading(reading);
+//	}
+//
+//	@Override
+//	public List<PaymentWater> getPaymentWaterByInvoice(Invoice invoice) {
+//
+//		return water.getWaterByInvoice(invoice);
+//	}
+//
+//	@Override
+//	public List<PaymentWater> getPaymentWaterByReadingDate(ReadingWater reading) {
+//
+//		return water.getWaterByReading(reading);
+//	}
 
 	@Override
 	public List<PaymentEnergy> getPaymentEnergyList() {
@@ -86,20 +86,20 @@ public class PaymentServiceImpl implements PaymentService {
 		return water.getPaymentWater();
 	}
 
-	@Override
-	public PaymentEnergy getLatestPaymentEnergy() {
-		return energy.getLatestPaymentEnergy();
-	}
-
-	@Override
-	public PaymentWater getLatestPaymentWater() {
-		return water.getLatestPaymentWater();
-	}
-
-	@Override
-	public PaymentGas getLatestPaymentGas() {
-		return gas.getLatestPaymentGas();
-	}
+//	@Override
+//	public PaymentEnergy getLatestPaymentEnergy() {
+//		return energy.getLatestPaymentEnergy();
+//	}
+//
+//	@Override
+//	public PaymentWater getLatestPaymentWater() {
+//		return water.getLatestPaymentWater();
+//	}
+//
+//	@Override
+//	public PaymentGas getLatestPaymentGas() {
+//		return gas.getLatestPaymentGas();
+//	}
 
 	@Override
 	public void saveGas(List<PaymentGas> payment) {
@@ -129,11 +129,11 @@ public class PaymentServiceImpl implements PaymentService {
 
 	}
 
-	@Override
-	public List<PaymentEnergy> getEnergyByInvoice(Invoice invoice) {
-
-		return energy.getEnergyByInvoice(invoice);
-	}
+//	@Override
+//	public List<PaymentEnergy> getEnergyByInvoice(Invoice invoice) {
+//
+//		return energy.getEnergyByInvoice(invoice);
+//	}
 
 	@Override
 	public List<PaymentEnergy> getPaymentEnergyForTenant(Tenant tenant) {

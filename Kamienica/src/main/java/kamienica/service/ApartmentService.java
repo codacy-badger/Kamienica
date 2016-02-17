@@ -16,5 +16,5 @@ public interface ApartmentService {
 
 	public Apartment getById(int id);
 	
-	public Apartment getByApartmentNumber(int number);
+//	public Apartment getByApartmentNumber(int number);
 }

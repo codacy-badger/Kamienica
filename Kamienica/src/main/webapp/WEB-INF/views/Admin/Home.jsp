@@ -126,7 +126,7 @@
 		</div>
 
 		<div class="row">
-			<div class="col-md-6">
+			<div class="col-md-6 col-sm-6 col-xs-12">
 				<div class="list-group">
 					<p class="list-group-item active myListGroup">Wprowadź</p>
 					<a href="Payment/paymentRegister.html" class="list-group-item">OPŁATA</a>
@@ -149,7 +149,7 @@
 
 
 
-			<div class="col-md-6">
+			<div class="col-md-6 col-sm-6 col-xs-12">
 				<div class="list-group">
 					<p class="list-group-item active myListGroup">Sprawdź/Edytuj</p>
 					<a href="Payment/paymentList.html" class="list-group-item">OPŁATA</a>

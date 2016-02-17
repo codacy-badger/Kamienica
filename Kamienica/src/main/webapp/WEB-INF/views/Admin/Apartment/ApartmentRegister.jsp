@@ -128,40 +128,42 @@
 			<c:url var="rejestrujMieszkanie"
 				value="/Admin/Apartment/apartmentSave.html" />
 			<form:form id="rejestrujMieszkanie" modelAttribute="apartment"
-				method="post" action="${rejestrujMieszkanie}">
+				method="post" class="form-horizontal"
+				action="${rejestrujMieszkanie}">
 
-
-				<div class="row  ">
-					<div class="col-md-6 myLabel ">
-						<form:label path="intercom">Domofon</form:label>
+				<div class="form-group">
+					<label class="col-xs-6 control-label">Domofon</label>
+					<div class="col-xs-3">
+						<input class='form-control' name="intercom" />
 					</div>
-					<div class="col-md-6 inputAndError">
-						<form:input  path="intercom" name="intercom" />
+					<div class="col-xs-3 messageContainer">
 						<form:errors path="intercom" class="error" />
 					</div>
 				</div>
 
-				<div class="row">
-					<div class="col-md-6 myLabel ">
-						<form:label path="apartmentNumber">Numer Mieszkania</form:label>
+				<div class="form-group">
+					<label class="col-xs-6 control-label">Numer Mieszkania</label>
+					<div class="col-xs-3">
+						<input class='form-control' name="apartmentNumber" />
 					</div>
-					<div class="col-md-6 inputAndError">
-						<form:input path="apartmentNumber" name="apartmentNumber" />
-
-						<form:errors path="apartmentNumber" class="error" />
+					<div class="col-xs-3 messageContainer">
+						<form:errors path="intercom" class="error" />
 					</div>
 				</div>
 
-				<div class="row">
-					<div class="col-md-6 myLabel ">
-						<form:label path="description">Opis Mieszkania</form:label>
-					</div>
-					<div class="col-md-6 inputAndError">
-						<form:input path="description" name="description" />
 
+				<div class="form-group">
+					<label class="col-xs-6 control-label">Opis Mieszkania</label>
+					<div class="col-xs-3">
+						<input class='form-control' name="description" />
+					</div>
+					<div class="col-xs-3 messageContainer">
 						<form:errors path="description" class="error" />
 					</div>
 				</div>
+
+
+
 
 				<div class="row">
 					<div class="col-md-12  ">
@@ -170,7 +172,7 @@
 					</div>
 				</div>
 
-				
+
 			</form:form>
 		</div>
 	</div>

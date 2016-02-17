@@ -18,7 +18,7 @@ public class TenantServiceImpl implements TenantService {
 
 	@Override
 	public void saveTenant(Tenant tenant) {
-		tenantDao.deactivate(tenant);
+		tenantDao.deactivateByApparmentId(tenant.getApartment().getId());
 		tenantDao.save(tenant);
 
 	}
