@@ -10,7 +10,7 @@ import org.springframework.stereotype.Repository;
 import kamienica.dao.AbstractDao;
 import kamienica.model.Invoice;
 import kamienica.model.InvoiceGas;
-import kamienica.model.PaymentGas;
+import kamienica.model.PaymentStatus;
 
 @Repository("invoiceGas")
 @Transactional
@@ -42,28 +42,67 @@ public class InvoiceGasDAOImpl extends AbstractDao<Integer, InvoiceGas> implemen
 
 	}
 
-	@SuppressWarnings("unchecked")
-	public List<InvoiceGas> getInvoicesForPayment(PaymentGas payment) {
+	// @SuppressWarnings("unchecked")
+	// public List<InvoiceGas> getInvoicesForPayment(PaymentGas payment) {
+	//
+	// String sql = "";
+	// if (payment.getId() < 1) {
+	// sql = "select * from kamienica.invoicegas order by date asc";
+	// } else {
+	// sql = "select * from kamienica.invoicegas where date >= (select date from
+	// kamienica.invoicegas where id = "
+	// + payment.getInvoice().getId() + ") order by date asc ";
+	// }
+	// Query query =
+	// getSession().createSQLQuery(sql).addEntity(InvoiceGas.class);
+	// return query.list();
+	// }
 
-		String sql = "";
-		if (payment.getId() < 1) {
-			sql = "select * from kamienica.invoicegas order by date asc";
-		} else {
-			sql = "select * from kamienica.invoicegas where date >= (select date from kamienica.invoicegas where id = "
-					+ payment.getInvoice().getId() + ") order by date asc ";
-		}
-		Query query = getSession().createSQLQuery(sql).addEntity(InvoiceGas.class);
+	@SuppressWarnings("unchecked")
+	public List<InvoiceGas> getInvoicesForCalulation(Invoice invoice) {
+		Query query = getSession()
+				.createSQLQuery(
+						"select * from kamienica.invoicegas where status = :status and date <= :date order by date asc")
+				.addEntity(InvoiceGas.class).setParameter("date", invoice.getDate())
+				.setParameter("status", PaymentStatus.UNPAID.getPaymentStatus());
 		return query.list();
 	}
 
-	public List<Invoice> getInvoicesForCalulation(Invoice first, Invoice second) {
-		Query query = getSession()
-				.createSQLQuery(
-						"select * from kamienica.invoicegas where date >  :date1 and date <= :date2 order by date asc")
-				.addEntity(InvoiceGas.class).setParameter("date1", first.getDate())
-				.setParameter("date2", second.getDate());
+	@Override
+	public List<InvoiceGas> getUnpaidInvoices() {
+		Query query = getSession().createSQLQuery("select * from invoicegas where status =  :stat  order by date asc")
+				.addEntity(InvoiceGas.class).setParameter("stat", PaymentStatus.UNPAID.getPaymentStatus());
 		@SuppressWarnings("unchecked")
-		List<Invoice> invoice = query.list();
+		List<InvoiceGas> invoice = query.list();
 		return invoice;
 	}
+
+	@Override
+	public InvoiceGas getLastResolved() {
+		Query query = getSession()
+				.createSQLQuery("select * from invoicegas where status =  :stat  order by date desc limit 1")
+				.addEntity(InvoiceGas.class).setParameter("stat", PaymentStatus.PAID.getPaymentStatus());
+		return (InvoiceGas) query.uniqueResult();
+	}
+
+	@Override
+	public void resolveInvoice(InvoiceGas invoice) {
+		Query query = getSession().createSQLQuery("update invoiceGas set status =  :stat  where id = :id")
+				.addEntity(InvoiceGas.class).setParameter("stat", PaymentStatus.PAID.getPaymentStatus())
+				.setParameter("id", invoice.getId());
+		query.executeUpdate();
+
+	}
+
+	@Override
+	public void unresolveInvoice(int id) {
+		Query query = getSession()
+				.createSQLQuery(
+						"update invoicegas invoice join paymentgas_invoicegas jointable on invoice.id = jointable.invoice_id   set status =  :stat  where jointable.paymentgas_id = :id")
+				.addEntity(InvoiceGas.class).setParameter("stat", PaymentStatus.UNPAID.getPaymentStatus())
+				.setParameter("id", id);
+		query.executeUpdate();
+
+	}
+
 }

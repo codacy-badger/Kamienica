@@ -13,34 +13,16 @@ public interface PaymentEergyDAO {
 
 	public void delete(PaymentEnergy payment);
 
+	public void deleteByDate(String date);
 
 	public List<PaymentEnergy> getEnergyByInvoice(Invoice invoice);
 
 	public List<PaymentEnergy> getEnergyByReading(ReadingEnergy reading);
 
 	public List<PaymentEnergy> getPaymentEnergy();
-	
+
 	public List<PaymentEnergy> getPaymentEnergyForTenant(Tenant tenant);
 
 	public PaymentEnergy getLatestPaymentEnergy();
-	
 
-//	@Override
-//	public void saveGas(List<PaymentGas> payment) {
-//		
-//		Transaction tx = getSession().beginTransaction();
-//
-//		for (int i = 0; i < payment.size(); i++) {
-//			PaymentGas tmp = payment.get(i);
-//			getSession().save(tmp);
-//			if (i % 20 == 0) { // 20, same as the JDBC batch size
-//				// flush a batch of inserts and release memory:
-//				getSession().flush();
-//				getSession().clear();
-//			}
-//		}
-//		tx.commit();
-//		getSession().close();
-//		
-//	}
 }

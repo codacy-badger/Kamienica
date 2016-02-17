@@ -22,13 +22,10 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
-import kamienica.forms.ReadingEnergyForm;
-import kamienica.forms.ReadingGasForm;
-import kamienica.forms.ReadingWaterForm;
-import kamienica.initBinder.ApartmentIB;
-import kamienica.initBinder.MeterEnergyIB;
-import kamienica.initBinder.MeterGasIB;
-import kamienica.initBinder.MeterWaterIB;
+import kamienica.conventer.ApartmentIB;
+import kamienica.conventer.MeterEnergyIB;
+import kamienica.conventer.MeterGasIB;
+import kamienica.conventer.MeterWaterIB;
 import kamienica.model.Apartment;
 import kamienica.model.MeterEnergy;
 import kamienica.model.MeterGas;
@@ -39,6 +36,9 @@ import kamienica.model.ReadingWater;
 import kamienica.service.ApartmentService;
 import kamienica.service.MeterService;
 import kamienica.service.ReadingService;
+import kamienica.wrapper.ReadingEnergyForm;
+import kamienica.wrapper.ReadingGasForm;
+import kamienica.wrapper.ReadingWaterForm;
 
 @Controller
 public class ReadingController {
@@ -335,13 +335,11 @@ public class ReadingController {
 	@RequestMapping(value = "/Admin/Reading/readingGasEdit", params = { "date" })
 	public ModelAndView readingGasEdit(@RequestParam(value = "date") String date,
 			@ModelAttribute("readingForm") ReadingGasForm readingForm) {
-		System.out.println("=================GAS EDIT START===========");
+
 		List<ReadingGas> readings = readingService.getReadingGasByDate(date);
 		List<ReadingGas> readings2 = readingService.getReadingGasByDate(date);
 		readingForm.setCurrentReadings(readings);
 		String oldDate = "2000-01-01";
-		System.out.println("--------------test booleab------------------------");
-		System.out.println(readingService.getPreviousReadingGas(date).isEmpty());
 		if (!readingService.getPreviousReadingGas(date).isEmpty()) {
 
 			List<ReadingGas> previousReading = readingService.getPreviousReadingGas(date);

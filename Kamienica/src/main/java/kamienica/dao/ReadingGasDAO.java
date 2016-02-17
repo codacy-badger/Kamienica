@@ -1,14 +1,15 @@
 package kamienica.dao;
 
-import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 
 import kamienica.model.Apartment;
-import kamienica.model.PaymentAbstract;
+import kamienica.model.InvoiceGas;
 import kamienica.model.ReadingGas;
 
 public interface ReadingGasDAO {
+
+	public ReadingGas getById(int id);
 
 	public void save(ReadingGas reading);
 
@@ -26,7 +27,16 @@ public interface ReadingGasDAO {
 
 	public HashMap<Integer, ReadingGas> getLatestReadingsMap();
 
-	public List<Date> getReadingDatesForPayment(PaymentAbstract payment);
+	// public List<Date> getReadingDatesForPayment(PaymentAbstract payment);
 
-	public List<ReadingGas> getListForTenant(Apartment apartment); 
+	public List<ReadingGas> getListForTenant(Apartment apartment);
+
+	public List<ReadingGas> getUnresolvedReadings();
+
+	public List<ReadingGas> getLastPaid(InvoiceGas invoice);
+
+	public void ResolveReadings(InvoiceGas invoice);
+
+	public void UnresolveReadings(InvoiceGas invoice);
+
 }

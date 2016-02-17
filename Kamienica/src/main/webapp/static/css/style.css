@@ -5,6 +5,11 @@
 .inputAndError {
 	text-align: left;
 }
+.myListGroup {
+	background-color: black !important;
+	border-color: black !important;
+}
+
 
 th, td {
 	text-align: center;
@@ -64,10 +69,14 @@ table input {
 	padding: 10%;
 }
 
-.form-control{
+.form-control {
 	width: 150px;
 }
 
 .ignore {
 	
+}
+
+.payment {
+	width: 100%;
 }

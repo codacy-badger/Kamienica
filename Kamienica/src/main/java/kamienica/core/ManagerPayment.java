@@ -6,7 +6,6 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 
-import kamienica.forms.ReadingInvoiceForm;
 import kamienica.model.Division;
 import kamienica.model.Invoice;
 import kamienica.model.InvoiceEnergy;
@@ -17,82 +16,19 @@ import kamienica.model.PaymentGas;
 import kamienica.model.PaymentWater;
 import kamienica.model.Tenant;
 import kamienica.model.UsageValue;
+import kamienica.wrapper.ReadingInvoiceForm;
 
 public class ManagerPayment {
 
-	// public static ArrayList<WartoscOplaty>
-	// generujListeOplatDlaMieszkancow(ArrayList<Tenant> tenants,
-	// HashMap<String, Invoice> listaFaktur, ArrayList<Division> podzial,
-	// ArrayList<UsageValue> zuzycieEnergia,
-	// ArrayList<UsageValue> zuzycieWoda, ArrayList<UsageValue> zuzycieGaz) {
-	//
-	// ArrayList<WartoscOplaty> listToReturn = new
-	// ArrayList<WartoscOplaty>();
-	// DecimalFormat decimalFormat = new DecimalFormat("#.00");
-	//
-	// double sumaGazu = sumaZuzycia(zuzycieGaz);
-	// double sumaWody = sumaZuzycia(zuzycieWoda);
-	// double sumaEnergii = sumaZuzycia(zuzycieEnergia);
-	//
-	// for (Tenant tenant : tenants) {
-	// HashMap<Integer, Double> podzialDlaNajemcy = new HashMap<Integer,
-	// Double>();
-	// double oplataZaGaz = 0;
-	// double oplataZaWode = 0;
-	// double oplataZaEnergie = 0;
-	//
-	// for (Division p : podzial) {
-	// if (tenant.getId() == p.getTenant().getId()) {
-	// podzialDlaNajemcy.put(p.getApartment().getApartmentNumber(),
-	// p.getDivisionValue());
-	// }
-	//
-	// }
-	// for (UsageValue w : zuzycieGaz) {
-	//
-	// double ulamek = w.getUsage() / sumaGazu;
-	// oplataZaGaz += (listaFaktur.get("Gaz").getTotalAmount() * ulamek
-	// * podzialDlaNajemcy.get(w.getMieszkanie().getApartmentNumber()));
-	//
-	// }
-	//
-	// for (UsageValue w : zuzycieEnergia) {
-	// double ulamek = w.getUsage() / sumaEnergii;
-	// oplataZaEnergie += listaFaktur.get("Energia").getTotalAmount() * ulamek
-	// * podzialDlaNajemcy.get(w.getMieszkanie().getApartmentNumber());
-	// }
-	//
-	// for (int i = 0; i < zuzycieWoda.size(); i++) {
-	// double ulamek = zuzycieWoda.get(i).getUsage() / sumaWody;
-	// oplataZaWode += listaFaktur.get("Woda").getTotalAmount() * ulamek
-	// *
-	// podzialDlaNajemcy.get(zuzycieWoda.get(i).getMieszkanie().getApartmentNumber());
-	// }
-	// oplataZaEnergie =
-	// Double.parseDouble(decimalFormat.format(oplataZaEnergie));
-	// oplataZaWode = Double.parseDouble(decimalFormat.format(oplataZaWode));
-	// oplataZaGaz = Double.parseDouble(decimalFormat.format(oplataZaGaz));
-	//
-	// WartoscOplaty forList = new WartoscOplaty(new Date(), oplataZaEnergie,
-	// oplataZaWode, oplataZaGaz, tenant);
-	// forList.setFakturaEnergia((InvoiceEnergy) listaFaktur.get("Energia"));
-	// forList.setFakturaGaz((InvoiceGas) listaFaktur.get("Gaz"));
-	// forList.setFakturaWoda((InvoiceWater) listaFaktur.get("Woda"));
-	// listToReturn.add(forList);
-	// }
-	//
-	// return listToReturn;
-	// }
+	public static ArrayList<PaymentEnergy> createPaymentEnergyList(ArrayList<Tenant> tenants,
+			List<InvoiceEnergy> invoice, ArrayList<Division> division, ArrayList<UsageValue> usage) {
 
-	public static ArrayList<PaymentEnergy> createEnergyPaymentList(ArrayList<Tenant> tenants, List<Invoice> invoice,
-			ArrayList<Division> division, ArrayList<UsageValue> usage, Date readingDate) {
-
-		double sumOfExpences = sumTotalValuesOfInvoices(invoice);
+		double sumOfExpences = sumEnergy(invoice);
 		ArrayList<PaymentEnergy> listToReturn = new ArrayList<PaymentEnergy>();
 		DecimalFormat decimalFormat = new DecimalFormat("#.00");
 
 		double sumaZuzycia = sumaZuzycia(usage);
-
+		System.out.println(sumaZuzycia);
 		for (Tenant tenant : tenants) {
 			HashMap<Integer, Double> podzialDlaNajemcy = tworzPodzialDlaNajemcy(division, tenant);
 			double oplata = 0;
@@ -101,15 +37,15 @@ public class ManagerPayment {
 				double ulamek = w.getUsage() / sumaZuzycia;
 				oplata += sumOfExpences * ulamek * podzialDlaNajemcy.get(w.getMieszkanie().getApartmentNumber());
 			}
-
+			System.out.println("manager payemt oplata");
+			System.out.println(oplata);
 			oplata = Double.parseDouble(decimalFormat.format(oplata));
 
 			PaymentEnergy forList = new PaymentEnergy();
-			forList.setInvoice((InvoiceEnergy) getLastInvoice(invoice));
+			forList.setInvoice(invoice);
 			forList.setTenant(tenant);
 			forList.setPaymentAmount(oplata);
 			forList.setPaymentDate(new Date());
-			forList.setReadingDate(readingDate);
 
 			listToReturn.add(forList);
 		}
@@ -117,9 +53,9 @@ public class ManagerPayment {
 		return listToReturn;
 	}
 
-	public static ArrayList<PaymentGas> createPaymentGasList(ArrayList<Tenant> tenants, List<Invoice> invoice,
-			ArrayList<Division> division, ArrayList<UsageValue> usage, Date readingDate) {
-		double sumOfExpences = sumTotalValuesOfInvoices(invoice);
+	public static ArrayList<PaymentGas> createPaymentGasList(ArrayList<Tenant> tenants, List<InvoiceGas> invoice,
+			ArrayList<Division> division, ArrayList<UsageValue> usage) {
+		double sumOfExpences = sumGas(invoice);
 		ArrayList<PaymentGas> listToReturn = new ArrayList<PaymentGas>();
 		DecimalFormat decimalFormat = new DecimalFormat("#.00");
 
@@ -134,25 +70,25 @@ public class ManagerPayment {
 				oplata += sumOfExpences * ulamek * podzialDlaNajemcy.get(w.getMieszkanie().getApartmentNumber());
 			}
 
-			oplata = Double.parseDouble(decimalFormat.format(oplata));
+			// oplata = Double.parseDouble(decimalFormat.format(oplata));
 
 			PaymentGas forList = new PaymentGas();
-			forList.setInvoice((InvoiceGas) getLastInvoice(invoice));
+			forList.setInvoice(invoice);
 			forList.setTenant(tenant);
 			forList.setPaymentAmount(oplata);
 			forList.setPaymentDate(new Date());
-			forList.setReadingDate(readingDate);
+
 			listToReturn.add(forList);
 		}
 
 		return listToReturn;
 	}
 
-	public static ArrayList<PaymentWater> createPaymentWaterList(ArrayList<Tenant> tenants, List<Invoice> invoice,
-			ArrayList<Division> podzial, ArrayList<UsageValue> usage, Date readingDate) {
+	public static ArrayList<PaymentWater> createPaymentWaterList(ArrayList<Tenant> tenants, List<InvoiceWater> invoice,
+			ArrayList<Division> podzial, ArrayList<UsageValue> usage) {
 		ArrayList<PaymentWater> listToReturn = new ArrayList<PaymentWater>();
 		DecimalFormat decimalFormat = new DecimalFormat("#.00");
-		double sumOfExpences = sumTotalValuesOfInvoices(invoice);
+		double sumOfExpences = sumWater(invoice);
 		double sumaZuzycia = sumaZuzycia(usage);
 
 		for (Tenant tenant : tenants) {
@@ -162,20 +98,17 @@ public class ManagerPayment {
 				double ulamek = w.getUsage() / sumaZuzycia;
 				oplata += sumOfExpences * ulamek * podzialDlaNajemcy.get(w.getMieszkanie().getApartmentNumber());
 			}
-			oplata = Double.parseDouble(decimalFormat.format(oplata));
+			// oplata = Double.parseDouble(decimalFormat.format(oplata));
 
 			PaymentWater forList = new PaymentWater();
-			forList.setInvoice( (InvoiceWater) getLastInvoice(invoice));
+			forList.setInvoice(invoice);
 			forList.setTenant(tenant);
 			forList.setPaymentAmount(oplata);
 			forList.setPaymentDate(new Date());
-			forList.setReadingDate(readingDate);
 			listToReturn.add(forList);
 		}
 		return listToReturn;
 	}
-
-
 
 	static double sumaZuzycia(ArrayList<UsageValue> listaZuzycia) {
 		double suma = 0;
@@ -197,25 +130,35 @@ public class ManagerPayment {
 		return output;
 	}
 
-	private static double sumTotalValuesOfInvoices(List<Invoice> list) {
+	private static double sumEnergy(List<InvoiceEnergy> invoice) {
 		double sum = 0;
-		for (Invoice inv : list) {
+		for (Invoice inv : invoice) {
 			sum = sum + inv.getTotalAmount();
 		}
 		return sum;
 	}
-	
-	
+
+	private static double sumWater(List<InvoiceWater> invoice) {
+		double sum = 0;
+		for (Invoice inv : invoice) {
+			sum = sum + inv.getTotalAmount();
+		}
+		return sum;
+	}
+
+	private static double sumGas(List<InvoiceGas> invoice) {
+		double sum = 0;
+		for (Invoice inv : invoice) {
+			sum = sum + inv.getTotalAmount();
+		}
+		return sum;
+	}
 
 	private static Invoice getLastInvoice(List<Invoice> list) {
 		int index = list.size();
-		if (list.size() == 1) {
-			index = 0;
-		} else {
-			index--;
-		}
-		Invoice invoice = list.get(index);
-		return invoice;
+
+		index--;
+		return list.get(index);
 	}
 
 	// =======================METHODS_USED_IN_CONTROLLER==============================
@@ -265,8 +208,8 @@ public class ManagerPayment {
 		model.put("invoiceGas", invoiceGas);
 	}
 
-	public static void prepareModelForNewEnergyPayment(HashMap<String, Object> model, ArrayList<Date> readingDatesEnergy,
-			List<InvoiceEnergy> invoiceEnergy) {
+	public static void prepareModelForNewEnergyPayment(HashMap<String, Object> model,
+			ArrayList<Date> readingDatesEnergy, List<InvoiceEnergy> invoiceEnergy) {
 		ReadingInvoiceForm energyFirstBinder = new ReadingInvoiceForm();
 		energyFirstBinder.setInvoice(invoiceEnergy.get(0));
 		invoiceEnergy.remove(0);

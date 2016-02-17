@@ -38,18 +38,19 @@ public class UserController {
 	@RequestMapping("/userHome")
 	public ModelAndView userHome() {
 		Map<String, Object> model = new HashMap<String, Object>();
-		MyUser myUser =  getMyUser();
-		if(myUser !=null) {
-		model.put("user", myUser);
-		
+		MyUser myUser = getMyUser();
+		if (myUser != null) {
+			model.put("user", myUser);
+
 		} else {
 			return new ModelAndView("/User/UserHome");
 		}
-//		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-//		if (!(auth instanceof AnonymousAuthenticationToken)) {
-//			UserDetails userDetail = (UserDetails) auth.getPrincipal();
-//			model.put("username", userDetail.getUsername());
-//		}
+		// Authentication auth =
+		// SecurityContextHolder.getContext().getAuthentication();
+		// if (!(auth instanceof AnonymousAuthenticationToken)) {
+		// UserDetails userDetail = (UserDetails) auth.getPrincipal();
+		// model.put("username", userDetail.getUsername());
+		// }
 		return new ModelAndView("/User/UserHome", "model", model);
 	}
 
@@ -96,7 +97,7 @@ public class UserController {
 	public ModelAndView updatePassword(HttpServletRequest req, @RequestParam String email,
 			@RequestParam String oldPassword, @RequestParam String newPassword, @RequestParam String newPassword2) {
 		HashMap<String, Object> model = new HashMap<>();
-		if (!newPassword.equals(newPassword2) || newPassword == "" || newPassword2=="") {
+		if (!newPassword.equals(newPassword2) || newPassword == "" || newPassword2 == "") {
 			model.put("error", "Wpisz poprawnie nowe hasło");
 			return new ModelAndView("/User/UserPassword", "model", model);
 		}
@@ -110,18 +111,6 @@ public class UserController {
 
 		return new ModelAndView("redirect:/User/userHome");
 	}
-
-//	private String getPrincipal() {
-//		String userName = null;
-//		Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-//
-//		if (principal instanceof UserDetails) {
-//			userName = ((UserDetails) principal).getUsername();
-//		} else {
-//			userName = principal.toString();
-//		}
-//		return userName;
-//	}
 
 	private MyUser getMyUser() {
 

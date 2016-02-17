@@ -25,19 +25,21 @@ public abstract class Invoice {
 	@Column(name = "id")
 	private int id;
 	@Column(nullable = false, unique = true)
-	@NotEmpty(message="Podaj wartość")
+	@NotEmpty(message = "Podaj wartość")
 	private String serialNumber;
 	@Column
 	private String description;
-	@Column(nullable = false)
+	@Column(nullable = false, unique = true)
 	@Temporal(TemporalType.DATE)
 	@DateTimeFormat(pattern = "yyyy.MM.dd")
-	@NotNull(message="Wprowadź datę")
+	@NotNull(message = "Wprowadź datę")
 	private Date date;
 	@Column(nullable = false)
-	@Min(value=0, message="Tylko wartości dodatnie")
-	@NotNull(message="Podaj wartość")
+	@Min(value = 0, message = "Tylko wartości dodatnie")
+	@NotNull(message = "Podaj wartość")
 	private double totalAmount;
+	@Column(nullable = false)
+	private String status = PaymentStatus.UNPAID.getPaymentStatus();
 
 	@Autowired
 	public Invoice(String serialNumber, String description, Date date, double totalAmount) {
@@ -90,6 +92,14 @@ public abstract class Invoice {
 
 	public void setTotalAmount(double totalAmount) {
 		this.totalAmount = totalAmount;
+	}
+
+	public String getStatus() {
+		return status;
+	}
+
+	public void setStatus(String status) {
+		this.status = status;
 	}
 
 	@Override

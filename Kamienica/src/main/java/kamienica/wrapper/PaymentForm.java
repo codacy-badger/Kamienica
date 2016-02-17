@@ -1,4 +1,4 @@
-package kamienica.forms;
+package kamienica.wrapper;
 
 public class PaymentForm {
 

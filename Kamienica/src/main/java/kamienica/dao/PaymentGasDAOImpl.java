@@ -24,12 +24,11 @@ public class PaymentGasDAOImpl extends AbstractDao<Integer, PaymentGas> implemen
 	@Override
 	public List<PaymentGas> getPaymentGasForTenant(Tenant tenant) {
 		@SuppressWarnings("unchecked")
-		List<PaymentGas> list = getSession().createCriteria(PaymentGas.class).add(Restrictions.eq("tenant", tenant)).addOrder(Order.asc("paymentDate"))
-				.addOrder(Order.asc("tenant")).list();
+		List<PaymentGas> list = getSession().createCriteria(PaymentGas.class).add(Restrictions.eq("tenant", tenant))
+				.addOrder(Order.asc("paymentDate")).addOrder(Order.asc("tenant")).list();
 		return list;
 	}
-	
-	
+
 	@SuppressWarnings("unchecked")
 	public List<PaymentGas> getGasByInvoice(Invoice invoice) {
 		Query query = getSession().createSQLQuery("Select * from paymentenergy where invoice_id = :id")
@@ -75,5 +74,13 @@ public class PaymentGasDAOImpl extends AbstractDao<Integer, PaymentGas> implemen
 			save(tmp);
 
 		}
+	}
+
+	@Override
+	public void deleteByDate(String date) {
+		Query query = getSession().createSQLQuery("delete from paymentgas where paymentdate =:date")
+				.addEntity(PaymentGas.class).setString("date", date);
+		query.executeUpdate();
+
 	}
 }

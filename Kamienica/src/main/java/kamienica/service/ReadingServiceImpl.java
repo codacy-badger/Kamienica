@@ -1,6 +1,5 @@
 package kamienica.service;
 
-import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 
@@ -12,7 +11,7 @@ import kamienica.dao.ReadingEnergyDAO;
 import kamienica.dao.ReadingGasDAO;
 import kamienica.dao.ReadingWaterDAO;
 import kamienica.model.Apartment;
-import kamienica.model.PaymentAbstract;
+import kamienica.model.InvoiceGas;
 import kamienica.model.ReadingAbstract;
 import kamienica.model.ReadingEnergy;
 import kamienica.model.ReadingGas;
@@ -43,11 +42,12 @@ public class ReadingServiceImpl implements ReadingService {
 	public List<ReadingGas> getReadingGasForTenant(Apartment aparmtent) {
 		return gas.getListForTenant(aparmtent);
 	}
-	
+
 	@Override
 	public List<ReadingWater> getReadingWaterForTenant(Apartment aparmtent) {
 		return water.getListForTenant(aparmtent);
 	}
+
 	@Override
 	public List<ReadingGas> getReadingGas() {
 		return gas.getList();
@@ -123,36 +123,38 @@ public class ReadingServiceImpl implements ReadingService {
 	public List<ReadingWater> getReadingWaterByDate(String date) {
 		return water.getByDate(date);
 	}
+	//
+	// @Override
+	// public List<ReadingEnergy> getLatestEnergyReadingsList() {
+	// return energy.getLatestList();
+	// }
+	//
+	// @Override
+	// public List<ReadingGas> getLatestGasReadingsList() {
+	// return gas.getLatestList();
+	// }
+	//
+	// @Override
+	// public List<ReadingWater> getLatestWaterReadingsList() {
+	// return water.getLatestList();
+	// }
 
-	@Override
-	public List<ReadingEnergy> getLatestEnergyReadingsList() {
-		return energy.getLatestList();
-	}
-
-	@Override
-	public List<ReadingGas> getLatestGasReadingsList() {
-		return gas.getLatestList();
-	}
-
-	@Override
-	public List<ReadingWater> getLatestWaterReadingsList() {
-		return water.getLatestList();
-	}
-
-	@Override
-	public List<Date> getEnergyReadingDatesForPayment(PaymentAbstract payment) {
-		return energy.getReadingDatesForPayment(payment);
-	}
-
-	@Override
-	public List<Date> getWaterReadingDatesForPayment(PaymentAbstract payment) {
-		return water.getReadingDatesForPayment(payment);
-	}
-
-	@Override
-	public List<Date> getGasReadingDatesForPayment(PaymentAbstract payment) {
-		return gas.getReadingDatesForPayment(payment);
-	}
+	// @Override
+	// public List<Date> getEnergyReadingDatesForPayment(PaymentAbstract
+	// payment) {
+	// return energy.getReadingDatesForPayment(payment);
+	// }
+	//
+	// @Override
+	// public List<Date> getWaterReadingDatesForPayment(PaymentAbstract payment)
+	// {
+	// return water.getReadingDatesForPayment(payment);
+	// }
+	//
+	// @Override
+	// public List<Date> getGasReadingDatesForPayment(PaymentAbstract payment) {
+	// return gas.getReadingDatesForPayment(payment);
+	// }
 
 	@Override
 	public List<ReadingWater> getWaterReadingsForGasConsumption(ReadingAbstract reading) {
@@ -168,7 +170,6 @@ public class ReadingServiceImpl implements ReadingService {
 
 	@Override
 	public void saveWaterList(List<ReadingWater> reading) {
-		System.out.println("jestem w metoddzie");
 		for (ReadingWater i : reading) {
 			water.save(i);
 		}
@@ -177,7 +178,7 @@ public class ReadingServiceImpl implements ReadingService {
 
 	@Override
 	public void saveEnergyList(List<ReadingEnergy> reading) {
-		System.out.println("jestem w metoddzie");
+
 		energy.saveList(reading);
 
 	}
@@ -198,6 +199,41 @@ public class ReadingServiceImpl implements ReadingService {
 	public void updateWater(ReadingWater reading) {
 		water.update(reading);
 
+	}
+
+	@Override
+	public ReadingEnergy getEnergyById(int id) {
+		return energy.getById(id);
+	}
+
+	@Override
+	public ReadingGas getGasById(int id) {
+		return gas.getById(id);
+	}
+
+	@Override
+	public ReadingWater getWaterById(int id) {
+		return water.getById(id);
+	}
+
+	@Override
+	public List<ReadingEnergy> getUnresolvedReadingsEnergy() {
+		return energy.getUnresolvedReadings();
+	}
+
+	@Override
+	public List<ReadingGas> getUnresolvedReadingsGas() {
+		return gas.getUnresolvedReadings();
+	}
+
+	@Override
+	public List<ReadingWater> getUnresolvedReadingsWater() {
+		return water.getUnresolvedReadings();
+	}
+
+	@Override
+	public HashMap<String, List<ReadingWater>> getWaterReadingsForGasConsumption2(InvoiceGas invoice) {
+		return water.getWaterReadingForGasConsumption2(invoice);
 	}
 
 }

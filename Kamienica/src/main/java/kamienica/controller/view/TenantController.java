@@ -22,7 +22,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
-import kamienica.initBinder.ApartmentIB;
+import kamienica.conventer.ApartmentIB;
 import kamienica.model.Apartment;
 import kamienica.model.Tenant;
 import kamienica.model.UserRole;
@@ -132,6 +132,12 @@ public class TenantController {
 
 	private Map<String, Object> prepareTenantModel() {
 		List<Apartment> apartment = (apartmentService.getList());
+		for(int i=0; i<apartment.size();i++) {
+			if(apartment.get(0).getApartmentNumber() == 0) {
+				apartment.remove(i);
+				break;
+			}
+		}
 		Map<String, Object> output = new HashMap<String, Object>();
 		if (apartment.isEmpty()) {
 			output.put("error", "Wprowadź przynajmniej jedno mieszkanie do bazy danych");

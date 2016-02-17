@@ -17,22 +17,20 @@ import org.springframework.web.bind.ServletRequestDataBinder;
 import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
+import kamienica.conventer.ApartmentIB;
+import kamienica.conventer.MeterEnergyIB;
+import kamienica.conventer.MeterGasIB;
+import kamienica.conventer.MeterWaterIB;
+import kamienica.conventer.ReadingInvoiceIB;
 import kamienica.core.ManagerEnergy;
 import kamienica.core.ManagerGas;
 import kamienica.core.ManagerPayment;
 import kamienica.core.ManagerWater;
-import kamienica.forms.PaymentForm;
-import kamienica.forms.ReadingInvoiceForm;
-import kamienica.initBinder.ApartmentIB;
-import kamienica.initBinder.MeterEnergyIB;
-import kamienica.initBinder.MeterGasIB;
-import kamienica.initBinder.MeterWaterIB;
-import kamienica.initBinder.ReadingInvoiceIB;
 import kamienica.model.Apartment;
 import kamienica.model.Division;
-import kamienica.model.Invoice;
 import kamienica.model.InvoiceEnergy;
 import kamienica.model.InvoiceGas;
 import kamienica.model.InvoiceWater;
@@ -55,6 +53,8 @@ import kamienica.service.PaymentService;
 import kamienica.service.ReadingService;
 import kamienica.service.TenantService;
 import kamienica.validator.DivisionValidator;
+import kamienica.wrapper.InvoiceWrapper;
+import kamienica.wrapper.ReadingInvoiceForm;
 
 @Controller
 public class PaymentController {
@@ -94,145 +94,124 @@ public class PaymentController {
 	}
 
 	@RequestMapping("/Admin/Payment/paymentRegister")
-	public ModelAndView paymentRegister(@ModelAttribute("paymentForm") PaymentForm paymentForm, BindingResult result) {
-		
-		boolean gas = true;
-		boolean water = true;
-		boolean energy = true;
+	public ModelAndView paymentRegister(@ModelAttribute("invoiceWrapper") InvoiceWrapper invoiceWrapper,
+			BindingResult result) {
 
 		HashMap<String, Object> model = new HashMap<>();
-		ArrayList<Tenant> tenants = (ArrayList<Tenant>) tenantService.getCurrentTenants();
-		ArrayList<Division> division = (ArrayList<Division>) divisionService.getList();
-		ArrayList<Apartment> apartments = (ArrayList<Apartment>) apartmentService.getList();
 
-		if (!DivisionValidator.validateDivisionForPaymentController(apartments, division, tenants)) {
-			String message = "Lista aktualnych najemców i mieszkań się nie zgadza. Sprawdź algorytm podziału";
-			model.put("message", message);
+		List<InvoiceEnergy> invoiceEnergy = invoiceService.getUnpaidInvoiceEnergy();
+		List<InvoiceGas> invoiceGas = invoiceService.getUnpaidInvoiceGas();
+		List<InvoiceWater> invoiceWater = invoiceService.getUnpaidInvoiceWater();
+
+		if (invoiceEnergy.isEmpty() && invoiceGas.isEmpty() && invoiceWater.isEmpty()) {
+			model.put("error", "Brak danych do wprowadzenia. Wprowadź nowe odczyty i faktury by kontynuować");
 			return new ModelAndView("/Admin/Payment/PaymentRegister", "model", model);
 		}
 
-		PaymentEnergy latestPaymentEnergy = paymentService.getLatestPaymentEnergy();
-		PaymentWater latestPaymentWater = paymentService.getLatestPaymentWater();
-		PaymentGas latestPaymentGas = paymentService.getLatestPaymentGas();
-	
-		
-		ArrayList<Date> readingDatesEnergy = (ArrayList<Date>) readingService
-				.getEnergyReadingDatesForPayment(latestPaymentEnergy);
-		ArrayList<Date> readingDatesWater = (ArrayList<Date>) readingService
-				.getWaterReadingDatesForPayment(latestPaymentWater);
-		ArrayList<Date> readingDatesGas = (ArrayList<Date>) readingService
-				.getGasReadingDatesForPayment(latestPaymentGas);
-
-		List<InvoiceWater> invoiceWater = invoiceService
-				.getInvoicesWaterForPayment(latestPaymentWater);
-		List<InvoiceGas> invoiceGas =  invoiceService.getInvoicesGasForPayment(latestPaymentGas);
-		List<InvoiceEnergy> invoiceEnergy =  invoiceService
-				.getInvoicesEnergyForPayment(latestPaymentEnergy);
-
-		
-		if (readingDatesEnergy.isEmpty() || invoiceEnergy.isEmpty()) {
-			energy = false;
+		if (!invoiceEnergy.isEmpty()) {
+			model.put("energy", invoiceEnergy);
 		}
-		if (readingDatesWater.isEmpty() || invoiceWater.isEmpty()) {
-			water = false;
+		if (!invoiceGas.isEmpty()) {
+			model.put("gas", invoiceGas);
 		}
-		if (readingDatesGas.isEmpty() || invoiceGas.isEmpty()) {
-			gas = false;
-		}
-
-		if (energy == false && water == false && gas == false) {
-			model.put("error", "Brak nowych danych do wprowadzenia");
-			return new ModelAndView("/Admin/Payment/NewPaymentRegister", "model", model);
-		}
-
-		if (energy) {
-			
-			ManagerPayment.prepareModelForNewEnergyPayment(model, readingDatesEnergy, invoiceEnergy);
-		}
-
-		if (gas) {
-			ManagerPayment.prepareModelForNewGasPayment(model, readingDatesGas, invoiceGas);
-		}
-		if (water) {
-			ManagerPayment.prepareModelForNewWaterPayment(model, readingDatesWater, invoiceWater);
-
+		if (!invoiceWater.isEmpty()) {
+			model.put("water", invoiceWater);
 		}
 
 		return new ModelAndView("/Admin/Payment/PaymentRegister", "model", model);
 	}
 
 	@RequestMapping("/Admin/Payment/paymentSave")
-	public ModelAndView paymentSave(@ModelAttribute("paymentForm") PaymentForm paymentForm, BindingResult result) {
+	public ModelAndView paymentSave(@ModelAttribute("invoiceWrapper") InvoiceWrapper invoiceWrapper,
+			BindingResult result) {
 
 		HashMap<String, Object> model = new HashMap<>();
+
+		if (invoiceWrapper.getEnergy() == null && invoiceWrapper.getWater() == null
+				&& invoiceWrapper.getGas() == null) {
+			String message = "Nie wybrano żadnych danych...";
+			model.put("warning", message);
+			return new ModelAndView("/admin/PaymentRegister", "model", model);
+		}
+
 		ArrayList<Tenant> tenants = (ArrayList<Tenant>) tenantService.getCurrentTenants();
 		ArrayList<Division> division = (ArrayList<Division>) divisionService.getList();
 		ArrayList<Apartment> apartments = (ArrayList<Apartment>) apartmentService.getList();
 
 		if (!DivisionValidator.validateDivisionForPaymentController(apartments, division, tenants)) {
 			String message = "Lista aktualnych najemców i mieszkań się nie zgadza. Sprawdź algorytm podziału";
-			model.put("message", message);
-			return new ModelAndView("/admin/PaymentRegister", "model", model);
+			model.put("error", message);
+			return new ModelAndView("/Admin/Payment/PaymentRegister", "model", model);
 		}
 
-		if (paymentForm.getGasFirst() != null && paymentForm.getGasLast() != null) {
+		if (invoiceWrapper.getEnergy() != null) {
+			List<InvoiceEnergy> invoicesEnergyForCalculation = invoiceService
+					.getInvoicesEnergyForCalulation(invoiceWrapper.getEnergy());
+			List<ReadingEnergy> readingEnergyOld = new ArrayList<>();
 
-			List<Invoice> invoiceGas = (ArrayList<Invoice>) invoiceService.getInvoicesGasForCalulation(
-					paymentForm.getGasFirst().getInvoice(), paymentForm.getGasLast().getInvoice());
+			try {
+				readingEnergyOld = readingService.getReadingEnergyByDate(
+						invoiceService.getLatestPaidEnergy().getBaseReading().getReadingDate().toString());
+			} catch (NullPointerException e) {
+			}
+			List<ReadingEnergy> readingEnergyNew = readingService
+					.getReadingEnergyByDate(invoiceWrapper.getEnergy().getBaseReading().getReadingDate().toString());
 
-			ArrayList<ReadingGas> gasOld = (ArrayList<ReadingGas>) readingService
-					.getReadingGasByDate(df.format(paymentForm.getGasFirst().getDate()));
-			ArrayList<ReadingGas> gasNew = (ArrayList<ReadingGas>) readingService
-					.getReadingGasByDate(df.format(paymentForm.getGasLast().getDate()));
-
-			List<ReadingWater> waterNewForGas = readingService.getWaterReadingsForGasConsumption(gasNew.get(0));
-			List<ReadingWater> waterOldForGas = readingService.getWaterReadingsForGasConsumption(waterNewForGas.get(0));
-
-			ArrayList<UsageValue> usage = ManagerGas.countGasConsumption(apartments, gasOld, gasNew, waterOldForGas,
-					waterNewForGas);
-
-			ArrayList<PaymentGas> paymentGas = ManagerPayment.createPaymentGasList(tenants, invoiceGas, division, usage,
-					gasNew.get(0).getReadingDate());
-
-			paymentService.saveGas(paymentGas);
-
-		}
-		if (paymentForm.getEnergyFirst() != null && paymentForm.getEnergyLast() != null) {
-
-			List<Invoice> invoiceEnergy =  invoiceService.getInvoicesEnergyForCalulation(
-					paymentForm.getEnergyFirst().getInvoice(), paymentForm.getEnergyLast().getInvoice());
-
-			ArrayList<ReadingEnergy> energyOld = (ArrayList<ReadingEnergy>) readingService
-					.getReadingEnergyByDate(df.format(paymentForm.getEnergyFirst().getDate()));
-			ArrayList<ReadingEnergy> energyNew = (ArrayList<ReadingEnergy>) readingService
-					.getReadingEnergyByDate(df.format(paymentForm.getEnergyLast().getDate()));
-
-			ArrayList<UsageValue> usage = ManagerEnergy.countEnergyConsupmtion(apartments, energyOld, energyNew);
-
-			ArrayList<PaymentEnergy> paymentEnergy = ManagerPayment.createEnergyPaymentList(tenants, invoiceEnergy,
-					division, usage, energyNew.get(0).getReadingDate());
-
+			ArrayList<UsageValue> usageEnergy = ManagerEnergy.countEnergyConsupmtion(apartments, readingEnergyOld,
+					readingEnergyNew);
+			List<PaymentEnergy> paymentEnergy = ManagerPayment.createPaymentEnergyList(tenants,
+					invoicesEnergyForCalculation, division, usageEnergy);
 			paymentService.saveEnergy(paymentEnergy);
-
 		}
 
-		if (paymentForm.getWaterFirst() != null && paymentForm.getWaterLast() != null) {
+		if (invoiceWrapper.getWater() != null) {
 
-			List<Invoice> invoiceWater =  invoiceService.getInvoicesWaterForCalulation(
-					paymentForm.getWaterFirst().getInvoice(), paymentForm.getWaterLast().getInvoice());
+			List<InvoiceWater> invoicesWaterForCalculation = invoiceService
+					.getInvoicesWaterForCalulation(invoiceWrapper.getWater());
+			List<ReadingWater> readingWaterOld = new ArrayList<>();
+			System.out.println(invoicesWaterForCalculation.toString());
+			try {
+				readingWaterOld = readingService.getReadingWaterByDate(
+						invoiceService.getLatestPaidWater().getBaseReading().getReadingDate().toString());
+			} catch (NullPointerException e) {
+			}
+			List<ReadingWater> readingWaterNew = readingService
+					.getReadingWaterByDate(invoiceWrapper.getWater().getBaseReading().getReadingDate().toString());
 
-			ArrayList<ReadingWater> waterOld = (ArrayList<ReadingWater>) readingService
-					.getReadingWaterByDate(df.format(paymentForm.getWaterFirst().getDate()));
-			ArrayList<ReadingWater> waterNew = (ArrayList<ReadingWater>) readingService
-					.getReadingWaterByDate(df.format(paymentForm.getWaterLast().getDate()));
-
-			ArrayList<UsageValue> usage = ManagerWater.countWaterConsumption(apartments, waterOld, waterNew);
-
-			ArrayList<PaymentWater> paymentWater = ManagerPayment.createPaymentWaterList(tenants, invoiceWater,
-					division, usage, waterNew.get(0).getReadingDate());
+			ArrayList<UsageValue> usageWater = ManagerWater.countWaterConsumption(apartments, readingWaterOld,
+					readingWaterNew);
+			System.out.println(usageWater.toString());
+			List<PaymentWater> paymentWater = ManagerPayment.createPaymentWaterList(tenants,
+					invoicesWaterForCalculation, division, usageWater);
 
 			paymentService.saveWater(paymentWater);
+		}
 
+		if (invoiceWrapper.getGas() != null) {
+
+			List<InvoiceGas> invoicesGasForCalculation = invoiceService
+					.getInvoicesGasForCalulation(invoiceWrapper.getGas());
+			List<ReadingGas> readingGasOld = new ArrayList<>();
+
+			HashMap<String, List<ReadingWater>> waterForGas = readingService
+					.getWaterReadingsForGasConsumption2(invoiceWrapper.getGas());
+			if (!waterForGas.isEmpty()) {
+
+				try {
+					readingGasOld = readingService.getReadingGasByDate(
+							invoiceService.getLatestPaidGas().getBaseReading().getReadingDate().toString());
+
+				} catch (NullPointerException e) {
+				}
+				List<ReadingGas> readingGasNew = readingService
+						.getReadingGasByDate(invoiceWrapper.getGas().getBaseReading().getReadingDate().toString());
+
+				ArrayList<UsageValue> usageGas = ManagerGas.countGasConsumption(apartments, readingGasOld,
+						readingGasNew, waterForGas.get("old"), waterForGas.get("new"));
+				List<PaymentGas> paymentGas = ManagerPayment.createPaymentGasList(tenants, invoicesGasForCalculation,
+						division, usageGas);
+				paymentService.saveGas(paymentGas);
+			}
 		}
 
 		return new ModelAndView("redirect:/Admin/Payment/paymentList.html");
@@ -244,6 +223,7 @@ public class PaymentController {
 	public ModelAndView paymentEnergyList() {
 		Map<String, Object> model = new HashMap<String, Object>();
 		model.put("media", "Energia");
+		model.put("url", "Energy");
 		model.put("payment", paymentService.getPaymentEnergyList());
 		return new ModelAndView("/Admin/Payment/PaymentList2", model);
 
@@ -253,6 +233,7 @@ public class PaymentController {
 	public ModelAndView paymentGasList() {
 		Map<String, Object> model = new HashMap<String, Object>();
 		model.put("media", "Gaz");
+		model.put("url", "Gas");
 		model.put("payment", paymentService.getPaymentGasList());
 		return new ModelAndView("/Admin/Payment/PaymentList2", model);
 
@@ -262,9 +243,32 @@ public class PaymentController {
 	public ModelAndView paymentWaterList() {
 		Map<String, Object> model = new HashMap<String, Object>();
 		model.put("media", "Woda");
+		model.put("url", "Water");
 		model.put("payment", paymentService.getPaymentWaterList());
 		return new ModelAndView("/Admin/Payment/PaymentList2", model);
 
+	}
+
+	// ------------------------------PAYMENTdelete--------------------------------------------------
+	@RequestMapping(value = "/Admin/Payment/paymentEnergyDelete", params = { "date", "id" })
+	public ModelAndView deleteEnergy(@RequestParam(value = "date") String date, @RequestParam(value = "id") int id) {
+
+		paymentService.deleteEnergyByDate(date, id);
+		return new ModelAndView("redirect:/Admin/Payment/paymentEnergyList.html");
+	}
+
+	@RequestMapping(value = "/Admin/Payment/paymentGasDelete", params = { "date", "id" })
+	public ModelAndView deleteGas(@RequestParam(value = "date") String date, @RequestParam(value = "id") int id) {
+
+		paymentService.deleteGasByDate(date, id);
+		return new ModelAndView("redirect:/Admin/Payment/paymentGasList.html");
+	}
+
+	@RequestMapping(value = "/Admin/Payment/paymentWaterDelete", params = { "date", "id" })
+	public ModelAndView deleteWater(@RequestParam(value = "date") String date, @RequestParam(value = "id") int id) {
+
+		paymentService.deleteWaterByDate(date, id);
+		return new ModelAndView("redirect:/Admin/Payment/paymentWaterList.html");
 	}
 
 }

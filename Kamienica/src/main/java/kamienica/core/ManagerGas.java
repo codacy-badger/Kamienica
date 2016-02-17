@@ -60,7 +60,7 @@ public class ManagerGas {
 			double sumPrevious = 0;
 			double sumNew = 0;
 			tmp.setApartment(m);
-			for (int i = 0; i < gasOld.size(); i++) {
+			for (int i = 0; i < gasNew.size(); i++) {
 				if (gasNew.get(i).getIsCWU() == false) {
 
 					if (gasNew.get(i).getMeter().getApartment() != null) {
@@ -68,12 +68,13 @@ public class ManagerGas {
 							sumNew = sumNew + gasNew.get(i).getValue();
 						}
 					}
-
-					if (gasOld.get(i).getIsCWU() == false) {
-						if (gasOld.get(i).getMeter().getApartment() != null) {
-							if (gasOld.get(i).getMeter().getApartment().getApartmentNumber() == m
-									.getApartmentNumber()) {
-								sumPrevious = sumPrevious + gasOld.get(i).getValue();
+					if (!gasOld.isEmpty()) {
+						if (gasOld.get(i).getIsCWU() == false) {
+							if (gasOld.get(i).getMeter().getApartment() != null) {
+								if (gasOld.get(i).getMeter().getApartment().getApartmentNumber() == m
+										.getApartmentNumber()) {
+									sumPrevious = sumPrevious + gasOld.get(i).getValue();
+								}
 							}
 						}
 					}
@@ -83,8 +84,12 @@ public class ManagerGas {
 			double usage = sumNew - sumPrevious;
 			tmp.setUsage(usage);
 			tmp.setUnit(gasNew.get(0).getUnit());
-			tmp.setDaysBetweenReadings(Days.daysBetween(new DateTime(gasOld.get(0).getReadingDate()),
-					new DateTime(gasNew.get(0).getReadingDate())).getDays());
+			if (!gasOld.isEmpty()) {
+				tmp.setDaysBetweenReadings(Days.daysBetween(new DateTime(gasOld.get(0).getReadingDate()),
+						new DateTime(gasNew.get(0).getReadingDate())).getDays());
+			} else {
+				tmp.setDaysBetweenReadings(0);
+			}
 			out.add(tmp);
 		}
 

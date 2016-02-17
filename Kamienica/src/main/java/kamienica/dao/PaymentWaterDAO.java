@@ -12,6 +12,8 @@ public interface PaymentWaterDAO {
 	public void saveWater(List<PaymentWater> payment);
 
 	public void delete(PaymentWater payment);
+	
+	public void deleteByDate(String date);
 
 	public List<PaymentWater> getWaterByInvoice(Invoice invoice);
 
@@ -20,6 +22,8 @@ public interface PaymentWaterDAO {
 	public List<PaymentWater> getPaymentWater();
 
 	public PaymentWater getLatestPaymentWater();
-	
+
 	public List<PaymentWater> getPaymentWaterForTenant(Tenant tenant);
+
+;
 }

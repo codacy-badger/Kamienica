@@ -4,16 +4,32 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<link href="<c:url value='/static/css/MyStyle.css' />" rel="stylesheet"></link>
+
+<link class="row" href="<c:url value='/static/css/bootstrap.css' />"
+	rel="stylesheet">
+
+<link class="row" href="<c:url value='/static/css/style.css' />"
+	rel="stylesheet">
+
+<script type="text/javascript"
+	src="<c:url value='/static/js/jquery-2.2.0.js' />"></script>
+<script type="text/javascript"
+	src="<c:url value='/static/js/bootstrap.js' />"></script>
 <title>403</title>
 </head>
 <body>
 	<br>
 	<br>
-	<div id="mainWrapper">
-		<h1>403 - Nie masz uprawnień do tej części programu.</h1>
-		<br> <a href="<c:url value="/" />">Przejdź do strony głównej</a><br>
-		<a href="<c:url value="/logout" />">Wyloguj</a>
+	<div class="container">
+		<div class="jumbotron">
+			<h2>403 - Nie masz uprawnień do tej części programu.</h2>
+			<h3>
+				<a href="<c:url value="/" />">Przejdź do strony głównej</a>
+			</h3>
+			<h3>
+				<a href="<c:url value="/logout" />">Wyloguj</a>
+			</h3>
+		</div>
 	</div>
 </body>
 </html>

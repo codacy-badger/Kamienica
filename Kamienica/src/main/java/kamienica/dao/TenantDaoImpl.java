@@ -16,19 +16,19 @@ public class TenantDaoImpl extends AbstractDao<Integer, Tenant> implements Tenan
 
 	@Override
 	public void save(Tenant tenant) {
-	
-//		Query query = session.createSQLQuery(
-//				"update kamienica.tenant set apartment_id= null where apartment_id =:param"
-//
-//		).setParameter("param", tenant.getApartment().getId());
-//		query.executeUpdate();
+
+		// Query query = session.createSQLQuery(
+		// "update kamienica.tenant set apartment_id= null where apartment_id
+		// =:param"
+		//
+		// ).setParameter("param", tenant.getApartment().getId());
+		// query.executeUpdate();
 		super.save(tenant);
 	}
 
 	@SuppressWarnings("unchecked")
 	public List<Tenant> getList() {
-		List<Tenant> list = getSession().createCriteria(Tenant.class).addOrder(Order.desc("apartment"))
-				.list();
+		List<Tenant> list = getSession().createCriteria(Tenant.class).addOrder(Order.desc("apartment")).list();
 		return list;
 	}
 
@@ -47,7 +47,7 @@ public class TenantDaoImpl extends AbstractDao<Integer, Tenant> implements Tenan
 	@SuppressWarnings("unchecked")
 	public List<Tenant> getActiveTenants() {
 		Criteria criteria = createEntityCriteria();
-		criteria.add(Restrictions.eq("status", "ACTIVE"));
+		criteria.add(Restrictions.eq("status", UserStatus.ACTIVE.getUserStatus()));
 		return (List<Tenant>) criteria.list();
 		//
 		// Query query = getSession().createSQLQuery("Select * from
@@ -66,12 +66,11 @@ public class TenantDaoImpl extends AbstractDao<Integer, Tenant> implements Tenan
 	}
 
 	@Override
-	public void deactivate(Tenant tenant) {
+	public void deactivateByApparmentId(int id) {
 		Query query = getSession().createSQLQuery("update tenant set status =:status where apartment_id =:id")
-				.setParameter("id", tenant.getApartment().getId())
-				.setParameter("status", UserStatus.INACTIVE.getUserStatus());
+				.setParameter("id", id).setParameter("status", UserStatus.INACTIVE.getUserStatus());
 		query.executeUpdate();
-		
+
 	}
 
 }

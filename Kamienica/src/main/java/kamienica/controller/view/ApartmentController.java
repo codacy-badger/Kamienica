@@ -20,7 +20,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
-import kamienica.initBinder.ApartmentIB;
+import kamienica.conventer.ApartmentIB;
 import kamienica.model.Apartment;
 import kamienica.service.ApartmentService;
 
@@ -47,7 +47,6 @@ public class ApartmentController {
 	public ModelAndView save(@Valid @ModelAttribute("apartment") Apartment apartment, BindingResult result) {
 
 		if (result.hasErrors()) {
-			System.out.println(result.toString());
 			return new ModelAndView("/Admin/Apartment/ApartmentRegister");
 		}
 

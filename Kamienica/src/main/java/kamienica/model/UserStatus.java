@@ -1,7 +1,7 @@
 package kamienica.model;
 
 public enum UserStatus {
-	ACTIVE("ACTIVE"), INACTIVE("INACTIVE");
+	ACTIVE("AKTYWNY"), INACTIVE("NIEAKTYWNY");
 	
 	private String userStatus;
 

@@ -12,6 +12,8 @@ public interface PaymentGasDAO {
 	public void saveGas(List<PaymentGas> payment);
 
 	public void delete(PaymentGas payment);
+	
+	public void deleteByDate(String date);
 
 	public List<PaymentGas> getGasByInvoice(Invoice invoice);
 
@@ -20,6 +22,8 @@ public interface PaymentGasDAO {
 	public List<PaymentGas> getPaymentGas();
 
 	public PaymentGas getLatestPaymentGas();
-	
+
 	public List<PaymentGas> getPaymentGasForTenant(Tenant tenant);
+
+
 }

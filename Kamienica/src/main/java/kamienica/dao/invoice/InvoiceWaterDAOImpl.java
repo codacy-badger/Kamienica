@@ -10,13 +10,12 @@ import org.springframework.stereotype.Repository;
 import kamienica.dao.AbstractDao;
 import kamienica.model.Invoice;
 import kamienica.model.InvoiceWater;
-import kamienica.model.PaymentWater;
+import kamienica.model.PaymentStatus;
 
 @Repository("invoiceWater")
 @Transactional
 public class InvoiceWaterDAOImpl extends AbstractDao<Integer, InvoiceWater> implements InvoiceWaterDAO {
 
-	
 	public void deleteByID(int id) {
 		Query query = getSession().createSQLQuery("delete from invoicewater where id = :id");
 		query.setInteger("id", id);
@@ -43,30 +42,65 @@ public class InvoiceWaterDAOImpl extends AbstractDao<Integer, InvoiceWater> impl
 
 	}
 
+	// @SuppressWarnings("unchecked")
+	// public List<InvoiceWater> getInvoicesForPayment(PaymentWater payment) {
+	//
+	// String sql = "";
+	// if (payment.getId() < 1) {
+	// sql = "select * from kamienica.invoicewater order by date asc";
+	// } else {
+	// sql = "select * from kamienica.invoicewater where date >= (select date
+	// from kamienica.invoicewater where id = "
+	// + payment.getInvoice().getId() + ") order by date asc ";
+	// }
+	// Query query =
+	// getSession().createSQLQuery(sql).addEntity(InvoiceWater.class);
+	// return query.list();
+	// }
+
 	@SuppressWarnings("unchecked")
-	public List<InvoiceWater> getInvoicesForPayment(PaymentWater payment) {
-
-		String sql = "";
-		if (payment.getId() < 1) {
-			sql = "select * from kamienica.invoicewater order by date asc";
-		} else {
-			sql = "select * from kamienica.invoicewater where date >= (select date from kamienica.invoicewater where id = "
-					+ payment.getInvoice().getId() + ") order by date asc ";
-		}
-		Query query = getSession().createSQLQuery(sql).addEntity(InvoiceWater.class);
-		return query.list();
-	}
-
-	public List<Invoice> getInvoicesForCalulation(Invoice first, Invoice second) {
+	public List<InvoiceWater> getInvoicesForCalulation(Invoice invoice) {
 		Query query = getSession()
 				.createSQLQuery(
-						"select * from kamienica.invoicewater where date >  :date1 and date <= :date2 order by date asc")
-				.addEntity(InvoiceWater.class).setParameter("date1", first.getDate())
-				.setParameter("date2", second.getDate());
+						"select * from kamienica.invoiceWater where status = :status and date <= :date order by date asc")
+				.addEntity(InvoiceWater.class).setParameter("date", invoice.getDate())
+				.setParameter("status", PaymentStatus.UNPAID.getPaymentStatus());
+		return query.list();
+
+	}
+
+	@Override
+	public List<InvoiceWater> getUnpaidInvoices() {
+		Query query = getSession().createSQLQuery("select * from invoicewater where status =  :stat  order by date asc")
+				.addEntity(InvoiceWater.class).setParameter("stat", PaymentStatus.UNPAID.getPaymentStatus());
 		@SuppressWarnings("unchecked")
-		List<Invoice> invoice = query.list();
+		List<InvoiceWater> invoice = query.list();
 		return invoice;
 	}
 
-	
+	@Override
+	public InvoiceWater getLastResolved() {
+		Query query = getSession()
+				.createSQLQuery("select * from invoiceWater where status =  :stat  order by date desc limit 1")
+				.addEntity(InvoiceWater.class).setParameter("stat", PaymentStatus.PAID.getPaymentStatus());
+		return (InvoiceWater) query.uniqueResult();
+	}
+
+	@Override
+	public void resolveInvoice(InvoiceWater invoice) {
+		Query query = getSession().createSQLQuery("update invoiceWater set status =  :stat  where id = :id")
+				.addEntity(InvoiceWater.class).setParameter("stat", PaymentStatus.PAID.getPaymentStatus())
+				.setParameter("id", invoice.getId());
+		query.executeUpdate();
+	}
+
+	@Override
+	public void unresolveInvoice( int id) {
+		Query query = getSession()
+				.createSQLQuery(
+						"update invoiceWater invoice join paymentWater_invoiceWater jointable on invoice.id = jointable.invoice_id   set status =  :stat  where jointable.paymentWater_id = :id")
+				.addEntity(InvoiceWater.class).setParameter("stat", PaymentStatus.UNPAID.getPaymentStatus())
+				.setParameter("id", id);
+		query.executeUpdate();
+	}
 }

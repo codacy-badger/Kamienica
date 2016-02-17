@@ -6,9 +6,6 @@ import kamienica.model.Invoice;
 import kamienica.model.InvoiceEnergy;
 import kamienica.model.InvoiceGas;
 import kamienica.model.InvoiceWater;
-import kamienica.model.PaymentEnergy;
-import kamienica.model.PaymentGas;
-import kamienica.model.PaymentWater;
 
 public interface InvoiceService {
 
@@ -42,21 +39,33 @@ public interface InvoiceService {
 
 	public InvoiceEnergy getEnergyByID(int id);
 
-	public InvoiceGas getLatestGas();
+//	public InvoiceGas getLatestGas();
+//
+//	public InvoiceWater getLatestWater();
+//
+//	public InvoiceEnergy getLatestEnergy();
 
-	public InvoiceWater getLatestWater();
+//	public List<InvoiceWater> getInvoicesWaterForPayment(PaymentWater payment);
+//
+//	public List<InvoiceGas> getInvoicesGasForPayment(PaymentGas payment);
+//
+//	public List<InvoiceEnergy> getInvoicesEnergyForPayment(PaymentEnergy payment);
 
-	public InvoiceEnergy getLatestEnergy();
+	public List<InvoiceWater> getInvoicesWaterForCalulation(Invoice invoice);
 
-	public List<InvoiceWater> getInvoicesWaterForPayment(PaymentWater payment);
+	public List<InvoiceGas> getInvoicesGasForCalulation(Invoice invoice);
 
-	public List<InvoiceGas> getInvoicesGasForPayment(PaymentGas payment);
+	public List<InvoiceEnergy> getInvoicesEnergyForCalulation(Invoice invoice);
 
-	public List<InvoiceEnergy> getInvoicesEnergyForPayment(PaymentEnergy payment);
+	public List<InvoiceEnergy> getUnpaidInvoiceEnergy();
 
-	public List<Invoice> getInvoicesWaterForCalulation(Invoice first, Invoice second);
+	public List<InvoiceGas> getUnpaidInvoiceGas();
 
-	public List<Invoice> getInvoicesGasForCalulation(Invoice first, Invoice second);
+	public List<InvoiceWater> getUnpaidInvoiceWater();
 
-	public List<Invoice> getInvoicesEnergyForCalulation(Invoice first, Invoice second);
+	public InvoiceEnergy getLatestPaidEnergy();
+	
+	public InvoiceWater getLatestPaidWater();
+	
+	public InvoiceGas getLatestPaidGas();
 }

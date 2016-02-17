@@ -1,14 +1,14 @@
-package kamienica.initBinder;
+package kamienica.conventer;
 
 import java.beans.PropertyEditorSupport;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 
-import kamienica.forms.ReadingInvoiceForm;
 import kamienica.model.InvoiceEnergy;
 import kamienica.model.InvoiceGas;
 import kamienica.model.InvoiceWater;
 import kamienica.service.InvoiceService;
+import kamienica.wrapper.ReadingInvoiceForm;
 
 public class ReadingInvoiceIB extends PropertyEditorSupport {
 

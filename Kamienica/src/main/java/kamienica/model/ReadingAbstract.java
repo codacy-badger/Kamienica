@@ -21,12 +21,22 @@ public abstract class ReadingAbstract {
 	@GeneratedValue
 	@Column
 	private int id;
-	@Column(nullable=false)
+	@Column(nullable = false)
 	@Temporal(TemporalType.DATE)
-	@DateTimeFormat(pattern="yyyy.MM.dd")
+	@DateTimeFormat(pattern = "yyyy.MM.dd")
 	private Date readingDate;
-	@Column(nullable=false)
+	@Column(nullable = false)
 	private double value;
+	@Column
+	private boolean resolved = false;
+
+	public boolean isResolved() {
+		return resolved;
+	}
+
+	public void setResolved(boolean resolved) {
+		this.resolved = resolved;
+	}
 
 
 	@Autowired
@@ -41,8 +51,7 @@ public abstract class ReadingAbstract {
 	@Override
 	public String toString() {
 
-		return "\nData Odczytu: " + readingDate + ", Zuzycie= "
-				+ value;
+		return "\nData Odczytu: " + readingDate + ", Zuzycie= " + value;
 	}
 
 	public Date getReadingDate() {
@@ -68,7 +77,5 @@ public abstract class ReadingAbstract {
 	public void setId(int id) {
 		this.id = id;
 	}
-
-
 
 }

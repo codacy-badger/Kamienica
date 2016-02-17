@@ -30,6 +30,10 @@ public class Kamienica {
 	public static void main(String[] args) throws IOException, ParseException {
 
 		// -------------------mieszkania_najemcy_algorytm_podzialu--------------------------------------------------------
+		
+		
+		
+		
 		DateFormat format = new SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH);
 		Apartment mieszkanie0 = new Apartment(1, 0, "0000", "Czesc Wspolna");
 		Apartment mieszkanie1 = new Apartment(2, 1, "1111", "Piwnica");
@@ -338,11 +342,12 @@ public class Kamienica {
 		ArrayList<PaymentGas> oplataGaz = new ArrayList<>();
 //		oplataGaz = ManagerPayment.createPaymentGasList(listaNajemcow, (InvoiceGas) mapaFaktur.get("Gaz"), algorytmPodzialuTmp,
 //				listaWartoscZuzyciaGazuDlaElementow, new Date());
-		System.out.println(oplataGaz.toString());
+//		System.out.println(oplataGaz.toString());
 //		for(PaymentGas kk:oplataGaz) {
 //			PdfGenerator.generujOplate(kk);
 //		}
 
-	
+
+		
 	}
 }
