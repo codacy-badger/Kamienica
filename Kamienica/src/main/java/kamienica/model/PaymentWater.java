@@ -1,32 +1,33 @@
 package kamienica.model;
 
 import java.util.Date;
+import java.util.List;
 
 import javax.persistence.Entity;
-import javax.persistence.OneToOne;
+import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 
 @Entity
 @Table
 public class PaymentWater extends PaymentAbstract {
 
-	@OneToOne
-	private InvoiceWater invoice;
+	@ManyToMany
+	private List<InvoiceWater> invoice;
 
 	public PaymentWater() {
 	}
 
 	public PaymentWater(int id, Date paymentDate, double paymentAmount, Tenant tenant,
-			InvoiceWater invoice) {
+			List<InvoiceWater> invoice) {
 		super(id, paymentDate, paymentAmount, tenant);
 		this.invoice = invoice;
 	}
 
-	public InvoiceWater getInvoice() {
+	public List<InvoiceWater> getInvoice() {
 		return invoice;
 	}
 
-	public void setInvoice(InvoiceWater invoice) {
+	public void setInvoice(List<InvoiceWater> invoice) {
 		this.invoice = invoice;
 	}
 

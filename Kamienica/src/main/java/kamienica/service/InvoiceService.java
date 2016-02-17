@@ -6,9 +6,6 @@ import kamienica.model.Invoice;
 import kamienica.model.InvoiceEnergy;
 import kamienica.model.InvoiceGas;
 import kamienica.model.InvoiceWater;
-import kamienica.model.PaymentEnergy;
-import kamienica.model.PaymentGas;
-import kamienica.model.PaymentWater;
 
 public interface InvoiceService {
 

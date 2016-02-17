@@ -42,7 +42,7 @@ public class ManagerPayment {
 			oplata = Double.parseDouble(decimalFormat.format(oplata));
 
 			PaymentEnergy forList = new PaymentEnergy();
-			forList.setInvoice(invoice.get(invoice.size() - 1));
+			forList.setInvoice(invoice);
 			forList.setTenant(tenant);
 			forList.setPaymentAmount(oplata);
 			forList.setPaymentDate(new Date());
@@ -73,7 +73,7 @@ public class ManagerPayment {
 			// oplata = Double.parseDouble(decimalFormat.format(oplata));
 
 			PaymentGas forList = new PaymentGas();
-			forList.setInvoice(invoice.get(invoice.size() - 1));
+			forList.setInvoice(invoice);
 			forList.setTenant(tenant);
 			forList.setPaymentAmount(oplata);
 			forList.setPaymentDate(new Date());
@@ -101,7 +101,7 @@ public class ManagerPayment {
 			// oplata = Double.parseDouble(decimalFormat.format(oplata));
 
 			PaymentWater forList = new PaymentWater();
-			forList.setInvoice(invoice.get((invoice.size() - 1)));
+			forList.setInvoice(invoice);
 			forList.setTenant(tenant);
 			forList.setPaymentAmount(oplata);
 			forList.setPaymentDate(new Date());

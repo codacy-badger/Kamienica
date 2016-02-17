@@ -21,15 +21,14 @@ public class PaymentWaterDAOImpl extends AbstractDao<Integer, PaymentWater> impl
 		query.executeUpdate();
 	}
 
-
 	@Override
 	public List<PaymentWater> getPaymentWaterForTenant(Tenant tenant) {
 		@SuppressWarnings("unchecked")
-		List<PaymentWater> list = getSession().createCriteria(PaymentWater.class).add(Restrictions.eq("tenant", tenant)).addOrder(Order.asc("paymentDate"))
-				.addOrder(Order.asc("tenant")).list();
+		List<PaymentWater> list = getSession().createCriteria(PaymentWater.class).add(Restrictions.eq("tenant", tenant))
+				.addOrder(Order.asc("paymentDate")).addOrder(Order.asc("tenant")).list();
 		return list;
 	}
-	
+
 	@SuppressWarnings("unchecked")
 	public List<PaymentWater> getWaterByInvoice(Invoice invoice) {
 		Query query = getSession().createSQLQuery("Select * from paymentwater where invoice_id = :id")
@@ -75,5 +74,13 @@ public class PaymentWaterDAOImpl extends AbstractDao<Integer, PaymentWater> impl
 			save(tmp);
 
 		}
+	}
+
+	@Override
+	public void deleteByDate(String date) {
+		Query query = getSession().createSQLQuery("delete from paymentwater where paymentdate =:date")
+				.addEntity(PaymentWater.class).setString("date", date);
+		query.executeUpdate();
+
 	}
 }

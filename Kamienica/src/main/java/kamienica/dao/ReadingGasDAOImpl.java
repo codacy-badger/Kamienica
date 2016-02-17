@@ -8,9 +8,7 @@ import org.hibernate.criterion.Order;
 import org.springframework.stereotype.Repository;
 
 import kamienica.model.Apartment;
-import kamienica.model.InvoiceEnergy;
 import kamienica.model.InvoiceGas;
-import kamienica.model.ReadingEnergy;
 import kamienica.model.ReadingGas;
 
 @Repository("readingGasDao")

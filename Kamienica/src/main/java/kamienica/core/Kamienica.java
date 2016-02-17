@@ -12,7 +12,6 @@ import java.util.Locale;
 import kamienica.model.Apartment;
 import kamienica.model.Division;
 import kamienica.model.Invoice;
-import kamienica.model.InvoiceEnergy;
 import kamienica.model.InvoiceGas;
 import kamienica.model.InvoiceWater;
 import kamienica.model.MeterEnergy;

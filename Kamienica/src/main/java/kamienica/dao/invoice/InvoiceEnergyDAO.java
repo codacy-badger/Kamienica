@@ -4,7 +4,6 @@ import java.util.List;
 
 import kamienica.model.Invoice;
 import kamienica.model.InvoiceEnergy;
-import kamienica.model.PaymentEnergy;
 
 public interface InvoiceEnergyDAO {
 
@@ -20,14 +19,16 @@ public interface InvoiceEnergyDAO {
 
 	public InvoiceEnergy getLatest();
 
-	public List<InvoiceEnergy> getInvoicesForPayment(PaymentEnergy payment);
+	// public List<InvoiceEnergy> getInvoicesForPayment(PaymentEnergy payment);
 
 	public List<InvoiceEnergy> getInvoicesForCalulation(Invoice invoice);
-	
+
 	public List<InvoiceEnergy> getUnpaidInvoices();
-	
+
 	public InvoiceEnergy getLastResolved();
-	
+
 	public void resolveInvoice(InvoiceEnergy invoice);
-	
+
+	public void unresolveInvoice(int id);
+
 }

@@ -1,6 +1,6 @@
 package kamienica.dao;
 
-import java.util.Date;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
@@ -9,12 +9,9 @@ import org.hibernate.criterion.Order;
 import org.springframework.stereotype.Repository;
 
 import kamienica.model.Apartment;
-import kamienica.model.InvoiceEnergy;
 import kamienica.model.InvoiceGas;
 import kamienica.model.InvoiceWater;
-import kamienica.model.PaymentAbstract;
 import kamienica.model.ReadingAbstract;
-import kamienica.model.ReadingGas;
 import kamienica.model.ReadingWater;
 
 @Repository("readingWaterDao")
@@ -161,17 +158,23 @@ public class ReadingWaterDAOImpl extends AbstractDao<Integer, ReadingWater> impl
 	@Override
 	public HashMap<String, List<ReadingWater>> getWaterReadingForGasConsumption2(InvoiceGas invoice) {
 		HashMap<String, List<ReadingWater>> out = new HashMap<String, List<ReadingWater>>();
-
+		List<ReadingWater> oldReadings = new ArrayList<>();
 		Query query = getSession().createSQLQuery("SELECT * FROM readingwater where readingdate = :date")
 				.addEntity(ReadingWater.class).setParameter("date", invoice.getBaseReading().getReadingDate());
 		List<ReadingWater> newReadings = query.list();
-		out.put("new", newReadings);
-		query = getSession()
-				.createSQLQuery(
-						"SELECT * FROM readingwater where readingdate = (select readingdate from readingwater where readingdate < :date GROUP BY readingdate ORDER BY readingdate desc limit 1)")
-				.addEntity(ReadingWater.class).setParameter("date", newReadings.get(0).getReadingDate());
-		List<ReadingWater> oldReadings = query.list();
-		out.put("old", oldReadings);
+		if (!newReadings.isEmpty()) {
+
+			query = getSession()
+					.createSQLQuery(
+							"SELECT * FROM readingwater where readingdate = (select readingdate from readingwater where readingdate < :date GROUP BY readingdate ORDER BY readingdate desc limit 1)")
+					.addEntity(ReadingWater.class).setParameter("date", newReadings.get(0).getReadingDate());
+			oldReadings = query.list();
+		}
+		if (!oldReadings.isEmpty()) {
+			out.put("old", oldReadings);
+			out.put("new", newReadings);
+		}
+
 		return out;
 	}
 }

@@ -31,7 +31,6 @@ import kamienica.core.ManagerPayment;
 import kamienica.core.ManagerWater;
 import kamienica.model.Apartment;
 import kamienica.model.Division;
-import kamienica.model.Invoice;
 import kamienica.model.InvoiceEnergy;
 import kamienica.model.InvoiceGas;
 import kamienica.model.InvoiceWater;
@@ -196,22 +195,23 @@ public class PaymentController {
 
 			HashMap<String, List<ReadingWater>> waterForGas = readingService
 					.getWaterReadingsForGasConsumption2(invoiceWrapper.getGas());
+			if (!waterForGas.isEmpty()) {
 
-			try {
-				readingGasOld = readingService.getReadingGasByDate(
-						invoiceService.getLatestPaidGas().getBaseReading().getReadingDate().toString());
+				try {
+					readingGasOld = readingService.getReadingGasByDate(
+							invoiceService.getLatestPaidGas().getBaseReading().getReadingDate().toString());
 
-			} catch (NullPointerException e) {
+				} catch (NullPointerException e) {
+				}
+				List<ReadingGas> readingGasNew = readingService
+						.getReadingGasByDate(invoiceWrapper.getGas().getBaseReading().getReadingDate().toString());
+
+				ArrayList<UsageValue> usageGas = ManagerGas.countGasConsumption(apartments, readingGasOld,
+						readingGasNew, waterForGas.get("old"), waterForGas.get("new"));
+				List<PaymentGas> paymentGas = ManagerPayment.createPaymentGasList(tenants, invoicesGasForCalculation,
+						division, usageGas);
+				paymentService.saveGas(paymentGas);
 			}
-			List<ReadingGas> readingGasNew = readingService
-					.getReadingGasByDate(invoiceWrapper.getGas().getBaseReading().getReadingDate().toString());
-
-			ArrayList<UsageValue> usageGas = ManagerGas.countGasConsumption(apartments, readingGasOld, readingGasNew,
-					waterForGas.get("old"), waterForGas.get("new"));
-			List<PaymentGas> paymentGas = ManagerPayment.createPaymentGasList(tenants, invoicesGasForCalculation,
-					division, usageGas);
-			paymentService.saveGas(paymentGas);
-
 		}
 
 		return new ModelAndView("redirect:/Admin/Payment/paymentList.html");
@@ -223,6 +223,7 @@ public class PaymentController {
 	public ModelAndView paymentEnergyList() {
 		Map<String, Object> model = new HashMap<String, Object>();
 		model.put("media", "Energia");
+		model.put("url", "Energy");
 		model.put("payment", paymentService.getPaymentEnergyList());
 		return new ModelAndView("/Admin/Payment/PaymentList2", model);
 
@@ -232,6 +233,7 @@ public class PaymentController {
 	public ModelAndView paymentGasList() {
 		Map<String, Object> model = new HashMap<String, Object>();
 		model.put("media", "Gaz");
+		model.put("url", "Gas");
 		model.put("payment", paymentService.getPaymentGasList());
 		return new ModelAndView("/Admin/Payment/PaymentList2", model);
 
@@ -241,16 +243,32 @@ public class PaymentController {
 	public ModelAndView paymentWaterList() {
 		Map<String, Object> model = new HashMap<String, Object>();
 		model.put("media", "Woda");
+		model.put("url", "Water");
 		model.put("payment", paymentService.getPaymentWaterList());
 		return new ModelAndView("/Admin/Payment/PaymentList2", model);
 
 	}
 
 	// ------------------------------PAYMENTdelete--------------------------------------------------
-	@RequestMapping(value = "/Admin/Payment/paymentEnergyDelete", params = { "date" })
-	public ModelAndView deleteEnergy(@RequestParam(value = "date") String date) {
-		paymentService.deleteEnergyByDate(date);
+	@RequestMapping(value = "/Admin/Payment/paymentEnergyDelete", params = { "date", "id" })
+	public ModelAndView deleteEnergy(@RequestParam(value = "date") String date, @RequestParam(value = "id") int id) {
+
+		paymentService.deleteEnergyByDate(date, id);
 		return new ModelAndView("redirect:/Admin/Payment/paymentEnergyList.html");
+	}
+
+	@RequestMapping(value = "/Admin/Payment/paymentGasDelete", params = { "date", "id" })
+	public ModelAndView deleteGas(@RequestParam(value = "date") String date, @RequestParam(value = "id") int id) {
+
+		paymentService.deleteGasByDate(date, id);
+		return new ModelAndView("redirect:/Admin/Payment/paymentGasList.html");
+	}
+
+	@RequestMapping(value = "/Admin/Payment/paymentWaterDelete", params = { "date", "id" })
+	public ModelAndView deleteWater(@RequestParam(value = "date") String date, @RequestParam(value = "id") int id) {
+
+		paymentService.deleteWaterByDate(date, id);
+		return new ModelAndView("redirect:/Admin/Payment/paymentWaterList.html");
 	}
 
 }

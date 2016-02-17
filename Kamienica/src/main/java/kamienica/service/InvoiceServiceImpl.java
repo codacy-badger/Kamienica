@@ -9,7 +9,6 @@ import org.springframework.transaction.annotation.Transactional;
 import kamienica.dao.ReadingEnergyDAO;
 import kamienica.dao.ReadingGasDAO;
 import kamienica.dao.ReadingWaterDAO;
-import kamienica.dao.invoice.InvoiceDao;
 import kamienica.dao.invoice.InvoiceEnergyDAO;
 import kamienica.dao.invoice.InvoiceGasDAO;
 import kamienica.dao.invoice.InvoiceWaterDAO;
@@ -17,16 +16,13 @@ import kamienica.model.Invoice;
 import kamienica.model.InvoiceEnergy;
 import kamienica.model.InvoiceGas;
 import kamienica.model.InvoiceWater;
-import kamienica.model.PaymentEnergy;
-import kamienica.model.PaymentGas;
-import kamienica.model.PaymentWater;
 
 @Service
 @Transactional
 public class InvoiceServiceImpl implements InvoiceService {
 
-	@Autowired
-	InvoiceDao invoiceDAO;
+//	@Autowired
+//	InvoiceDao invoiceDAO;
 	@Autowired
 	InvoiceEnergyDAO energy;
 	@Autowired

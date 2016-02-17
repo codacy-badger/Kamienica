@@ -9,7 +9,6 @@ import org.springframework.stereotype.Repository;
 
 import kamienica.model.Apartment;
 import kamienica.model.InvoiceEnergy;
-import kamienica.model.PaymentStatus;
 import kamienica.model.ReadingEnergy;
 
 @Repository("readingEnergyDao")

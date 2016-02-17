@@ -1,6 +1,5 @@
 package kamienica.service;
 
-import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 
@@ -13,7 +12,6 @@ import kamienica.dao.ReadingGasDAO;
 import kamienica.dao.ReadingWaterDAO;
 import kamienica.model.Apartment;
 import kamienica.model.InvoiceGas;
-import kamienica.model.PaymentAbstract;
 import kamienica.model.ReadingAbstract;
 import kamienica.model.ReadingEnergy;
 import kamienica.model.ReadingGas;

@@ -253,32 +253,32 @@ public class SetupMethods {
 		return list;
 	}
 
-	public static List<PaymentWater> getPaymentsWater(List<InvoiceWater> invoices, List<Tenant> tenants)
-			throws ParseException {
-		List<PaymentWater> list = new ArrayList<>();
-		DateFormat format = new SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH);
-		list.add(new PaymentWater(1, format.parse("2015-01-01"), 117.5, tenants.get(0), invoices.get(0)));
-		list.add(new PaymentWater(1, format.parse("2015-01-01"), 82.5, tenants.get(1), invoices.get(0)));
-		return list;
-	}
-
-	public static List<PaymentGas> getPaymentsGas(List<InvoiceGas> invoices, List<Tenant> tenants)
-			throws ParseException {
-		List<PaymentGas> list = new ArrayList<>();
-		DateFormat format = new SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH);
-		list.add(new PaymentGas(1, format.parse("2015-01-01"), 121.3444213, tenants.get(0), invoices.get(0)));
-		list.add(new PaymentGas(1, format.parse("2015-01-01"), 78.65557866, tenants.get(1), invoices.get(0)));
-		return list;
-	}
-
-	public static List<PaymentEnergy> getPaymentsEnergy(List<InvoiceEnergy> invoices, List<Tenant> tenants)
-			throws ParseException {
-		List<PaymentEnergy> list = new ArrayList<>();
-		DateFormat format = new SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH);
-		list.add(new PaymentEnergy(1, format.parse("2015-01-01"), 128.5714286, tenants.get(0),
-				invoices.get(0)));
-		list.add(new PaymentEnergy(1, format.parse("2015-01-01"), 71.42857143, tenants.get(1),
-				invoices.get(0)));
-		return list;
-	}
+//	public static List<PaymentWater> getPaymentsWater(List<InvoiceWater> invoices, List<Tenant> tenants)
+//			throws ParseException {
+//		List<PaymentWater> list = new ArrayList<>();
+//		DateFormat format = new SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH);
+//		list.add(new PaymentWater(1, format.parse("2015-01-01"), 117.5, tenants.get(0), invoices.get(0)));
+//		list.add(new PaymentWater(1, format.parse("2015-01-01"), 82.5, tenants.get(1), invoices.get(0)));
+//		return list;
+//	}
+//
+//	public static List<PaymentGas> getPaymentsGas(List<InvoiceGas> invoices, List<Tenant> tenants)
+//			throws ParseException {
+//		List<PaymentGas> list = new ArrayList<>();
+//		DateFormat format = new SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH);
+//		list.add(new PaymentGas(1, format.parse("2015-01-01"), 121.3444213, tenants.get(0), invoices.get(0)));
+//		list.add(new PaymentGas(1, format.parse("2015-01-01"), 78.65557866, tenants.get(1), invoices.get(0)));
+//		return list;
+//	}
+//
+//	public static List<PaymentEnergy> getPaymentsEnergy(List<InvoiceEnergy> invoices, List<Tenant> tenants)
+//			throws ParseException {
+//		List<PaymentEnergy> list = new ArrayList<>();
+//		DateFormat format = new SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH);
+//		list.add(new PaymentEnergy(1, format.parse("2015-01-01"), 128.5714286, tenants.get(0),
+//				invoices.get(0)));
+//		list.add(new PaymentEnergy(1, format.parse("2015-01-01"), 71.42857143, tenants.get(1),
+//				invoices.get(0)));
+//		return list;
+//	}
 }

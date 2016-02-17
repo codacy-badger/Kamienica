@@ -13,21 +13,21 @@ import kamienica.model.Tenant;
 
 public interface PaymentService {
 
-//	public void savePayment(PaymentAbstract payment);
-	
+	// public void savePayment(PaymentAbstract payment);
+
 	public void saveGas(List<PaymentGas> payment);
 
 	public void saveWater(List<PaymentWater> payment);
 
 	public void saveEnergy(List<PaymentEnergy> payment);
-	
+
 	public List<PaymentEnergy> getPaymentEnergyForTenant(Tenant tenant);
-	
+
 	public List<PaymentGas> getPaymentGasForTenant(Tenant tenant);
-	
+
 	public List<PaymentWater> getPaymentWaterForTenant(Tenant tenant);
 
-//	public PaymentAbstract getPaymentByInvoice(Invoice invoice);
+	// public PaymentAbstract getPaymentByInvoice(Invoice invoice);
 
 	public List<PaymentEnergy> getEnergyByInvoice(Invoice invoice);
 
@@ -52,7 +52,11 @@ public interface PaymentService {
 	public PaymentWater getLatestPaymentWater();
 
 	public PaymentGas getLatestPaymentGas();
-	
-	public void deleteEnergyByDate(String date);
+
+	public void deleteEnergyByDate(String date, int id);
+
+	public void deleteWaterByDate(String date, int id);
+
+	public void deleteGasByDate(String date, int id);
 
 }

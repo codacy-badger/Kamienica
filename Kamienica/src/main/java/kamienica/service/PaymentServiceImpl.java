@@ -13,6 +13,9 @@ import kamienica.dao.invoice.InvoiceEnergyDAO;
 import kamienica.dao.invoice.InvoiceGasDAO;
 import kamienica.dao.invoice.InvoiceWaterDAO;
 import kamienica.model.Invoice;
+import kamienica.model.InvoiceEnergy;
+import kamienica.model.InvoiceGas;
+import kamienica.model.InvoiceWater;
 import kamienica.model.PaymentEnergy;
 import kamienica.model.PaymentGas;
 import kamienica.model.PaymentWater;
@@ -101,20 +104,27 @@ public class PaymentServiceImpl implements PaymentService {
 	@Override
 	public void saveGas(List<PaymentGas> payment) {
 		gas.saveGas(payment);
-		invoiceGas.resolveInvoice(payment.get(0).getInvoice());
+		List<InvoiceGas> invoice = payment.get(0).getInvoice();
+		for (InvoiceGas i : invoice) {
+			invoiceGas.resolveInvoice(i);
+		}
 	}
 
 	@Override
 	public void saveWater(List<PaymentWater> payment) {
 		water.saveWater(payment);
-		invoiceWater.resolveInvoice(payment.get(0).getInvoice());
+		List<InvoiceWater> invoice = payment.get(0).getInvoice();
+		for (InvoiceWater i : invoice) {
+			invoiceWater.resolveInvoice(i);
+		}
 	}
 
 	@Override
 	public void saveEnergy(List<PaymentEnergy> payment) {
 		energy.saveEnergy(payment);
-		for (PaymentEnergy p : payment) {
-			invoiceEnergy.resolveInvoice(p.getInvoice());
+		List<InvoiceEnergy> invoice = payment.get(0).getInvoice();
+		for (InvoiceEnergy i : invoice) {
+			invoiceEnergy.resolveInvoice(i);
 		}
 
 	}
@@ -141,8 +151,23 @@ public class PaymentServiceImpl implements PaymentService {
 	}
 
 	@Override
-	public void deleteEnergyByDate(String date) {
+	public void deleteEnergyByDate(String date, int id) {
+		invoiceEnergy.unresolveInvoice(id);
 		energy.deleteByDate(date);
+
+	}
+
+	@Override
+	public void deleteWaterByDate(String date, int id) {
+		invoiceWater.unresolveInvoice(id);
+		water.deleteByDate(date);
+
+	}
+
+	@Override
+	public void deleteGasByDate(String date, int id) {
+		invoiceGas.unresolveInvoice(id);
+		gas.deleteByDate(date);
 
 	}
 }

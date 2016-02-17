@@ -3,7 +3,6 @@ package kamienica.dao;
 import java.util.List;
 
 import kamienica.model.Invoice;
-import kamienica.model.InvoiceEnergy;
 import kamienica.model.PaymentGas;
 import kamienica.model.ReadingGas;
 import kamienica.model.Tenant;
@@ -13,6 +12,8 @@ public interface PaymentGasDAO {
 	public void saveGas(List<PaymentGas> payment);
 
 	public void delete(PaymentGas payment);
+	
+	public void deleteByDate(String date);
 
 	public List<PaymentGas> getGasByInvoice(Invoice invoice);
 
