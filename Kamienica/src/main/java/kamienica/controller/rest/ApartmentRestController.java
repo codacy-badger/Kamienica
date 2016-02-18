@@ -74,7 +74,7 @@ public class ApartmentRestController  {
 	// update
 	@RequestMapping(value = "/apartments/{id}", method = RequestMethod.PUT)
 	public ResponseEntity<Apartment> updateUser(@PathVariable("id") int id, @RequestBody Apartment apartment) {
-System.out.println("start resta-------------------");
+
 		Apartment currentApartment = apartmentService.getById(id);
 
 		if (currentApartment == null) {
@@ -90,8 +90,7 @@ System.out.println("start resta-------------------");
 	}
 	// delete by id
 	 @RequestMapping(value = "/apartments/{id}", method = RequestMethod.DELETE)
-	    public ResponseEntity<Apartment> deleteUser(@PathVariable("id") int id) {
-	        
+	    public ResponseEntity<Apartment> deleteUser(@PathVariable("id") int id) {    
 		 Apartment apartment = apartmentService.getById(id);
 	        if (apartment == null) {
 	          

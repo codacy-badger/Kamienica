@@ -117,6 +117,7 @@
 		<div class='row'>
 			<div class='jumbotron'>
 				<h1>Rejestracja Odczytów Gazu</h1>
+				<a href="../home.html">Strona Główna</a>
 			</div>
 		</div>
 

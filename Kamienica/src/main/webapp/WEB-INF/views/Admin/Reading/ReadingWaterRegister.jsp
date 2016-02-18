@@ -117,6 +117,7 @@
 		<div class='row'>
 			<div class='jumbotron'>
 				<h1>Rejestracja Odczytów Wody</h1>
+				<a href="../home.html">Strona Główna</a>
 			</div>
 		</div>
 
@@ -130,7 +131,7 @@
 		<c:if test="${!empty readingForm.currentReadings}">
 			<c:url var="odczyty" value="/Admin/Reading/readingWaterSave.html" />
 			<form:form modelAttribute="readingForm" method="post"
-				action="${odczyty}" >
+				action="${odczyty}">
 				<div class="row">
 					<div class="col-md-6 myLabel ">
 						<label>Data</label>
@@ -141,7 +142,7 @@
 					</div>
 				</div>
 
-				<div class="row" >
+				<div class="row">
 					<div class="col-md-6 myLabel ">
 						<label style="margin-top: 15px; margin-bottom: 15px;">Opis
 							Licznika</label>

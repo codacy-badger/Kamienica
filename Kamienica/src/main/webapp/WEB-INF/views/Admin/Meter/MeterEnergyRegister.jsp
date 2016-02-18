@@ -8,24 +8,17 @@
 <head>
 <link class="row" href="<c:url value='/static/css/bootstrap.css' />"
 	rel="stylesheet">
-
 <link class="row" href="<c:url value='/static/css/style.css' />"
 	rel="stylesheet">
 <script type="text/javascript"
 	src="<c:url value='/static/js/jquery-2.2.0.js' />"></script>
 <script type="text/javascript"
 	src="<c:url value='/static/js/bootstrap.js' />"></script>
-
-
-
 <script type="text/javascript" src="<c:url value='/static/js/jq.js' />"></script>
-
 <script type="text/javascript"
 	src="<c:url value='/static/js/jquery.validate.js' />"></script>
-
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>Rejestracja Nowego Licznika Energii</title>
 </head>
 <body>
@@ -122,6 +115,7 @@
 	<div class='container'>
 		<div class='jumbotron'>
 			<h1>Rejestracja Licznika Energii</h1>
+			<a href="../home.html">Strona Główna</a>
 		</div>
 
 		<div class='row'>

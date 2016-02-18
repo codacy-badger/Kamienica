@@ -30,6 +30,9 @@
 </head>
 <body>
 
+
+
+
 	<nav class="navbar navbar-inverse navbar-fixed-top">
 	<div class="container-fluid">
 		<!-- Brand and toggle get grouped for better mobile display -->
@@ -121,9 +124,15 @@
 
 
 	<div id="container">
-		<div class="jumbotron">
-			<h1>Rejestracja Nowego Mieszkania</h1>
+
+		<div class='row'>
+			<div class='jumbotron'>
+				<h1>Rejestracja nowego mieszkania</h1>
+				<a href="../home.html">Strona Główna</a>
+			</div>
 		</div>
+
+
 		<div class='row'>
 			<c:url var="rejestrujMieszkanie"
 				value="/Admin/Apartment/apartmentSave.html" />
@@ -147,7 +156,7 @@
 						<input class='form-control' name="apartmentNumber" />
 					</div>
 					<div class="col-xs-3 messageContainer">
-						<form:errors path="intercom" class="error" />
+						<form:errors path="apartmentNumber" class="error" />
 					</div>
 				</div>
 
