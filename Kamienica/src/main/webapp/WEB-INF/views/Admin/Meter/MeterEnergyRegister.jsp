@@ -115,6 +115,7 @@
 	<div class='container'>
 		<div class='jumbotron'>
 			<h1>Rejestracja Licznika Energii</h1>
+			<a href="../home.html">Strona Główna</a>
 		</div>
 
 		<div class='row'>

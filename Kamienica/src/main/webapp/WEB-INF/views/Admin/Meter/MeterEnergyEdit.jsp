@@ -113,11 +113,13 @@
 	<div class='container'>
 		<div class='jumbotron'>
 			<h1>Rejestracja Licznika Energii</h1>
+			<a href="../home.html">Strona Główna</a>
 		</div>
 
 		<div class='row'>
 			<c:if test="${!empty model.error}">
 				<p class='alert alert-danger'>${model.error}</p>
+
 			</c:if>
 		</div>
 		<div class='row'>
@@ -126,39 +128,69 @@
 					value="/Admin/Meter/meterEnergyOverwrite.html" />
 				<form:form id="licznikEnergiaEdytuj" modelAttribute="meter"
 					method="post" action="${licznikEnergiaEdytuj}">
-					<table width="400px" height="150px">
-						<tr>
-							<td><form:label path="id">ID</form:label></td>
-							<td><form:input path="id" readonly="true" /></td>
-							<td><form:errors path="id" cssClass="error" /></td>
-						</tr>
-						<tr>
-							<td><form:label path="description">description</form:label></td>
-							<td><form:input path="description" /></td>
-							<td><form:errors path="description" cssClass="error" /></td>
-						</tr>
-						<tr>
-							<td><form:label path="serialNumber">serialNumber</form:label></td>
-							<td><form:input path="serialNumber" /></td>
-							<td><form:errors path="serialNumber" cssClass="error" /></td>
-						</tr>
 
-						<tr>
-							<td><form:label path="unit">jendostka</form:label></td>
-							<td><form:input path="unit" /></td>
-							<td><form:errors path="unit" cssClass="error" /></td>
-						</tr>
-						<tr>
-							<td><form:label path="apartment">apartment</form:label></td>
-							<td><form:select path="apartment" items="${model.apartment}"
-									itemValue="id" itemLabel="description" /></td>
-							<td><form:errors path="apartment" cssClass="error" /></td>
-						</tr>
-						<tr>
-							<td></td>
-							<td><input type="submit" value="Zapisz" /></td>
-						</tr>
-					</table>
+
+					<div class="row">
+						<div class="col-md-6 myLabel ">
+							<form:label path="id">ID</form:label>
+						</div>
+						<div class="col-md-6 inputAndError">
+							<form:input path="id" readonly="true" />
+							<form:errors path="id" cssClass="error" />
+						</div>
+					</div>
+
+					<div class="row">
+						<div class="col-md-6 myLabel ">
+							<form:label path="description">Opis</form:label>
+						</div>
+						<div class="col-md-6 inputAndError">
+							<form:input path="description" name="description" />
+							<form:errors path="description" class="error" />
+						</div>
+					</div>
+
+					<div class="row">
+						<div class="col-md-6 myLabel ">
+							<form:label path="serialNumber">Nr. seryjny</form:label>
+						</div>
+						<div class="col-md-6 inputAndError">
+							<form:input path="serialNumber" name="serialNumber" />
+							<form:errors path="serialNumber" class="error" />
+						</div>
+					</div>
+
+					<div class="row">
+						<div class="col-md-6 myLabel ">
+							<form:label path="unit">Jednostka</form:label>
+						</div>
+						<div class="col-md-6 inputAndError">
+							<form:input path="unit" name="unit" />
+							<form:errors path="unit" class="error" />
+						</div>
+					</div>
+
+					<div class="row">
+						<div class="col-md-6 myLabel ">
+							<form:label path="apartment">Mieszkanie</form:label>
+						</div>
+						<div class="col-md-6 inputAndError">
+							<form:select path="apartment" items="${model.apartment}"
+								itemValue="id" itemLabel="description" />
+							<form:errors path="apartment" class="error" />
+						</div>
+					</div>
+
+
+
+					<div class="row">
+						<div class='col-md-12'>
+							<input type="submit" class='btn btn-primary' value="Zapisz"
+								${ !empty model.error ? 'disabled="disabled"' : ''} />
+
+						</div>
+					</div>
+
 				</form:form>
 			</c:if>
 		</div>
