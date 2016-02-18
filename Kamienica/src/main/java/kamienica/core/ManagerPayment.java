@@ -1,10 +1,12 @@
 package kamienica.core;
 
 import java.text.DecimalFormat;
+import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 
 import kamienica.model.Division;
 import kamienica.model.Invoice;
@@ -25,8 +27,12 @@ public class ManagerPayment {
 
 		double sumOfExpences = sumEnergy(invoice);
 		ArrayList<PaymentEnergy> listToReturn = new ArrayList<PaymentEnergy>();
-		DecimalFormat decimalFormat = new DecimalFormat("#.00");
-	
+		
+
+		NumberFormat nf = NumberFormat.getNumberInstance(Locale.ENGLISH);
+		DecimalFormat df = (DecimalFormat)nf;
+		df.applyPattern("#.00");
+		
 		
 		double sumaZuzycia = sumaZuzycia(usage);
 		System.out.println(sumaZuzycia);
@@ -40,7 +46,7 @@ public class ManagerPayment {
 			}
 			System.out.println("manager payemt oplata");
 			System.out.println(oplata);
-			oplata = Double.parseDouble(decimalFormat.format(oplata));
+			oplata = Double.parseDouble(df.format(oplata));
 
 			PaymentEnergy forList = new PaymentEnergy();
 			forList.setInvoice(invoice);
@@ -58,7 +64,9 @@ public class ManagerPayment {
 			ArrayList<Division> division, ArrayList<UsageValue> usage) {
 		double sumOfExpences = sumGas(invoice);
 		ArrayList<PaymentGas> listToReturn = new ArrayList<PaymentGas>();
-		DecimalFormat decimalFormat = new DecimalFormat("#.00");
+		NumberFormat nf = NumberFormat.getNumberInstance(Locale.ENGLISH);
+		DecimalFormat df = (DecimalFormat)nf;
+		df.applyPattern("#.00");
 
 		double sumaZuzycia = sumaZuzycia(usage);
 
@@ -71,7 +79,7 @@ public class ManagerPayment {
 				oplata += sumOfExpences * ulamek * podzialDlaNajemcy.get(w.getMieszkanie().getApartmentNumber());
 			}
 
-			 oplata = Double.parseDouble(decimalFormat.format(oplata));
+			 oplata = Double.parseDouble(df.format(oplata));
 
 			PaymentGas forList = new PaymentGas();
 			forList.setInvoice(invoice);
@@ -88,7 +96,9 @@ public class ManagerPayment {
 	public static ArrayList<PaymentWater> createPaymentWaterList(ArrayList<Tenant> tenants, List<InvoiceWater> invoice,
 			ArrayList<Division> podzial, ArrayList<UsageValue> usage) {
 		ArrayList<PaymentWater> listToReturn = new ArrayList<PaymentWater>();
-		DecimalFormat decimalFormat = new DecimalFormat("#.00");
+		NumberFormat nf = NumberFormat.getNumberInstance(Locale.ENGLISH);
+		DecimalFormat df = (DecimalFormat)nf;
+		df.applyPattern("#.00");
 		double sumOfExpences = sumWater(invoice);
 		double sumaZuzycia = sumaZuzycia(usage);
 
@@ -99,7 +109,7 @@ public class ManagerPayment {
 				double ulamek = w.getUsage() / sumaZuzycia;
 				oplata += sumOfExpences * ulamek * podzialDlaNajemcy.get(w.getMieszkanie().getApartmentNumber());
 			}
-		 oplata = Double.parseDouble(decimalFormat.format(oplata));
+		 oplata = Double.parseDouble(df.format(oplata));
 
 			PaymentWater forList = new PaymentWater();
 			forList.setInvoice(invoice);
