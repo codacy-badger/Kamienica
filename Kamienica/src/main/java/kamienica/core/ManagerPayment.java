@@ -26,7 +26,8 @@ public class ManagerPayment {
 		double sumOfExpences = sumEnergy(invoice);
 		ArrayList<PaymentEnergy> listToReturn = new ArrayList<PaymentEnergy>();
 		DecimalFormat decimalFormat = new DecimalFormat("#.00");
-
+	
+		
 		double sumaZuzycia = sumaZuzycia(usage);
 		System.out.println(sumaZuzycia);
 		for (Tenant tenant : tenants) {
@@ -70,7 +71,7 @@ public class ManagerPayment {
 				oplata += sumOfExpences * ulamek * podzialDlaNajemcy.get(w.getMieszkanie().getApartmentNumber());
 			}
 
-			// oplata = Double.parseDouble(decimalFormat.format(oplata));
+			 oplata = Double.parseDouble(decimalFormat.format(oplata));
 
 			PaymentGas forList = new PaymentGas();
 			forList.setInvoice(invoice);
@@ -98,7 +99,7 @@ public class ManagerPayment {
 				double ulamek = w.getUsage() / sumaZuzycia;
 				oplata += sumOfExpences * ulamek * podzialDlaNajemcy.get(w.getMieszkanie().getApartmentNumber());
 			}
-			// oplata = Double.parseDouble(decimalFormat.format(oplata));
+		 oplata = Double.parseDouble(decimalFormat.format(oplata));
 
 			PaymentWater forList = new PaymentWater();
 			forList.setInvoice(invoice);
