@@ -127,6 +127,7 @@
 		<div class='row'>
 			<div class='jumbotron'>
 				<h1>Nowa Faktura Energii</h1>
+				<a href="../home.html">Strona Główna</a>
 			</div>
 		</div>
 
