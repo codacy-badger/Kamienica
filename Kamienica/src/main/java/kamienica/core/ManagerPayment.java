@@ -18,24 +18,20 @@ import kamienica.model.PaymentGas;
 import kamienica.model.PaymentWater;
 import kamienica.model.Tenant;
 import kamienica.model.UsageValue;
-import kamienica.wrapper.ReadingInvoiceForm;
 
 public class ManagerPayment {
 
 	public static ArrayList<PaymentEnergy> createPaymentEnergyList(ArrayList<Tenant> tenants,
 			List<InvoiceEnergy> invoice, ArrayList<Division> division, ArrayList<UsageValue> usage) {
 
-		double sumOfExpences = sumEnergy(invoice);
+		double sumOfExpences = sumInvoicesAmount(invoice);
 		ArrayList<PaymentEnergy> listToReturn = new ArrayList<PaymentEnergy>();
-		
 
-		NumberFormat nf = NumberFormat.getNumberInstance(Locale.ENGLISH);
-		DecimalFormat df = (DecimalFormat)nf;
-		df.applyPattern("#.00");
-		
-		
-		double sumaZuzycia = sumaZuzycia(usage);
-		System.out.println(sumaZuzycia);
+		// NumberFormat nf = NumberFormat.getNumberInstance(Locale.ENGLISH);
+		// DecimalFormat df = (DecimalFormat) nf;
+		// df.applyPattern("#.00");
+		double sumaZuzycia = sumUsage(usage);
+
 		for (Tenant tenant : tenants) {
 			HashMap<Integer, Double> podzialDlaNajemcy = tworzPodzialDlaNajemcy(division, tenant);
 			double oplata = 0;
@@ -44,10 +40,9 @@ public class ManagerPayment {
 				double ulamek = w.getUsage() / sumaZuzycia;
 				oplata += sumOfExpences * ulamek * podzialDlaNajemcy.get(w.getMieszkanie().getApartmentNumber());
 			}
-			System.out.println("manager payemt oplata");
-			System.out.println(oplata);
-			oplata = Double.parseDouble(df.format(oplata));
 
+			// oplata = Double.parseDouble(df.format(oplata));
+			oplata = decimalFormat(oplata);
 			PaymentEnergy forList = new PaymentEnergy();
 			forList.setInvoice(invoice);
 			forList.setTenant(tenant);
@@ -62,13 +57,13 @@ public class ManagerPayment {
 
 	public static ArrayList<PaymentGas> createPaymentGasList(ArrayList<Tenant> tenants, List<InvoiceGas> invoice,
 			ArrayList<Division> division, ArrayList<UsageValue> usage) {
-		double sumOfExpences = sumGas(invoice);
+		double sumOfExpences = sumInvoicesAmount(invoice);
 		ArrayList<PaymentGas> listToReturn = new ArrayList<PaymentGas>();
-		NumberFormat nf = NumberFormat.getNumberInstance(Locale.ENGLISH);
-		DecimalFormat df = (DecimalFormat)nf;
-		df.applyPattern("#.00");
+		// NumberFormat nf = NumberFormat.getNumberInstance(Locale.ENGLISH);
+		// DecimalFormat df = (DecimalFormat) nf;
+		// df.applyPattern("#.00");
 
-		double sumaZuzycia = sumaZuzycia(usage);
+		double sumaZuzycia = sumUsage(usage);
 
 		for (Tenant tenant : tenants) {
 			HashMap<Integer, Double> podzialDlaNajemcy = tworzPodzialDlaNajemcy(division, tenant);
@@ -79,8 +74,8 @@ public class ManagerPayment {
 				oplata += sumOfExpences * ulamek * podzialDlaNajemcy.get(w.getMieszkanie().getApartmentNumber());
 			}
 
-			 oplata = Double.parseDouble(df.format(oplata));
-
+			// oplata = Double.parseDouble(df.format(oplata));
+			oplata = decimalFormat(oplata);
 			PaymentGas forList = new PaymentGas();
 			forList.setInvoice(invoice);
 			forList.setTenant(tenant);
@@ -96,21 +91,24 @@ public class ManagerPayment {
 	public static ArrayList<PaymentWater> createPaymentWaterList(ArrayList<Tenant> tenants, List<InvoiceWater> invoice,
 			ArrayList<Division> podzial, ArrayList<UsageValue> usage) {
 		ArrayList<PaymentWater> listToReturn = new ArrayList<PaymentWater>();
-		NumberFormat nf = NumberFormat.getNumberInstance(Locale.ENGLISH);
-		DecimalFormat df = (DecimalFormat)nf;
-		df.applyPattern("#.00");
-		double sumOfExpences = sumWater(invoice);
-		double sumaZuzycia = sumaZuzycia(usage);
+		// NumberFormat nf = NumberFormat.getNumberInstance(Locale.ENGLISH);
+		// DecimalFormat df = (DecimalFormat) nf;
+		// df.applyPattern("#.00");
+		double sumOfExpences = sumInvoicesAmount(invoice);
+
+		double sumaZuzycia = sumUsage(usage);
 
 		for (Tenant tenant : tenants) {
 			HashMap<Integer, Double> podzialDlaNajemcy = tworzPodzialDlaNajemcy(podzial, tenant);
 			double oplata = 0;
 			for (UsageValue w : usage) {
 				double ulamek = w.getUsage() / sumaZuzycia;
+
 				oplata += sumOfExpences * ulamek * podzialDlaNajemcy.get(w.getMieszkanie().getApartmentNumber());
 			}
-		 oplata = Double.parseDouble(df.format(oplata));
 
+			// oplata = Double.parseDouble(df.format(oplata));
+			oplata = decimalFormat(oplata);
 			PaymentWater forList = new PaymentWater();
 			forList.setInvoice(invoice);
 			forList.setTenant(tenant);
@@ -121,7 +119,7 @@ public class ManagerPayment {
 		return listToReturn;
 	}
 
-	static double sumaZuzycia(ArrayList<UsageValue> listaZuzycia) {
+	static double sumUsage(ArrayList<UsageValue> listaZuzycia) {
 		double suma = 0;
 		for (UsageValue i : listaZuzycia) {
 			suma += i.getUsage();
@@ -141,7 +139,31 @@ public class ManagerPayment {
 		return output;
 	}
 
-	private static double sumEnergy(List<InvoiceEnergy> invoice) {
+	// private static double sumEnergy(List<InvoiceEnergy> invoice) {
+	// double sum = 0;
+	// for (Invoice inv : invoice) {
+	// sum = sum + inv.getTotalAmount();
+	// }
+	// return sum;
+	// }
+	//
+	// private static double sumWater(List<InvoiceWater> invoice) {
+	// double sum = 0;
+	// for (Invoice inv : invoice) {
+	// sum = sum + inv.getTotalAmount();
+	// }
+	// return sum;
+	// }
+	//
+	// private static double sumGas(List<InvoiceGas> invoice) {
+	// double sum = 0;
+	// for (Invoice inv : invoice) {
+	// sum = sum + inv.getTotalAmount();
+	// }
+	// return sum;
+	// }
+
+	private static double sumInvoicesAmount(List<? extends Invoice> invoice) {
 		double sum = 0;
 		for (Invoice inv : invoice) {
 			sum = sum + inv.getTotalAmount();
@@ -149,96 +171,82 @@ public class ManagerPayment {
 		return sum;
 	}
 
-	private static double sumWater(List<InvoiceWater> invoice) {
-		double sum = 0;
-		for (Invoice inv : invoice) {
-			sum = sum + inv.getTotalAmount();
-		}
-		return sum;
+	private static double decimalFormat(double input) {
+		NumberFormat nf = NumberFormat.getNumberInstance(Locale.ENGLISH);
+		DecimalFormat df = (DecimalFormat) nf;
+		df.applyPattern("#.00");
+		return Double.parseDouble(df.format(input));
 	}
-
-	private static double sumGas(List<InvoiceGas> invoice) {
-		double sum = 0;
-		for (Invoice inv : invoice) {
-			sum = sum + inv.getTotalAmount();
-		}
-		return sum;
-	}
-
-	private static Invoice getLastInvoice(List<Invoice> list) {
-		int index = list.size();
-
-		index--;
-		return list.get(index);
-	}
-
 	// =======================METHODS_USED_IN_CONTROLLER==============================
-	public static void prepareModelForNewWaterPayment(HashMap<String, Object> model, ArrayList<Date> readingDatesWater,
-			List<InvoiceWater> invoiceWater) {
-		ReadingInvoiceForm waterFirstBinder = new ReadingInvoiceForm();
-		waterFirstBinder.setInvoice(invoiceWater.get(0));
-		invoiceWater.remove(0);
-		waterFirstBinder.setDate(readingDatesWater.get(0));
-		readingDatesWater.remove(0);
-		model.put("waterFirstBinder", waterFirstBinder);
-		ArrayList<ReadingInvoiceForm> waterBinder = new ArrayList<>();
-		while (!invoiceWater.isEmpty() && !readingDatesWater.isEmpty()) {
-			ReadingInvoiceForm out = new ReadingInvoiceForm();
-			out.setDate(readingDatesWater.get(0));
-			out.setInvoice(invoiceWater.get(0));
-			waterBinder.add(out);
-			readingDatesWater.remove(0);
-			invoiceWater.remove(0);
+	// public static void prepareModelForNewWaterPayment(HashMap<String, Object>
+	// model, ArrayList<Date> readingDatesWater,
+	// List<InvoiceWater> invoiceWater) {
+	// ReadingInvoiceForm waterFirstBinder = new ReadingInvoiceForm();
+	// waterFirstBinder.setInvoice(invoiceWater.get(0));
+	// invoiceWater.remove(0);
+	// waterFirstBinder.setDate(readingDatesWater.get(0));
+	// readingDatesWater.remove(0);
+	// model.put("waterFirstBinder", waterFirstBinder);
+	// ArrayList<ReadingInvoiceForm> waterBinder = new ArrayList<>();
+	// while (!invoiceWater.isEmpty() && !readingDatesWater.isEmpty()) {
+	// ReadingInvoiceForm out = new ReadingInvoiceForm();
+	// out.setDate(readingDatesWater.get(0));
+	// out.setInvoice(invoiceWater.get(0));
+	// waterBinder.add(out);
+	// readingDatesWater.remove(0);
+	// invoiceWater.remove(0);
+	//
+	// }
+	// model.put("waterBinder", waterBinder);
+	// model.put("readingDatesWater", readingDatesWater);
+	// model.put("invoiceWater", invoiceWater);
+	// }
 
-		}
-		model.put("waterBinder", waterBinder);
-		model.put("readingDatesWater", readingDatesWater);
-		model.put("invoiceWater", invoiceWater);
-	}
+	// public static void prepareModelForNewGasPayment(HashMap<String, Object>
+	// model, ArrayList<Date> readingDatesGas,
+	// List<InvoiceGas> invoiceGas) {
+	// ReadingInvoiceForm gasFirstBinder = new ReadingInvoiceForm();
+	// gasFirstBinder.setInvoice(invoiceGas.get(0));
+	// invoiceGas.remove(0);
+	// gasFirstBinder.setDate(readingDatesGas.get(0));
+	// readingDatesGas.remove(0);
+	// model.put("gasFirstBinder", gasFirstBinder);
+	// ArrayList<ReadingInvoiceForm> gasBinder = new ArrayList<>();
+	// while (!invoiceGas.isEmpty() && !readingDatesGas.isEmpty()) {
+	// ReadingInvoiceForm out = new ReadingInvoiceForm();
+	// out.setDate(readingDatesGas.get(0));
+	// out.setInvoice(invoiceGas.get(0));
+	// gasBinder.add(out);
+	// readingDatesGas.remove(0);
+	// invoiceGas.remove(0);
+	//
+	// }
+	// model.put("gasBinder", gasBinder);
+	// model.put("readingDatesGas", readingDatesGas);
+	// model.put("invoiceGas", invoiceGas);
+	// }
 
-	public static void prepareModelForNewGasPayment(HashMap<String, Object> model, ArrayList<Date> readingDatesGas,
-			List<InvoiceGas> invoiceGas) {
-		ReadingInvoiceForm gasFirstBinder = new ReadingInvoiceForm();
-		gasFirstBinder.setInvoice(invoiceGas.get(0));
-		invoiceGas.remove(0);
-		gasFirstBinder.setDate(readingDatesGas.get(0));
-		readingDatesGas.remove(0);
-		model.put("gasFirstBinder", gasFirstBinder);
-		ArrayList<ReadingInvoiceForm> gasBinder = new ArrayList<>();
-		while (!invoiceGas.isEmpty() && !readingDatesGas.isEmpty()) {
-			ReadingInvoiceForm out = new ReadingInvoiceForm();
-			out.setDate(readingDatesGas.get(0));
-			out.setInvoice(invoiceGas.get(0));
-			gasBinder.add(out);
-			readingDatesGas.remove(0);
-			invoiceGas.remove(0);
-
-		}
-		model.put("gasBinder", gasBinder);
-		model.put("readingDatesGas", readingDatesGas);
-		model.put("invoiceGas", invoiceGas);
-	}
-
-	public static void prepareModelForNewEnergyPayment(HashMap<String, Object> model,
-			ArrayList<Date> readingDatesEnergy, List<InvoiceEnergy> invoiceEnergy) {
-		ReadingInvoiceForm energyFirstBinder = new ReadingInvoiceForm();
-		energyFirstBinder.setInvoice(invoiceEnergy.get(0));
-		invoiceEnergy.remove(0);
-		energyFirstBinder.setDate(readingDatesEnergy.get(0));
-		readingDatesEnergy.remove(0);
-		model.put("energyFirstBinder", energyFirstBinder);
-		ArrayList<ReadingInvoiceForm> energyBinder = new ArrayList<>();
-		while (!invoiceEnergy.isEmpty() && !readingDatesEnergy.isEmpty()) {
-			ReadingInvoiceForm out = new ReadingInvoiceForm();
-			out.setDate(readingDatesEnergy.get(0));
-			out.setInvoice(invoiceEnergy.get(0));
-			energyBinder.add(out);
-			readingDatesEnergy.remove(0);
-			invoiceEnergy.remove(0);
-
-		}
-		model.put("energyBinder", energyBinder);
-		model.put("readingDatesEnergy", readingDatesEnergy);
-		model.put("invoiceEnergy", invoiceEnergy);
-	}
+	// public static void prepareModelForNewEnergyPayment(HashMap<String,
+	// Object> model,
+	// ArrayList<Date> readingDatesEnergy, List<InvoiceEnergy> invoiceEnergy) {
+	// ReadingInvoiceForm energyFirstBinder = new ReadingInvoiceForm();
+	// energyFirstBinder.setInvoice(invoiceEnergy.get(0));
+	// invoiceEnergy.remove(0);
+	// energyFirstBinder.setDate(readingDatesEnergy.get(0));
+	// readingDatesEnergy.remove(0);
+	// model.put("energyFirstBinder", energyFirstBinder);
+	// ArrayList<ReadingInvoiceForm> energyBinder = new ArrayList<>();
+	// while (!invoiceEnergy.isEmpty() && !readingDatesEnergy.isEmpty()) {
+	// ReadingInvoiceForm out = new ReadingInvoiceForm();
+	// out.setDate(readingDatesEnergy.get(0));
+	// out.setInvoice(invoiceEnergy.get(0));
+	// energyBinder.add(out);
+	// readingDatesEnergy.remove(0);
+	// invoiceEnergy.remove(0);
+	//
+	// }
+	// model.put("energyBinder", energyBinder);
+	// model.put("readingDatesEnergy", readingDatesEnergy);
+	// model.put("invoiceEnergy", invoiceEnergy);
+	// }
 }

@@ -62,7 +62,7 @@ public class InvoiceWaterDAOImpl extends AbstractDao<Integer, InvoiceWater> impl
 	public List<InvoiceWater> getInvoicesForCalulation(Invoice invoice) {
 		Query query = getSession()
 				.createSQLQuery(
-						"select * from kamienica.invoiceWater where status = :status and date <= :date order by date asc")
+						"select * from kamienica.invoiceWater where status = :status and date <= :date and baseReading_id is not null order by date asc")
 				.addEntity(InvoiceWater.class).setParameter("date", invoice.getDate())
 				.setParameter("status", PaymentStatus.UNPAID.getPaymentStatus());
 		return query.list();
@@ -71,7 +71,7 @@ public class InvoiceWaterDAOImpl extends AbstractDao<Integer, InvoiceWater> impl
 
 	@Override
 	public List<InvoiceWater> getUnpaidInvoices() {
-		Query query = getSession().createSQLQuery("select * from invoicewater where status =  :stat  order by date asc")
+		Query query = getSession().createSQLQuery("select * from invoicewater where status =  :stat and baseReading_id is not null order by date asc")
 				.addEntity(InvoiceWater.class).setParameter("stat", PaymentStatus.UNPAID.getPaymentStatus());
 		@SuppressWarnings("unchecked")
 		List<InvoiceWater> invoice = query.list();
@@ -95,7 +95,7 @@ public class InvoiceWaterDAOImpl extends AbstractDao<Integer, InvoiceWater> impl
 	}
 
 	@Override
-	public void unresolveInvoice( int id) {
+	public void unresolveInvoice(int id) {
 		Query query = getSession()
 				.createSQLQuery(
 						"update invoiceWater invoice join paymentWater_invoiceWater jointable on invoice.id = jointable.invoice_id   set status =  :stat  where jointable.paymentWater_id = :id")

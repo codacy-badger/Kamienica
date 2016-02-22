@@ -54,6 +54,12 @@ public interface ReadingService {
 
 	public void deleteReadingWater(int id);
 
+	public void deleteReadingEnergyList(List<ReadingEnergy> list);
+
+	public void deleteReadingGasList(List<ReadingGas> list);
+
+	public void deleteReadingWaterList(List<ReadingWater> list);
+
 	// public List<ReadingEnergy> getLatestEnergyReadingsList();
 	//
 	// public List<ReadingGas> getLatestGasReadingsList();

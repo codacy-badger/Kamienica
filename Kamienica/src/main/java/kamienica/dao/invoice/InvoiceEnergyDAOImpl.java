@@ -62,7 +62,7 @@ public class InvoiceEnergyDAOImpl extends AbstractDao<Integer, InvoiceEnergy> im
 	public List<InvoiceEnergy> getInvoicesForCalulation(Invoice invoice) {
 		Query query = getSession()
 				.createSQLQuery(
-						"select * from kamienica.invoiceenergy where status = :status and date <= :date order by date asc")
+						"select * from kamienica.invoiceenergy where status = :status and date <= :date and baseReading_id is not null order by date asc")
 				.addEntity(InvoiceEnergy.class).setParameter("date", invoice.getDate())
 				.setParameter("status", PaymentStatus.UNPAID.getPaymentStatus());
 		return query.list();
@@ -72,7 +72,8 @@ public class InvoiceEnergyDAOImpl extends AbstractDao<Integer, InvoiceEnergy> im
 	@Override
 	public List<InvoiceEnergy> getUnpaidInvoices() {
 		Query query = getSession()
-				.createSQLQuery("select * from invoiceenergy where status =  :stat  order by date asc")
+				.createSQLQuery(
+						"select * from invoiceenergy where status =  :stat and baseReading_id is not null order by date asc")
 				.addEntity(InvoiceEnergy.class).setParameter("stat", PaymentStatus.UNPAID.getPaymentStatus());
 		@SuppressWarnings("unchecked")
 		List<InvoiceEnergy> invoice = query.list();

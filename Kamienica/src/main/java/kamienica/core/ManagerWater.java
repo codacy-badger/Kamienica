@@ -13,52 +13,6 @@ import kamienica.model.UsageValue;
 
 public class ManagerWater {
 
-	// metoda stworzona gdy� nie istnieje fizyczny licznik wody dla czesci
-	// administracyjnej a cześć wpólna jest wylczana jako rónica między
-	// licznikiemgłównym a poszczególnymi licznikami
-	public static ReadingWater generateUsageForAdministrativePart(List<ReadingWater> listaOdczytowWody,
-			List<Apartment> apartments) {
-		Apartment apartment = null;
-		for (Apartment ap : apartments) {
-			if (ap.getApartmentNumber() == 0) {
-				apartment = ap;
-				break;
-			}
-		}
-		MeterWater temporaryWaterMeter = new MeterWater("Część Wspólna", "N/A", "m3", apartment, false);
-		double sumaZuzyciaPozostalychLicznikow = 0;
-		double zuzycieLicznikaGlownego = 0;
-
-		for (ReadingWater odczyt : listaOdczytowWody) {
-			if (odczyt.getMeter().getApartment() != null) {
-				sumaZuzyciaPozostalychLicznikow += odczyt.getValue();
-			} else {
-				zuzycieLicznikaGlownego = odczyt.getValue();
-			}
-		}
-		double wartoscZuzyciaCzesciAdministracyjnej = zuzycieLicznikaGlownego - sumaZuzyciaPozostalychLicznikow;
-		ReadingWater tmp = new ReadingWater(listaOdczytowWody.get(0).getReadingDate(),
-				wartoscZuzyciaCzesciAdministracyjnej, temporaryWaterMeter);
-		return tmp;
-	}
-
-	// metoda dla managera gazu
-	public static double countWarmWaterUsage(List<ReadingWater> staryOdczytWody, List<ReadingWater> nowyOdczytWody) {
-		double output = 0;
-
-		for (ReadingWater o : nowyOdczytWody) {
-			if (o.getMeter().getIsWarmWater() == true)
-				output += o.getValue();
-		}
-
-		for (ReadingWater o : staryOdczytWody) {
-			if (o.getMeter().getIsWarmWater() == true)
-				output = output - o.getValue();
-		}
-
-		return output;
-	}
-
 	public static ArrayList<UsageValue> countWaterConsumption(List<Apartment> apartment, List<ReadingWater> oldReading,
 			List<ReadingWater> newRading) {
 
@@ -119,5 +73,50 @@ public class ManagerWater {
 		}
 
 		return ap;
+	}
+
+	// metoda stworzona gdy� nie istnieje fizyczny licznik wody dla czesci
+	// administracyjnej a cześć wpólna jest wylczana jako rónica między
+	// licznikiemgłównym a poszczególnymi licznikami
+	private static ReadingWater generateUsageForAdministrativePart(List<ReadingWater> readings,
+			List<Apartment> apartments) {
+		Apartment apartment = null;
+		for (Apartment ap : apartments) {
+			if (ap.getApartmentNumber() == 0) {
+				apartment = ap;
+				break;
+			}
+		}
+		MeterWater temporaryWaterMeter = new MeterWater("Część Wspólna", "N/A", "m3", apartment, false);
+		double sumOfOthers = 0;
+		double main = 0;
+
+		for (ReadingWater odczyt : readings) {
+			if (odczyt.getMeter().getApartment() != null) {
+				sumOfOthers += odczyt.getValue();
+			} else {
+				main = odczyt.getValue();
+			}
+		}
+		double sharedPart = main - sumOfOthers;
+		ReadingWater tmp = new ReadingWater(readings.get(0).getReadingDate(), sharedPart, temporaryWaterMeter);
+		return tmp;
+	}
+
+	// metoda dla managera gazu
+	public static double countWarmWaterUsage(List<ReadingWater> oldReadings, List<ReadingWater> newReadings) {
+		double output = 0;
+
+		for (ReadingWater o : newReadings) {
+			if (o.getMeter().getIsWarmWater() == true)
+				output += o.getValue();
+		}
+
+		for (ReadingWater o : oldReadings) {
+			if (o.getMeter().getIsWarmWater() == true)
+				output = output - o.getValue();
+		}
+
+		return output;
 	}
 }

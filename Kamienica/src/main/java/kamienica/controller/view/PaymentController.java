@@ -164,7 +164,7 @@ public class PaymentController {
 			paymentService.saveEnergy(paymentEnergy);
 		}
 
-		if (invoiceWrapper.getWater() != null) {
+		if (invoiceWrapper.getWater() != null ) {
 
 			List<InvoiceWater> invoicesWaterForCalculation = invoiceService
 					.getInvoicesWaterForCalulation(invoiceWrapper.getWater());
