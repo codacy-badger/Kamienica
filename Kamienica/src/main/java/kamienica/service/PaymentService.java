@@ -2,13 +2,9 @@ package kamienica.service;
 
 import java.util.List;
 
-import kamienica.model.Invoice;
 import kamienica.model.PaymentEnergy;
 import kamienica.model.PaymentGas;
 import kamienica.model.PaymentWater;
-import kamienica.model.ReadingEnergy;
-import kamienica.model.ReadingGas;
-import kamienica.model.ReadingWater;
 import kamienica.model.Tenant;
 
 public interface PaymentService {

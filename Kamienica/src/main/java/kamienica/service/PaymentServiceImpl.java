@@ -12,16 +12,12 @@ import kamienica.dao.PaymentWaterDAO;
 import kamienica.dao.invoice.InvoiceEnergyDAO;
 import kamienica.dao.invoice.InvoiceGasDAO;
 import kamienica.dao.invoice.InvoiceWaterDAO;
-import kamienica.model.Invoice;
 import kamienica.model.InvoiceEnergy;
 import kamienica.model.InvoiceGas;
 import kamienica.model.InvoiceWater;
 import kamienica.model.PaymentEnergy;
 import kamienica.model.PaymentGas;
 import kamienica.model.PaymentWater;
-import kamienica.model.ReadingEnergy;
-import kamienica.model.ReadingGas;
-import kamienica.model.ReadingWater;
 import kamienica.model.Tenant;
 
 @Service

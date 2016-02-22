@@ -1,29 +1,7 @@
 package kamienica.core;
 
 import java.io.IOException;
-import java.text.DateFormat;
 import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.Locale;
-
-import kamienica.model.Apartment;
-import kamienica.model.Division;
-import kamienica.model.Invoice;
-import kamienica.model.InvoiceGas;
-import kamienica.model.InvoiceWater;
-import kamienica.model.MeterEnergy;
-import kamienica.model.MeterGas;
-import kamienica.model.MeterWater;
-import kamienica.model.PaymentGas;
-import kamienica.model.ReadingEnergy;
-import kamienica.model.ReadingGas;
-import kamienica.model.ReadingWater;
-import kamienica.model.Tenant;
-import kamienica.model.UsageValue;
-import kamienica.validator.DivisionValidator;
 
 public class Kamienica {
 
