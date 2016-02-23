@@ -262,13 +262,23 @@ public class InvoiceController {
 
 	@RequestMapping(value = "/Admin/Invoice/invoiceGasDelete", params = { "id" })
 	public ModelAndView invoiceGaz(@RequestParam(value = "id") int id) {
-		invoiceService.deleteGasByID(id);
+		try {
+			invoiceService.deleteGasByID(id);
+		} catch (org.hibernate.exception.ConstraintViolationException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		return new ModelAndView("redirect:/Admin/Invoice/invoiceGasList.html");
 	}
 
 	@RequestMapping(value = "/Admin/Invoice/invoiceWaterDelete", params = { "id" })
 	public ModelAndView invoiceWoda(@RequestParam(value = "id") int id) {
-		invoiceService.deleteWaterByID(id);
+		try {
+			invoiceService.deleteWaterByID(id);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		return new ModelAndView("redirect:/Admin/Invoice/invoiceWaterList.html");
 	}
 
