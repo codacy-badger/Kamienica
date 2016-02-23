@@ -260,31 +260,34 @@ public class ReadingController {
 	@RequestMapping(value = "/Admin/Reading/readingEnergyDelete", params = { "date" })
 	public ModelAndView readingEnergyDelete(@RequestParam(value = "date") String date) {
 		List<ReadingEnergy> listToDelete = readingService.getReadingEnergyByDate(date);
-
+		if (listToDelete.get(0).isResolved() == true) {
+			System.out.println("nie wolno usuwać!!!");
+			return new ModelAndView("redirect:/Admin/Reading/readingEnergyList.html");
+		}
 		readingService.deleteReadingEnergyList(listToDelete);
-		// for (ReadingEnergy i : listToDelete) {
-		// readingService.deleteReadingEnergy(i.getId());
-		// }
+
 		return new ModelAndView("redirect:/Admin/Reading/readingEnergyList.html");
 	}
 
 	@RequestMapping(value = "/Admin/Reading/readingGasDelete", params = { "date" })
 	public ModelAndView readingGasDelete(@RequestParam(value = "date") String date) {
 		List<ReadingGas> listToDelete = readingService.getReadingGasByDate(date);
+		if (listToDelete.get(0).isResolved() == true) {
+			System.out.println("nie wolno usuwać!!!");
+			return new ModelAndView("redirect:/Admin/Reading/readingGasList.html");
+		}
 		readingService.deleteReadingGasList(listToDelete);
-		// for (ReadingGas i : listToDelete) {
-		// readingService.deleteReadingGas(i.getId());
-		// }
 		return new ModelAndView("redirect:/Admin/Reading/readingGasList.html");
 	}
 
 	@RequestMapping(value = "/Admin/Reading/readingWaterDelete", params = { "date" })
 	public ModelAndView usunReadingWater(@RequestParam(value = "date") String date) {
 		List<ReadingWater> listToDelete = readingService.getReadingWaterByDate(date);
+		if (listToDelete.get(0).isResolved() == true) {
+			System.out.println("nie wolno usuwać!!!");
+			return new ModelAndView("redirect:/Admin/Reading/readingWaterList.html");
+		}
 		readingService.deleteReadingWaterList(listToDelete);
-		// for (ReadingWater i : listToDelete) {
-		// readingService.deleteReadingWater(i.getId());
-		// }
 		return new ModelAndView("redirect:/Admin/Reading/readingWaterList.html");
 	}
 
