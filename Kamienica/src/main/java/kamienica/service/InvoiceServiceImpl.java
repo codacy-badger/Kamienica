@@ -67,9 +67,9 @@ public class InvoiceServiceImpl implements InvoiceService {
 
 		// temp fix
 		InvoiceEnergy test = energy.getById(invoice.getId());
-		if (invoice.getBaseReading().getId() != test.getBaseReading().getId()) {
-			readingEnergy.UnresolveReadings(test);
-		}
+//		if (invoice.getBaseReading().getId() != test.getBaseReading().getId()) {
+//			readingEnergy.UnresolveReadings(test);
+//		}
 		energy.update(invoice);
 
 	}
@@ -124,9 +124,9 @@ public class InvoiceServiceImpl implements InvoiceService {
 	public void updateGas(InvoiceGas invoice) {
 		// temp fix
 		InvoiceGas test = gas.getById(invoice.getId());
-		if (invoice.getBaseReading().getId() != test.getBaseReading().getId()) {
-			readingGas.UnresolveReadings(test);
-		}
+//		if (invoice.getBaseReading().getId() != test.getBaseReading().getId()) {
+//			readingGas.UnresolveReadings(test);
+//		}
 		gas.update(invoice);
 
 	}
@@ -135,9 +135,9 @@ public class InvoiceServiceImpl implements InvoiceService {
 	public void updateWater(InvoiceWater invoice) {
 		// temp fix
 		InvoiceWater test = water.getById(invoice.getId());
-		if (invoice.getBaseReading().getId() != test.getBaseReading().getId()) {
-			readingWater.UnresolveReadings(test);
-		}
+//		if (invoice.getBaseReading().getId() != test.getBaseReading().getId()) {
+//			readingWater.UnresolveReadings(test);
+//		}
 		water.update(invoice);
 
 	}

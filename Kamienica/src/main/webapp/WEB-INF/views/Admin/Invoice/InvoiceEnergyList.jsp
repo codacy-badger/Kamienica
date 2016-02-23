@@ -119,7 +119,11 @@
 				<a href="invoiceEnergyRegister.html">Dodaj nową fakturę</a>
 			</div>
 		</div>
-
+		<div class='row'>
+			<c:if test="${!empty model.error}">
+				<p class='alert alert-danger'>${model.error}</p>
+			</c:if>
+		</div>
 		<div class='row'>
 
 			<c:if test="${!empty invoice}">

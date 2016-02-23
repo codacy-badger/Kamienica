@@ -24,6 +24,7 @@ import org.springframework.web.servlet.ModelAndView;
 import kamienica.model.InvoiceEnergy;
 import kamienica.model.InvoiceGas;
 import kamienica.model.InvoiceWater;
+import kamienica.model.PaymentStatus;
 import kamienica.model.ReadingEnergy;
 import kamienica.model.ReadingGas;
 import kamienica.model.ReadingWater;
@@ -76,7 +77,6 @@ public class InvoiceController {
 			model.put("readings", readings);
 		}
 
-		
 		return new ModelAndView("/Admin/Invoice/InvoiceGasRegister", "model", model);
 	}
 
@@ -96,7 +96,7 @@ public class InvoiceController {
 
 	@RequestMapping("/Admin/Invoice/invoiceWaterRegister")
 	public ModelAndView registerInvoiceWater(@ModelAttribute("invoice") InvoiceWater invoice, BindingResult result) {
-		
+
 		HashMap<String, Object> model = new HashMap<>();
 		List<ReadingWater> readings = readingService.getUnresolvedReadingsWater();
 		if (readings.isEmpty()) {
@@ -190,6 +190,11 @@ public class InvoiceController {
 	public ModelAndView invoiceGasEdit(@RequestParam(value = "id") int id) {
 
 		InvoiceGas invoice = (InvoiceGas) invoiceService.getGasByID(id);
+		if (invoice.getStatus().equals(PaymentStatus.PAID.getPaymentStatus())) {
+			Map<String, Object> model = new HashMap<String, Object>();
+			model.put("error", "Nie można edyotwać faktury, dla której wprowadzono opłatę");
+			return new ModelAndView("/Admin/Invoice/InvoiceGasList", "model", model);
+		}
 		ModelAndView mvc = new ModelAndView("/Admin/Invoice/InvoiceGasEdit");
 		mvc.addObject("invoice", invoice);
 		return mvc;
@@ -197,8 +202,12 @@ public class InvoiceController {
 
 	@RequestMapping(value = "/Admin/Invoice/invoiceWaterEdit", params = { "id" })
 	public ModelAndView edytujFakturaWoda(@RequestParam(value = "id") int id) {
-
 		InvoiceWater invoice = (InvoiceWater) invoiceService.getWaterByID(id);
+		if (invoice.getStatus().equals(PaymentStatus.PAID.getPaymentStatus())) {
+			Map<String, Object> model = new HashMap<String, Object>();
+			model.put("error", "Nie można edyotwać faktury, dla której wprowadzono opłatę");
+			return new ModelAndView("/Admin/Invoice/InvoiceWaterList", "model", model);
+		}
 		ModelAndView mvc = new ModelAndView("/Admin/Invoice/InvoiceWaterEdit");
 		mvc.addObject("invoice", invoice);
 		return mvc;
@@ -208,6 +217,11 @@ public class InvoiceController {
 	public ModelAndView edytujFakture(@RequestParam(value = "id") int id) {
 
 		InvoiceEnergy invoice = (InvoiceEnergy) invoiceService.getEnergyByID(id);
+		if (invoice.getStatus().equals(PaymentStatus.PAID.getPaymentStatus())) {
+			Map<String, Object> model = new HashMap<String, Object>();
+			model.put("error", "Nie można edyotwać faktury, dla której wprowadzono opłatę");
+			return new ModelAndView("/Admin/Invoice/InvoiceEnergyList", "model", model);
+		}
 		ModelAndView mvc = new ModelAndView("/Admin/Invoice/InvoiceEnergyEdit");
 		mvc.addObject("invoice", invoice);
 		return mvc;
@@ -255,6 +269,10 @@ public class InvoiceController {
 		} catch (org.springframework.dao.DataIntegrityViolationException e) {
 			result.rejectValue("serialNumber", "error.invoice", "Podany numerjuż istnieje");
 			return new ModelAndView("/Admin/Invoice/InvoiceEnergyEdit");
+		} catch (org.hibernate.exception.ConstraintViolationException e) {
+			Map<String, Object> model = new HashMap<String, Object>();
+			model.put("error", "Nie można edytować faktury, dla której wprowadzono opłatę");
+			return new ModelAndView("redirect:/Admin/Invoice/InvoiceWaterList", "model", model);
 		}
 		return new ModelAndView("redirect:/Admin/Invoice/invoiceEnergyList.html");
 	}
@@ -262,19 +280,37 @@ public class InvoiceController {
 
 	@RequestMapping(value = "/Admin/Invoice/invoiceGasDelete", params = { "id" })
 	public ModelAndView invoiceGaz(@RequestParam(value = "id") int id) {
-		invoiceService.deleteGasByID(id);
-		return new ModelAndView("redirect:/Admin/Invoice/invoiceGasList.html");
+		try {
+			invoiceService.deleteGasByID(id);
+		} catch (org.hibernate.exception.ConstraintViolationException e) {
+			Map<String, Object> model = new HashMap<String, Object>();
+			model.put("error", "Nie można usunąć faktury, dla której wprowadzono opłatę");
+			return new ModelAndView("redirect:/Admin/Invoice/InvoiceGasList", "model", model);
+		}
+		return new ModelAndView("/Admin/Invoice/invoiceGasList.html");
 	}
 
 	@RequestMapping(value = "/Admin/Invoice/invoiceWaterDelete", params = { "id" })
 	public ModelAndView invoiceWoda(@RequestParam(value = "id") int id) {
-		invoiceService.deleteWaterByID(id);
-		return new ModelAndView("redirect:/Admin/Invoice/invoiceWaterList.html");
+		try {
+			invoiceService.deleteWaterByID(id);
+		} catch (org.hibernate.exception.ConstraintViolationException e) {
+			Map<String, Object> model = new HashMap<String, Object>();
+			model.put("error", "Nie można usunąć faktury, dla której wprowadzono opłatę");
+			return new ModelAndView("redirect:/Admin/Invoice/InvoiceWaterList", "model", model);
+		}
+		return new ModelAndView("/Admin/Invoice/invoiceWaterList.html");
 	}
 
 	@RequestMapping(value = "/Admin/Invoice/invoiceEnergyDelete", params = { "id" })
 	public ModelAndView invoiceEnergia(@RequestParam(value = "id") int id) {
-		invoiceService.deleteEnergyByID(id);
+		try {
+			invoiceService.deleteEnergyByID(id);
+		} catch (org.hibernate.exception.ConstraintViolationException e) {
+			Map<String, Object> model = new HashMap<String, Object>();
+			model.put("error", "Nie można usunąć faktury, dla której wprowadzono opłatę");
+			return new ModelAndView("/Admin/Invoice/InvoiceEnergyList", "model", model);
+		}
 		return new ModelAndView("redirect:/Admin/Invoice/invoiceEnergyList.html");
 	}
 
