@@ -39,7 +39,7 @@ public class PaymentWaterDAOImpl extends AbstractDao<Integer, PaymentWater> impl
 
 	@Override
 	public List<PaymentWater> getWaterByReading(ReadingWater reading) {
-		Query query = getSession().createSQLQuery("Select * from paymentwater where readingdate =:date")
+		Query query = getSession().createSQLQuery("Select * from paymentwater where readingdate >=:date")
 				.addEntity(PaymentWater.class).setDate("date", reading.getReadingDate());
 		@SuppressWarnings("unchecked")
 		List<PaymentWater> result = query.list();

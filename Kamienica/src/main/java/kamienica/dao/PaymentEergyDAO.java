@@ -15,6 +15,8 @@ public interface PaymentEergyDAO {
 
 	public void deleteByDate(String date);
 
+	public PaymentEnergy getById(int id);
+
 	public List<PaymentEnergy> getEnergyByInvoice(Invoice invoice);
 
 	public List<PaymentEnergy> getEnergyByReading(ReadingEnergy reading);

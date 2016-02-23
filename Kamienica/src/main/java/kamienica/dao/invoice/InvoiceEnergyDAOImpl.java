@@ -99,13 +99,13 @@ public class InvoiceEnergyDAOImpl extends AbstractDao<Integer, InvoiceEnergy> im
 
 	@Override
 	public void unresolveInvoice(int id) {
-		Query query = getSession()
-				.createSQLQuery(
-						"update invoiceenergy invoice join paymentenergy_invoiceenergy jointable on invoice.id = jointable.invoice_id   set status =  :stat  where jointable.paymentenergy_id = :id")
+		Query query = getSession().createSQLQuery("update invoiceenergy set status = :stat where id = :id")
 				.addEntity(InvoiceEnergy.class).setParameter("stat", PaymentStatus.UNPAID.getPaymentStatus())
 				.setParameter("id", id);
 		query.executeUpdate();
 
 	}
-
+	// "update invoiceenergy invoice join paymentenergy_invoiceenergy jointable
+	// on invoice.id = jointable.invoice_id set status = :stat where
+	// jointable.paymentenergy_id = :id")
 }

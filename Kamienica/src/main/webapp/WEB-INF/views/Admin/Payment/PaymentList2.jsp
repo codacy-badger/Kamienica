@@ -5,7 +5,6 @@
 
 <html>
 <head>
-<meta charset="UTF-8">
 <title>Payment List</title>
 <link class="row" href="<c:url value='/static/css/bootstrap.css' />"
 	rel="stylesheet">
@@ -134,19 +133,20 @@
 					<th>Wartość Opłaty</th>
 					<th>Data Rachunku</th>
 					<th>Najemca</th>
-					<!--	<th>Nr Faktury</th> -->
+
 					<th>Usuń</th>
 				</tr>
-				<c:forEach items="${payment}" var="payment">
+				<c:forEach items="${payment}" var="p">
 					<tr>
-						<td><c:out value="${payment.id}" /></td>
-						<td><c:out value="${payment.paymentAmount}" /></td>
-						<td><c:out value="${payment.paymentDate}" /></td>
-						<td><c:out value="${payment.tenant.firstName}" /> <c:out
-								value="${payment.tenant.lastName}" /></td>
-					
-						<td><a href="<c:url value="/Admin/Payment/payment${url}Delete.html?date=${payment.paymentDate}&id=${payment.id}"  />"
-							onclick="return confirm('UWAGA!!! Usunięte zostaną wszystkie opłaty z tą datą!\n Na pewno usunąć?')"
+						<td><c:out value="${p.id}" /></td>
+						<td><c:out value="${p.paymentAmount}" /></td>
+						<td><c:out value="${p.paymentDate}" /></td>
+						<td><c:out value="${p.tenant.firstName}" /> <c:out
+								value="${p.tenant.lastName}" /></td>
+
+						<td><a
+							href="<c:url value="/Admin/Payment/payment${url}Delete.html?date=${p.paymentDate}&id=${p.id}"  />"
+							onclick="return confirm('UWAGA!!! Usunięte zostaną wszystkie opłaty od tej daty wzwyż!\n Na pewno usunąć?')"
 							role="button" class="btn-xs btn-danger">Usuń</a></td>
 					</tr>
 				</c:forEach>

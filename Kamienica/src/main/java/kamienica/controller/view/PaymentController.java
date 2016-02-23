@@ -253,21 +253,21 @@ public class PaymentController {
 	@RequestMapping(value = "/Admin/Payment/paymentEnergyDelete", params = { "date", "id" })
 	public ModelAndView deleteEnergy(@RequestParam(value = "date") String date, @RequestParam(value = "id") int id) {
 
-		paymentService.deleteEnergyByDate(date, id);
+		paymentService.deleteEnergyByDate(id);
 		return new ModelAndView("redirect:/Admin/Payment/paymentEnergyList.html");
 	}
 
 	@RequestMapping(value = "/Admin/Payment/paymentGasDelete", params = { "date", "id" })
 	public ModelAndView deleteGas(@RequestParam(value = "date") String date, @RequestParam(value = "id") int id) {
 
-		paymentService.deleteGasByDate(date, id);
+		paymentService.deleteGasByDate(id);
 		return new ModelAndView("redirect:/Admin/Payment/paymentGasList.html");
 	}
 
 	@RequestMapping(value = "/Admin/Payment/paymentWaterDelete", params = { "date", "id" })
 	public ModelAndView deleteWater(@RequestParam(value = "date") String date, @RequestParam(value = "id") int id) {
 
-		paymentService.deleteWaterByDate(date, id);
+		paymentService.deleteWaterByDate(id);
 		return new ModelAndView("redirect:/Admin/Payment/paymentWaterList.html");
 	}
 

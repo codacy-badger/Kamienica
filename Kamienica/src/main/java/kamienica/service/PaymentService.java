@@ -49,10 +49,10 @@ public interface PaymentService {
 //
 //	public PaymentGas getLatestPaymentGas();
 
-	public void deleteEnergyByDate(String date, int id);
+	public void deleteEnergyByDate(int id);
 
-	public void deleteWaterByDate(String date, int id);
+	public void deleteWaterByDate(int id);
 
-	public void deleteGasByDate(String date, int id);
+	public void deleteGasByDate( int id);
 
 }

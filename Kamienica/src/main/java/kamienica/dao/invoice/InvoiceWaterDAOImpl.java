@@ -98,7 +98,7 @@ public class InvoiceWaterDAOImpl extends AbstractDao<Integer, InvoiceWater> impl
 	public void unresolveInvoice(int id) {
 		Query query = getSession()
 				.createSQLQuery(
-						"update invoiceWater invoice join paymentWater_invoiceWater jointable on invoice.id = jointable.invoice_id   set status =  :stat  where jointable.paymentWater_id = :id")
+						"update invoicewater set status = :stat where id = :id")
 				.addEntity(InvoiceWater.class).setParameter("stat", PaymentStatus.UNPAID.getPaymentStatus())
 				.setParameter("id", id);
 		query.executeUpdate();

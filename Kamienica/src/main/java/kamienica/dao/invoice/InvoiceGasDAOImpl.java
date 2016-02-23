@@ -70,7 +70,9 @@ public class InvoiceGasDAOImpl extends AbstractDao<Integer, InvoiceGas> implemen
 
 	@Override
 	public List<InvoiceGas> getUnpaidInvoices() {
-		Query query = getSession().createSQLQuery("select * from invoicegas where status =  :stat  and baseReading_id is not null order by date asc")
+		Query query = getSession()
+				.createSQLQuery(
+						"select * from invoicegas where status =  :stat  and baseReading_id is not null order by date asc")
 				.addEntity(InvoiceGas.class).setParameter("stat", PaymentStatus.UNPAID.getPaymentStatus());
 		@SuppressWarnings("unchecked")
 		List<InvoiceGas> invoice = query.list();
@@ -96,13 +98,13 @@ public class InvoiceGasDAOImpl extends AbstractDao<Integer, InvoiceGas> implemen
 
 	@Override
 	public void unresolveInvoice(int id) {
-		Query query = getSession()
-				.createSQLQuery(
-						"update invoicegas invoice join paymentgas_invoicegas jointable on invoice.id = jointable.invoice_id   set status =  :stat  where jointable.paymentgas_id = :id")
+		Query query = getSession().createSQLQuery("update invoicegas set status = :stat where id = :id")
 				.addEntity(InvoiceGas.class).setParameter("stat", PaymentStatus.UNPAID.getPaymentStatus())
 				.setParameter("id", id);
 		query.executeUpdate();
-
+		// "update invoicegas invoice join paymentgas_invoicegas jointable on
+		// invoice.id = jointable.invoice_id set status = :stat where
+		// jointable.paymentgas_id = :id"
 	}
 
 }
