@@ -27,6 +27,7 @@ import kamienica.conventer.MeterEnergyIB;
 import kamienica.conventer.MeterGasIB;
 import kamienica.conventer.MeterWaterIB;
 import kamienica.model.Apartment;
+import kamienica.model.MeterAbstract;
 import kamienica.model.MeterEnergy;
 import kamienica.model.MeterGas;
 import kamienica.model.MeterWater;
@@ -70,8 +71,8 @@ public class ReadingController {
 			BindingResult result) {
 		List<MeterEnergy> meterEnergy = meterService.getEnergyList();
 		HashMap<String, Object> model = new HashMap<>();
-		if (meterEnergy.isEmpty()) {
-			model.put("error", "Brak liczników w bazie danych. Wprowadź brakujące liczniki");
+		if (!validateMeters(meterEnergy)) {
+			model.put("error", "Brakuje licznika głównego. Wprowadź brakujące liczniki");
 			return new ModelAndView("/Admin/Reading/ReadingEnergyRegister", "model", model);
 		}
 		List<ReadingEnergy> readings = new ArrayList<ReadingEnergy>();
@@ -111,8 +112,8 @@ public class ReadingController {
 			BindingResult result) {
 		List<MeterGas> meterGas = meterService.getGasList();
 		HashMap<String, Object> model = new HashMap<>();
-		if (meterGas.isEmpty()) {
-			model.put("error", "Brak liczników w bazie danych. Wprowadź brakujące liczniki");
+		if (!validateMeters(meterGas)) {
+			model.put("error", "Brakuje licznika głównego. Wprowadź brakujące liczniki");
 			return new ModelAndView("/Admin/Reading/ReadingEnergyRegister", "model", model);
 		}
 		List<ReadingGas> readings = new ArrayList<>();
@@ -152,8 +153,8 @@ public class ReadingController {
 			BindingResult result) {
 		List<MeterWater> meterWater = meterService.getWaterList();
 		HashMap<String, Object> model = new HashMap<>();
-		if (meterWater.isEmpty()) {
-			model.put("error", "Brak liczników w bazie danych. Wprowadź brakujące liczniki");
+		if (!validateMeters(meterWater)) {
+			model.put("error", "Brakuje licznika głównego. Wprowadź brakujące liczniki");
 			return new ModelAndView("/Admin/Reading/ReadingEnergyRegister", "model", model);
 		}
 		List<ReadingWater> readings = new ArrayList<>();
@@ -196,8 +197,7 @@ public class ReadingController {
 			reading.get(i).setReadingDate(sdf.parse(date));
 			reading.get(i).setUnit(reading.get(i).getMeter().getUnit());
 		}
-		System.out.println("tu dochodzę");
-		System.out.println(reading.toString());
+
 		readingService.saveEnergyList(reading);
 		return new ModelAndView("redirect:/Admin/Reading/readingEnergyList.html");
 	}
@@ -260,29 +260,31 @@ public class ReadingController {
 	@RequestMapping(value = "/Admin/Reading/readingEnergyDelete", params = { "date" })
 	public ModelAndView readingEnergyDelete(@RequestParam(value = "date") String date) {
 		List<ReadingEnergy> listToDelete = readingService.getReadingEnergyByDate(date);
-		for (ReadingEnergy i : listToDelete) {
-			readingService.deleteReadingEnergy(i.getId());
-		}
+
+		readingService.deleteReadingEnergyList(listToDelete);
+		// for (ReadingEnergy i : listToDelete) {
+		// readingService.deleteReadingEnergy(i.getId());
+		// }
 		return new ModelAndView("redirect:/Admin/Reading/readingEnergyList.html");
 	}
 
 	@RequestMapping(value = "/Admin/Reading/readingGasDelete", params = { "date" })
 	public ModelAndView readingGasDelete(@RequestParam(value = "date") String date) {
 		List<ReadingGas> listToDelete = readingService.getReadingGasByDate(date);
-
-		for (ReadingGas i : listToDelete) {
-			readingService.deleteReadingGas(i.getId());
-		}
+		readingService.deleteReadingGasList(listToDelete);
+		// for (ReadingGas i : listToDelete) {
+		// readingService.deleteReadingGas(i.getId());
+		// }
 		return new ModelAndView("redirect:/Admin/Reading/readingGasList.html");
 	}
 
 	@RequestMapping(value = "/Admin/Reading/readingWaterDelete", params = { "date" })
 	public ModelAndView usunReadingWater(@RequestParam(value = "date") String date) {
 		List<ReadingWater> listToDelete = readingService.getReadingWaterByDate(date);
-
-		for (ReadingWater i : listToDelete) {
-			readingService.deleteReadingWater(i.getId());
-		}
+		readingService.deleteReadingWaterList(listToDelete);
+		// for (ReadingWater i : listToDelete) {
+		// readingService.deleteReadingWater(i.getId());
+		// }
 		return new ModelAndView("redirect:/Admin/Reading/readingWaterList.html");
 	}
 
@@ -470,7 +472,20 @@ public class ReadingController {
 		}
 		return new ModelAndView("redirect:/Admin/Reading/readingWaterList.html");
 	}
+
 	// -----------------------CONTROLER_METHODS-----------------------------------------------------------------------------
+	private static boolean validateMeters(List<? extends MeterAbstract> meters) {
+		if (meters.isEmpty()) {
+			return false;
+		}
+		for (MeterAbstract meter : meters) {
+			if (meter.getApartment() == null) {
+				return true;
+			}
+		}
+
+		return false;
+	}
 
 	private static String getIncrementedDate(Date date) {
 		long tt = 24 * 60 * 60 * 1000;

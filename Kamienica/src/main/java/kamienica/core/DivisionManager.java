@@ -12,13 +12,14 @@ import kamienica.model.Tenant;
 
 public class DivisionManager {
 
-	public static ArrayList<Division> prepareDivisionListForRegistration(List<Tenant> tenantList, List<Apartment>  apartmentList) {
+	public static ArrayList<Division> prepareDivisionListForRegistration(List<Tenant> tenantList,
+			List<Apartment> apartmentList) {
 		ArrayList<Division> divisionList = new ArrayList<>();
 		double rr = tenantList.size();
 		double contribution = (double) (1 / rr);
 		DecimalFormat df = new DecimalFormat("####0.00");
 		df.setDecimalFormatSymbols(new DecimalFormatSymbols(Locale.ENGLISH));
-System.out.println(tenantList.toString());
+
 		for (Tenant i : tenantList) {
 			for (Apartment y : apartmentList) {
 				Division tmp = new Division();
@@ -35,8 +36,8 @@ System.out.println(tenantList.toString());
 				divisionList.add(tmp);
 			}
 		}
-	
-	return divisionList;
-	}	
-	
+
+		return divisionList;
+	}
+
 }

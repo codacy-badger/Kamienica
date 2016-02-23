@@ -164,7 +164,7 @@ public class PaymentController {
 			paymentService.saveEnergy(paymentEnergy);
 		}
 
-		if (invoiceWrapper.getWater() != null) {
+		if (invoiceWrapper.getWater() != null ) {
 
 			List<InvoiceWater> invoicesWaterForCalculation = invoiceService
 					.getInvoicesWaterForCalulation(invoiceWrapper.getWater());
@@ -183,7 +183,7 @@ public class PaymentController {
 			System.out.println(usageWater.toString());
 			List<PaymentWater> paymentWater = ManagerPayment.createPaymentWaterList(tenants,
 					invoicesWaterForCalculation, division, usageWater);
-
+			System.out.println(paymentWater.toString());
 			paymentService.saveWater(paymentWater);
 		}
 

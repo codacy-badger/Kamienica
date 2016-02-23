@@ -236,4 +236,28 @@ public class ReadingServiceImpl implements ReadingService {
 		return water.getWaterReadingForGasConsumption2(invoice);
 	}
 
+	@Override
+	public void deleteReadingEnergyList(List<ReadingEnergy> list) {
+		for (ReadingEnergy reading : list) {
+			energy.deleteById(reading.getId());
+		}
+
+	}
+
+	@Override
+	public void deleteReadingGasList(List<ReadingGas> list) {
+		for (ReadingGas reading : list) {
+			gas.deleteById(reading.getId());
+		}
+
+	}
+
+	@Override
+	public void deleteReadingWaterList(List<ReadingWater> list) {
+		for (ReadingWater reading : list) {
+			water.deleteById(reading.getId());
+		}
+
+	}
+
 }

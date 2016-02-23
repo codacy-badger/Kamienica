@@ -49,10 +49,10 @@ public class TenantController {
 
 	@Autowired
 	private Validator validator;
-
-	public void setValidator(Validator validator) {
-		this.validator = validator;
-	}
+//
+//	public void setValidator(Validator validator) {
+//		this.validator = validator;
+//	}
 
 	@RequestMapping("/Admin/Tenant/tenantRegister")
 	public ModelAndView tenantRegister(@ModelAttribute("tenant") Tenant tenant, BindingResult result) {

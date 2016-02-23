@@ -12,11 +12,13 @@ import org.springframework.context.support.ResourceBundleMessageSource;
 import org.springframework.format.FormatterRegistry;
 import org.springframework.http.MediaType;
 import org.springframework.web.accept.ContentNegotiationManager;
+import org.springframework.web.servlet.LocaleResolver;
 import org.springframework.web.servlet.ViewResolver;
 import org.springframework.web.servlet.config.annotation.ContentNegotiationConfigurer;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
+import org.springframework.web.servlet.i18n.CookieLocaleResolver;
 import org.springframework.web.servlet.view.ContentNegotiatingViewResolver;
 import org.springframework.web.servlet.view.InternalResourceViewResolver;
 import org.springframework.web.servlet.view.JstlView;
@@ -76,6 +78,31 @@ public class AppConfig extends WebMvcConfigurerAdapter {
 		return viewResolver;
 	}
 
+//	@Bean
+//	public LocaleResolver localeResolver() {
+//	    SessionLocaleResolver localeResolver = new SessionLocaleResolver();
+//	    localeResolver.setDefaultLocale(Locale.ENGLISH); // change this
+//	    return localeResolver;
+//	}
+//	
+//	
+//    @Override
+//    public void addInterceptors(InterceptorRegistry registry) {
+//        registry.addInterceptor(localeChangeInterceptor());
+//    }
+//
+//    @Bean
+//    public LocaleChangeInterceptor localeChangeInterceptor(){
+//        LocaleChangeInterceptor localeChangeInterceptor=new LocaleChangeInterceptor();
+//        localeChangeInterceptor.setParamName("language");
+//        return localeChangeInterceptor;
+//    }
+
+    @Bean(name = "localeResolver")
+    public LocaleResolver getLocaleResolver(){
+        return new CookieLocaleResolver();
+    }
+	
 	@Bean
 	public ViewResolver jsonViewResolver() {
 		return new JsonViewResolver();
