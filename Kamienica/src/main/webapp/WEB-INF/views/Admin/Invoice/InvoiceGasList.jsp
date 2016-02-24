@@ -130,6 +130,7 @@
 				<p class='alert alert-danger'>${model.error}</p>
 			</c:if>
 		</div>
+
 		<div class='row'>
 			<c:if test="${!empty invoice}">
 				<table class='table table-stripped table-hover' width="100%">

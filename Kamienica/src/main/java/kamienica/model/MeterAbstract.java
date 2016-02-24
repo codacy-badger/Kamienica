@@ -97,4 +97,6 @@ public abstract class MeterAbstract {
 	public void setId(int id) {
 		this.id = id;
 	}
+	
+	
 }

@@ -119,7 +119,11 @@
 				<a href="readingEnergyRegister.html">Dodaj Odczyty Energii</a><br>
 			</div>
 		</div>
-
+		<div class='row'>
+			<c:if test="${!empty model.error}">
+				<p class='alert alert-danger'>${model.error}</p>
+			</c:if>
+		</div>
 		<div class='row'>
 			<c:if test="${!empty reading}">
 				<table class='table table-stripped table-hover' width="100%">
@@ -141,12 +145,12 @@
 							<td><c:out value="${readingEnergy.unit}" /></td>
 							<td><c:out value="${readingEnergy.meter.description}" /></td>
 							<td><a
-								href="<c:url value="readingEnergyEdit.html?date=${readingEnergy.readingDate}" />" role="button"
-								class="btn-xs btn-warning">Edytuj</a></td>
+								href="<c:url value="readingEnergyEdit.html?date=${readingEnergy.readingDate}" />"
+								role="button" class="btn-xs btn-warning">Edytuj</a></td>
 							<td><a
 								href="<c:url value="readingEnergyDelete.html?date=${readingEnergy.readingDate}"  />"
-								onclick="return confirm('UWAGA!!! Usunięte zostaną wszystkie odczyty z tą datą!\n Na pewno usunąć?')" role="button"
-								class="btn-xs btn-danger">Usuń</a></td>
+								onclick="return confirm('UWAGA!!! Usunięte zostaną wszystkie odczyty z tą datą!\n Na pewno usunąć?')"
+								role="button" class="btn-xs btn-danger">Usuń</a></td>
 
 						</tr>
 					</c:forEach>

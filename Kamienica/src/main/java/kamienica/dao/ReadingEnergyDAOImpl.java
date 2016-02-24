@@ -71,33 +71,34 @@ public class ReadingEnergyDAOImpl extends AbstractDao<Integer, ReadingEnergy> im
 		return result;
 	}
 
+	@SuppressWarnings("unchecked")
 	public List<ReadingEnergy> getLatestList() {
-		Query query = getSession().createSQLQuery(
-				"Select * from (select * from readingEnergy order by readingDate desc) as c group by meter_id")
-
+		Query query = getSession()
+				.createSQLQuery(
+						"Select * from (select * from readingEnergy order by readingDate desc) as c group by meter_id")
 				.addEntity(ReadingEnergy.class);
-		@SuppressWarnings("unchecked")
-		List<ReadingEnergy> result = query.list();
+		return query.list();
 
-		return result;
 	}
-//
-//	@SuppressWarnings("unchecked")
-//	public List<Date> getReadingDatesForPayment(PaymentAbstract payment) {
-//		if (payment.getReadingDate() != null) {
-//			Query query = getSession()
-//					.createSQLQuery(
-//							"SELECT readingdate FROM readingenergy where readingdate >= :date GROUP BY readingdate ORDER BY readingdate asc")
-//					.setParameter("date", payment.getReadingDate());
-//			return query.list();
-//		} else {
-//			Query query = getSession()
-//					.createSQLQuery(
-//							"SELECT readingdate FROM readingenergy where readingdate >= :date GROUP BY readingdate ORDER BY readingdate asc")
-//					.setParameter("date", "19800101");
-//			return query.list();
-//		}
-//	}
+	//
+	// @SuppressWarnings("unchecked")
+	// public List<Date> getReadingDatesForPayment(PaymentAbstract payment) {
+	// if (payment.getReadingDate() != null) {
+	// Query query = getSession()
+	// .createSQLQuery(
+	// "SELECT readingdate FROM readingenergy where readingdate >= :date GROUP
+	// BY readingdate ORDER BY readingdate asc")
+	// .setParameter("date", payment.getReadingDate());
+	// return query.list();
+	// } else {
+	// Query query = getSession()
+	// .createSQLQuery(
+	// "SELECT readingdate FROM readingenergy where readingdate >= :date GROUP
+	// BY readingdate ORDER BY readingdate asc")
+	// .setParameter("date", "19800101");
+	// return query.list();
+	// }
+	// }
 
 	@Override
 	public void saveList(List<ReadingEnergy> reading) {
@@ -112,8 +113,6 @@ public class ReadingEnergyDAOImpl extends AbstractDao<Integer, ReadingEnergy> im
 		Query query = getSession().createSQLQuery("SELECT r.id, r.readingDate, r.value, r.unit, r.meter_id, r.resolved "
 				+ "FROM readingenergy r join meterEnergy m on r.meter_id = m.id "
 				+ "where r.resolved = 0 and m.apartment_id is null").addEntity(ReadingEnergy.class);
-		;
-
 		return query.list();
 
 	}
@@ -140,8 +139,7 @@ public class ReadingEnergyDAOImpl extends AbstractDao<Integer, ReadingEnergy> im
 	@SuppressWarnings("unchecked")
 	public List<ReadingEnergy> getLastPaid(InvoiceEnergy invoice) {
 		Query query = getSession()
-				.createSQLQuery(
-						"SELECT * FROM readingenergy where status = :stat order by date desc l")
+				.createSQLQuery("SELECT * FROM readingenergy where status = :stat order by date desc l")
 				.setParameter("stat", true);
 		return query.list();
 
