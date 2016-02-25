@@ -20,6 +20,8 @@ import kamienica.model.InvoiceEnergy;
 import kamienica.model.InvoiceGas;
 import kamienica.model.InvoiceWater;
 import kamienica.model.PaymentEnergy;
+import kamienica.model.PaymentGas;
+import kamienica.model.PaymentWater;
 
 @Service
 @Transactional
@@ -51,20 +53,21 @@ public class InvoiceServiceImpl implements InvoiceService {
 		invoiceEnergy.save(invoice);
 		readingEnergy.ResolveReadings(invoice);
 		paymentEnergy.saveEnergy(payment);
-		invoiceEnergy.resolveInvoice(invoice);
 
 	}
 
 	@Override
-	public void saveGas(InvoiceGas invoice) {
+	public void saveGas(InvoiceGas invoice, List<PaymentGas> payment) {
 		invoiceGas.save(invoice);
 		readingGas.ResolveReadings(invoice);
+		paymetGas.saveGas(payment);
 	}
 
 	@Override
-	public void saveWater(InvoiceWater invoice) {
+	public void saveWater(InvoiceWater invoice, List<PaymentWater> payment) {
 		invoiceWater.save(invoice);
 		readingWater.ResolveReadings(invoice);
+		paymentWater.saveWater(payment);
 	}
 
 	@Override

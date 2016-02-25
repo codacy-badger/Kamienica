@@ -7,14 +7,16 @@ import kamienica.model.InvoiceEnergy;
 import kamienica.model.InvoiceGas;
 import kamienica.model.InvoiceWater;
 import kamienica.model.PaymentEnergy;
+import kamienica.model.PaymentGas;
+import kamienica.model.PaymentWater;
 
 public interface InvoiceService {
 
 	public void saveEnergy(InvoiceEnergy invoice, List<PaymentEnergy> payment);
 
-	public void saveGas(InvoiceGas invoice);
+	public void saveGas(InvoiceGas invoice, List<PaymentGas> payment);
 
-	public void saveWater(InvoiceWater invoice);
+	public void saveWater(InvoiceWater invoice, List<PaymentWater> payment);
 
 	public List<InvoiceWater> getWaterInvoiceList();
 

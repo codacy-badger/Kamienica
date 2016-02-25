@@ -23,6 +23,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import kamienica.core.ManagerEnergy;
+import kamienica.core.ManagerGas;
 import kamienica.core.ManagerPayment;
 import kamienica.core.ManagerWater;
 import kamienica.model.Apartment;
@@ -31,6 +32,7 @@ import kamienica.model.InvoiceEnergy;
 import kamienica.model.InvoiceGas;
 import kamienica.model.InvoiceWater;
 import kamienica.model.PaymentEnergy;
+import kamienica.model.PaymentGas;
 import kamienica.model.PaymentStatus;
 import kamienica.model.PaymentWater;
 import kamienica.model.ReadingEnergy;
@@ -174,8 +176,30 @@ public class InvoiceController {
 			return new ModelAndView("/Admin/Invoice/InvoiceGasRegister");
 		}
 
+		List<ReadingGas> readingGasOld = new ArrayList<>();
+		ArrayList<Tenant> tenants = (ArrayList<Tenant>) tenantService.getCurrentTenants();
+		ArrayList<Division> division = (ArrayList<Division>) divisionService.getList();
+		ArrayList<Apartment> apartments = (ArrayList<Apartment>) apartmentService.getList();
+
+		readingGasOld = readingService.getPreviousReadingGas(invoice.getBaseReading().getReadingDate().toString());
+
+		HashMap<String, List<ReadingWater>> waterForGas = readingService.getWaterReadingsForGasConsumption2(invoice);
+		if (waterForGas.isEmpty()) {
+			HashMap<String, Object> model = new HashMap<>();
+			String message = "Brakuje odczytów wody. Bez nich niemożliwe jest obliczenie zużycia gazu dla pieca CWU";
+			model.put("error", message);
+			return new ModelAndView("/Admin/Invoice/InvoiceWaterRegister", "model", model);
+		}
+
+		List<ReadingGas> readingGasNew = readingService
+				.getReadingGasByDate(invoice.getBaseReading().getReadingDate().toString());
+
+		ArrayList<UsageValue> usageGas = ManagerGas.countConsumption(apartments, readingGasOld, readingGasNew,
+				waterForGas.get("old"), waterForGas.get("new"));
+		List<PaymentGas> paymentGas = ManagerPayment.createPaymentGasList(tenants, invoice, division, usageGas);
+
 		try {
-			invoiceService.saveGas(invoice);
+			invoiceService.saveGas(invoice, paymentGas);
 		} catch (ConstraintViolationException e) {
 			result.rejectValue("serialNumber", "error.invoice", "Podany numer już istnieje");
 			return new ModelAndView("/Admin/Invoice/InvoiceGasRegister");
@@ -189,25 +213,22 @@ public class InvoiceController {
 		if (result.hasErrors()) {
 			return new ModelAndView("/Admin/Invoice/InvoiceWaterRegister");
 		}
-		
+
 		List<ReadingWater> readingWaterOld = new ArrayList<>();
 		ArrayList<Tenant> tenants = (ArrayList<Tenant>) tenantService.getCurrentTenants();
 		ArrayList<Division> division = (ArrayList<Division>) divisionService.getList();
 		ArrayList<Apartment> apartments = (ArrayList<Apartment>) apartmentService.getList();
 
-		readingWaterOld = readingService
-				.getPreviousReadingWater(invoice.getBaseReading().getReadingDate().toString());
+		readingWaterOld = readingService.getPreviousReadingWater(invoice.getBaseReading().getReadingDate().toString());
 
 		List<ReadingWater> readingWaterNew = readingService
 				.getReadingWaterByDate(invoice.getBaseReading().getReadingDate().toString());
 
-		ArrayList<UsageValue> usageWater = ManagerWater.countConsumption(apartments, readingWaterOld,
-				readingWaterNew);
-		List<PaymentWater> paymentWater = ManagerPayment.createPaymentWaterList(tenants, invoice, division,
-				usageWater);
-		
+		ArrayList<UsageValue> usageWater = ManagerWater.countConsumption(apartments, readingWaterOld, readingWaterNew);
+		List<PaymentWater> paymentWater = ManagerPayment.createPaymentWaterList(tenants, invoice, division, usageWater);
+
 		try {
-			invoiceService.saveWater(invoice);
+			invoiceService.saveWater(invoice, paymentWater);
 		} catch (ConstraintViolationException e) {
 			result.rejectValue("serialNumber", "error.invoice", "Podany numerjuż istnieje");
 			return new ModelAndView("/Admin/Invoice/InvoiceWaterRegister");
@@ -215,7 +236,6 @@ public class InvoiceController {
 		return new ModelAndView("redirect:/Admin/Invoice/invoiceWaterList.html");
 	}
 
-	
 	@RequestMapping("/Admin/Invoice/invoiceEnergySave")
 	public ModelAndView invoiceEnergySave(@Valid @ModelAttribute("invoice") InvoiceEnergy invoice,
 			BindingResult result) {
@@ -239,7 +259,6 @@ public class InvoiceController {
 				readingEnergyNew);
 		List<PaymentEnergy> paymentEnergy = ManagerPayment.createPaymentEnergyList(tenants, invoice, division,
 				usageEnergy);
-
 
 		try {
 			invoiceService.saveEnergy(invoice, paymentEnergy);
@@ -283,11 +302,14 @@ public class InvoiceController {
 	public ModelAndView invoiceGasEdit(@RequestParam(value = "id") int id) {
 
 		InvoiceGas invoice = (InvoiceGas) invoiceService.getGasByID(id);
-//		if (invoice.getStatus().equals(PaymentStatus.PAID.getPaymentStatus())) {
-//			Map<String, Object> model = new HashMap<String, Object>();
-//			model.put("error", "Nie można edyotwać faktury, dla której wprowadzono opłatę");
-//			return new ModelAndView("/Admin/Invoice/InvoiceGasList", "model", model);
-//		}
+		// if
+		// (invoice.getStatus().equals(PaymentStatus.PAID.getPaymentStatus())) {
+		// Map<String, Object> model = new HashMap<String, Object>();
+		// model.put("error", "Nie można edyotwać faktury, dla której
+		// wprowadzono opłatę");
+		// return new ModelAndView("/Admin/Invoice/InvoiceGasList", "model",
+		// model);
+		// }
 		ModelAndView mvc = new ModelAndView("/Admin/Invoice/InvoiceGasEdit");
 		mvc.addObject("invoice", invoice);
 		return mvc;
@@ -296,11 +318,14 @@ public class InvoiceController {
 	@RequestMapping(value = "/Admin/Invoice/invoiceWaterEdit", params = { "id" })
 	public ModelAndView edytujFakturaWoda(@RequestParam(value = "id") int id) {
 		InvoiceWater invoice = (InvoiceWater) invoiceService.getWaterByID(id);
-//		if (invoice.getStatus().equals(PaymentStatus.PAID.getPaymentStatus())) {
-//			Map<String, Object> model = new HashMap<String, Object>();
-//			model.put("error", "Nie można edyotwać faktury, dla której wprowadzono opłatę");
-//			return new ModelAndView("/Admin/Invoice/InvoiceWaterList", "model", model);
-//		}
+		// if
+		// (invoice.getStatus().equals(PaymentStatus.PAID.getPaymentStatus())) {
+		// Map<String, Object> model = new HashMap<String, Object>();
+		// model.put("error", "Nie można edyotwać faktury, dla której
+		// wprowadzono opłatę");
+		// return new ModelAndView("/Admin/Invoice/InvoiceWaterList", "model",
+		// model);
+		// }
 		ModelAndView mvc = new ModelAndView("/Admin/Invoice/InvoiceWaterEdit");
 		mvc.addObject("invoice", invoice);
 		return mvc;
@@ -310,11 +335,14 @@ public class InvoiceController {
 	public ModelAndView edytujFakture(@RequestParam(value = "id") int id) {
 
 		InvoiceEnergy invoice = (InvoiceEnergy) invoiceService.getEnergyByID(id);
-//		if (invoice.getStatus().equals(PaymentStatus.PAID.getPaymentStatus())) {
-//			Map<String, Object> model = new HashMap<String, Object>();
-//			model.put("error", "Nie można edyotwać faktury, dla której wprowadzono opłatę");
-//			return new ModelAndView("/Admin/Invoice/InvoiceEnergyList", "model", model);
-//		}
+		// if
+		// (invoice.getStatus().equals(PaymentStatus.PAID.getPaymentStatus())) {
+		// Map<String, Object> model = new HashMap<String, Object>();
+		// model.put("error", "Nie można edyotwać faktury, dla której
+		// wprowadzono opłatę");
+		// return new ModelAndView("/Admin/Invoice/InvoiceEnergyList", "model",
+		// model);
+		// }
 		ModelAndView mvc = new ModelAndView("/Admin/Invoice/InvoiceEnergyEdit");
 		mvc.addObject("invoice", invoice);
 		return mvc;
