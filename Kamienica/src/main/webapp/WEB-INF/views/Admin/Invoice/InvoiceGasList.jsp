@@ -140,7 +140,6 @@
 						<th>Opis</th>
 						<th>Data</th>
 						<th>Wartość</th>
-						<th>Status</th>
 						<th>Edytuj</th>
 						<th>Usuń</th>
 
@@ -152,7 +151,6 @@
 							<td><c:out value="${invoice.description}" /></td>
 							<td><c:out value="${invoice.date}" /></td>
 							<td><c:out value="${invoice.totalAmount}" /></td>
-							<td><c:out value="${invoice.status}" /></td>
 							<td><a
 								href="<c:url value="/Admin/Invoice/invoiceGasEdit.html?id=${invoice.id}" />"
 								role="button" class="btn-xs btn-warning">Edytuj</a></td>

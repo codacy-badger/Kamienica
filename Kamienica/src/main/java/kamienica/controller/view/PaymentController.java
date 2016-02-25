@@ -138,81 +138,81 @@ public class PaymentController {
 		ArrayList<Division> division = (ArrayList<Division>) divisionService.getList();
 		ArrayList<Apartment> apartments = (ArrayList<Apartment>) apartmentService.getList();
 
-		if (!DivisionValidator.validateDivisionForPaymentController(apartments, division, tenants)) {
+		if (!DivisionValidator.validateDivision(apartments, division, tenants)) {
 			String message = "Lista aktualnych najemców i mieszkań się nie zgadza. Sprawdź algorytm podziału";
 			model.put("error", message);
 			return new ModelAndView("/Admin/Payment/PaymentRegister", "model", model);
 		}
 
-		if (invoiceWrapper.getEnergy() != null) {
-			List<InvoiceEnergy> invoicesEnergyForCalculation = invoiceService
-					.getInvoicesEnergyForCalulation(invoiceWrapper.getEnergy());
-			List<ReadingEnergy> readingEnergyOld = new ArrayList<>();
+//		if (invoiceWrapper.getEnergy() != null) {
+//			List<InvoiceEnergy> invoicesEnergyForCalculation = invoiceService
+//					.getInvoicesEnergyForCalulation(invoiceWrapper.getEnergy());
+//			List<ReadingEnergy> readingEnergyOld = new ArrayList<>();
+//
+//			try {
+//				readingEnergyOld = readingService.getReadingEnergyByDate(
+//						invoiceService.getLatestPaidEnergy().getBaseReading().getReadingDate().toString());
+//			} catch (NullPointerException e) {
+//			}
+//			List<ReadingEnergy> readingEnergyNew = readingService
+//					.getReadingEnergyByDate(invoiceWrapper.getEnergy().getBaseReading().getReadingDate().toString());
+//
+//			ArrayList<UsageValue> usageEnergy = ManagerEnergy.countEnergyConsupmtion(apartments, readingEnergyOld,
+//					readingEnergyNew);
+//			List<PaymentEnergy> paymentEnergy = ManagerPayment.createPaymentEnergyList(tenants,
+//					invoicesEnergyForCalculation, division, usageEnergy);
+//			paymentService.saveEnergy(paymentEnergy);
+//		}
 
-			try {
-				readingEnergyOld = readingService.getReadingEnergyByDate(
-						invoiceService.getLatestPaidEnergy().getBaseReading().getReadingDate().toString());
-			} catch (NullPointerException e) {
-			}
-			List<ReadingEnergy> readingEnergyNew = readingService
-					.getReadingEnergyByDate(invoiceWrapper.getEnergy().getBaseReading().getReadingDate().toString());
+//		if (invoiceWrapper.getWater() != null ) {
+		//
+//			List<InvoiceWater> invoicesWaterForCalculation = invoiceService
+//					.getInvoicesWaterForCalulation(invoiceWrapper.getWater());
+//			List<ReadingWater> readingWaterOld = new ArrayList<>();
+//			System.out.println(invoicesWaterForCalculation.toString());
+//			try {
+//				readingWaterOld = readingService.getReadingWaterByDate(
+//						invoiceService.getLatestPaidWater().getBaseReading().getReadingDate().toString());
+//			} catch (NullPointerException e) {
+//			}
+//			List<ReadingWater> readingWaterNew = readingService
+//					.getReadingWaterByDate(invoiceWrapper.getWater().getBaseReading().getReadingDate().toString());
+//
+//			ArrayList<UsageValue> usageWater = ManagerWater.countConsumption(apartments, readingWaterOld,
+//					readingWaterNew);
+//			System.out.println(usageWater.toString());
+//			List<PaymentWater> paymentWater = ManagerPayment.createPaymentWaterList(tenants,
+//					invoicesWaterForCalculation, division, usageWater);
+//			System.out.println(paymentWater.toString());
+//			paymentService.saveWater(paymentWater);
+//		}
 
-			ArrayList<UsageValue> usageEnergy = ManagerEnergy.countEnergyConsupmtion(apartments, readingEnergyOld,
-					readingEnergyNew);
-			List<PaymentEnergy> paymentEnergy = ManagerPayment.createPaymentEnergyList(tenants,
-					invoicesEnergyForCalculation, division, usageEnergy);
-			paymentService.saveEnergy(paymentEnergy);
-		}
-
-		if (invoiceWrapper.getWater() != null ) {
-
-			List<InvoiceWater> invoicesWaterForCalculation = invoiceService
-					.getInvoicesWaterForCalulation(invoiceWrapper.getWater());
-			List<ReadingWater> readingWaterOld = new ArrayList<>();
-			System.out.println(invoicesWaterForCalculation.toString());
-			try {
-				readingWaterOld = readingService.getReadingWaterByDate(
-						invoiceService.getLatestPaidWater().getBaseReading().getReadingDate().toString());
-			} catch (NullPointerException e) {
-			}
-			List<ReadingWater> readingWaterNew = readingService
-					.getReadingWaterByDate(invoiceWrapper.getWater().getBaseReading().getReadingDate().toString());
-
-			ArrayList<UsageValue> usageWater = ManagerWater.countWaterConsumption(apartments, readingWaterOld,
-					readingWaterNew);
-			System.out.println(usageWater.toString());
-			List<PaymentWater> paymentWater = ManagerPayment.createPaymentWaterList(tenants,
-					invoicesWaterForCalculation, division, usageWater);
-			System.out.println(paymentWater.toString());
-			paymentService.saveWater(paymentWater);
-		}
-
-		if (invoiceWrapper.getGas() != null) {
-
-			List<InvoiceGas> invoicesGasForCalculation = invoiceService
-					.getInvoicesGasForCalulation(invoiceWrapper.getGas());
-			List<ReadingGas> readingGasOld = new ArrayList<>();
-
-			HashMap<String, List<ReadingWater>> waterForGas = readingService
-					.getWaterReadingsForGasConsumption2(invoiceWrapper.getGas());
-			if (!waterForGas.isEmpty()) {
-
-				try {
-					readingGasOld = readingService.getReadingGasByDate(
-							invoiceService.getLatestPaidGas().getBaseReading().getReadingDate().toString());
-
-				} catch (NullPointerException e) {
-				}
-				List<ReadingGas> readingGasNew = readingService
-						.getReadingGasByDate(invoiceWrapper.getGas().getBaseReading().getReadingDate().toString());
-
-				ArrayList<UsageValue> usageGas = ManagerGas.countGasConsumption(apartments, readingGasOld,
-						readingGasNew, waterForGas.get("old"), waterForGas.get("new"));
-				List<PaymentGas> paymentGas = ManagerPayment.createPaymentGasList(tenants, invoicesGasForCalculation,
-						division, usageGas);
-				paymentService.saveGas(paymentGas);
-			}
-		}
+//		if (invoiceWrapper.getGas() != null) {
+//
+//			List<InvoiceGas> invoicesGasForCalculation = invoiceService
+//					.getInvoicesGasForCalulation(invoiceWrapper.getGas());
+//			List<ReadingGas> readingGasOld = new ArrayList<>();
+//
+//			HashMap<String, List<ReadingWater>> waterForGas = readingService
+//					.getWaterReadingsForGasConsumption2(invoiceWrapper.getGas());
+//			if (!waterForGas.isEmpty()) {
+//
+//				try {
+//					readingGasOld = readingService.getReadingGasByDate(
+//							invoiceService.getLatestPaidGas().getBaseReading().getReadingDate().toString());
+//
+//				} catch (NullPointerException e) {
+//				}
+//				List<ReadingGas> readingGasNew = readingService
+//						.getReadingGasByDate(invoiceWrapper.getGas().getBaseReading().getReadingDate().toString());
+//
+//				ArrayList<UsageValue> usageGas = ManagerGas.countConsumption(apartments, readingGasOld,
+//						readingGasNew, waterForGas.get("old"), waterForGas.get("new"));
+//				List<PaymentGas> paymentGas = ManagerPayment.createPaymentGasList(tenants, invoicesGasForCalculation,
+//						division, usageGas);
+//				paymentService.saveGas(paymentGas);
+//			}
+//		}
 
 		return new ModelAndView("redirect:/Admin/Payment/paymentList.html");
 

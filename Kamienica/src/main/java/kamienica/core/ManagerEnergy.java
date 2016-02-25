@@ -12,7 +12,7 @@ import kamienica.model.UsageValue;
 
 public class ManagerEnergy {
 
-	public static ArrayList<UsageValue> countEnergyConsupmtion(ArrayList<Apartment> apartment,
+	public static ArrayList<UsageValue> countConsupmtion(ArrayList<Apartment> apartment,
 			List<ReadingEnergy> oldReadings, List<ReadingEnergy> newReadings) {
 		ArrayList<UsageValue> out = new ArrayList<UsageValue>();
 		for (Apartment m : apartment) {

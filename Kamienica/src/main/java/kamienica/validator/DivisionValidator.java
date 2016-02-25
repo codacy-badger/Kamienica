@@ -8,8 +8,8 @@ import kamienica.model.Tenant;
 
 public class DivisionValidator {
 
-	public static boolean validateDivisionForPaymentController(List<Apartment> apartments,
-			List<Division> divisionTocheck, List<Tenant> currentTenants) {
+	public static boolean validateDivision(List<Apartment> apartments, List<Division> divisionTocheck,
+			List<Tenant> currentTenants) {
 
 		boolean toReturn = true;
 		double[] sum = new double[apartments.size()];
@@ -22,7 +22,7 @@ public class DivisionValidator {
 				}
 			}
 			if (stop == true) {
-				System.out.println("break 1");
+
 				return false;
 			}
 		}
@@ -37,10 +37,10 @@ public class DivisionValidator {
 			}
 
 		}
-		System.out.println("część 3");
+
 		for (double d : sum) {
 			if (d != 1 && d != 0.99) {
-				System.out.println(d);
+
 				toReturn = false;
 				break;
 			}
@@ -83,8 +83,7 @@ public class DivisionValidator {
 
 			if (checklist[i] != 1) {
 				toReturn = false;
-			
-				
+
 				break;
 			}
 		}

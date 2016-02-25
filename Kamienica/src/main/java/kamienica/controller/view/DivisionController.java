@@ -100,7 +100,7 @@ public class DivisionController {
 		divisionForm.setDivisionList((ArrayList<Division>) divisionService.getList());
 		List<Tenant> tenants = tenantService.getCurrentTenants();
 		List<Apartment> apartments = apartmentService.getList();
-		if (!DivisionValidator.validateDivisionForPaymentController(apartments, divisionForm.getDivisionList(),
+		if (!DivisionValidator.validateDivision(apartments, divisionForm.getDivisionList(),
 				tenants)) {
 			model.put("error", "Podział jest nieaktualny. <a href='divisionRegister.html' class='alert alert-danger'><b>Zaktualizuj dane.</b></a> ");
 		}
