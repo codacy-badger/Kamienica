@@ -394,14 +394,18 @@ public class InvoiceController {
 
 	@RequestMapping(value = "/Admin/Invoice/invoiceGasDelete", params = { "id" })
 	public ModelAndView invoiceGaz(@RequestParam(value = "id") int id) {
+
 		invoiceService.deleteGasByID(id);
 		return new ModelAndView("/Admin/Invoice/invoiceGasList.html");
+
 	}
 
 	@RequestMapping(value = "/Admin/Invoice/invoiceWaterDelete", params = { "id" })
 	public ModelAndView invoiceWoda(@RequestParam(value = "id") int id) {
+
 		invoiceService.deleteWaterByID(id);
 		return new ModelAndView("/Admin/Invoice/invoiceWaterList.html");
+
 	}
 
 	@RequestMapping(value = "/Admin/Invoice/invoiceEnergyDelete", params = { "id" })
