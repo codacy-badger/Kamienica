@@ -42,7 +42,7 @@ public class InvoiceServiceImpl implements InvoiceService {
 	@Autowired
 	ReadingWaterDAO readingWater;
 	@Autowired
-	private PaymentGasDAO paymetGas;
+	private PaymentGasDAO paymentGas;
 	@Autowired
 	private PaymentEergyDAO paymentEnergy;
 	@Autowired
@@ -60,7 +60,7 @@ public class InvoiceServiceImpl implements InvoiceService {
 	public void saveGas(InvoiceGas invoice, List<PaymentGas> payment) {
 		invoiceGas.save(invoice);
 		readingGas.ResolveReadings(invoice);
-		paymetGas.saveGas(payment);
+		paymentGas.saveGas(payment);
 	}
 
 	@Override
@@ -72,21 +72,15 @@ public class InvoiceServiceImpl implements InvoiceService {
 
 	@Override
 	public void deleteEnergyByID(int id) {
-		// temporaryFix...
 		readingEnergy.UnresolveReadings(invoiceEnergy.getById(id));
 		invoiceEnergy.deleteByID(id);
-
 	}
 
 	@Override
-	public void updateEnergy(InvoiceEnergy invoice) {
-
-		// temp fix
-		InvoiceEnergy test = invoiceEnergy.getById(invoice.getId());
-		// if (invoice.getBaseReading().getId() !=
-		// test.getBaseReading().getId()) {
-		// readingEnergy.UnresolveReadings(test);
-		// }
+	public void updateEnergy(InvoiceEnergy invoice, List<PaymentEnergy> payments) {
+		for (PaymentEnergy payment : payments) {
+			paymentEnergy.update(payment);
+		}
 		invoiceEnergy.update(invoice);
 
 	}
@@ -95,21 +89,6 @@ public class InvoiceServiceImpl implements InvoiceService {
 	public InvoiceEnergy getEnergyByID(int id) {
 		return invoiceEnergy.getById(id);
 	}
-	//
-	// @Override
-	// public InvoiceEnergy getLatestEnergy() {
-	// return energy.getLatest();
-	// }
-	//
-	// @Override
-	// public List<InvoiceEnergy> getInvoicesEnergyForPayment(PaymentEnergy
-	// payment) {
-	// List<InvoiceEnergy> output = energy.getInvoicesForPayment(payment);
-	// if (output.isEmpty()) {
-	// output = energy.getList();
-	// }
-	// return output;
-	// }
 
 	@Override
 	public List<InvoiceEnergy> getEnergyInvoiceList() {
@@ -139,25 +118,20 @@ public class InvoiceServiceImpl implements InvoiceService {
 	}
 
 	@Override
-	public void updateGas(InvoiceGas invoice) {
-		// temp fix
-		InvoiceGas test = invoiceGas.getById(invoice.getId());
-		// if (invoice.getBaseReading().getId() !=
-		// test.getBaseReading().getId()) {
-		// readingGas.UnresolveReadings(test);
-		// }
+	public void updateGas(InvoiceGas invoice, List<PaymentGas> payments) {
+		for (PaymentGas payment : payments) {
+			paymentGas.update(payment);
+		}
 		invoiceGas.update(invoice);
 
 	}
 
 	@Override
-	public void updateWater(InvoiceWater invoice) {
-		// temp fix
-		InvoiceWater test = invoiceWater.getById(invoice.getId());
-		// if (invoice.getBaseReading().getId() !=
-		// test.getBaseReading().getId()) {
-		// readingWater.UnresolveReadings(test);
-		// }
+	public void updateWater(InvoiceWater invoice, List<PaymentWater> payments) {
+		for (PaymentWater payment : payments) {
+			paymentWater.update(payment);
+		}
+
 		invoiceWater.update(invoice);
 
 	}

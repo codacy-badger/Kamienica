@@ -30,11 +30,11 @@ public interface InvoiceService {
 
 	public void deleteEnergyByID(int id);
 
-	public void updateGas(InvoiceGas invoice);
+	public void updateGas(InvoiceGas invoice, List<PaymentGas> payments);
 
-	public void updateWater(InvoiceWater invoice);
+	public void updateWater(InvoiceWater invoice,  List<PaymentWater> payments);
 
-	public void updateEnergy(InvoiceEnergy invoice);
+	public void updateEnergy(InvoiceEnergy invoice, List<PaymentEnergy> payments);
 
 	public InvoiceGas getGasByID(int id);
 

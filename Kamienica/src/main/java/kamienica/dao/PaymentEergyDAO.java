@@ -11,6 +11,8 @@ public interface PaymentEergyDAO {
 
 	public void saveEnergy(List<PaymentEnergy> payment);
 
+	public void update(PaymentEnergy payment);
+
 	public void delete(PaymentEnergy payment);
 
 	public void deleteByDate(String date);

@@ -12,9 +12,7 @@ import kamienica.dao.PaymentWaterDAO;
 import kamienica.dao.invoice.InvoiceEnergyDAO;
 import kamienica.dao.invoice.InvoiceGasDAO;
 import kamienica.dao.invoice.InvoiceWaterDAO;
-import kamienica.model.InvoiceEnergy;
-import kamienica.model.InvoiceGas;
-import kamienica.model.InvoiceWater;
+import kamienica.model.Invoice;
 import kamienica.model.PaymentEnergy;
 import kamienica.model.PaymentGas;
 import kamienica.model.PaymentWater;
@@ -44,11 +42,11 @@ public class PaymentServiceImpl implements PaymentService {
 	// return energy.getEnergyByReading(reading);
 	// }
 	//
-	// @Override
-	// public List<PaymentGas> getPaymentGasByInvoice(Invoice invoice) {
-	//
-	// return gas.getGasByInvoice(invoice);
-	// }
+	 @Override
+	 public List<PaymentGas> getPaymentGasByInvoice(Invoice invoice) {
+	
+	 return gas.getGasByInvoice(invoice);
+	 }
 	//
 	// @Override
 	// public List<PaymentGas> getPaymentGasByReadingDate(ReadingGas reading) {
@@ -56,11 +54,11 @@ public class PaymentServiceImpl implements PaymentService {
 	// return gas.getGasByReading(reading);
 	// }
 	//
-	// @Override
-	// public List<PaymentWater> getPaymentWaterByInvoice(Invoice invoice) {
-	//
-	// return water.getWaterByInvoice(invoice);
-	// }
+	 @Override
+	 public List<PaymentWater> getPaymentWaterByInvoice(Invoice invoice) {
+	
+	 return water.getWaterByInvoice(invoice);
+	 }
 	//
 	// @Override
 	// public List<PaymentWater> getPaymentWaterByReadingDate(ReadingWater
@@ -114,12 +112,12 @@ public class PaymentServiceImpl implements PaymentService {
 		energy.saveEnergy(payment);
 	}
 
-	//
-	// @Override
-	// public List<PaymentEnergy> getEnergyByInvoice(Invoice invoice) {
-	//
-	// return energy.getEnergyByInvoice(invoice);
-	// }
+	
+	 @Override
+	 public List<PaymentEnergy> getEnergyByInvoice(Invoice invoice) {
+	
+	 return energy.getEnergyByInvoice(invoice);
+	 }
 
 	@Override
 	public List<PaymentEnergy> getPaymentEnergyForTenant(Tenant tenant) {
