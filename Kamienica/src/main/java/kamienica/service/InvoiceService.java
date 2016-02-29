@@ -6,14 +6,17 @@ import kamienica.model.Invoice;
 import kamienica.model.InvoiceEnergy;
 import kamienica.model.InvoiceGas;
 import kamienica.model.InvoiceWater;
+import kamienica.model.PaymentEnergy;
+import kamienica.model.PaymentGas;
+import kamienica.model.PaymentWater;
 
 public interface InvoiceService {
 
-	public void saveEnergy(InvoiceEnergy invoice);
+	public void saveEnergy(InvoiceEnergy invoice, List<PaymentEnergy> payment);
 
-	public void saveGas(InvoiceGas invoice);
+	public void saveGas(InvoiceGas invoice, List<PaymentGas> payment);
 
-	public void saveWater(InvoiceWater invoice);
+	public void saveWater(InvoiceWater invoice, List<PaymentWater> payment);
 
 	public List<InvoiceWater> getWaterInvoiceList();
 
@@ -27,11 +30,11 @@ public interface InvoiceService {
 
 	public void deleteEnergyByID(int id);
 
-	public void updateGas(InvoiceGas invoice);
+	public void updateGas(InvoiceGas invoice, List<PaymentGas> payments);
 
-	public void updateWater(InvoiceWater invoice);
+	public void updateWater(InvoiceWater invoice,  List<PaymentWater> payments);
 
-	public void updateEnergy(InvoiceEnergy invoice);
+	public void updateEnergy(InvoiceEnergy invoice, List<PaymentEnergy> payments);
 
 	public InvoiceGas getGasByID(int id);
 

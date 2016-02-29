@@ -118,7 +118,7 @@ public class PaymentControllerTest {
 		when(tenantService.getCurrentTenants()).thenReturn(tenants);
 		when(divisionService.getList()).thenReturn(division);
 		when(apartmentService.getList()).thenReturn(apartments);
-		Assert.assertEquals(DivisionValidator.validateDivisionForPaymentController(apartments, division, tenants),
+		Assert.assertEquals(DivisionValidator.validateDivision(apartments, division, tenants),
 				true);	
 	}
 	

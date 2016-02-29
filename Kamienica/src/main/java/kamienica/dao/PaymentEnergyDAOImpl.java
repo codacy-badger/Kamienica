@@ -21,6 +21,7 @@ public class PaymentEnergyDAOImpl extends AbstractDao<Integer, PaymentEnergy> im
 		query.executeUpdate();
 	}
 
+
 	@SuppressWarnings("unchecked")
 	public List<PaymentEnergy> getEnergyByInvoice(Invoice invoice) {
 		Query query = getSession().createSQLQuery("Select * from paymentenergy where invoice_id = :id")

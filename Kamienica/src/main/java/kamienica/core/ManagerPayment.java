@@ -5,11 +5,9 @@ import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Locale;
 
 import kamienica.model.Division;
-import kamienica.model.Invoice;
 import kamienica.model.InvoiceEnergy;
 import kamienica.model.InvoiceGas;
 import kamienica.model.InvoiceWater;
@@ -22,9 +20,9 @@ import kamienica.model.UsageValue;
 public class ManagerPayment {
 
 	public static ArrayList<PaymentEnergy> createPaymentEnergyList(ArrayList<Tenant> tenants,
-			List<InvoiceEnergy> invoice, ArrayList<Division> division, ArrayList<UsageValue> usage) {
+			InvoiceEnergy invoice, ArrayList<Division> division, ArrayList<UsageValue> usage) {
 
-		double sumOfExpences = sumInvoicesAmount(invoice);
+		double sumOfExpences = invoice.getTotalAmount();
 		ArrayList<PaymentEnergy> listToReturn = new ArrayList<PaymentEnergy>();
 
 		// NumberFormat nf = NumberFormat.getNumberInstance(Locale.ENGLISH);
@@ -55,9 +53,9 @@ public class ManagerPayment {
 		return listToReturn;
 	}
 
-	public static ArrayList<PaymentGas> createPaymentGasList(ArrayList<Tenant> tenants, List<InvoiceGas> invoice,
+	public static ArrayList<PaymentGas> createPaymentGasList(ArrayList<Tenant> tenants, InvoiceGas invoice,
 			ArrayList<Division> division, ArrayList<UsageValue> usage) {
-		double sumOfExpences = sumInvoicesAmount(invoice);
+		double sumOfExpences = invoice.getTotalAmount();
 		ArrayList<PaymentGas> listToReturn = new ArrayList<PaymentGas>();
 		// NumberFormat nf = NumberFormat.getNumberInstance(Locale.ENGLISH);
 		// DecimalFormat df = (DecimalFormat) nf;
@@ -88,13 +86,13 @@ public class ManagerPayment {
 		return listToReturn;
 	}
 
-	public static ArrayList<PaymentWater> createPaymentWaterList(ArrayList<Tenant> tenants, List<InvoiceWater> invoice,
+	public static ArrayList<PaymentWater> createPaymentWaterList(ArrayList<Tenant> tenants, InvoiceWater invoice,
 			ArrayList<Division> podzial, ArrayList<UsageValue> usage) {
 		ArrayList<PaymentWater> listToReturn = new ArrayList<PaymentWater>();
 		// NumberFormat nf = NumberFormat.getNumberInstance(Locale.ENGLISH);
 		// DecimalFormat df = (DecimalFormat) nf;
 		// df.applyPattern("#.00");
-		double sumOfExpences = sumInvoicesAmount(invoice);
+		double sumOfExpences = invoice.getTotalAmount();
 
 		double sumaZuzycia = sumUsage(usage);
 
@@ -163,13 +161,13 @@ public class ManagerPayment {
 	// return sum;
 	// }
 
-	private static double sumInvoicesAmount(List<? extends Invoice> invoice) {
-		double sum = 0;
-		for (Invoice inv : invoice) {
-			sum = sum + inv.getTotalAmount();
-		}
-		return sum;
-	}
+//	private static double sumInvoicesAmount(List<? extends Invoice> invoice) {
+//		double sum = 0;
+//		for (Invoice inv : invoice) {
+//			sum = sum + inv.getTotalAmount();
+//		}
+//		return sum;
+//	}
 
 	private static double decimalFormat(double input) {
 		NumberFormat nf = NumberFormat.getNumberInstance(Locale.ENGLISH);

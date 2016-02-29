@@ -13,7 +13,7 @@ import kamienica.model.UsageValue;
 
 public class ManagerWater {
 
-	public static ArrayList<UsageValue> countWaterConsumption(List<Apartment> apartment, List<ReadingWater> oldReading,
+	public static ArrayList<UsageValue> countConsumption(List<Apartment> apartment, List<ReadingWater> oldReading,
 			List<ReadingWater> newRading) {
 
 		ReadingWater sharedReadingOld;

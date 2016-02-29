@@ -144,7 +144,7 @@
 							<form:label path="id">ID</form:label>
 						</div>
 						<div class="col-md-6 inputAndError">
-							<form:input path="id" readonly="true" />
+							<form:input path="id"  readonly="true" />
 							<form:errors path="id" cssClass="error" />
 						</div>
 					</div>

@@ -133,8 +133,8 @@
 					<th>Wartość Opłaty</th>
 					<th>Data Rachunku</th>
 					<th>Najemca</th>
-
-					<th>Usuń</th>
+					<th>Data Faktury</th>
+					<th>Numer Faktury</th>
 				</tr>
 				<c:forEach items="${payment}" var="p">
 					<tr>
@@ -143,11 +143,8 @@
 						<td><c:out value="${p.paymentDate}" /></td>
 						<td><c:out value="${p.tenant.firstName}" /> <c:out
 								value="${p.tenant.lastName}" /></td>
-
-						<td><a
-							href="<c:url value="/Admin/Payment/payment${url}Delete.html?date=${p.paymentDate}&id=${p.id}"  />"
-							onclick="return confirm('UWAGA!!! Usunięte zostaną wszystkie opłaty od tej daty wzwyż!\n Na pewno usunąć?')"
-							role="button" class="btn-xs btn-danger">Usuń</a></td>
+						<td><c:out value="${p.invoice.date}" /></td>
+						<td><c:out value="${p.invoice.serialNumber}" /></td>
 					</tr>
 				</c:forEach>
 			</table>

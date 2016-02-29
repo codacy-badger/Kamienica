@@ -140,6 +140,8 @@
 				<form:form id="fakturaEdytuj" modelAttribute="invoice" method="post"
 					action="${fakturaEdytuj}">
 
+					<form:select path="baseReading" items="${model.readings}"
+						itemValue="id" itemLabel="readingDate" hidden="true" class='ignore' />
 
 					<div class="row">
 						<div class="col-md-6 myLabel ">
@@ -151,7 +153,6 @@
 						</div>
 					</div>
 
-
 					<div class="row">
 						<div class="col-md-6 myLabel ">
 							<form:label path="serialNumber">Numer Faktury</form:label>
@@ -161,8 +162,6 @@
 							<form:errors path="serialNumber" class="error" />
 						</div>
 					</div>
-
-
 
 					<div class="row">
 						<div class="col-md-6 myLabel ">

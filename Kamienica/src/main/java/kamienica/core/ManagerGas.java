@@ -50,7 +50,7 @@ public class ManagerGas {
 		return out;
 	}
 
-	public static ArrayList<UsageValue> countGasConsumption(List<Apartment> aparment, List<ReadingGas> gasOld,
+	public static ArrayList<UsageValue> countConsumption(List<Apartment> aparment, List<ReadingGas> gasOld,
 			List<ReadingGas> gasNew, List<ReadingWater> waterOld, List<ReadingWater> waterNew) {
 		ArrayList<UsageValue> out = new ArrayList<UsageValue>();
 		for (Apartment m : aparment) {

@@ -2,6 +2,7 @@ package kamienica.service;
 
 import java.util.List;
 
+import kamienica.model.Invoice;
 import kamienica.model.PaymentEnergy;
 import kamienica.model.PaymentGas;
 import kamienica.model.PaymentWater;
@@ -23,21 +24,21 @@ public interface PaymentService {
 
 	public List<PaymentWater> getPaymentWaterForTenant(Tenant tenant);
 
-	// public PaymentAbstract getPaymentByInvoice(Invoice invoice);
+//	 public PaymentAbstract getPaymentByInvoice(Invoice invoice);
 
-//	public List<PaymentEnergy> getEnergyByInvoice(Invoice invoice);
+	public List<PaymentEnergy> getEnergyByInvoice(Invoice invoice);
 
 //	public List<PaymentEnergy> getEnergyPaymentByDate(ReadingEnergy reading);
 
 	public List<PaymentEnergy> getPaymentEnergyList();
 
-//	public List<PaymentGas> getPaymentGasByInvoice(Invoice invoice);
+	public List<PaymentGas> getPaymentGasByInvoice(Invoice invoice);
 
 //	public List<PaymentGas> getPaymentGasByReadingDate(ReadingGas reading);
 
 	public List<PaymentGas> getPaymentGasList();
 
-//	public List<PaymentWater> getPaymentWaterByInvoice(Invoice invoice);
+	public List<PaymentWater> getPaymentWaterByInvoice(Invoice invoice);
 
 //	public List<PaymentWater> getPaymentWaterByReadingDate(ReadingWater reading);
 

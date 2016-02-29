@@ -125,6 +125,11 @@
 				<a href="invoiceGasRegister.html">Dodaj nową fakturę</a>
 			</div>
 		</div>
+		<div class='row'>
+			<c:if test="${!empty model.error}">
+				<p class='alert alert-danger'>${model.error}</p>
+			</c:if>
+		</div>
 
 		<div class='row'>
 			<c:if test="${!empty invoice}">
@@ -135,7 +140,6 @@
 						<th>Opis</th>
 						<th>Data</th>
 						<th>Wartość</th>
-						<th>Status</th>
 						<th>Edytuj</th>
 						<th>Usuń</th>
 
@@ -147,7 +151,6 @@
 							<td><c:out value="${invoice.description}" /></td>
 							<td><c:out value="${invoice.date}" /></td>
 							<td><c:out value="${invoice.totalAmount}" /></td>
-							<td><c:out value="${invoice.status}" /></td>
 							<td><a
 								href="<c:url value="/Admin/Invoice/invoiceGasEdit.html?id=${invoice.id}" />"
 								role="button" class="btn-xs btn-warning">Edytuj</a></td>

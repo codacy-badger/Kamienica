@@ -9,6 +9,7 @@ import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.propertyeditors.CustomDateEditor;
@@ -37,6 +38,7 @@ import kamienica.model.ReadingWater;
 import kamienica.service.ApartmentService;
 import kamienica.service.MeterService;
 import kamienica.service.ReadingService;
+import kamienica.validator.ReadingValidator;
 import kamienica.wrapper.ReadingEnergyForm;
 import kamienica.wrapper.ReadingGasForm;
 import kamienica.wrapper.ReadingWaterForm;
@@ -91,7 +93,6 @@ public class ReadingController {
 			}
 			tmp.setReadingDate(new Date());
 			readings.add(tmp);
-			// tmp.setUnit(meterEnergy.get(i).getUnit());
 		}
 
 		readingForm.setCurrentReadings(readings);
@@ -132,7 +133,6 @@ public class ReadingController {
 			}
 			tmp.setReadingDate(new Date());
 			readings.add(tmp);
-			// tmp.setUnit(meterEnergy.get(i).getUnit());
 		}
 
 		readingForm.setCurrentReadings(readings);
@@ -188,11 +188,16 @@ public class ReadingController {
 	// --------------------------------SAVE-----------------------------------------------------------------
 
 	@RequestMapping(value = "/Admin/Reading/readingEnergySave", method = RequestMethod.POST)
-	public ModelAndView readingEnergySave(@ModelAttribute("readingForm") ReadingEnergyForm readingForm,
+	public ModelAndView readingEnergySave( @ModelAttribute("readingForm") ReadingEnergyForm readingForm,
 			BindingResult result, HttpServletRequest req) throws ParseException {
+		List<ReadingEnergy> reading = readingForm.getCurrentReadings();
+		if(!ReadingValidator.validateMeterReadings(reading)) {
+			return new ModelAndView("/Admin/Reading/ReadingEnergyRegister");
+		}
 		String date = req.getParameter("date");
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-		List<ReadingEnergy> reading = readingForm.getCurrentReadings();
+		
+
 		for (int i = 0; i < reading.size(); i++) {
 			reading.get(i).setReadingDate(sdf.parse(date));
 			reading.get(i).setUnit(reading.get(i).getMeter().getUnit());
@@ -260,31 +265,37 @@ public class ReadingController {
 	@RequestMapping(value = "/Admin/Reading/readingEnergyDelete", params = { "date" })
 	public ModelAndView readingEnergyDelete(@RequestParam(value = "date") String date) {
 		List<ReadingEnergy> listToDelete = readingService.getReadingEnergyByDate(date);
-
+		if (listToDelete.get(0).isResolved() == true) {
+			Map<String, Object> model = new HashMap<String, Object>();
+			model.put("error", "Nie można usuwać odczytu, dla którego wprowadzono Fakturę.");
+			return new ModelAndView("/Admin/Reading/ReadingEnergyList","model", model);
+		}
 		readingService.deleteReadingEnergyList(listToDelete);
-		// for (ReadingEnergy i : listToDelete) {
-		// readingService.deleteReadingEnergy(i.getId());
-		// }
+
 		return new ModelAndView("redirect:/Admin/Reading/readingEnergyList.html");
 	}
 
 	@RequestMapping(value = "/Admin/Reading/readingGasDelete", params = { "date" })
 	public ModelAndView readingGasDelete(@RequestParam(value = "date") String date) {
 		List<ReadingGas> listToDelete = readingService.getReadingGasByDate(date);
+		if (listToDelete.get(0).isResolved() == true) {
+			Map<String, Object> model = new HashMap<String, Object>();
+			model.put("error", "Nie można usuwać odczytu, dla którego wprowadzono Fakturę.");
+			return new ModelAndView("/Admin/Reading/ReadingGasList","model", model);
+		}
 		readingService.deleteReadingGasList(listToDelete);
-		// for (ReadingGas i : listToDelete) {
-		// readingService.deleteReadingGas(i.getId());
-		// }
 		return new ModelAndView("redirect:/Admin/Reading/readingGasList.html");
 	}
 
 	@RequestMapping(value = "/Admin/Reading/readingWaterDelete", params = { "date" })
 	public ModelAndView usunReadingWater(@RequestParam(value = "date") String date) {
 		List<ReadingWater> listToDelete = readingService.getReadingWaterByDate(date);
+		if (listToDelete.get(0).isResolved() == true) {
+			Map<String, Object> model = new HashMap<String, Object>();
+			model.put("error", "Nie można usuwać odczytu, dla którego wprowadzono Fakturę.");
+			return new ModelAndView("/Admin/Reading/ReadingWaterList","model", model);
+		}
 		readingService.deleteReadingWaterList(listToDelete);
-		// for (ReadingWater i : listToDelete) {
-		// readingService.deleteReadingWater(i.getId());
-		// }
 		return new ModelAndView("redirect:/Admin/Reading/readingWaterList.html");
 	}
 

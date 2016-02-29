@@ -38,8 +38,6 @@ public abstract class Invoice {
 	@Min(value = 0, message = "Tylko wartości dodatnie")
 	@NotNull(message = "Podaj wartość")
 	private double totalAmount;
-	@Column(nullable = false)
-	private String status = PaymentStatus.UNPAID.getPaymentStatus();
 
 	@Autowired
 	public Invoice(String serialNumber, String description, Date date, double totalAmount) {
@@ -94,13 +92,7 @@ public abstract class Invoice {
 		this.totalAmount = totalAmount;
 	}
 
-	public String getStatus() {
-		return status;
-	}
 
-	public void setStatus(String status) {
-		this.status = status;
-	}
 
 	@Override
 	public String toString() {
