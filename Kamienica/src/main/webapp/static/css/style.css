@@ -80,3 +80,8 @@ table input {
 .payment {
 	width: 100%;
 }
+
+.paymentButton {
+	color: #C3C3C3 !important;
+	background-color: #020202 !important;
+}

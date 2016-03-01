@@ -17,5 +17,4 @@ public interface ApartmentDao {
 
 	public Apartment getById(int id);
 
-	public Apartment getByAparmentNumber(int number);
 }

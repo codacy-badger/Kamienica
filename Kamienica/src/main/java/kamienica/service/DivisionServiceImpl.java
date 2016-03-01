@@ -15,13 +15,6 @@ public class DivisionServiceImpl implements DivisionService {
 	@Autowired
 	DivisionDao divisionDAO;
 
-//	@Override
-//	public void save(Division division) {
-//		
-//		divisionDAO.save(division);
-//
-//	}
-
 	@Override
 	public List<Division> getList() {
 		return divisionDAO.getList();
@@ -38,7 +31,6 @@ public class DivisionServiceImpl implements DivisionService {
 		divisionDAO.update(division);
 	}
 
-	
 	@Override
 	public void deleteAll() {
 		divisionDAO.deleteAll();
@@ -48,12 +40,11 @@ public class DivisionServiceImpl implements DivisionService {
 	@Override
 	public void saveList(List<Division> division) {
 		divisionDAO.deleteAll();
-		for(Division div : division) {
+		for (Division div : division) {
 			divisionDAO.save(div);
 		}
-//		divisionDAO.saveList(division);
+
 
 	}
-
 
 }

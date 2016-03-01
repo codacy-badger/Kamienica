@@ -16,6 +16,7 @@ import kamienica.model.PaymentStatus;
 @Transactional
 public class InvoiceEnergyDAOImpl extends AbstractDao<Integer, InvoiceEnergy> implements InvoiceEnergyDAO {
 
+	@Override
 	public void deleteByID(int id) {
 		Query query = getSession().createSQLQuery("delete from invoiceenergy where id = :id");
 		query.setInteger("id", id);
@@ -23,18 +24,7 @@ public class InvoiceEnergyDAOImpl extends AbstractDao<Integer, InvoiceEnergy> im
 
 	}
 
-	//
-	//
-	//
-	// public Invoice getEnergyByID(int id) {
-	// Session session = this.sessionfactory.getCurrentSession();
-	// session.beginTransaction();
-	// Invoice out = (InvoiceEnergy) session.get(InvoiceEnergy.class, new
-	// Integer(id));
-	// session.close();
-	// return out;
-	// }
-
+	@Override
 	public InvoiceEnergy getLatest() {
 		Query query = getSession().createSQLQuery(
 				"select * from kamienica.invoiceenergy where date = (select MAX(date) from kamienica.invoiceenergy)");
@@ -42,23 +32,8 @@ public class InvoiceEnergyDAOImpl extends AbstractDao<Integer, InvoiceEnergy> im
 
 	}
 
-	// @SuppressWarnings("unchecked")
-	// public List<InvoiceEnergy> getInvoicesForPayment(PaymentEnergy payment) {
-	//
-	// String sql = "";
-	// if (payment.getId() < 1) {
-	// sql = "select * from kamienica.invoiceenergy order by date asc";
-	// } else {
-	// sql = "select * from kamienica.invoiceenergy where date >= (select date
-	// from kamienica.invoiceenergy where id = "
-	// + payment.getInvoice().getId() + ") order by date asc ";
-	// }
-	// Query query =
-	// getSession().createSQLQuery(sql).addEntity(InvoiceEnergy.class);
-	// return query.list();
-	// }
-
 	@SuppressWarnings("unchecked")
+	@Override
 	public List<InvoiceEnergy> getInvoicesForCalulation(Invoice invoice) {
 		Query query = getSession()
 				.createSQLQuery(
@@ -105,7 +80,5 @@ public class InvoiceEnergyDAOImpl extends AbstractDao<Integer, InvoiceEnergy> im
 		query.executeUpdate();
 
 	}
-	// "update invoiceenergy invoice join paymentenergy_invoiceenergy jointable
-	// on invoice.id = jointable.invoice_id set status = :stat where
-	// jointable.paymentenergy_id = :id")
+
 }

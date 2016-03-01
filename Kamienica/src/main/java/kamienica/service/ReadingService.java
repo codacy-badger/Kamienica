@@ -5,7 +5,6 @@ import java.util.List;
 
 import kamienica.model.Apartment;
 import kamienica.model.InvoiceGas;
-import kamienica.model.ReadingAbstract;
 import kamienica.model.ReadingEnergy;
 import kamienica.model.ReadingGas;
 import kamienica.model.ReadingWater;
@@ -60,12 +59,6 @@ public interface ReadingService {
 
 	public void deleteReadingWaterList(List<ReadingWater> list);
 
-	// public List<ReadingEnergy> getLatestEnergyReadingsList();
-	//
-	// public List<ReadingGas> getLatestGasReadingsList();
-	//
-	// public List<ReadingWater> getLatestWaterReadingsList();
-
 	public List<ReadingEnergy> getPreviousReadingEnergy(String date);
 
 	public List<ReadingGas> getPreviousReadingGas(String date);
@@ -78,17 +71,7 @@ public interface ReadingService {
 
 	public HashMap<Integer, ReadingWater> getLatestWaterReadings();
 
-	// public List<Date> getEnergyReadingDatesForPayment(PaymentAbstract
-	// payment);
-	//
-	// public List<Date> getWaterReadingDatesForPayment(PaymentAbstract
-	// payment);
-	//
-	// public List<Date> getGasReadingDatesForPayment(PaymentAbstract payment);
-
-	public List<ReadingWater> getWaterReadingsForGasConsumption(ReadingAbstract reading);
-
-	public HashMap<String, List<ReadingWater>> getWaterReadingsForGasConsumption2(InvoiceGas invoice);
+	public HashMap<String, List<ReadingWater>> getWaterReadingsForGasConsumption(InvoiceGas invoice);
 
 	public List<ReadingEnergy> getUnresolvedReadingsEnergy();
 

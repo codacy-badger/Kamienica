@@ -16,6 +16,7 @@ import kamienica.model.PaymentStatus;
 @Transactional
 public class InvoiceWaterDAOImpl extends AbstractDao<Integer, InvoiceWater> implements InvoiceWaterDAO {
 
+	@Override
 	public void deleteByID(int id) {
 		Query query = getSession().createSQLQuery("delete from invoicewater where id = :id");
 		query.setInteger("id", id);
@@ -23,18 +24,7 @@ public class InvoiceWaterDAOImpl extends AbstractDao<Integer, InvoiceWater> impl
 
 	}
 
-	//
-	//
-	//
-	// public Invoice getWaterByID(int id) {
-	// Session session = this.sessionfactory.getCurrentSession();
-	// session.beginTransaction();
-	// Invoice out = (InvoiceWater) session.get(InvoiceWater.class, new
-	// Integer(id));
-	// session.close();
-	// return out;
-	// }
-
+	@Override
 	public InvoiceWater getLatest() {
 		Query query = getSession().createSQLQuery(
 				"select * from kamienica.invoicewater where date = (select MAX(date) from kamienica.invoicewater)");
@@ -42,23 +32,8 @@ public class InvoiceWaterDAOImpl extends AbstractDao<Integer, InvoiceWater> impl
 
 	}
 
-	// @SuppressWarnings("unchecked")
-	// public List<InvoiceWater> getInvoicesForPayment(PaymentWater payment) {
-	//
-	// String sql = "";
-	// if (payment.getId() < 1) {
-	// sql = "select * from kamienica.invoicewater order by date asc";
-	// } else {
-	// sql = "select * from kamienica.invoicewater where date >= (select date
-	// from kamienica.invoicewater where id = "
-	// + payment.getInvoice().getId() + ") order by date asc ";
-	// }
-	// Query query =
-	// getSession().createSQLQuery(sql).addEntity(InvoiceWater.class);
-	// return query.list();
-	// }
-
 	@SuppressWarnings("unchecked")
+	@Override
 	public List<InvoiceWater> getInvoicesForCalulation(Invoice invoice) {
 		Query query = getSession()
 				.createSQLQuery(
@@ -71,7 +46,9 @@ public class InvoiceWaterDAOImpl extends AbstractDao<Integer, InvoiceWater> impl
 
 	@Override
 	public List<InvoiceWater> getUnpaidInvoices() {
-		Query query = getSession().createSQLQuery("select * from invoicewater where status =  :stat and baseReading_id is not null order by date asc")
+		Query query = getSession()
+				.createSQLQuery(
+						"select * from invoicewater where status =  :stat and baseReading_id is not null order by date asc")
 				.addEntity(InvoiceWater.class).setParameter("stat", PaymentStatus.UNPAID.getPaymentStatus());
 		@SuppressWarnings("unchecked")
 		List<InvoiceWater> invoice = query.list();
@@ -96,9 +73,7 @@ public class InvoiceWaterDAOImpl extends AbstractDao<Integer, InvoiceWater> impl
 
 	@Override
 	public void unresolveInvoice(int id) {
-		Query query = getSession()
-				.createSQLQuery(
-						"update invoicewater set status = :stat where id = :id")
+		Query query = getSession().createSQLQuery("update invoicewater set status = :stat where id = :id")
 				.addEntity(InvoiceWater.class).setParameter("stat", PaymentStatus.UNPAID.getPaymentStatus())
 				.setParameter("id", id);
 		query.executeUpdate();

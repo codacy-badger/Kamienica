@@ -16,6 +16,7 @@ import kamienica.model.PaymentStatus;
 @Transactional
 public class InvoiceGasDAOImpl extends AbstractDao<Integer, InvoiceGas> implements InvoiceGasDAO {
 
+	@Override
 	public void deleteByID(int id) {
 		Query query = getSession().createSQLQuery("delete from invoicegas where id = :id");
 		query.setInteger("id", id);
@@ -23,18 +24,7 @@ public class InvoiceGasDAOImpl extends AbstractDao<Integer, InvoiceGas> implemen
 
 	}
 
-	//
-	//
-	//
-	// public Invoice getGasByID(int id) {
-	// Session session = this.sessionfactory.getCurrentSession();
-	// session.beginTransaction();
-	// Invoice out = (InvoiceGas) session.get(InvoiceGas.class, new
-	// Integer(id));
-	// session.close();
-	// return out;
-	// }
-
+	@Override
 	public InvoiceGas getLatest() {
 		Query query = getSession().createSQLQuery(
 				"select * from kamienica.invoicegas where date = (select MAX(date) from kamienica.invoicegas)");
@@ -42,23 +32,8 @@ public class InvoiceGasDAOImpl extends AbstractDao<Integer, InvoiceGas> implemen
 
 	}
 
-	// @SuppressWarnings("unchecked")
-	// public List<InvoiceGas> getInvoicesForPayment(PaymentGas payment) {
-	//
-	// String sql = "";
-	// if (payment.getId() < 1) {
-	// sql = "select * from kamienica.invoicegas order by date asc";
-	// } else {
-	// sql = "select * from kamienica.invoicegas where date >= (select date from
-	// kamienica.invoicegas where id = "
-	// + payment.getInvoice().getId() + ") order by date asc ";
-	// }
-	// Query query =
-	// getSession().createSQLQuery(sql).addEntity(InvoiceGas.class);
-	// return query.list();
-	// }
-
 	@SuppressWarnings("unchecked")
+	@Override
 	public List<InvoiceGas> getInvoicesForCalulation(Invoice invoice) {
 		Query query = getSession()
 				.createSQLQuery(
@@ -102,9 +77,6 @@ public class InvoiceGasDAOImpl extends AbstractDao<Integer, InvoiceGas> implemen
 				.addEntity(InvoiceGas.class).setParameter("stat", PaymentStatus.UNPAID.getPaymentStatus())
 				.setParameter("id", id);
 		query.executeUpdate();
-		// "update invoicegas invoice join paymentgas_invoicegas jointable on
-		// invoice.id = jointable.invoice_id set status = :stat where
-		// jointable.paymentgas_id = :id"
 	}
 
 }

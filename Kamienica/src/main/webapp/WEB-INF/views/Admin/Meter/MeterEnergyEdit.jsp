@@ -80,11 +80,6 @@
 					aria-expanded="false">Opłaty <span class="caret"></span></a>
 
 					<ul class="dropdown-menu">
-
-						<li><a href="../../Admin/Payment/paymentRegister">Wprowadź
-								Nowe</a></li>
-						<li role="separator" class="divider"></li>
-						<li class="dropdown-header">Sprawdź/Edytuj</li>
 						<li><a href="../../Admin/Payment/paymentGasList">Gaz</a></li>
 						<li><a href="../../Admin/Payment/paymentEnergyList">Energia</a></li>
 						<li><a href="../../Admin/Payment/paymentWaterList">Woda</a></li>

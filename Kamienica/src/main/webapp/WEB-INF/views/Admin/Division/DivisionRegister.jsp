@@ -89,11 +89,6 @@
 					aria-expanded="false">Opłaty <span class="caret"></span></a>
 
 					<ul class="dropdown-menu">
-
-						<li><a href="../../Admin/Payment/paymentRegister">Wprowadź
-								Nowe</a></li>
-						<li role="separator" class="divider"></li>
-						<li class="dropdown-header">Sprawdź/Edytuj</li>
 						<li><a href="../../Admin/Payment/paymentGasList">Gaz</a></li>
 						<li><a href="../../Admin/Payment/paymentEnergyList">Energia</a></li>
 						<li><a href="../../Admin/Payment/paymentWaterList">Woda</a></li>
@@ -133,48 +128,47 @@
 			</c:if>
 		</div>
 
-		
-			<div class='row'>
-				<c:url var="division" value="/Admin/Division/divisionSave.html" />
-				<form:form modelAttribute="divisionForm" method="post"
-					action="${division}">
-					
-					<table class='table table-bordered table-condensed'>
-						<tr>
-							<td><form:label path="date">
-									<b>Data</b>
-								</form:label> <form:input path="date" type="date" /></td>
-							<c:forEach items="${model.apartment}" var="m">
-								<th><c:out value="${m.description}" /></th>
-							</c:forEach>
-						<tr>
-							<c:forEach items="${model.tenantList}" var="tenantList">
-								<tr>
-									<th style="height: 12px"><b><c:out
-												value="${tenantList.firstName} ${tenantList.lastName}" /> 
-									</th>
-									<c:forEach items="${divisionForm.divisionList}" varStatus="i"
-										var="l">
+
+		<div class='row'>
+			<c:url var="division" value="/Admin/Division/divisionSave.html" />
+			<form:form modelAttribute="divisionForm" method="post"
+				action="${division}">
+
+				<table class='table table-bordered table-condensed'>
+					<tr>
+						<td><form:label path="date">
+								<b>Data</b>
+							</form:label> <form:input path="date" type="date" /></td>
+						<c:forEach items="${model.apartment}" var="m">
+							<th><c:out value="${m.description}" /></th>
+						</c:forEach>
+					<tr>
+						<c:forEach items="${model.tenantList}" var="tenantList">
+							<tr>
+								<th style="height: 12px"><b><c:out
+											value="${tenantList.firstName} ${tenantList.lastName}" /></th>
+								<c:forEach items="${divisionForm.divisionList}" varStatus="i"
+									var="l">
 
 
-										<c:if test="${tenantList.id.equals(l.tenant.id)}">
-											<input name="divisionList[${i.index}].tenant"
-												value="${l.tenant.id}" type="hidden" />
-											<input name="divisionList[${i.index}].apartment"
-												value="${l.apartment.id}" type="hidden" />
-											<td><input type="number" step="any" max="1.0" min="0"
-												name="divisionList[${i.index}].divisionValue"
-												value="${l.divisionValue}"></td>
-										</c:if>
-									</c:forEach>
-								</tr>
-							</c:forEach>
-					</table>
-					<br>
-					<input type="submit" value="Zapisz" />
-				</form:form>
-			</div>
-		
+									<c:if test="${tenantList.id.equals(l.tenant.id)}">
+										<input name="divisionList[${i.index}].tenant"
+											value="${l.tenant.id}" type="hidden" />
+										<input name="divisionList[${i.index}].apartment"
+											value="${l.apartment.id}" type="hidden" />
+										<td><input type="number" step="any" max="1.0" min="0"
+											name="divisionList[${i.index}].divisionValue"
+											value="${l.divisionValue}"></td>
+									</c:if>
+								</c:forEach>
+							</tr>
+						</c:forEach>
+				</table>
+				<br>
+				<input type="submit" value="Zapisz" />
+			</form:form>
+		</div>
+
 	</div>
 
 </body>

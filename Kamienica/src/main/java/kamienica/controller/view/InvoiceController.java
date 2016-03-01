@@ -42,7 +42,6 @@ import kamienica.model.UsageValue;
 import kamienica.service.ApartmentService;
 import kamienica.service.DivisionService;
 import kamienica.service.InvoiceService;
-import kamienica.service.MeterService;
 import kamienica.service.PaymentService;
 import kamienica.service.ReadingService;
 import kamienica.service.TenantService;
@@ -57,8 +56,6 @@ public class InvoiceController {
 	private ReadingService readingService;
 	@Autowired
 	private ApartmentService apartmentService;
-	@Autowired
-	private MeterService meterService;
 	@Autowired
 	private TenantService tenantService;
 	@Autowired
@@ -182,7 +179,7 @@ public class InvoiceController {
 
 		readingGasOld = readingService.getPreviousReadingGas(invoice.getBaseReading().getReadingDate().toString());
 
-		HashMap<String, List<ReadingWater>> waterForGas = readingService.getWaterReadingsForGasConsumption2(invoice);
+		HashMap<String, List<ReadingWater>> waterForGas = readingService.getWaterReadingsForGasConsumption(invoice);
 		if (waterForGas.isEmpty()) {
 			HashMap<String, Object> model = new HashMap<>();
 			String message = "Brakuje odczytów wody. Bez nich niemożliwe jest obliczenie zużycia gazu dla pieca CWU";
@@ -327,14 +324,14 @@ public class InvoiceController {
 		if (result.hasErrors()) {
 			return new ModelAndView("/Admin/Invoice/InvoiceGasEdit");
 		}
-		
+
 		InvoiceGas oldInv = invoiceService.getGasByID(invoice.getId());
 		double invFactor = (invoice.getTotalAmount() / oldInv.getTotalAmount());
 		List<PaymentGas> oldPayments = paymentService.getPaymentGasByInvoice(invoice);
 		for (int i = 0; i < oldPayments.size(); i++) {
 			oldPayments.get(i).setPaymentAmount(oldPayments.get(i).getPaymentAmount() * invFactor);
 		}
-		
+
 		try {
 			invoiceService.updateGas(invoice, oldPayments);
 		} catch (org.springframework.dao.DataIntegrityViolationException e) {
@@ -356,7 +353,7 @@ public class InvoiceController {
 		for (int i = 0; i < oldPayments.size(); i++) {
 			oldPayments.get(i).setPaymentAmount(oldPayments.get(i).getPaymentAmount() * invFactor);
 		}
-		
+
 		try {
 
 			invoiceService.updateWater(invoice, oldPayments);
