@@ -9,9 +9,6 @@ import org.springframework.transaction.annotation.Transactional;
 import kamienica.dao.PaymentEergyDAO;
 import kamienica.dao.PaymentGasDAO;
 import kamienica.dao.PaymentWaterDAO;
-import kamienica.dao.invoice.InvoiceEnergyDAO;
-import kamienica.dao.invoice.InvoiceGasDAO;
-import kamienica.dao.invoice.InvoiceWaterDAO;
 import kamienica.model.Invoice;
 import kamienica.model.PaymentEnergy;
 import kamienica.model.PaymentGas;
@@ -28,44 +25,18 @@ public class PaymentServiceImpl implements PaymentService {
 	private PaymentEergyDAO energy;
 	@Autowired
 	private PaymentWaterDAO water;
-	@Autowired
-	private InvoiceEnergyDAO invoiceEnergy;
-	@Autowired
-	private InvoiceWaterDAO invoiceWater;
-	@Autowired
-	private InvoiceGasDAO invoiceGas;
 
-	// @Override
-	// public List<PaymentEnergy> getEnergyPaymentByDate(ReadingEnergy reading)
-	// {
-	//
-	// return energy.getEnergyByReading(reading);
-	// }
-	//
-	 @Override
-	 public List<PaymentGas> getPaymentGasByInvoice(Invoice invoice) {
-	
-	 return gas.getGasByInvoice(invoice);
-	 }
-	//
-	// @Override
-	// public List<PaymentGas> getPaymentGasByReadingDate(ReadingGas reading) {
-	//
-	// return gas.getGasByReading(reading);
-	// }
-	//
-	 @Override
-	 public List<PaymentWater> getPaymentWaterByInvoice(Invoice invoice) {
-	
-	 return water.getWaterByInvoice(invoice);
-	 }
-	//
-	// @Override
-	// public List<PaymentWater> getPaymentWaterByReadingDate(ReadingWater
-	// reading) {
-	//
-	// return water.getWaterByReading(reading);
-	// }
+	@Override
+	public List<PaymentGas> getPaymentGasByInvoice(Invoice invoice) {
+
+		return gas.getGasByInvoice(invoice);
+	}
+
+	@Override
+	public List<PaymentWater> getPaymentWaterByInvoice(Invoice invoice) {
+
+		return water.getWaterByInvoice(invoice);
+	}
 
 	@Override
 	public List<PaymentEnergy> getPaymentEnergyList() {
@@ -82,21 +53,6 @@ public class PaymentServiceImpl implements PaymentService {
 		return water.getPaymentWater();
 	}
 
-	// @Override
-	// public PaymentEnergy getLatestPaymentEnergy() {
-	// return energy.getLatestPaymentEnergy();
-	// }
-	//
-	// @Override
-	// public PaymentWater getLatestPaymentWater() {
-	// return water.getLatestPaymentWater();
-	// }
-	//
-	// @Override
-	// public PaymentGas getLatestPaymentGas() {
-	// return gas.getLatestPaymentGas();
-	// }
-
 	@Override
 	public void saveGas(List<PaymentGas> payment) {
 		gas.saveGas(payment);
@@ -112,12 +68,11 @@ public class PaymentServiceImpl implements PaymentService {
 		energy.saveEnergy(payment);
 	}
 
-	
-	 @Override
-	 public List<PaymentEnergy> getEnergyByInvoice(Invoice invoice) {
-	
-	 return energy.getEnergyByInvoice(invoice);
-	 }
+	@Override
+	public List<PaymentEnergy> getEnergyByInvoice(Invoice invoice) {
+
+		return energy.getEnergyByInvoice(invoice);
+	}
 
 	@Override
 	public List<PaymentEnergy> getPaymentEnergyForTenant(Tenant tenant) {

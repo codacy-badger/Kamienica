@@ -19,15 +19,13 @@ public interface InvoiceGasDAO {
 
 	public InvoiceGas getLatest();
 
-//	public List<InvoiceGas> getInvoicesForPayment(PaymentGas payment);
-
 	public List<InvoiceGas> getInvoicesForCalulation(Invoice invoice);
 
 	List<InvoiceGas> getUnpaidInvoices();
-	
+
 	public InvoiceGas getLastResolved();
 
 	public void resolveInvoice(InvoiceGas invoice);
-	
+
 	public void unresolveInvoice(int id);
 }

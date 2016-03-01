@@ -2,7 +2,6 @@ package kamienica.service;
 
 import java.util.List;
 
-import kamienica.model.Invoice;
 import kamienica.model.InvoiceEnergy;
 import kamienica.model.InvoiceGas;
 import kamienica.model.InvoiceWater;
@@ -32,7 +31,7 @@ public interface InvoiceService {
 
 	public void updateGas(InvoiceGas invoice, List<PaymentGas> payments);
 
-	public void updateWater(InvoiceWater invoice,  List<PaymentWater> payments);
+	public void updateWater(InvoiceWater invoice, List<PaymentWater> payments);
 
 	public void updateEnergy(InvoiceEnergy invoice, List<PaymentEnergy> payments);
 
@@ -42,24 +41,6 @@ public interface InvoiceService {
 
 	public InvoiceEnergy getEnergyByID(int id);
 
-//	public InvoiceGas getLatestGas();
-//
-//	public InvoiceWater getLatestWater();
-//
-//	public InvoiceEnergy getLatestEnergy();
-
-//	public List<InvoiceWater> getInvoicesWaterForPayment(PaymentWater payment);
-//
-//	public List<InvoiceGas> getInvoicesGasForPayment(PaymentGas payment);
-//
-//	public List<InvoiceEnergy> getInvoicesEnergyForPayment(PaymentEnergy payment);
-
-	public List<InvoiceWater> getInvoicesWaterForCalulation(Invoice invoice);
-
-	public List<InvoiceGas> getInvoicesGasForCalulation(Invoice invoice);
-
-	public List<InvoiceEnergy> getInvoicesEnergyForCalulation(Invoice invoice);
-
 	public List<InvoiceEnergy> getUnpaidInvoiceEnergy();
 
 	public List<InvoiceGas> getUnpaidInvoiceGas();
@@ -67,8 +48,8 @@ public interface InvoiceService {
 	public List<InvoiceWater> getUnpaidInvoiceWater();
 
 	public InvoiceEnergy getLatestPaidEnergy();
-	
+
 	public InvoiceWater getLatestPaidWater();
-	
+
 	public InvoiceGas getLatestPaidGas();
 }

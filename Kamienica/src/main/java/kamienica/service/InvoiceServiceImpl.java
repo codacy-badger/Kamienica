@@ -15,7 +15,6 @@ import kamienica.dao.ReadingWaterDAO;
 import kamienica.dao.invoice.InvoiceEnergyDAO;
 import kamienica.dao.invoice.InvoiceGasDAO;
 import kamienica.dao.invoice.InvoiceWaterDAO;
-import kamienica.model.Invoice;
 import kamienica.model.InvoiceEnergy;
 import kamienica.model.InvoiceGas;
 import kamienica.model.InvoiceWater;
@@ -96,13 +95,6 @@ public class InvoiceServiceImpl implements InvoiceService {
 	}
 
 	@Override
-	public List<InvoiceEnergy> getInvoicesEnergyForCalulation(Invoice incoice) {
-
-		return invoiceEnergy.getInvoicesForCalulation(incoice);
-	}
-
-	// Gas
-	@Override
 	public void deleteGasByID(int id) {
 		readingGas.UnresolveReadings(invoiceGas.getById(id));
 		invoiceGas.deleteByID(id);
@@ -181,16 +173,6 @@ public class InvoiceServiceImpl implements InvoiceService {
 	@Override
 	public List<InvoiceGas> getGasInvoiceList() {
 		return invoiceGas.getList();
-	}
-
-	@Override
-	public List<InvoiceWater> getInvoicesWaterForCalulation(Invoice invoice) {
-		return invoiceWater.getInvoicesForCalulation(invoice);
-	}
-
-	@Override
-	public List<InvoiceGas> getInvoicesGasForCalulation(Invoice invoice) {
-		return invoiceGas.getInvoicesForCalulation(invoice);
 	}
 
 	@Override

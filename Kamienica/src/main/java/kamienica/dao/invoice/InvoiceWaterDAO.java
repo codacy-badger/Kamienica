@@ -19,8 +19,6 @@ public interface InvoiceWaterDAO {
 
 	public InvoiceWater getLatest();
 
-	// public List<InvoiceWater> getInvoicesForPayment(PaymentWater payment);
-
 	public List<InvoiceWater> getInvoicesForCalulation(Invoice invoice);
 
 	List<InvoiceWater> getUnpaidInvoices();

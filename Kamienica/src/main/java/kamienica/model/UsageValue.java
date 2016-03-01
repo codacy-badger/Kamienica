@@ -9,7 +9,7 @@ public class UsageValue {
 	private Apartment apartment;
 
 
-	public Apartment getMieszkanie() {
+	public Apartment getApartment() {
 		return apartment;
 	}
 

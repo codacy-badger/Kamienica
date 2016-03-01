@@ -12,7 +12,6 @@ import kamienica.dao.ReadingGasDAO;
 import kamienica.dao.ReadingWaterDAO;
 import kamienica.model.Apartment;
 import kamienica.model.InvoiceGas;
-import kamienica.model.ReadingAbstract;
 import kamienica.model.ReadingEnergy;
 import kamienica.model.ReadingGas;
 import kamienica.model.ReadingWater;
@@ -123,43 +122,8 @@ public class ReadingServiceImpl implements ReadingService {
 	public List<ReadingWater> getReadingWaterByDate(String date) {
 		return water.getByDate(date);
 	}
-	//
-	// @Override
-	// public List<ReadingEnergy> getLatestEnergyReadingsList() {
-	// return energy.getLatestList();
-	// }
-	//
-	// @Override
-	// public List<ReadingGas> getLatestGasReadingsList() {
-	// return gas.getLatestList();
-	// }
-	//
-	// @Override
-	// public List<ReadingWater> getLatestWaterReadingsList() {
-	// return water.getLatestList();
-	// }
 
-	// @Override
-	// public List<Date> getEnergyReadingDatesForPayment(PaymentAbstract
-	// payment) {
-	// return energy.getReadingDatesForPayment(payment);
-	// }
-	//
-	// @Override
-	// public List<Date> getWaterReadingDatesForPayment(PaymentAbstract payment)
-	// {
-	// return water.getReadingDatesForPayment(payment);
-	// }
-	//
-	// @Override
-	// public List<Date> getGasReadingDatesForPayment(PaymentAbstract payment) {
-	// return gas.getReadingDatesForPayment(payment);
-	// }
 
-	@Override
-	public List<ReadingWater> getWaterReadingsForGasConsumption(ReadingAbstract reading) {
-		return water.getWaterReadingsForGasConsumption(reading);
-	}
 
 	@Override
 	public void saveGasList(List<ReadingGas> reading) {
@@ -232,7 +196,7 @@ public class ReadingServiceImpl implements ReadingService {
 	}
 
 	@Override
-	public HashMap<String, List<ReadingWater>> getWaterReadingsForGasConsumption2(InvoiceGas invoice) {
+	public HashMap<String, List<ReadingWater>> getWaterReadingsForGasConsumption(InvoiceGas invoice) {
 		return water.getWaterReadingForGasConsumption2(invoice);
 	}
 

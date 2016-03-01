@@ -99,8 +99,8 @@ public class ManagerGas {
 			HashMap<Integer, Double> mapaZuzyciaCieplejWody = ManagerGas.stworzMapeUdzialuZuzyciaCieplejWody(waterOld,
 					waterNew);
 			for (int i = 0; i < out.size(); i++) {
-				if (out.get(i).getMieszkanie().getApartmentNumber() != 0) {
-					int nrMieszkania = out.get(i).getMieszkanie().getApartmentNumber();
+				if (out.get(i).getApartment().getApartmentNumber() != 0) {
+					int nrMieszkania = out.get(i).getApartment().getApartmentNumber();
 					double zuzycieGazuCwuDlaDanegoMieszkania = (mapaZuzyciaCieplejWody.get(nrMieszkania)
 							/ sumaZuzyciaCieplejWody) * zuzycieCWU;
 					double tmp = out.get(i).getUsage() + zuzycieGazuCwuDlaDanegoMieszkania;

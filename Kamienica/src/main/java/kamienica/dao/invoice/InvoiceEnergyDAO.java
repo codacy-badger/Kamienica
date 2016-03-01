@@ -19,8 +19,6 @@ public interface InvoiceEnergyDAO {
 
 	public InvoiceEnergy getLatest();
 
-	// public List<InvoiceEnergy> getInvoicesForPayment(PaymentEnergy payment);
-
 	public List<InvoiceEnergy> getInvoicesForCalulation(Invoice invoice);
 
 	public List<InvoiceEnergy> getUnpaidInvoices();

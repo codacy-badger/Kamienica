@@ -19,7 +19,6 @@ public class DivisionDaoImpl extends AbstractDao<Integer, Division> implements D
 
 	@Override
 	public void deleteAll() {
-		System.out.println("----------------------halooo-------------------");
 		Query query = getSession().createSQLQuery("delete from division where id > 0");
 		query.executeUpdate();
 

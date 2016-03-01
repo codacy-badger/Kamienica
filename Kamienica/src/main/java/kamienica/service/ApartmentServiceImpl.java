@@ -49,10 +49,6 @@ public class ApartmentServiceImpl implements ApartmentService {
 
 	}
 
-//	@Override
-//	public Apartment getByApartmentNumber(int number) {
-//		Apartment apartment = apartmentDAO.getByAparmentNumber(number);
-//		return apartment;
-//	}
+
 
 }

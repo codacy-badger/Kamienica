@@ -6,7 +6,6 @@ import kamienica.model.Division;
 
 public interface DivisionService {
 
-//	public void save(Division division);
 
 	public void saveList(List<Division> division);
 	

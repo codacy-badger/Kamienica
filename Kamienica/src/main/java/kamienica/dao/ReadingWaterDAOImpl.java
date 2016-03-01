@@ -16,7 +16,7 @@ import kamienica.model.ReadingWater;
 
 @Repository("readingWaterDao")
 public class ReadingWaterDAOImpl extends AbstractDao<Integer, ReadingWater> implements ReadingWaterDAO {
-
+	@Override
 	public List<ReadingWater> getList() {
 		@SuppressWarnings("unchecked")
 		List<ReadingWater> list = getSession().createCriteria(ReadingWater.class).addOrder(Order.desc("readingDate"))
@@ -24,6 +24,7 @@ public class ReadingWaterDAOImpl extends AbstractDao<Integer, ReadingWater> impl
 		return list;
 	}
 
+	@Override
 	public List<ReadingWater> getListForTenant(Apartment apartment) {
 		Query query = getSession()
 				.createSQLQuery(
@@ -34,12 +35,14 @@ public class ReadingWaterDAOImpl extends AbstractDao<Integer, ReadingWater> impl
 		return result;
 	}
 
+	@Override
 	public void deleteById(int id) {
 		Query query = getSession().createSQLQuery("delete from readingwater where id = :id");
 		query.setInteger("id", id);
 		query.executeUpdate();
 	}
 
+	@Override
 	public HashMap<Integer, ReadingWater> getLatestReadingsMap() {
 
 		Query query = getSession()
@@ -55,6 +58,7 @@ public class ReadingWaterDAOImpl extends AbstractDao<Integer, ReadingWater> impl
 		return mappedResult;
 	}
 
+	@Override
 	public List<ReadingWater> getPrevious(String readingDate) {
 		Query query = getSession().createSQLQuery(
 				"SELECT * FROM readingwater where readingDate =(SELECT max(readingDate) FROM readingwater WHERE readingDate < "
@@ -65,6 +69,7 @@ public class ReadingWaterDAOImpl extends AbstractDao<Integer, ReadingWater> impl
 		return result;
 	}
 
+	@Override
 	public List<ReadingWater> getByDate(String readingDate) {
 		Query query = getSession()
 				.createSQLQuery("SELECT * FROM readingWater where readingDate=\"" + readingDate + "\"")
@@ -74,6 +79,7 @@ public class ReadingWaterDAOImpl extends AbstractDao<Integer, ReadingWater> impl
 		return result;
 	}
 
+	@Override
 	public List<ReadingWater> getLatestList() {
 		Query query = getSession().createSQLQuery(
 				"Select * from (select * from readingWater order by readingDate desc) as c group by meter_id")
@@ -85,27 +91,8 @@ public class ReadingWaterDAOImpl extends AbstractDao<Integer, ReadingWater> impl
 		return result;
 	}
 
-	// @SuppressWarnings("unchecked")
-	// public List<Date> getReadingDatesForPayment(PaymentAbstract payment) {
-	// if (payment.getReadingDate() != null) {
-	// Query query = getSession()
-	// .createSQLQuery(
-	// "SELECT readingdate FROM readingwater where readingdate >= :date GROUP BY
-	// readingdate ORDER BY readingdate asc")
-	// .setParameter("date", payment.getReadingDate());
-	// return query.list();
-	// } else {
-	// Query query = getSession()
-	// .createSQLQuery(
-	// "SELECT readingdate FROM readingwater where readingdate >= :date GROUP BY
-	// readingdate ORDER BY readingdate asc")
-	// .setParameter("date", "19800101");
-	// return query.list();
-	// }
-	// }
-
 	@SuppressWarnings("unchecked")
-
+	@Override
 	public List<ReadingWater> getWaterReadingsForGasConsumption(ReadingAbstract reading) {
 
 		Query query = getSession()
@@ -115,6 +102,7 @@ public class ReadingWaterDAOImpl extends AbstractDao<Integer, ReadingWater> impl
 		return query.list();
 	}
 
+	@Override
 	@SuppressWarnings("unchecked")
 	public List<ReadingWater> getUnresolvedReadings() {
 		Query query = getSession().createSQLQuery("SELECT r.id, r.readingDate, r.value, r.unit, r.meter_id, r.resolved "

@@ -88,11 +88,6 @@
 					aria-expanded="false">Opłaty <span class="caret"></span></a>
 
 					<ul class="dropdown-menu">
-
-						<li><a href="../Admin/Payment/paymentRegister">Wprowadź
-								Nowe</a></li>
-						<li role="separator" class="divider"></li>
-						<li class="dropdown-header">Sprawdź/Edytuj</li>
 						<li><a href="../Admin/Payment/paymentGasList">Gaz</a></li>
 						<li><a href="../Admin/Payment/paymentEnergyList">Energia</a></li>
 						<li><a href="../Admin/Payment/paymentWaterList">Woda</a></li>
@@ -122,14 +117,17 @@
 		<div class='row'>
 			<div class="jumbotron">
 				<h1>Kamienica - Strona Admina</h1>
+				<a href="Payment/paymentList.html" class="btn btn-lg btn-default paymentButton">OPŁATY
+				</a>
 			</div>
 		</div>
+
+
 
 		<div class="row">
 			<div class="col-md-6 col-sm-6 col-xs-12">
 				<div class="list-group">
 					<p class="list-group-item active myListGroup">Wprowadź</p>
-					<a href="Payment/paymentRegister.html" class="list-group-item">OPŁATA</a>
 					<a href="Reading/readingEnergyRegister.html"
 						class="list-group-item">ODCZYT - ENERGIA</a> <a
 						href="Reading/readingWaterRegister.html" class="list-group-item">ODCZYT
@@ -152,7 +150,6 @@
 			<div class="col-md-6 col-sm-6 col-xs-12">
 				<div class="list-group">
 					<p class="list-group-item active myListGroup">Sprawdź/Edytuj</p>
-					<a href="Payment/paymentList.html" class="list-group-item">OPŁATA</a>
 					<a href="Reading/readingEnergyList.html" class="list-group-item">ODCZYT
 						- ENERGIA</a> <a href="Reading/readingWaterList.html"
 						class="list-group-item">ODCZYT - WODA</a> <a

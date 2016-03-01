@@ -13,7 +13,7 @@ import kamienica.model.ReadingEnergy;
 
 @Repository("readingEnergyDao")
 public class ReadingEnergyDAOImpl extends AbstractDao<Integer, ReadingEnergy> implements ReadingEnergyDAO {
-
+	@Override
 	public List<ReadingEnergy> getList() {
 		@SuppressWarnings("unchecked")
 		List<ReadingEnergy> list = getSession().createCriteria(ReadingEnergy.class).addOrder(Order.desc("readingDate"))
@@ -21,6 +21,7 @@ public class ReadingEnergyDAOImpl extends AbstractDao<Integer, ReadingEnergy> im
 		return list;
 	}
 
+	@Override
 	public List<ReadingEnergy> getListForTenant(Apartment apartment) {
 		Query query = getSession()
 				.createSQLQuery(
@@ -31,12 +32,13 @@ public class ReadingEnergyDAOImpl extends AbstractDao<Integer, ReadingEnergy> im
 		return result;
 	}
 
+	@Override
 	public void deleteById(int id) {
 		Query query = getSession().createSQLQuery("delete from readingenergy where id = :id");
 		query.setInteger("id", id);
 		query.executeUpdate();
 	}
-
+	@Override
 	public HashMap<Integer, ReadingEnergy> getLatestReadingsMap() {
 
 		Query query = getSession()
@@ -52,6 +54,7 @@ public class ReadingEnergyDAOImpl extends AbstractDao<Integer, ReadingEnergy> im
 		return mappedResult;
 	}
 
+	@Override
 	public List<ReadingEnergy> getPrevious(String readingDate) {
 		Query query = getSession().createSQLQuery(
 				"SELECT * FROM readingEnergy where readingDate =(SELECT max(readingDate) FROM readingEnergy WHERE readingDate < "
@@ -62,6 +65,7 @@ public class ReadingEnergyDAOImpl extends AbstractDao<Integer, ReadingEnergy> im
 		return result;
 	}
 
+	@Override
 	public List<ReadingEnergy> getByDate(String readingDate) {
 		Query query = getSession()
 				.createSQLQuery("SELECT * FROM readingEnergy where readingDate=\"" + readingDate + "\"")
@@ -80,25 +84,6 @@ public class ReadingEnergyDAOImpl extends AbstractDao<Integer, ReadingEnergy> im
 		return query.list();
 
 	}
-	//
-	// @SuppressWarnings("unchecked")
-	// public List<Date> getReadingDatesForPayment(PaymentAbstract payment) {
-	// if (payment.getReadingDate() != null) {
-	// Query query = getSession()
-	// .createSQLQuery(
-	// "SELECT readingdate FROM readingenergy where readingdate >= :date GROUP
-	// BY readingdate ORDER BY readingdate asc")
-	// .setParameter("date", payment.getReadingDate());
-	// return query.list();
-	// } else {
-	// Query query = getSession()
-	// .createSQLQuery(
-	// "SELECT readingdate FROM readingenergy where readingdate >= :date GROUP
-	// BY readingdate ORDER BY readingdate asc")
-	// .setParameter("date", "19800101");
-	// return query.list();
-	// }
-	// }
 
 	@Override
 	public void saveList(List<ReadingEnergy> reading) {
