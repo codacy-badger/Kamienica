@@ -52,6 +52,9 @@ public class HibernateConfiguration {
 		properties.put("hibernate.hbm2ddl.auto", environment.getRequiredProperty("hibernate.hbm2ddl.auto"));
 		properties.put("hibernate.connection.characterEncoding", environment.getRequiredProperty("hibernate.connection.characterEncoding"));
 		properties.put("hibernate.connection.charSet", environment.getRequiredProperty("hibernate.connection.charSet"));
+//		properties.put("hibernate.connectio.setNames", environment.getRequiredProperty("hibernate.connectio.setNames"));
+		
+		
 		return properties;
 	}
 
