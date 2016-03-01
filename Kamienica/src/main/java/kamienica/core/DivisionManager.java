@@ -1,7 +1,7 @@
 package kamienica.core;
 
 import java.text.DecimalFormat;
-import java.text.DecimalFormatSymbols;
+import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
@@ -15,19 +15,14 @@ public class DivisionManager {
 	public static ArrayList<Division> prepareDivisionListForRegistration(List<Tenant> tenantList,
 			List<Apartment> apartmentList) {
 		ArrayList<Division> divisionList = new ArrayList<>();
-		double rr = tenantList.size();
-		double contribution = (double) (1 / rr);
-		DecimalFormat df = new DecimalFormat("####0.00");
-		df.setDecimalFormatSymbols(new DecimalFormatSymbols(Locale.ENGLISH));
-
-		for (Tenant i : tenantList) {
-			for (Apartment y : apartmentList) {
+		for (Tenant ten : tenantList) {
+			for (Apartment ap : apartmentList) {
 				Division tmp = new Division();
-				tmp.setApartment(y);
-				tmp.setTenant(i);
-				if (y.getApartmentNumber() == 0) {
-					tmp.setDivisionValue(Double.valueOf(df.format(contribution)));
-				} else if (y.getApartmentNumber() == i.getApartment().getApartmentNumber()) {
+				tmp.setApartment(ap);
+				tmp.setTenant(ten);
+				if (ap.getApartmentNumber() == 0) {
+					tmp.setDivisionValue(Double.valueOf(decimalFormat((double) (1 / (double) tenantList.size()))));
+				} else if (ap.getApartmentNumber() == ten.getApartment().getApartmentNumber()) {
 					tmp.setDivisionValue(1);
 				} else {
 					tmp.setDivisionValue(0);
@@ -36,8 +31,15 @@ public class DivisionManager {
 				divisionList.add(tmp);
 			}
 		}
-
 		return divisionList;
 	}
+
+	private static double decimalFormat(double input) {
+		NumberFormat nf = NumberFormat.getNumberInstance(Locale.ENGLISH);
+		DecimalFormat df = (DecimalFormat) nf;
+		df.applyPattern("#.00");
+		return Double.parseDouble(df.format(input));
+	}
+		
 
 }
