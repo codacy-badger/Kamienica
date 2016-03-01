@@ -33,7 +33,6 @@ import kamienica.model.InvoiceGas;
 import kamienica.model.InvoiceWater;
 import kamienica.model.PaymentEnergy;
 import kamienica.model.PaymentGas;
-import kamienica.model.PaymentStatus;
 import kamienica.model.PaymentWater;
 import kamienica.model.ReadingEnergy;
 import kamienica.model.ReadingGas;
