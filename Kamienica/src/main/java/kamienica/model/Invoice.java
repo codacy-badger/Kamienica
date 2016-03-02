@@ -39,6 +39,7 @@ public abstract class Invoice {
 	@NotNull(message = "Podaj wartość")
 	private double totalAmount;
 
+
 	@Autowired
 	public Invoice(String serialNumber, String description, Date date, double totalAmount) {
 		this.serialNumber = serialNumber;

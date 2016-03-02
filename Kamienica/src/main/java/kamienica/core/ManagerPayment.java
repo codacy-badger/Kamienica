@@ -105,7 +105,7 @@ public class ManagerPayment {
 		return listToReturn;
 	}
 
-	static double sumUsage(ArrayList<UsageValue> listaZuzycia) {
+	private static double sumUsage(ArrayList<UsageValue> listaZuzycia) {
 		double suma = 0;
 		for (UsageValue i : listaZuzycia) {
 			suma += i.getUsage();

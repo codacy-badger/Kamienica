@@ -229,29 +229,29 @@ public class SetupMethods {
 		return list;
 	}
 
-	public static List<InvoiceGas> getInvoicesGas() {
-		List<InvoiceGas> list = new ArrayList<>();
-		DateFormat format = new SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH);
-		try {
-			list.add(new InvoiceGas("12", "1", format.parse("2015-01-01"), 200));
-			list.add(new InvoiceGas("12", "2", format.parse("2015-02-01"), 200));
-		} catch (ParseException e) {
-			e.printStackTrace();
-		}
-		return list;
-	}
-
-	public static List<InvoiceWater> getInvoicesWater() {
-		List<InvoiceWater> list = new ArrayList<>();
-		DateFormat format = new SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH);
-		try {
-			list.add(new InvoiceWater("12", "1", format.parse("2015-01-01"), 200));
-			list.add(new InvoiceWater("12", "2", format.parse("2015-02-01"), 200));
-		} catch (ParseException e) {
-			e.printStackTrace();
-		}
-		return list;
-	}
+//	public static List<InvoiceGas> getInvoicesGas() {
+//		List<InvoiceGas> list = new ArrayList<>();
+//		DateFormat format = new SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH);
+//		try {
+//			list.add(new InvoiceGas("12", "1", format.parse("2015-01-01"), 200));
+//			list.add(new InvoiceGas("12", "2", format.parse("2015-02-01"), 200));
+//		} catch (ParseException e) {
+//			e.printStackTrace();
+//		}
+//		return list;
+//	}
+//
+//	public static List<InvoiceWater> getInvoicesWater() {
+//		List<InvoiceWater> list = new ArrayList<>();
+//		DateFormat format = new SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH);
+//		try {
+//			list.add(new InvoiceWater("12", "1", format.parse("2015-01-01"), 200));
+//			list.add(new InvoiceWater("12", "2", format.parse("2015-02-01"), 200));
+//		} catch (ParseException e) {
+//			e.printStackTrace();
+//		}
+//		return list;
+//	}
 
 //	public static List<PaymentWater> getPaymentsWater(List<InvoiceWater> invoices, List<Tenant> tenants)
 //			throws ParseException {

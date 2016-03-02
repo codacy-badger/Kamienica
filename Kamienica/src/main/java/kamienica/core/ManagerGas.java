@@ -1,8 +1,11 @@
 package kamienica.core;
 
+import java.text.DecimalFormat;
+import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 
 import org.joda.time.DateTime;
 import org.joda.time.Days;
@@ -13,42 +16,6 @@ import kamienica.model.ReadingWater;
 import kamienica.model.UsageValue;
 
 public class ManagerGas {
-
-	public static HashMap<Integer, Double> stworzMapeUdzialuZuzyciaCieplejWody(List<ReadingWater> oldReading,
-			List<ReadingWater> newReading) {
-		HashMap<Integer, Double> output = new HashMap<>();
-		for (ReadingWater o : newReading) {
-			if (o.getMeter().getApartment() != null && o.getMeter().getApartment().getApartmentNumber() != 0) {
-				if (o.getMeter().getIsWarmWater() == true) {
-					output.put(o.getMeter().getApartment().getApartmentNumber(), o.getValue());
-				}
-			}
-		}
-		for (ReadingWater o : oldReading) {
-			if (o.getMeter().getApartment() != null && o.getMeter().getApartment().getApartmentNumber() != 0) {
-				if (o.getMeter().getIsWarmWater() == true) {
-					double consumption = output.get(o.getMeter().getApartment().getApartmentNumber());
-					consumption = consumption - o.getValue();
-					output.put(o.getMeter().getApartment().getApartmentNumber(), consumption);
-				}
-			}
-		}
-		return output;
-	}
-
-	public static double sumCWU(List<ReadingGas> gazStare, List<ReadingGas> gazNowe) {
-		double out = 0;
-		for (ReadingGas w : gazNowe) {
-			if (w.getIsCWU() == true)
-				out += w.getValue();
-		}
-
-		for (ReadingGas w : gazStare) {
-			if (w.getIsCWU() == true)
-				out -= w.getValue();
-		}
-		return out;
-	}
 
 	public static ArrayList<UsageValue> countConsumption(List<Apartment> aparment, List<ReadingGas> gasOld,
 			List<ReadingGas> gasNew, List<ReadingWater> waterOld, List<ReadingWater> waterNew) {
@@ -96,7 +63,7 @@ public class ManagerGas {
 		double zuzycieCWU = ManagerGas.sumCWU(gasOld, gasNew);
 		if (zuzycieCWU != 0) {
 			double sumaZuzyciaCieplejWody = ManagerWater.countWarmWaterUsage(waterOld, waterNew);
-			HashMap<Integer, Double> mapaZuzyciaCieplejWody = ManagerGas.stworzMapeUdzialuZuzyciaCieplejWody(waterOld,
+			HashMap<Integer, Double> mapaZuzyciaCieplejWody = ManagerGas.hotWaterUsageMap(waterOld,
 					waterNew);
 			for (int i = 0; i < out.size(); i++) {
 				if (out.get(i).getApartment().getApartmentNumber() != 0) {
@@ -104,7 +71,7 @@ public class ManagerGas {
 					double zuzycieGazuCwuDlaDanegoMieszkania = (mapaZuzyciaCieplejWody.get(nrMieszkania)
 							/ sumaZuzyciaCieplejWody) * zuzycieCWU;
 					double tmp = out.get(i).getUsage() + zuzycieGazuCwuDlaDanegoMieszkania;
-					out.get(i).setUsage(tmp);
+					out.get(i).setUsage(decimalFormat(tmp));
 				}
 			}
 		}
@@ -112,4 +79,48 @@ public class ManagerGas {
 
 	}
 
+
+	private static HashMap<Integer, Double> hotWaterUsageMap(List<ReadingWater> oldReading,
+			List<ReadingWater> newReading) {
+		HashMap<Integer, Double> output = new HashMap<>();
+		for (ReadingWater o : newReading) {
+			if (o.getMeter().getApartment() != null && o.getMeter().getApartment().getApartmentNumber() != 0) {
+				if (o.getMeter().getIsWarmWater() == true) {
+					output.put(o.getMeter().getApartment().getApartmentNumber(), o.getValue());
+				}
+			}
+		}
+		for (ReadingWater o : oldReading) {
+			if (o.getMeter().getApartment() != null && o.getMeter().getApartment().getApartmentNumber() != 0) {
+				if (o.getMeter().getIsWarmWater() == true) {
+					double consumption = output.get(o.getMeter().getApartment().getApartmentNumber());
+					consumption = consumption - o.getValue();
+					output.put(o.getMeter().getApartment().getApartmentNumber(), consumption);
+				}
+			}
+		}
+		return output;
+	}
+
+	private static double sumCWU(List<ReadingGas> gasOld, List<ReadingGas> gasNew) {
+		double out = 0;
+		for (ReadingGas w : gasNew) {
+			if (w.getIsCWU() == true)
+				out += w.getValue();
+		}
+
+		for (ReadingGas w : gasOld) {
+			if (w.getIsCWU() == true)
+				out -= w.getValue();
+		}
+		return out;
+	}
+
+	
+	private static double decimalFormat(double input) {
+		NumberFormat nf = NumberFormat.getNumberInstance(Locale.ENGLISH);
+		DecimalFormat df = (DecimalFormat) nf;
+		df.applyPattern("#.00");
+		return Double.parseDouble(df.format(input));
+	}
 }
