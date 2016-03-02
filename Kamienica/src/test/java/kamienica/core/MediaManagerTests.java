@@ -23,6 +23,8 @@ import kamienica.model.MeterEnergy;
 import kamienica.model.MeterGas;
 import kamienica.model.MeterWater;
 import kamienica.model.PaymentEnergy;
+import kamienica.model.PaymentGas;
+import kamienica.model.PaymentWater;
 import kamienica.model.ReadingEnergy;
 import kamienica.model.ReadingGas;
 import kamienica.model.ReadingWater;
@@ -92,29 +94,23 @@ public class MediaManagerTests {
 	}
 
 	@Test
-	public void consuptionAndPaymentEnergy() {
+	public void consuptionEnergy() {
 		ArrayList<Integer> expectedUsageUsage = new ArrayList<>();
 		ArrayList<UsageValue> usage = ManagerEnergy.countConsupmtion(apartments, readingsEnergyOld, readingsEnergyNew);
 
 		ArrayList<Double> expectedPayment = new ArrayList<>();
 		ArrayList<Double> realPayment = new ArrayList<>();
-		System.out.println(usage.toString());
-		System.out.println(tenants.toString());
-		System.out.println(invoiceEnergy.toString());
-		System.out.println(division.toString());
 		ArrayList<PaymentEnergy> payment = ManagerPayment.createPaymentEnergyList(tenants, invoiceEnergy, division,
 				usage);
-		System.out.println(payment.toString());
 
 		expectedUsageUsage.add(10);
 		expectedUsageUsage.add(5);
 		expectedUsageUsage.add(15);
 		expectedUsageUsage.add(5);
 
-		
-		expectedPayment.add(64.28);
+		expectedPayment.add(64.29);
 		expectedPayment.add(85.71);
-	
+
 		ArrayList<Integer> realUsage = new ArrayList<>();
 		for (UsageValue u : usage) {
 			realUsage.add((int) u.getUsage());
@@ -126,41 +122,92 @@ public class MediaManagerTests {
 		Assert.assertEquals(realUsage, expectedUsageUsage);
 		Assert.assertEquals(realPayment, expectedPayment);
 	}
+	@Test(dependsOnMethods = { "consuptionEnergy" })
+	public void consuptionPayment() {
+		ArrayList<Integer> expectedUsageUsage = new ArrayList<>();
+		ArrayList<UsageValue> usage = ManagerEnergy.countConsupmtion(apartments, readingsEnergyOld, readingsEnergyNew);
+
+		ArrayList<Double> expectedPayment = new ArrayList<>();
+		ArrayList<Double> realPayment = new ArrayList<>();
+		ArrayList<PaymentEnergy> payment = ManagerPayment.createPaymentEnergyList(tenants, invoiceEnergy, division,
+				usage);
+
+		expectedUsageUsage.add(10);
+		expectedUsageUsage.add(5);
+		expectedUsageUsage.add(15);
+		expectedUsageUsage.add(5);
+
+		expectedPayment.add(64.29);
+		expectedPayment.add(85.71);
+
+		ArrayList<Integer> realUsage = new ArrayList<>();
+		for (UsageValue u : usage) {
+			realUsage.add((int) u.getUsage());
+		}
+		for (PaymentEnergy pay : payment) {
+			realPayment.add(pay.getPaymentAmount());
+		}
+		
+		Assert.assertEquals(realPayment, expectedPayment);
+	}
+
+
 
 	@Test
 	public void consuptionAndPaymentWater() {
 		ArrayList<Integer> expectedUsage = new ArrayList<>();
-
+		ArrayList<UsageValue> usage = ManagerWater.countConsumption(apartments, readingsWaterOld, readingsWaterNew);
 		expectedUsage.add(2);
 		expectedUsage.add(2);
 		expectedUsage.add(10);
 		expectedUsage.add(6);
 
-		ArrayList<UsageValue> usage = ManagerWater.countConsumption(apartments, readingsWaterOld, readingsWaterNew);
+		ArrayList<Double> expectedPayment = new ArrayList<>();
+		expectedPayment.add(90.0);
+		expectedPayment.add(110.0);
+
+		ArrayList<Double> realPayment = new ArrayList<>();
+		ArrayList<PaymentWater> payment = ManagerPayment.createPaymentWaterList(tenants, invoiceWater, division, usage);
+		// payment.forEach(e -> realPayment.add(e.getPaymentAmount()));
+		for (PaymentWater d : payment) {
+			realPayment.add(d.getPaymentAmount());
+		}
 		ArrayList<Integer> realUsage = new ArrayList<>();
 		for (UsageValue u : usage) {
 			realUsage.add((int) u.getUsage());
 		}
 		Assert.assertEquals(realUsage, expectedUsage);
+		Assert.assertEquals(realPayment, expectedPayment);
 	}
 
 	@Test
 	public void consuptionAndPaymentGas() {
 		ArrayList<Double> expectedUsage = new ArrayList<>();
+		ArrayList<UsageValue> usage = ManagerGas.countConsumption(apartments, readingsGasOld, readingsGasNew,
+				readingsWaterOld, readingsWaterNew);
+		ArrayList<Double> realUsage = new ArrayList<>();
 		expectedUsage.add(8.0);
 		expectedUsage.add(10.33);
 		expectedUsage.add(3.67);
 		expectedUsage.add(5.0);
 
-		ArrayList<UsageValue> usage = ManagerGas.countConsumption(apartments, readingsGasOld, readingsGasNew,
-				readingsWaterOld, readingsWaterNew);
-		
-		ArrayList<Double> realUsage = new ArrayList<>();
+		ArrayList<Double> expectedPayment = new ArrayList<>();
+		expectedPayment.add(214.78);
+		expectedPayment.add(85.22);
+
+		ArrayList<Double> realPayment = new ArrayList<>();
+		ArrayList<PaymentGas> payment = ManagerPayment.createPaymentGasList(tenants, invoiceGas, division, usage);
+
+		for (PaymentGas d : payment) {
+			realPayment.add(d.getPaymentAmount());
+		}
+
 		for (UsageValue u : usage) {
 			realUsage.add(u.getUsage());
 		}
 
 		Assert.assertEquals(realUsage, expectedUsage);
+		Assert.assertEquals(realPayment, expectedPayment);
 	}
 
 	// --------------------------------------SETUP--------------------------------------------------------------
@@ -182,9 +229,11 @@ public class MediaManagerTests {
 
 		Tenant tenant2 = new Tenant("Maciej (Admin)", "Fol", "kowalski@wp.pl", "222222", apartments.get(1));
 		tenant2.setStatus(UserStatus.ACTIVE.getUserStatus());
+		tenant2.setId(1);
 		tenant2.setRole(UserRole.ADMIN.getUserRole());
 		Tenant tenant3 = new Tenant("Adam", "Nowak", "nowak@wp.pl", "111111", apartments.get(2));
 		tenant3.setStatus(UserStatus.ACTIVE.getUserStatus());
+		tenant3.setId(2);
 
 		ArrayList<Tenant> tenants = new ArrayList<Tenant>();
 		tenants.add(tenant2);
@@ -371,7 +420,5 @@ public class MediaManagerTests {
 	public static InvoiceGas getInvoiceGas(List<ReadingGas> newReadings) {
 		return new InvoiceGas("23424", "energia", new Date(), 300, newReadings.get(0));
 	}
-
-	
 
 }

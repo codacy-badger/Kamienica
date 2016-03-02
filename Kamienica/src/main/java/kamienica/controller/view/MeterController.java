@@ -121,7 +121,7 @@ public class MeterController {
 	public ModelAndView meterGasSave(@Valid @ModelAttribute("meter") MeterGas meter, BindingResult result) {
 	 
 		if (meter.getApartment() == null && meter.isCwu() == true) {
-			result.rejectValue("cwu", "error.meter", "Licznik cz�ci wsp�lnej nie może być licznikiem CWU");
+			result.rejectValue("cwu", "error.meter", "Licznik częsci wspólnej nie może być licznikiem CWU");
 		}
 		if (result.hasErrors()) {
 			Map<String, Object> model = prepareModel();
