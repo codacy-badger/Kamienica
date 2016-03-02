@@ -4,6 +4,7 @@ import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
@@ -11,14 +12,9 @@ import java.util.Locale;
 import kamienica.model.Apartment;
 import kamienica.model.Division;
 import kamienica.model.InvoiceEnergy;
-import kamienica.model.InvoiceGas;
-import kamienica.model.InvoiceWater;
 import kamienica.model.MeterEnergy;
 import kamienica.model.MeterGas;
 import kamienica.model.MeterWater;
-import kamienica.model.PaymentEnergy;
-import kamienica.model.PaymentGas;
-import kamienica.model.PaymentWater;
 import kamienica.model.ReadingEnergy;
 import kamienica.model.ReadingGas;
 import kamienica.model.ReadingWater;
@@ -35,10 +31,7 @@ public class SetupMethods {
 		Apartment apartment3 = new Apartment(4, 3, "3333", "1 pietro");
 
 		ArrayList<Apartment> apartments = new ArrayList<Apartment>();
-		apartments.add(apartment0);
-		apartments.add(apartment1);
-		apartments.add(apartment2);
-		apartments.add(apartment3);
+		apartments.addAll(Arrays.asList(apartment0, apartment1, apartment2, apartment3));
 		return apartments;
 	}
 

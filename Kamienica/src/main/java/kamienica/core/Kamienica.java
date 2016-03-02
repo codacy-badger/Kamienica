@@ -2,11 +2,32 @@ package kamienica.core;
 
 import java.io.IOException;
 import java.text.ParseException;
+import java.util.Arrays;
+import java.util.LinkedList;
+
+import kamienica.model.Invoice;
+import kamienica.model.InvoiceEnergy;
 
 public class Kamienica {
 
 	public static void main(String[] args) throws IOException, ParseException {
 
+		LinkedList<Integer> test = new LinkedList<>();
+		test.addAll(Arrays.asList(1,1,1,1,1,1));
+		System.out.println(test.toString());
+		for (Integer i :test) {
+			i += 5;
+			System.out.println("i po zmianach " + i);
+		}
+		System.out.println(test.toString());
+		
+//		Invoice testr = new InvoiceEnergy();
+//		testr.setBaseReading();
+		
+//		List<Test> testList = new ArrayList<>();
+//		testList = testList.stream().filter(t -> t=1).collect(Collectors.toList());
+//		
+//		test = test.strea
 		// -------------------mieszkania_najemcy_algorytm_podzialu--------------------------------------------------------
 		
 		
