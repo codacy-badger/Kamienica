@@ -1,5 +1,6 @@
 package kamienica.dao;
 
+import org.dbunit.dataset.CompositeDataSet;
 import org.dbunit.dataset.IDataSet;
 import org.dbunit.dataset.xml.FlatXmlDataSet;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,11 +15,13 @@ public class MeterGasDaoImplTest extends EntityDaoImplTest{
 	@Autowired
 	MeterGasDAO meterDao;
 
+
 	@Override
 	protected IDataSet getDataSet() throws Exception {
-		IDataSet dataSet = new FlatXmlDataSet(this.getClass().getClassLoader().
-				getResourceAsStream("MeterGas.xml"));
-		return dataSet;
+		IDataSet[] datasets = new IDataSet[] {
+				new FlatXmlDataSet(this.getClass().getClassLoader().getResourceAsStream("Apartment.xml")),
+				new FlatXmlDataSet(this.getClass().getClassLoader().getResourceAsStream("MeterGas.xml")) };
+		return new CompositeDataSet(datasets);
 	}
 
 	@Test

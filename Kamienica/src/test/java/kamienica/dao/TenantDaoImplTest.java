@@ -2,6 +2,7 @@ package kamienica.dao;
 
 import java.util.Date;
 
+import org.dbunit.dataset.CompositeDataSet;
 import org.dbunit.dataset.IDataSet;
 import org.dbunit.dataset.xml.FlatXmlDataSet;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,13 +16,17 @@ public class TenantDaoImplTest extends EntityDaoImplTest {
 	@Autowired
 	TenantDao dao;
 
-	@Override
-	protected IDataSet getDataSet() throws Exception {
-		IDataSet dataSet = new FlatXmlDataSet(this.getClass().getClassLoader().
-				getResourceAsStream("Tenant.xml"));
-		return dataSet;
-	}
-
+ 
+    @Override
+    protected IDataSet getDataSet() throws Exception {
+      IDataSet[] datasets = new IDataSet[] {
+              new FlatXmlDataSet(this.getClass().getClassLoader().getResourceAsStream("Apartment.xml")),
+              new FlatXmlDataSet(this.getClass().getClassLoader().getResourceAsStream("Tenant.xml"))
+      };
+      return new CompositeDataSet(datasets);
+    }
+   
+	
 	@Test
 	public void findById() {
 		Assert.assertNotNull(dao.getById(1));

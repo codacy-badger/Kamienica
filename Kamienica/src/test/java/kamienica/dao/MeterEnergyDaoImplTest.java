@@ -1,5 +1,6 @@
 package kamienica.dao;
 
+import org.dbunit.dataset.CompositeDataSet;
 import org.dbunit.dataset.IDataSet;
 import org.dbunit.dataset.xml.FlatXmlDataSet;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,46 +9,54 @@ import org.testng.annotations.Test;
 
 import kamienica.model.MeterEnergy;
 
-public class MeterEnergyDaoImplTest extends EntityDaoImplTest{
+public class MeterEnergyDaoImplTest extends EntityDaoImplTest  {
 
-	
 	@Autowired
 	MeterEnergyDAO meterDao;
 
+	// @Override
+	// protected IDataSet getDataSet() throws Exception {
+	// IDataSet dataSet = new FlatXmlDataSet(this.getClass().getClassLoader().
+	// getResourceAsStream("MeterEnergy.xml"));
+	// return dataSet;
+	// }
+
 	@Override
 	protected IDataSet getDataSet() throws Exception {
-		IDataSet dataSet = new FlatXmlDataSet(this.getClass().getClassLoader().
-				getResourceAsStream("MeterEnergy.xml"));
-		return dataSet;
+		IDataSet[] datasets = new IDataSet[] {
+				new FlatXmlDataSet(this.getClass().getClassLoader().getResourceAsStream("Apartment.xml")),
+				new FlatXmlDataSet(this.getClass().getClassLoader().getResourceAsStream("MeterEnergy.xml")) };
+		return new CompositeDataSet(datasets);
 	}
 
 	@Test
 	public void findById() {
+	
 		Assert.assertNotNull(meterDao.getById(1));
-		Assert.assertNull(meterDao.getById(4));
+		Assert.assertNull(meterDao.getById(5));
 	}
 
 	@Test
 	public void save() {
 		meterDao.save(getSampleMeter());
-		Assert.assertEquals(meterDao.getList().size(), 4);
+		Assert.assertEquals(meterDao.getList().size(), 5);
 	}
 
 	@Test
 	public void deleteById() {
 		meterDao.deleteEnergyByID(1);
-		Assert.assertEquals(meterDao.getList().size(), 2);
+		Assert.assertEquals(meterDao.getList().size(), 3);
 	}
 
 	@Test
 	public void deletetByInvalidId() {
 		meterDao.deleteEnergyByID(9);
-		Assert.assertEquals(meterDao.getList().size(), 3);
+		Assert.assertEquals(meterDao.getList().size(), 4);
 	}
 
 	@Test
 	public void findAll() {
-		Assert.assertEquals(meterDao.getList().size(), 3);
+		Assert.assertEquals(meterDao.getList().size(), 4);
 	}
 
 	@Test(expectedExceptions = org.hibernate.exception.ConstraintViolationException.class)
