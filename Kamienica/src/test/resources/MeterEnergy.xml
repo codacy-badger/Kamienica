@@ -8,5 +8,5 @@
 		unit="test" apartment_id="3" />
 	<meterEnergy id="4" description="glowny" serialNumber="4"
 		unit="test" />
-
+	
 </dataset>

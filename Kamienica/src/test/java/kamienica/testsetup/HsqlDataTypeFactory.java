@@ -2,8 +2,6 @@ package kamienica.testsetup;
 
 import java.sql.Types;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
 import org.dbunit.dataset.datatype.DataType;
 import org.dbunit.dataset.datatype.DataTypeException;
 import org.dbunit.dataset.datatype.DefaultDataTypeFactory;
@@ -11,7 +9,7 @@ import org.dbunit.dataset.datatype.DefaultDataTypeFactory;
 public class HsqlDataTypeFactory
   extends DefaultDataTypeFactory
 {
-  private static final Log log = LogFactory.getLog(HsqlDataTypeFactory.class);
+//  private static final Log log = LogFactory.getLog(HsqlDataTypeFactory.class);
  
   public DataType createDataType(int sqlType, String sqlTypeName)
     throws DataTypeException

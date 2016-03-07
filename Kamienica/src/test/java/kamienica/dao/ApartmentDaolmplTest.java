@@ -33,8 +33,8 @@ public class ApartmentDaolmplTest extends EntityDaoImplTest {
 
 	@Test
 	public void deleteApartmentById() {
-		apartemtnDao.deleteByID(1);
-		Assert.assertEquals(apartemtnDao.getList().size(), 2);
+		apartemtnDao.deleteByID(5);
+		Assert.assertEquals(apartemtnDao.getList().size(), 3);
 	}
 
 	@Test
@@ -51,7 +51,7 @@ public class ApartmentDaolmplTest extends EntityDaoImplTest {
 	@Test(expectedExceptions = org.hibernate.exception.ConstraintViolationException.class)
 	public void saveDuplicateAppNuber() {
 		apartemtnDao.save(getDuplcateNubmerApartment());
-		Assert.assertEquals(apartemtnDao.getList().size(), 4);
+		Assert.assertEquals(apartemtnDao.getList().size(), 3);
 	}
 
 	public Apartment getSampleApartment() {

@@ -6,7 +6,7 @@ import org.testng.annotations.Test;
 
 import kamienica.model.MeterEnergy;
 
-public class MeterEnergyDaoImplTest extends EntityDaoImplTest  {
+public class MeterEnergyDaoImplTest extends EntityDaoImplTest {
 
 	@Autowired
 	MeterEnergyDAO meterDao;
@@ -18,19 +18,22 @@ public class MeterEnergyDaoImplTest extends EntityDaoImplTest  {
 	// return dataSet;
 	// }
 
-//	@Override
-//	protected IDataSet getDataSet() throws Exception {
-//		IDataSet[] datasets = new IDataSet[] {
-//				new FlatXmlDataSet(this.getClass().getClassLoader().getResourceAsStream("Apartment.xml")),
-//				new FlatXmlDataSet(this.getClass().getClassLoader().getResourceAsStream("MeterEnergy.xml")) };
-//		return new CompositeDataSet(datasets);
-//	}
+	// @Override
+	// protected IDataSet getDataSet() throws Exception {
+	// IDataSet[] datasets = new IDataSet[] {
+	// new
+	// FlatXmlDataSet(this.getClass().getClassLoader().getResourceAsStream("Apartment.xml")),
+	// new
+	// FlatXmlDataSet(this.getClass().getClassLoader().getResourceAsStream("MeterEnergy.xml"))
+	// };
+	// return new CompositeDataSet(datasets);
+	// }
 
 	@Test
 	public void findById() {
-	
+
 		Assert.assertNotNull(meterDao.getById(1));
-		Assert.assertNull(meterDao.getById(5));
+		Assert.assertNull(meterDao.getById(7));
 	}
 
 	@Test
@@ -41,8 +44,8 @@ public class MeterEnergyDaoImplTest extends EntityDaoImplTest  {
 
 	@Test
 	public void deleteById() {
-		meterDao.deleteEnergyByID(1);
-		Assert.assertEquals(meterDao.getList().size(), 3);
+		meterDao.deleteEnergyByID(5);
+		Assert.assertEquals(meterDao.getList().size(), 4);
 	}
 
 	@Test
