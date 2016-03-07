@@ -1,8 +1,5 @@
 package kamienica.dao;
 
-import org.dbunit.dataset.CompositeDataSet;
-import org.dbunit.dataset.IDataSet;
-import org.dbunit.dataset.xml.FlatXmlDataSet;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.testng.Assert;
 import org.testng.annotations.Test;
@@ -21,13 +18,13 @@ public class MeterEnergyDaoImplTest extends EntityDaoImplTest  {
 	// return dataSet;
 	// }
 
-	@Override
-	protected IDataSet getDataSet() throws Exception {
-		IDataSet[] datasets = new IDataSet[] {
-				new FlatXmlDataSet(this.getClass().getClassLoader().getResourceAsStream("Apartment.xml")),
-				new FlatXmlDataSet(this.getClass().getClassLoader().getResourceAsStream("MeterEnergy.xml")) };
-		return new CompositeDataSet(datasets);
-	}
+//	@Override
+//	protected IDataSet getDataSet() throws Exception {
+//		IDataSet[] datasets = new IDataSet[] {
+//				new FlatXmlDataSet(this.getClass().getClassLoader().getResourceAsStream("Apartment.xml")),
+//				new FlatXmlDataSet(this.getClass().getClassLoader().getResourceAsStream("MeterEnergy.xml")) };
+//		return new CompositeDataSet(datasets);
+//	}
 
 	@Test
 	public void findById() {

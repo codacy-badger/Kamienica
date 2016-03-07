@@ -32,7 +32,6 @@ public class ApartmentServiceImpl implements ApartmentService {
 
 	@Override
 	public void deleteByID(int id) {
-		tenantDAO.deactivateByApparmentId(id);
 		apartmentDAO.deleteByID(id);
 
 	}
@@ -48,7 +47,5 @@ public class ApartmentServiceImpl implements ApartmentService {
 		return apartment;
 
 	}
-
-
 
 }

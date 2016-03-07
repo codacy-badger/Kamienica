@@ -16,15 +16,15 @@ public class TenantDaoImplTest extends EntityDaoImplTest {
 	@Autowired
 	TenantDao dao;
 
- 
-    @Override
-    protected IDataSet getDataSet() throws Exception {
-      IDataSet[] datasets = new IDataSet[] {
-              new FlatXmlDataSet(this.getClass().getClassLoader().getResourceAsStream("Apartment.xml")),
-              new FlatXmlDataSet(this.getClass().getClassLoader().getResourceAsStream("Tenant.xml"))
-      };
-      return new CompositeDataSet(datasets);
-    }
+// 
+//    @Override
+//    protected IDataSet getDataSet() throws Exception {
+//      IDataSet[] datasets = new IDataSet[] {
+//              new FlatXmlDataSet(this.getClass().getClassLoader().getResourceAsStream("Apartment.xml")),
+//              new FlatXmlDataSet(this.getClass().getClassLoader().getResourceAsStream("Tenant.xml"))
+//      };
+//      return new CompositeDataSet(datasets);
+//    }
    
 	
 	@Test
