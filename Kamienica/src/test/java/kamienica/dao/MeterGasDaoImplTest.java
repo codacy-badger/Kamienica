@@ -28,6 +28,7 @@ public class MeterGasDaoImplTest extends EntityDaoImplTest{
 	public void findById() {
 		Assert.assertNotNull(meterDao.getById(1));
 		Assert.assertNull(meterDao.getById(4));
+
 	}
 
 	@Test

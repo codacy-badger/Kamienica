@@ -79,7 +79,7 @@
 					data-toggle="dropdown" role="button" aria-haspopup="true"
 					aria-expanded="false">Opłaty <span class="caret"></span></a>
 
-				<ul class="dropdown-menu">
+					<ul class="dropdown-menu">
 						<li><a href="../../Admin/Payment/paymentGasList">Gaz</a></li>
 						<li><a href="../../Admin/Payment/paymentEnergyList">Energia</a></li>
 						<li><a href="../../Admin/Payment/paymentWaterList">Woda</a></li>
@@ -238,6 +238,7 @@
 
 		</form:form>
 		<br> <br> <a href="../home.html">Strona Główna</a>
-		</center>
+	</div>
+
 </body>
 </html>

@@ -145,7 +145,7 @@
 					<tr>
 						<c:forEach items="${model.tenantList}" var="tenantList">
 							<tr>
-								<th style="height: 12px"><b><c:out
+								<th style="height: 12px"><c:out
 											value="${tenantList.firstName} ${tenantList.lastName}" /></th>
 								<c:forEach items="${divisionForm.divisionList}" varStatus="i"
 									var="l">

@@ -2,6 +2,7 @@ package kamienica.dao;
 
 import javax.sql.DataSource;
 
+import org.dbunit.database.DatabaseConfig;
 import org.dbunit.database.DatabaseDataSourceConnection;
 import org.dbunit.database.IDatabaseConnection;
 import org.dbunit.dataset.IDataSet;
@@ -12,7 +13,7 @@ import org.springframework.test.context.testng.AbstractTransactionalTestNGSpring
 import org.testng.annotations.BeforeMethod;
 
 import kamienica.configuration.HibernateTestConfiguration;
-
+import kamienica.testsetup.HsqlDataTypeFactory;
 
 @ContextConfiguration(classes = { HibernateTestConfiguration.class })
 public abstract class EntityDaoImplTest extends AbstractTransactionalTestNGSpringContextTests {
@@ -22,11 +23,12 @@ public abstract class EntityDaoImplTest extends AbstractTransactionalTestNGSprin
 
 	@BeforeMethod
 	public void setUp() throws Exception {
-		IDatabaseConnection dbConn = new DatabaseDataSourceConnection(
-				dataSource);
+		IDatabaseConnection dbConn = new DatabaseDataSourceConnection(dataSource);
+		DatabaseConfig config = dbConn.getConfig();
+		config.setProperty(DatabaseConfig.PROPERTY_DATATYPE_FACTORY, new HsqlDataTypeFactory());
 		DatabaseOperation.CLEAN_INSERT.execute(dbConn, getDataSet());
 	}
-	
+
 	protected abstract IDataSet getDataSet() throws Exception;
 
 }

@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <dataset>
 	<meterGas id="1" description="glowny" serialNumber="1" unit="test"
-		 CWU="true" />
-	<meterGas id="2" description="cz wpolna" serialNumber="2"
-		unit="test" apartment_id="true"   CWU="true" />
+		cwu="false" />
+	<meterGas id="2" description="wpolny" serialNumber="2" unit="test"
+		apartment_id="1" cwu="false" />
 	<meterGas id="3" description="piwnica" serialNumber="3" unit="test"
-		apartment_id="2"  CWU="true"  />
+		apartment_id="2" cwu="false" />
 	<meterGas id="4" description="parter" serialNumber="4" unit="test"
-		apartment_id="3"   CWU="true" />
+		apartment_id="3" cwu="false" />
 	<meterGas id="5" description="CWU" serialNumber="5" unit="test"
-		apartment_id="1" CWU="true"  />
+		cwu="true" />
 </dataset>
