@@ -26,14 +26,11 @@ public class ApartmentDaolmplTest extends EntityDaoImplTest {
 	}
 
 	@Test
-	public void saveApartment() {
+	public void saveAndDelete() {
+		Assert.assertEquals(apartemtnDao.getList().size(), 3);
 		apartemtnDao.save(getSampleApartment());
 		Assert.assertEquals(apartemtnDao.getList().size(), 4);
-	}
-
-	@Test
-	public void deleteApartmentById() {
-		apartemtnDao.deleteByID(5);
+		apartemtnDao.deleteByID(4);
 		Assert.assertEquals(apartemtnDao.getList().size(), 3);
 	}
 

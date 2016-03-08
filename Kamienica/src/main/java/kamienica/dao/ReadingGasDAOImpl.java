@@ -115,13 +115,13 @@ public class ReadingGasDAOImpl extends AbstractDao<Integer, ReadingGas> implemen
 
 	}
 
-	@Override
-	@SuppressWarnings("unchecked")
-	public List<ReadingGas> getLastPaid(InvoiceGas invoice) {
-		Query query = getSession().createSQLQuery("SELECT * FROM readingGas where status = :stat order by date desc l")
-				.setParameter("stat", true);
-		return query.list();
-
-	}
+//	@Override
+//	@SuppressWarnings("unchecked")
+//	public List<ReadingGas> getLastPaid(InvoiceGas invoice) {
+//		Query query = getSession().createSQLQuery("SELECT * FROM readingGas where status = :stat order by date desc l")
+//				.setParameter("stat", true);
+//		return query.list();
+//
+//	}
 
 }

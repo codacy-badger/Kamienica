@@ -11,27 +11,8 @@ public class MeterEnergyDaoImplTest extends EntityDaoImplTest {
 	@Autowired
 	MeterEnergyDAO meterDao;
 
-	// @Override
-	// protected IDataSet getDataSet() throws Exception {
-	// IDataSet dataSet = new FlatXmlDataSet(this.getClass().getClassLoader().
-	// getResourceAsStream("MeterEnergy.xml"));
-	// return dataSet;
-	// }
-
-	// @Override
-	// protected IDataSet getDataSet() throws Exception {
-	// IDataSet[] datasets = new IDataSet[] {
-	// new
-	// FlatXmlDataSet(this.getClass().getClassLoader().getResourceAsStream("Apartment.xml")),
-	// new
-	// FlatXmlDataSet(this.getClass().getClassLoader().getResourceAsStream("MeterEnergy.xml"))
-	// };
-	// return new CompositeDataSet(datasets);
-	// }
-
 	@Test
 	public void findById() {
-
 		Assert.assertNotNull(meterDao.getById(1));
 		Assert.assertNull(meterDao.getById(7));
 	}

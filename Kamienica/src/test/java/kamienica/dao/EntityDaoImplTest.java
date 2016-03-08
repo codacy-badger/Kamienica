@@ -40,7 +40,8 @@ public abstract class EntityDaoImplTest extends AbstractTransactionalTestNGSprin
 				new FlatXmlDataSet(this.getClass().getClassLoader().getResourceAsStream("MeterWater.xml")),
 				new FlatXmlDataSet(this.getClass().getClassLoader().getResourceAsStream("MeterGas.xml")),
 				new FlatXmlDataSet(this.getClass().getClassLoader().getResourceAsStream("ReadingEnergy.xml")),
-				new FlatXmlDataSet(this.getClass().getClassLoader().getResourceAsStream("Tenant.xml"))};
+				new FlatXmlDataSet(this.getClass().getClassLoader().getResourceAsStream("InvoiceEnergy.xml")),
+				new FlatXmlDataSet(this.getClass().getClassLoader().getResourceAsStream("Tenant.xml")) };
 
 		return new CompositeDataSet(datasets);
 	}

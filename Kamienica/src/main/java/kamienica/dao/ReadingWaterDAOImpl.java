@@ -91,16 +91,16 @@ public class ReadingWaterDAOImpl extends AbstractDao<Integer, ReadingWater> impl
 		return result;
 	}
 
-	@SuppressWarnings("unchecked")
-	@Override
-	public List<ReadingWater> getWaterReadingsForGasConsumption(ReadingAbstract reading) {
-
-		Query query = getSession()
-				.createSQLQuery(
-						"SELECT * FROM readingwater where readingdate = (select readingdate from readingwater where readingdate < :date GROUP BY readingdate ORDER BY readingdate desc limit 1)")
-				.addEntity(ReadingWater.class).setParameter("date", reading.getReadingDate());
-		return query.list();
-	}
+//	@SuppressWarnings("unchecked")
+//	@Override
+//	public List<ReadingWater> getWaterReadingsForGasConsumption(ReadingAbstract reading) {
+//
+//		Query query = getSession()
+//				.createSQLQuery(
+//						"SELECT * FROM readingwater where readingdate = (select readingdate from readingwater where readingdate < :date GROUP BY readingdate ORDER BY readingdate desc limit 1)")
+//				.addEntity(ReadingWater.class).setParameter("date", reading.getReadingDate());
+//		return query.list();
+//	}
 
 	@Override
 	@SuppressWarnings("unchecked")
@@ -132,15 +132,15 @@ public class ReadingWaterDAOImpl extends AbstractDao<Integer, ReadingWater> impl
 
 	}
 
-	@Override
-	@SuppressWarnings("unchecked")
-	public List<ReadingWater> getLastPaid(InvoiceWater invoice) {
-		Query query = getSession()
-				.createSQLQuery("SELECT * FROM readingWater where status = :stat order by date desc l")
-				.setParameter("stat", true);
-		return query.list();
-
-	}
+//	@Override
+//	@SuppressWarnings("unchecked")
+//	public List<ReadingWater> getLastPaid(InvoiceWater invoice) {
+//		Query query = getSession()
+//				.createSQLQuery("SELECT * FROM readingWater where status = :stat order by date desc l")
+//				.setParameter("stat", true);
+//		return query.list();
+//
+//	}
 
 	@SuppressWarnings("unchecked")
 	@Override

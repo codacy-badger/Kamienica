@@ -31,7 +31,7 @@ public interface ReadingWaterDAO {
 
 	// public List<Date> getReadingDatesForPayment(PaymentAbstract payment);
 
-	public List<ReadingWater> getWaterReadingsForGasConsumption(ReadingAbstract reading);
+//	public List<ReadingWater> getWaterReadingsForGasConsumption(ReadingAbstract reading);
 	
 	public HashMap<String, List<ReadingWater>> getWaterReadingForGasConsumption2(InvoiceGas invoice);
 
@@ -39,7 +39,7 @@ public interface ReadingWaterDAO {
 
 	public List<ReadingWater> getUnresolvedReadings();
 
-	public List<ReadingWater> getLastPaid(InvoiceWater invoice);
+//	public List<ReadingWater> getLastPaid(InvoiceWater invoice);
 
 	public void ResolveReadings(InvoiceWater invoice);
 
