@@ -41,13 +41,16 @@ public class ReadingEnergyDAOImpl extends AbstractDao<Integer, ReadingEnergy> im
 
 	@Override
 	public HashMap<Integer, ReadingEnergy> getLatestReadingsMap() {
-//		String original = "Select * from (select * from readingEnergy order by readingDate desc) as c group by meter_id";
-//		String test = "Select * from readingEnergy where readingDate=(select MAX(readingDate) from readingEnergy)";
-//		Query query = getSession()
-//				.createSQLQuery(
-//						"Select * from (select * from readingEnergy order by readingDate desc) as c group by meter_id")
-//				.addEntity(ReadingEnergy.class);
-//		@SuppressWarnings("unchecked")
+		// String original = "Select * from (select * from readingEnergy order
+		// by readingDate desc) as c group by meter_id";
+		// String test = "Select * from readingEnergy where readingDate=(select
+		// MAX(readingDate) from readingEnergy)";
+		// Query query = getSession()
+		// .createSQLQuery(
+		// "Select * from (select * from readingEnergy order by readingDate
+		// desc) as c group by meter_id")
+		// .addEntity(ReadingEnergy.class);
+		// @SuppressWarnings("unchecked")
 		List<ReadingEnergy> result = getLatestList();
 		HashMap<Integer, ReadingEnergy> mappedResult = new HashMap<>();
 		for (ReadingEnergy i : result) {
@@ -60,7 +63,7 @@ public class ReadingEnergyDAOImpl extends AbstractDao<Integer, ReadingEnergy> im
 	public List<ReadingEnergy> getPrevious(String readingDate) {
 		Query query = getSession()
 				.createSQLQuery(
-						"SELECT * FROM readingEnergy where readingDate =(SELECT max(readingDate) FROM readingEnergy WHERE readingDate < :date );")
+						"SELECT * FROM readingEnergy where readingDate =(SELECT max(readingDate) FROM readingEnergy WHERE readingDate < :date )")
 				.addEntity(ReadingEnergy.class).setString("date", readingDate);
 		@SuppressWarnings("unchecked")
 		List<ReadingEnergy> result = query.list();
@@ -93,6 +96,7 @@ public class ReadingEnergyDAOImpl extends AbstractDao<Integer, ReadingEnergy> im
 
 	}
 
+	@Override
 	@SuppressWarnings("unchecked")
 	public List<ReadingEnergy> getUnresolvedReadings() {
 		Query query = getSession().createSQLQuery("SELECT r.id, r.readingDate, r.value, r.unit, r.meter_id, r.resolved "

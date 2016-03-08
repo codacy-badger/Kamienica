@@ -11,13 +11,16 @@ public class MeterWaterDaoImplTest extends EntityDaoImplTest {
 	@Autowired
 	MeterWaterDAO meterDao;
 
-//	@Override
-//	protected IDataSet getDataSet() throws Exception {
-//		IDataSet[] datasets = new IDataSet[] {
-//				new FlatXmlDataSet(this.getClass().getClassLoader().getResourceAsStream("Apartment.xml")),
-//				new FlatXmlDataSet(this.getClass().getClassLoader().getResourceAsStream("MeterWater.xml")) };
-//		return new CompositeDataSet(datasets);
-//	}
+	// @Override
+	// protected IDataSet getDataSet() throws Exception {
+	// IDataSet[] datasets = new IDataSet[] {
+	// new
+	// FlatXmlDataSet(this.getClass().getClassLoader().getResourceAsStream("Apartment.xml")),
+	// new
+	// FlatXmlDataSet(this.getClass().getClassLoader().getResourceAsStream("MeterWater.xml"))
+	// };
+	// return new CompositeDataSet(datasets);
+	// }
 
 	@Test
 	public void findById() {
@@ -26,26 +29,22 @@ public class MeterWaterDaoImplTest extends EntityDaoImplTest {
 	}
 
 	@Test
-	public void save() {
+	public void saveAndDelete() {
 		meterDao.save(getSampleMeter());
-		Assert.assertEquals(meterDao.getList().size(), 8);
-	}
-
-	@Test
-	public void deleteById() {
-		meterDao.deleteWaterByID(1);
 		Assert.assertEquals(meterDao.getList().size(), 6);
+		meterDao.deleteWaterByID(6);
+		Assert.assertEquals(meterDao.getList().size(), 5);
 	}
 
 	@Test
 	public void deletetByInvalidId() {
 		meterDao.deleteWaterByID(9);
-		Assert.assertEquals(meterDao.getList().size(), 7);
+		Assert.assertEquals(meterDao.getList().size(), 5);
 	}
 
 	@Test
 	public void findAll() {
-		Assert.assertEquals(meterDao.getList().size(), 7);
+		Assert.assertEquals(meterDao.getList().size(), 5);
 	}
 
 	@Test(expectedExceptions = org.hibernate.exception.ConstraintViolationException.class)
