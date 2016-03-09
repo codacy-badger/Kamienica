@@ -1,16 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <dataset>
-	<meterWater id="1" description="glowny" serialNumber="1" unit="test"
-		ISWARMWATER='false' />
-
-	<meterWater id="2" description="1c" serialNumber="3" unit="test"
-		ISWARMWATER='false' apartment_id="2" />
-	<meterWater id="3" description="1z" serialNumber="4" unit="test"
-		ISWARMWATER='false' apartment_id="3" />
-
-	<meterWater id="4" description="2c" serialNumber="6" unit="test"
-		ISWARMWATER='true' apartment_id="2" />
-	<meterWater id="5" description="2z" serialNumber="7" unit="test"
-		ISWARMWATER='true' apartment_id="3" />
+	<meterWater id="1" description="glowny" serialNumber="1"
+		unit="test" ISWARMWATER='false' />
+	<meterWater id="2" description="1c" serialNumber="2"
+		unit="test" apartment="2" ISWARMWATER='false' />
+	<meterWater id="3" description="1z" serialNumber="3"
+		unit="test" apartment="3" ISWARMWATER='true' />
+	<meterWater id="4" description="2c" serialNumber="4"
+		unit="test" apartment="2" ISWARMWATER='false' />
+	<meterWater id="5" description="2z" serialNumber="5" unit="test"
+		apartment="3" ISWARMWATER='true' />
 </dataset>
 

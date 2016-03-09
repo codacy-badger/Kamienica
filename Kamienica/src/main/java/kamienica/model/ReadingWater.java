@@ -45,4 +45,9 @@ public class ReadingWater extends ReadingAbstract {
 		this.meter = meter;
 	}
 
+	@Override
+	public String toString() {
+		return "ReadingWater [unit=" + unit + ", meter=" + meter + ", toString()=" + super.toString() + "]";
+	}
+
 }

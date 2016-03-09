@@ -21,14 +21,23 @@ public class ReadingWaterDaoTest extends EntityDaoImplTest {
 
 	@Test
 	public void getUnresolvedReadings() {
+		List<ReadingWater> list = dao.getList();
+		for (ReadingWater readingWater : list) {
+			System.out.println(readingWater);
+		}
+
+		List<MeterWater> meterList = meterDAO.getList();
+		for (MeterWater meterWater : meterList) {
+			System.out.println(meterWater);
+		}
 		Assert.assertEquals(dao.getUnresolvedReadings().size(), 2);
 	}
 
 	@Test
 	public void getByDate() {
-		ReadingWater reading = dao.getById(2);
+		ReadingWater reading = dao.getById(1);
 		List<ReadingWater> list = dao.getByDate(reading.getReadingDate().toString());
-		Assert.assertEquals(list.size(), 7);
+		Assert.assertEquals(list.size(), 5);
 		for (ReadingWater readingWater : list) {
 			Assert.assertEquals(readingWater.getValue(), 100.0);
 		}
@@ -38,7 +47,7 @@ public class ReadingWaterDaoTest extends EntityDaoImplTest {
 	@Test
 	public void getPrevious() {
 		List<ReadingWater> list = dao.getPrevious("2010-03-01");
-		Assert.assertEquals(list.size(), 7);
+		Assert.assertEquals(list.size(), 5);
 		for (ReadingWater readingWater : list) {
 			Assert.assertEquals(readingWater.getValue(), 120.0);
 		}
@@ -47,7 +56,7 @@ public class ReadingWaterDaoTest extends EntityDaoImplTest {
 	@Test
 	public void getLatestList() {
 		List<ReadingWater> list = dao.getLatestList();
-		Assert.assertEquals(list.size(), 7);
+		Assert.assertEquals(list.size(), 5);
 		for (ReadingWater readingWater : list) {
 			Assert.assertEquals(readingWater.getValue(), 145.0);
 		}
@@ -78,10 +87,10 @@ public class ReadingWaterDaoTest extends EntityDaoImplTest {
 		MeterWater test = meterDAO.getById(1);
 		ReadingWater reading = new ReadingWater(new Date(), 300, test);
 		dao.save(reading);
-		Assert.assertEquals(dao.getList().size(), 22);
-		Assert.assertEquals(dao.getById(22).getValue(), 300.0);
+		Assert.assertEquals(dao.getList().size(), 16);
+		Assert.assertEquals(dao.getById(16).getValue(), 300.0);
 		dao.deleteById(13);
-		Assert.assertEquals(dao.getList().size(), 21);
+		Assert.assertEquals(dao.getList().size(), 15);
 	}
 
 	private static Apartment getAp() {

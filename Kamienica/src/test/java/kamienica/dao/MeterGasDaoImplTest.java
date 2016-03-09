@@ -10,14 +10,17 @@ public class MeterGasDaoImplTest extends EntityDaoImplTest {
 
 	@Autowired
 	MeterGasDAO meterDao;
-//
-//	@Override
-//	protected IDataSet getDataSet() throws Exception {
-//		IDataSet[] datasets = new IDataSet[] {
-//				new FlatXmlDataSet(this.getClass().getClassLoader().getResourceAsStream("Apartment.xml")),
-//				new FlatXmlDataSet(this.getClass().getClassLoader().getResourceAsStream("MeterGas.xml")) };
-//		return new CompositeDataSet(datasets);
-//	}
+	//
+	// @Override
+	// protected IDataSet getDataSet() throws Exception {
+	// IDataSet[] datasets = new IDataSet[] {
+	// new
+	// FlatXmlDataSet(this.getClass().getClassLoader().getResourceAsStream("Apartment.xml")),
+	// new
+	// FlatXmlDataSet(this.getClass().getClassLoader().getResourceAsStream("MeterGas.xml"))
+	// };
+	// return new CompositeDataSet(datasets);
+	// }
 
 	@Test
 	public void findById() {
@@ -48,6 +51,7 @@ public class MeterGasDaoImplTest extends EntityDaoImplTest {
 
 	@Test
 	public void findAll() {
+	
 		Assert.assertEquals(meterDao.getList().size(), 5);
 	}
 
