@@ -21,7 +21,7 @@
 	<meterWater id="4" description="2c" serialNumber="4" unit="test"
 		apartment_id="2" ISWARMWATER='false' />
 	<meterWater id="5" description="2z" serialNumber="5" unit="test"
-		apartment_id="3" ISWARMWATER='true' />
+		apartmentcxvxcv="8" ISWARMWATER='true' />
 
 
 	<meterEnergy id="1" description="wpolny" serialNumber="1"

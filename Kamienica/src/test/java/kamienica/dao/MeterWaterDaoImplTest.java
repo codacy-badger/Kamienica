@@ -11,16 +11,7 @@ public class MeterWaterDaoImplTest extends EntityDaoImplTest {
 	@Autowired
 	MeterWaterDAO meterDao;
 
-	// @Override
-	// protected IDataSet getDataSet() throws Exception {
-	// IDataSet[] datasets = new IDataSet[] {
-	// new
-	// FlatXmlDataSet(this.getClass().getClassLoader().getResourceAsStream("Apartment.xml")),
-	// new
-	// FlatXmlDataSet(this.getClass().getClassLoader().getResourceAsStream("MeterWater.xml"))
-	// };
-	// return new CompositeDataSet(datasets);
-	// }
+	
 
 	@Test
 	public void findById() {
@@ -44,7 +35,6 @@ public class MeterWaterDaoImplTest extends EntityDaoImplTest {
 
 	@Test
 	public void findAll() {
-		System.out.println(meterDao.getList());
 		Assert.assertEquals(meterDao.getList().size(), 5);
 	}
 
