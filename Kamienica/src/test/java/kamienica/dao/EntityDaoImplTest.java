@@ -36,9 +36,10 @@ public abstract class EntityDaoImplTest extends AbstractTransactionalTestNGSprin
 	protected IDataSet getDataSet() throws Exception {
 		IDataSet[] datasets = new IDataSet[] {
 				new FlatXmlDataSet(this.getClass().getClassLoader().getResourceAsStream("Apartment.xml")),
-				new FlatXmlDataSet(this.getClass().getClassLoader().getResourceAsStream("MeterWater.xml")),
-				new FlatXmlDataSet(this.getClass().getClassLoader().getResourceAsStream("MeterEnergy.xml")),
-				new FlatXmlDataSet(this.getClass().getClassLoader().getResourceAsStream("MeterGas.xml")),
+//				new FlatXmlDataSet(this.getClass().getClassLoader().getResourceAsStream("MeterWater.xml")),
+				new FlatXmlDataSet(this.getClass().getClassLoader().getResourceAsStream("Meters.xml")),
+//				new FlatXmlDataSet(this.getClass().getClassLoader().getResourceAsStream("MeterEnergy.xml")),
+//				new FlatXmlDataSet(this.getClass().getClassLoader().getResourceAsStream("MeterGas.xml")),
 				new FlatXmlDataSet(this.getClass().getClassLoader().getResourceAsStream("ReadingWater.xml")),
 				new FlatXmlDataSet(this.getClass().getClassLoader().getResourceAsStream("ReadingEnergy.xml")),
 				new FlatXmlDataSet(this.getClass().getClassLoader().getResourceAsStream("InvoiceEnergy.xml")),
