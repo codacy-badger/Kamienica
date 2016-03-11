@@ -6,7 +6,6 @@ import java.util.List;
 import kamienica.model.Apartment;
 import kamienica.model.InvoiceGas;
 import kamienica.model.InvoiceWater;
-import kamienica.model.ReadingAbstract;
 import kamienica.model.ReadingWater;
 
 public interface ReadingWaterDAO {

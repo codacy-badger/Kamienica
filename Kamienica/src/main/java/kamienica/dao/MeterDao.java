@@ -4,15 +4,15 @@ import java.util.List;
 
 import kamienica.model.MeterAbstract;;
 
-public interface MeterDao {
+public interface MeterDao<M extends MeterAbstract> {
 
-	public void save(Class<? extends MeterAbstract> meter);
+	public void save(MeterAbstract meter);
 
-	public void update(Class<? extends MeterAbstract> meter);
+	public void update(MeterAbstract meter);
 
-	public List<? extends MeterAbstract> getList();
+	public List<MeterAbstract> getList();
 
-	public Class<? extends MeterAbstract> getById(int id);
+	public MeterAbstract getById(int id);
 
 	public void deleteByID(int id);
 }
