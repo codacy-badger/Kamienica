@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<dataset>
+	<invoiceEnergy id="1" serialNumber="1" description="1"
+		totalAmount="100" date="2010-01-01" baseReading_id="1" />
+
+
+	<invoiceGas id="1" serialNumber="1" description="1"
+		totalAmount="100" date="2010-01-01" baseReading_id="1" />
+
+
+	<invoiceWater id="1" serialNumber="1" description="1"
+		totalAmount="100" date="2010-01-01" baseReading_id="1" />
+</dataset>
+	

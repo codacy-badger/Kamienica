@@ -28,7 +28,7 @@ public class ReadingGasDaoTest extends EntityDaoImplTest {
 	public void getByDate() {
 		ReadingGas reading = dao.getById(1);
 		List<ReadingGas> list = dao.getByDate(reading.getReadingDate().toString());
-		Assert.assertEquals(list.size(), 4);
+		Assert.assertEquals(list.size(), 5);
 		for (ReadingGas readingGas : list) {
 			Assert.assertEquals(readingGas.getValue(), 100.0);
 		}
@@ -38,7 +38,7 @@ public class ReadingGasDaoTest extends EntityDaoImplTest {
 	@Test
 	public void getPrevious() {
 		List<ReadingGas> list = dao.getPrevious("2010-03-01");
-		Assert.assertEquals(list.size(), 4);
+		Assert.assertEquals(list.size(), 5);
 		for (ReadingGas readingGas : list) {
 			Assert.assertEquals(readingGas.getValue(), 120.0);
 		}
@@ -47,7 +47,7 @@ public class ReadingGasDaoTest extends EntityDaoImplTest {
 	@Test
 	public void getLatestList() {
 		List<ReadingGas> list = dao.getLatestList();
-		Assert.assertEquals(list.size(), 4);
+		Assert.assertEquals(list.size(), 5);
 		for (ReadingGas readingGas : list) {
 			Assert.assertEquals(readingGas.getValue(), 145.0);
 		}
@@ -78,10 +78,10 @@ public class ReadingGasDaoTest extends EntityDaoImplTest {
 		MeterGas test = meterDAO.getById(1);
 		ReadingGas reading = new ReadingGas(new Date(), 300, test);
 		dao.save(reading);
-		Assert.assertEquals(dao.getList().size(), 13);
-		Assert.assertEquals(dao.getById(13).getValue(), 300.0);
+		Assert.assertEquals(dao.getList().size(), 16);
+		Assert.assertEquals(dao.getById(16).getValue(), 300.0);
 		dao.deleteById(13);
-		Assert.assertEquals(dao.getList().size(), 12);
+		Assert.assertEquals(dao.getList().size(), 15);
 	}
 
 	private static Apartment getAp() {
