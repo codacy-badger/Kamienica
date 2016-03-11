@@ -23,10 +23,10 @@ public class ReadingEnergyDAOImpl extends AbstractDao<Integer, ReadingEnergy> im
 
 	@Override
 	public List<ReadingEnergy> getListForTenant(Apartment apartment) {
-		Query query = getSession()
-				.createSQLQuery(
-						"select * from readingenergy where meter_id IN(select id from meterenergy where apartment_id IN(SELECT id FROM apartment where apartmentnumber IN(0, :num))) order by readingDate desc;")
-				.addEntity(ReadingEnergy.class).setInteger("num", apartment.getApartmentNumber());
+		String old = "select * from readingenergy where meter_id IN(select id from meterenergy where apartment_id IN(SELECT id FROM apartment where apartmentnumber IN(0, :num))) order by readingDate desc;";
+		String newer = "select * from readingenergy join ";
+		Query query = getSession().createSQLQuery(old).addEntity(ReadingEnergy.class).setInteger("num",
+				apartment.getApartmentNumber());
 		@SuppressWarnings("unchecked")
 		List<ReadingEnergy> result = query.list();
 		return result;
@@ -38,15 +38,20 @@ public class ReadingEnergyDAOImpl extends AbstractDao<Integer, ReadingEnergy> im
 		query.setInteger("id", id);
 		query.executeUpdate();
 	}
+
 	@Override
 	public HashMap<Integer, ReadingEnergy> getLatestReadingsMap() {
-
-		Query query = getSession()
-				.createSQLQuery(
-						"Select * from (select * from readingEnergy order by readingDate desc) as c group by meter_id")
-				.addEntity(ReadingEnergy.class);
-		@SuppressWarnings("unchecked")
-		List<ReadingEnergy> result = query.list();
+		// String original = "Select * from (select * from readingEnergy order
+		// by readingDate desc) as c group by meter_id";
+		// String test = "Select * from readingEnergy where readingDate=(select
+		// MAX(readingDate) from readingEnergy)";
+		// Query query = getSession()
+		// .createSQLQuery(
+		// "Select * from (select * from readingEnergy order by readingDate
+		// desc) as c group by meter_id")
+		// .addEntity(ReadingEnergy.class);
+		// @SuppressWarnings("unchecked")
+		List<ReadingEnergy> result = getLatestList();
 		HashMap<Integer, ReadingEnergy> mappedResult = new HashMap<>();
 		for (ReadingEnergy i : result) {
 			mappedResult.put(i.getMeter().getId(), i);
@@ -56,10 +61,10 @@ public class ReadingEnergyDAOImpl extends AbstractDao<Integer, ReadingEnergy> im
 
 	@Override
 	public List<ReadingEnergy> getPrevious(String readingDate) {
-		Query query = getSession().createSQLQuery(
-				"SELECT * FROM readingEnergy where readingDate =(SELECT max(readingDate) FROM readingEnergy WHERE readingDate < "
-						+ "\"" + readingDate + "\" );")
-				.addEntity(ReadingEnergy.class);
+		Query query = getSession()
+				.createSQLQuery(
+						"SELECT * FROM readingEnergy where readingDate =(SELECT max(readingDate) FROM readingEnergy WHERE readingDate < :date )")
+				.addEntity(ReadingEnergy.class).setString("date", readingDate);
 		@SuppressWarnings("unchecked")
 		List<ReadingEnergy> result = query.list();
 		return result;
@@ -67,9 +72,8 @@ public class ReadingEnergyDAOImpl extends AbstractDao<Integer, ReadingEnergy> im
 
 	@Override
 	public List<ReadingEnergy> getByDate(String readingDate) {
-		Query query = getSession()
-				.createSQLQuery("SELECT * FROM readingEnergy where readingDate=\"" + readingDate + "\"")
-				.addEntity(ReadingEnergy.class);
+		Query query = getSession().createSQLQuery("SELECT * FROM readingEnergy where readingDate=:date")
+				.addEntity(ReadingEnergy.class).setString("date", readingDate);
 		@SuppressWarnings("unchecked")
 		List<ReadingEnergy> result = query.list();
 		return result;
@@ -77,10 +81,9 @@ public class ReadingEnergyDAOImpl extends AbstractDao<Integer, ReadingEnergy> im
 
 	@SuppressWarnings("unchecked")
 	public List<ReadingEnergy> getLatestList() {
-		Query query = getSession()
-				.createSQLQuery(
-						"Select * from (select * from readingEnergy order by readingDate desc) as c group by meter_id")
-				.addEntity(ReadingEnergy.class);
+		String original = "Select * from (select * from readingEnergy order by readingDate desc) as c group by meter_id";
+		String test = "Select * from readingEnergy where readingDate=(select MAX(readingDate) from readingEnergy)";
+		Query query = getSession().createSQLQuery(test).addEntity(ReadingEnergy.class);
 		return query.list();
 
 	}
@@ -93,6 +96,7 @@ public class ReadingEnergyDAOImpl extends AbstractDao<Integer, ReadingEnergy> im
 
 	}
 
+	@Override
 	@SuppressWarnings("unchecked")
 	public List<ReadingEnergy> getUnresolvedReadings() {
 		Query query = getSession().createSQLQuery("SELECT r.id, r.readingDate, r.value, r.unit, r.meter_id, r.resolved "
@@ -120,14 +124,15 @@ public class ReadingEnergyDAOImpl extends AbstractDao<Integer, ReadingEnergy> im
 
 	}
 
-	@Override
-	@SuppressWarnings("unchecked")
-	public List<ReadingEnergy> getLastPaid(InvoiceEnergy invoice) {
-		Query query = getSession()
-				.createSQLQuery("SELECT * FROM readingenergy where status = :stat order by date desc l")
-				.setParameter("stat", true);
-		return query.list();
-
-	}
+	// @Override
+	// @SuppressWarnings("unchecked")
+	// public List<ReadingEnergy> getLastPaid() {
+	// Query query = getSession()
+	// .createSQLQuery("SELECT * FROM readingenergy where status = :stat order
+	// by date desc l")
+	// .setParameter("stat", true);
+	// return query.list();
+	//
+	// }
 
 }

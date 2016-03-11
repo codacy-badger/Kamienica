@@ -11,7 +11,6 @@ import org.springframework.stereotype.Repository;
 import kamienica.model.Apartment;
 import kamienica.model.InvoiceGas;
 import kamienica.model.InvoiceWater;
-import kamienica.model.ReadingAbstract;
 import kamienica.model.ReadingWater;
 
 @Repository("readingWaterDao")
@@ -28,7 +27,7 @@ public class ReadingWaterDAOImpl extends AbstractDao<Integer, ReadingWater> impl
 	public List<ReadingWater> getListForTenant(Apartment apartment) {
 		Query query = getSession()
 				.createSQLQuery(
-						"select * from readingwater where meter_id IN(select id from meterwater where apartment_id IN(SELECT id FROM apartment where apartmentnumber IN(0, :num))) order by readingDate desc;")
+						"select * from readingwater where meter_id IN(select id from meterwater where apartment_id IN(SELECT id FROM apartment where apartmentnumber IN(0, :num))) order by readingDate desc")
 				.addEntity(ReadingWater.class).setInteger("num", apartment.getApartmentNumber());
 		@SuppressWarnings("unchecked")
 		List<ReadingWater> result = query.list();
@@ -44,13 +43,7 @@ public class ReadingWaterDAOImpl extends AbstractDao<Integer, ReadingWater> impl
 
 	@Override
 	public HashMap<Integer, ReadingWater> getLatestReadingsMap() {
-
-		Query query = getSession()
-				.createSQLQuery(
-						"Select * from (select * from readingWater order by readingDate desc) as c group by meter_id")
-				.addEntity(ReadingWater.class);
-		@SuppressWarnings("unchecked")
-		List<ReadingWater> result = query.list();
+		List<ReadingWater> result = getLatestList();
 		HashMap<Integer, ReadingWater> mappedResult = new HashMap<>();
 		for (ReadingWater i : result) {
 			mappedResult.put(i.getMeter().getId(), i);
@@ -60,10 +53,10 @@ public class ReadingWaterDAOImpl extends AbstractDao<Integer, ReadingWater> impl
 
 	@Override
 	public List<ReadingWater> getPrevious(String readingDate) {
-		Query query = getSession().createSQLQuery(
-				"SELECT * FROM readingwater where readingDate =(SELECT max(readingDate) FROM readingwater WHERE readingDate < "
-						+ "\"" + readingDate + "\" );")
-				.addEntity(ReadingWater.class);
+		Query query = getSession()
+				.createSQLQuery(
+						"SELECT * FROM readingwater where readingDate =(SELECT max(readingDate) FROM readingwater WHERE readingDate <  :date )")
+				.addEntity(ReadingWater.class).setString("date", readingDate);
 		@SuppressWarnings("unchecked")
 		List<ReadingWater> result = query.list();
 		return result;
@@ -71,9 +64,8 @@ public class ReadingWaterDAOImpl extends AbstractDao<Integer, ReadingWater> impl
 
 	@Override
 	public List<ReadingWater> getByDate(String readingDate) {
-		Query query = getSession()
-				.createSQLQuery("SELECT * FROM readingWater where readingDate=\"" + readingDate + "\"")
-				.addEntity(ReadingWater.class);
+		Query query = getSession().createSQLQuery("SELECT * FROM readingWater where readingDate=:date")
+				.addEntity(ReadingWater.class).setString("date", readingDate);
 		@SuppressWarnings("unchecked")
 		List<ReadingWater> result = query.list();
 		return result;
@@ -81,26 +73,16 @@ public class ReadingWaterDAOImpl extends AbstractDao<Integer, ReadingWater> impl
 
 	@Override
 	public List<ReadingWater> getLatestList() {
-		Query query = getSession().createSQLQuery(
-				"Select * from (select * from readingWater order by readingDate desc) as c group by meter_id")
-
-				.addEntity(ReadingWater.class);
+		String original = "Select * from (select * from readingWater order by readingDate desc) as c group by meter_id";
+		String test = "Select * from readingWater where readingDate=(select MAX(readingDate) from readingWater)";
+		Query query = getSession().createSQLQuery(test).addEntity(ReadingWater.class);
 		@SuppressWarnings("unchecked")
 		List<ReadingWater> result = query.list();
 
 		return result;
 	}
 
-	@SuppressWarnings("unchecked")
-	@Override
-	public List<ReadingWater> getWaterReadingsForGasConsumption(ReadingAbstract reading) {
 
-		Query query = getSession()
-				.createSQLQuery(
-						"SELECT * FROM readingwater where readingdate = (select readingdate from readingwater where readingdate < :date GROUP BY readingdate ORDER BY readingdate desc limit 1)")
-				.addEntity(ReadingWater.class).setParameter("date", reading.getReadingDate());
-		return query.list();
-	}
 
 	@Override
 	@SuppressWarnings("unchecked")
@@ -108,8 +90,6 @@ public class ReadingWaterDAOImpl extends AbstractDao<Integer, ReadingWater> impl
 		Query query = getSession().createSQLQuery("SELECT r.id, r.readingDate, r.value, r.unit, r.meter_id, r.resolved "
 				+ "FROM readingwater r join meterwater m on r.meter_id = m.id "
 				+ "where r.resolved = 0 and m.apartment_id is null").addEntity(ReadingWater.class);
-		;
-
 		return query.list();
 
 	}
@@ -132,15 +112,16 @@ public class ReadingWaterDAOImpl extends AbstractDao<Integer, ReadingWater> impl
 
 	}
 
-	@Override
-	@SuppressWarnings("unchecked")
-	public List<ReadingWater> getLastPaid(InvoiceWater invoice) {
-		Query query = getSession()
-				.createSQLQuery("SELECT * FROM readingWater where status = :stat order by date desc l")
-				.setParameter("stat", true);
-		return query.list();
-
-	}
+	// @Override
+	// @SuppressWarnings("unchecked")
+	// public List<ReadingWater> getLastPaid(InvoiceWater invoice) {
+	// Query query = getSession()
+	// .createSQLQuery("SELECT * FROM readingWater where status = :stat order by
+	// date desc l")
+	// .setParameter("stat", true);
+	// return query.list();
+	//
+	// }
 
 	@SuppressWarnings("unchecked")
 	@Override

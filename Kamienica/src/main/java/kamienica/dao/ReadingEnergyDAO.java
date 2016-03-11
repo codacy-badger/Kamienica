@@ -8,13 +8,13 @@ import kamienica.model.InvoiceEnergy;
 import kamienica.model.ReadingEnergy;
 
 public interface ReadingEnergyDAO {
-	
+
 	public ReadingEnergy getById(int id);
 
 	public void save(ReadingEnergy reading);
 
 	public void saveList(List<ReadingEnergy> reading);
-	
+
 	public void update(ReadingEnergy reading);
 
 	public List<ReadingEnergy> getList();
@@ -29,17 +29,14 @@ public interface ReadingEnergyDAO {
 
 	public HashMap<Integer, ReadingEnergy> getLatestReadingsMap();
 
+	public List<ReadingEnergy> getListForTenant(Apartment apartment);
 
-	public List<ReadingEnergy> getListForTenant(Apartment apartment); 
-	
 	public List<ReadingEnergy> getUnresolvedReadings();
-	
-	public List<ReadingEnergy> getLastPaid(InvoiceEnergy invoice);
-	
+
+//	public List<ReadingEnergy> getLastPaid();
+
 	public void ResolveReadings(InvoiceEnergy invoice);
-	
+
 	public void UnresolveReadings(InvoiceEnergy invoice);
-	
-	
-	
+
 }

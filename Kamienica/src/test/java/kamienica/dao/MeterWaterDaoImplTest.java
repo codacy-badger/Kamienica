@@ -1,59 +1,47 @@
 package kamienica.dao;
 
-import org.dbunit.dataset.IDataSet;
-import org.dbunit.dataset.xml.FlatXmlDataSet;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
 import kamienica.model.MeterWater;
 
-public class MeterWaterDaoImplTest extends EntityDaoImplTest{
+public class MeterWaterDaoImplTest extends EntityDaoImplTest {
 
-	
 	@Autowired
 	MeterWaterDAO meterDao;
 
-	@Override
-	protected IDataSet getDataSet() throws Exception {
-		IDataSet dataSet = new FlatXmlDataSet(this.getClass().getClassLoader().
-				getResourceAsStream("MeterWater.xml"));
-		return dataSet;
-	}
+	
 
 	@Test
 	public void findById() {
 		Assert.assertNotNull(meterDao.getById(1));
-		Assert.assertNull(meterDao.getById(4));
+		Assert.assertNull(meterDao.getById(8));
 	}
 
 	@Test
-	public void save() {
+	public void saveAndDelete() {
 		meterDao.save(getSampleMeter());
-		Assert.assertEquals(meterDao.getList().size(), 4);
-	}
-
-	@Test
-	public void deleteById() {
-		meterDao.deleteWaterByID(1);
-		Assert.assertEquals(meterDao.getList().size(), 2);
+		Assert.assertEquals(meterDao.getList().size(), 6);
+		meterDao.deleteWaterByID(6);
+		Assert.assertEquals(meterDao.getList().size(), 5);
 	}
 
 	@Test
 	public void deletetByInvalidId() {
 		meterDao.deleteWaterByID(9);
-		Assert.assertEquals(meterDao.getList().size(), 3);
+		Assert.assertEquals(meterDao.getList().size(), 5);
 	}
 
 	@Test
 	public void findAll() {
-		Assert.assertEquals(meterDao.getList().size(), 3);
+		Assert.assertEquals(meterDao.getList().size(), 5);
 	}
 
 	@Test(expectedExceptions = org.hibernate.exception.ConstraintViolationException.class)
 	public void saveDuplicate() {
 		meterDao.save(getDuplcateNubmerApartment());
-		Assert.assertEquals(meterDao.getList().size(), 4);
+		// Assert.assertEquals(meterDao.getList().size(), 4);
 	}
 
 	public MeterWater getSampleMeter() {

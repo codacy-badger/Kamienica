@@ -6,7 +6,7 @@ import kamienica.model.MeterEnergy;
 
 public interface MeterEnergyDAO {
 
-	
+
 	public void save(MeterEnergy meter);
 	
 	public void update(MeterEnergy meter);

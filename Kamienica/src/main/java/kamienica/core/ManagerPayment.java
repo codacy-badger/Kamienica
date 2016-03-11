@@ -21,14 +21,13 @@ public class ManagerPayment {
 
 	public static ArrayList<PaymentEnergy> createPaymentEnergyList(ArrayList<Tenant> tenants, InvoiceEnergy invoice,
 			ArrayList<Division> division, ArrayList<UsageValue> usage) {
-
 		double sumOfExpences = invoice.getTotalAmount();
 		ArrayList<PaymentEnergy> listToReturn = new ArrayList<PaymentEnergy>();
 
 		double usageSum = sumUsage(usage);
 
 		for (Tenant tenant : tenants) {
-			HashMap<Integer, Double> divisionForTenant = set(division, tenant);
+			HashMap<Integer, Double> divisionForTenant = setTenantDivision(division, tenant);
 			double payment = 0;
 
 			for (UsageValue w : usage) {
@@ -42,7 +41,6 @@ public class ManagerPayment {
 			forList.setTenant(tenant);
 			forList.setPaymentAmount(payment);
 			forList.setPaymentDate(new Date());
-
 			listToReturn.add(forList);
 		}
 
@@ -57,7 +55,7 @@ public class ManagerPayment {
 		double usageSum = sumUsage(usage);
 
 		for (Tenant tenant : tenants) {
-			HashMap<Integer, Double> divisionForTenant = set(division, tenant);
+			HashMap<Integer, Double> divisionForTenant = setTenantDivision(division, tenant);
 			double payment = 0;
 
 			for (UsageValue w : usage) {
@@ -86,7 +84,7 @@ public class ManagerPayment {
 		double usageSum = sumUsage(usage);
 
 		for (Tenant tenant : tenants) {
-			HashMap<Integer, Double> divForTenants = set(podzial, tenant);
+			HashMap<Integer, Double> divForTenants = setTenantDivision(podzial, tenant);
 			double payment = 0;
 			for (UsageValue w : usage) {
 				double factor = w.getUsage() / usageSum;
@@ -105,7 +103,7 @@ public class ManagerPayment {
 		return listToReturn;
 	}
 
-	static double sumUsage(ArrayList<UsageValue> listaZuzycia) {
+	private static double sumUsage(ArrayList<UsageValue> listaZuzycia) {
 		double suma = 0;
 		for (UsageValue i : listaZuzycia) {
 			suma += i.getUsage();
@@ -114,7 +112,7 @@ public class ManagerPayment {
 		return suma;
 	}
 
-	private static HashMap<Integer, Double> set(ArrayList<Division> division, Tenant tenant) {
+	private static HashMap<Integer, Double> setTenantDivision(ArrayList<Division> division, Tenant tenant) {
 		HashMap<Integer, Double> output = new HashMap<>();
 		for (Division p : division) {
 			if (tenant.getId() == p.getTenant().getId()) {

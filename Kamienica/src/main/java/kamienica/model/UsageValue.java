@@ -8,7 +8,6 @@ public class UsageValue {
 	private int daysBetweenReadings;
 	private Apartment apartment;
 
-
 	public Apartment getApartment() {
 		return apartment;
 	}
@@ -41,11 +40,23 @@ public class UsageValue {
 		this.daysBetweenReadings = daysBetweenReadings;
 	}
 
+	public UsageValue(String description, double usage, String unit, int daysBetweenReadings, Apartment apartment) {
+		super();
+		this.description = description;
+		this.usage = usage;
+		this.unit = unit;
+		this.daysBetweenReadings = daysBetweenReadings;
+		this.apartment = apartment;
+	}
+
+	public UsageValue() {
+	}
+
 	@Override
 	public String toString() {
 		String formattedString = String.format("%.02f", usage);
-		return "\n"+ description +": Zuzycie=" + formattedString + " " + unit
-				+ ". Liczba Dni Pomiedzy Odczytami: " + daysBetweenReadings+ " mieskzanie:"+apartment;
+		return "\n" + description + ": Zuzycie=" + formattedString + " " + unit + ". Liczba Dni Pomiedzy Odczytami: "
+				+ daysBetweenReadings + " mieskzanie:" + apartment;
 	}
 
 	public String getDescription() {
@@ -55,7 +66,5 @@ public class UsageValue {
 	public void setDescription(String description) {
 		this.description = description;
 	}
-
-	
 
 }

@@ -1,9 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<dataset>
-	<meterEnergy id="1" description="00" serialNumber="1"
-		unit="test" />
-		<meterEnergy id="2" description="00" serialNumber="2"
-		unit="test" />
-		<meterEnergy id="3" description="00" serialNumber="3"
-		unit="test"/>
-</dataset>

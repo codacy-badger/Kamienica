@@ -70,14 +70,13 @@ public abstract class PaymentAbstract {
 	@Override
 	public String toString() {
 		SimpleDateFormat df = new SimpleDateFormat("dd-MM-yyyy");
-		return "Op�ata dla " + tenant.getFullName() + " z dnia " + df.format(paymentDate) + " Wynosi " + paymentAmount;
+		return "Opłata dla " + tenant.getFullName() + " z dnia " + df.format(paymentDate) + " Wynosi " + paymentAmount;
 	}
 
 	public PaymentAbstract() {
 	}
 
 	public PaymentAbstract(int id, Date paymentDate, double paymentAmount, Tenant tenant) {
-		super();
 		this.id = id;
 		this.paymentDate = paymentDate;
 		this.paymentAmount = paymentAmount;
