@@ -189,5 +189,6 @@
 				</form:form>
 			</div>
 		</c:if>
+	</div>
 </body>
 </html>

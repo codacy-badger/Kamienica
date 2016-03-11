@@ -7,11 +7,10 @@
 <title>403</title>
 </head>
 <body>
-<br><br>
-	<center>
-		Podana strona nie istnieje. <br>
-		<a href="<c:url value="/" />">Przejdź do strony głównej</a><br> <a
-			href="<c:url value="/logout" />">Wyloguj</a>
-	</center>
+
+	<div class='center'>
+		Podana strona nie istnieje. <br> <a href="<c:url value="/" />">Przejdź
+			do strony głównej</a><br> <a href="<c:url value="/logout" />">Wyloguj</a>
+	</div>
 </body>
 </html>

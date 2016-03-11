@@ -74,7 +74,7 @@
 		<br>
 
 		<c:if test="${!empty model.readings}">
-			<div class="row"">
+			<div class="row">
 				<div class="col-md-3 myLabel "></div>
 				<div class="col-md-6 myLabel ">
 					<table class="table table-stripped table-hover" style="width: 100%">

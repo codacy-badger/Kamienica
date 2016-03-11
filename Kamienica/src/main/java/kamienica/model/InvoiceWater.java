@@ -30,9 +30,9 @@ public class InvoiceWater extends Invoice {
 		super.setDescription("Faktura Za Wodę");
 	}
 
-	public InvoiceWater(String serialNumber, String description, Date date, double totalAmount) {
+	public InvoiceWater(String serialNumber, String description, Date date, double totalAmount, ReadingWater reading) {
 		super(serialNumber, description, date, totalAmount);
-
+		this.baseReading = reading;
 	}
 
 	@Override

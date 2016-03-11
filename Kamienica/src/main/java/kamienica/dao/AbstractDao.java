@@ -5,6 +5,7 @@ import java.lang.reflect.ParameterizedType;
 import java.util.List;
 
 import org.hibernate.Criteria;
+import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,15 +31,17 @@ public abstract class AbstractDao<PK extends Serializable, T> {
 		return sessionFactory.getCurrentSession();
 	}
 
-// common methods shared by all entities
-	//getByID
-	//getById
+	// common methods shared by all entities
+	// getByID
+	// getById
 	@SuppressWarnings("unchecked")
 	public T getById(int id) {
 		return (T) getSession().get(persistentClass, new Integer((int) id));
 	}
 
-	public void save(T entity)  {
+
+
+	public void save(T entity) {
 		getSession().persist(entity);
 
 	}
@@ -57,7 +60,7 @@ public abstract class AbstractDao<PK extends Serializable, T> {
 		Criteria criteria = createEntityCriteria();
 		return (List<T>) criteria.list();
 	}
-	
+
 	protected Criteria createEntityCriteria() {
 		return getSession().createCriteria(persistentClass);
 	}

@@ -1,7 +1,5 @@
 package kamienica.dao;
 
-import org.dbunit.dataset.IDataSet;
-import org.dbunit.dataset.xml.FlatXmlDataSet;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.testng.Assert;
 import org.testng.annotations.Test;
@@ -13,12 +11,13 @@ public class ApartmentDaolmplTest extends EntityDaoImplTest {
 	@Autowired
 	ApartmentDao apartemtnDao;
 
-	@Override
-	protected IDataSet getDataSet() throws Exception {
-		IDataSet dataSet = new FlatXmlDataSet(this.getClass().getClassLoader().
-				getResourceAsStream("Apartment.xml"));
-		return dataSet;
-	}
+	// @BeforeClass
+	// @Override
+	// protected IDataSet getDataSet() throws Exception {
+	// IDataSet dataSet = new
+	// FlatXmlDataSet(this.getClass().getClassLoader().getResourceAsStream("Apartment.xml"));
+	// return dataSet;
+	// }
 
 	@Test
 	public void findById() {
@@ -27,15 +26,12 @@ public class ApartmentDaolmplTest extends EntityDaoImplTest {
 	}
 
 	@Test
-	public void saveApartment() {
+	public void saveAndDelete() {
+		Assert.assertEquals(apartemtnDao.getList().size(), 3);
 		apartemtnDao.save(getSampleApartment());
 		Assert.assertEquals(apartemtnDao.getList().size(), 4);
-	}
-
-	@Test
-	public void deleteApartmentById() {
-		apartemtnDao.deleteByID(1);
-		Assert.assertEquals(apartemtnDao.getList().size(), 2);
+		apartemtnDao.deleteByID(4);
+		Assert.assertEquals(apartemtnDao.getList().size(), 3);
 	}
 
 	@Test
@@ -52,7 +48,7 @@ public class ApartmentDaolmplTest extends EntityDaoImplTest {
 	@Test(expectedExceptions = org.hibernate.exception.ConstraintViolationException.class)
 	public void saveDuplicateAppNuber() {
 		apartemtnDao.save(getDuplcateNubmerApartment());
-		Assert.assertEquals(apartemtnDao.getList().size(), 4);
+		Assert.assertEquals(apartemtnDao.getList().size(), 3);
 	}
 
 	public Apartment getSampleApartment() {

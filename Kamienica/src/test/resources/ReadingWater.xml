@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<dataset>
+
+	<readingWater id="1" readingDate="2010-01-01" value="100"
+		resolved="true" unit='kmw' meter_id="1" />
+	<readingWater id="2" readingDate="2010-01-01" value="100"
+		resolved="true" unit='kmw' meter_id="2" />
+	<readingWater id="3" readingDate="2010-01-01" value="100"
+		resolved="true" unit='kmw' meter_id="3" />
+	<readingWater id="4" readingDate="2010-01-01" value="100"
+		resolved="true" unit='kmw' meter_id="4" />
+	<readingWater id="5" readingDate="2010-01-01" value="100"
+		resolved="true" unit='kmw' meter_id="5" />
+
+
+	<readingWater id="6" readingDate="2010-02-01" value="120"
+		resolved="false" unit='kmw' meter_id="1" />
+	<readingWater id="7" readingDate="2010-02-01" value="120"
+		resolved="false" unit='kmw' meter_id="2" />
+	<readingWater id="8" readingDate="2010-02-01" value="120"
+		resolved="false" unit='kmw' meter_id="3" />
+	<readingWater id="9" readingDate="2010-02-01" value="120"
+		resolved="false" unit='kmw' meter_id="4" />
+	<readingWater id="10" readingDate="2010-02-01" value="120"
+		resolved="false" unit='kmw' meter_id="5" />
+
+
+	<readingWater id="11" readingDate="2010-03-01" value="145"
+		resolved="false" unit='kmw' meter_id="1" />
+	<readingWater id="12" readingDate="2010-03-01" value="145"
+		resolved="false" unit='kmw' meter_id="2" />
+	<readingWater id="13" readingDate="2010-03-01" value="145"
+		resolved="false" unit='kmw' meter_id="3" />
+	<readingWater id="14" readingDate="2010-03-01" value="145"
+		resolved="false" unit='kmw' meter_id="4" />
+	<readingWater id="15" readingDate="2010-03-01" value="145"
+		resolved="false" unit='kmw' meter_id="5" />
+
+</dataset>
+
+	

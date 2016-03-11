@@ -2,16 +2,16 @@
 <dataset>
 	<tenant id="1" firstName="aaaa" lastName="Fol" email="a@wp"
 		phone="234234" role="ADMIN" status="ACTIVE" movementDate="2014-01-01"
-		password="witaj" />
+		password="witaj" apartment_id="2" />
 	<tenant id="2" firstName="bbb" lastName="Fol" email="b@wp"
 		phone="234234" role="ADMIN" status="ACTIVE" movementDate="2014-01-01"
-		password="witaj" />
+		password="witaj" apartment_id="2"/>
 	<tenant id="3" firstName="ccc" lastName="Fol" email="c@wp.pl"
 		phone="234234" role="USER" status="ACTIVE" movementDate="2014-01-01"
-		password="witaj" />
+		password="witaj" apartment_id="1"/>
 	<tenant id="4" firstName="dddd" lastName="Fol" email="d@wp"
 		phone="234234" role="ADMIN" status="INACTIVE" movementDate="2014-01-01"
-		password="witaj" />
+		password="witaj" apartment_id="2"/>
 
 </dataset>
 

@@ -33,7 +33,7 @@ public interface ReadingGasDAO {
 
 	public List<ReadingGas> getUnresolvedReadings();
 
-	public List<ReadingGas> getLastPaid(InvoiceGas invoice);
+//	public List<ReadingGas> getLastPaid(InvoiceGas invoice);
 
 	public void ResolveReadings(InvoiceGas invoice);
 

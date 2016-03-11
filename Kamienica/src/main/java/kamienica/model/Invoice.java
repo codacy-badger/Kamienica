@@ -7,6 +7,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Inheritance;
 import javax.persistence.MappedSuperclass;
+import javax.persistence.OneToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.validation.constraints.Min;
@@ -38,6 +39,7 @@ public abstract class Invoice {
 	@Min(value = 0, message = "Tylko wartości dodatnie")
 	@NotNull(message = "Podaj wartość")
 	private double totalAmount;
+
 
 	@Autowired
 	public Invoice(String serialNumber, String description, Date date, double totalAmount) {

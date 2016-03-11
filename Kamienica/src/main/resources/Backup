@@ -1,21 +1,25 @@
-jdbc.driverClassName = com.mysql.jdbc.Driver
-jdbc.url = jdbc:mysql://localhost:3306/kamienica
-jdbc.username = root
-jdbc.password = maciej
-hibernate.dialect = org.hibernate.dialect.MySQLDialect
-hibernate.show_sql = true
-hibernate.format_sql = true
-hibernate.hbm2ddl.auto=update
-hibernate.current_session_context_class=thread
+Praca polega na: 
+• przygotowywaniu oprogramowania na podstawie dostarczonego projektu, 
+• weryfikacji i akceptacji kodu źródłowego dostarczanego przez innych dostawców, 
+• udziale w tworzeniu wspólnych komponentów; 
+• tworzeniu i utrzymanie bazy wiedzy dotyczącej rozwiązań SOA (katalog, usług, dokumentacja usług); 
+• realizacji projektów integracyjnych w oparciu o zasady architektury SOA przy wykorzystaniu szyny usług
+Qualifications/Requirements:
+Wymagania: 
+• dobra znajomość języka JAVA, 
+• wykształcenie wyższe / nauki ścisłe, preferowany kierunek informatyka 
+• umiejętność analitycznego myślenia oraz pracy w zespole, 
+• znajomość podstawowych wzorców projektowych, 
+• mile widziane cechy: odpowiedzialność, samodzielność, otwartość i komunikatywność
+Desired Characteristics:
+Dodatkowe atuty: 
+• znajomość zagadnień związanych z integracją systemów, 
+• doświadczenie w projektowaniu i rozwoju architektury SOA, 
+• znajomość specyfikacji JEE z ukierunkowaniem na zagadnienia związane z wymianą komunikatów za pomocą EJB, JMS, WebService, 
+• praktyczna znajomość serwera aplikacyjnego JBOSS, 
+• Znajomość systemów kontroli wersji SVN lub GIT
 
 
+http://archive.oreilly.com/pub/a/onjava/2005/01/26/soa-intro.html
 
-jdbc.url = jdbc:postgres://hqdrnjzqodhkfc:O5-O04XYo-M6Xe_vayOGZbQpoq@ec2-107-20-223-116.compute-1.amazonaws.com:5432/d8dtm9df0f99q7
-jdbc.username = hqdrnjzqodhkfc
-jdbc.password = O5-O04XYo-M6Xe_vayOGZbQpoq
-hibernate.dialect = org.hibernate.dialect.PostgreSQLDialect
-hibernate.show_sql = true
-hibernate.format_sql = true
-hibernate.hbm2ddl.auto=update
-hibernate.current_session_context_class=thread
 

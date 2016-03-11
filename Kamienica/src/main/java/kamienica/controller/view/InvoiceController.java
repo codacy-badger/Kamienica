@@ -392,7 +392,7 @@ public class InvoiceController {
 	public ModelAndView invoiceGaz(@RequestParam(value = "id") int id) {
 
 		invoiceService.deleteGasByID(id);
-		return new ModelAndView("/Admin/Invoice/invoiceGasList.html");
+		return new ModelAndView("redirect:/Admin/Invoice/invoiceGasList.html");
 
 	}
 
@@ -400,7 +400,7 @@ public class InvoiceController {
 	public ModelAndView invoiceWoda(@RequestParam(value = "id") int id) {
 
 		invoiceService.deleteWaterByID(id);
-		return new ModelAndView("/Admin/Invoice/invoiceWaterList.html");
+		return new ModelAndView("redirect:/Admin/Invoice/invoiceWaterList.html");
 
 	}
 

@@ -101,9 +101,9 @@ public class PaymentControllerTest {
 		metersEnergy = SetupMethods.getMetersEnergy(apartments);
 		metersWater = SetupMethods.getMetersWater(apartments);
 		metersGas = SetupMethods.getMetersGas(apartments);
-		readingsWater = SetupMethods.getReadingsWater(metersWater);
-		readingsEnergy = SetupMethods.getReadingsEnergy(metersEnergy);
-		readingsGas = SetupMethods.getReadingsGas(metersGas);
+//		readingsWater = SetupMethods.getReadingsWater(metersWater);
+//		readingsEnergy = SetupMethods.getReadingsEnergy(metersEnergy);
+//		readingsGas = SetupMethods.getReadingsGas(metersGas);
 
 	}
 

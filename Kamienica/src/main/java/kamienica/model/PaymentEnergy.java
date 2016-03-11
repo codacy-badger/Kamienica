@@ -23,12 +23,7 @@ public class PaymentEnergy extends PaymentAbstract {
 	}
 
 
-	@Override
-	public String toString() {
-		return "PaymentEnergy [invoice=" + invoice + ", getId()=" + getId() + ", getPaymentDate()=" + getPaymentDate()
-				+ ", getPaymentAmount()=" + getPaymentAmount() + ", getTenant()=" + getTenant() + ", toString()="
-				+ super.toString() + ", getClass()=" + getClass() + ", hashCode()=" + hashCode() + "]";
-	}
+	
 
 	public InvoiceEnergy getInvoice() {
 		return invoice;
