@@ -4,7 +4,7 @@ import java.util.List;
 
 import kamienica.model.MeterAbstract;;
 
-public interface MeterDao<M extends MeterAbstract> {
+public interface MeterDao<M extends Object> {
 
 	public void save(MeterAbstract meter);
 
