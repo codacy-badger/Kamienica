@@ -7,13 +7,7 @@ import kamienica.model.PaymentWater;
 import kamienica.model.ReadingWater;
 import kamienica.model.Tenant;
 
-public interface PaymentWaterDAO {
-
-	public void saveWater(List<PaymentWater> payment);
-
-	public void update(PaymentWater payment);
-
-	public void delete(PaymentWater payment);
+public interface PaymentWaterDAO extends DaoInterface<PaymentWater> {
 
 	public void deleteByDate(String date);
 
@@ -21,11 +15,8 @@ public interface PaymentWaterDAO {
 
 	public List<PaymentWater> getWaterByReading(ReadingWater reading);
 
-	public List<PaymentWater> getPaymentWater();
-
 	public PaymentWater getLatestPaymentWater();
 
 	public List<PaymentWater> getPaymentWaterForTenant(Tenant tenant);
 
-	public PaymentWater getById(int id);
 }

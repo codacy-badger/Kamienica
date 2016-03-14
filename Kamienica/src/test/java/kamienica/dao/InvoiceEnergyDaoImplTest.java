@@ -9,6 +9,7 @@ import kamienica.model.MeterEnergy;
 
 public class InvoiceEnergyDaoImplTest extends EntityDaoImplTest {
 
+
 	@Autowired
 	InvoiceEnergyDAO invDao;
 

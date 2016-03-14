@@ -2,20 +2,11 @@ package kamienica.dao.invoice;
 
 import java.util.List;
 
+import kamienica.dao.DaoInterface;
 import kamienica.model.Invoice;
 import kamienica.model.InvoiceEnergy;
 
-public interface InvoiceEnergyDAO {
-
-	public void save(InvoiceEnergy invoice);
-
-	public List<InvoiceEnergy> getList();
-
-	public void update(InvoiceEnergy invoice);
-
-	public void deleteByID(int id);
-
-	public InvoiceEnergy getById(int id);
+public interface InvoiceEnergyDAO extends DaoInterface<InvoiceEnergy> {
 
 	public InvoiceEnergy getLatest();
 

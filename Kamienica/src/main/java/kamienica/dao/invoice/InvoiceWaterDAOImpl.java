@@ -17,14 +17,6 @@ import kamienica.model.PaymentStatus;
 public class InvoiceWaterDAOImpl extends AbstractDao<Integer, InvoiceWater> implements InvoiceWaterDAO {
 
 	@Override
-	public void deleteByID(int id) {
-		Query query = getSession().createSQLQuery("delete from invoicewater where id = :id");
-		query.setInteger("id", id);
-		query.executeUpdate();
-
-	}
-
-	@Override
 	public InvoiceWater getLatest() {
 		Query query = getSession().createSQLQuery(
 				"select * from kamienica.invoicewater where date = (select MAX(date) from kamienica.invoicewater)");

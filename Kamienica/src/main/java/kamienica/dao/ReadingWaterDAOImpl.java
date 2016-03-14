@@ -15,6 +15,7 @@ import kamienica.model.ReadingWater;
 
 @Repository("readingWaterDao")
 public class ReadingWaterDAOImpl extends AbstractDao<Integer, ReadingWater> implements ReadingWaterDAO {
+
 	@Override
 	public List<ReadingWater> getList() {
 		@SuppressWarnings("unchecked")
@@ -32,13 +33,6 @@ public class ReadingWaterDAOImpl extends AbstractDao<Integer, ReadingWater> impl
 		@SuppressWarnings("unchecked")
 		List<ReadingWater> result = query.list();
 		return result;
-	}
-
-	@Override
-	public void deleteById(int id) {
-		Query query = getSession().createSQLQuery("delete from readingwater where id = :id");
-		query.setInteger("id", id);
-		query.executeUpdate();
 	}
 
 	@Override
@@ -82,8 +76,6 @@ public class ReadingWaterDAOImpl extends AbstractDao<Integer, ReadingWater> impl
 		return result;
 	}
 
-
-
 	@Override
 	@SuppressWarnings("unchecked")
 	public List<ReadingWater> getUnresolvedReadings() {
@@ -111,17 +103,6 @@ public class ReadingWaterDAOImpl extends AbstractDao<Integer, ReadingWater> impl
 		query.executeUpdate();
 
 	}
-
-	// @Override
-	// @SuppressWarnings("unchecked")
-	// public List<ReadingWater> getLastPaid(InvoiceWater invoice) {
-	// Query query = getSession()
-	// .createSQLQuery("SELECT * FROM readingWater where status = :stat order by
-	// date desc l")
-	// .setParameter("stat", true);
-	// return query.list();
-	//
-	// }
 
 	@SuppressWarnings("unchecked")
 	@Override

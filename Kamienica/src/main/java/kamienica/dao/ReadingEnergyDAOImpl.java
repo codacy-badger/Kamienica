@@ -13,6 +13,7 @@ import kamienica.model.ReadingEnergy;
 
 @Repository("readingEnergyDao")
 public class ReadingEnergyDAOImpl extends AbstractDao<Integer, ReadingEnergy> implements ReadingEnergyDAO {
+
 	@Override
 	public List<ReadingEnergy> getList() {
 		@SuppressWarnings("unchecked")
@@ -33,24 +34,7 @@ public class ReadingEnergyDAOImpl extends AbstractDao<Integer, ReadingEnergy> im
 	}
 
 	@Override
-	public void deleteById(int id) {
-		Query query = getSession().createSQLQuery("delete from readingenergy where id = :id");
-		query.setInteger("id", id);
-		query.executeUpdate();
-	}
-
-	@Override
 	public HashMap<Integer, ReadingEnergy> getLatestReadingsMap() {
-		// String original = "Select * from (select * from readingEnergy order
-		// by readingDate desc) as c group by meter_id";
-		// String test = "Select * from readingEnergy where readingDate=(select
-		// MAX(readingDate) from readingEnergy)";
-		// Query query = getSession()
-		// .createSQLQuery(
-		// "Select * from (select * from readingEnergy order by readingDate
-		// desc) as c group by meter_id")
-		// .addEntity(ReadingEnergy.class);
-		// @SuppressWarnings("unchecked")
 		List<ReadingEnergy> result = getLatestList();
 		HashMap<Integer, ReadingEnergy> mappedResult = new HashMap<>();
 		for (ReadingEnergy i : result) {
@@ -89,14 +73,6 @@ public class ReadingEnergyDAOImpl extends AbstractDao<Integer, ReadingEnergy> im
 	}
 
 	@Override
-	public void saveList(List<ReadingEnergy> reading) {
-		for (int i = 0; i < reading.size(); i++) {
-			save(reading.get(i));
-		}
-
-	}
-
-	@Override
 	@SuppressWarnings("unchecked")
 	public List<ReadingEnergy> getUnresolvedReadings() {
 		Query query = getSession().createSQLQuery("SELECT r.id, r.readingDate, r.value, r.unit, r.meter_id, r.resolved "
@@ -123,16 +99,5 @@ public class ReadingEnergyDAOImpl extends AbstractDao<Integer, ReadingEnergy> im
 		query.executeUpdate();
 
 	}
-
-	// @Override
-	// @SuppressWarnings("unchecked")
-	// public List<ReadingEnergy> getLastPaid() {
-	// Query query = getSession()
-	// .createSQLQuery("SELECT * FROM readingenergy where status = :stat order
-	// by date desc l")
-	// .setParameter("stat", true);
-	// return query.list();
-	//
-	// }
 
 }

@@ -13,6 +13,7 @@ import kamienica.model.ReadingGas;
 
 @Repository("readingGasDao")
 public class ReadingGasDAOImpl extends AbstractDao<Integer, ReadingGas> implements ReadingGasDAO {
+
 	@Override
 	public List<ReadingGas> getList() {
 		@SuppressWarnings("unchecked")
@@ -33,21 +34,7 @@ public class ReadingGasDAOImpl extends AbstractDao<Integer, ReadingGas> implemen
 	}
 
 	@Override
-	public void deleteById(int id) {
-		Query query = getSession().createSQLQuery("delete from readinggas where id = :id");
-		query.setInteger("id", id);
-		query.executeUpdate();
-	}
-
-	@Override
 	public HashMap<Integer, ReadingGas> getLatestReadingsMap() {
-		//
-		// Query query = getSession()
-		// .createSQLQuery(
-		// "Select * from (select * from readinggas order by readingDate desc)
-		// as c group by meter_id")
-		// .addEntity(ReadingGas.class);
-		// @SuppressWarnings("unchecked")
 		List<ReadingGas> result = getLatestList();
 		HashMap<Integer, ReadingGas> mappedResult = new HashMap<>();
 		for (ReadingGas i : result) {
@@ -113,15 +100,5 @@ public class ReadingGasDAOImpl extends AbstractDao<Integer, ReadingGas> implemen
 		query.executeUpdate();
 
 	}
-
-	// @Override
-	// @SuppressWarnings("unchecked")
-	// public List<ReadingGas> getLastPaid(InvoiceGas invoice) {
-	// Query query = getSession().createSQLQuery("SELECT * FROM readingGas where
-	// status = :stat order by date desc l")
-	// .setParameter("stat", true);
-	// return query.list();
-	//
-	// }
 
 }

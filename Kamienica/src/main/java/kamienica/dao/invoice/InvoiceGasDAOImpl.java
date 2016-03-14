@@ -16,13 +16,6 @@ import kamienica.model.PaymentStatus;
 @Transactional
 public class InvoiceGasDAOImpl extends AbstractDao<Integer, InvoiceGas> implements InvoiceGasDAO {
 
-	@Override
-	public void deleteByID(int id) {
-		Query query = getSession().createSQLQuery("delete from invoicegas where id = :id");
-		query.setInteger("id", id);
-		query.executeUpdate();
-
-	}
 
 	@Override
 	public InvoiceGas getLatest() {

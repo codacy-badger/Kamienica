@@ -9,7 +9,7 @@ import kamienica.model.Apartment;
 public class ApartmentDaolmplTest extends EntityDaoImplTest {
 
 	@Autowired
-	ApartmentDao apartemtnDao;
+	DaoInterface<Apartment> apartemtnDao;
 
 	// @BeforeClass
 	// @Override
@@ -30,13 +30,14 @@ public class ApartmentDaolmplTest extends EntityDaoImplTest {
 		Assert.assertEquals(apartemtnDao.getList().size(), 3);
 		apartemtnDao.save(getSampleApartment());
 		Assert.assertEquals(apartemtnDao.getList().size(), 4);
-		apartemtnDao.deleteByID(4);
+		apartemtnDao.deleteById(4);
+		// apartemtnDao.deleteByID(4);
 		Assert.assertEquals(apartemtnDao.getList().size(), 3);
 	}
 
 	@Test
 	public void deleteApartmentByInvalidId() {
-		apartemtnDao.deleteByID(8);
+		apartemtnDao.deleteById(8);
 		Assert.assertEquals(apartemtnDao.getList().size(), 3);
 	}
 

@@ -16,17 +16,18 @@ public class TenantDaoImplTest extends EntityDaoImplTest {
 	@Autowired
 	TenantDao dao;
 
-// 
-//    @Override
-//    protected IDataSet getDataSet() throws Exception {
-//      IDataSet[] datasets = new IDataSet[] {
-//              new FlatXmlDataSet(this.getClass().getClassLoader().getResourceAsStream("Apartment.xml")),
-//              new FlatXmlDataSet(this.getClass().getClassLoader().getResourceAsStream("Tenant.xml"))
-//      };
-//      return new CompositeDataSet(datasets);
-//    }
-   
-	
+	//
+	// @Override
+	// protected IDataSet getDataSet() throws Exception {
+	// IDataSet[] datasets = new IDataSet[] {
+	// new
+	// FlatXmlDataSet(this.getClass().getClassLoader().getResourceAsStream("Apartment.xml")),
+	// new
+	// FlatXmlDataSet(this.getClass().getClassLoader().getResourceAsStream("Tenant.xml"))
+	// };
+	// return new CompositeDataSet(datasets);
+	// }
+
 	@Test
 	public void findById() {
 		Assert.assertNotNull(dao.getById(1));
@@ -41,13 +42,13 @@ public class TenantDaoImplTest extends EntityDaoImplTest {
 
 	@Test
 	public void deleteById() {
-		dao.delete(1);
+		dao.deleteById(1);
 		Assert.assertEquals(dao.getList().size(), 3);
 	}
 
 	@Test
 	public void deleteInvalidId() {
-		dao.delete(8);
+		dao.deleteById(8);
 		Assert.assertEquals(dao.getList().size(), 4);
 	}
 

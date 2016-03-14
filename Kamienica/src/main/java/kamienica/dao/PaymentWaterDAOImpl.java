@@ -15,12 +15,6 @@ import kamienica.model.Tenant;
 @Repository("paymentWaterDao")
 public class PaymentWaterDAOImpl extends AbstractDao<Integer, PaymentWater> implements PaymentWaterDAO {
 
-	public void delete(PaymentWater payment) {
-		Query query = getSession().createSQLQuery("delete from paymentwater where id = :id");
-		query.setInteger("id", payment.getId());
-		query.executeUpdate();
-	}
-
 	@Override
 	public List<PaymentWater> getPaymentWaterForTenant(Tenant tenant) {
 		@SuppressWarnings("unchecked")
@@ -47,7 +41,7 @@ public class PaymentWaterDAOImpl extends AbstractDao<Integer, PaymentWater> impl
 	}
 
 	@Override
-	public List<PaymentWater> getPaymentWater() {
+	public List<PaymentWater> getList() {
 		@SuppressWarnings("unchecked")
 		List<PaymentWater> list = getSession().createCriteria(PaymentWater.class).addOrder(Order.asc("paymentDate"))
 				.addOrder(Order.asc("tenant")).list();
@@ -67,14 +61,7 @@ public class PaymentWaterDAOImpl extends AbstractDao<Integer, PaymentWater> impl
 
 	}
 
-	public void saveWater(List<PaymentWater> payment) {
-
-		for (int i = 0; i < payment.size(); i++) {
-			PaymentWater tmp = payment.get(i);
-			save(tmp);
-
-		}
-	}
+	
 
 	@Override
 	public void deleteByDate(String date) {

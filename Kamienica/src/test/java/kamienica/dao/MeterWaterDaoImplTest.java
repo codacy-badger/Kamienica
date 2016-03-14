@@ -4,12 +4,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
+import kamienica.model.MeterEnergy;
 import kamienica.model.MeterWater;
 
 public class MeterWaterDaoImplTest extends EntityDaoImplTest {
 
 	@Autowired
-	MeterWaterDAO meterDao;
+	DaoInterface<MeterWater> meterDao;
 
 	
 
@@ -23,13 +24,13 @@ public class MeterWaterDaoImplTest extends EntityDaoImplTest {
 	public void saveAndDelete() {
 		meterDao.save(getSampleMeter());
 		Assert.assertEquals(meterDao.getList().size(), 6);
-		meterDao.deleteWaterByID(6);
+		meterDao.deleteById(6);
 		Assert.assertEquals(meterDao.getList().size(), 5);
 	}
 
 	@Test
 	public void deletetByInvalidId() {
-		meterDao.deleteWaterByID(9);
+		meterDao.deleteById(9);
 		Assert.assertEquals(meterDao.getList().size(), 5);
 	}
 

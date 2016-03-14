@@ -30,7 +30,7 @@ public class TenantServiceImpl implements TenantService {
 
 	@Override
 	public void deleteTenant(int id) {
-		tenantDao.delete(id);
+		tenantDao.deleteById(id);
 
 	}
 

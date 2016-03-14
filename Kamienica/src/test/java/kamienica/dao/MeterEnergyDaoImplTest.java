@@ -9,7 +9,7 @@ import kamienica.model.MeterEnergy;
 public class MeterEnergyDaoImplTest extends EntityDaoImplTest {
 
 	@Autowired
-	MeterEnergyDAO meterDao;
+	DaoInterface<MeterEnergy> meterDao;
 
 	@Test
 	public void findById() {
@@ -25,13 +25,13 @@ public class MeterEnergyDaoImplTest extends EntityDaoImplTest {
 
 	@Test
 	public void deleteById() {
-		meterDao.deleteEnergyByID(5);
+		meterDao.deleteById(5);
 		Assert.assertEquals(meterDao.getList().size(), 4);
 	}
 
 	@Test
 	public void deletetByInvalidId() {
-		meterDao.deleteEnergyByID(9);
+		meterDao.deleteById(9);
 		Assert.assertEquals(meterDao.getList().size(), 4);
 	}
 

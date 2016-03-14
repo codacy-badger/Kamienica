@@ -26,8 +26,7 @@ import kamienica.model.PaymentWater;
 @Transactional
 public class InvoiceServiceImpl implements InvoiceService {
 
-	// @Autowired
-	// InvoiceDao invoiceDAO;
+
 	@Autowired
 	InvoiceEnergyDAO invoiceEnergy;
 	@Autowired
@@ -41,17 +40,19 @@ public class InvoiceServiceImpl implements InvoiceService {
 	@Autowired
 	ReadingWaterDAO readingWater;
 	@Autowired
-	private PaymentGasDAO paymentGas;
+	private PaymentGasDAO paymentGasDao;
 	@Autowired
-	private PaymentEergyDAO paymentEnergy;
+	private PaymentEergyDAO paymentEnergyDao;
 	@Autowired
-	private PaymentWaterDAO paymentWater;
+	private PaymentWaterDAO paymentWaterDao;
 
 	@Override
 	public void saveEnergy(InvoiceEnergy invoice, List<PaymentEnergy> payment) {
 		invoiceEnergy.save(invoice);
 		readingEnergy.ResolveReadings(invoice);
-		paymentEnergy.saveEnergy(payment);
+		for (PaymentEnergy paymentEnergy : payment) {
+			paymentEnergyDao.save(paymentEnergy);
+		}
 
 	}
 
@@ -59,26 +60,33 @@ public class InvoiceServiceImpl implements InvoiceService {
 	public void saveGas(InvoiceGas invoice, List<PaymentGas> payment) {
 		invoiceGas.save(invoice);
 		readingGas.ResolveReadings(invoice);
-		paymentGas.saveGas(payment);
+
+		for (PaymentGas paymentGas : payment) {
+			paymentGasDao.save(paymentGas);
+		}
 	}
 
 	@Override
 	public void saveWater(InvoiceWater invoice, List<PaymentWater> payment) {
 		invoiceWater.save(invoice);
 		readingWater.ResolveReadings(invoice);
-		paymentWater.saveWater(payment);
+
+		for (PaymentWater paymentWater : payment) {
+			paymentWaterDao.save(paymentWater);
+		}
+
 	}
 
 	@Override
 	public void deleteEnergyByID(int id) {
 		readingEnergy.UnresolveReadings(invoiceEnergy.getById(id));
-		invoiceEnergy.deleteByID(id);
+		invoiceEnergy.deleteById(id);
 	}
 
 	@Override
 	public void updateEnergy(InvoiceEnergy invoice, List<PaymentEnergy> payments) {
 		for (PaymentEnergy payment : payments) {
-			paymentEnergy.update(payment);
+			paymentEnergyDao.update(payment);
 		}
 		invoiceEnergy.update(invoice);
 
@@ -97,7 +105,7 @@ public class InvoiceServiceImpl implements InvoiceService {
 	@Override
 	public void deleteGasByID(int id) {
 		readingGas.UnresolveReadings(invoiceGas.getById(id));
-		invoiceGas.deleteByID(id);
+		invoiceGas.deleteById(id);
 
 	}
 
@@ -105,14 +113,14 @@ public class InvoiceServiceImpl implements InvoiceService {
 	public void deleteWaterByID(int id) {
 		// temporaryFix...
 		readingWater.UnresolveReadings(invoiceWater.getById(id));
-		invoiceWater.deleteByID(id);
+		invoiceWater.deleteById(id);
 
 	}
 
 	@Override
 	public void updateGas(InvoiceGas invoice, List<PaymentGas> payments) {
 		for (PaymentGas payment : payments) {
-			paymentGas.update(payment);
+			paymentGasDao.update(payment);
 		}
 		invoiceGas.update(invoice);
 
@@ -121,7 +129,7 @@ public class InvoiceServiceImpl implements InvoiceService {
 	@Override
 	public void updateWater(InvoiceWater invoice, List<PaymentWater> payments) {
 		for (PaymentWater payment : payments) {
-			paymentWater.update(payment);
+			paymentWaterDao.update(payment);
 		}
 
 		invoiceWater.update(invoice);

@@ -18,13 +18,13 @@ import org.testng.Assert;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
-import kamienica.dao.ApartmentDao;
+import kamienica.dao.DaoInterface;
 import kamienica.model.Apartment;
 
 public class ApartmentServiceImplTest {
 
 	@Mock
-	ApartmentDao dao;
+	DaoInterface<Apartment> dao;
 
 	@InjectMocks
 	ApartmentServiceImpl apartmentService;
@@ -62,9 +62,9 @@ public class ApartmentServiceImplTest {
 
 	@Test
 	public void deleteApartmentById() {
-		doNothing().when(dao).deleteByID(anyInt());
+		doNothing().when(dao).deleteById(anyInt());
 		apartmentService.deleteByID(anyInt());
-		verify(dao, atLeastOnce()).deleteByID(anyInt());
+		verify(dao, atLeastOnce()).deleteById(anyInt());
 	}
 
 	@Test

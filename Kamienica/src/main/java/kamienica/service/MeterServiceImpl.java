@@ -6,9 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import kamienica.dao.MeterEnergyDAO;
-import kamienica.dao.MeterGasDAO;
-import kamienica.dao.MeterWaterDAO;
+import kamienica.dao.DaoInterface;
 import kamienica.model.MeterEnergy;
 import kamienica.model.MeterGas;
 import kamienica.model.MeterWater;
@@ -18,13 +16,13 @@ import kamienica.model.MeterWater;
 public class MeterServiceImpl implements MeterService {
 
 	@Autowired
-	MeterEnergyDAO energy;
+	DaoInterface<MeterEnergy> energy;
 
 	@Autowired
-	MeterGasDAO gas;
+	DaoInterface<MeterGas> gas;
 
 	@Autowired
-	MeterWaterDAO water;
+	DaoInterface<MeterWater> water;
 
 	@Override
 	public void saveGas(MeterGas meter) {
@@ -80,19 +78,19 @@ public class MeterServiceImpl implements MeterService {
 
 	@Override
 	public void deleteEnergyByID(int id) {
-		energy.deleteEnergyByID(id);
+		energy.deleteById(id);
 
 	}
 
 	@Override
 	public void deleteGasByID(int id) {
-		gas.deleteGasByID(id);
+		gas.deleteById(id);
 
 	}
 
 	@Override
 	public void deleteWaterByID(int id) {
-		water.deleteWaterByID(id);
+		water.deleteById(id);
 
 	}
 

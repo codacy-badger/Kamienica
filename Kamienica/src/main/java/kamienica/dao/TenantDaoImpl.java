@@ -13,12 +13,7 @@ import kamienica.model.UserStatus;
 @Repository("tenantDao")
 public class TenantDaoImpl extends AbstractDao<Integer, Tenant> implements TenantDao {
 
-	public void delete(int id) {
-		Query query = getSession().createSQLQuery("delete from tenant where id = :id");
-		query.setInteger("id", id);
-		query.executeUpdate();
 
-	}
 
 	@SuppressWarnings("unchecked")
 	public List<Tenant> getActiveTenants() {

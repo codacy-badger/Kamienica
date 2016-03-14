@@ -17,7 +17,7 @@ public class ReadingEnergyDaoTest extends EntityDaoImplTest {
 	@Autowired
 	ReadingEnergyDAO dao;
 	@Autowired
-	MeterEnergyDAO meterDAO;
+	DaoInterface<MeterEnergy> meterDAO;
 
 	@Test
 	public void getUnresolvedReadings() {

@@ -15,13 +15,6 @@ import kamienica.model.Tenant;
 @Repository("paymentEnergyDao")
 public class PaymentEnergyDAOImpl extends AbstractDao<Integer, PaymentEnergy> implements PaymentEergyDAO {
 
-	public void delete(PaymentEnergy payment) {
-		Query query = getSession().createSQLQuery("delete from paymentenergy where id = :id");
-		query.setInteger("id", payment.getId());
-		query.executeUpdate();
-	}
-
-
 	@SuppressWarnings("unchecked")
 	public List<PaymentEnergy> getEnergyByInvoice(Invoice invoice) {
 		Query query = getSession().createSQLQuery("Select * from paymentenergy where invoice_id = :id")
@@ -40,7 +33,7 @@ public class PaymentEnergyDAOImpl extends AbstractDao<Integer, PaymentEnergy> im
 	}
 
 	@Override
-	public List<PaymentEnergy> getPaymentEnergy() {
+	public List<PaymentEnergy> getList() {
 		@SuppressWarnings("unchecked")
 		List<PaymentEnergy> list = getSession().createCriteria(PaymentEnergy.class).addOrder(Order.asc("paymentDate"))
 				.addOrder(Order.asc("tenant")).list();
@@ -50,11 +43,12 @@ public class PaymentEnergyDAOImpl extends AbstractDao<Integer, PaymentEnergy> im
 	@Override
 	public List<PaymentEnergy> getPaymentEnergyForTenant(Tenant tenant) {
 		@SuppressWarnings("unchecked")
-		List<PaymentEnergy> list = getSession().createCriteria(PaymentEnergy.class).add(Restrictions.eq("tenant", tenant)).addOrder(Order.asc("paymentDate"))
-				.addOrder(Order.asc("tenant")).list();
+		List<PaymentEnergy> list = getSession().createCriteria(PaymentEnergy.class)
+				.add(Restrictions.eq("tenant", tenant)).addOrder(Order.asc("paymentDate")).addOrder(Order.asc("tenant"))
+				.list();
 		return list;
 	}
-	
+
 	@Override
 	public PaymentEnergy getLatestPaymentEnergy() {
 		@SuppressWarnings("unchecked")
@@ -68,21 +62,11 @@ public class PaymentEnergyDAOImpl extends AbstractDao<Integer, PaymentEnergy> im
 
 	}
 
-	public void saveEnergy(List<PaymentEnergy> payment) {
-
-		for (int i = 0; i < payment.size(); i++) {
-			PaymentEnergy tmp = payment.get(i);
-			save(tmp);
-
-		}
-	}
-
 	@Override
 	public void deleteByDate(String date) {
 		Query query = getSession().createSQLQuery("delete from paymentenergy where paymentdate >= :date")
 				.addEntity(PaymentEnergy.class).setString("date", date);
-		 query.executeUpdate();
-	
-		
+		query.executeUpdate();
+
 	}
 }

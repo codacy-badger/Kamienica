@@ -40,32 +40,40 @@ public class PaymentServiceImpl implements PaymentService {
 
 	@Override
 	public List<PaymentEnergy> getPaymentEnergyList() {
-		return energy.getPaymentEnergy();
+		return energy.getList();
 	}
 
 	@Override
 	public List<PaymentGas> getPaymentGasList() {
-		return gas.getPaymentGas();
+		return gas.getList();
 	}
 
 	@Override
 	public List<PaymentWater> getPaymentWaterList() {
-		return water.getPaymentWater();
+		return water.getList();
 	}
 
 	@Override
-	public void saveGas(List<PaymentGas> payment) {
-		gas.saveGas(payment);
+	public void saveGasList(List<PaymentGas> payment) {
+		for (PaymentGas paymentGas : payment) {
+			gas.save(paymentGas);
+		}
+
 	}
 
 	@Override
-	public void saveWater(List<PaymentWater> payment) {
-		water.saveWater(payment);
+	public void saveWaterList(List<PaymentWater> payment) {
+		for (PaymentWater paymentWater : payment) {
+			water.save(paymentWater);
+		}
+
 	}
 
 	@Override
-	public void saveEnergy(List<PaymentEnergy> payment) {
-		energy.saveEnergy(payment);
+	public void saveEnergyList(List<PaymentEnergy> payment) {
+		for (PaymentEnergy paymentEnergy : payment) {
+			energy.save(paymentEnergy);
+		}
 	}
 
 	@Override

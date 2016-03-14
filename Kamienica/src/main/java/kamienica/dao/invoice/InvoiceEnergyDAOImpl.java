@@ -16,13 +16,7 @@ import kamienica.model.PaymentStatus;
 @Transactional
 public class InvoiceEnergyDAOImpl extends AbstractDao<Integer, InvoiceEnergy> implements InvoiceEnergyDAO {
 
-	@Override
-	public void deleteByID(int id) {
-		Query query = getSession().createSQLQuery("delete from invoiceenergy where id = :id");
-		query.setInteger("id", id);
-		query.executeUpdate();
 
-	}
 
 	@Override
 	public InvoiceEnergy getLatest() {
@@ -80,5 +74,7 @@ public class InvoiceEnergyDAOImpl extends AbstractDao<Integer, InvoiceEnergy> im
 		query.executeUpdate();
 
 	}
+
+
 
 }

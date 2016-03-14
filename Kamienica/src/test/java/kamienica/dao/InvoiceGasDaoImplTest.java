@@ -9,7 +9,8 @@ import kamienica.model.MeterGas;
 
 public class InvoiceGasDaoImplTest extends EntityDaoImplTest {
 
-	@Autowired
+
+	@Autowired 
 	InvoiceGasDAO invDao;
 
 	@Test

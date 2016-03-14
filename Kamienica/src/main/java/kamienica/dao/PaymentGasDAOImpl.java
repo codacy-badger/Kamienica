@@ -15,12 +15,6 @@ import kamienica.model.Tenant;
 @Repository("paymentGasDao")
 public class PaymentGasDAOImpl extends AbstractDao<Integer, PaymentGas> implements PaymentGasDAO {
 
-	public void delete(PaymentGas payment) {
-		Query query = getSession().createSQLQuery("delete from paymentenergy where id = :id");
-		query.setInteger("id", payment.getId());
-		query.executeUpdate();
-	}
-
 	@Override
 	public List<PaymentGas> getPaymentGasForTenant(Tenant tenant) {
 		@SuppressWarnings("unchecked")
@@ -47,7 +41,7 @@ public class PaymentGasDAOImpl extends AbstractDao<Integer, PaymentGas> implemen
 	}
 
 	@Override
-	public List<PaymentGas> getPaymentGas() {
+	public List<PaymentGas> getList() {
 		@SuppressWarnings("unchecked")
 		List<PaymentGas> list = getSession().createCriteria(PaymentGas.class).addOrder(Order.asc("paymentDate"))
 				.addOrder(Order.asc("tenant")).list();

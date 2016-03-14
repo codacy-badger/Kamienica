@@ -10,11 +10,11 @@ import kamienica.model.Tenant;
 
 public interface PaymentService {
 
-	public void saveGas(List<PaymentGas> payment);
+	public void saveGasList(List<PaymentGas> payment);
 
-	public void saveWater(List<PaymentWater> payment);
+	public void saveWaterList(List<PaymentWater> payment);
 
-	public void saveEnergy(List<PaymentEnergy> payment);
+	public void saveEnergyList(List<PaymentEnergy> payment);
 
 	public List<PaymentEnergy> getPaymentEnergyForTenant(Tenant tenant);
 

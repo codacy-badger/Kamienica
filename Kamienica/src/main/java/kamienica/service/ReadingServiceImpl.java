@@ -123,8 +123,6 @@ public class ReadingServiceImpl implements ReadingService {
 		return water.getByDate(date);
 	}
 
-
-
 	@Override
 	public void saveGasList(List<ReadingGas> reading) {
 		for (ReadingGas i : reading) {
@@ -142,8 +140,9 @@ public class ReadingServiceImpl implements ReadingService {
 
 	@Override
 	public void saveEnergyList(List<ReadingEnergy> reading) {
-
-		energy.saveList(reading);
+		for (ReadingEnergy readingEnergy : reading) {
+			energy.save(readingEnergy);
+		}
 
 	}
 

@@ -39,8 +39,6 @@ public abstract class AbstractDao<PK extends Serializable, T> {
 		return (T) getSession().get(persistentClass, new Integer((int) id));
 	}
 
-
-
 	public void save(T entity) {
 		getSession().persist(entity);
 
@@ -49,6 +47,12 @@ public abstract class AbstractDao<PK extends Serializable, T> {
 	public void update(T entity) {
 		getSession().update(entity);
 
+	}
+
+	public void deleteById(int id) {
+		Query query = getSession().createSQLQuery("delete from " + persistentClass.getSimpleName() + " where id = :id");
+		query.setInteger("id", id);
+		query.executeUpdate();
 	}
 
 	public void delete(T entity) {

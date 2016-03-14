@@ -22,7 +22,7 @@ public class DivisionServiceImpl implements DivisionService {
 
 	@Override
 	public void deleteByID(int id) {
-		divisionDAO.deleteByID(id);
+		divisionDAO.deleteById(id);
 
 	}
 

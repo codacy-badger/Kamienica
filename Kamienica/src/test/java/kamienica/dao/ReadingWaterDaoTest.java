@@ -9,6 +9,7 @@ import org.testng.Assert;
 import org.testng.annotations.Test;
 
 import kamienica.model.Apartment;
+import kamienica.model.MeterEnergy;
 import kamienica.model.MeterWater;
 import kamienica.model.ReadingWater;
 
@@ -17,7 +18,7 @@ public class ReadingWaterDaoTest extends EntityDaoImplTest {
 	@Autowired
 	ReadingWaterDAO dao;
 	@Autowired
-	MeterWaterDAO meterDAO;
+	DaoInterface<MeterWater> meterDAO;
 
 	@Test
 	public void getUnresolvedReadings() {

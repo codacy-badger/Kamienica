@@ -9,6 +9,7 @@ import kamienica.model.MeterWater;
 
 public class InvoiceWaterDaoImplTest extends EntityDaoImplTest {
 
+	
 	@Autowired
 	InvoiceWaterDAO invDao;
 

@@ -6,17 +6,18 @@ import java.util.List;
 import kamienica.model.Apartment;
 import kamienica.model.InvoiceGas;
 import kamienica.model.InvoiceWater;
+import kamienica.model.ReadingEnergy;
 import kamienica.model.ReadingWater;
 
-public interface ReadingWaterDAO {
+public interface ReadingWaterDAO extends DaoInterface<ReadingWater>{
 
-	public ReadingWater getById(int id);
-
-	public void save(ReadingWater reading);
-
-	public void update(ReadingWater reading);
-
-	public List<ReadingWater> getList();
+//	public ReadingWater getById(int id);
+//
+//	public void save(ReadingWater reading);
+//
+//	public void update(ReadingWater reading);
+//
+//	public List<ReadingWater> getList();
 
 	public List<ReadingWater> getByDate(String date);
 
@@ -24,7 +25,7 @@ public interface ReadingWaterDAO {
 
 	public List<ReadingWater> getLatestList();
 
-	public void deleteById(int id);
+//	public void deleteById(int id);
 
 	public HashMap<Integer, ReadingWater> getLatestReadingsMap();
 

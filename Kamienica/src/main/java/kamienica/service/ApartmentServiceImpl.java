@@ -6,7 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import kamienica.dao.ApartmentDao;
+import kamienica.dao.DaoInterface;
 import kamienica.dao.TenantDao;
 import kamienica.model.Apartment;
 
@@ -15,7 +15,7 @@ import kamienica.model.Apartment;
 public class ApartmentServiceImpl implements ApartmentService {
 
 	@Autowired
-	ApartmentDao apartmentDAO;
+	DaoInterface<Apartment> apartmentDAO;
 	@Autowired
 	TenantDao tenantDAO;
 
@@ -32,7 +32,7 @@ public class ApartmentServiceImpl implements ApartmentService {
 
 	@Override
 	public void deleteByID(int id) {
-		apartmentDAO.deleteByID(id);
+		apartmentDAO.deleteById(id);
 
 	}
 
