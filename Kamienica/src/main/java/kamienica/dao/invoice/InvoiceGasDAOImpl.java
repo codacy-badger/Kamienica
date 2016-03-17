@@ -14,8 +14,7 @@ import kamienica.model.PaymentStatus;
 
 @Repository("invoiceGas")
 @Transactional
-public class InvoiceGasDAOImpl extends AbstractDao<Integer, InvoiceGas> implements InvoiceGasDAO {
-
+public class InvoiceGasDAOImpl extends AbstractDao<Integer, InvoiceGas> implements InvoiceDao<InvoiceGas> {
 
 	@Override
 	public InvoiceGas getLatest() {

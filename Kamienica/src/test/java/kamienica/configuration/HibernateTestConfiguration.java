@@ -1,14 +1,17 @@
 package kamienica.configuration;
 
+import java.util.Arrays;
 import java.util.Properties;
 
 import javax.sql.DataSource;
 
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.core.env.Environment;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
 import org.springframework.orm.hibernate4.HibernateTransactionManager;
 import org.springframework.orm.hibernate4.LocalSessionFactoryBean;
@@ -25,8 +28,10 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 @ComponentScan({ "kamienica.dao" })
 public class HibernateTestConfiguration {
 
-//	@Autowired
-//	private Environment environment;
+	@Autowired
+	private Environment environment;
+	@Autowired
+	ApplicationContext applicationContext;
 
 	@Bean
 	public LocalSessionFactoryBean sessionFactory() {
@@ -34,6 +39,7 @@ public class HibernateTestConfiguration {
 		sessionFactory.setDataSource(dataSource());
 		sessionFactory.setPackagesToScan(new String[] { "kamienica.model" });
 		sessionFactory.setHibernateProperties(hibernateProperties());
+		System.out.println(Arrays.asList(applicationContext.getBeanDefinitionNames()));
 		return sessionFactory;
 	}
 
@@ -41,7 +47,8 @@ public class HibernateTestConfiguration {
 	public DataSource dataSource() {
 		DriverManagerDataSource dataSource = new DriverManagerDataSource();
 		dataSource.setDriverClassName("org.h2.Driver");
-		dataSource.setUrl("jdbc:h2:mem:test;DB_CLOSE_DELAY=-1;INIT=CREATE SCHEMA IF NOT EXISTS kamienica;DB_CLOSE_ON_EXIT=FALSE");
+		dataSource.setUrl(
+				"jdbc:h2:mem:test;DB_CLOSE_DELAY=-1;INIT=CREATE SCHEMA IF NOT EXISTS kamienica;DB_CLOSE_ON_EXIT=FALSE");
 		dataSource.setUsername("sa");
 		dataSource.setPassword("");
 		return dataSource;

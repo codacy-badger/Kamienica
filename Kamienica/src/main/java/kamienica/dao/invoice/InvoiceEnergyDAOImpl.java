@@ -14,9 +14,7 @@ import kamienica.model.PaymentStatus;
 
 @Repository("invoiceEnergy")
 @Transactional
-public class InvoiceEnergyDAOImpl extends AbstractDao<Integer, InvoiceEnergy> implements InvoiceEnergyDAO {
-
-
+public class InvoiceEnergyDAOImpl extends AbstractDao<Integer, InvoiceEnergy> implements InvoiceDao<InvoiceEnergy> {
 
 	@Override
 	public InvoiceEnergy getLatest() {
@@ -74,7 +72,5 @@ public class InvoiceEnergyDAOImpl extends AbstractDao<Integer, InvoiceEnergy> im
 		query.executeUpdate();
 
 	}
-
-
 
 }

@@ -1,17 +1,20 @@
 package kamienica.dao;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
-import kamienica.dao.invoice.InvoiceGasDAO;
+import kamienica.dao.invoice.InvoiceDao;
+import kamienica.model.InvoiceGas;
 import kamienica.model.MeterGas;
 
 public class InvoiceGasDaoImplTest extends EntityDaoImplTest {
 
 
 	@Autowired 
-	InvoiceGasDAO invDao;
+	@Qualifier("invoiceGas")
+	InvoiceDao<InvoiceGas> invDao;
 
 	@Test
 	public void findById() {
