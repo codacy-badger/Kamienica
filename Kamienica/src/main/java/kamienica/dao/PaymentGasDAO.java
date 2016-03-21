@@ -11,12 +11,12 @@ public interface PaymentGasDAO extends DaoInterface<PaymentGas> {
 
 	public void deleteByDate(String date);
 
-	public List<PaymentGas> getGasByInvoice(Invoice invoice);
+	public List<PaymentGas> getByInvoice(Invoice invoice);
 
-	public List<PaymentGas> getGasByReading(ReadingGas reading);
+	public List<PaymentGas> getByReading(ReadingGas reading);
 
-	public PaymentGas getLatestPaymentGas();
+	public PaymentGas getLatestPayment();
 
-	public List<PaymentGas> getPaymentGasForTenant(Tenant tenant);
+	public List<PaymentGas> getPaymentForTenant(Tenant tenant);
 
 }

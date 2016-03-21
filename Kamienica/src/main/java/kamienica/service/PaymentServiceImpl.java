@@ -29,13 +29,13 @@ public class PaymentServiceImpl implements PaymentService {
 	@Override
 	public List<PaymentGas> getPaymentGasByInvoice(Invoice invoice) {
 
-		return gas.getGasByInvoice(invoice);
+		return gas.getByInvoice(invoice);
 	}
 
 	@Override
 	public List<PaymentWater> getPaymentWaterByInvoice(Invoice invoice) {
 
-		return water.getWaterByInvoice(invoice);
+		return water.getByInvoice(invoice);
 	}
 
 	@Override
@@ -79,22 +79,22 @@ public class PaymentServiceImpl implements PaymentService {
 	@Override
 	public List<PaymentEnergy> getEnergyByInvoice(Invoice invoice) {
 
-		return energy.getEnergyByInvoice(invoice);
+		return energy.getByInvoice(invoice);
 	}
 
 	@Override
 	public List<PaymentEnergy> getPaymentEnergyForTenant(Tenant tenant) {
-		return energy.getPaymentEnergyForTenant(tenant);
+		return energy.getPaymentForTenant(tenant);
 	}
 
 	@Override
 	public List<PaymentGas> getPaymentGasForTenant(Tenant tenant) {
-		return gas.getPaymentGasForTenant(tenant);
+		return gas.getPaymentForTenant(tenant);
 	}
 
 	@Override
 	public List<PaymentWater> getPaymentWaterForTenant(Tenant tenant) {
-		return water.getPaymentWaterForTenant(tenant);
+		return water.getPaymentForTenant(tenant);
 	}
 
 	@Override

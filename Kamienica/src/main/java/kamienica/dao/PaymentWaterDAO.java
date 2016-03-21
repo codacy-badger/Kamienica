@@ -11,12 +11,12 @@ public interface PaymentWaterDAO extends DaoInterface<PaymentWater> {
 
 	public void deleteByDate(String date);
 
-	public List<PaymentWater> getWaterByInvoice(Invoice invoice);
+	public List<PaymentWater> getByInvoice(Invoice invoice);
 
-	public List<PaymentWater> getWaterByReading(ReadingWater reading);
+	public List<PaymentWater> getByReading(ReadingWater reading);
 
-	public PaymentWater getLatestPaymentWater();
+	public PaymentWater getLatestPayment();
 
-	public List<PaymentWater> getPaymentWaterForTenant(Tenant tenant);
+	public List<PaymentWater> getPaymentForTenant(Tenant tenant);
 
 }

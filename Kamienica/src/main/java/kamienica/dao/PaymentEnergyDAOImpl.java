@@ -16,7 +16,7 @@ import kamienica.model.Tenant;
 public class PaymentEnergyDAOImpl extends AbstractDao<Integer, PaymentEnergy> implements PaymentEergyDAO {
 
 	@SuppressWarnings("unchecked")
-	public List<PaymentEnergy> getEnergyByInvoice(Invoice invoice) {
+	public List<PaymentEnergy> getByInvoice(Invoice invoice) {
 		Query query = getSession().createSQLQuery("Select * from paymentenergy where invoice_id = :id")
 				.addEntity(PaymentEnergy.class).setInteger("id", invoice.getId());
 		List<PaymentEnergy> result = query.list();
@@ -24,7 +24,7 @@ public class PaymentEnergyDAOImpl extends AbstractDao<Integer, PaymentEnergy> im
 	}
 
 	@Override
-	public List<PaymentEnergy> getEnergyByReading(ReadingEnergy reading) {
+	public List<PaymentEnergy> getByReading(ReadingEnergy reading) {
 		Query query = getSession().createSQLQuery("Select * from paymentenergy where readingdate =:date")
 				.addEntity(PaymentEnergy.class).setDate("date", reading.getReadingDate());
 		@SuppressWarnings("unchecked")
@@ -41,7 +41,7 @@ public class PaymentEnergyDAOImpl extends AbstractDao<Integer, PaymentEnergy> im
 	}
 
 	@Override
-	public List<PaymentEnergy> getPaymentEnergyForTenant(Tenant tenant) {
+	public List<PaymentEnergy> getPaymentForTenant(Tenant tenant) {
 		@SuppressWarnings("unchecked")
 		List<PaymentEnergy> list = getSession().createCriteria(PaymentEnergy.class)
 				.add(Restrictions.eq("tenant", tenant)).addOrder(Order.asc("paymentDate")).addOrder(Order.asc("tenant"))
@@ -50,7 +50,7 @@ public class PaymentEnergyDAOImpl extends AbstractDao<Integer, PaymentEnergy> im
 	}
 
 	@Override
-	public PaymentEnergy getLatestPaymentEnergy() {
+	public PaymentEnergy getLatestPayment() {
 		@SuppressWarnings("unchecked")
 
 		List<PaymentEnergy> list = getSession().createCriteria(PaymentEnergy.class).addOrder(Order.desc("readingDate"))

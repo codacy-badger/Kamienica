@@ -11,12 +11,12 @@ public interface PaymentEergyDAO extends DaoInterface<PaymentEnergy> {
 
 	public void deleteByDate(String date);
 
-	public List<PaymentEnergy> getEnergyByInvoice(Invoice invoice);
+	public List<PaymentEnergy> getByInvoice(Invoice invoice);
 
-	public List<PaymentEnergy> getEnergyByReading(ReadingEnergy reading);
+	public List<PaymentEnergy> getByReading(ReadingEnergy reading);
 
-	public List<PaymentEnergy> getPaymentEnergyForTenant(Tenant tenant);
+	public List<PaymentEnergy> getPaymentForTenant(Tenant tenant);
 
-	public PaymentEnergy getLatestPaymentEnergy();
+	public PaymentEnergy getLatestPayment();
 
 }

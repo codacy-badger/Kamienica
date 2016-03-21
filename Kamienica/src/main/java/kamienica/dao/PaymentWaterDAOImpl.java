@@ -16,7 +16,7 @@ import kamienica.model.Tenant;
 public class PaymentWaterDAOImpl extends AbstractDao<Integer, PaymentWater> implements PaymentWaterDAO {
 
 	@Override
-	public List<PaymentWater> getPaymentWaterForTenant(Tenant tenant) {
+	public List<PaymentWater> getPaymentForTenant(Tenant tenant) {
 		@SuppressWarnings("unchecked")
 		List<PaymentWater> list = getSession().createCriteria(PaymentWater.class).add(Restrictions.eq("tenant", tenant))
 				.addOrder(Order.asc("paymentDate")).addOrder(Order.asc("tenant")).list();
@@ -24,7 +24,7 @@ public class PaymentWaterDAOImpl extends AbstractDao<Integer, PaymentWater> impl
 	}
 
 	@SuppressWarnings("unchecked")
-	public List<PaymentWater> getWaterByInvoice(Invoice invoice) {
+	public List<PaymentWater> getByInvoice(Invoice invoice) {
 		Query query = getSession().createSQLQuery("Select * from paymentwater where invoice_id = :id")
 				.addEntity(PaymentWater.class).setInteger("id", invoice.getId());
 		List<PaymentWater> result = query.list();
@@ -32,7 +32,7 @@ public class PaymentWaterDAOImpl extends AbstractDao<Integer, PaymentWater> impl
 	}
 
 	@Override
-	public List<PaymentWater> getWaterByReading(ReadingWater reading) {
+	public List<PaymentWater> getByReading(ReadingWater reading) {
 		Query query = getSession().createSQLQuery("Select * from paymentwater where readingdate >=:date")
 				.addEntity(PaymentWater.class).setDate("date", reading.getReadingDate());
 		@SuppressWarnings("unchecked")
@@ -49,7 +49,7 @@ public class PaymentWaterDAOImpl extends AbstractDao<Integer, PaymentWater> impl
 	}
 
 	@Override
-	public PaymentWater getLatestPaymentWater() {
+	public PaymentWater getLatestPayment() {
 		@SuppressWarnings("unchecked")
 
 		List<PaymentWater> list = getSession().createCriteria(PaymentWater.class).addOrder(Order.desc("readingDate"))

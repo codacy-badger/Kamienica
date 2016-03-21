@@ -16,7 +16,7 @@ import kamienica.model.Tenant;
 public class PaymentGasDAOImpl extends AbstractDao<Integer, PaymentGas> implements PaymentGasDAO {
 
 	@Override
-	public List<PaymentGas> getPaymentGasForTenant(Tenant tenant) {
+	public List<PaymentGas> getPaymentForTenant(Tenant tenant) {
 		@SuppressWarnings("unchecked")
 		List<PaymentGas> list = getSession().createCriteria(PaymentGas.class).add(Restrictions.eq("tenant", tenant))
 				.addOrder(Order.asc("paymentDate")).addOrder(Order.asc("tenant")).list();
@@ -24,7 +24,7 @@ public class PaymentGasDAOImpl extends AbstractDao<Integer, PaymentGas> implemen
 	}
 
 	@SuppressWarnings("unchecked")
-	public List<PaymentGas> getGasByInvoice(Invoice invoice) {
+	public List<PaymentGas> getByInvoice(Invoice invoice) {
 		Query query = getSession().createSQLQuery("Select * from paymentenergy where invoice_id = :id")
 				.addEntity(PaymentGas.class).setInteger("id", invoice.getId());
 		List<PaymentGas> result = query.list();
@@ -32,7 +32,7 @@ public class PaymentGasDAOImpl extends AbstractDao<Integer, PaymentGas> implemen
 	}
 
 	@Override
-	public List<PaymentGas> getGasByReading(ReadingGas reading) {
+	public List<PaymentGas> getByReading(ReadingGas reading) {
 		Query query = getSession().createSQLQuery("Select * from paymentenergy where readingdate >=:date")
 				.addEntity(PaymentGas.class).setDate("date", reading.getReadingDate());
 		@SuppressWarnings("unchecked")
@@ -49,7 +49,7 @@ public class PaymentGasDAOImpl extends AbstractDao<Integer, PaymentGas> implemen
 	}
 
 	@Override
-	public PaymentGas getLatestPaymentGas() {
+	public PaymentGas getLatestPayment() {
 		@SuppressWarnings("unchecked")
 
 		List<PaymentGas> list = getSession().createCriteria(PaymentGas.class).addOrder(Order.desc("readingDate"))
