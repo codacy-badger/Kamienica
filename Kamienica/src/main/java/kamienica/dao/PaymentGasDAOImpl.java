@@ -13,7 +13,7 @@ import kamienica.model.ReadingGas;
 import kamienica.model.Tenant;
 
 @Repository("paymentGasDao")
-public class PaymentGasDAOImpl extends AbstractDao<Integer, PaymentGas> implements PaymentGasDAO {
+public class PaymentGasDAOImpl extends AbstractDao<Integer, PaymentGas> implements PaymentDao<PaymentGas, ReadingGas> {
 
 	@Override
 	public List<PaymentGas> getPaymentForTenant(Tenant tenant) {

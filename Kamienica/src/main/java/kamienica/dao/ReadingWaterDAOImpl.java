@@ -14,7 +14,8 @@ import kamienica.model.InvoiceWater;
 import kamienica.model.ReadingWater;
 
 @Repository("readingWaterDao")
-public class ReadingWaterDAOImpl extends AbstractDao<Integer, ReadingWater> implements ReadingWaterDAO {
+public class ReadingWaterDAOImpl extends AbstractDao<Integer, ReadingWater>
+		implements ReadingWaterDAO {
 
 	@Override
 	public List<ReadingWater> getList() {
@@ -35,15 +36,15 @@ public class ReadingWaterDAOImpl extends AbstractDao<Integer, ReadingWater> impl
 		return result;
 	}
 
-	@Override
-	public HashMap<Integer, ReadingWater> getLatestReadingsMap() {
-		List<ReadingWater> result = getLatestList();
-		HashMap<Integer, ReadingWater> mappedResult = new HashMap<>();
-		for (ReadingWater i : result) {
-			mappedResult.put(i.getMeter().getId(), i);
-		}
-		return mappedResult;
-	}
+	// @Override
+	// public HashMap<Integer, ReadingWater> getLatestReadingsMap() {
+	// List<ReadingWater> result = getLatestList();
+	// HashMap<Integer, ReadingWater> mappedResult = new HashMap<>();
+	// for (ReadingWater i : result) {
+	// mappedResult.put(i.getMeter().getId(), i);
+	// }
+	// return mappedResult;
+	// }
 
 	@Override
 	public List<ReadingWater> getPrevious(String readingDate) {
@@ -105,8 +106,7 @@ public class ReadingWaterDAOImpl extends AbstractDao<Integer, ReadingWater> impl
 	}
 
 	@SuppressWarnings("unchecked")
-	@Override
-	public HashMap<String, List<ReadingWater>> getWaterReadingForGasConsumption2(InvoiceGas invoice) {
+	public HashMap<String, List<ReadingWater>> getWaterReadingForGasConsumption(InvoiceGas invoice) {
 		HashMap<String, List<ReadingWater>> out = new HashMap<String, List<ReadingWater>>();
 		List<ReadingWater> oldReadings = new ArrayList<>();
 		Query query = getSession()

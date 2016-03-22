@@ -75,13 +75,13 @@ public class ReadingWaterDaoTest extends EntityDaoImplTest {
 		Assert.assertEquals(sum, 730.0);
 
 	}
-
-	@Test
-	public void getLatestMap() {
-		HashMap<Integer, ReadingWater> list = dao.getLatestReadingsMap();
-		Assert.assertEquals(list.get(1).getValue(), 145.0);
-
-	}
+//
+//	@Test
+//	public void getLatestMap() {
+//		HashMap<Integer, ReadingWater> list = dao.getLatestReadingsMap();
+//		Assert.assertEquals(list.get(1).getValue(), 145.0);
+//
+//	}
 
 	@Test
 	public void addAndRemove() {

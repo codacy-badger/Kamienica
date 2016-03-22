@@ -1,6 +1,5 @@
 package kamienica.dao;
 
-import java.util.HashMap;
 import java.util.List;
 
 import org.hibernate.Query;
@@ -12,7 +11,8 @@ import kamienica.model.InvoiceEnergy;
 import kamienica.model.ReadingEnergy;
 
 @Repository("readingEnergyDao")
-public class ReadingEnergyDAOImpl extends AbstractDao<Integer, ReadingEnergy> implements ReadingEnergyDAO {
+public class ReadingEnergyDAOImpl extends AbstractDao<Integer, ReadingEnergy>
+		implements ReadingDao<ReadingEnergy, InvoiceEnergy> {
 
 	@Override
 	public List<ReadingEnergy> getList() {
@@ -33,15 +33,15 @@ public class ReadingEnergyDAOImpl extends AbstractDao<Integer, ReadingEnergy> im
 		return result;
 	}
 
-	@Override
-	public HashMap<Integer, ReadingEnergy> getLatestReadingsMap() {
-		List<ReadingEnergy> result = getLatestList();
-		HashMap<Integer, ReadingEnergy> mappedResult = new HashMap<>();
-		for (ReadingEnergy i : result) {
-			mappedResult.put(i.getMeter().getId(), i);
-		}
-		return mappedResult;
-	}
+//	@Override
+//	public HashMap<Integer, ReadingEnergy> getLatestReadingsMap() {
+//		List<ReadingEnergy> result = getLatestList();
+//		HashMap<Integer, ReadingEnergy> mappedResult = new HashMap<>();
+//		for (ReadingEnergy i : result) {
+//			mappedResult.put(i.getMeter().getId(), i);
+//		}
+//		return mappedResult;
+//	}
 
 	@Override
 	public List<ReadingEnergy> getPrevious(String readingDate) {

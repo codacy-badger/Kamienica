@@ -6,11 +6,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import kamienica.dao.PaymentEergyDAO;
-import kamienica.dao.PaymentGasDAO;
-import kamienica.dao.PaymentWaterDAO;
-import kamienica.dao.ReadingEnergyDAO;
-import kamienica.dao.ReadingGasDAO;
+import kamienica.dao.PaymentDao;
+import kamienica.dao.ReadingDao;
 import kamienica.dao.ReadingWaterDAO;
 import kamienica.dao.invoice.InvoiceDao;
 import kamienica.model.InvoiceEnergy;
@@ -19,11 +16,13 @@ import kamienica.model.InvoiceWater;
 import kamienica.model.PaymentEnergy;
 import kamienica.model.PaymentGas;
 import kamienica.model.PaymentWater;
+import kamienica.model.ReadingEnergy;
+import kamienica.model.ReadingGas;
+import kamienica.model.ReadingWater;
 
 @Service
 @Transactional
 public class InvoiceServiceImpl implements InvoiceService {
-
 
 	@Autowired
 	InvoiceDao<InvoiceEnergy> invoiceEnergy;
@@ -32,17 +31,17 @@ public class InvoiceServiceImpl implements InvoiceService {
 	@Autowired
 	InvoiceDao<InvoiceWater> invoiceWater;
 	@Autowired
-	ReadingEnergyDAO readingEnergy;
+	ReadingDao<ReadingEnergy, InvoiceEnergy> readingEnergy;
 	@Autowired
-	ReadingGasDAO readingGas;
+	ReadingDao<ReadingGas, InvoiceGas>  readingGas;
 	@Autowired
-	ReadingWaterDAO readingWater;
+	ReadingWaterDAO  readingWater;
 	@Autowired
-	private PaymentGasDAO paymentGasDao;
+	private PaymentDao<PaymentGas, ReadingGas> paymentGasDao;
 	@Autowired
-	private PaymentEergyDAO paymentEnergyDao;
+	private PaymentDao<PaymentEnergy, ReadingEnergy> paymentEnergyDao;
 	@Autowired
-	private PaymentWaterDAO paymentWaterDao;
+	private PaymentDao<PaymentWater, ReadingWater> paymentWaterDao;
 
 	@Override
 	public void saveEnergy(InvoiceEnergy invoice, List<PaymentEnergy> payment) {

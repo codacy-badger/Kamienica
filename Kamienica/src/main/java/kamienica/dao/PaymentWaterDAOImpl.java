@@ -13,7 +13,8 @@ import kamienica.model.ReadingWater;
 import kamienica.model.Tenant;
 
 @Repository("paymentWaterDao")
-public class PaymentWaterDAOImpl extends AbstractDao<Integer, PaymentWater> implements PaymentWaterDAO {
+public class PaymentWaterDAOImpl extends AbstractDao<Integer, PaymentWater>
+		implements PaymentDao<PaymentWater, ReadingWater> {
 
 	@Override
 	public List<PaymentWater> getPaymentForTenant(Tenant tenant) {
@@ -60,8 +61,6 @@ public class PaymentWaterDAOImpl extends AbstractDao<Integer, PaymentWater> impl
 		return list.get(0);
 
 	}
-
-	
 
 	@Override
 	public void deleteByDate(String date) {

@@ -13,7 +13,8 @@ import kamienica.model.ReadingEnergy;
 import kamienica.model.Tenant;
 
 @Repository("paymentEnergyDao")
-public class PaymentEnergyDAOImpl extends AbstractDao<Integer, PaymentEnergy> implements PaymentEergyDAO {
+public class PaymentEnergyDAOImpl extends AbstractDao<Integer, PaymentEnergy>
+		implements PaymentDao<PaymentEnergy, ReadingEnergy> {
 
 	@SuppressWarnings("unchecked")
 	public List<PaymentEnergy> getByInvoice(Invoice invoice) {

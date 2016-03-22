@@ -7,10 +7,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import kamienica.dao.ReadingEnergyDAO;
-import kamienica.dao.ReadingGasDAO;
-import kamienica.dao.ReadingWaterDAO;
+import kamienica.dao.ReadingDao;
+import kamienica.dao.ReadingWaterDAOImpl;
 import kamienica.model.Apartment;
+import kamienica.model.InvoiceEnergy;
 import kamienica.model.InvoiceGas;
 import kamienica.model.ReadingEnergy;
 import kamienica.model.ReadingGas;
@@ -21,11 +21,11 @@ import kamienica.model.ReadingWater;
 public class ReadingServiceImpl implements ReadingService {
 
 	@Autowired
-	ReadingEnergyDAO energy;
+	ReadingDao<ReadingEnergy, InvoiceEnergy> energy;
 	@Autowired
-	ReadingWaterDAO water;
+	ReadingWaterDAOImpl  water;
 	@Autowired
-	ReadingGasDAO gas;
+	ReadingDao<ReadingGas, InvoiceGas>  gas;
 
 	@Override
 	public List<ReadingEnergy> getReadingEnergy() {
@@ -77,7 +77,12 @@ public class ReadingServiceImpl implements ReadingService {
 
 	@Override
 	public HashMap<Integer, ReadingEnergy> getLatestEnergyReadings() {
-		return energy.getLatestReadingsMap();
+		List<ReadingEnergy> result = energy.getLatestList();
+		HashMap<Integer, ReadingEnergy> mappedResult = new HashMap<>();
+		for (ReadingEnergy i : result) {
+			mappedResult.put(i.getMeter().getId(), i);
+		}
+		return mappedResult;
 	}
 
 	@Override
@@ -104,13 +109,22 @@ public class ReadingServiceImpl implements ReadingService {
 
 	@Override
 	public HashMap<Integer, ReadingGas> getLatestGasReadings() {
-
-		return gas.getLatestReadingsMap();
+		List<ReadingGas> result = gas.getLatestList();
+		HashMap<Integer, ReadingGas> mappedResult = new HashMap<>();
+		for (ReadingGas i : result) {
+			mappedResult.put(i.getMeter().getId(), i);
+		}
+		return mappedResult;
 	}
 
 	@Override
 	public HashMap<Integer, ReadingWater> getLatestWaterReadings() {
-		return water.getLatestReadingsMap();
+		List<ReadingWater> result = water.getLatestList();
+		HashMap<Integer, ReadingWater> mappedResult = new HashMap<>();
+		for (ReadingWater i : result) {
+			mappedResult.put(i.getMeter().getId(), i);
+		}
+		return mappedResult;
 	}
 
 	@Override
@@ -196,7 +210,7 @@ public class ReadingServiceImpl implements ReadingService {
 
 	@Override
 	public HashMap<String, List<ReadingWater>> getWaterReadingsForGasConsumption(InvoiceGas invoice) {
-		return water.getWaterReadingForGasConsumption2(invoice);
+		return water.getWaterReadingForGasConsumption(invoice);
 	}
 
 	@Override

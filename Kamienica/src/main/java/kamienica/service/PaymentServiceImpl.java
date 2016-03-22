@@ -6,13 +6,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import kamienica.dao.PaymentEergyDAO;
-import kamienica.dao.PaymentGasDAO;
-import kamienica.dao.PaymentWaterDAO;
+import kamienica.dao.PaymentDao;
 import kamienica.model.Invoice;
 import kamienica.model.PaymentEnergy;
 import kamienica.model.PaymentGas;
 import kamienica.model.PaymentWater;
+import kamienica.model.ReadingEnergy;
+import kamienica.model.ReadingGas;
+import kamienica.model.ReadingWater;
 import kamienica.model.Tenant;
 
 @Service
@@ -20,11 +21,11 @@ import kamienica.model.Tenant;
 public class PaymentServiceImpl implements PaymentService {
 
 	@Autowired
-	private PaymentGasDAO gas;
+	private PaymentDao<PaymentGas, ReadingGas> gas;
 	@Autowired
-	private PaymentEergyDAO energy;
+	private PaymentDao<PaymentEnergy, ReadingEnergy> energy;
 	@Autowired
-	private PaymentWaterDAO water;
+	private PaymentDao<PaymentWater, ReadingWater> water;
 
 	@Override
 	public List<PaymentGas> getPaymentGasByInvoice(Invoice invoice) {
