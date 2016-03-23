@@ -32,16 +32,6 @@ public class ReadingGasDAOImpl extends AbstractDao<Integer, ReadingGas> implemen
 		return result;
 	}
 
-//	@Override
-//	public HashMap<Integer, ReadingGas> getLatestReadingsMap() {
-//		List<ReadingGas> result = getLatestList();
-//		HashMap<Integer, ReadingGas> mappedResult = new HashMap<>();
-//		for (ReadingGas i : result) {
-//			mappedResult.put(i.getMeter().getId(), i);
-//		}
-//		return mappedResult;
-//	}
-
 	@Override
 	public List<ReadingGas> getPrevious(String readingDate) {
 		Query query = getSession()
@@ -64,7 +54,7 @@ public class ReadingGasDAOImpl extends AbstractDao<Integer, ReadingGas> implemen
 
 	@Override
 	public List<ReadingGas> getLatestList() {
-		String original = "Select * from (select * from readingGas order by readingDate desc) as c group by meter_id";
+		//		String original = "Select * from (select * from readingGas order by readingDate desc) as c group by meter_id";
 		String test = "Select * from readingGas where readingDate=(select MAX(readingDate) from readingGas)";
 		Query query = getSession().createSQLQuery(test).addEntity(ReadingGas.class);
 		@SuppressWarnings("unchecked")

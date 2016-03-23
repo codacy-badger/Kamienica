@@ -14,8 +14,7 @@ import kamienica.model.InvoiceWater;
 import kamienica.model.ReadingWater;
 
 @Repository("readingWaterDao")
-public class ReadingWaterDAOImpl extends AbstractDao<Integer, ReadingWater>
-		implements ReadingWaterDAO {
+public class ReadingWaterDAOImpl extends AbstractDao<Integer, ReadingWater> implements ReadingWaterDAO {
 
 	@Override
 	public List<ReadingWater> getList() {
@@ -35,16 +34,6 @@ public class ReadingWaterDAOImpl extends AbstractDao<Integer, ReadingWater>
 		List<ReadingWater> result = query.list();
 		return result;
 	}
-
-	// @Override
-	// public HashMap<Integer, ReadingWater> getLatestReadingsMap() {
-	// List<ReadingWater> result = getLatestList();
-	// HashMap<Integer, ReadingWater> mappedResult = new HashMap<>();
-	// for (ReadingWater i : result) {
-	// mappedResult.put(i.getMeter().getId(), i);
-	// }
-	// return mappedResult;
-	// }
 
 	@Override
 	public List<ReadingWater> getPrevious(String readingDate) {
@@ -68,7 +57,8 @@ public class ReadingWaterDAOImpl extends AbstractDao<Integer, ReadingWater>
 
 	@Override
 	public List<ReadingWater> getLatestList() {
-		String original = "Select * from (select * from readingWater order by readingDate desc) as c group by meter_id";
+		// String original = "Select * from (select * from readingWater order by
+		// readingDate desc) as c group by meter_id";
 		String test = "Select * from readingWater where readingDate=(select MAX(readingDate) from readingWater)";
 		Query query = getSession().createSQLQuery(test).addEntity(ReadingWater.class);
 		@SuppressWarnings("unchecked")

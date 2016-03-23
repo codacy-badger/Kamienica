@@ -187,15 +187,14 @@ public class ReadingController {
 	// --------------------------------SAVE-----------------------------------------------------------------
 
 	@RequestMapping(value = "/Admin/Reading/readingEnergySave", method = RequestMethod.POST)
-	public ModelAndView readingEnergySave( @ModelAttribute("readingForm") ReadingEnergyForm readingForm,
+	public ModelAndView readingEnergySave(@ModelAttribute("readingForm") ReadingEnergyForm readingForm,
 			BindingResult result, HttpServletRequest req) throws ParseException {
 		List<ReadingEnergy> reading = readingForm.getCurrentReadings();
-		if(!ReadingValidator.validateMeterReadings(reading)) {
+		if (!ReadingValidator.validateMeterReadings(reading)) {
 			return new ModelAndView("/Admin/Reading/ReadingEnergyRegister");
 		}
 		String date = req.getParameter("date");
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-		
 
 		for (int i = 0; i < reading.size(); i++) {
 			reading.get(i).setReadingDate(sdf.parse(date));
@@ -267,7 +266,7 @@ public class ReadingController {
 		if (listToDelete.get(0).isResolved() == true) {
 			Map<String, Object> model = new HashMap<String, Object>();
 			model.put("error", "Nie można usuwać odczytu, dla którego wprowadzono Fakturę.");
-			return new ModelAndView("/Admin/Reading/ReadingEnergyList","model", model);
+			return new ModelAndView("/Admin/Reading/ReadingEnergyList", "model", model);
 		}
 		readingService.deleteReadingEnergyList(listToDelete);
 
@@ -280,7 +279,7 @@ public class ReadingController {
 		if (listToDelete.get(0).isResolved() == true) {
 			Map<String, Object> model = new HashMap<String, Object>();
 			model.put("error", "Nie można usuwać odczytu, dla którego wprowadzono Fakturę.");
-			return new ModelAndView("/Admin/Reading/ReadingGasList","model", model);
+			return new ModelAndView("/Admin/Reading/ReadingGasList", "model", model);
 		}
 		readingService.deleteReadingGasList(listToDelete);
 		return new ModelAndView("redirect:/Admin/Reading/readingGasList.html");
@@ -292,7 +291,7 @@ public class ReadingController {
 		if (listToDelete.get(0).isResolved() == true) {
 			Map<String, Object> model = new HashMap<String, Object>();
 			model.put("error", "Nie można usuwać odczytu, dla którego wprowadzono Fakturę.");
-			return new ModelAndView("/Admin/Reading/ReadingWaterList","model", model);
+			return new ModelAndView("/Admin/Reading/ReadingWaterList", "model", model);
 		}
 		readingService.deleteReadingWaterList(listToDelete);
 		return new ModelAndView("redirect:/Admin/Reading/readingWaterList.html");
@@ -443,13 +442,18 @@ public class ReadingController {
 		String date = req.getParameter("date");
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 		List<ReadingEnergy> listToSave = readingForm.getCurrentReadings();
+		System.out.println("lista!!!!");
+		System.out.println(listToSave);
 
+		System.out.println("id:");
+		System.out.println(listToSave.get(0).getId());
 		for (ReadingEnergy i : listToSave) {
 			i.setReadingDate(sdf.parse(date));
 			i.setUnit(i.getMeter().getUnit());
-			readingService.updateEnergy(i);
+			// readingService.updateEnergy(i);
 
 		}
+		readingService.updateEnergyList(listToSave);
 		return new ModelAndView("redirect:/Admin/Reading/readingEnergyList.html");
 	}
 
@@ -474,7 +478,11 @@ public class ReadingController {
 		String date = req.getParameter("date");
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 		List<ReadingWater> listToSave = readingForm.getCurrentReadings();
+		System.out.println("lista!!!!");
+		System.out.println(listToSave);
 
+		System.out.println("id:");
+		System.out.println(listToSave.get(0).getId());
 		for (ReadingWater i : listToSave) {
 			i.setReadingDate(sdf.parse(date));
 			i.setUnit(i.getMeter().getUnit());

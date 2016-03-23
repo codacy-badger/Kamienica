@@ -5,7 +5,6 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
-import kamienica.dao.invoice.InvoiceDao;
 import kamienica.model.InvoiceGas;
 import kamienica.model.MeterGas;
 

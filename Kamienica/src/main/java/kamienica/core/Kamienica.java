@@ -5,9 +5,6 @@ import java.text.ParseException;
 import java.util.Arrays;
 import java.util.LinkedList;
 
-import kamienica.model.Invoice;
-import kamienica.model.InvoiceEnergy;
-
 public class Kamienica {
 
 	public static void main(String[] args) throws IOException, ParseException {

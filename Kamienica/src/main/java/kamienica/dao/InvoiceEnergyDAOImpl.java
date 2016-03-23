@@ -1,4 +1,4 @@
-package kamienica.dao.invoice;
+package kamienica.dao;
 
 import java.util.List;
 
@@ -7,7 +7,6 @@ import javax.transaction.Transactional;
 import org.hibernate.Query;
 import org.springframework.stereotype.Repository;
 
-import kamienica.dao.AbstractDao;
 import kamienica.model.Invoice;
 import kamienica.model.InvoiceEnergy;
 import kamienica.model.PaymentStatus;

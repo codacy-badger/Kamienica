@@ -25,6 +25,8 @@ public interface ReadingService {
 
 	public void updateEnergy(ReadingEnergy reading);
 
+	public void updateEnergyList(List<ReadingEnergy> readings);
+
 	public void updateGas(ReadingGas reading);
 
 	public void updateWater(ReadingWater reading);

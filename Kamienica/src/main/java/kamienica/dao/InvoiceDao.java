@@ -1,8 +1,7 @@
-package kamienica.dao.invoice;
+package kamienica.dao;
 
 import java.util.List;
 
-import kamienica.dao.DaoInterface;
 import kamienica.model.Invoice;
 
 public interface InvoiceDao<I extends Invoice> extends DaoInterface<I> {

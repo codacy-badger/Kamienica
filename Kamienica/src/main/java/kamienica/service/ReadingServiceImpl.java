@@ -23,9 +23,9 @@ public class ReadingServiceImpl implements ReadingService {
 	@Autowired
 	ReadingDao<ReadingEnergy, InvoiceEnergy> energy;
 	@Autowired
-	ReadingWaterDAO  water;
+	ReadingWaterDAO water;
 	@Autowired
-	ReadingDao<ReadingGas, InvoiceGas>  gas;
+	ReadingDao<ReadingGas, InvoiceGas> gas;
 
 	@Override
 	public List<ReadingEnergy> getReadingEnergy() {
@@ -233,6 +233,14 @@ public class ReadingServiceImpl implements ReadingService {
 	public void deleteReadingWaterList(List<ReadingWater> list) {
 		for (ReadingWater reading : list) {
 			water.deleteById(reading.getId());
+		}
+
+	}
+
+	@Override
+	public void updateEnergyList(List<ReadingEnergy> readings) {
+		for (ReadingEnergy readingEnergy : readings) {
+			energy.update(readingEnergy);
 		}
 
 	}

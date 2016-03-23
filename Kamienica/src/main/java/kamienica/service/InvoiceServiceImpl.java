@@ -6,10 +6,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import kamienica.dao.InvoiceDao;
 import kamienica.dao.PaymentDao;
 import kamienica.dao.ReadingDao;
 import kamienica.dao.ReadingWaterDAO;
-import kamienica.dao.invoice.InvoiceDao;
 import kamienica.model.InvoiceEnergy;
 import kamienica.model.InvoiceGas;
 import kamienica.model.InvoiceWater;
