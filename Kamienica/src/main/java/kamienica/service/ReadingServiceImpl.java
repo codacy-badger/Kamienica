@@ -8,7 +8,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import kamienica.dao.ReadingDao;
-import kamienica.dao.ReadingWaterDAOImpl;
+import kamienica.dao.ReadingWaterDAO;
 import kamienica.model.Apartment;
 import kamienica.model.InvoiceEnergy;
 import kamienica.model.InvoiceGas;
@@ -23,7 +23,7 @@ public class ReadingServiceImpl implements ReadingService {
 	@Autowired
 	ReadingDao<ReadingEnergy, InvoiceEnergy> energy;
 	@Autowired
-	ReadingWaterDAOImpl  water;
+	ReadingWaterDAO  water;
 	@Autowired
 	ReadingDao<ReadingGas, InvoiceGas>  gas;
 
