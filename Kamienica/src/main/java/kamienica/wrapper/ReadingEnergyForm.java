@@ -43,7 +43,7 @@ public class ReadingEnergyForm {
 		this.previousReadings = previousReadings;
 	}
 
-	public void dodajBrakujacyOdczytZPoprzedniejListy(ReadingEnergy odczyt) {
-		this.previousReadings.add(odczyt);
-	}
+//	public void dodajBrakujacyOdczytZPoprzedniejListy(ReadingEnergy odczyt) {
+//		this.previousReadings.add(odczyt);
+//	}
 }

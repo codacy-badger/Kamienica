@@ -154,6 +154,8 @@
 						var="reading">
 						<div class="row">
 							<div class="col-md-6 myLabel ">
+								<input name="currentReadings[${i.index}].id"
+									value="${reading.id}" type="hidden" />
 								<form:label path="currentReadings[${i.index}].value">${reading.meter.description}</form:label>
 							</div>
 							<div class="col-md-6 inputAndError">

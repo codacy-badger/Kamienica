@@ -39,6 +39,7 @@ import kamienica.service.MeterService;
 import kamienica.service.ReadingService;
 import kamienica.validator.ReadingValidator;
 import kamienica.wrapper.ReadingEnergyForm;
+import kamienica.wrapper.ReadingForm;
 import kamienica.wrapper.ReadingGasForm;
 import kamienica.wrapper.ReadingWaterForm;
 
@@ -440,15 +441,11 @@ public class ReadingController {
 	public ModelAndView readingEnergyOverwite(@ModelAttribute("readingForm") ReadingEnergyForm readingForm,
 			BindingResult result, HttpServletRequest req) throws ParseException {
 		String date = req.getParameter("date");
-		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+		// SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 		List<ReadingEnergy> listToSave = readingForm.getCurrentReadings();
-		System.out.println("lista!!!!");
-		System.out.println(listToSave);
 
-		System.out.println("id:");
-		System.out.println(listToSave.get(0).getId());
 		for (ReadingEnergy i : listToSave) {
-			i.setReadingDate(sdf.parse(date));
+			i.setReadingDate(df.parse(date));
 			i.setUnit(i.getMeter().getUnit());
 			// readingService.updateEnergy(i);
 
@@ -461,11 +458,11 @@ public class ReadingController {
 	public ModelAndView readingGasOverwrite(@ModelAttribute("readingForm") ReadingGasForm readingForm,
 			BindingResult result, HttpServletRequest req) throws ParseException {
 		String date = req.getParameter("date");
-		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+		// SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 		List<ReadingGas> listToSave = readingForm.getCurrentReadings();
 
 		for (ReadingGas i : listToSave) {
-			i.setReadingDate(sdf.parse(date));
+			i.setReadingDate(df.parse(date));
 			i.setUnit(i.getMeter().getUnit());
 			readingService.updateGas(i);
 		}
@@ -476,15 +473,11 @@ public class ReadingController {
 	public ModelAndView readingWaterOverwrite(@ModelAttribute("readingForm") ReadingWaterForm readingForm,
 			BindingResult result, HttpServletRequest req) throws ParseException {
 		String date = req.getParameter("date");
-		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+		// SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 		List<ReadingWater> listToSave = readingForm.getCurrentReadings();
-		System.out.println("lista!!!!");
-		System.out.println(listToSave);
 
-		System.out.println("id:");
-		System.out.println(listToSave.get(0).getId());
 		for (ReadingWater i : listToSave) {
-			i.setReadingDate(sdf.parse(date));
+			i.setReadingDate(df.parse(date));
 			i.setUnit(i.getMeter().getUnit());
 			readingService.updateWater(i);
 		}
