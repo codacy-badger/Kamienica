@@ -8,7 +8,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 @Entity
-@Table
+@Table(name="readingwater")
 public class ReadingWater extends ReadingAbstract {
 
 	@Column(nullable = false)

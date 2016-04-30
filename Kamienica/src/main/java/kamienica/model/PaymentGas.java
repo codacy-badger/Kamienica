@@ -7,7 +7,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 @Entity
-@Table
+@Table(name="paymentgas")
 public class PaymentGas extends PaymentAbstract {
 
 	@ManyToOne
