@@ -74,7 +74,7 @@ public abstract class MeterAbstract {
 		try {
 			opisMieszkania = apartment.getDescription();
 		} catch (NullPointerException e) {
-			// TODO Auto-generated catch block
+		
 			opisMieszkania = "brak";
 		}
 		return "\n" + description + ", serialNumber:" + serialNumber

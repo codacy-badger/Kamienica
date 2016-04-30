@@ -2,9 +2,6 @@ package kamienica.dao;
 
 import java.util.Date;
 
-import org.dbunit.dataset.CompositeDataSet;
-import org.dbunit.dataset.IDataSet;
-import org.dbunit.dataset.xml.FlatXmlDataSet;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.testng.Assert;
 import org.testng.annotations.Test;
