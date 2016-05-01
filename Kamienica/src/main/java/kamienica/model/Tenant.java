@@ -18,7 +18,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
 
 @Entity
-@Table
+@Table(name="tenant")
 public class Tenant {
 
 	@Id

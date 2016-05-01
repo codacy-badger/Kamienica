@@ -7,7 +7,7 @@ import javax.persistence.Table;
 import org.springframework.beans.factory.annotation.Autowired;
 
 @Entity
-@Table
+@Table(name="metergas")
 public class MeterGas extends MeterAbstract {
 	@Column(nullable=false)
 	private boolean cwu;

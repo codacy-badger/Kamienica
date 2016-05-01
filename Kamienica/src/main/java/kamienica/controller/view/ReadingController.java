@@ -39,7 +39,6 @@ import kamienica.service.MeterService;
 import kamienica.service.ReadingService;
 import kamienica.validator.ReadingValidator;
 import kamienica.wrapper.ReadingEnergyForm;
-import kamienica.wrapper.ReadingForm;
 import kamienica.wrapper.ReadingGasForm;
 import kamienica.wrapper.ReadingWaterForm;
 

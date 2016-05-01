@@ -14,7 +14,7 @@ import org.hibernate.validator.constraints.NotEmpty;
 import org.springframework.beans.factory.annotation.Autowired;
 
 @Entity
-@Table
+@Table(name="apartment")
 public class Apartment {
 
 	@Id

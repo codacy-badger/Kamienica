@@ -7,7 +7,7 @@ import javax.persistence.Table;
 import org.springframework.beans.factory.annotation.Autowired;
 
 @Entity
-@Table
+@Table(name="meterwater")
 public class MeterWater extends MeterAbstract {
 	@Column(nullable = false)
 	private boolean isWarmWater;
@@ -17,7 +17,6 @@ public class MeterWater extends MeterAbstract {
 		super(description, serialNumber, unit, apartment);
 
 		this.isWarmWater = isWarmWater;
-		// TODO Auto-generated constructor stub
 	}
 
 	public MeterWater() {
@@ -38,7 +37,6 @@ public class MeterWater extends MeterAbstract {
 		try {
 			opisMieszkania = apartment.getDescription();
 		} catch (NullPointerException e) {
-			// TODO Auto-generated catch block
 			opisMieszkania = "brak";
 		}
 		return "\n" + description + ", nrSeryjnyLicznika:" + serialNumber + ", Mieszkanie:" + opisMieszkania

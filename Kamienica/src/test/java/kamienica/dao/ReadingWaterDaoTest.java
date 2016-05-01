@@ -1,7 +1,6 @@
 package kamienica.dao;
 
 import java.util.Date;
-import java.util.HashMap;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,7 +8,6 @@ import org.testng.Assert;
 import org.testng.annotations.Test;
 
 import kamienica.model.Apartment;
-import kamienica.model.MeterEnergy;
 import kamienica.model.MeterWater;
 import kamienica.model.ReadingWater;
 

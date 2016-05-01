@@ -7,7 +7,7 @@ import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 @Entity
-@Table
+@Table(name="invoiceenergy")
 public class InvoiceEnergy extends Invoice {
 	
 	@OneToOne
