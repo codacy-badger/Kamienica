@@ -2,7 +2,7 @@ package kamienica.dao;
 
 import java.util.List;
 
-import kamienica.model.Apartment;
+import kamienica.apartment.Apartment;
 import kamienica.model.Invoice;
 import kamienica.model.ReadingAbstract;
 

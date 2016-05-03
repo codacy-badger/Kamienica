@@ -3,7 +3,7 @@ package kamienica.service;
 import java.util.HashMap;
 import java.util.List;
 
-import kamienica.model.Apartment;
+import kamienica.apartment.Apartment;
 import kamienica.model.InvoiceGas;
 import kamienica.model.ReadingEnergy;
 import kamienica.model.ReadingGas;

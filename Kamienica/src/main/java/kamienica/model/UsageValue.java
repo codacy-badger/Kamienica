@@ -1,5 +1,7 @@
 package kamienica.model;
 
+import kamienica.apartment.Apartment;
+
 public class UsageValue {
 
 	private String description;

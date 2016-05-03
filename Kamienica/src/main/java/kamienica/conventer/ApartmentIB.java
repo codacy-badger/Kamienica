@@ -2,7 +2,7 @@ package kamienica.conventer;
 
 import java.beans.PropertyEditorSupport;
 
-import kamienica.model.Apartment;
+import kamienica.apartment.Apartment;
 import kamienica.service.ApartmentService;
 
 public class ApartmentIB extends PropertyEditorSupport {

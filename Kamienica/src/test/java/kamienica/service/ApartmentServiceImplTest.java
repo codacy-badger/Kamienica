@@ -18,8 +18,9 @@ import org.testng.Assert;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
+import kamienica.apartment.Apartment;
+import kamienica.apartment.ApartmentServiceImpl;
 import kamienica.dao.DaoInterface;
-import kamienica.model.Apartment;
 
 public class ApartmentServiceImplTest {
 

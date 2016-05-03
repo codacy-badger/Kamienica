@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.util.UriComponentsBuilder;
 
-import kamienica.model.Apartment;
+import kamienica.apartment.Apartment;
 import kamienica.service.ApartmentService;
 
 @RestController

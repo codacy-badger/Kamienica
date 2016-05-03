@@ -17,7 +17,6 @@ public class ReadingValidator {
 				sumOfReadings += readings.get(i).getValue();
 			}
 		}
-		System.out.println(Math.abs((sumOfReadings - sumOfReadings)) / primaryReading);
 
 		if (Math.abs((sumOfReadings - sumOfReadings)) / primaryReading > 0.03) {
 			return false;

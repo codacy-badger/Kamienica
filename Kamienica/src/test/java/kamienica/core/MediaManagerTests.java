@@ -10,7 +10,7 @@ import org.testng.Assert;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
-import kamienica.model.Apartment;
+import kamienica.apartment.Apartment;
 import kamienica.model.Division;
 import kamienica.model.InvoiceEnergy;
 import kamienica.model.InvoiceGas;

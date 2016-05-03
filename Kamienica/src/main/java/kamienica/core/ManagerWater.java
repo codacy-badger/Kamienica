@@ -6,7 +6,7 @@ import java.util.List;
 import org.joda.time.DateTime;
 import org.joda.time.Days;
 
-import kamienica.model.Apartment;
+import kamienica.apartment.Apartment;
 import kamienica.model.MeterWater;
 import kamienica.model.ReadingWater;
 import kamienica.model.UsageValue;

@@ -1,4 +1,4 @@
-package kamienica.service;
+package kamienica.apartment;
 
 import java.util.List;
 
@@ -8,7 +8,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import kamienica.dao.DaoInterface;
 import kamienica.dao.TenantDao;
-import kamienica.model.Apartment;
+import kamienica.service.ApartmentService;
 
 @Service
 @Transactional

@@ -1,4 +1,4 @@
-package kamienica.controller.view;
+package kamienica.apartment;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -21,7 +21,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import kamienica.conventer.ApartmentIB;
-import kamienica.model.Apartment;
 import kamienica.service.ApartmentService;
 
 @Controller

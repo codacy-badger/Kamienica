@@ -22,8 +22,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
+import kamienica.apartment.Apartment;
 import kamienica.conventer.ApartmentIB;
-import kamienica.model.Apartment;
 import kamienica.model.Tenant;
 import kamienica.model.UserRole;
 import kamienica.model.UserStatus;

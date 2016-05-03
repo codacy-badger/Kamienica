@@ -19,8 +19,8 @@ import org.testng.Assert;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
-import kamienica.controller.view.ApartmentController;
-import kamienica.model.Apartment;
+import kamienica.apartment.Apartment;
+import kamienica.apartment.ApartmentController;
 import kamienica.service.ApartmentService;
 import kamienica.testsetup.SetupMethods;
 

@@ -2,7 +2,7 @@ package kamienica.validator;
 
 import java.util.List;
 
-import kamienica.model.Apartment;
+import kamienica.apartment.Apartment;
 import kamienica.model.Division;
 import kamienica.model.Tenant;
 

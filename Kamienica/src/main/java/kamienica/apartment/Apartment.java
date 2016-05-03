@@ -1,4 +1,4 @@
-package kamienica.model;
+package kamienica.apartment;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;

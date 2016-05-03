@@ -22,11 +22,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
+import kamienica.apartment.Apartment;
 import kamienica.core.ManagerEnergy;
 import kamienica.core.ManagerGas;
 import kamienica.core.ManagerPayment;
 import kamienica.core.ManagerWater;
-import kamienica.model.Apartment;
 import kamienica.model.Division;
 import kamienica.model.InvoiceEnergy;
 import kamienica.model.InvoiceGas;

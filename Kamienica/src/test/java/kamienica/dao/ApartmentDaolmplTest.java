@@ -4,7 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
-import kamienica.model.Apartment;
+import kamienica.apartment.Apartment;
 
 public class ApartmentDaolmplTest extends EntityDaoImplTest {
 

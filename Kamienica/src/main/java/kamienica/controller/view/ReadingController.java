@@ -22,11 +22,11 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
+import kamienica.apartment.Apartment;
 import kamienica.conventer.ApartmentIB;
 import kamienica.conventer.MeterEnergyIB;
 import kamienica.conventer.MeterGasIB;
 import kamienica.conventer.MeterWaterIB;
-import kamienica.model.Apartment;
 import kamienica.model.MeterAbstract;
 import kamienica.model.MeterEnergy;
 import kamienica.model.MeterGas;

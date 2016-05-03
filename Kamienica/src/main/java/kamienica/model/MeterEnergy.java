@@ -5,6 +5,8 @@ import javax.persistence.Table;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
+import kamienica.apartment.Apartment;
+
 @Entity
 @Table(name="meterenergy")
 public class MeterEnergy extends MeterAbstract {

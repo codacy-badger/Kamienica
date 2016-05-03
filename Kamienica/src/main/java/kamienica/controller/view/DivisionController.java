@@ -21,10 +21,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
+import kamienica.apartment.Apartment;
 import kamienica.conventer.ApartmentIB;
 import kamienica.conventer.TenantIB;
 import kamienica.core.DivisionManager;
-import kamienica.model.Apartment;
 import kamienica.model.Division;
 import kamienica.model.Tenant;
 import kamienica.service.ApartmentService;
