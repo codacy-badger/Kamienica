@@ -60,5 +60,8 @@ public class MainController {
 		return new ModelAndView("404");
 	}
 	
-	
+	@RequestMapping("/navbar")
+	public String navbar() {
+	    return "/Admin/navbar";
+	}
 }
