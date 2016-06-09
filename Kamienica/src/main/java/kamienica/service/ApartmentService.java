@@ -2,7 +2,7 @@ package kamienica.service;
 
 import java.util.List;
 
-import kamienica.apartment.Apartment;
+import kamienica.feature.apartment.Apartment;
 
 public interface ApartmentService {
 

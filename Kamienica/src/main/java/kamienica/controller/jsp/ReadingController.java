@@ -1,4 +1,4 @@
-package kamienica.controller.view;
+package kamienica.controller.jsp;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -22,11 +22,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
-import kamienica.apartment.Apartment;
-import kamienica.conventer.ApartmentIB;
-import kamienica.conventer.MeterEnergyIB;
-import kamienica.conventer.MeterGasIB;
-import kamienica.conventer.MeterWaterIB;
 import kamienica.model.MeterAbstract;
 import kamienica.model.MeterEnergy;
 import kamienica.model.MeterGas;
@@ -46,18 +41,12 @@ import kamienica.wrapper.ReadingWaterForm;
 public class ReadingController {
 
 	@Autowired
-	private ApartmentService apartmentService;
-	@Autowired
 	private MeterService meterService;
 	@Autowired
 	private ReadingService readingService;
 
 	@InitBinder
 	protected void initBinder(HttpServletRequest request, ServletRequestDataBinder binder) {
-		binder.registerCustomEditor(Apartment.class, new ApartmentIB(this.apartmentService));
-		binder.registerCustomEditor(MeterEnergy.class, new MeterEnergyIB(this.meterService));
-		binder.registerCustomEditor(MeterGas.class, new MeterGasIB(this.meterService));
-		binder.registerCustomEditor(MeterWater.class, new MeterWaterIB(this.meterService));
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 		sdf.setLenient(true);
 		binder.registerCustomEditor(Date.class, new CustomDateEditor(sdf, true));

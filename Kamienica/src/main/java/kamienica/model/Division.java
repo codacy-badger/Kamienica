@@ -14,7 +14,7 @@ import javax.persistence.TemporalType;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
 
-import kamienica.apartment.Apartment;
+import kamienica.feature.apartment.Apartment;
 
 @Entity
 @Table(name="division")

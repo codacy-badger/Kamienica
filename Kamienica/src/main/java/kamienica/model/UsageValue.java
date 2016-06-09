@@ -1,6 +1,6 @@
 package kamienica.model;
 
-import kamienica.apartment.Apartment;
+import kamienica.feature.apartment.Apartment;
 
 public class UsageValue {
 

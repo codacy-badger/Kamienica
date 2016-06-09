@@ -1,4 +1,4 @@
-package kamienica.controller.view;
+package kamienica.controller.jsp;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -23,9 +23,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
-import kamienica.apartment.Apartment;
-import kamienica.conventer.ApartmentIB;
-import kamienica.conventer.MeterEnergyIB;
+import kamienica.feature.apartment.Apartment;
 import kamienica.model.MeterEnergy;
 import kamienica.model.MeterGas;
 import kamienica.model.MeterWater;
@@ -40,13 +38,6 @@ public class MeterController {
 	@Autowired
 	private MeterService meterService;
 
-	@InitBinder
-	protected void initBinder(HttpServletRequest request, ServletRequestDataBinder binder) {
-		binder.registerCustomEditor(Apartment.class, new ApartmentIB(this.apartmentService));
-		binder.registerCustomEditor(MeterEnergy.class, new MeterEnergyIB(this.meterService));
-	}
-
-	
 	@InitBinder
 	public void initBinder(WebDataBinder binder) {
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
@@ -79,7 +70,7 @@ public class MeterController {
 
 	@RequestMapping("/Admin/Meter/meterEnergySave")
 	public ModelAndView meterEnergySave(@Valid @ModelAttribute("meter") MeterEnergy meter, BindingResult result) {
-	 
+
 		if (result.hasErrors()) {
 			Map<String, Object> model = prepareModel();
 			return new ModelAndView("/Admin/Meter/MeterEnergyRegister", "model", model);
@@ -101,7 +92,7 @@ public class MeterController {
 			result.rejectValue("isWarmWater", "error.meter",
 					"Licznik cz�ci wsp�lnej nie może być licznikiem ciep�ej wody");
 		}
-	 
+
 		if (result.hasErrors()) {
 			Map<String, Object> model = prepareModel();
 			return new ModelAndView("/Admin/Meter/MeterWaterRegister", "model", model);
@@ -119,7 +110,7 @@ public class MeterController {
 
 	@RequestMapping("/Admin/Meter/meterGasSave")
 	public ModelAndView meterGasSave(@Valid @ModelAttribute("meter") MeterGas meter, BindingResult result) {
-	 
+
 		if (meter.getApartment() == null && meter.isCwu() == true) {
 			result.rejectValue("cwu", "error.meter", "Licznik częsci wspólnej nie może być licznikiem CWU");
 		}
@@ -182,7 +173,7 @@ public class MeterController {
 	public ModelAndView meterWaterEdit(@RequestParam(value = "id") int id) {
 		Map<String, Object> model = prepareModel();
 		MeterWater meter = meterService.getWaterByID(id);
-			ModelAndView mvc = new ModelAndView("/Admin/Meter/MeterWaterEdit", "model", model);
+		ModelAndView mvc = new ModelAndView("/Admin/Meter/MeterWaterEdit", "model", model);
 		mvc.addObject("meter", meter);
 		return mvc;
 	}
@@ -199,7 +190,7 @@ public class MeterController {
 
 	@RequestMapping("/Admin/Meter/meterEnergyOverwrite")
 	public ModelAndView meterEnergyOverwrite(@Valid @ModelAttribute("meter") MeterEnergy meter, BindingResult result) {
-	 
+
 		if (result.hasErrors()) {
 			Map<String, Object> model = prepareModel();
 			return new ModelAndView("/Admin/Meter/MeterEnergyEdit", "model", model);
@@ -222,7 +213,6 @@ public class MeterController {
 					"Licznik cz�ci wsp�lnej nie może być licznikiem ciep�ej wody");
 		}
 
-	 
 		if (result.hasErrors()) {
 			Map<String, Object> model = prepareModel();
 			return new ModelAndView("/Admin/Meter/MeterWaterEdit", "model", model);
@@ -299,7 +289,7 @@ public class MeterController {
 
 	private Apartment createNullApartment() {
 		Apartment m = new Apartment();
-		m.setDescription("Brak");
+		m.setDescription("Licznik Główny");
 		m.setApartmentNumber(-1);
 		m.setId(-1);
 		return m;

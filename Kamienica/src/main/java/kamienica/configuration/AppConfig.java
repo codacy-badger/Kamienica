@@ -23,12 +23,17 @@ import org.springframework.web.servlet.view.ContentNegotiatingViewResolver;
 import org.springframework.web.servlet.view.InternalResourceViewResolver;
 import org.springframework.web.servlet.view.JstlView;
 
+import kamienica.conventer.ApartmentConverter;
 import kamienica.conventer.InvoiceEnergyConverter;
 import kamienica.conventer.InvoiceGasConverter;
 import kamienica.conventer.InvoiceWaterConverter;
+import kamienica.conventer.MeterEnergyConverter;
+import kamienica.conventer.MeterGasConverter;
+import kamienica.conventer.MeterWaterConverter;
 import kamienica.conventer.ReadingEnergyConverter;
 import kamienica.conventer.ReadingGasConverter;
 import kamienica.conventer.ReadingWaterConverter;
+import kamienica.conventer.TenantConverter;
 
 @Configuration
 @EnableWebMvc
@@ -47,7 +52,18 @@ public class AppConfig extends WebMvcConfigurerAdapter {
 	InvoiceWaterConverter invoiceWaterConverter;
 	@Autowired
 	InvoiceEnergyConverter invoiceEnergyConverter;
-	
+	// start nowych
+	@Autowired
+	ApartmentConverter apartmentConverter;
+	@Autowired
+	MeterGasConverter meterGasConverter;
+	@Autowired
+	MeterEnergyConverter meterEnergyConverter;
+	@Autowired
+	MeterWaterConverter meterWaterConverter;
+	@Autowired
+	TenantConverter tenantConverter;
+
 	@Override
 	public void configureContentNegotiation(ContentNegotiationConfigurer configurer) {
 		configurer.ignoreAcceptHeader(true).defaultContentType(MediaType.TEXT_HTML);
@@ -78,31 +94,32 @@ public class AppConfig extends WebMvcConfigurerAdapter {
 		return viewResolver;
 	}
 
-//	@Bean
-//	public LocaleResolver localeResolver() {
-//	    SessionLocaleResolver localeResolver = new SessionLocaleResolver();
-//	    localeResolver.setDefaultLocale(Locale.ENGLISH); // change this
-//	    return localeResolver;
-//	}
-//	
-//	
-//    @Override
-//    public void addInterceptors(InterceptorRegistry registry) {
-//        registry.addInterceptor(localeChangeInterceptor());
-//    }
-//
-//    @Bean
-//    public LocaleChangeInterceptor localeChangeInterceptor(){
-//        LocaleChangeInterceptor localeChangeInterceptor=new LocaleChangeInterceptor();
-//        localeChangeInterceptor.setParamName("language");
-//        return localeChangeInterceptor;
-//    }
+	// @Bean
+	// public LocaleResolver localeResolver() {
+	// SessionLocaleResolver localeResolver = new SessionLocaleResolver();
+	// localeResolver.setDefaultLocale(Locale.ENGLISH); // change this
+	// return localeResolver;
+	// }
+	//
+	//
+	// @Override
+	// public void addInterceptors(InterceptorRegistry registry) {
+	// registry.addInterceptor(localeChangeInterceptor());
+	// }
+	//
+	// @Bean
+	// public LocaleChangeInterceptor localeChangeInterceptor(){
+	// LocaleChangeInterceptor localeChangeInterceptor=new
+	// LocaleChangeInterceptor();
+	// localeChangeInterceptor.setParamName("language");
+	// return localeChangeInterceptor;
+	// }
 
-    @Bean(name = "localeResolver")
-    public LocaleResolver getLocaleResolver(){
-        return new CookieLocaleResolver();
-    }
-	
+	@Bean(name = "localeResolver")
+	public LocaleResolver getLocaleResolver() {
+		return new CookieLocaleResolver();
+	}
+
 	@Bean
 	public ViewResolver jsonViewResolver() {
 		return new JsonViewResolver();
@@ -116,6 +133,13 @@ public class AppConfig extends WebMvcConfigurerAdapter {
 		registry.addConverter(invoiceEnergyConverter);
 		registry.addConverter(invoiceGasConverter);
 		registry.addConverter(invoiceWaterConverter);
+
+		registry.addConverter(apartmentConverter);
+		registry.addConverter(meterGasConverter);
+		registry.addConverter(meterEnergyConverter);
+		registry.addConverter(meterWaterConverter);
+		registry.addConverter(tenantConverter);
+
 	}
 
 	@Bean

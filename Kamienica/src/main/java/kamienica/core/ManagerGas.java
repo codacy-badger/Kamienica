@@ -10,7 +10,7 @@ import java.util.Locale;
 import org.joda.time.DateTime;
 import org.joda.time.Days;
 
-import kamienica.apartment.Apartment;
+import kamienica.feature.apartment.Apartment;
 import kamienica.model.ReadingGas;
 import kamienica.model.ReadingWater;
 import kamienica.model.UsageValue;

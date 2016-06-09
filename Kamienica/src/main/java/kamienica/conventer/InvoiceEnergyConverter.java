@@ -7,11 +7,19 @@ import org.springframework.stereotype.Component;
 import kamienica.model.InvoiceEnergy;
 import kamienica.service.InvoiceService;
 
+/**
+ * 
+ * @author macfol
+ * 
+ *         The class's role is to convert string value from the jsp form into
+ *         object from DB
+ *
+ */
 @Component
 public class InvoiceEnergyConverter implements Converter<Object, InvoiceEnergy> {
 
 	@Autowired
-	InvoiceService service;
+	private InvoiceService service;
 
 	@Override
 	public InvoiceEnergy convert(Object element) {

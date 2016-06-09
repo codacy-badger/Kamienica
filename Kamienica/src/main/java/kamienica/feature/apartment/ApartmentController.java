@@ -1,4 +1,4 @@
-package kamienica.apartment;
+package kamienica.feature.apartment;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -20,7 +20,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
-import kamienica.conventer.ApartmentIB;
 import kamienica.service.ApartmentService;
 
 @Controller
@@ -31,7 +30,7 @@ public class ApartmentController {
 
 	@InitBinder
 	protected void initBinder(HttpServletRequest request, ServletRequestDataBinder binder) {
-		binder.registerCustomEditor(Apartment.class, new ApartmentIB(this.apartmentService));
+//		binder.registerCustomEditor(Apartment.class, new ApartmentIB(this.apartmentService));
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 		sdf.setLenient(true);
 		binder.registerCustomEditor(Date.class, new CustomDateEditor(sdf, true));

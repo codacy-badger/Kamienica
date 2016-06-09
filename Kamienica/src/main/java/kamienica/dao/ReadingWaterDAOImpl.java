@@ -8,7 +8,7 @@ import org.hibernate.Query;
 import org.hibernate.criterion.Order;
 import org.springframework.stereotype.Repository;
 
-import kamienica.apartment.Apartment;
+import kamienica.feature.apartment.Apartment;
 import kamienica.model.InvoiceGas;
 import kamienica.model.InvoiceWater;
 import kamienica.model.ReadingWater;

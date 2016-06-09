@@ -1,4 +1,4 @@
-package kamienica.controller.view;
+package kamienica.controller.jsp;
 
 import java.util.HashMap;
 import java.util.Map;

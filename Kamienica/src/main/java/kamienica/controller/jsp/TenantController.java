@@ -1,4 +1,4 @@
-package kamienica.controller.view;
+package kamienica.controller.jsp;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -22,8 +22,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
-import kamienica.apartment.Apartment;
-import kamienica.conventer.ApartmentIB;
+import kamienica.feature.apartment.Apartment;
 import kamienica.model.Tenant;
 import kamienica.model.UserRole;
 import kamienica.model.UserStatus;
@@ -41,7 +40,6 @@ public class TenantController {
 
 	@InitBinder
 	protected void initBinder(HttpServletRequest request, ServletRequestDataBinder binder) {
-		binder.registerCustomEditor(Apartment.class, new ApartmentIB(this.apartmentService));
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 		sdf.setLenient(true);
 		binder.registerCustomEditor(Date.class, new CustomDateEditor(sdf, true));

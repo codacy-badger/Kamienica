@@ -1,4 +1,4 @@
-package kamienica.controller.view;
+package kamienica.controller.jsp;
 
 import java.sql.SQLException;
 

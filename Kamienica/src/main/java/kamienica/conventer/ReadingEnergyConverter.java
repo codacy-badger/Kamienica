@@ -6,7 +6,14 @@ import org.springframework.stereotype.Component;
 
 import kamienica.model.ReadingEnergy;
 import kamienica.service.ReadingService;
-
+/**
+ * 
+ * @author macfol
+ * 
+ *         The class's role is to convert string value from the jsp form into
+ *         object from DB
+ *
+ */
 @Component
 public class ReadingEnergyConverter implements Converter<Object, ReadingEnergy>{
 

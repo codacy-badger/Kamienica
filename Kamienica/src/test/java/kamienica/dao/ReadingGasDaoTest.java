@@ -7,7 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
-import kamienica.apartment.Apartment;
+import kamienica.feature.apartment.Apartment;
 import kamienica.model.InvoiceGas;
 import kamienica.model.MeterGas;
 import kamienica.model.ReadingGas;

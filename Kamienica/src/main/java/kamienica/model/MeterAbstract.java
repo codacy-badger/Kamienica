@@ -10,7 +10,7 @@ import javax.persistence.MappedSuperclass;
 import org.hibernate.validator.constraints.NotEmpty;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import kamienica.apartment.Apartment;
+import kamienica.feature.apartment.Apartment;
 
 @MappedSuperclass
 @Inheritance

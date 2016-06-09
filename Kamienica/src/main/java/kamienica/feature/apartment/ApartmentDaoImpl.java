@@ -1,4 +1,4 @@
-package kamienica.apartment;
+package kamienica.feature.apartment;
 
 import org.springframework.stereotype.Repository;
 

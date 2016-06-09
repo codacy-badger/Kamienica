@@ -5,7 +5,7 @@ import java.util.Collection;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.User;
 
-import kamienica.apartment.Apartment;
+import kamienica.feature.apartment.Apartment;
 
 public class MyUser extends User {
 

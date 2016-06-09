@@ -1,4 +1,4 @@
-package kamienica.controller.view;
+package kamienica.controller.jsp;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -45,12 +45,7 @@ public class UserController {
 		} else {
 			return new ModelAndView("/User/UserHome");
 		}
-		// Authentication auth =
-		// SecurityContextHolder.getContext().getAuthentication();
-		// if (!(auth instanceof AnonymousAuthenticationToken)) {
-		// UserDetails userDetail = (UserDetails) auth.getPrincipal();
-		// model.put("username", userDetail.getUsername());
-		// }
+
 		return new ModelAndView("/User/UserHome", "model", model);
 	}
 

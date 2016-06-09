@@ -7,6 +7,14 @@ import org.springframework.stereotype.Component;
 import kamienica.model.InvoiceWater;
 import kamienica.service.InvoiceService;
 
+/**
+ * 
+ * @author macfol
+ * 
+ *         The class's role is to convert string value from the jsp form into
+ *         object from DB
+ *
+ */
 @Component
 public class InvoiceWaterConverter implements Converter<Object, InvoiceWater> {
 
