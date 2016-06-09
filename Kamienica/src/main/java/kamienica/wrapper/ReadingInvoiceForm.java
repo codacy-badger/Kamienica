@@ -3,7 +3,7 @@ package kamienica.wrapper;
 import java.util.Date;
 import java.util.List;
 
-import kamienica.model.Invoice;
+import kamienica.feature.invoice.Invoice;
 
 public class ReadingInvoiceForm {
 

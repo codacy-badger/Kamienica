@@ -4,10 +4,10 @@ import java.beans.PropertyEditorSupport;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 
-import kamienica.model.InvoiceEnergy;
-import kamienica.model.InvoiceGas;
-import kamienica.model.InvoiceWater;
-import kamienica.service.InvoiceService;
+import kamienica.feature.invoice.InvoiceEnergy;
+import kamienica.feature.invoice.InvoiceGas;
+import kamienica.feature.invoice.InvoiceService;
+import kamienica.feature.invoice.InvoiceWater;
 import kamienica.wrapper.ReadingInvoiceForm;
 
 public class ReadingInvoiceIB extends PropertyEditorSupport {

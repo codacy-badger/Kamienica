@@ -21,7 +21,7 @@ import org.testng.annotations.Test;
 
 import kamienica.feature.apartment.Apartment;
 import kamienica.feature.apartment.ApartmentController;
-import kamienica.service.ApartmentService;
+import kamienica.feature.apartment.ApartmentService;
 import kamienica.testsetup.SetupMethods;
 
 public class ApartmentControllerTest {

@@ -7,8 +7,8 @@ import org.joda.time.DateTime;
 import org.joda.time.Days;
 
 import kamienica.feature.apartment.Apartment;
-import kamienica.model.ReadingEnergy;
-import kamienica.model.UsageValue;
+import kamienica.feature.reading.ReadingEnergy;
+import kamienica.feature.usagevalue.UsageValue;
 
 public class ManagerEnergy {
 

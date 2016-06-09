@@ -4,7 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
-import kamienica.model.MeterEnergy;
+import kamienica.feature.meter.MeterEnergy;
 
 public class MeterEnergyDaoImplTest extends EntityDaoImplTest {
 

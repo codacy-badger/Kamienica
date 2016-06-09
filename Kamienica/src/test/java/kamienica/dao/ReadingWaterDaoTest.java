@@ -8,8 +8,9 @@ import org.testng.Assert;
 import org.testng.annotations.Test;
 
 import kamienica.feature.apartment.Apartment;
-import kamienica.model.MeterWater;
-import kamienica.model.ReadingWater;
+import kamienica.feature.meter.MeterWater;
+import kamienica.feature.reading.ReadingWater;
+import kamienica.feature.reading.ReadingWaterDAO;
 
 public class ReadingWaterDaoTest extends EntityDaoImplTest {
 

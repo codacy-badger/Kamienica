@@ -9,20 +9,20 @@ import java.util.List;
 import java.util.Locale;
 
 import kamienica.feature.apartment.Apartment;
-import kamienica.model.Division;
-import kamienica.model.InvoiceEnergy;
-import kamienica.model.InvoiceGas;
-import kamienica.model.InvoiceWater;
-import kamienica.model.MeterEnergy;
-import kamienica.model.MeterGas;
-import kamienica.model.MeterWater;
-import kamienica.model.ReadingEnergy;
-import kamienica.model.ReadingGas;
-import kamienica.model.ReadingWater;
-import kamienica.model.Tenant;
-import kamienica.model.UsageValue;
-import kamienica.model.UserRole;
-import kamienica.model.UserStatus;
+import kamienica.feature.division.Division;
+import kamienica.feature.invoice.InvoiceEnergy;
+import kamienica.feature.invoice.InvoiceGas;
+import kamienica.feature.invoice.InvoiceWater;
+import kamienica.feature.meter.MeterEnergy;
+import kamienica.feature.meter.MeterGas;
+import kamienica.feature.meter.MeterWater;
+import kamienica.feature.reading.ReadingEnergy;
+import kamienica.feature.reading.ReadingGas;
+import kamienica.feature.reading.ReadingWater;
+import kamienica.feature.tenant.Tenant;
+import kamienica.feature.tenant.UserRole;
+import kamienica.feature.tenant.UserStatus;
+import kamienica.feature.usagevalue.UsageValue;
 
 public class SetupMethods {
 

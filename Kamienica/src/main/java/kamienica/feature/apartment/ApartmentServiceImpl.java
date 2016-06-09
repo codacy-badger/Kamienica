@@ -7,8 +7,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import kamienica.dao.DaoInterface;
-import kamienica.dao.TenantDao;
-import kamienica.service.ApartmentService;
+import kamienica.feature.tenant.TenantDao;
 
 @Service
 @Transactional

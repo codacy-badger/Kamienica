@@ -16,28 +16,28 @@ import org.testng.Assert;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
-import kamienica.controller.jsp.PaymentController;
 import kamienica.feature.apartment.Apartment;
-import kamienica.model.Division;
-import kamienica.model.InvoiceEnergy;
-import kamienica.model.InvoiceGas;
-import kamienica.model.InvoiceWater;
-import kamienica.model.MeterEnergy;
-import kamienica.model.MeterGas;
-import kamienica.model.MeterWater;
-import kamienica.model.ReadingEnergy;
-import kamienica.model.ReadingGas;
-import kamienica.model.ReadingWater;
-import kamienica.model.Tenant;
-import kamienica.service.ApartmentService;
-import kamienica.service.DivisionService;
-import kamienica.service.InvoiceService;
-import kamienica.service.MeterService;
-import kamienica.service.PaymentService;
-import kamienica.service.ReadingService;
-import kamienica.service.TenantService;
+import kamienica.feature.apartment.ApartmentService;
+import kamienica.feature.division.Division;
+import kamienica.feature.division.DivisionService;
+import kamienica.feature.division.DivisionValidator;
+import kamienica.feature.invoice.InvoiceEnergy;
+import kamienica.feature.invoice.InvoiceGas;
+import kamienica.feature.invoice.InvoiceService;
+import kamienica.feature.invoice.InvoiceWater;
+import kamienica.feature.meter.MeterEnergy;
+import kamienica.feature.meter.MeterGas;
+import kamienica.feature.meter.MeterService;
+import kamienica.feature.meter.MeterWater;
+import kamienica.feature.payment.PaymentController;
+import kamienica.feature.payment.PaymentService;
+import kamienica.feature.reading.ReadingEnergy;
+import kamienica.feature.reading.ReadingGas;
+import kamienica.feature.reading.ReadingService;
+import kamienica.feature.reading.ReadingWater;
+import kamienica.feature.tenant.Tenant;
+import kamienica.feature.tenant.TenantService;
 import kamienica.testsetup.SetupMethods;
-import kamienica.validator.DivisionValidator;
 
 public class PaymentControllerTest {
 

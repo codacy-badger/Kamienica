@@ -11,23 +11,23 @@ import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
 import kamienica.feature.apartment.Apartment;
-import kamienica.model.Division;
-import kamienica.model.InvoiceEnergy;
-import kamienica.model.InvoiceGas;
-import kamienica.model.InvoiceWater;
-import kamienica.model.MeterEnergy;
-import kamienica.model.MeterGas;
-import kamienica.model.MeterWater;
-import kamienica.model.PaymentEnergy;
-import kamienica.model.PaymentGas;
-import kamienica.model.PaymentWater;
-import kamienica.model.ReadingEnergy;
-import kamienica.model.ReadingGas;
-import kamienica.model.ReadingWater;
-import kamienica.model.Tenant;
-import kamienica.model.UsageValue;
+import kamienica.feature.division.Division;
+import kamienica.feature.division.DivisionValidator;
+import kamienica.feature.invoice.InvoiceEnergy;
+import kamienica.feature.invoice.InvoiceGas;
+import kamienica.feature.invoice.InvoiceWater;
+import kamienica.feature.meter.MeterEnergy;
+import kamienica.feature.meter.MeterGas;
+import kamienica.feature.meter.MeterWater;
+import kamienica.feature.payment.PaymentEnergy;
+import kamienica.feature.payment.PaymentGas;
+import kamienica.feature.payment.PaymentWater;
+import kamienica.feature.reading.ReadingEnergy;
+import kamienica.feature.reading.ReadingGas;
+import kamienica.feature.reading.ReadingWater;
+import kamienica.feature.tenant.Tenant;
+import kamienica.feature.usagevalue.UsageValue;
 import kamienica.testsetup.SetupMethods;
-import kamienica.validator.DivisionValidator;
 
 public class MediaManagerTests {
 

@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.util.UriComponentsBuilder;
 
 import kamienica.feature.apartment.Apartment;
-import kamienica.service.ApartmentService;
+import kamienica.feature.apartment.ApartmentService;
 
 @RestController
 @RequestMapping("/Rest")
