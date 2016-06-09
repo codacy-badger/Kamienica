@@ -1,6 +1,7 @@
 package kamienica.configuration;
 
 import javax.servlet.Filter;
+import javax.servlet.ServletRegistration;
 
 import org.springframework.web.servlet.support.AbstractAnnotationConfigDispatcherServletInitializer;
 
@@ -27,5 +28,9 @@ public class AppInitializer extends AbstractAnnotationConfigDispatcherServletIni
         return singleton;
     }
 	
+	@Override
+	protected void customizeRegistration(ServletRegistration.Dynamic registration) {
+		registration.setInitParameter("throwExceptionIfNoHandlerFound", "true");
+	}
 
 }

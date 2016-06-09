@@ -6,10 +6,10 @@ import java.util.List;
 import org.joda.time.DateTime;
 import org.joda.time.Days;
 
-import kamienica.model.Apartment;
-import kamienica.model.MeterWater;
-import kamienica.model.ReadingWater;
-import kamienica.model.UsageValue;
+import kamienica.feature.apartment.Apartment;
+import kamienica.feature.meter.MeterWater;
+import kamienica.feature.reading.ReadingWater;
+import kamienica.feature.usagevalue.UsageValue;
 
 public class ManagerWater {
 

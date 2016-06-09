@@ -7,9 +7,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
-import kamienica.model.Apartment;
-import kamienica.model.MeterWater;
-import kamienica.model.ReadingWater;
+import kamienica.feature.apartment.Apartment;
+import kamienica.feature.meter.MeterWater;
+import kamienica.feature.reading.ReadingWater;
+import kamienica.feature.reading.ReadingWaterDAO;
 
 public class ReadingWaterDaoTest extends EntityDaoImplTest {
 

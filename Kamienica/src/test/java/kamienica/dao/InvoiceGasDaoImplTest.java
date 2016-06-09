@@ -5,8 +5,9 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
-import kamienica.model.InvoiceGas;
-import kamienica.model.MeterGas;
+import kamienica.feature.invoice.InvoiceDao;
+import kamienica.feature.invoice.InvoiceGas;
+import kamienica.feature.meter.MeterGas;
 
 public class InvoiceGasDaoImplTest extends EntityDaoImplTest {
 

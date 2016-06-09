@@ -10,10 +10,10 @@ import java.util.Locale;
 import org.joda.time.DateTime;
 import org.joda.time.Days;
 
-import kamienica.model.Apartment;
-import kamienica.model.ReadingGas;
-import kamienica.model.ReadingWater;
-import kamienica.model.UsageValue;
+import kamienica.feature.apartment.Apartment;
+import kamienica.feature.reading.ReadingGas;
+import kamienica.feature.reading.ReadingWater;
+import kamienica.feature.usagevalue.UsageValue;
 
 public class ManagerGas {
 

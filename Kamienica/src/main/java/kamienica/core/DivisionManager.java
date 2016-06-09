@@ -6,9 +6,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
-import kamienica.model.Apartment;
-import kamienica.model.Division;
-import kamienica.model.Tenant;
+import kamienica.feature.apartment.Apartment;
+import kamienica.feature.division.Division;
+import kamienica.feature.tenant.Tenant;
 
 public class DivisionManager {
 

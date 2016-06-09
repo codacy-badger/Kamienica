@@ -6,7 +6,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
-import kamienica.model.Tenant;
+import kamienica.feature.tenant.Tenant;
+import kamienica.feature.tenant.TenantDao;
 
 public class TenantDaoImplTest extends EntityDaoImplTest {
 

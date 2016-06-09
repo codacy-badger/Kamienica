@@ -19,9 +19,9 @@ import org.testng.Assert;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
-import kamienica.controller.view.ApartmentController;
-import kamienica.model.Apartment;
-import kamienica.service.ApartmentService;
+import kamienica.feature.apartment.Apartment;
+import kamienica.feature.apartment.ApartmentController;
+import kamienica.feature.apartment.ApartmentService;
 import kamienica.testsetup.SetupMethods;
 
 public class ApartmentControllerTest {
