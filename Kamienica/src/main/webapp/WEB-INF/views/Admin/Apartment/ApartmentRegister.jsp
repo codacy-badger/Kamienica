@@ -26,72 +26,72 @@
 <title>Rejestracja Nowego Mieszkania</title>
 </head>
 <body>
+
 	<div id="wrapper">
 		<mytags:navbarAdmin />
 
 		<div id="page-wrapper">
 
 			<div class='row'>
-				<div class='jumbotron'>
-					<h1>Rejestracja nowego mieszkania</h1>
-					<a href="../home.html">Strona Główna</a>
+				<div class='row'>
+					<div class="col-lg-12">
+						<h1 class="page-header well">Lista Mieszkań</h1>
+					</div>
 				</div>
 			</div>
 
+			<c:url var="rejestrujMieszkanie"
+				value="/Admin/Apartment/apartmentSave.html" />
+			<form:form class="form-horizontal" role="form"
+				modelAttribute="apartment" method="post"
+				action="${rejestrujMieszkanie}">
 
-			<div class='row'>
-				<c:url var="rejestrujMieszkanie"
-					value="/Admin/Apartment/apartmentSave.html" />
-				<form:form id="rejestrujMieszkanie" modelAttribute="apartment"
-					method="post" class="form-horizontal"
-					action="${rejestrujMieszkanie}">
 
-					<div class="form-group">
-						<label class="col-xs-6 control-label">Domofon</label>
-						<div class="col-xs-3">
-							<input class='form-control' name="intercom" />
-						</div>
-						<div class="col-xs-3 messageContainer">
+				<div class="form-group">
+					<label for="inputEmail3" class="col-sm-3 control-label">Domofon</label>
+					<div class="col-sm-9">
+						<input type="text" class="form-control" name="intercom"
+							placeholder="Pole wymagane">
+						<p class="help-block">
 							<form:errors path="intercom" class="error" />
-						</div>
+						</p>
 					</div>
+				</div>
 
-					<div class="form-group">
-						<label class="col-xs-6 control-label">Numer Mieszkania</label>
-						<div class="col-xs-3">
-							<input class='form-control' name="apartmentNumber" />
-						</div>
-						<div class="col-xs-3 messageContainer">
+				<div class="form-group">
+					<label for="inputEmail3" class="col-sm-3 control-label">Numer
+						Mieszkania</label>
+					<div class="col-sm-9">
+						<input type="text" class="form-control" id="inputEmail3"
+							placeholder="Pole wymagane" name="apartmentNumber">
+						<p class="help-block">
 							<form:errors path="apartmentNumber" class="error" />
-						</div>
+						</p>
 					</div>
+				</div>
 
-
-					<div class="form-group">
-						<label class="col-xs-6 control-label">Opis Mieszkania</label>
-						<div class="col-xs-3">
-							<input class='form-control' name="description" />
-						</div>
-						<div class="col-xs-3 messageContainer">
+				<div class="form-group">
+					<label for="inputEmail3" class="col-sm-3 control-label">Opis</label>
+					<div class="col-sm-9">
+						<input type="text" class="form-control" id="inputEmail3"
+							placeholder="Pole wymagane" name="description">
+						<p class="help-block">
 							<form:errors path="description" class="error" />
-						</div>
+						</p>
 					</div>
+				</div>
+				<div class="form-group">
+					<button type="submit" class="btn btn-default">Zapisz</button>
+					<button class="btn btn-default" type="reset">Resetuj</button>
+				</div>
+			</form:form>
 
 
 
 
-					<div class="row">
-						<div class="col-md-12  ">
-							<button class="btn btn-primary" type="submit">Zapisz</button>
-							<button class="btn btn-primary" type="reset">Resetuj</button>
-						</div>
-					</div>
-
-
-				</form:form>
-			</div>
 		</div>
 	</div>
+
 	<!-- jQuery -->
 	<script src="<c:url value='/static/js/jquery.min.js' />"></script>
 
@@ -104,6 +104,5 @@
 
 	<!-- Custom Theme JavaScript -->
 	<script src="<c:url value='/static/js/sb-admin-2.js' />"></script>
-
 </body>
 </html>
