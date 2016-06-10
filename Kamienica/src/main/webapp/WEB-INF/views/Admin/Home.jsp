@@ -14,20 +14,13 @@
 <link href="<c:url value='/static/css/font-awesome.min.css' />"
 	rel="stylesheet" type="text/css">
 
-
-
 <!-- MetisMenu CSS -->
 <link href="<c:url value='/static/css/metisMenu.min.css' />"
 	rel="stylesheet">
-
 <!-- Timeline CSS -->
 <link href="<c:url value='/static/css/timeline.css' />" rel="stylesheet">
-
-
 <!-- Morris Charts CSS -->
 <link href="<c:url value='/static/css/morris.css' />" rel="stylesheet">
-
-
 
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
