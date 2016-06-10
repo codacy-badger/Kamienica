@@ -20,12 +20,12 @@
                         <li>
                             <a href="#">
                                 <div>
-                                    <strong>John Smith</strong>
+                                    <strong>Prace Serwisowe</strong>
                                     <span class="pull-right text-muted">
                                         <em>Yesterday</em>
                                     </span>
                                 </div>
-                                <div>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque eleifend...</div>
+                                <div>27 czerwca nastąpią prace serwisowe. Dostęp do aplikacji może być ograniczony</div>
                             </a>
                         </li>
                         <li class="divider"></li>
