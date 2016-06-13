@@ -45,48 +45,43 @@
 			<div class='row'>
 				<c:if test="${!empty readingForm.currentReadings}">
 					<c:url var="odczyty" value="/Admin/Reading/readingGasSave.html" />
-					<form:form modelAttribute="readingForm" method="post"
-						action="${odczyty}">
-						<div class="row">
-							<div class="col-md-6 myLabel ">
-								<label>Data</label>
-							</div>
-							<div class="col-md-6 inputAndError">
-								<input name="date" id="date" class='ignore' type="date" required
-									value="${model.date}" min="${model.oldDate}" />
+					<form:form class="form-horizontal" modelAttribute="readingForm"
+						method="post" action="${odczyty}">
+
+						<div class="form-group">
+							<label for="date" class="col-sm-3 control-label">Data</label>
+							<div class="col-sm-9">
+								<input type="date" class="form-control" name="date" path='date'
+									placeholder="Pole wymagane" value="${model.date}"
+									min="${model.oldDate}" />
+
 							</div>
 						</div>
 
 						<div class="row">
-							<div class="col-md-6 myLabel ">
-								<label style="margin-top: 15px; margin-bottom: 15px;">Opis
-									Licznika</label>
-							</div>
-							<div class="col-md-6 inputAndError">
-								<label style="margin-top: 15px; margin-bottom: 15px;">Wartość
-									Odczytu</label>
-							</div>
+							<label class="col-sm-3 text-right">Opis Licznika </label><label
+								class="col-sm-3 ">Wartość Odczytu</label>
+
 						</div>
 
 						<c:forEach items="${readingForm.currentReadings}" varStatus="i"
 							var="reading">
-							<div class="row">
-								<div class="col-md-6 myLabel ">
-									<form:label path="currentReadings[${i.index}].value">${reading.meter.description}</form:label>
-								</div>
-								<div class="col-md-6 inputAndError">
+							<div class="form-group">
+								<label path="currentReadings[${i.index}].value"
+									class="col-sm-3 control-label">${reading.meter.description}</label>
+								<div class="col-sm-9">
 									<input name="currentReadings[${i.index}].meter"
 										value="${reading.meter.id}" type="hidden" /> <input
-										type="number" step="any" min="${reading.value}"
+										class='form-control ' type="number" step="any"
+										min="${reading.value}"
 										name="currentReadings[${i.index}].value"
 										value="${reading.value}" />
 								</div>
 							</div>
 						</c:forEach>
-
-
-						<div class='row'>
-							<input type="submit" class='btn btn-default' value="Zapisz" />
+						<div class="form-group ">
+							<button type="submit" class="btn btn-default">Zapisz</button>
+							<button class="btn btn-default" type="reset">Resetuj</button>
 						</div>
 					</form:form>
 				</c:if>

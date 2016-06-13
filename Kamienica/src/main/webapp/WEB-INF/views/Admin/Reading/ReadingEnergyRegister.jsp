@@ -49,7 +49,6 @@
 					<form:form class="form-horizontal" modelAttribute="readingForm"
 						method="post" action="${odczyty}">
 
-
 						<div class="form-group">
 							<label for="inputEmail3" class="col-sm-3 control-label">Data</label>
 							<div class="col-sm-9">
@@ -65,7 +64,8 @@
 								class="col-sm-3 ">Wartość Odczytu</label>
 
 						</div>
-						<div class='row'></div>
+						
+						
 						<c:forEach items="${readingForm.currentReadings}" varStatus="i"
 							var="reading">
 							<div class="form-group">

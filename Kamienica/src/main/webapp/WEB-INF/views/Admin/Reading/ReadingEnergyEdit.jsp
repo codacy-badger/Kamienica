@@ -53,7 +53,7 @@
 					<div class="form-group">
 						<label for="date" class="col-sm-3 control-label">Data</label>
 						<div class="col-sm-9">
-							<input name="date" id="date" type="date" class='ignore'
+							<input name="date"class="form-control"  id="date" type="date" class='ignore'
 								value="${model.date}" min="${model.oldDate}" />
 						</div>
 					</div>
@@ -78,7 +78,7 @@
 									value="${reading.id}" type="hidden" /> <input
 									name="currentReadings[${i.index}].meter"
 									value="${reading.meter.id}" type="hidden" /> <input
-									type="number" step="any"
+									type="number" step="any" class="form-control"
 									name="currentReadings[${i.index}].value"
 									value="${reading.value}"
 									min="${readingForm.previousReadings[i.index].value}" />
@@ -86,11 +86,9 @@
 						</div>
 					</c:forEach>
 
-
-
-
-					<div class='row'>
-						<input type="submit" class='btn btn-default' value="Zapisz" />
+					<div class="form-group ">
+						<button type="submit" class="btn btn-default">Zapisz</button>
+						<button class="btn btn-default" type="reset">Resetuj</button>
 					</div>
 				</form:form>
 			</c:if>
