@@ -22,7 +22,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
-import kamienica.feature.apartment.ApartmentService;
 import kamienica.feature.meter.MeterAbstract;
 import kamienica.feature.meter.MeterEnergy;
 import kamienica.feature.meter.MeterGas;
@@ -95,6 +94,7 @@ public class ReadingController {
 		HashMap<String, Object> model = new HashMap<>();
 		if (!validateMeters(meterGas)) {
 			model.put("error", "Brakuje licznika głównego. Wprowadź brakujące liczniki");
+			model.put("url", "/Admin/Reading/readingEnergySave.html");
 			return new ModelAndView("/Admin/Reading/ReadingEnergyRegister", "model", model);
 		}
 		List<ReadingGas> readings = new ArrayList<>();
@@ -279,7 +279,7 @@ public class ReadingController {
 	}
 
 	// ------------------------------EDIT-----------------------------------
-	@RequestMapping(value = "/Admin/Reading/readingEnergyEdit", params = { "date" })
+	@RequestMapping(value = "/Admin/Reading/readingEnergyEdit")
 	public ModelAndView readingEnergyEdit(@RequestParam(value = "date") String date,
 			@ModelAttribute("readingForm") ReadingEnergyForm readingForm) {
 		List<ReadingEnergy> readings = readingService.getReadingEnergyByDate(date);
@@ -324,7 +324,7 @@ public class ReadingController {
 		return new ModelAndView("/Admin/Reading/ReadingEnergyEdit", "model", model);
 	}
 
-	@RequestMapping(value = "/Admin/Reading/readingGasEdit", params = { "date" })
+	@RequestMapping(value = "/Admin/Reading/readingGasEdit")
 	public ModelAndView readingGasEdit(@RequestParam(value = "date") String date,
 			@ModelAttribute("readingForm") ReadingGasForm readingForm) {
 
@@ -371,7 +371,7 @@ public class ReadingController {
 		return new ModelAndView("/Admin/Reading/ReadingGasEdit", "model", model);
 	}
 
-	@RequestMapping(value = "/Admin/Reading/readingWaterEdit", params = { "date" })
+	@RequestMapping(value = "/Admin/Reading/readingWaterEdit")
 	public ModelAndView readingWaterEdit(@RequestParam(value = "date") String date,
 			@ModelAttribute("readingForm") ReadingWaterForm readingForm) {
 		List<ReadingWater> readings = readingService.getReadingWaterByDate(date);
@@ -421,13 +421,11 @@ public class ReadingController {
 	public ModelAndView readingEnergyOverwite(@ModelAttribute("readingForm") ReadingEnergyForm readingForm,
 			BindingResult result, HttpServletRequest req) throws ParseException {
 		String date = req.getParameter("date");
-		// SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 		List<ReadingEnergy> listToSave = readingForm.getCurrentReadings();
 
 		for (ReadingEnergy i : listToSave) {
 			i.setReadingDate(df.parse(date));
 			i.setUnit(i.getMeter().getUnit());
-			// readingService.updateEnergy(i);
 
 		}
 		readingService.updateEnergyList(listToSave);
@@ -438,7 +436,6 @@ public class ReadingController {
 	public ModelAndView readingGasOverwrite(@ModelAttribute("readingForm") ReadingGasForm readingForm,
 			BindingResult result, HttpServletRequest req) throws ParseException {
 		String date = req.getParameter("date");
-		// SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 		List<ReadingGas> listToSave = readingForm.getCurrentReadings();
 
 		for (ReadingGas i : listToSave) {
@@ -453,7 +450,6 @@ public class ReadingController {
 	public ModelAndView readingWaterOverwrite(@ModelAttribute("readingForm") ReadingWaterForm readingForm,
 			BindingResult result, HttpServletRequest req) throws ParseException {
 		String date = req.getParameter("date");
-		// SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 		List<ReadingWater> listToSave = readingForm.getCurrentReadings();
 
 		for (ReadingWater i : listToSave) {

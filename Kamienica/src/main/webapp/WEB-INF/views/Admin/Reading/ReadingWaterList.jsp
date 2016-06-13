@@ -6,69 +6,86 @@
 
 <html>
 <head>
-<link class="row" href="<c:url value='/static/css/bootstrap.css' />"
+<link href="<c:url value='/static/css/bootstrap.css' />"
 	rel="stylesheet">
 
-<link class="row" href="<c:url value='/static/css/style.css' />"
+<link href="<c:url value='/static/css/style.css' />" rel="stylesheet">
+<link href="<c:url value='/static/css/sb-admin-2.css' />"
 	rel="stylesheet">
-<script type="text/javascript"
-	src="<c:url value='/static/js/jquery-2.2.0.js' />"></script>
-<script type="text/javascript"
-	src="<c:url value='/static/js/bootstrap.js' />"></script>
-<script type="text/javascript" src="<c:url value='/static/js/jq.js' />"></script>
-<script type="text/javascript"
-	src="<c:url value='/static/js/jquery.validate.js' />"></script>
+<link href="<c:url value='/static/css/font-awesome.min.css' />"
+	rel="stylesheet" type="text/css">
+
+<!-- MetisMenu CSS -->
+<link href="<c:url value='/static/css/metisMenu.min.css' />"
+	rel="stylesheet">
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Odczyty Wody</title>
 </head>
 <body>
+	<div id="wrapper">
+		<mytags:navbarAdmin />
 
-<mytags:navbarAdmin />
+		<div id="page-wrapper">
+			<div class='row'>
+				<div class="col-lg-12">
+					<h1 class="page-header well">Odczyty Wody</h1>
+				</div>
+			</div>
 
-	<div class='container'>
-		<div class='row'>
-			<div class='jumbotron'>
-				<h1>Odczyty Wody</h1>
-				<a href="readingWaterRegister.html">Dodaj Odczyty Wody</a><br>
+
+			<div class='row'>
+
+				<c:if test="${!empty reading}">
+					<table class='table table-stripped table-hover'>
+						<thead>
+							<tr>
+								
+								<th>Data</th>
+								<th>Wartość Odczytu</th>
+								<th>Jednostka</th>
+								<th>Licznik</th>
+								<th>Edytuj</th>
+								<th>Usuń</th>
+
+							</tr>
+						</thead>
+						<c:forEach items="${reading}" var="reading">
+							<tr>
+								
+								<td><c:out value="${reading.readingDate}" /></td>
+								<td><c:out value="${reading.value}" /></td>
+								<td><c:out value="${reading.unit}" /></td>
+								<td><c:out value="${reading.meter.description}" /></td>
+								<td><a
+									href='<c:url value="/Admin/Reading/readingWaterEdit.html?date=${reading.readingDate}" />'
+									role="button" class="btn-xs btn-warning"><i
+										class="fa fa-pencil-square-o" aria-hidden="true"></i></a></td>
+								<td><a
+									href='<c:url value="/Admin/Reading/readingWaterDelete.html?date=${reading.readingDate}"  />'
+									role="button" class="btn-xs btn-danger"
+									onclick="return confirm('UWAGA!!! Usunięte zostaną wszystkie odczyty z tą datą!\n Na pewno usunąć?')"><i
+										class="fa fa-times" aria-hidden="true"></i></a></td>
+
+							</tr>
+						</c:forEach>
+					</table>
+				</c:if>
 			</div>
 		</div>
-
-		<div class='row'>
-
-			<c:if test="${!empty reading}">
-				<table class='table table-stripped table-hover' width="100%">
-					<tr>
-						<th>Id</th>
-						<th>Data</th>
-						<th>Wartość Odczytu</th>
-						<th>Jednostka</th>
-						<th>Licznik</th>
-						<th>Edytuj</th>
-						<th>Usuń</th>
-
-					</tr>
-					<c:forEach items="${reading}" var="reading">
-						<tr>
-							<td><c:out value="${reading.id}" /></td>
-							<td><c:out value="${reading.readingDate}" /></td>
-							<td><c:out value="${reading.value}" /></td>
-							<td><c:out value="${reading.unit}" /></td>
-							<td><c:out value="${reading.meter.description}" /></td>
-							<td><a
-								href='<c:url value="/Admin/Reading/readingWaterEdit.html?date=${reading.readingDate}" />' role="button"
-								class="btn-xs btn-warning">Edytuj</a></td>
-							<td><a
-								href='<c:url value="/Admin/Reading/readingWaterDelete.html?date=${reading.readingDate}"  />' role="button"
-								class="btn-xs btn-danger"
-								onclick="return confirm('UWAGA!!! Usunięte zostaną wszystkie odczyty z tą datą!\n Na pewno usunąć?')">Usuń</a></td>
-
-						</tr>
-					</c:forEach>
-				</table>
-			</c:if>
-		</div>
-
 	</div>
+	<!-- jQuery -->
+	<script src="<c:url value='/static/js/jquery.min.js' />"></script>
+
+	<!-- Bootstrap Core JavaScript -->
+	<script src="<c:url value='/static/js/bootstrap.min.js' />"></script>
+
+	<!-- Metis Menu Plugin JavaScript -->
+	<script src="<c:url value='/static/js/metisMenu.min.js' />"></script>
+
+
+
+	<!-- Custom Theme JavaScript -->
+	<script src="<c:url value='/static/js/sb-admin-2.js' />"></script>
 </body>
 </html>

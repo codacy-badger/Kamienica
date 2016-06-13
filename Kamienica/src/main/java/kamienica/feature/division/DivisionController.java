@@ -28,6 +28,7 @@ import kamienica.feature.tenant.Tenant;
 import kamienica.feature.tenant.TenantService;
 
 @Controller
+@RequestMapping("/Admin/Division")
 public class DivisionController {
 
 	@Autowired
@@ -44,7 +45,7 @@ public class DivisionController {
 		binder.registerCustomEditor(Date.class, new CustomDateEditor(sdf, true));
 	}
 
-	@RequestMapping("/Admin/Division/divisionRegister")
+	@RequestMapping("/divisionRegister")
 	public ModelAndView divisionRegister(@ModelAttribute("divisionForm") DivisionForm divisionForm,
 			BindingResult result) {
 		Map<String, Object> model = new HashMap<String, Object>();
@@ -62,7 +63,7 @@ public class DivisionController {
 		return new ModelAndView("/Admin/Division/DivisionRegister", "model", model);
 	}
 
-	@RequestMapping(value = "/Admin/Division/divisionSave", method = RequestMethod.POST)
+	@RequestMapping(value = "/divisionSave", method = RequestMethod.POST)
 	public ModelAndView divisionSave(@ModelAttribute("divisionForm") DivisionForm divisionForm, BindingResult result,
 			HttpServletRequest req) throws ParseException {
 		Date date = divisionForm.getDate();
@@ -85,7 +86,7 @@ public class DivisionController {
 		}
 	}
 
-	@RequestMapping("/Admin/Division/divisionList")
+	@RequestMapping("/divisionList")
 	public ModelAndView divisionList() {
 		Map<String, Object> model = new HashMap<String, Object>();
 		DivisionForm divisionForm = new DivisionForm();

@@ -12,57 +12,62 @@
 
 <link class="row" href="<c:url value='/static/css/style.css' />"
 	rel="stylesheet">
-<script type="text/javascript"
-	src="<c:url value='/static/js/jquery-2.2.0.js' />"></script>
-<script type="text/javascript"
-	src="<c:url value='/static/js/bootstrap.js' />"></script>
-
-
-
-<script type="text/javascript" src="<c:url value='/static/js/jq.js' />"></script>
-
-<script type="text/javascript"
-	src="<c:url value='/static/js/jquery.validate.js' />"></script>
+<link href="<c:url value='/static/css/bootstrap.css' />"
+	rel="stylesheet">
+<link href="<c:url value='/static/css/style.css' />" rel="stylesheet">
+<link href="<c:url value='/static/css/sb-admin-2.css' />"
+	rel="stylesheet">
+<link href="<c:url value='/static/css/font-awesome.min.css' />"
+	rel="stylesheet" type="text/css">
+<!-- MetisMenu CSS -->
+<link href="<c:url value='/static/css/metisMenu.min.css' />"
+	rel="stylesheet">
 
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Algorytm Podziału</title>
 </head>
 <body>
-	<mytags:navbarAdmin />
+	<div id="wrapper">
+		<mytags:navbarAdmin />
 
-	<div class="container">
-		<div class="row">
-			<div class="jumbotron">
-				<h1>Algorytm Podziału</h1>
-				<p>
+		<div id="page-wrapper">
+
+			<div class='row'>
+				<div class='row'>
+					<div class="col-lg-12">
+						<h1 class="page-header well">Formularz Podziału</h1>
+					</div>
+				</div>
 			</div>
-		</div>
 
-		<div class='row'>
-			<c:if test="${!empty model.error}">
-				<p class='alert alert-danger'>${model.error}</p>
-			</c:if>
-		</div>
+			<div class='row'>
+				<c:if test="${!empty model.error}">
+					<p class='alert alert-danger'>${model.error}</p>
+				</c:if>
+			</div>
 
 
-		<div class='row'>
-			<c:url var="division" value="/Admin/Division/divisionSave.html" />
-			<form:form modelAttribute="divisionForm" method="post"
-				action="${division}">
+			<div class='row'>
+				<c:url var="division" value="/Admin/Division/divisionSave.html" />
+				<form:form modelAttribute="divisionForm" method="post"
+					action="${division}">
 
-				<table class='table table-bordered table-condensed'>
-					<tr>
-						<td><form:label path="date">
-								<b>Data</b>
-							</form:label> <form:input path="date" type="date" /></td>
-						<c:forEach items="${model.apartment}" var="m">
-							<th><c:out value="${m.description}" /></th>
-						</c:forEach>
-					<tr>
+					<table class='table  table-condensed'>
+						<thead>
+							<tr>
+								<th><form:label path="date">
+										Data
+									</form:label> <form:input path="date" type="date" />
+								</th>
+								<c:forEach items="${model.apartment}" var="m">
+									<th><c:out value="${m.description}" /></th>
+								</c:forEach>
+							</tr>
+						</thead>
 						<c:forEach items="${model.tenantList}" var="tenantList">
 							<tr>
-								<th style="height: 12px"><c:out
+								<th><c:out
 										value="${tenantList.firstName} ${tenantList.lastName}" /></th>
 								<c:forEach items="${divisionForm.divisionList}" varStatus="i"
 									var="l">
@@ -80,13 +85,28 @@
 								</c:forEach>
 							</tr>
 						</c:forEach>
-				</table>
-				<br>
-				<input type="submit" value="Zapisz" />
-			</form:form>
+					</table>
+					<br>
+					<div class="form-group">
+						<button type="submit" class="btn btn-default">Zapisz</button>
+						<button class="btn btn-default" type="reset">Resetuj</button>
+					</div>
+				</form:form>
+			</div>
 		</div>
 
 	</div>
+	<!-- jQuery -->
+	<script src="<c:url value='/static/js/jquery.min.js' />"></script>
 
+	<!-- Bootstrap Core JavaScript -->
+	<script src="<c:url value='/static/js/bootstrap.min.js' />"></script>
+
+	<!-- Metis Menu Plugin JavaScript -->
+	<script src="<c:url value='/static/js/metisMenu.min.js' />"></script>
+
+
+	<!-- Custom Theme JavaScript -->
+	<script src="<c:url value='/static/js/sb-admin-2.js' />"></script>
 </body>
 </html>
