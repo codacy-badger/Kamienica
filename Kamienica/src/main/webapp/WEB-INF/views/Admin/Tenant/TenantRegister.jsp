@@ -7,147 +7,164 @@
 
 <html>
 <head>
-<link class="row" href="<c:url value='/static/css/bootstrap.css' />"
+<link href="<c:url value='/static/css/bootstrap.css' />"
 	rel="stylesheet">
-<link class="row" href="<c:url value='/static/css/style.css' />"
+<link href="<c:url value='/static/css/style.css' />" rel="stylesheet">
+<link href="<c:url value='/static/css/sb-admin-2.css' />"
 	rel="stylesheet">
-<script type="text/javascript"
-	src="<c:url value='/static/js/jquery-2.2.0.js' />"></script>
-<script type="text/javascript"
-	src="<c:url value='/static/js/bootstrap.js' />"></script>
-<script type="text/javascript" src="<c:url value='/static/js/jq.js' />"></script>
-<script type="text/javascript"
-	src="<c:url value='/static/js/jquery.validate.js' />"></script>
+<link href="<c:url value='/static/css/font-awesome.min.css' />"
+	rel="stylesheet" type="text/css">
+<!-- MetisMenu CSS -->
+<link href="<c:url value='/static/css/metisMenu.min.css' />"
+	rel="stylesheet">
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Rejestracja Najemcy</title>
 </head>
 <body>
-	<mytags:navbarAdmin />
+	<div id="wrapper">
+		<mytags:navbarAdmin />
 
-	<div class="container" role="main">
+		<div id="page-wrapper">
 
-		<div class="jumbotron">
-			<h1>Najemca</h1>
-			<p>Wprowadź dane by zarejestrować nowego najemcę</p>
+			<div class='row'>
+				<div class='row'>
+					<div class="col-lg-12">
+						<h1 class="page-header well">Formularz Najemcy</h1>
+					</div>
+				</div>
+			</div>
+			<div class="row">
+				<c:if test="${!empty model.error}">
+					<p align="center" class="alert alert-danger">${model.error}</p>
+				</c:if>
+
+			</div>
+
+			<c:url var="rejestrujNajemca" value="${model.url }" />
+			<form:form class="form-horizontal" id="rejestrujNajemca"
+				modelAttribute="tenant" method="post" action="${rejestrujNajemca}">
+
+				<form:input path="id" readonly="true" hidden='true' />
+
+				<div class="form-group">
+					<label for="firstName" class="col-sm-3 control-label">Imię</label>
+					<div class="col-sm-9">
+						<form:input type="text" class="form-control" name="firstName"
+							path='firstName' placeholder="Pole wymagane" />
+						<p class="help-block">
+							<form:errors path="firstName" class="error" />
+						</p>
+					</div>
+				</div>
+
+				<div class="form-group">
+					<label for="lastName" class="col-sm-3 control-label">Nazwisko</label>
+					<div class="col-sm-9">
+						<form:input type="text" class="form-control" name="lastName"
+							path='lastName' placeholder="Pole wymagane" />
+						<p class="help-block">
+							<form:errors path="lastName" class="error" />
+						</p>
+					</div>
+				</div>
+
+				<div class="form-group">
+					<label for="email" class="col-sm-3 control-label">E-mail</label>
+					<div class="col-sm-9">
+						<form:input type="text" class="form-control" name="email"
+							path='email' placeholder="Pole wymagane" />
+						<p class="help-block">
+							<form:errors path="email" class="error" />
+						</p>
+					</div>
+				</div>
+
+				<div class="form-group">
+					<label for="phone" class="col-sm-3 control-label">Telefon</label>
+					<div class="col-sm-9">
+						<form:input type="text" class="form-control" name="phone"
+							path='phone' placeholder="Pole wymagane" />
+						<p class="help-block">
+							<form:errors path="phone" class="error" />
+						</p>
+					</div>
+				</div>
+
+				<div class="form-group">
+					<label for="phone" class="col-sm-3 control-label">Mieszkanie</label>
+					<div class="col-sm-9">
+						<form:select path="apartment" items="${model.apartment}"
+							itemValue="id" itemLabel="description" />
+						<p class="help-block">
+							<form:errors path="apartment" class="error" />
+						</p>
+					</div>
+				</div>
+
+				<div class="form-group">
+					<label for="phone" class="col-sm-3 control-label">Data
+						Wprowadzenia</label>
+					<div class="col-sm-9">
+						<form:input path="movementDate" type="date" />
+						<p class="help-block">
+							<form:errors path="movementDate" class="error" />
+						</p>
+					</div>
+				</div>
+
+				<div class="form-group">
+					<label for="phone" class="col-sm-3 control-label">Prawa</label>
+					<div class="col-sm-9">
+						<form:select path="role" items="${model.role}" />
+						<p class="help-block">
+							<form:errors path="role" class="error" />
+						</p>
+					</div>
+				</div>
+
+				<div class="form-group">
+					<label for="phone" class="col-sm-3 control-label">Status</label>
+					<div class="col-sm-9">
+						<form:select path="status" items="${model.status}" />
+						<p class="help-block">
+							<form:errors path="status" class="error" />
+						</p>
+					</div>
+				</div>
+
+				<div class="form-group">
+					<label for="phone" class="col-sm-3 control-label">Status</label>
+					<div class="col-sm-9">
+						<form:input path="password" />
+						<p class="help-block">
+							<form:errors path="password" class="error" />
+						</p>
+					</div>
+				</div>
+
+
+				<div class="form-group">
+					<button type="submit" class="btn btn-default">Zapisz</button>
+					<button class="btn btn-default" type="reset">Resetuj</button>
+				</div>
+
+			</form:form>
 		</div>
-
-		<c:url var="rejestrujNajemca" value="${model.url }" />
-		<form:form class="myForm" id="rejestrujNajemca"
-			modelAttribute="tenant" method="post" action="${rejestrujNajemca}">
-
-			<div class="row">
-				<p align="center" class="error">${model.error}</p>
-			</div>
-
-
-			<div class="row">
-				<div class="col-md-6 myLabel ">
-					<form:label path="firstName">Imię</form:label>
-				</div>
-				<div class="col-md-6 inputAndError">
-					<form:input path="firstName" name="firstName" />
-
-					<form:errors path="firstName" class="error" />
-				</div>
-			</div>
-			<div class="row">
-				<div class="col-md-6 myLabel">
-					<form:label path="lastName">Nazwisko</form:label>
-				</div>
-				<div class="col-md-6 inputAndError">
-					<form:input path="lastName" />
-					<form:errors path="lastName" class="error" />
-				</div>
-			</div>
-
-			<div class="row">
-				<div class="col-md-6 myLabel ">
-					<form:label path="email">Email</form:label>
-				</div>
-				<div class="col-md-6 inputAndError">
-					<form:input path="email" />
-					<label for="email" generated="true" class="error"></label>
-					<form:errors path="email" class="error" />
-				</div>
-			</div>
-
-			<div class="row">
-				<div class="col-md-6 myLabel ">
-					<form:label path="phone">Telefon</form:label>
-				</div>
-				<div class="col-md-6 inputAndError">
-					<form:input path="phone" />
-					<label for="phone" generated="true" class="error"></label>
-					<form:errors path="phone" class="error" />
-				</div>
-			</div>
-
-			<div class="row">
-				<div class="col-md-6 myLabel ">
-					<form:label path="apartment">Mieszkanie</form:label>
-				</div>
-				<div class="col-md-6 inputAndError">
-					<form:select path="apartment" items="${model.apartment}"
-						itemValue="id" itemLabel="description" />
-					<label for="apartment" generated="true" class="error"></label>
-					<form:errors path="apartment" class="error" />
-				</div>
-			</div>
-
-			<div class="row">
-				<div class="col-md-6 myLabel ">
-					<form:label path="movementDate">Data Wprowadzenia</form:label>
-				</div>
-				<div class="col-md-6 inputAndError">
-					<form:input path="movementDate" type="date" />
-					<label for="movementDate" generated="true" class="error"></label>
-					<form:errors path="movementDate" class="error" />
-				</div>
-			</div>
-
-			<div class="row">
-				<div class="col-md-6 myLabel ">
-					<form:label path="role">Prawa</form:label>
-				</div>
-				<div class="col-md-6 inputAndError">
-					<form:select path="role" items="${model.role}" />
-					<form:errors path="role" class="error" />
-					<label for="role" generated="true" class="error"></label>
-				</div>
-			</div>
-
-			<div class="row">
-				<div class="col-md-6 myLabel ">
-					<form:label path="status">Status</form:label>
-				</div>
-				<div class="col-md-6 inputAndError">
-					<form:select path="status" items="${model.status}" />
-					<label for="status" generated="true" class="error"></label>
-					<form:errors path="status" class="error" />
-				</div>
-			</div>
-
-			<div class="row">
-				<div class="col-md-6 myLabel ">
-					<form:label path="password" name="password">Hasło</form:label>
-				</div>
-				<div class="col-md-6 inputAndError">
-					<form:input path="password" />
-					<label for="password" generated="true" class="error"></label>
-					<form:errors path="password" class="error" />
-				</div>
-			</div>
-			<div class="row">
-				<div class="col-md-12  ">
-					<button class="btn btn-primary" type="submit">Zapisz</button>
-					<button class="btn btn-primary" type="reset">Resetuj</button>
-				</div>
-			</div>
-
-		</form:form>
 	</div>
+	</div>
+	<!-- jQuery -->
+	<script src="<c:url value='/static/js/jquery.min.js' />"></script>
 
+	<!-- Bootstrap Core JavaScript -->
+	<script src="<c:url value='/static/js/bootstrap.min.js' />"></script>
+
+	<!-- Metis Menu Plugin JavaScript -->
+	<script src="<c:url value='/static/js/metisMenu.min.js' />"></script>
+
+
+	<!-- Custom Theme JavaScript -->
+	<script src="<c:url value='/static/js/sb-admin-2.js' />"></script>
 
 </body>
 </html>

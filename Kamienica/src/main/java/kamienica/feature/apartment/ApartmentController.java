@@ -79,12 +79,12 @@ public class ApartmentController {
 			apartmentService.update(apartment);
 		} catch (org.springframework.dao.DataIntegrityViolationException e) {
 			result.rejectValue("apartmentNumber", "error.apartment", "Istnieje już taki numer mieszkania w bazie");
-			return new ModelAndView("/Admin/Apartment/ApartmentEdit");
+			return new ModelAndView("/Admin/Apartment/ApartmentRegister");
 		}
 		return new ModelAndView("redirect:/Admin/Apartment/apartmentList.html");
 	}
 
-	@RequestMapping(value = "/apartmentDelete", params = { "id" }, method = RequestMethod.GET)
+	@RequestMapping(value = "/apartmentDelete", method = RequestMethod.GET)
 	public ModelAndView apartmentDelete(@RequestParam(value = "id") int id) {
 		apartmentService.deleteByID(id);
 		return new ModelAndView("redirect:/Admin/Apartment/apartmentList.html");
