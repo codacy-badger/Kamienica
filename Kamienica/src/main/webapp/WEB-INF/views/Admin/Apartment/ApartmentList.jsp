@@ -25,46 +25,50 @@
 <title>Lista Mieszkań</title>
 </head>
 <body>
-	<mytags:navbarAdmin />
+	<div id="wrapper">
+		<mytags:navbarAdmin />
 
-	<div class="container">
-		<div class='row'>
-			<div class="col-lg-12">
-				<h1 class="page-header well">Lista Mieszkań</h1>
-			</div>
-		</div>
-
-		<div class='row'>
-			<c:if test="${!empty apartment}">
-				<div>
-					<table class='table table-stripped table-hover'>
-						<thead>
-							<tr>
-								<th>Nr Mieszkania</th>
-								<th>Domofon</th>
-								<th>Opis</th>
-								<th>Edytuj</th>
-								<th>Usuń</th>
-
-							</tr>
-						</thead>
-						<c:forEach items="${apartment}" var="apartment">
-							<tr>
-								<td><c:out value="${apartment.apartmentNumber}" /></td>
-								<td><c:out value="${apartment.intercom}" /></td>
-								<td><c:out value="${apartment.description}" /></td>
-								<td><a
-									href='<c:url value="/Admin/Apartment/apartmentEdit.html?id=${apartment.id}" />'
-									role="button" class="btn-xs btn-warning">Edytuj</a></td>
-								<td><a
-									href='<c:url value="/Admin/Apartment/apartmentDelete.html?id=${apartment.id}"  />'
-									onclick="return confirm('Na pewno usunąć?')" role="button"
-									class="btn-xs btn-danger">Usuń</a></td>
-							</tr>
-						</c:forEach>
-					</table>
+		<div id="page-wrapper">
+			<div class='row'>
+				<div class="col-lg-12">
+					<h1 class="page-header well">Lista Mieszkań</h1>
 				</div>
-			</c:if>
+			</div>
+
+			<div class='row'>
+				<c:if test="${!empty apartment}">
+					<div>
+						<table class='table table-stripped table-hover'>
+							<thead>
+								<tr>
+									<th>Nr Mieszkania</th>
+									<th>Domofon</th>
+									<th>Opis</th>
+									<th>Edytuj</th>
+									<th>Usuń</th>
+
+								</tr>
+							</thead>
+							<c:forEach items="${apartment}" var="apartment">
+								<tr>
+									<td><c:out value="${apartment.apartmentNumber}" /></td>
+									<td><c:out value="${apartment.intercom}" /></td>
+									<td><c:out value="${apartment.description}" /></td>
+									<td><a
+										href='<c:url value="/Admin/Apartment/apartmentEdit.html?id=${apartment.id}" />'
+										role="button" class="btn-xs btn-warning"><i
+											class="fa fa-pencil-square-o" aria-hidden="true"></i></a></td>
+									<td><a
+										href='<c:url value="/Admin/Apartment/apartmentDelete.html?id=${apartment.id}"  />'
+										onclick="return confirm('Na pewno usunąć?')" role="button"
+										class="btn-xs btn-danger"><i class="fa fa-times"
+											aria-hidden="true"></i> </a></td>
+								</tr>
+							</c:forEach>
+						</table>
+					</div>
+				</c:if>
+			</div>
 		</div>
 	</div>
 	<!-- jQuery -->

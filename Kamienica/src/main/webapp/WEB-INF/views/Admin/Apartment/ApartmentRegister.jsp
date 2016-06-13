@@ -35,23 +35,22 @@
 			<div class='row'>
 				<div class='row'>
 					<div class="col-lg-12">
-						<h1 class="page-header well">Lista Mieszkań</h1>
+						<h1 class="page-header well">Formularz Mieszkań</h1>
 					</div>
 				</div>
 			</div>
 
-			<c:url var="rejestrujMieszkanie"
-				value="/Admin/Apartment/apartmentSave.html" />
+			<c:url var="rejestrujMieszkanie" value="${url}" />
 			<form:form class="form-horizontal" role="form"
 				modelAttribute="apartment" method="post"
 				action="${rejestrujMieszkanie}">
-
+				<form:input path="id" readonly="true" type='hidden' />
 
 				<div class="form-group">
 					<label for="inputEmail3" class="col-sm-3 control-label">Domofon</label>
 					<div class="col-sm-9">
-						<input type="text" class="form-control" name="intercom"
-							placeholder="Pole wymagane">
+						<form:input type="text" class="form-control" name="intercom"
+							path='intercom' placeholder="Pole wymagane" />
 						<p class="help-block">
 							<form:errors path="intercom" class="error" />
 						</p>
@@ -62,8 +61,9 @@
 					<label for="inputEmail3" class="col-sm-3 control-label">Numer
 						Mieszkania</label>
 					<div class="col-sm-9">
-						<input type="text" class="form-control" id="inputEmail3"
-							placeholder="Pole wymagane" name="apartmentNumber">
+						<form:input type="text" class="form-control" id="inputEmail3"
+							path='apartmentNumber' placeholder="Pole wymagane"
+							name="apartmentNumber" />
 						<p class="help-block">
 							<form:errors path="apartmentNumber" class="error" />
 						</p>
@@ -73,8 +73,8 @@
 				<div class="form-group">
 					<label for="inputEmail3" class="col-sm-3 control-label">Opis</label>
 					<div class="col-sm-9">
-						<input type="text" class="form-control" id="inputEmail3"
-							placeholder="Pole wymagane" name="description">
+						<form:input type="text" class="form-control" id="inputEmail3"
+							path='description' placeholder="Pole wymagane" name="description" />
 						<p class="help-block">
 							<form:errors path="description" class="error" />
 						</p>

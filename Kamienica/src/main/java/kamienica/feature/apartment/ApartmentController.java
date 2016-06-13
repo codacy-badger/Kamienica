@@ -17,10 +17,12 @@ import org.springframework.web.bind.ServletRequestDataBinder;
 import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 @Controller
+@RequestMapping("/Admin/Apartment")
 public class ApartmentController {
 
 	@Autowired
@@ -28,18 +30,18 @@ public class ApartmentController {
 
 	@InitBinder
 	protected void initBinder(HttpServletRequest request, ServletRequestDataBinder binder) {
-//		binder.registerCustomEditor(Apartment.class, new ApartmentIB(this.apartmentService));
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 		sdf.setLenient(true);
 		binder.registerCustomEditor(Date.class, new CustomDateEditor(sdf, true));
 	}
 
-	@RequestMapping("/Admin/Apartment/apartmentRegister")
+	@RequestMapping(value = "/apartmentRegister", method = RequestMethod.GET)
 	public ModelAndView ApartmentRegister(@ModelAttribute("apartment") Apartment apartment, BindingResult result) {
-		return new ModelAndView("/Admin/Apartment/ApartmentRegister");
+		return new ModelAndView("/Admin/Apartment/ApartmentRegister").addObject("url",
+				"/Admin/Apartment/apartmentSave.html");
 	}
 
-	@RequestMapping("/Admin/Apartment/apartmentSave")
+	@RequestMapping(value = "/apartmentSave", method = RequestMethod.POST)
 	public ModelAndView save(@Valid @ModelAttribute("apartment") Apartment apartment, BindingResult result) {
 
 		if (result.hasErrors()) {
@@ -56,20 +58,21 @@ public class ApartmentController {
 		return new ModelAndView("redirect:/Admin/Apartment/apartmentList.html");
 	}
 
-	@RequestMapping(value = "/Admin/Apartment/apartmentEdit", params = { "id" })
-	public ModelAndView apartmentEdit(@RequestParam(value = "id") int id) {
-		Apartment apartment = apartmentService.getById(id);
-		ModelAndView mvc = new ModelAndView("/Admin/Apartment/ApartmentEdit");
-		mvc.addObject("apartment", apartment);
+	@RequestMapping(value = "/apartmentEdit", method = RequestMethod.GET)
+	public ModelAndView apartmentEdit(@RequestParam(value = "id") int id,
+			@ModelAttribute("apartment") Apartment apartment) {
+		ModelAndView mvc = new ModelAndView("/Admin/Apartment/ApartmentRegister");
+		mvc.addObject("url", "/Admin/Apartment/apartmentOverwrite.html");
+		mvc.addObject("apartment", apartmentService.getById(id));
 		return mvc;
 	}
 
-	@RequestMapping("/Admin/Apartment/apartmentOverwrite")
+	@RequestMapping(value = "/apartmentOverwrite", method = RequestMethod.POST)
 	public ModelAndView apartmentOverwrite(@Valid @ModelAttribute("apartment") Apartment apartment,
 			BindingResult result) {
 		if (result.hasErrors()) {
 
-			return new ModelAndView("/Admin/Apartment/ApartmentEdit");
+			return new ModelAndView("/Admin/Apartment/ApartmentRegister");
 		}
 
 		try {
@@ -81,13 +84,13 @@ public class ApartmentController {
 		return new ModelAndView("redirect:/Admin/Apartment/apartmentList.html");
 	}
 
-	@RequestMapping(value = "/Admin/Apartment/apartmentDelete", params = { "id" })
+	@RequestMapping(value = "/apartmentDelete", params = { "id" }, method = RequestMethod.GET)
 	public ModelAndView apartmentDelete(@RequestParam(value = "id") int id) {
 		apartmentService.deleteByID(id);
 		return new ModelAndView("redirect:/Admin/Apartment/apartmentList.html");
 	}
 
-	@RequestMapping("/Admin/Apartment/apartmentList")
+	@RequestMapping(value = "/apartmentList", method = RequestMethod.GET)
 	public ModelAndView apartmentList() {
 		Map<String, Object> model = new HashMap<String, Object>();
 		model.put("apartment", apartmentService.getList());
