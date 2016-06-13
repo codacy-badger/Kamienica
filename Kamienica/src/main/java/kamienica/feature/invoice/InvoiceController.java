@@ -59,11 +59,6 @@ public class InvoiceController {
 	@Autowired
 	private PaymentService paymentService;
 
-//	public void setFakturaService(InvoiceService invoiceService) {
-//		this.invoiceService = invoiceService;
-//
-//	}
-
 	@InitBinder
 	protected void initBinder(HttpServletRequest request, ServletRequestDataBinder binder) {
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
@@ -74,22 +69,13 @@ public class InvoiceController {
 	Date date = new Date();
 	SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
 
-	@RequestMapping("/Admin/Invoice/registerInvoice")
-	public ModelAndView invoiceRegistration() {
-
-		return new ModelAndView("/Admin/Invoice/RegisterInvoice");
-	}
-
-	@RequestMapping("/Admin/Invoice/invoiceList")
-	public ModelAndView invoiceLsit() {
-		return new ModelAndView("/Admin/Invoice/InvoiceList");
-	}
-
 	// -------------------REJESTRACJA----------------------------------------------
 	@RequestMapping("/Admin/Invoice/invoiceGasRegister")
 	public ModelAndView registerInvoiceGas(@ModelAttribute("invoice") InvoiceGas invoice, BindingResult result) {
 
 		HashMap<String, Object> model = new HashMap<>();
+		model.put("url", "/Admin/Invoice/invoiceGasSave");
+		model.put("media", "Gas");
 		ArrayList<Tenant> tenants = (ArrayList<Tenant>) tenantService.getCurrentTenants();
 		ArrayList<Division> division = (ArrayList<Division>) divisionService.getList();
 		ArrayList<Apartment> apartments = (ArrayList<Apartment>) apartmentService.getList();
@@ -114,7 +100,8 @@ public class InvoiceController {
 	public ModelAndView registerInvoiceEnergy(@ModelAttribute("invoice") InvoiceEnergy invoice, BindingResult result) {
 
 		HashMap<String, Object> model = new HashMap<>();
-
+		model.put("url", "/Admin/Invoice/invoiceEnergySave.html");
+		model.put("media", "Energia");
 		ArrayList<Tenant> tenants = (ArrayList<Tenant>) tenantService.getCurrentTenants();
 		ArrayList<Division> division = (ArrayList<Division>) divisionService.getList();
 		ArrayList<Apartment> apartments = (ArrayList<Apartment>) apartmentService.getList();
@@ -132,13 +119,15 @@ public class InvoiceController {
 			model.put("readings", readings);
 		}
 
-		return new ModelAndView("/Admin/Invoice/InvoiceEnergyRegister", "model", model);
+		return new ModelAndView("/Admin/Invoice/InvoiceRegister", "model", model);
 	}
 
 	@RequestMapping("/Admin/Invoice/invoiceWaterRegister")
 	public ModelAndView registerInvoiceWater(@ModelAttribute("invoice") InvoiceWater invoice, BindingResult result) {
 
 		HashMap<String, Object> model = new HashMap<>();
+		model.put("url", "/Admin/Invoice/invoiceWaterSave");
+		model.put("media", "Woda");
 		ArrayList<Tenant> tenants = (ArrayList<Tenant>) tenantService.getCurrentTenants();
 		ArrayList<Division> division = (ArrayList<Division>) divisionService.getList();
 		ArrayList<Apartment> apartments = (ArrayList<Apartment>) apartmentService.getList();
@@ -233,7 +222,10 @@ public class InvoiceController {
 			BindingResult result) {
 
 		if (result.hasErrors()) {
-			return new ModelAndView("/Admin/Invoice/InvoiceEnergyRegister");
+			HashMap<String, Object> model = new HashMap<>();
+			model.put("url", "/Admin/Invoice/invoiceEnergySave");
+			model.put("media", "Woda");
+			return new ModelAndView("/Admin/Invoice/InvoiceEnergyRegister", "model", model);
 		}
 
 		ArrayList<Tenant> tenants = (ArrayList<Tenant>) tenantService.getCurrentTenants();
@@ -267,7 +259,10 @@ public class InvoiceController {
 	public ModelAndView invoiceGasList() {
 		Map<String, Object> model = new HashMap<String, Object>();
 		model.put("invoice", invoiceService.getGasInvoiceList());
-		return new ModelAndView("/Admin/Invoice/InvoiceGasList", model);
+		model.put("editlUrl", "/Admin/Invoice/invoiceGasEdit.html?id=");
+		model.put("delUrl", "/Admin/Invoice/invoiceGasDelete.html?id=");
+		model.put("media", "Gaz");
+		return new ModelAndView("/Admin/Invoice/InvoiceList", model);
 
 	}
 
@@ -275,7 +270,10 @@ public class InvoiceController {
 	public ModelAndView invoiceWaterList() {
 		Map<String, Object> model = new HashMap<String, Object>();
 		model.put("invoice", invoiceService.getWaterInvoiceList());
-		return new ModelAndView("/Admin/Invoice/InvoiceWaterList", model);
+		model.put("editlUrl", "/Admin/Invoice/invoiceWaterEdit.html?id=");
+		model.put("delUrl", "/Admin/Invoice/invoiceWaterDelete.html?id=");
+		model.put("media", "Woda");
+		return new ModelAndView("/Admin/Invoice/InvoiceList", model);
 
 	}
 
@@ -283,7 +281,10 @@ public class InvoiceController {
 	public ModelAndView invoiceEnergyList() {
 		Map<String, Object> model = new HashMap<String, Object>();
 		model.put("invoice", invoiceService.getEnergyInvoiceList());
-		return new ModelAndView("/Admin/Invoice/InvoiceEnergyList", model);
+		model.put("editlUrl", "/Admin/Invoice/invoiceEnergyEdit.html?id=");
+		model.put("delUrl", "/Admin/Invoice/invoiceEnergyDelete.html?id=");
+		model.put("media", "Energia");
+		return new ModelAndView("/Admin/Invoice/InvoiceList", model);
 
 	}
 
