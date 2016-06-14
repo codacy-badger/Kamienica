@@ -44,9 +44,11 @@
 
 			<c:if test="${empty model.error}">
 				<div class='row'>
-					<c:url var="register" value="${model.url }" />
+					<c:url var="register" value="${model.saveUrl }" />
 					<form:form class="form-horizontal" id="register"
 						modelAttribute="invoice" method="post" action="${register}">
+
+						<form:input path="id" readonly="true" type='hidden' />
 
 						<div class="form-group">
 							<label for="serialNumber" class="col-sm-3 control-label">Numer
@@ -54,24 +56,46 @@
 							<div class="col-sm-9">
 								<form:input type="text" class="form-control" name="serialNumber"
 									path='serialNumber' placeholder="Pole wymagane" />
+
 								<p class="help-block">
 									<form:errors path="serialNumber" class="error" />
 								</p>
 							</div>
 						</div>
 
-						<div class="form-group">
-							<label for="baseReading" class="col-sm-3 control-label">Okres
-								Rozliczenia</label>
-							<div class="col-sm-9">
-								<form:select path="baseReading" class="form-control ignore"
-									items="${model.readings}" itemValue="id"
-									itemLabel="readingDate" />
-								<p class="help-block">
-									<form:errors path="baseReading" class="error" />
-								</p>
+						<c:if test="${!empty model.readings}">
+							<div class="form-group">
+								<label for="baseReading" class="col-sm-3 control-label">Okres
+									Rozliczenia</label>
+								<div class="col-sm-9">
+									<form:select path="baseReading" class="form-control ignore"
+										items="${model.readings}" itemValue="id"
+										itemLabel="readingDate" />
+									<p class="help-block">
+										<form:errors path="baseReading" class="error" />
+									</p>
+								</div>
 							</div>
-						</div>
+						</c:if>
+						<!-- work on that after the decimal bug has been resolved -->
+						<c:if test="${empty model.readings}">
+							<div class="form-group">
+								<label for="baseReading" class="col-sm-3 control-label">Okres
+									Rozliczenia</label>
+								<div class="col-sm-9">
+
+									<form:input path="baseReading" items="${invoice.baseReading}"
+										itemValue="id" itemLabel="${invoice.baseReading.readingDate}" readonly="true"
+										class='ignore' />
+									<!--<form:input path="baseReading" class="form-control ignore"
+										disabled="true" value="${invoice.baseReading.readingDate }" /> -->
+									<p class="help-block">
+										<form:errors path="baseReading" class="error" />
+									</p>
+								</div>
+							</div>
+						</c:if>
+
 
 						<div class="form-group">
 							<label for="description" class="col-sm-3 control-label">Opis
