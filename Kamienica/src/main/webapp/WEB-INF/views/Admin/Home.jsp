@@ -54,11 +54,11 @@
 			<!-- /.row -->
 			<div class="row">
 				<div class="col-lg-3 col-md-6">
-					<div class="panel panel-primary">
+					<div class="panel panel-primary" id='config'>
 						<div class="panel-heading">
 							<div class="row">
 								<div class="col-xs-3">
-									<i class="fa fa-comments fa-5x"></i>
+									<i class="fa fa-cog fa-5x" aria-hidden="true"></i>
 								</div>
 								<div class="col-xs-9 text-right">
 									<div>
@@ -78,7 +78,7 @@
 					</div>
 				</div>
 				<div class="col-lg-3 col-md-6">
-					<div class="panel panel-yellow">
+					<div class="panel " id='invoice'>
 						<div class="panel-heading">
 							<div class="row">
 								<div class="col-xs-3">
@@ -86,9 +86,9 @@
 								</div>
 								<div class="col-xs-9 text-right">
 									<div>
-										<h2>Gaz: 10</h2>
+										<h2 id='invoiceDays'>${model.invoiceDays } dni</h2>
 									</div>
-									<div>Najstarsza opłata</div>
+									<div>Najstarsza opłata: ${model.invoiceMedia }</div>
 								</div>
 							</div>
 						</div>
@@ -102,7 +102,7 @@
 					</div>
 				</div>
 				<div class="col-lg-3 col-md-6">
-					<div class="panel panel-yellow">
+					<div class="panel" id='reading'>
 						<div class="panel-heading">
 							<div class="row">
 								<div class="col-xs-3">
@@ -110,9 +110,9 @@
 								</div>
 								<div class="col-xs-9 text-right">
 									<div class="huge">
-										<h2>Energia: 30</h2>
+										<h2 id='readingDays'>${model.radingDays } dni</h2>
 									</div>
-									<div>Najstarszy odczyt</div>
+									<div>Najstarszy odczyt: ${model.readingMedia }</div>
 								</div>
 							</div>
 						</div>
@@ -126,7 +126,7 @@
 					</div>
 				</div>
 				<div class="col-lg-3 col-md-6">
-					<div class="panel panel-red">
+					<div class="panel " id='apartment'>
 						<div class="panel-heading">
 							<div class="row">
 								<div class="col-xs-3">
@@ -134,7 +134,7 @@
 								</div>
 								<div class="col-xs-9 text-right">
 									<div>
-										<h2>13</h2>
+										<h2 id='apartmentNumber'>${model.emptyApartments }</h2>
 									</div>
 									<div>Liczba Pustych Mieszkań</div>
 								</div>
@@ -301,6 +301,8 @@
 	<!-- Custom Theme JavaScript -->
 	<script src="<c:url value='/static/js/sb-admin-2.js' />"></script>
 
+
+	<script src="<c:url value='/static/js/adminHome.js' />"></script>
 </body>
 
 </html>

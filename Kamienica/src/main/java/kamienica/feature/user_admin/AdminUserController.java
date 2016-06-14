@@ -1,4 +1,4 @@
-package kamienica.feature.user;
+package kamienica.feature.user_admin;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -20,8 +20,7 @@ import kamienica.feature.tenant.Tenant;
 import kamienica.feature.tenant.TenantService;
 
 @Controller
-@RequestMapping("/User")
-public class UserController {
+public class AdminUserController {
 
 	@Autowired
 	private PaymentService paymentService;
@@ -29,11 +28,20 @@ public class UserController {
 	private TenantService tenantService;
 	@Autowired
 	private ReadingService readingService;
-	// temporary solution
 	@Autowired
 	private MyUserDetailsService userDetailsService;
+	@Autowired
+	private AdminService adminService;
 
-	@RequestMapping("/userHome")
+	// ===========ADMIN===========================================
+	@RequestMapping("/Admin/home")
+	public ModelAndView home() {
+		HashMap<String, Object> model = adminService.getMainData();
+		return new ModelAndView("/Admin/Home", "model", model);
+	}
+
+	// =====================USER===========================================
+	@RequestMapping("/User/userHome")
 	public ModelAndView userHome() {
 		Map<String, Object> model = new HashMap<String, Object>();
 		MyUser myUser = getMyUser();
@@ -47,7 +55,7 @@ public class UserController {
 		return new ModelAndView("/User/UserHome", "model", model);
 	}
 
-	@RequestMapping("/userReadings")
+	@RequestMapping("/User/userReadings")
 	public ModelAndView aparmtnetRest(@RequestParam(value = "media") String media) {
 		HashMap<String, Object> model = new HashMap<>();
 		if (media.equals("energy")) {
@@ -68,7 +76,7 @@ public class UserController {
 		return new ModelAndView("/User/UserReadings", "model", model);
 	}
 
-	@RequestMapping("/userPayment")
+	@RequestMapping("/User/userPayment")
 	public ModelAndView userPayment() {
 		Map<String, Object> model = new HashMap<String, Object>();
 		Tenant tenant = tenantService.loadByMail(getMyUser().getUsername());
@@ -81,12 +89,12 @@ public class UserController {
 		return new ModelAndView("/User/UserPayment", "model", model);
 	}
 
-	@RequestMapping("/userPassword")
+	@RequestMapping("/User/userPassword")
 	public ModelAndView changePassword() {
 		return new ModelAndView("/User/UserPassword");
 	}
 
-	@RequestMapping("/userUpdatePassword")
+	@RequestMapping("/User/userUpdatePassword")
 	public ModelAndView updatePassword(HttpServletRequest req, @RequestParam String email,
 			@RequestParam String oldPassword, @RequestParam String newPassword, @RequestParam String newPassword2) {
 		HashMap<String, Object> model = new HashMap<>();

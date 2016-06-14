@@ -22,4 +22,6 @@ public interface ReadingDao<R extends ReadingAbstract, I extends Invoice> extend
 	public void ResolveReadings(I invoice);
 
 	public void UnresolveReadings(I invoice);
+	
+	public int countDaysFromLastReading();
 }

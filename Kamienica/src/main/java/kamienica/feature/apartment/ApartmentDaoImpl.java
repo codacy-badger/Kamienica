@@ -1,11 +1,19 @@
 package kamienica.feature.apartment;
 
+import org.hibernate.Query;
 import org.springframework.stereotype.Repository;
 
 import kamienica.dao.AbstractDao;
-import kamienica.dao.DaoInterface;
 
 @Repository("apatmentDao")
-public class ApartmentDaoImpl extends AbstractDao<Integer, Apartment> implements DaoInterface<Apartment> {
+public class ApartmentDaoImpl extends AbstractDao<Integer, Apartment> implements ApartmentDao {
+
+	@Override
+	public int getNumOfEmptyApartment() {
+		Query query = getSession().createSQLQuery(
+				"SELECT count(*) FROM apartment WHERE NOT EXISTS (SELECT * FROM tenant WHERE apartment.id = tenant.apartment_id ) and apartmentNumber > 0");
+
+		return ((Number) query.uniqueResult()).intValue();
+	}
 
 }

@@ -165,12 +165,12 @@
 				<i class="fa fa-caret-down"></i>
 		</a>
 			<ul class="dropdown-menu dropdown-user">
-				<li><a href="#"><i class="fa fa-user fa-fw"></i> User
-						Profile</a></li>
-				<li><a href="#"><i class="fa fa-gear fa-fw"></i> Settings</a></li>
+				<li><a href="/Kamienica/User/userHome"><i
+						class="fa fa-user fa-fw"></i>Strona Najemcy</a></li>
+				<li><a href="#"><i class="fa fa-gear fa-fw"></i>Ustawienia</a></li>
 				<li class="divider"></li>
-				<li><a href="login.html"><i class="fa fa-sign-out fa-fw"></i>
-						Logout</a></li>
+				<li><a href="/Kamienica/logout"><i
+						class="fa fa-sign-out fa-fw"></i>Wyloguj</a></li>
 			</ul> <!-- /.dropdown-user --></li>
 		<!-- /.dropdown -->
 	</ul>
@@ -185,14 +185,18 @@
 						Mieszkania<span class="fa arrow"></span></a>
 					<ul class="nav nav-second-level">
 						<li><a
-							href="/Kamienica/Admin/Apartment/apartmentRegister.html"><i class="fa fa-plus" aria-hidden="true"></i>  Nowe</a></li>
-						<li><a href="/Kamienica/Admin/Apartment/apartmentList.html"><i class="fa fa-list" aria-hidden="true"></i>  Lista</a></li>
+							href="/Kamienica/Admin/Apartment/apartmentRegister.html"><i
+								class="fa fa-plus" aria-hidden="true"></i> Nowe</a></li>
+						<li><a href="/Kamienica/Admin/Apartment/apartmentList.html"><i
+								class="fa fa-list" aria-hidden="true"></i> Lista</a></li>
 					</ul> <!-- /.nav-second-level --></li>
 				<li><a href="#"><i class="fa fa-users" aria-hidden="true"></i>
 						Najemcy<span class="fa arrow"></span></a>
 					<ul class="nav nav-second-level">
-						<li><a href="/Kamienica/Admin/Tenant/tenantRegister.html"><i class="fa fa-plus" aria-hidden="true"></i>  Nowe</a></li>
-						<li><a href="/Kamienica/Admin/Tenant/tenantList.html"><i class="fa fa-list" aria-hidden="true"></i>  Lista</a></li>
+						<li><a href="/Kamienica/Admin/Tenant/tenantRegister.html"><i
+								class="fa fa-plus" aria-hidden="true"></i> Nowe</a></li>
+						<li><a href="/Kamienica/Admin/Tenant/tenantList.html"><i
+								class="fa fa-list" aria-hidden="true"></i> Lista</a></li>
 					</ul> <!-- /.nav-second-level --></li>
 				<li><a href="#"><i class="fa fa-wrench fa-fw"></i>
 						Konfiguracja<span class="fa arrow"></span></a>
@@ -200,8 +204,10 @@
 						<li><a href=#>Algorytm Podziału<span class="fa arrow"></span></a>
 							<ul class="nav nav-third-level">
 								<li><a
-									href="/Kamienica/Admin/Division/divisionRegister.html"><i class="fa fa-plus" aria-hidden="true"></i>  Nowe</a></li>
-								<li><a href="/Kamienica/Admin/Division/divisionList.html"><i class="fa fa-list" aria-hidden="true"></i>  Lista</a></li>
+									href="/Kamienica/Admin/Division/divisionRegister.html"><i
+										class="fa fa-plus" aria-hidden="true"></i> Nowe</a></li>
+								<li><a href="/Kamienica/Admin/Division/divisionList.html"><i
+										class="fa fa-list" aria-hidden="true"></i> Lista</a></li>
 							</ul></li>
 						<li><a href="#">Ustawienia Początkowe</a></li>
 					</ul> <!-- /.nav-second-level --></li>
@@ -211,23 +217,29 @@
 						<li><a href="panels-wells.html">Gaz<span class="fa arrow"></span></a>
 							<ul class="nav nav-third-level">
 								<li><a
-									href="/Kamienica/Admin/Reading/readingGasRegister.html"><i class="fa fa-plus" aria-hidden="true"></i>  Nowe</a></li>
-								<li><a href="/Kamienica/Admin/Reading/readingGasList.html"><i class="fa fa-list" aria-hidden="true"></i>  Lista</a></li>
+									href="/Kamienica/Admin/Reading/readingGasRegister.html"><i
+										class="fa fa-plus" aria-hidden="true"></i> Nowe</a></li>
+								<li><a href="/Kamienica/Admin/Reading/readingGasList.html"><i
+										class="fa fa-list" aria-hidden="true"></i> Lista</a></li>
 							</ul></li>
 						<li><a href="buttons.html">Woda<span class="fa arrow"></a>
 							<ul class="nav nav-third-level">
 								<li><a
-									href="/Kamienica/Admin/Reading/readingWaterRegister.html"><i class="fa fa-plus" aria-hidden="true"></i>  Nowe</a></li>
+									href="/Kamienica/Admin/Reading/readingWaterRegister.html"><i
+										class="fa fa-plus" aria-hidden="true"></i> Nowe</a></li>
 								<li><a
-									href="/Kamienica/Admin/Reading/readingWaterList.html"><i class="fa fa-list" aria-hidden="true"></i>  Lista</a></li>
+									href="/Kamienica/Admin/Reading/readingWaterList.html"><i
+										class="fa fa-list" aria-hidden="true"></i> Lista</a></li>
 							</ul></li>
 						<li><a href="notifications.html">Energia<span
 								class="fa arrow"></a>
 							<ul class="nav nav-third-level">
 								<li><a
-									href="/Kamienica/Admin/Reading/readingEnergyRegister.html"><i class="fa fa-plus" aria-hidden="true"></i>  Nowe</a></li>
+									href="/Kamienica/Admin/Reading/readingEnergyRegister.html"><i
+										class="fa fa-plus" aria-hidden="true"></i> Nowe</a></li>
 								<li><a
-									href="/Kamienica/Admin/Reading/readingEnergyList.html"><i class="fa fa-list" aria-hidden="true"></i>  Lista</a></li>
+									href="/Kamienica/Admin/Reading/readingEnergyList.html"><i
+										class="fa fa-list" aria-hidden="true"></i> Lista</a></li>
 							</ul></li>
 
 					</ul> <!-- /.nav-second-level --></li>
@@ -238,23 +250,29 @@
 								class="fa arrow"></span></a>
 							<ul class="nav nav-third-level">
 								<li><a
-									href="/Kamienica/Admin/Invoice/invoiceGasRegister.html"><i class="fa fa-plus" aria-hidden="true"></i>  Nowe</a></li>
-								<li><a href="/Kamienica/Admin/Invoice/invoiceGasList.html"><i class="fa fa-list" aria-hidden="true"></i>  Lista</a></li>
+									href="/Kamienica/Admin/Invoice/invoiceGasRegister.html"><i
+										class="fa fa-plus" aria-hidden="true"></i> Nowe</a></li>
+								<li><a href="/Kamienica/Admin/Invoice/invoiceGasList.html"><i
+										class="fa fa-list" aria-hidden="true"></i> Lista</a></li>
 							</ul></li>
 						<li><a href="buttons.html">Woda<span class="fa arrow"></a>
 							<ul class="nav nav-third-level">
 								<li><a
-									href="/Kamienica/Admin/Invoice/invoiceWaterRegister.html"><i class="fa fa-plus" aria-hidden="true"></i>  Nowe</a></li>
+									href="/Kamienica/Admin/Invoice/invoiceWaterRegister.html"><i
+										class="fa fa-plus" aria-hidden="true"></i> Nowe</a></li>
 								<li><a
-									href="/Kamienica/Admin/Invoice/invoiceWaterList.html"><i class="fa fa-list" aria-hidden="true"></i>  Lista</a></li>
+									href="/Kamienica/Admin/Invoice/invoiceWaterList.html"><i
+										class="fa fa-list" aria-hidden="true"></i> Lista</a></li>
 							</ul></li>
 						<li><a href="notifications.html">Energia<span
 								class="fa arrow"></a>
 							<ul class="nav nav-third-level">
 								<li><a
-									href="/Kamienica/Admin/Invoice/invoiceEnergyRegister.html"><i class="fa fa-plus" aria-hidden="true"></i>  Nowe</a></li>
+									href="/Kamienica/Admin/Invoice/invoiceEnergyRegister.html"><i
+										class="fa fa-plus" aria-hidden="true"></i> Nowe</a></li>
 								<li><a
-									href="/Kamienica/Admin/Invoice/invoiceEnergyList.html"><i class="fa fa-list" aria-hidden="true"></i>  Lista</a></li>
+									href="/Kamienica/Admin/Invoice/invoiceEnergyList.html"><i
+										class="fa fa-list" aria-hidden="true"></i> Lista</a></li>
 							</ul></li>
 
 					</ul>
@@ -264,21 +282,27 @@
 						<li><a href="panels-wells.html"> Gaz<span
 								class="fa arrow"></span></a>
 							<ul class="nav nav-third-level">
-								<li><a href="/Kamienica/Admin/Meter/meterGasRegister.html"><i class="fa fa-plus" aria-hidden="true"></i>  Nowe</a></li>
-								<li><a href="/Kamienica/Admin/Meter/meterGasList.html"><i class="fa fa-list" aria-hidden="true"></i>  Lista</a></li>
+								<li><a href="/Kamienica/Admin/Meter/meterGasRegister.html"><i
+										class="fa fa-plus" aria-hidden="true"></i> Nowe</a></li>
+								<li><a href="/Kamienica/Admin/Meter/meterGasList.html"><i
+										class="fa fa-list" aria-hidden="true"></i> Lista</a></li>
 							</ul></li>
 						<li><a href="buttons.html">Woda<span class="fa arrow"></a>
 							<ul class="nav nav-third-level">
 								<li><a
-									href="/Kamienica/Admin/Meter/meterWaterRegister.html"><i class="fa fa-plus" aria-hidden="true"></i>  Nowe</a></li>
-								<li><a href="/Kamienica/Admin/Meter/meterWaterList.html"><i class="fa fa-list" aria-hidden="true"></i>  Lista</a></li>
+									href="/Kamienica/Admin/Meter/meterWaterRegister.html"><i
+										class="fa fa-plus" aria-hidden="true"></i> Nowe</a></li>
+								<li><a href="/Kamienica/Admin/Meter/meterWaterList.html"><i
+										class="fa fa-list" aria-hidden="true"></i> Lista</a></li>
 							</ul></li>
 						<li><a href="notifications.html">Energia<span
 								class="fa arrow"></a>
 							<ul class="nav nav-third-level">
 								<li><a
-									href="/Kamienica/Admin/Meter/meterEnergyRegister.html"><i class="fa fa-plus" aria-hidden="true"></i>  Nowe</a></li>
-								<li><a href="/Kamienica/Admin/Meter/meterEnergyList.html"><i class="fa fa-list" aria-hidden="true"></i>  Lista</a></li>
+									href="/Kamienica/Admin/Meter/meterEnergyRegister.html"><i
+										class="fa fa-plus" aria-hidden="true"></i> Nowe</a></li>
+								<li><a href="/Kamienica/Admin/Meter/meterEnergyList.html"><i
+										class="fa fa-list" aria-hidden="true"></i> Lista</a></li>
 							</ul></li>
 
 					</ul> <!-- /.nav-second-level --></li>

@@ -71,4 +71,15 @@ public class InvoiceEnergyDAOImpl extends AbstractDao<Integer, InvoiceEnergy> im
 
 	}
 
+	@Override
+	public int getDaysOfLastInvoice() {
+		try {
+			Query query = getSession().createSQLQuery(
+					"SELECT DATEDIFF(CURDATE()  ,invoiceenergy.date) FROM kamienica.invoiceenergy order by date desc limit 1");
+			return ((Number) query.uniqueResult()).intValue();
+		} catch (Exception e) {
+			return 0;
+		}
+	}
+
 }

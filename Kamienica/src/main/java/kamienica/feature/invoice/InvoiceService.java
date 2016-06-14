@@ -49,4 +49,11 @@ public interface InvoiceService {
 	public InvoiceWater getLatestPaidWater();
 
 	public InvoiceGas getLatestPaidGas();
+
+	public int getDaysForGas();
+
+	public int getDaysForWater();
+
+	public int getDaysForEnergy();
+
 }

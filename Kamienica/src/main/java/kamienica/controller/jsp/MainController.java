@@ -29,10 +29,7 @@ public class MainController {
 		return "index";
 	}
 
-	@RequestMapping("/Admin/home")
-	public ModelAndView home() {
-		return new ModelAndView("/Admin/Home");
-	}
+
 
 	@RequestMapping(value = "/logout")
 	public ModelAndView updatePassword(HttpServletRequest req, HttpServletResponse response) {
@@ -53,13 +50,4 @@ public class MainController {
 		return new ModelAndView("404");
 	}
 
-	@RequestMapping("/navbar")
-	public String navbar() {
-		return "/Admin/navbar";
-	}
-
-	@RequestMapping("/Admin/index")
-	public ModelAndView test() {
-		return new ModelAndView("/Admin/index");
-	}
 }

@@ -68,4 +68,15 @@ public class InvoiceWaterDAOImpl extends AbstractDao<Integer, InvoiceWater> impl
 				.setParameter("id", id);
 		query.executeUpdate();
 	}
+
+	@Override
+	public int getDaysOfLastInvoice() {
+		try {
+			Query query = getSession().createSQLQuery(
+					"SELECT DATEDIFF(CURDATE()  ,invoicewater.date) FROM kamienica.invoicewater order by date desc limit 1");
+			return ((Number) query.uniqueResult()).intValue();
+		} catch (Exception e) {
+			return 0;
+		}
+	}
 }

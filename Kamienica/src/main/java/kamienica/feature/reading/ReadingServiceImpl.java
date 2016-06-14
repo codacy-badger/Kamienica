@@ -240,4 +240,19 @@ public class ReadingServiceImpl implements ReadingService {
 
 	}
 
+	@Override
+	public int countLatestGasDays() {
+		return gas.countDaysFromLastReading();
+	}
+
+	@Override
+	public int countLatestWaterDays() {
+		return water.countDaysFromLastReading();
+	}
+
+	@Override
+	public int countLatestEnergyDays() {
+		return energy.countDaysFromLastReading();
+	}
+
 }

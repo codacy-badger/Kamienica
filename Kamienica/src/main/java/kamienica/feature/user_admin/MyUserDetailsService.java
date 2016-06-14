@@ -1,4 +1,4 @@
-package kamienica.feature.user;
+package kamienica.feature.user_admin;
 
 import java.util.ArrayList;
 import java.util.List;
