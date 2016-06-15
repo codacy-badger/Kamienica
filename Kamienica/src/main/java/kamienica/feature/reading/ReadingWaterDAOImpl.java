@@ -123,7 +123,7 @@ public class ReadingWaterDAOImpl extends AbstractDao<Integer, ReadingWater> impl
 	public int countDaysFromLastReading() {
 		try {
 			Query query = getSession().createSQLQuery(
-					"SELECT DATEDIFF(CURDATE()  ,readingwater.readingDate) FROM kamienica.readingwater order by readingDate desc limit 1");
+					"SELECT DATEDIFF(CURDATE()  ,readingwater.readingDate) FROM readingwater order by readingDate desc limit 1");
 			return ((Number) query.uniqueResult()).intValue();
 		} catch (Exception e) {
 			return 0;
