@@ -53,27 +53,27 @@ public class ReadingServiceImpl implements ReadingService {
 	}
 
 	@Override
-	public void deleteReadingEnergy(int id) {
+	public void deleteReadingEnergy(Long id) {
 		energy.deleteById(id);
 
 	}
 
 	@Override
-	public void deleteReadingGas(int id) {
+	public void deleteReadingGas(Long id) {
 		gas.deleteById(id);
 
 	}
 
 	@Override
-	public void deleteReadingWater(int id) {
+	public void deleteReadingWater(Long id) {
 		water.deleteById(id);
 
 	}
 
 	@Override
-	public HashMap<Integer, ReadingEnergy> getLatestEnergyReadings() {
+	public HashMap<Long, ReadingEnergy> getLatestEnergyReadings() {
 		List<ReadingEnergy> result = energy.getLatestList();
-		HashMap<Integer, ReadingEnergy> mappedResult = new HashMap<>();
+		HashMap<Long, ReadingEnergy> mappedResult = new HashMap<>();
 		for (ReadingEnergy i : result) {
 			mappedResult.put(i.getMeter().getId(), i);
 		}
@@ -103,9 +103,9 @@ public class ReadingServiceImpl implements ReadingService {
 	}
 
 	@Override
-	public HashMap<Integer, ReadingGas> getLatestGasReadings() {
+	public HashMap<Long, ReadingGas> getLatestGasReadings() {
 		List<ReadingGas> result = gas.getLatestList();
-		HashMap<Integer, ReadingGas> mappedResult = new HashMap<>();
+		HashMap<Long, ReadingGas> mappedResult = new HashMap<>();
 		for (ReadingGas i : result) {
 			mappedResult.put(i.getMeter().getId(), i);
 		}
@@ -113,9 +113,9 @@ public class ReadingServiceImpl implements ReadingService {
 	}
 
 	@Override
-	public HashMap<Integer, ReadingWater> getLatestWaterReadings() {
+	public HashMap<Long, ReadingWater> getLatestWaterReadings() {
 		List<ReadingWater> result = water.getLatestList();
-		HashMap<Integer, ReadingWater> mappedResult = new HashMap<>();
+		HashMap<Long, ReadingWater> mappedResult = new HashMap<>();
 		for (ReadingWater i : result) {
 			mappedResult.put(i.getMeter().getId(), i);
 		}
@@ -174,17 +174,17 @@ public class ReadingServiceImpl implements ReadingService {
 	}
 
 	@Override
-	public ReadingEnergy getEnergyById(int id) {
+	public ReadingEnergy getEnergyById(Long id) {
 		return energy.getById(id);
 	}
 
 	@Override
-	public ReadingGas getGasById(int id) {
+	public ReadingGas getGasById(Long id) {
 		return gas.getById(id);
 	}
 
 	@Override
-	public ReadingWater getWaterById(int id) {
+	public ReadingWater getWaterById(Long id) {
 		return water.getById(id);
 	}
 

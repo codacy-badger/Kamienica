@@ -59,7 +59,7 @@ public class ApartmentController {
 	}
 
 	@RequestMapping(value = "/apartmentEdit", method = RequestMethod.GET)
-	public ModelAndView apartmentEdit(@RequestParam(value = "id") int id,
+	public ModelAndView apartmentEdit(@RequestParam(value = "id") Long id,
 			@ModelAttribute("apartment") Apartment apartment) {
 		ModelAndView mvc = new ModelAndView("/Admin/Apartment/ApartmentRegister");
 		mvc.addObject("url", "/Admin/Apartment/apartmentOverwrite.html");
@@ -85,7 +85,7 @@ public class ApartmentController {
 	}
 
 	@RequestMapping(value = "/apartmentDelete", method = RequestMethod.GET)
-	public ModelAndView apartmentDelete(@RequestParam(value = "id") int id) {
+	public ModelAndView apartmentDelete(@RequestParam(value = "id") Long id) {
 		apartmentService.deleteByID(id);
 		return new ModelAndView("redirect:/Admin/Apartment/apartmentList.html");
 	}

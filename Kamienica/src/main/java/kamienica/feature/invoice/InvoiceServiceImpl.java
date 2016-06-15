@@ -70,7 +70,7 @@ public class InvoiceServiceImpl implements InvoiceService {
 	}
 
 	@Override
-	public void deleteEnergyByID(int id) {
+	public void deleteEnergyByID(Long id) {
 		readingEnergy.UnresolveReadings(invoiceEnergy.getById(id));
 		invoiceEnergy.deleteById(id);
 	}
@@ -85,7 +85,7 @@ public class InvoiceServiceImpl implements InvoiceService {
 	}
 
 	@Override
-	public InvoiceEnergy getEnergyByID(int id) {
+	public InvoiceEnergy getEnergyByID(Long id) {
 		return invoiceEnergy.getById(id);
 	}
 
@@ -95,14 +95,14 @@ public class InvoiceServiceImpl implements InvoiceService {
 	}
 
 	@Override
-	public void deleteGasByID(int id) {
+	public void deleteGasByID(Long id) {
 		readingGas.UnresolveReadings(invoiceGas.getById(id));
 		invoiceGas.deleteById(id);
 
 	}
 
 	@Override
-	public void deleteWaterByID(int id) {
+	public void deleteWaterByID(Long id) {
 		// temporaryFix...
 		readingWater.UnresolveReadings(invoiceWater.getById(id));
 		invoiceWater.deleteById(id);
@@ -129,12 +129,12 @@ public class InvoiceServiceImpl implements InvoiceService {
 	}
 
 	@Override
-	public InvoiceGas getGasByID(int id) {
+	public InvoiceGas getGasByID(Long id) {
 		return invoiceGas.getById(id);
 	}
 
 	@Override
-	public InvoiceWater getWaterByID(int id) {
+	public InvoiceWater getWaterByID(Long id) {
 		return invoiceWater.getById(id);
 	}
 

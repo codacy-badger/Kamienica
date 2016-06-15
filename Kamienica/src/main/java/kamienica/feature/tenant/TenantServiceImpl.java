@@ -26,7 +26,7 @@ public class TenantServiceImpl implements TenantService {
 	}
 
 	@Override
-	public void deleteTenant(int id) {
+	public void deleteTenant(Long id) {
 		tenantDao.deleteById(id);
 
 	}
@@ -38,7 +38,7 @@ public class TenantServiceImpl implements TenantService {
 	}
 
 	@Override
-	public Tenant getTenantById(int id) {
+	public Tenant getTenantById(Long id) {
 		return tenantDao.getById(id);
 
 	}

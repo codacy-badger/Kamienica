@@ -27,7 +27,7 @@ public class Tenant {
 	@Id
 	@GeneratedValue
 	@Column
-	private int id;
+	private Long id;
 	@Column
 	@NotEmpty(message = "Wprowadź imie")
 	private String firstName;
@@ -125,11 +125,11 @@ public class Tenant {
 		this.phone = phone;
 	}
 
-	public int getId() {
+	public Long getId() {
 		return id;
 	}
 
-	public void setId(int id) {
+	public void setId(Long id) {
 		this.id = id;
 	}
 

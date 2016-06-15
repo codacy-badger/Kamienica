@@ -6,7 +6,7 @@ import kamienica.dao.DaoInterface;
 
 public interface TenantDao extends DaoInterface<Tenant> {
 
-	public void deactivateByApparmentId(int id);
+	public void deactivateByApparmentId(Long id);
 
 	public List<Tenant> getActiveTenants();
 

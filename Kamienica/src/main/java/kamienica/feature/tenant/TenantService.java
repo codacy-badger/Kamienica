@@ -8,11 +8,11 @@ public interface TenantService {
 
 	public List<Tenant> getList();
 
-	public void deleteTenant(int id);
+	public void deleteTenant(Long id);
 
 	public void updateTenant(Tenant tenant);
 
-	public Tenant getTenantById(int id);
+	public Tenant getTenantById(Long id);
 	
 	public List<Tenant> getCurrentTenants();
 

@@ -22,7 +22,7 @@ import kamienica.feature.tenant.Tenant;
 public class Division {
 	@Id
 	@GeneratedValue
-	private int id;
+	private Long id;
 	@Column(nullable = false)
 	@Temporal(TemporalType.DATE)
 	@DateTimeFormat(pattern = "yyyy.MM.dd")
@@ -34,11 +34,11 @@ public class Division {
 	@Column(nullable = false)
 	private double divisionValue;
 
-	public int getId() {
+	public Long getId() {
 		return id;
 	}
 
-	public void setId(int id) {
+	public void setId(Long id) {
 		this.id = id;
 	}
 
@@ -75,7 +75,7 @@ public class Division {
 	}
 
 	@Autowired
-	public Division(int id, Date date, Tenant tenant, Apartment apartment, double divisionValue) {
+	public Division(Long id, Date date, Tenant tenant, Apartment apartment, double divisionValue) {
 		super();
 		this.id = id;
 		this.date = date;

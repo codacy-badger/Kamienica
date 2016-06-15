@@ -24,10 +24,10 @@ public class MeterGasDaoImplTest extends EntityDaoImplTest {
 
 	@Test
 	public void findById() {
-		Assert.assertNotNull(meterDao.getById(1));
-		Assert.assertNotNull(meterDao.getById(3));
-		Assert.assertNotNull(meterDao.getById(5));
-		Assert.assertNull(meterDao.getById(6));
+		Assert.assertNotNull(meterDao.getById(1L));
+		Assert.assertNotNull(meterDao.getById(3L));
+		Assert.assertNotNull(meterDao.getById(5L));
+		Assert.assertNull(meterDao.getById(6L));
 
 	}
 
@@ -39,13 +39,13 @@ public class MeterGasDaoImplTest extends EntityDaoImplTest {
 
 	@Test
 	public void deleteById() {
-		meterDao.deleteById(1);
+		meterDao.deleteById(1L);
 		Assert.assertEquals(meterDao.getList().size(), 4);
 	}
 
 	@Test
 	public void deletetByInvalidId() {
-		meterDao.deleteById(9);
+		meterDao.deleteById(9L);
 		Assert.assertEquals(meterDao.getList().size(), 5);
 	}
 

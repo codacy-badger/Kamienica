@@ -19,7 +19,7 @@ public class ReadingGasConverter implements Converter<Object, ReadingGas> {
 
 	@Override
 	public ReadingGas convert(Object element) {
-		Integer id = Integer.parseInt((String) element);
+		Long id = Long.parseLong((String) element);
 		return readingService.getGasById(id);
 	}
 

@@ -35,8 +35,8 @@ public abstract class AbstractDao<PK extends Serializable, T> {
 	// getByID
 	// getById
 	@SuppressWarnings("unchecked")
-	public T getById(int id) {
-		return (T) getSession().get(persistentClass, new Integer((int) id));
+	public T getById(Long id) {
+		return (T) getSession().get(persistentClass, id);
 	}
 
 	public void save(T entity) {
@@ -49,9 +49,9 @@ public abstract class AbstractDao<PK extends Serializable, T> {
 
 	}
 
-	public void deleteById(int id) {
+	public void deleteById(Long id) {
 		Query query = getSession().createSQLQuery("delete from " + persistentClass.getSimpleName() + " where id = :id");
-		query.setInteger("id", id);
+		query.setLong("id", id);
 		query.executeUpdate();
 	}
 

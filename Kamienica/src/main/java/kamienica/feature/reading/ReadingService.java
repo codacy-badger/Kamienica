@@ -8,11 +8,11 @@ import kamienica.feature.invoice.InvoiceGas;
 
 public interface ReadingService {
 
-	public ReadingEnergy getEnergyById(int id);
+	public ReadingEnergy getEnergyById(Long id);
 
-	public ReadingGas getGasById(int id);
+	public ReadingGas getGasById(Long id);
 
-	public ReadingWater getWaterById(int id);
+	public ReadingWater getWaterById(Long id);
 
 	public void saveGasList(List<ReadingGas> reading);
 
@@ -46,11 +46,11 @@ public interface ReadingService {
 
 	public List<ReadingWater> getReadingWaterByDate(String date);
 
-	public void deleteReadingEnergy(int id);
+	public void deleteReadingEnergy(Long id);
 
-	public void deleteReadingGas(int id);
+	public void deleteReadingGas(Long id);
 
-	public void deleteReadingWater(int id);
+	public void deleteReadingWater(Long id);
 
 	public void deleteReadingEnergyList(List<ReadingEnergy> list);
 
@@ -64,11 +64,11 @@ public interface ReadingService {
 
 	public List<ReadingWater> getPreviousReadingWater(String date);
 
-	public HashMap<Integer, ReadingEnergy> getLatestEnergyReadings();
+	public HashMap<Long, ReadingEnergy> getLatestEnergyReadings();
 
-	public HashMap<Integer, ReadingGas> getLatestGasReadings();
+	public HashMap<Long, ReadingGas> getLatestGasReadings();
 
-	public HashMap<Integer, ReadingWater> getLatestWaterReadings();
+	public HashMap<Long, ReadingWater> getLatestWaterReadings();
 
 	public HashMap<String, List<ReadingWater>> getWaterReadingsForGasConsumption(InvoiceGas invoice);
 

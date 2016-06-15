@@ -45,7 +45,6 @@ public class TenantController {
 	@Autowired
 	private Validator validator;
 
-
 	@RequestMapping("/tenantRegister")
 	public ModelAndView tenantRegister(@ModelAttribute("tenant") Tenant tenant, BindingResult result) {
 		Map<String, Object> model = prepareTenantModel();
@@ -53,7 +52,7 @@ public class TenantController {
 		return new ModelAndView("/Admin/Tenant/TenantRegister", "model", model);
 	}
 
-	@RequestMapping(value="/tenantSave", method = RequestMethod.POST)
+	@RequestMapping(value = "/tenantSave", method = RequestMethod.POST)
 	public ModelAndView tenantSave(@Valid @ModelAttribute("tenant") Tenant tenant, BindingResult result) {
 		TenantValidator.validateTenant(tenant, result);
 
@@ -75,7 +74,7 @@ public class TenantController {
 	}
 
 	@RequestMapping(value = "/tenantEdit")
-	public ModelAndView tenantEdit(@RequestParam(value = "id") int id) {
+	public ModelAndView tenantEdit(@RequestParam(value = "id") Long id) {
 		Map<String, Object> model = prepareTenantModel();
 		model.put("url", "/Admin/Tenant/tenantOverwrite.html");
 		Tenant tenant = tenantService.getTenantById(id);
@@ -84,7 +83,7 @@ public class TenantController {
 		return mvc;
 	}
 
-	@RequestMapping(value="/tenantOverwrite", method = RequestMethod.POST)
+	@RequestMapping(value = "/tenantOverwrite", method = RequestMethod.POST)
 	public ModelAndView updateTenant(@ModelAttribute("tenant") Tenant tenant, BindingResult result) {
 
 		TenantValidator.validateTenant(tenant, result);
@@ -105,7 +104,7 @@ public class TenantController {
 	}
 
 	@RequestMapping(value = "/tenantDelete")
-	public ModelAndView deleteTenant(@RequestParam(value = "id") int id) {
+	public ModelAndView deleteTenant(@RequestParam(value = "id") Long id) {
 		tenantService.deleteTenant(id);
 		return new ModelAndView("redirect:/Admin/Tenant/tenantList.html");
 	}
@@ -124,8 +123,8 @@ public class TenantController {
 
 	private Map<String, Object> prepareTenantModel() {
 		List<Apartment> apartment = (apartmentService.getList());
-		for(int i=0; i<apartment.size();i++) {
-			if(apartment.get(0).getApartmentNumber() == 0) {
+		for (int i = 0; i < apartment.size(); i++) {
+			if (apartment.get(0).getApartmentNumber() == 0) {
 				apartment.remove(i);
 				break;
 			}

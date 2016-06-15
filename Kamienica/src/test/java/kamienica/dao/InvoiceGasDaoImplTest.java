@@ -18,8 +18,8 @@ public class InvoiceGasDaoImplTest extends EntityDaoImplTest {
 
 	@Test
 	public void findById() {
-		Assert.assertNotNull(invDao.getById(1));
-		Assert.assertNull(invDao.getById(2));
+		Assert.assertNotNull(invDao.getById(1L));
+		Assert.assertNull(invDao.getById(2L));
 	}
 
 	// @Test

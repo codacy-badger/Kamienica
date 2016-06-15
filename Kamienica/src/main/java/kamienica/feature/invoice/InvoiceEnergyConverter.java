@@ -20,7 +20,7 @@ public class InvoiceEnergyConverter implements Converter<Object, InvoiceEnergy> 
 
 	@Override
 	public InvoiceEnergy convert(Object element) {
-		Integer id = Integer.parseInt((String) element);
+		Long id = Long.parseLong((String) element);
 		return service.getEnergyByID(id);
 	}
 

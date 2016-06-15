@@ -74,35 +74,35 @@ public class MeterServiceImpl implements MeterService {
 	}
 
 	@Override
-	public void deleteEnergyByID(int id) {
+	public void deleteEnergyByID(Long id) {
 		energy.deleteById(id);
 
 	}
 
 	@Override
-	public void deleteGasByID(int id) {
+	public void deleteGasByID(Long id) {
 		gas.deleteById(id);
 
 	}
 
 	@Override
-	public void deleteWaterByID(int id) {
+	public void deleteWaterByID(Long id) {
 		water.deleteById(id);
 
 	}
 
 	@Override
-	public MeterEnergy getEnergyByID(int id) {
+	public MeterEnergy getEnergyByID(Long id) {
 		return energy.getById(id);
 	}
 
 	@Override
-	public MeterGas getGasByID(int id) {
+	public MeterGas getGasByID(Long id) {
 		return gas.getById(id);
 	}
 
 	@Override
-	public MeterWater getWaterByID(int id) {
+	public MeterWater getWaterByID(Long id) {
 		return water.getById(id);
 	}
 

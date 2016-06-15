@@ -18,7 +18,7 @@ public class DivisionServiceImpl implements DivisionService {
 	}
 
 	@Override
-	public void deleteByID(int id) {
+	public void deleteByID(Long id) {
 		divisionDAO.deleteById(id);
 
 	}

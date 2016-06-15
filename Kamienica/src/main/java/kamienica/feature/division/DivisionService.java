@@ -9,7 +9,7 @@ public interface DivisionService {
 	
 	public List<Division> getList();
 
-	public void deleteByID(int id);
+	public void deleteByID(Long id);
 
 	public void update(Division division);
 

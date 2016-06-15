@@ -22,7 +22,7 @@ public abstract class ReadingAbstract {
 	@Id
 	@GeneratedValue
 	@Column
-	private int id;
+	private Long id;
 	@Column(nullable = false)
 	@Temporal(TemporalType.DATE)
 	@DateTimeFormat(pattern = "yyyy.MM.dd")
@@ -72,11 +72,11 @@ public abstract class ReadingAbstract {
 		this.value = value;
 	}
 
-	public int getId() {
+	public Long getId() {
 		return id;
 	}
 
-	public void setId(int id) {
+	public void setId(Long id) {
 		this.id = id;
 	}
 

@@ -20,7 +20,7 @@ public class ApartmentConverter implements Converter<Object, Apartment> {
 
 	@Override
 	public Apartment convert(Object element) {
-		Integer id = Integer.parseInt((String) element);
+		Long id = Long.parseLong((String) element);
 		return service.getById(id);
 	}
 

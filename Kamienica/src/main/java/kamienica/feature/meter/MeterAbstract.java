@@ -19,7 +19,7 @@ public abstract class MeterAbstract {
 	@Id
 	@GeneratedValue
 	@Column
-	protected int id;
+	protected Long id;
 	@Column(nullable = false)
 	@NotEmpty(message="Wprowadź wartość")
 	protected String description;
@@ -92,11 +92,11 @@ public abstract class MeterAbstract {
 		this.apartment = apartment;
 	}
 
-	public int getId() {
+	public Long getId() {
 		return id;
 	}
 
-	public void setId(int id) {
+	public void setId(Long id) {
 		this.id = id;
 	}
 	

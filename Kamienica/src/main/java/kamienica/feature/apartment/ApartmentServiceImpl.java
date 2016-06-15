@@ -29,7 +29,7 @@ public class ApartmentServiceImpl implements ApartmentService {
 	}
 
 	@Override
-	public void deleteByID(int id) {
+	public void deleteByID(Long id) {
 		apartmentDAO.deleteById(id);
 
 	}
@@ -40,7 +40,7 @@ public class ApartmentServiceImpl implements ApartmentService {
 	}
 
 	@Override
-	public Apartment getById(int id) {
+	public Apartment getById(Long id) {
 		Apartment apartment = apartmentDAO.getById(id);
 		return apartment;
 

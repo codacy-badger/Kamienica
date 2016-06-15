@@ -8,10 +8,10 @@ public interface ApartmentService {
 
 	public List<Apartment> getList();
 
-	public void deleteByID(int id);
+	public void deleteByID(Long id);
 
 	public void update(Apartment apartment);
 
-	public Apartment getById(int id);
+	public Apartment getById(Long id);
 	
 }

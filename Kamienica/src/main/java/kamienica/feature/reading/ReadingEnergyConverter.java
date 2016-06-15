@@ -19,7 +19,7 @@ public class ReadingEnergyConverter implements Converter<Object, ReadingEnergy>{
 	
 	@Override
 	public ReadingEnergy convert(Object element) {
-		Integer id = Integer.parseInt((String)element);
+		Long id = Long.parseLong((String) element);
 		return readingService.getEnergyById(id);
 	}
 

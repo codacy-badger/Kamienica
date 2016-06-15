@@ -57,12 +57,12 @@ public class ReadingController {
 			return new ModelAndView("/Admin/Reading/ReadingEnergyRegister", "model", model);
 		}
 		List<ReadingEnergy> readings = new ArrayList<ReadingEnergy>();
-		HashMap<Integer, ReadingEnergy> latestReadings = readingService.getLatestEnergyReadings();
+		HashMap<Long, ReadingEnergy> latestReadings = readingService.getLatestEnergyReadings();
 
 		model.put("date", df.format(today));
 
 		for (int i = 0; i < meterEnergy.size(); i++) {
-			int id = meterEnergy.get(i).getId();
+			Long id = meterEnergy.get(i).getId();
 			ReadingEnergy tmp = new ReadingEnergy();
 			tmp.setMeter(meterEnergy.get(i));
 			if (latestReadings.get(id) != null) {
@@ -98,12 +98,12 @@ public class ReadingController {
 			return new ModelAndView("/Admin/Reading/ReadingEnergyRegister", "model", model);
 		}
 		List<ReadingGas> readings = new ArrayList<>();
-		HashMap<Integer, ReadingGas> latestReadings = readingService.getLatestGasReadings();
+		HashMap<Long, ReadingGas> latestReadings = readingService.getLatestGasReadings();
 
 		model.put("date", df.format(today));
 
 		for (int i = 0; i < meterGas.size(); i++) {
-			int id = meterGas.get(i).getId();
+			Long id = meterGas.get(i).getId();
 			ReadingGas tmp = new ReadingGas();
 			tmp.setMeter(meterGas.get(i));
 			if (latestReadings.get(id) != null) {
@@ -138,11 +138,11 @@ public class ReadingController {
 			return new ModelAndView("/Admin/Reading/ReadingEnergyRegister", "model", model);
 		}
 		List<ReadingWater> readings = new ArrayList<>();
-		HashMap<Integer, ReadingWater> currentReadings = readingService.getLatestWaterReadings();
+		HashMap<Long, ReadingWater> currentReadings = readingService.getLatestWaterReadings();
 
 		model.put("date", df.format(today));
 		for (int i = 0; i < meterWater.size(); i++) {
-			int id = meterWater.get(i).getId();
+			Long id = meterWater.get(i).getId();
 			ReadingWater reading = new ReadingWater();
 			reading.setMeter(meterWater.get(i));
 			if (currentReadings.get(id) != null) {

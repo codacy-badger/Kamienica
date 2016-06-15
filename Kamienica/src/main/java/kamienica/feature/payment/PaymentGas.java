@@ -21,7 +21,7 @@ public class PaymentGas extends PaymentAbstract {
 
 	
 
-	public PaymentGas(int id, Date paymentDate, double paymentAmount, Tenant tenant, InvoiceGas invoice) {
+	public PaymentGas(Long id, Date paymentDate, double paymentAmount, Tenant tenant, InvoiceGas invoice) {
 		super(id, paymentDate, paymentAmount, tenant);
 		this.invoice = invoice;
 	}

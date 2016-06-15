@@ -28,8 +28,8 @@ public class TenantDaoImplTest extends EntityDaoImplTest {
 
 	@Test
 	public void findById() {
-		Assert.assertNotNull(dao.getById(1));
-		Assert.assertNull(dao.getById(5));
+		Assert.assertNotNull(dao.getById(1L));
+		Assert.assertNull(dao.getById(5L));
 	}
 
 	@Test
@@ -40,13 +40,13 @@ public class TenantDaoImplTest extends EntityDaoImplTest {
 
 	@Test
 	public void deleteById() {
-		dao.deleteById(1);
+		dao.deleteById(1L);
 		Assert.assertEquals(dao.getList().size(), 3);
 	}
 
 	@Test
 	public void deleteInvalidId() {
-		dao.deleteById(8);
+		dao.deleteById(8L);
 		Assert.assertEquals(dao.getList().size(), 4);
 	}
 

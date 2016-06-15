@@ -19,7 +19,7 @@ public class PaymentWater extends PaymentAbstract {
 	public PaymentWater() {
 	}
 
-	public PaymentWater(int id, Date paymentDate, double paymentAmount, Tenant tenant,
+	public PaymentWater(Long id, Date paymentDate, double paymentAmount, Tenant tenant,
 			InvoiceWater invoice) {
 		super(id, paymentDate, paymentAmount, tenant);
 		this.invoice = invoice;

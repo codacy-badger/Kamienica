@@ -44,11 +44,11 @@ public class SetupMethods {
 
 		Tenant tenant2 = new Tenant("Maciej (Admin)", "Fol", "kowalski@wp.pl", "222222", apartments.get(1));
 		tenant2.setStatus(UserStatus.ACTIVE.getUserStatus());
-		tenant2.setId(1);
+		tenant2.setId(1L);
 		tenant2.setRole(UserRole.ADMIN.getUserRole());
 		Tenant tenant3 = new Tenant("Adam", "Nowak", "nowak@wp.pl", "111111", apartments.get(2));
 		tenant3.setStatus(UserStatus.ACTIVE.getUserStatus());
-		tenant3.setId(2);
+		tenant3.setId(2L);
 
 		ArrayList<Tenant> tenants = new ArrayList<Tenant>();
 		tenants.add(tenant2);
@@ -58,15 +58,15 @@ public class SetupMethods {
 
 	public static ArrayList<Division> getDivisionList(List<Apartment> apartments, List<Tenant> tenants) {
 		ArrayList<Division> division = new ArrayList<>();
-		division.add(new Division(1, new Date(), tenants.get(0), apartments.get(0), 0.5));
-		division.add(new Division(2, new Date(), tenants.get(0), apartments.get(1), 1));
-		division.add(new Division(3, new Date(), tenants.get(0), apartments.get(2), 0));
-		division.add(new Division(4, new Date(), tenants.get(0), apartments.get(3), 1));
+		division.add(new Division(1L, new Date(), tenants.get(0), apartments.get(0), 0.5));
+		division.add(new Division(2L, new Date(), tenants.get(0), apartments.get(1), 1));
+		division.add(new Division(3L, new Date(), tenants.get(0), apartments.get(2), 0));
+		division.add(new Division(4L, new Date(), tenants.get(0), apartments.get(3), 1));
 
-		division.add(new Division(6, new Date(), tenants.get(1), apartments.get(0), 0.5));
-		division.add(new Division(7, new Date(), tenants.get(1), apartments.get(1), 0));
-		division.add(new Division(8, new Date(), tenants.get(1), apartments.get(2), 1));
-		division.add(new Division(9, new Date(), tenants.get(1), apartments.get(3), 0));
+		division.add(new Division(6L, new Date(), tenants.get(1), apartments.get(0), 0.5));
+		division.add(new Division(7L, new Date(), tenants.get(1), apartments.get(1), 0));
+		division.add(new Division(8L, new Date(), tenants.get(1), apartments.get(2), 1));
+		division.add(new Division(9L, new Date(), tenants.get(1), apartments.get(3), 0));
 
 		return division;
 	}

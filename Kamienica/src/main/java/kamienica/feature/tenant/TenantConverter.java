@@ -19,7 +19,7 @@ public class TenantConverter implements Converter<Object, Tenant> {
 
 	@Override
 	public Tenant convert(Object element) {
-		Integer id = Integer.parseInt((String) element);
+		Long id = Long.parseLong((String) element);
 		return service.getTenantById(id);
 	}
 

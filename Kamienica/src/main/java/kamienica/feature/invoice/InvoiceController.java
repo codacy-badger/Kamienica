@@ -300,7 +300,7 @@ public class InvoiceController {
 	// -------------------EDYCJA----------------------------------------------
 
 	@RequestMapping(value = "/Admin/Invoice/invoiceGasEdit")
-	public ModelAndView invoiceGasEdit(@RequestParam(value = "id") int id) {
+	public ModelAndView invoiceGasEdit(@RequestParam(value = "id") Long id) {
 		HashMap<String, Object> model = new HashMap<>();
 		model.put("saveUrl", "/Admin/Invoice/invoiceGasOverwrite.html");
 		model.put("media", "Gaz");
@@ -309,7 +309,7 @@ public class InvoiceController {
 	}
 
 	@RequestMapping(value = "/Admin/Invoice/invoiceWaterEdit")
-	public ModelAndView edytujFakturaWoda(@RequestParam(value = "id") int id) {
+	public ModelAndView edytujFakturaWoda(@RequestParam(value = "id") Long id) {
 		HashMap<String, Object> model = new HashMap<>();
 		model.put("saveUrl", "/Admin/Invoice/invoiceWaterOverwrite.html");
 		model.put("media", "Woda");
@@ -318,7 +318,7 @@ public class InvoiceController {
 	}
 
 	@RequestMapping(value = "/Admin/Invoice/invoiceEnergyEdit")
-	public ModelAndView edytujFakture(@RequestParam(value = "id") int id) {
+	public ModelAndView edytujFakture(@RequestParam(value = "id") Long id) {
 		HashMap<String, Object> model = new HashMap<>();
 		model.put("saveUrl", "/Admin/Invoice/invoiceEnergyOverwrite.html");
 		model.put("media", "Energia");
@@ -416,7 +416,7 @@ public class InvoiceController {
 	// -----------------------------USUN------------------------------------------------
 
 	@RequestMapping(value = "/Admin/Invoice/invoiceGasDelete")
-	public ModelAndView invoiceGaz(@RequestParam(value = "id") int id) {
+	public ModelAndView invoiceGaz(@RequestParam(value = "id") Long id) {
 
 		invoiceService.deleteGasByID(id);
 		return new ModelAndView("redirect:/Admin/Invoice/invoiceGasList.html");
@@ -424,7 +424,7 @@ public class InvoiceController {
 	}
 
 	@RequestMapping(value = "/Admin/Invoice/invoiceWaterDelete")
-	public ModelAndView invoiceWoda(@RequestParam(value = "id") int id) {
+	public ModelAndView invoiceWoda(@RequestParam(value = "id") Long id) {
 
 		invoiceService.deleteWaterByID(id);
 		return new ModelAndView("redirect:/Admin/Invoice/invoiceWaterList.html");
@@ -432,7 +432,7 @@ public class InvoiceController {
 	}
 
 	@RequestMapping(value = "/Admin/Invoice/invoiceEnergyDelete")
-	public ModelAndView invoiceEnergia(@RequestParam(value = "id") int id) {
+	public ModelAndView invoiceEnergia(@RequestParam(value = "id") Long id) {
 		invoiceService.deleteEnergyByID(id);
 		return new ModelAndView("redirect:/Admin/Invoice/invoiceEnergyList.html");
 	}

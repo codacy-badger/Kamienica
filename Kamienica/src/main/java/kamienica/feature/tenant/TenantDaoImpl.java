@@ -12,8 +12,6 @@ import kamienica.dao.AbstractDao;
 @Repository("tenantDao")
 public class TenantDaoImpl extends AbstractDao<Integer, Tenant> implements TenantDao {
 
-
-
 	@SuppressWarnings("unchecked")
 	public List<Tenant> getActiveTenants() {
 		Criteria criteria = createEntityCriteria();
@@ -28,9 +26,9 @@ public class TenantDaoImpl extends AbstractDao<Integer, Tenant> implements Tenan
 	}
 
 	@Override
-	public void deactivateByApparmentId(int id) {
+	public void deactivateByApparmentId(Long id) {
 		Query query = getSession().createSQLQuery("update tenant set status =:status where apartment_id =:id")
-				.setParameter("id", id).setParameter("status", UserStatus.INACTIVE.getUserStatus());
+				.setLong("id", id).setParameter("status", UserStatus.INACTIVE.getUserStatus());
 		query.executeUpdate();
 
 	}

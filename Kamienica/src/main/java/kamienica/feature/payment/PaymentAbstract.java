@@ -23,7 +23,7 @@ public abstract class PaymentAbstract {
 	@Id
 	@GeneratedValue
 	@Column
-	private int id;
+	private Long id;
 	@Column
 	@Temporal(TemporalType.DATE)
 	@DateTimeFormat(pattern = "yyyy.MM.dd")
@@ -35,11 +35,11 @@ public abstract class PaymentAbstract {
 
 
 
-	public int getId() {
+	public Long getId() {
 		return id;
 	}
 
-	public void setId(int id) {
+	public void setId(Long id) {
 		this.id = id;
 	}
 
@@ -78,7 +78,7 @@ public abstract class PaymentAbstract {
 	public PaymentAbstract() {
 	}
 
-	public PaymentAbstract(int id, Date paymentDate, double paymentAmount, Tenant tenant) {
+	public PaymentAbstract(Long id, Date paymentDate, double paymentAmount, Tenant tenant) {
 		this.id = id;
 		this.paymentDate = paymentDate;
 		this.paymentAmount = paymentAmount;

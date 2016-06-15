@@ -3,6 +3,7 @@ package kamienica.feature.meter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.convert.converter.Converter;
 import org.springframework.stereotype.Component;
+
 /**
  * 
  * @author macfol
@@ -19,7 +20,7 @@ public class MeterWaterConverter implements Converter<Object, MeterWater> {
 
 	@Override
 	public MeterWater convert(Object element) {
-		Integer id = Integer.parseInt((String) element);
+		Long id = Long.parseLong((String) element);
 		return service.getWaterByID(id);
 	}
 

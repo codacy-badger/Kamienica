@@ -20,7 +20,7 @@ public class PaymentEnergy extends PaymentAbstract {
 
 	}
 
-	public PaymentEnergy(int id, Date paymentDate, double paymentAmount, Tenant tenant, InvoiceEnergy invoice) {
+	public PaymentEnergy(Long id, Date paymentDate, double paymentAmount, Tenant tenant, InvoiceEnergy invoice) {
 		super(id, paymentDate, paymentAmount, tenant);
 		this.invoice = invoice;
 	}

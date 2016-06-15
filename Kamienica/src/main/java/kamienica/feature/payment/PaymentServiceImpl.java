@@ -95,20 +95,20 @@ public class PaymentServiceImpl implements PaymentService {
 	}
 
 	@Override
-	public void deleteEnergyByDate(int id) {
+	public void deleteEnergyByDate(Long id) {
 		PaymentEnergy forDeletion = energy.getById(id);
 		energy.deleteByDate(forDeletion.getPaymentDate().toString());
 	}
 
 	@Override
-	public void deleteWaterByDate(int id) {
+	public void deleteWaterByDate(Long id) {
 		PaymentWater forDeletion = water.getById(id);
 		water.deleteByDate(forDeletion.getPaymentDate().toString());
 
 	}
 
 	@Override
-	public void deleteGasByDate(int id) {
+	public void deleteGasByDate(Long id) {
 		PaymentGas forDeletion = gas.getById(id);
 		gas.deleteByDate(forDeletion.getPaymentDate().toString());
 	}

@@ -27,7 +27,7 @@ public class ReadingEnergyDaoTest extends EntityDaoImplTest {
 
 	@Test
 	public void getByDate() {
-		ReadingEnergy reading = dao.getById(1);
+		ReadingEnergy reading = dao.getById(1L);
 		List<ReadingEnergy> list = dao.getByDate(reading.getReadingDate().toString());
 		Assert.assertEquals(list.size(), 4);
 		for (ReadingEnergy readingEnergy : list) {
@@ -76,18 +76,18 @@ public class ReadingEnergyDaoTest extends EntityDaoImplTest {
 
 	@Test
 	public void addAndRemove() {
-		MeterEnergy test = meterDAO.getById(1);
+		MeterEnergy test = meterDAO.getById(1L);
 		ReadingEnergy reading = new ReadingEnergy(new Date(), 300, test);
 		dao.save(reading);
 		Assert.assertEquals(dao.getList().size(), 13);
-		Assert.assertEquals(dao.getById(13).getValue(), 300.0);
-		dao.deleteById(13);
+		Assert.assertEquals(dao.getById(13L).getValue(), 300.0);
+		dao.deleteById(13L);
 		Assert.assertEquals(dao.getList().size(), 12);
 	}
 
 	private static Apartment getAp() {
 		Apartment ap = new Apartment();
-		ap.setId(3);
+		ap.setId(3L);
 		ap.setApartmentNumber(2);
 		return ap;
 	}
