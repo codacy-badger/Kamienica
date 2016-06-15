@@ -1,5 +1,8 @@
-
 <%@ tag language="java" pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<c:set var="path" value="${pageContext.request.contextPath}" />
+
+
 <!-- Navigation -->
 <nav class="navbar navbar-inverse navbar-static-top" role="navigation"
 	style="margin-bottom: 0">
@@ -9,7 +12,7 @@
 			<span class="sr-only">Toggle navigation</span> <span class="icon-bar"></span>
 			<span class="icon-bar"></span> <span class="icon-bar"></span>
 		</button>
-		<a class="navbar-brand" href="/Kamienica/Admin/home">Strona Główna</a>
+		<a class="navbar-brand" href="${path}/Admin/home">Strona Główna</a>
 	</div>
 	<!-- /.navbar-header -->
 
@@ -165,11 +168,11 @@
 				<i class="fa fa-caret-down"></i>
 		</a>
 			<ul class="dropdown-menu dropdown-user">
-				<li><a href="/Kamienica/User/userHome"><i
+				<li><a href="${path}/User/userHome"><i
 						class="fa fa-user fa-fw"></i>Strona Najemcy</a></li>
 				<li><a href="#"><i class="fa fa-gear fa-fw"></i>Ustawienia</a></li>
 				<li class="divider"></li>
-				<li><a href="/Kamienica/logout"><i
+				<li><a href="${path}/logout"><i
 						class="fa fa-sign-out fa-fw"></i>Wyloguj</a></li>
 			</ul> <!-- /.dropdown-user --></li>
 		<!-- /.dropdown -->
@@ -185,17 +188,17 @@
 						Mieszkania<span class="fa arrow"></span></a>
 					<ul class="nav nav-second-level">
 						<li><a
-							href="/Kamienica/Admin/Apartment/apartmentRegister.html"><i
+							href="${path}/Admin/Apartment/apartmentRegister.html"><i
 								class="fa fa-plus" aria-hidden="true"></i> Nowe</a></li>
-						<li><a href="/Kamienica/Admin/Apartment/apartmentList.html"><i
+						<li><a href="${path}/Admin/Apartment/apartmentList.html"><i
 								class="fa fa-list" aria-hidden="true"></i> Lista</a></li>
 					</ul> <!-- /.nav-second-level --></li>
 				<li><a href="#"><i class="fa fa-users" aria-hidden="true"></i>
 						Najemcy<span class="fa arrow"></span></a>
 					<ul class="nav nav-second-level">
-						<li><a href="/Kamienica/Admin/Tenant/tenantRegister.html"><i
+						<li><a href="${path}/Admin/Tenant/tenantRegister.html"><i
 								class="fa fa-plus" aria-hidden="true"></i> Nowe</a></li>
-						<li><a href="/Kamienica/Admin/Tenant/tenantList.html"><i
+						<li><a href="${path}/Admin/Tenant/tenantList.html"><i
 								class="fa fa-list" aria-hidden="true"></i> Lista</a></li>
 					</ul> <!-- /.nav-second-level --></li>
 				<li><a href="#"><i class="fa fa-wrench fa-fw"></i>
@@ -204,9 +207,9 @@
 						<li><a href=#>Algorytm Podziału<span class="fa arrow"></span></a>
 							<ul class="nav nav-third-level">
 								<li><a
-									href="/Kamienica/Admin/Division/divisionRegister.html"><i
+									href="${path}/Admin/Division/divisionRegister.html"><i
 										class="fa fa-plus" aria-hidden="true"></i> Nowe</a></li>
-								<li><a href="/Kamienica/Admin/Division/divisionList.html"><i
+								<li><a href="${path}/Admin/Division/divisionList.html"><i
 										class="fa fa-list" aria-hidden="true"></i> Lista</a></li>
 							</ul></li>
 						<li><a href="#">Ustawienia Początkowe</a></li>
@@ -217,28 +220,28 @@
 						<li><a href="panels-wells.html">Gaz<span class="fa arrow"></span></a>
 							<ul class="nav nav-third-level">
 								<li><a
-									href="/Kamienica/Admin/Reading/readingGasRegister.html"><i
+									href="${path}/Admin/Reading/readingGasRegister.html"><i
 										class="fa fa-plus" aria-hidden="true"></i> Nowe</a></li>
-								<li><a href="/Kamienica/Admin/Reading/readingGasList.html"><i
+								<li><a href="${path}/Admin/Reading/readingGasList.html"><i
 										class="fa fa-list" aria-hidden="true"></i> Lista</a></li>
 							</ul></li>
 						<li><a href="buttons.html">Woda<span class="fa arrow"></a>
 							<ul class="nav nav-third-level">
 								<li><a
-									href="/Kamienica/Admin/Reading/readingWaterRegister.html"><i
+									href="${path}/Admin/Reading/readingWaterRegister.html"><i
 										class="fa fa-plus" aria-hidden="true"></i> Nowe</a></li>
 								<li><a
-									href="/Kamienica/Admin/Reading/readingWaterList.html"><i
+									href="${path}/Admin/Reading/readingWaterList.html"><i
 										class="fa fa-list" aria-hidden="true"></i> Lista</a></li>
 							</ul></li>
 						<li><a href="notifications.html">Energia<span
 								class="fa arrow"></a>
 							<ul class="nav nav-third-level">
 								<li><a
-									href="/Kamienica/Admin/Reading/readingEnergyRegister.html"><i
+									href="${path}/Admin/Reading/readingEnergyRegister.html"><i
 										class="fa fa-plus" aria-hidden="true"></i> Nowe</a></li>
 								<li><a
-									href="/Kamienica/Admin/Reading/readingEnergyList.html"><i
+									href="${path}/Admin/Reading/readingEnergyList.html"><i
 										class="fa fa-list" aria-hidden="true"></i> Lista</a></li>
 							</ul></li>
 
@@ -250,28 +253,28 @@
 								class="fa arrow"></span></a>
 							<ul class="nav nav-third-level">
 								<li><a
-									href="/Kamienica/Admin/Invoice/invoiceGasRegister.html"><i
+									href="${path}/Admin/Invoice/invoiceGasRegister.html"><i
 										class="fa fa-plus" aria-hidden="true"></i> Nowe</a></li>
-								<li><a href="/Kamienica/Admin/Invoice/invoiceGasList.html"><i
+								<li><a href="${path}/Admin/Invoice/invoiceGasList.html"><i
 										class="fa fa-list" aria-hidden="true"></i> Lista</a></li>
 							</ul></li>
 						<li><a href="buttons.html">Woda<span class="fa arrow"></a>
 							<ul class="nav nav-third-level">
 								<li><a
-									href="/Kamienica/Admin/Invoice/invoiceWaterRegister.html"><i
+									href="${path}/Admin/Invoice/invoiceWaterRegister.html"><i
 										class="fa fa-plus" aria-hidden="true"></i> Nowe</a></li>
 								<li><a
-									href="/Kamienica/Admin/Invoice/invoiceWaterList.html"><i
+									href="${path}/Admin/Invoice/invoiceWaterList.html"><i
 										class="fa fa-list" aria-hidden="true"></i> Lista</a></li>
 							</ul></li>
 						<li><a href="notifications.html">Energia<span
 								class="fa arrow"></a>
 							<ul class="nav nav-third-level">
 								<li><a
-									href="/Kamienica/Admin/Invoice/invoiceEnergyRegister.html"><i
+									href="${path}/Admin/Invoice/invoiceEnergyRegister.html"><i
 										class="fa fa-plus" aria-hidden="true"></i> Nowe</a></li>
 								<li><a
-									href="/Kamienica/Admin/Invoice/invoiceEnergyList.html"><i
+									href="${path}/Admin/Invoice/invoiceEnergyList.html"><i
 										class="fa fa-list" aria-hidden="true"></i> Lista</a></li>
 							</ul></li>
 
@@ -282,26 +285,26 @@
 						<li><a href="panels-wells.html"> Gaz<span
 								class="fa arrow"></span></a>
 							<ul class="nav nav-third-level">
-								<li><a href="/Kamienica/Admin/Meter/meterGasRegister.html"><i
+								<li><a href="${path}/Admin/Meter/meterGasRegister.html"><i
 										class="fa fa-plus" aria-hidden="true"></i> Nowe</a></li>
-								<li><a href="/Kamienica/Admin/Meter/meterGasList.html"><i
+								<li><a href="${path}/Admin/Meter/meterGasList.html"><i
 										class="fa fa-list" aria-hidden="true"></i> Lista</a></li>
 							</ul></li>
 						<li><a href="buttons.html">Woda<span class="fa arrow"></a>
 							<ul class="nav nav-third-level">
 								<li><a
-									href="/Kamienica/Admin/Meter/meterWaterRegister.html"><i
+									href="${path}/Admin/Meter/meterWaterRegister.html"><i
 										class="fa fa-plus" aria-hidden="true"></i> Nowe</a></li>
-								<li><a href="/Kamienica/Admin/Meter/meterWaterList.html"><i
+								<li><a href="${path}/Admin/Meter/meterWaterList.html"><i
 										class="fa fa-list" aria-hidden="true"></i> Lista</a></li>
 							</ul></li>
 						<li><a href="notifications.html">Energia<span
 								class="fa arrow"></a>
 							<ul class="nav nav-third-level">
 								<li><a
-									href="/Kamienica/Admin/Meter/meterEnergyRegister.html"><i
+									href="${path}/Admin/Meter/meterEnergyRegister.html"><i
 										class="fa fa-plus" aria-hidden="true"></i> Nowe</a></li>
-								<li><a href="/Kamienica/Admin/Meter/meterEnergyList.html"><i
+								<li><a href="${path}/Admin/Meter/meterEnergyList.html"><i
 										class="fa fa-list" aria-hidden="true"></i> Lista</a></li>
 							</ul></li>
 
