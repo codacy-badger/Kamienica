@@ -10,6 +10,8 @@ import javax.persistence.MappedSuperclass;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
+import org.hibernate.annotations.Type;
+import org.joda.time.LocalDate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
 
@@ -25,8 +27,9 @@ public abstract class ReadingAbstract {
 	private Long id;
 	@Column(nullable = false)
 	@Temporal(TemporalType.DATE)
-	@DateTimeFormat(pattern = "yyyy.MM.dd")
-	private Date readingDate;
+	@DateTimeFormat(pattern = "yyyy-MM-dd")
+	@Type(type = "org.jadira.usertype.dateandtime.joda.PersistentLocalDate")
+	private LocalDate readingDate;
 	@Column(nullable = false)
 	private double value;
 	@Column
@@ -40,9 +43,8 @@ public abstract class ReadingAbstract {
 		this.resolved = resolved;
 	}
 
-
 	@Autowired
-	public ReadingAbstract(Date readingDate, double value) {
+	public ReadingAbstract(LocalDate readingDate, double value) {
 		this.readingDate = readingDate;
 		this.value = value;
 	}
@@ -56,11 +58,11 @@ public abstract class ReadingAbstract {
 		return "\nData Odczytu: " + readingDate + ", Zuzycie= " + value;
 	}
 
-	public Date getReadingDate() {
+	public LocalDate getReadingDate() {
 		return readingDate;
 	}
 
-	public void setReadingDate(Date readingDate) {
+	public void setReadingDate(LocalDate readingDate) {
 		this.readingDate = readingDate;
 	}
 

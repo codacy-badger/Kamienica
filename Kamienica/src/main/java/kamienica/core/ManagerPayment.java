@@ -3,9 +3,10 @@ package kamienica.core;
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.Locale;
+
+import org.joda.time.LocalDate;
 
 import kamienica.feature.division.Division;
 import kamienica.feature.invoice.InvoiceEnergy;
@@ -40,7 +41,7 @@ public class ManagerPayment {
 			forList.setInvoice(invoice);
 			forList.setTenant(tenant);
 			forList.setPaymentAmount(payment);
-			forList.setPaymentDate(new Date());
+			forList.setPaymentDate(new LocalDate());
 			listToReturn.add(forList);
 		}
 
@@ -68,7 +69,7 @@ public class ManagerPayment {
 			forList.setInvoice(invoice);
 			forList.setTenant(tenant);
 			forList.setPaymentAmount(payment);
-			forList.setPaymentDate(new Date());
+			forList.setPaymentDate(new LocalDate());
 
 			listToReturn.add(forList);
 		}
@@ -97,7 +98,7 @@ public class ManagerPayment {
 			forList.setInvoice(invoice);
 			forList.setTenant(tenant);
 			forList.setPaymentAmount(payment);
-			forList.setPaymentDate(new Date());
+			forList.setPaymentDate(new LocalDate());
 			listToReturn.add(forList);
 		}
 		return listToReturn;

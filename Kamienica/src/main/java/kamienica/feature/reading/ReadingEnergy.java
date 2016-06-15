@@ -1,11 +1,11 @@
 package kamienica.feature.reading;
 
-import java.util.Date;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+
+import org.joda.time.LocalDate;
 
 import kamienica.feature.meter.MeterEnergy;
 
@@ -20,7 +20,7 @@ public class ReadingEnergy extends ReadingAbstract {
 	public ReadingEnergy() {
 	}
 
-	public ReadingEnergy(Date date, double value, MeterEnergy meter) {
+	public ReadingEnergy(LocalDate date, double value, MeterEnergy meter) {
 		super(date, value);
 		this.unit = meter.getUnit();
 		this.meter = meter;

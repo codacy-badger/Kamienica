@@ -75,17 +75,17 @@ public class ReadingGasDAOImpl extends AbstractDao<Integer, ReadingGas> implemen
 	}
 
 	@Override
-	public void ResolveReadings(InvoiceGas invoice) {
+	public void resolveReadings(InvoiceGas invoice) {
 		Query query = getSession().createSQLQuery("update readinggas set resolved= :res where readingDate = :paramdate")
-				.setParameter("paramdate", invoice.getBaseReading().getReadingDate()).setParameter("res", true);
+				.setDate("paramdate", invoice.getBaseReading().getReadingDate().toDate()).setParameter("res", true);
 		query.executeUpdate();
 
 	}
 
 	@Override
-	public void UnresolveReadings(InvoiceGas invoice) {
+	public void unresolveReadings(InvoiceGas invoice) {
 		Query query = getSession().createSQLQuery("update readinggas set resolved= :res where readingDate = :paramdate")
-				.setParameter("paramdate", invoice.getBaseReading().getReadingDate()).setParameter("res", false);
+				.setDate("paramdate", invoice.getBaseReading().getReadingDate().toDate()).setParameter("res", false);
 		query.executeUpdate();
 
 	}

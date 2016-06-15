@@ -34,7 +34,7 @@ public class PaymentGasDAOImpl extends AbstractDao<Integer, PaymentGas> implemen
 	@Override
 	public List<PaymentGas> getByReading(ReadingGas reading) {
 		Query query = getSession().createSQLQuery("Select * from paymentenergy where readingdate >=:date")
-				.addEntity(PaymentGas.class).setDate("date", reading.getReadingDate());
+				.addEntity(PaymentGas.class).setParameter("date", reading.getReadingDate());
 		@SuppressWarnings("unchecked")
 		List<PaymentGas> result = query.list();
 		return result;

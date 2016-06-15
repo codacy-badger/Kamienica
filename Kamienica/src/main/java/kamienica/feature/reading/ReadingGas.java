@@ -1,11 +1,11 @@
 package kamienica.feature.reading;
 
-import java.util.Date;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+
+import org.joda.time.LocalDate;
 
 import kamienica.feature.meter.MeterGas;
 
@@ -26,7 +26,7 @@ public class ReadingGas extends ReadingAbstract {
 		return this.meter.isCwu();
 	}
 
-	public ReadingGas(Date date, double value, MeterGas meter) {
+	public ReadingGas(LocalDate date, double value, MeterGas meter) {
 		super(date, value);
 		this.unit = meter.getUnit();
 		this.meter = meter;

@@ -1,10 +1,10 @@
 package kamienica.feature.invoice;
 
-import java.util.Date;
-
 import javax.persistence.Entity;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
+
+import org.joda.time.LocalDate;
 
 import kamienica.feature.reading.ReadingEnergy;
 
@@ -34,7 +34,7 @@ public class InvoiceEnergy extends Invoice {
 		super.setDescription("Faktura Za Energię");
 	}
 
-	public InvoiceEnergy(String serialNumber, String description, Date date, double totalAmount, ReadingEnergy reading) {
+	public InvoiceEnergy(String serialNumber, String description, LocalDate date, double totalAmount, ReadingEnergy reading) {
 		super(serialNumber, description, date, totalAmount);
 
 	}

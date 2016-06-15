@@ -1,22 +1,17 @@
 package kamienica.feature.tenant;
 
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.propertyeditors.CustomDateEditor;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.Validator;
-import org.springframework.web.bind.ServletRequestDataBinder;
-import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -35,12 +30,12 @@ public class TenantController {
 	@Autowired
 	private TenantService tenantService;
 
-	@InitBinder
-	protected void initBinder(HttpServletRequest request, ServletRequestDataBinder binder) {
-		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-		sdf.setLenient(true);
-		binder.registerCustomEditor(Date.class, new CustomDateEditor(sdf, true));
-	}
+//	@InitBinder
+//	protected void initBinder(HttpServletRequest request, ServletRequestDataBinder binder) {
+//		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+//		sdf.setLenient(true);
+//		binder.registerCustomEditor(Date.class, new CustomDateEditor(sdf, true));
+//	}
 
 	@Autowired
 	private Validator validator;

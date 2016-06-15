@@ -55,7 +55,8 @@ public class ReadingEnergyDAOImpl extends AbstractDao<Integer, ReadingEnergy>
 
 	@SuppressWarnings("unchecked")
 	public List<ReadingEnergy> getLatestList() {
-//		String original = "Select * from (select * from readingEnergy order by readingDate desc) as c group by meter_id";
+		// String original = "Select * from (select * from readingEnergy order
+		// by readingDate desc) as c group by meter_id";
 		String test = "Select * from readingEnergy where readingDate=(select MAX(readingDate) from readingEnergy)";
 		Query query = getSession().createSQLQuery(test).addEntity(ReadingEnergy.class);
 		return query.list();
@@ -73,19 +74,19 @@ public class ReadingEnergyDAOImpl extends AbstractDao<Integer, ReadingEnergy>
 	}
 
 	@Override
-	public void ResolveReadings(InvoiceEnergy invoice) {
+	public void resolveReadings(InvoiceEnergy invoice) {
 		Query query = getSession()
 				.createSQLQuery("update readingenergy set resolved= :res where readingDate = :paramdate")
-				.setParameter("paramdate", invoice.getBaseReading().getReadingDate()).setParameter("res", true);
+				.setDate("paramdate", invoice.getBaseReading().getReadingDate().toDate()).setParameter("res", true);
 		query.executeUpdate();
 
 	}
 
 	@Override
-	public void UnresolveReadings(InvoiceEnergy invoice) {
+	public void unresolveReadings(InvoiceEnergy invoice) {
 		Query query = getSession()
 				.createSQLQuery("update readingenergy set resolved= :res where readingDate = :paramdate")
-				.setParameter("paramdate", invoice.getBaseReading().getReadingDate()).setParameter("res", false);
+				.setDate("paramdate", invoice.getBaseReading().getReadingDate().toDate()).setParameter("res", false);
 		query.executeUpdate();
 
 	}

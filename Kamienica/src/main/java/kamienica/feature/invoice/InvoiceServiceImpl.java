@@ -17,6 +17,7 @@ import kamienica.feature.reading.ReadingWater;
 import kamienica.feature.reading.ReadingWaterDAO;
 
 @Service
+@Transactional
 public class InvoiceServiceImpl implements InvoiceService {
 
 	@Autowired
@@ -41,7 +42,7 @@ public class InvoiceServiceImpl implements InvoiceService {
 	@Override
 	public void saveEnergy(InvoiceEnergy invoice, List<PaymentEnergy> payment) {
 		invoiceEnergy.save(invoice);
-		readingEnergy.ResolveReadings(invoice);
+		readingEnergy.resolveReadings(invoice);
 		for (PaymentEnergy paymentEnergy : payment) {
 			paymentEnergyDao.save(paymentEnergy);
 		}
@@ -51,7 +52,7 @@ public class InvoiceServiceImpl implements InvoiceService {
 	@Override
 	public void saveGas(InvoiceGas invoice, List<PaymentGas> payment) {
 		invoiceGas.save(invoice);
-		readingGas.ResolveReadings(invoice);
+		readingGas.resolveReadings(invoice);
 
 		for (PaymentGas paymentGas : payment) {
 			paymentGasDao.save(paymentGas);
@@ -61,7 +62,7 @@ public class InvoiceServiceImpl implements InvoiceService {
 	@Override
 	public void saveWater(InvoiceWater invoice, List<PaymentWater> payment) {
 		invoiceWater.save(invoice);
-		readingWater.ResolveReadings(invoice);
+		readingWater.resolveReadings(invoice);
 
 		for (PaymentWater paymentWater : payment) {
 			paymentWaterDao.save(paymentWater);
@@ -71,7 +72,7 @@ public class InvoiceServiceImpl implements InvoiceService {
 
 	@Override
 	public void deleteEnergyByID(Long id) {
-		readingEnergy.UnresolveReadings(invoiceEnergy.getById(id));
+		readingEnergy.unresolveReadings(invoiceEnergy.getById(id));
 		invoiceEnergy.deleteById(id);
 	}
 
@@ -96,7 +97,7 @@ public class InvoiceServiceImpl implements InvoiceService {
 
 	@Override
 	public void deleteGasByID(Long id) {
-		readingGas.UnresolveReadings(invoiceGas.getById(id));
+		readingGas.unresolveReadings(invoiceGas.getById(id));
 		invoiceGas.deleteById(id);
 
 	}
@@ -104,7 +105,7 @@ public class InvoiceServiceImpl implements InvoiceService {
 	@Override
 	public void deleteWaterByID(Long id) {
 		// temporaryFix...
-		readingWater.UnresolveReadings(invoiceWater.getById(id));
+		readingWater.unresolveReadings(invoiceWater.getById(id));
 		invoiceWater.deleteById(id);
 
 	}

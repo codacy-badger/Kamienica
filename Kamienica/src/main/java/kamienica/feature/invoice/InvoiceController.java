@@ -60,15 +60,15 @@ public class InvoiceController {
 	@Autowired
 	private PaymentService paymentService;
 
-	@InitBinder
-	protected void initBinder(HttpServletRequest request, ServletRequestDataBinder binder) {
-		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-		sdf.setLenient(true);
-		binder.registerCustomEditor(Date.class, new CustomDateEditor(sdf, true));
-	}
-
-	Date date = new Date();
-	SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
+//	@InitBinder
+//	protected void initBinder(HttpServletRequest request, ServletRequestDataBinder binder) {
+//		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+//		sdf.setLenient(true);
+//		binder.registerCustomEditor(Date.class, new CustomDateEditor(sdf, true));
+//	}
+//
+//	Date date = new Date();
+//	SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
 
 	// -------------------REJESTRACJA----------------------------------------------
 	@RequestMapping("/Admin/Invoice/invoiceGasRegister")

@@ -1,8 +1,8 @@
 package kamienica.dao;
 
-import java.util.Date;
 import java.util.List;
 
+import org.joda.time.LocalDate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.testng.Assert;
 import org.testng.annotations.Test;
@@ -77,7 +77,7 @@ public class ReadingGasDaoTest extends EntityDaoImplTest {
 	@Test
 	public void addAndRemove() {
 		MeterGas test = meterDAO.getById(1L);
-		ReadingGas reading = new ReadingGas(new Date(), 300, test);
+		ReadingGas reading = new ReadingGas(new LocalDate(), 300, test);
 		dao.save(reading);
 		Assert.assertEquals(dao.getList().size(), 16);
 		Assert.assertEquals(dao.getById(16L).getValue(), 300.0);

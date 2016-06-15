@@ -1,15 +1,16 @@
 package kamienica.feature.division;
 
 import java.util.ArrayList;
-import java.util.Date;
+
+import org.joda.time.LocalDate;
 
 public class DivisionForm {
 
 	private ArrayList<Division> divisionList = new ArrayList<>();
-	private Date date;
+	private  LocalDate date;
 
 	public DivisionForm(){
-		this.date = new Date();
+		this.date = new LocalDate();
 	}
 
 	public ArrayList<Division> getDivisionList() {
@@ -25,11 +26,11 @@ public class DivisionForm {
 		return "PodzialFormularz [podzialLista=" + divisionList + "]";
 	}
 
-	public Date getDate() {
+	public LocalDate getDate() {
 		return date;
 	}
 
-	public void setDate(Date date) {
+	public void setDate(LocalDate date) {
 		this.date = date;
 	}
 

@@ -19,9 +19,9 @@ public interface ReadingDao<R extends ReadingAbstract, I extends Invoice> extend
 
 	public List<R> getUnresolvedReadings();
 
-	public void ResolveReadings(I invoice);
+	public void resolveReadings(I invoice);
 
-	public void UnresolveReadings(I invoice);
+	public void unresolveReadings(I invoice);
 	
 	public int countDaysFromLastReading();
 }

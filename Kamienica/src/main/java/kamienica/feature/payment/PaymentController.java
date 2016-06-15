@@ -14,11 +14,6 @@ public class PaymentController {
 	@Autowired
 	private PaymentService paymentService;
 
-	@RequestMapping("/Admin/Payment/paymentList")
-	public ModelAndView paymentList() {
-		return new ModelAndView("/Admin/Payment/PaymentList");
-	}
-
 	// ------------------------------PAYMENTLIST--------------------------------------------------
 	@RequestMapping("/Admin/Payment/paymentEnergyList")
 	public ModelAndView paymentEnergyList() {
@@ -26,7 +21,7 @@ public class PaymentController {
 		model.put("media", "Energia");
 		model.put("url", "Energy");
 		model.put("payment", paymentService.getPaymentEnergyList());
-		return new ModelAndView("/Admin/Payment/PaymentList2", model);
+		return new ModelAndView("/Admin/Payment/PaymentList", model);
 
 	}
 
@@ -36,7 +31,7 @@ public class PaymentController {
 		model.put("media", "Gaz");
 		model.put("url", "Gas");
 		model.put("payment", paymentService.getPaymentGasList());
-		return new ModelAndView("/Admin/Payment/PaymentList2", model);
+		return new ModelAndView("/Admin/Payment/PaymentList", model);
 
 	}
 
@@ -46,7 +41,7 @@ public class PaymentController {
 		model.put("media", "Woda");
 		model.put("url", "Water");
 		model.put("payment", paymentService.getPaymentWaterList());
-		return new ModelAndView("/Admin/Payment/PaymentList2", model);
+		return new ModelAndView("/Admin/Payment/PaymentList", model);
 
 	}
 

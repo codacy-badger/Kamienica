@@ -78,19 +78,19 @@ public class ReadingWaterDAOImpl extends AbstractDao<Integer, ReadingWater> impl
 	}
 
 	@Override
-	public void ResolveReadings(InvoiceWater invoice) {
+	public void resolveReadings(InvoiceWater invoice) {
 		Query query = getSession()
 				.createSQLQuery("update readingwater set resolved= :res where readingDate = :paramdate")
-				.setParameter("paramdate", invoice.getBaseReading().getReadingDate()).setParameter("res", true);
+				.setDate("paramdate", invoice.getBaseReading().getReadingDate().toDate()).setParameter("res", true);
 		query.executeUpdate();
 
 	}
 
 	@Override
-	public void UnresolveReadings(InvoiceWater invoice) {
+	public void unresolveReadings(InvoiceWater invoice) {
 		Query query = getSession()
 				.createSQLQuery("update readingwater set resolved= :res where readingDate = :paramdate")
-				.setParameter("paramdate", invoice.getBaseReading().getReadingDate()).setParameter("res", false);
+				.setDate("paramdate", invoice.getBaseReading().getReadingDate().toDate()).setParameter("res", false);
 		query.executeUpdate();
 
 	}

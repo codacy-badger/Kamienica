@@ -8,13 +8,13 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
 import javax.validation.constraints.Digits;
 
+import org.hibernate.annotations.Type;
 import org.hibernate.validator.constraints.Email;
 import org.hibernate.validator.constraints.Length;
 import org.hibernate.validator.constraints.NotEmpty;
+import org.joda.time.LocalDate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
 
@@ -48,9 +48,9 @@ public class Tenant {
 	@Column(nullable = false)
 	private String status = UserStatus.ACTIVE.getUserStatus();
 	@Column(nullable = false)
-	@Temporal(TemporalType.DATE)
-	@DateTimeFormat(pattern = "yyyy.MM.dd")
-	private Date movementDate;
+	@DateTimeFormat(pattern = "yyyy-MM-dd")
+	@Type(type="org.jadira.usertype.dateandtime.joda.PersistentLocalDate")
+	private LocalDate movementDate;
 	@Length(min=5, message="Hasło musi mieć minimum 5 znaków")
 	@Column( nullable = false)
 	@NotEmpty(message = "Wprowadź hasło")
@@ -85,7 +85,7 @@ public class Tenant {
 
 	public Tenant() {
 
-		this.movementDate = new Date();
+		this.movementDate = new LocalDate();
 		this.password = "witaj";
 	}
 
@@ -133,11 +133,11 @@ public class Tenant {
 		this.id = id;
 	}
 
-	public Date getMovementDate() {
+	public LocalDate getMovementDate() {
 		return movementDate;
 	}
 
-	public void setMovementDate(Date movementDate) {
+	public void setMovementDate(LocalDate movementDate) {
 		this.movementDate = movementDate;
 	}
 

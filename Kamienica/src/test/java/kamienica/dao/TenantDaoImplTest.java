@@ -1,7 +1,6 @@
 package kamienica.dao;
 
-import java.util.Date;
-
+import org.joda.time.LocalDate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.testng.Assert;
 import org.testng.annotations.Test;
@@ -68,7 +67,7 @@ public class TenantDaoImplTest extends EntityDaoImplTest {
 		ap.setEmail("gdf@wp.pl");
 		ap.setFirstName("ab");
 		ap.setApartment(null);
-		ap.setMovementDate(new Date());
+		ap.setMovementDate(new LocalDate());
 		ap.setPhone("345");
 		ap.setRole("ADMIN");
 		ap.setStatus("ACTIVE");
@@ -83,7 +82,7 @@ public class TenantDaoImplTest extends EntityDaoImplTest {
 		ap.setEmail("c@wp.pl");
 		ap.setFirstName("ab");
 		ap.setApartment(null);
-		ap.setMovementDate(new Date());
+		ap.setMovementDate(new LocalDate());
 		ap.setPhone("345");
 		ap.setRole("ADMIN");
 		ap.setStatus("ACTIVE");

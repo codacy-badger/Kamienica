@@ -1,8 +1,6 @@
 package kamienica.feature.meter;
 
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -11,11 +9,8 @@ import javax.validation.Valid;
 
 import org.hibernate.exception.ConstraintViolationException;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.propertyeditors.CustomDateEditor;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.WebDataBinder;
-import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -33,12 +28,12 @@ public class MeterController {
 	@Autowired
 	private MeterService meterService;
 
-	@InitBinder
-	public void initBinder(WebDataBinder binder) {
-		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-		sdf.setLenient(true);
-		binder.registerCustomEditor(Date.class, new CustomDateEditor(sdf, true));
-	}
+//	@InitBinder
+//	public void initBinder(WebDataBinder binder) {
+//		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+//		sdf.setLenient(true);
+//		binder.registerCustomEditor(Date.class, new CustomDateEditor(sdf, true));
+//	}
 
 	private final String DUPLICATE = "Istnieje już w bazie licznik z takim numerem seryjnym";
 	private final String WARM_CWU = "Licznik Główny nie może być licznikiem CWU bądź Ciepłej Wody";

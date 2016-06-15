@@ -1,10 +1,10 @@
 package kamienica.feature.invoice;
 
-import java.util.Date;
-
 import javax.persistence.Entity;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
+
+import org.joda.time.LocalDate;
 
 import kamienica.feature.reading.ReadingWater;
 
@@ -32,7 +32,7 @@ public class InvoiceWater extends Invoice {
 		super.setDescription("Faktura Za Wodę");
 	}
 
-	public InvoiceWater(String serialNumber, String description, Date date, double totalAmount, ReadingWater reading) {
+	public InvoiceWater(String serialNumber, String description, LocalDate date, double totalAmount, ReadingWater reading) {
 		super(serialNumber, description, date, totalAmount);
 		this.baseReading = reading;
 	}

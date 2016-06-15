@@ -1,21 +1,15 @@
 package kamienica.feature.reading;
 
 import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import javax.servlet.http.HttpServletRequest;
-
+import org.joda.time.LocalDate;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.propertyeditors.CustomDateEditor;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.ServletRequestDataBinder;
-import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -36,15 +30,16 @@ public class ReadingController {
 	@Autowired
 	private ReadingService readingService;
 
-	@InitBinder
-	protected void initBinder(HttpServletRequest request, ServletRequestDataBinder binder) {
-		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-		sdf.setLenient(true);
-		binder.registerCustomEditor(Date.class, new CustomDateEditor(sdf, true));
-	}
+	// @InitBinder
+	// protected void initBinder(HttpServletRequest request,
+	// ServletRequestDataBinder binder) {
+	// SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+	// sdf.setLenient(true);
+	// binder.registerCustomEditor(Date.class, new CustomDateEditor(sdf, true));
+	// }
 
-	SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
-	Date today = new Date();
+	// SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
+	// Date today = new Date();
 	// -----------------------------------REGISTER---------------------------------------------------------------
 
 	@RequestMapping("/Admin/Reading/readingEnergyRegister")
@@ -59,7 +54,7 @@ public class ReadingController {
 		List<ReadingEnergy> readings = new ArrayList<ReadingEnergy>();
 		HashMap<Long, ReadingEnergy> latestReadings = readingService.getLatestEnergyReadings();
 
-		model.put("date", df.format(today));
+		model.put("date", new LocalDate());
 
 		for (int i = 0; i < meterEnergy.size(); i++) {
 			Long id = meterEnergy.get(i).getId();
@@ -70,16 +65,16 @@ public class ReadingController {
 			} else {
 				tmp.setValue(0);
 			}
-			tmp.setReadingDate(new Date());
+			tmp.setReadingDate(new LocalDate());
 			readings.add(tmp);
 		}
 
 		readingForm.setCurrentReadings(readings);
 
-		Date oldDate = null;
+		LocalDate oldDate = null;
 		try {
 			oldDate = latestReadings.get(meterEnergy.get(0).getId()).getReadingDate();
-			model.put("oldDate", getIncrementedDate(oldDate));
+			model.put("oldDate", oldDate.plusDays(1));
 		} catch (NullPointerException e) {
 			model.put("oldDate", "2000-01-01");
 		}
@@ -100,7 +95,7 @@ public class ReadingController {
 		List<ReadingGas> readings = new ArrayList<>();
 		HashMap<Long, ReadingGas> latestReadings = readingService.getLatestGasReadings();
 
-		model.put("date", df.format(today));
+		model.put("date", new LocalDate());
 
 		for (int i = 0; i < meterGas.size(); i++) {
 			Long id = meterGas.get(i).getId();
@@ -111,16 +106,16 @@ public class ReadingController {
 			} else {
 				tmp.setValue(0);
 			}
-			tmp.setReadingDate(new Date());
+			tmp.setReadingDate(new LocalDate());
 			readings.add(tmp);
 		}
 
 		readingForm.setCurrentReadings(readings);
 
-		Date oldDate = null;
+		LocalDate oldDate = null;
 		try {
 			oldDate = latestReadings.get(meterGas.get(0).getId()).getReadingDate();
-			model.put("oldDate", getIncrementedDate(oldDate));
+			model.put("oldDate", oldDate.plusDays(1));
 		} catch (NullPointerException e) {
 			model.put("oldDate", "2000-01-01");
 		}
@@ -140,7 +135,7 @@ public class ReadingController {
 		List<ReadingWater> readings = new ArrayList<>();
 		HashMap<Long, ReadingWater> currentReadings = readingService.getLatestWaterReadings();
 
-		model.put("date", df.format(today));
+		model.put("date", new LocalDate());
 		for (int i = 0; i < meterWater.size(); i++) {
 			Long id = meterWater.get(i).getId();
 			ReadingWater reading = new ReadingWater();
@@ -150,15 +145,15 @@ public class ReadingController {
 			} else {
 				reading.setValue(0);
 			}
-			reading.setReadingDate(new Date());
+			reading.setReadingDate(new LocalDate());
 			readings.add(reading);
 
 		}
 		readingWaterForm.setCurrentReadings(readings);
-		Date oldDate = null;
+		LocalDate oldDate = null;
 		try {
 			oldDate = currentReadings.get(meterWater.get(0).getId()).getReadingDate();
-			model.put("oldDate", getIncrementedDate(oldDate));
+			model.put("oldDate", oldDate.plusDays(1));
 		} catch (NullPointerException e) {
 			model.put("oldDate", "2000-01-01");
 		}
@@ -169,16 +164,16 @@ public class ReadingController {
 
 	@RequestMapping(value = "/Admin/Reading/readingEnergySave", method = RequestMethod.POST)
 	public ModelAndView readingEnergySave(@ModelAttribute("readingForm") ReadingEnergyForm readingForm,
-			BindingResult result, HttpServletRequest req) throws ParseException {
+			BindingResult result, @RequestParam String date) {
 		List<ReadingEnergy> reading = readingForm.getCurrentReadings();
 		if (!ReadingValidator.validateMeterReadings(reading)) {
 			return new ModelAndView("/Admin/Reading/ReadingEnergyRegister");
 		}
-		String date = req.getParameter("date");
-		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+		// String date = req.getParameter("date");
+		// SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 
 		for (int i = 0; i < reading.size(); i++) {
-			reading.get(i).setReadingDate(sdf.parse(date));
+			reading.get(i).setReadingDate(LocalDate.parse(date));
 			reading.get(i).setUnit(reading.get(i).getMeter().getUnit());
 		}
 
@@ -188,12 +183,12 @@ public class ReadingController {
 
 	@RequestMapping(value = "/Admin/Reading/readingGasSave", method = RequestMethod.POST)
 	public ModelAndView readingGasSave(@ModelAttribute("readingForm") ReadingGasForm readingForm, BindingResult result,
-			HttpServletRequest req) throws ParseException {
-		String date = req.getParameter("date");
-		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+			@RequestParam String date) {
+		// String date = req.getParameter("date");
+		// SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 		List<ReadingGas> reading = readingForm.getCurrentReadings();
 		for (int i = 0; i < reading.size(); i++) {
-			reading.get(i).setReadingDate(sdf.parse(date));
+			reading.get(i).setReadingDate(LocalDate.parse(date));
 			reading.get(i).setUnit(reading.get(i).getMeter().getUnit());
 		}
 
@@ -203,12 +198,12 @@ public class ReadingController {
 
 	@RequestMapping(value = "/Admin/Reading/readingWaterSave", method = RequestMethod.POST)
 	public ModelAndView readingWaterSave(@ModelAttribute("readingForm") ReadingWaterForm readingWaterForm,
-			BindingResult result, HttpServletRequest req) throws ParseException {
-		String date = req.getParameter("date");
-		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+			BindingResult result, @RequestParam String date) throws ParseException {
+		// String date = req.getParameter("date");
+		// SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 		List<ReadingWater> reading = readingWaterForm.getCurrentReadings();
 		for (int i = 0; i < reading.size(); i++) {
-			reading.get(i).setReadingDate(sdf.parse(date));
+			reading.get(i).setReadingDate(LocalDate.parse(date));
 			reading.get(i).setUnit(reading.get(i).getMeter().getUnit());
 		}
 		readingService.saveWaterList(reading);
@@ -290,7 +285,7 @@ public class ReadingController {
 		if (!readingService.getPreviousReadingEnergy(date).isEmpty()) {
 
 			List<ReadingEnergy> previousReading = readingService.getPreviousReadingEnergy(date);
-			oldDate = getIncrementedDate(previousReading.get(0).getReadingDate());
+			oldDate = previousReading.get(0).getReadingDate().plusDays(1).toString();
 			HashMap<String, ReadingEnergy> mapPreviousReadings = new HashMap<>();
 
 			for (ReadingEnergy i : previousReading) {
@@ -335,7 +330,8 @@ public class ReadingController {
 		if (!readingService.getPreviousReadingGas(date).isEmpty()) {
 
 			List<ReadingGas> previousReading = readingService.getPreviousReadingGas(date);
-			oldDate = getIncrementedDate(previousReading.get(0).getReadingDate());
+			oldDate = previousReading.get(0).getReadingDate().plusDays(1).toString();
+			System.out.println("--------------------------reading controler-> edit oldDate " + oldDate);
 			HashMap<String, ReadingGas> mapPreviousReadings = new HashMap<>();
 
 			for (ReadingGas i : previousReading) {
@@ -381,7 +377,7 @@ public class ReadingController {
 		if (!readingService.getPreviousReadingWater(date).isEmpty()) {
 
 			List<ReadingWater> previousReadings = readingService.getPreviousReadingWater(date);
-			oldDate = getIncrementedDate(previousReadings.get(0).getReadingDate());
+			oldDate = previousReadings.get(0).getReadingDate().plusDays(1).toString();
 			HashMap<String, ReadingWater> mapPreviousReadings = new HashMap<>();
 
 			for (ReadingWater i : previousReadings) {
@@ -419,12 +415,12 @@ public class ReadingController {
 	// -------------------------OVERWRITE--------------------------------------------
 	@RequestMapping("/Admin/Reading/readingEnergyOverwrite")
 	public ModelAndView readingEnergyOverwite(@ModelAttribute("readingForm") ReadingEnergyForm readingForm,
-			BindingResult result, HttpServletRequest req) throws ParseException {
-		String date = req.getParameter("date");
+			BindingResult result, @RequestParam String date) throws ParseException {
+		// String date = req.getParameter("date");
 		List<ReadingEnergy> listToSave = readingForm.getCurrentReadings();
 
 		for (ReadingEnergy i : listToSave) {
-			i.setReadingDate(df.parse(date));
+			i.setReadingDate(LocalDate.parse(date));
 			i.setUnit(i.getMeter().getUnit());
 
 		}
@@ -434,12 +430,12 @@ public class ReadingController {
 
 	@RequestMapping("/Admin/Reading/readingGasOverwrite")
 	public ModelAndView readingGasOverwrite(@ModelAttribute("readingForm") ReadingGasForm readingForm,
-			BindingResult result, HttpServletRequest req) throws ParseException {
-		String date = req.getParameter("date");
+			BindingResult result, @RequestParam String date) throws ParseException {
+		// String date = req.getParameter("date");
 		List<ReadingGas> listToSave = readingForm.getCurrentReadings();
 
 		for (ReadingGas i : listToSave) {
-			i.setReadingDate(df.parse(date));
+			i.setReadingDate(LocalDate.parse(date));
 			i.setUnit(i.getMeter().getUnit());
 			readingService.updateGas(i);
 		}
@@ -448,12 +444,12 @@ public class ReadingController {
 
 	@RequestMapping("/Admin/Reading/readingWaterOverwrite")
 	public ModelAndView readingWaterOverwrite(@ModelAttribute("readingForm") ReadingWaterForm readingForm,
-			BindingResult result, HttpServletRequest req) throws ParseException {
-		String date = req.getParameter("date");
+			BindingResult result, @RequestParam String date) throws ParseException {
+		// String date = req.getParameter("date");
 		List<ReadingWater> listToSave = readingForm.getCurrentReadings();
 
 		for (ReadingWater i : listToSave) {
-			i.setReadingDate(df.parse(date));
+			i.setReadingDate(LocalDate.parse(date));
 			i.setUnit(i.getMeter().getUnit());
 			readingService.updateWater(i);
 		}
@@ -474,9 +470,9 @@ public class ReadingController {
 		return false;
 	}
 
-	private static String getIncrementedDate(Date date) {
-		long tt = 24 * 60 * 60 * 1000;
-		SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
-		return df.format(new Date(date.getTime() + tt));
-	}
+	// private static String getIncrementedDate(Date date) {
+	// long tt = 24 * 60 * 60 * 1000;
+	// SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
+	// return df.format(new Date(date.getTime() + tt));
+	// }
 }

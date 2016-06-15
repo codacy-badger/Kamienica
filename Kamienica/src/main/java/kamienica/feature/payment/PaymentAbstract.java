@@ -1,7 +1,6 @@
 package kamienica.feature.payment;
 
 import java.text.SimpleDateFormat;
-import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.GeneratedValue;
@@ -12,6 +11,8 @@ import javax.persistence.MappedSuperclass;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
+import org.hibernate.annotations.Type;
+import org.joda.time.LocalDate;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import kamienica.feature.tenant.Tenant;
@@ -26,8 +27,9 @@ public abstract class PaymentAbstract {
 	private Long id;
 	@Column
 	@Temporal(TemporalType.DATE)
-	@DateTimeFormat(pattern = "yyyy.MM.dd")
-	private Date paymentDate;
+	@DateTimeFormat(pattern = "yyyy-MM-dd")
+	@Type(type="org.jadira.usertype.dateandtime.joda.PersistentLocalDate")
+	private LocalDate paymentDate;
 	@Column
 	private double paymentAmount;
 	@ManyToOne
@@ -43,11 +45,11 @@ public abstract class PaymentAbstract {
 		this.id = id;
 	}
 
-	public Date getPaymentDate() {
+	public LocalDate getPaymentDate() {
 		return paymentDate;
 	}
 
-	public void setPaymentDate(Date paymentDate) {
+	public void setPaymentDate(LocalDate paymentDate) {
 		this.paymentDate = paymentDate;
 	}
 
@@ -78,7 +80,7 @@ public abstract class PaymentAbstract {
 	public PaymentAbstract() {
 	}
 
-	public PaymentAbstract(Long id, Date paymentDate, double paymentAmount, Tenant tenant) {
+	public PaymentAbstract(Long id, LocalDate paymentDate, double paymentAmount, Tenant tenant) {
 		this.id = id;
 		this.paymentDate = paymentDate;
 		this.paymentAmount = paymentAmount;

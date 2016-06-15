@@ -1,10 +1,10 @@
 package kamienica.feature.invoice;
 
-import java.util.Date;
-
 import javax.persistence.Entity;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
+
+import org.joda.time.LocalDate;
 
 import kamienica.feature.reading.ReadingGas;
 
@@ -32,7 +32,7 @@ public class InvoiceGas extends Invoice {
 		super.setDescription("Faktura Za Gaz");
 	}
 
-	public InvoiceGas(String serialNumber, String description, Date date, double totalAmount, ReadingGas reading) {
+	public InvoiceGas(String serialNumber, String description, LocalDate date, double totalAmount, ReadingGas reading) {
 		super(serialNumber, description, date, totalAmount);
 		this.baseReading = reading;
 	}

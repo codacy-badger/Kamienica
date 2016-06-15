@@ -2,10 +2,11 @@ package kamienica.feature.invoice;
 
 import java.util.List;
 
-import javax.transaction.Transactional;
+
 
 import org.hibernate.Query;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 import kamienica.dao.AbstractDao;
 import kamienica.feature.payment.PaymentStatus;
@@ -16,6 +17,8 @@ public class InvoiceEnergyDAOImpl extends AbstractDao<Integer, InvoiceEnergy> im
 
 	@Override
 	public InvoiceEnergy getLatest() {
+//		List<InvoiceEnergy> list = getSession().createQuery(
+//				"select * from kamienica.invoiceenergy where date = (select MAX(date) from kamienica.invoiceenergy)").list();
 		Query query = getSession().createSQLQuery(
 				"select * from kamienica.invoiceenergy where date = (select MAX(date) from kamienica.invoiceenergy)");
 		return (InvoiceEnergy) query.uniqueResult();

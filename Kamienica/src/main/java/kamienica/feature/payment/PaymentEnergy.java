@@ -1,10 +1,10 @@
 package kamienica.feature.payment;
 
-import java.util.Date;
-
 import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+
+import org.joda.time.LocalDate;
 
 import kamienica.feature.invoice.InvoiceEnergy;
 import kamienica.feature.tenant.Tenant;
@@ -20,7 +20,7 @@ public class PaymentEnergy extends PaymentAbstract {
 
 	}
 
-	public PaymentEnergy(Long id, Date paymentDate, double paymentAmount, Tenant tenant, InvoiceEnergy invoice) {
+	public PaymentEnergy(Long id, LocalDate paymentDate, double paymentAmount, Tenant tenant, InvoiceEnergy invoice) {
 		super(id, paymentDate, paymentAmount, tenant);
 		this.invoice = invoice;
 	}

@@ -45,8 +45,10 @@ public class ManagerEnergy {
 			if (oldReadings.isEmpty()) {
 				tmp.setDaysBetweenReadings(0);
 			} else {
-				tmp.setDaysBetweenReadings(Days.daysBetween(new DateTime(oldReadings.get(0).getReadingDate()),
-						new DateTime(newReadings.get(0).getReadingDate())).getDays());
+				tmp.setDaysBetweenReadings(
+						Days.daysBetween(oldReadings.get(0).getReadingDate(), newReadings.get(0).getReadingDate()).getDays());
+//				tmp.setDaysBetweenReadings(Days.daysBetween(new DateTime(oldReadings.get(0).getReadingDate()),
+//						new DateTime(newReadings.get(0).getReadingDate())).getDays());
 			}
 			out.add(tmp);
 		}
