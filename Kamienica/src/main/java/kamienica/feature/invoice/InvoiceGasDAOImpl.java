@@ -69,4 +69,15 @@ public class InvoiceGasDAOImpl extends AbstractDao<Integer, InvoiceGas> implemen
 		query.executeUpdate();
 	}
 
+	@Override
+	public int getDaysOfLastInvoice() {
+		try {
+			Query query = getSession().createSQLQuery(
+					"SELECT DATEDIFF(CURDATE()  ,invoicegas.date) FROM invoicegas order by date desc limit 1");
+			return ((Number) query.uniqueResult()).intValue();
+		} catch (Exception e) {
+			return 0;
+		}
+	}
+
 }

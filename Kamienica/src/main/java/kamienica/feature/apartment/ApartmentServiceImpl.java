@@ -6,7 +6,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import kamienica.dao.DaoInterface;
 import kamienica.feature.tenant.TenantDao;
 
 @Service
@@ -14,7 +13,7 @@ import kamienica.feature.tenant.TenantDao;
 public class ApartmentServiceImpl implements ApartmentService {
 
 	@Autowired
-	DaoInterface<Apartment> apartmentDAO;
+	ApartmentDao apartmentDAO;
 	@Autowired
 	TenantDao tenantDAO;
 

@@ -17,7 +17,6 @@ import kamienica.feature.reading.ReadingWater;
 import kamienica.feature.reading.ReadingWaterDAO;
 
 @Service
-@Transactional
 public class InvoiceServiceImpl implements InvoiceService {
 
 	@Autowired
@@ -29,9 +28,9 @@ public class InvoiceServiceImpl implements InvoiceService {
 	@Autowired
 	ReadingDao<ReadingEnergy, InvoiceEnergy> readingEnergy;
 	@Autowired
-	ReadingDao<ReadingGas, InvoiceGas>  readingGas;
+	ReadingDao<ReadingGas, InvoiceGas> readingGas;
 	@Autowired
-	ReadingWaterDAO  readingWater;
+	ReadingWaterDAO readingWater;
 	@Autowired
 	private PaymentDao<PaymentGas, ReadingGas> paymentGasDao;
 	@Autowired
@@ -206,5 +205,23 @@ public class InvoiceServiceImpl implements InvoiceService {
 	@Override
 	public InvoiceGas getLatestPaidGas() {
 		return invoiceGas.getLastResolved();
+	}
+
+	@Override
+	public int getDaysForGas() {
+		return invoiceGas.getDaysOfLastInvoice();
+
+	}
+
+	@Override
+	public int getDaysForWater() {
+		return invoiceWater.getDaysOfLastInvoice();
+
+	}
+
+	@Override
+	public int getDaysForEnergy() {
+		return invoiceEnergy.getDaysOfLastInvoice();
+
 	}
 }

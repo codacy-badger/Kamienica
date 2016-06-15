@@ -19,6 +19,7 @@ import org.springframework.web.bind.ServletRequestDataBinder;
 import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -26,6 +27,7 @@ import kamienica.feature.apartment.Apartment;
 import kamienica.feature.apartment.ApartmentService;
 
 @Controller
+@RequestMapping("/Admin/Tenant")
 public class TenantController {
 
 	@Autowired
@@ -42,19 +44,16 @@ public class TenantController {
 
 	@Autowired
 	private Validator validator;
-//
-//	public void setValidator(Validator validator) {
-//		this.validator = validator;
-//	}
 
-	@RequestMapping("/Admin/Tenant/tenantRegister")
+
+	@RequestMapping("/tenantRegister")
 	public ModelAndView tenantRegister(@ModelAttribute("tenant") Tenant tenant, BindingResult result) {
 		Map<String, Object> model = prepareTenantModel();
 		model.put("url", "/Admin/Tenant/tenantSave.html");
 		return new ModelAndView("/Admin/Tenant/TenantRegister", "model", model);
 	}
 
-	@RequestMapping("/Admin/Tenant/tenantSave")
+	@RequestMapping(value="/tenantSave", method = RequestMethod.POST)
 	public ModelAndView tenantSave(@Valid @ModelAttribute("tenant") Tenant tenant, BindingResult result) {
 		TenantValidator.validateTenant(tenant, result);
 
@@ -67,7 +66,7 @@ public class TenantController {
 		return new ModelAndView("redirect:/Admin/Tenant/tenantList.html");
 	}
 
-	@RequestMapping("/Admin/Tenant/tenantList")
+	@RequestMapping("/tenantList")
 	public ModelAndView tenantList() {
 		Map<String, Object> model = new HashMap<String, Object>();
 		model.put("tenant", tenantService.getList());
@@ -75,24 +74,24 @@ public class TenantController {
 
 	}
 
-	@RequestMapping(value = "/Admin/Tenant/tenantEdit", params = { "id" })
+	@RequestMapping(value = "/tenantEdit")
 	public ModelAndView tenantEdit(@RequestParam(value = "id") int id) {
 		Map<String, Object> model = prepareTenantModel();
 		model.put("url", "/Admin/Tenant/tenantOverwrite.html");
 		Tenant tenant = tenantService.getTenantById(id);
-		ModelAndView mvc = new ModelAndView("/Admin/Tenant/TenantEdit", "model", model);
+		ModelAndView mvc = new ModelAndView("/Admin/Tenant/TenantRegister", "model", model);
 		mvc.addObject("tenant", tenant);
 		return mvc;
 	}
 
-	@RequestMapping("/Admin/Tenant/tenantOverwrite")
+	@RequestMapping(value="/tenantOverwrite", method = RequestMethod.POST)
 	public ModelAndView updateTenant(@ModelAttribute("tenant") Tenant tenant, BindingResult result) {
 
 		TenantValidator.validateTenant(tenant, result);
 		validator.validate(tenant, result);
 		if (result.hasErrors()) {
 			Map<String, Object> model = prepareTenantModel();
-			return new ModelAndView("/Admin/Tenant/TenantEdit", "model", model);
+			return new ModelAndView("/Admin/Tenant/TenantRegister", "model", model);
 		}
 
 		try {
@@ -100,18 +99,18 @@ public class TenantController {
 		} catch (org.springframework.dao.DataIntegrityViolationException e) {
 			result.rejectValue("email", "error.tenant", "Podany e-mail już istnieje");
 			Map<String, Object> model = prepareTenantModel();
-			return new ModelAndView("/Admin/Tenant/TenantEdit", "model", model);
+			return new ModelAndView("/Admin/Tenant/TenantRegister", "model", model);
 		}
 		return new ModelAndView("redirect:/Admin/Tenant/tenantList.html");
 	}
 
-	@RequestMapping(value = "/Admin/Tenant/tenantDelete", params = { "id" })
-	public ModelAndView usunTenant(@RequestParam(value = "id") int id) {
+	@RequestMapping(value = "/tenantDelete")
+	public ModelAndView deleteTenant(@RequestParam(value = "id") int id) {
 		tenantService.deleteTenant(id);
 		return new ModelAndView("redirect:/Admin/Tenant/tenantList.html");
 	}
 
-	@RequestMapping("/Admin/Tenant/tenantCurrent")
+	@RequestMapping("/tenantCurrent")
 	public ModelAndView currentLTenants() {
 		Map<String, Object> model = new HashMap<String, Object>();
 		model.put("tenant", tenantService.getCurrentTenants());

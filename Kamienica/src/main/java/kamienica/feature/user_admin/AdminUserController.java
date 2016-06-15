@@ -1,9 +1,7 @@
-package kamienica.feature.user;
+package kamienica.feature.user_admin;
 
 import java.util.HashMap;
 import java.util.Map;
-
-import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -20,8 +18,7 @@ import kamienica.feature.tenant.Tenant;
 import kamienica.feature.tenant.TenantService;
 
 @Controller
-@RequestMapping("/User")
-public class UserController {
+public class AdminUserController {
 
 	@Autowired
 	private PaymentService paymentService;
@@ -29,11 +26,20 @@ public class UserController {
 	private TenantService tenantService;
 	@Autowired
 	private ReadingService readingService;
-	// temporary solution
 	@Autowired
 	private MyUserDetailsService userDetailsService;
+	@Autowired
+	private AdminService adminService;
 
-	@RequestMapping("/userHome")
+	// ===========ADMIN===========================================
+	@RequestMapping("/Admin/home")
+	public ModelAndView home() {
+		HashMap<String, Object> model = adminService.getMainData();
+		return new ModelAndView("/Admin/Home", "model", model);
+	}
+
+	// =====================USER===========================================
+	@RequestMapping("/User/userHome")
 	public ModelAndView userHome() {
 		Map<String, Object> model = new HashMap<String, Object>();
 		MyUser myUser = getMyUser();
@@ -47,7 +53,7 @@ public class UserController {
 		return new ModelAndView("/User/UserHome", "model", model);
 	}
 
-	@RequestMapping("/userReadings")
+	@RequestMapping("/User/userReadings")
 	public ModelAndView aparmtnetRest(@RequestParam(value = "media") String media) {
 		HashMap<String, Object> model = new HashMap<>();
 		if (media.equals("energy")) {
@@ -57,18 +63,18 @@ public class UserController {
 		}
 		if (media.equals("gas")) {
 			Tenant tenant = tenantService.loadByMail(getMyUser().getUsername());
-			model.put("media", "Energia");
+			model.put("media", "Gaz");
 			model.put("readings", readingService.getReadingGasForTenant(tenant.getApartment()));
 		}
 		if (media.equals("water")) {
 			Tenant tenant = tenantService.loadByMail(getMyUser().getUsername());
-			model.put("media", "Energia");
+			model.put("media", "Woda");
 			model.put("readings", readingService.getReadingWaterForTenant(tenant.getApartment()));
 		}
 		return new ModelAndView("/User/UserReadings", "model", model);
 	}
 
-	@RequestMapping("/userPayment")
+	@RequestMapping("/User/userPayment")
 	public ModelAndView userPayment() {
 		Map<String, Object> model = new HashMap<String, Object>();
 		Tenant tenant = tenantService.loadByMail(getMyUser().getUsername());
@@ -81,14 +87,14 @@ public class UserController {
 		return new ModelAndView("/User/UserPayment", "model", model);
 	}
 
-	@RequestMapping("/userPassword")
+	@RequestMapping("/User/userPassword")
 	public ModelAndView changePassword() {
 		return new ModelAndView("/User/UserPassword");
 	}
 
-	@RequestMapping("/userUpdatePassword")
-	public ModelAndView updatePassword(HttpServletRequest req, @RequestParam String email,
-			@RequestParam String oldPassword, @RequestParam String newPassword, @RequestParam String newPassword2) {
+	@RequestMapping("/User/userUpdatePassword")
+	public ModelAndView updatePassword(@RequestParam String email, @RequestParam String oldPassword,
+			@RequestParam String newPassword, @RequestParam String newPassword2) {
 		HashMap<String, Object> model = new HashMap<>();
 		if (!newPassword.equals(newPassword2) || newPassword == "" || newPassword2 == "") {
 			model.put("error", "Wpisz poprawnie nowe hasło");
@@ -101,8 +107,10 @@ public class UserController {
 			model.put("error", "Niepoprawny login lub hasło");
 			return new ModelAndView("/User/UserPassword", "model", model);
 		}
-
-		return new ModelAndView("redirect:/User/userHome");
+		model.put("class", "alert-success");
+		model.put("msg", "Hasło zostało zmienione");
+		model.put("user", getMyUser());
+		return new ModelAndView("/User/UserHome", "model", model);
 	}
 
 	private MyUser getMyUser() {

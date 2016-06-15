@@ -12,8 +12,6 @@ html {
 
 body {
 	margin: 0;
-	padding-top: 40px;
-	text-align: center;
 }
 
 article, aside, details, figcaption, figure, footer, header, hgroup,
@@ -26,11 +24,28 @@ audio, canvas, progress, video {
 	vertical-align: baseline;
 }
 
-audio:not ([controls] ) {
-	display: none;
-	height: 0;
-}
+audio
+:not
+ 
+(
+[
+controls
+]
+ 
+)
+{
+display
+:
+ 
+none
+;
 
+	
+height
+:
+ 
+0;
+}
 [hidden], template {
 	display: none;
 }
@@ -88,10 +103,22 @@ img {
 	border: 0;
 }
 
-svg:not (:root ) {
-	overflow: hidden;
-}
+svg
+:not
+ 
+(
+:root
+ 
+)
+{
+overflow
+:
+ 
+hidden
+;
 
+
+}
 figure {
 	margin: 1em 40px;
 }
@@ -143,15 +170,6 @@ button::-moz-focus-inner, input::-moz-focus-inner {
 
 input {
 	line-height: normal;
-	width: 150px;
-}
-
-input[type="date"], input[type="select"], input[type="list"] {
-	width: 150px !important;
-}
-
-select {
-	width: 150px;
 }
 
 input[type="checkbox"], input[type="radio"] {
@@ -205,8 +223,6 @@ table {
 td, th {
 	padding: 0;
 }
-
-
 /*! Source: https://github.com/h5bp/html5-boilerplate/blob/master/src/css/main.css */
 @media print {
 	*, *:before, *:after {
@@ -1844,7 +1860,8 @@ pre code {
 .container {
 	padding-right: 15px;
 	padding-left: 15px;
-	margin: 40px auto;
+	margin-right: auto;
+	margin-left: auto;
 }
 
 @media ( min-width : 768px) {
@@ -1875,7 +1892,6 @@ pre code {
 .row {
 	margin-right: -15px;
 	margin-left: -15px;
-	text-align: center;
 }
 
 .col-xs-1, .col-sm-1, .col-md-1, .col-lg-1, .col-xs-2, .col-sm-2,
@@ -2811,10 +2827,9 @@ legend {
 
 label {
 	display: inline-block;
+	max-width: 100%;
 	margin-bottom: 5px;
 	font-weight: bold;
-	text-align: right;
-	font-weight: 700;
 }
 
 input[type="search"] {
@@ -3989,26 +4004,94 @@ tbody.collapse.in {
 	margin-left: 5px;
 }
 
-.btn-group>.btn:not (:first-child ):not (:last-child ):not (.dropdown-toggle
-	) {
-	border-radius: 0;
-}
+.btn-group
+>
+.btn
+:not
+ 
+(
+:first-child
+ 
+)
+:not
+ 
+(
+:last-child
+ 
+)
+:not
+ 
+(
+.dropdown-toggle
 
+	
+)
+{
+border-radius
+:
+ 
+0;
+}
 .btn-group>.btn:first-child {
 	margin-left: 0;
 }
 
-.btn-group>.btn:first-child:not (:last-child ):not (.dropdown-toggle ) {
-	border-top-right-radius: 0;
-	border-bottom-right-radius: 0;
+.btn-group
+>
+.btn
+:first-child
+:not
+ 
+(
+:last-child
+ 
+)
+:not
+ 
+(
+.dropdown-toggle
+ 
+)
+{
+border-top-right-radius
+:
+ 
+0;
+border-bottom-right-radius
+:
+ 
+0;
 }
+.btn-group
+>
+.btn
+:last-child
+:not
+ 
+(
+:first-child
+ 
+),
+.btn-group
+>
+.dropdown-toggle
+:not
 
-.btn-group>.btn:last-child:not (:first-child ), .btn-group>.dropdown-toggle:not
-	(:first-child ) {
-	border-top-left-radius: 0;
-	border-bottom-left-radius: 0;
+	
+(
+:first-child
+ 
+)
+{
+border-top-left-radius
+:
+ 
+0;
+border-bottom-left-radius
+:
+ 
+0;
 }
-
 .btn-group>.btn-group {
 	float: left;
 }
@@ -4085,24 +4168,99 @@ tbody.collapse.in {
 	margin-left: 0;
 }
 
-.btn-group-vertical>.btn:not (:first-child ):not (:last-child ) {
-	border-radius: 0;
+.btn-group-vertical
+>
+.btn
+:not
+ 
+(
+:first-child
+ 
+)
+:not
+ 
+(
+:last-child
+ 
+)
+{
+border-radius
+:
+ 
+0;
 }
+.btn-group-vertical
+>
+.btn
+:first-child
+:not
+ 
+(
+:last-child
+ 
+)
+{
+border-top-left-radius
+:
+ 
+4
+px
+;
 
-.btn-group-vertical>.btn:first-child:not (:last-child ) {
-	border-top-left-radius: 4px;
-	border-top-right-radius: 4px;
-	border-bottom-right-radius: 0;
-	border-bottom-left-radius: 0;
+	
+border-top-right-radius
+:
+ 
+4
+px
+;
+
+	
+border-bottom-right-radius
+:
+ 
+0;
+border-bottom-left-radius
+:
+ 
+0;
 }
+.btn-group-vertical
+>
+.btn
+:last-child
+:not
+ 
+(
+:first-child
+ 
+)
+{
+border-top-left-radius
+:
+ 
+0;
+border-top-right-radius
+:
+ 
+0;
+border-bottom-right-radius
+:
+ 
+4
+px
+;
 
-.btn-group-vertical>.btn:last-child:not (:first-child ) {
-	border-top-left-radius: 0;
-	border-top-right-radius: 0;
-	border-bottom-right-radius: 4px;
-	border-bottom-left-radius: 4px;
+	
+border-bottom-left-radius
+:
+ 
+4
+px
+;
+
+
 }
-
 .btn-group-vertical>.btn-group:not (:first-child ):not (:last-child ) >.btn
 	{
 	border-radius: 0;
@@ -4222,12 +4380,54 @@ textarea.input-group-sm>.form-control, textarea.input-group-sm>.input-group-addo
 	display: table-cell;
 }
 
-.input-group-addon:not (:first-child ):not (:last-child ),
-	.input-group-btn:not (:first-child ):not (:last-child ), .input-group .form-control:not
-	(:first-child ):not (:last-child ) {
-	border-radius: 0;
-}
+.input-group-addon
+:not
+ 
+(
+:first-child
+ 
+)
+:not
+ 
+(
+:last-child
+ 
+),
+.input-group-btn
+:not
+ 
+(
+:first-child
+ 
+)
+:not
+ 
+(
+:last-child
+ 
+),
+.input-group
+ 
+.form-control
+:not
 
+	
+(
+:first-child
+ 
+)
+:not
+ 
+(
+:last-child
+ 
+)
+{
+border-radius
+:
+ 
+0;
+}
 .input-group-addon, .input-group-btn {
 	width: 1%;
 	white-space: nowrap;
@@ -4266,8 +4466,8 @@ textarea.input-group-sm>.form-control, textarea.input-group-sm>.input-group-addo
 .input-group .form-control:first-child, .input-group-addon:first-child,
 	.input-group-btn:first-child>.btn, .input-group-btn:first-child>.btn-group>.btn,
 	.input-group-btn:first-child>.dropdown-toggle, .input-group-btn:last-child>.btn:not
-	(:last-child ):not (.dropdown-toggle ), .input-group-btn:last-child>.btn-group:not
-	(:last-child ) >.btn {
+	 (:last-child ):not (.dropdown-toggle ), .input-group-btn:last-child>.btn-group:not
+	 (:last-child ) >.btn {
 	border-top-right-radius: 0;
 	border-bottom-right-radius: 0;
 }
@@ -4279,8 +4479,8 @@ textarea.input-group-sm>.form-control, textarea.input-group-sm>.input-group-addo
 .input-group .form-control:last-child, .input-group-addon:last-child,
 	.input-group-btn:last-child>.btn, .input-group-btn:last-child>.btn-group>.btn,
 	.input-group-btn:last-child>.dropdown-toggle, .input-group-btn:first-child>.btn:not
-	(:first-child ), .input-group-btn:first-child>.btn-group:not (:first-child
-	) >.btn {
+	 (:first-child ), .input-group-btn:first-child>.btn-group:not (:first-child
+	 ) >.btn {
 	border-top-left-radius: 0;
 	border-bottom-left-radius: 0;
 }
@@ -5409,9 +5609,9 @@ a.badge:hover, a.badge:focus {
 }
 
 .jumbotron {
-	padding-top: 15px;
-	padding-bottom: 15px;
-	margin-bottom: 15px;
+	padding-top: 30px;
+	padding-bottom: 30px;
+	margin-bottom: 30px;
 	color: inherit;
 	background-color: #eee;
 }
@@ -7412,4 +7612,6 @@ button.close {
 		display: none !important;
 	}
 }
+
+
 /*# sourceMappingURL=bootstrap.css.map */

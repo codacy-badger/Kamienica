@@ -17,4 +17,6 @@ public interface InvoiceDao<I extends Invoice> extends DaoInterface<I> {
 	public void resolveInvoice(I invoice);
 
 	public void unresolveInvoice(int id);
+	
+	public int getDaysOfLastInvoice();
 }

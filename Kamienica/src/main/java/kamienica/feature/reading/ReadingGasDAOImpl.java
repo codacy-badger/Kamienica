@@ -90,4 +90,14 @@ public class ReadingGasDAOImpl extends AbstractDao<Integer, ReadingGas> implemen
 
 	}
 
+	@Override
+	public int countDaysFromLastReading() {
+		try {
+			Query query = getSession().createSQLQuery(
+					"SELECT DATEDIFF(CURDATE()  ,readinggas.readingDate) FROM readinggas order by readingDate desc limit 1");
+			return ((Number) query.uniqueResult()).intValue();
+		} catch (Exception e) {
+			return 0;
+		}
+	}
 }

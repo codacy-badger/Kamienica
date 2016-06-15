@@ -77,4 +77,10 @@ public interface ReadingService {
 	public List<ReadingGas> getUnresolvedReadingsGas();
 
 	public List<ReadingWater> getUnresolvedReadingsWater();
+	
+	public int countLatestGasDays();
+	
+	public int countLatestWaterDays();
+	
+	public int countLatestEnergyDays();
 }
