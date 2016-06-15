@@ -84,6 +84,7 @@
 					<button type="submit" class="btn btn-default">Zapisz</button>
 					<button class="btn btn-default" type="reset">Resetuj</button>
 				</div>
+
 			</form:form>
 
 

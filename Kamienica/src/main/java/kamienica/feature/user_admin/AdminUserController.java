@@ -3,8 +3,6 @@ package kamienica.feature.user_admin;
 import java.util.HashMap;
 import java.util.Map;
 
-import javax.servlet.http.HttpServletRequest;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -65,12 +63,12 @@ public class AdminUserController {
 		}
 		if (media.equals("gas")) {
 			Tenant tenant = tenantService.loadByMail(getMyUser().getUsername());
-			model.put("media", "Energia");
+			model.put("media", "Gaz");
 			model.put("readings", readingService.getReadingGasForTenant(tenant.getApartment()));
 		}
 		if (media.equals("water")) {
 			Tenant tenant = tenantService.loadByMail(getMyUser().getUsername());
-			model.put("media", "Energia");
+			model.put("media", "Woda");
 			model.put("readings", readingService.getReadingWaterForTenant(tenant.getApartment()));
 		}
 		return new ModelAndView("/User/UserReadings", "model", model);
@@ -95,8 +93,8 @@ public class AdminUserController {
 	}
 
 	@RequestMapping("/User/userUpdatePassword")
-	public ModelAndView updatePassword(HttpServletRequest req, @RequestParam String email,
-			@RequestParam String oldPassword, @RequestParam String newPassword, @RequestParam String newPassword2) {
+	public ModelAndView updatePassword(@RequestParam String email, @RequestParam String oldPassword,
+			@RequestParam String newPassword, @RequestParam String newPassword2) {
 		HashMap<String, Object> model = new HashMap<>();
 		if (!newPassword.equals(newPassword2) || newPassword == "" || newPassword2 == "") {
 			model.put("error", "Wpisz poprawnie nowe hasło");
@@ -109,8 +107,10 @@ public class AdminUserController {
 			model.put("error", "Niepoprawny login lub hasło");
 			return new ModelAndView("/User/UserPassword", "model", model);
 		}
-
-		return new ModelAndView("redirect:/User/userHome");
+		model.put("class", "alert-success");
+		model.put("msg", "Hasło zostało zmienione");
+		model.put("user", getMyUser());
+		return new ModelAndView("/User/UserHome", "model", model);
 	}
 
 	private MyUser getMyUser() {

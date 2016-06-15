@@ -13,6 +13,7 @@ import javax.persistence.TemporalType;
 import javax.validation.constraints.Digits;
 
 import org.hibernate.validator.constraints.Email;
+import org.hibernate.validator.constraints.Length;
 import org.hibernate.validator.constraints.NotEmpty;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -50,7 +51,8 @@ public class Tenant {
 	@Temporal(TemporalType.DATE)
 	@DateTimeFormat(pattern = "yyyy.MM.dd")
 	private Date movementDate;
-	@Column(length = 5, nullable = false)
+	@Length(min=5, message="Hasło musi mieć minimum 5 znaków")
+	@Column( nullable = false)
 	@NotEmpty(message = "Wprowadź hasło")
 	private String password;
 
