@@ -51,13 +51,11 @@ public class TenantServiceImpl implements TenantService {
 
 	@Override
 	public List<Tenant> getCurrentTenants() {
-
 		return tenantDao.getActiveTenants();
 	}
 
 	@Override
 	public Tenant loadByMail(String mail) {
-
 		return tenantDao.loadByMail(mail);
 	}
 

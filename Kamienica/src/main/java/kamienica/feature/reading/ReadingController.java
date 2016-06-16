@@ -1,7 +1,6 @@
 package kamienica.feature.reading;
 
 import java.text.ParseException;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -41,32 +40,35 @@ public class ReadingController {
 			model.put("error", "Brakuje licznika głównego. Wprowadź brakujące liczniki");
 			return new ModelAndView("/Admin/Reading/ReadingEnergyRegister", "model", model);
 		}
-		List<ReadingEnergy> readings = new ArrayList<ReadingEnergy>();
-		HashMap<Long, ReadingEnergy> latestReadings = readingService.getLatestEnergyReadings();
-
+		List<ReadingEnergy> readings = readingService.getLatestEnergyReadings2();
+		// HashMap<Long, ReadingEnergy> latestReadings =
+		// readingService.getLatestEnergyReadings();
+		// System.out.println("na cholerę na hashmapa???????????????????");
+		// System.out.println(latestReadings.get(2L));
 		model.put("date", new LocalDate());
+		//
+		// for (int i = 0; i < meterEnergy.size(); i++) {
+		// Long id = meterEnergy.get(i).getId();
+		// ReadingEnergy tmp = new ReadingEnergy();
+		// tmp.setMeter(meterEnergy.get(i));
+		// if (latestReadings.get(id) != null) {
+		// tmp.setValue(latestReadings.get(id).getValue());
+		// } else {
+		// tmp.setValue(0);
+		// }
+		// tmp.setReadingDate(new LocalDate());
+		// readings.add(tmp);
+		// }
+		// System.out.println("i na cholerę ta petla???????????????????");
+		// System.out.println(readings.get(0));
+		// readingForm.setCurrentReadings(readings);
+		readingForm.setCurrentReadings(readingService.getLatestEnergyReadings2());
 
-		for (int i = 0; i < meterEnergy.size(); i++) {
-			Long id = meterEnergy.get(i).getId();
-			ReadingEnergy tmp = new ReadingEnergy();
-			tmp.setMeter(meterEnergy.get(i));
-			if (latestReadings.get(id) != null) {
-				tmp.setValue(latestReadings.get(id).getValue());
-			} else {
-				tmp.setValue(0);
-			}
-			tmp.setReadingDate(new LocalDate());
-			readings.add(tmp);
-		}
-
-		readingForm.setCurrentReadings(readings);
-
-		LocalDate oldDate = null;
-		try {
-			oldDate = latestReadings.get(meterEnergy.get(0).getId()).getReadingDate();
-			model.put("oldDate", oldDate.plusDays(1));
-		} catch (NullPointerException e) {
+		if (readings.isEmpty()) {
 			model.put("oldDate", "2000-01-01");
+
+		} else {
+			model.put("oldDate", readings.get(0).getReadingDate().plusDays(1));
 		}
 
 		return new ModelAndView("/Admin/Reading/ReadingEnergyRegister", "model", model);
@@ -82,32 +84,33 @@ public class ReadingController {
 			model.put("url", "/Admin/Reading/readingEnergySave.html");
 			return new ModelAndView("/Admin/Reading/ReadingEnergyRegister", "model", model);
 		}
-		List<ReadingGas> readings = new ArrayList<>();
-		HashMap<Long, ReadingGas> latestReadings = readingService.getLatestGasReadings();
-
+		List<ReadingGas> readings = readingService.getLatestGasReadings2();
+		// HashMap<Long, ReadingGas> latestReadings =
+		// readingService.getLatestGasReadings();
+		//
 		model.put("date", new LocalDate());
-
-		for (int i = 0; i < meterGas.size(); i++) {
-			Long id = meterGas.get(i).getId();
-			ReadingGas tmp = new ReadingGas();
-			tmp.setMeter(meterGas.get(i));
-			if (latestReadings.get(id) != null) {
-				tmp.setValue(latestReadings.get(id).getValue());
-			} else {
-				tmp.setValue(0);
-			}
-			tmp.setReadingDate(new LocalDate());
-			readings.add(tmp);
-		}
-
+		//
+		// for (int i = 0; i < meterGas.size(); i++) {
+		// Long id = meterGas.get(i).getId();
+		// ReadingGas tmp = new ReadingGas();
+		// tmp.setMeter(meterGas.get(i));
+		// if (latestReadings.get(id) != null) {
+		// tmp.setValue(latestReadings.get(id).getValue());
+		// } else {
+		// tmp.setValue(0);
+		// }
+		// tmp.setReadingDate(new LocalDate());
+		// readings.add(tmp);
+		// }
+		//
 		readingForm.setCurrentReadings(readings);
-
-		LocalDate oldDate = null;
-		try {
-			oldDate = latestReadings.get(meterGas.get(0).getId()).getReadingDate();
-			model.put("oldDate", oldDate.plusDays(1));
-		} catch (NullPointerException e) {
+		//
+		// LocalDate oldDate = null;
+		if (readings.isEmpty()) {
 			model.put("oldDate", "2000-01-01");
+
+		} else {
+			model.put("oldDate", readings.get(0).getReadingDate().plusDays(1));
 		}
 
 		return new ModelAndView("/Admin/Reading/ReadingGasRegister", "model", model);
@@ -122,32 +125,31 @@ public class ReadingController {
 			model.put("error", "Brakuje licznika głównego. Wprowadź brakujące liczniki");
 			return new ModelAndView("/Admin/Reading/ReadingEnergyRegister", "model", model);
 		}
-		List<ReadingWater> readings = new ArrayList<>();
-		HashMap<Long, ReadingWater> currentReadings = readingService.getLatestWaterReadings();
-
+		List<ReadingWater> readings = readingService.getLatestWaterReadings2();
+		// HashMap<Long, ReadingWater> currentReadings =
+		// readingService.getLatestWaterReadings();
+		//
 		model.put("date", new LocalDate());
-		for (int i = 0; i < meterWater.size(); i++) {
-			Long id = meterWater.get(i).getId();
-			ReadingWater reading = new ReadingWater();
-			reading.setMeter(meterWater.get(i));
-			if (currentReadings.get(id) != null) {
-				reading.setValue(currentReadings.get(id).getValue());
-			} else {
-				reading.setValue(0);
-			}
-			reading.setReadingDate(new LocalDate());
-			readings.add(reading);
-
-		}
+		// for (int i = 0; i < meterWater.size(); i++) {
+		// Long id = meterWater.get(i).getId();
+		// ReadingWater reading = new ReadingWater();
+		// reading.setMeter(meterWater.get(i));
+		// if (currentReadings.get(id) != null) {
+		// reading.setValue(currentReadings.get(id).getValue());
+		// } else {
+		// reading.setValue(0);
+		// }
+		// reading.setReadingDate(new LocalDate());
+		// readings.add(reading);
+		//
+		// }
 		readingWaterForm.setCurrentReadings(readings);
-		LocalDate oldDate = null;
-		try {
-			oldDate = currentReadings.get(meterWater.get(0).getId()).getReadingDate();
-			model.put("oldDate", oldDate.plusDays(1));
-		} catch (NullPointerException e) {
-			model.put("oldDate", "2000-01-01");
-		}
 
+		if (readings.isEmpty()) {
+			model.put("oldDate", "2000-01-01");
+		} else {
+			model.put("oldDate", readings.get(0).getReadingDate().plusDays(1));
+		}
 		return new ModelAndView("/Admin/Reading/ReadingWaterRegister", "model", model);
 	}
 	// --------------------------------SAVE-----------------------------------------------------------------
@@ -159,8 +161,6 @@ public class ReadingController {
 		if (!ReadingValidator.validateMeterReadings(reading)) {
 			return new ModelAndView("/Admin/Reading/ReadingEnergyRegister");
 		}
-		// String date = req.getParameter("date");
-		// SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 
 		for (int i = 0; i < reading.size(); i++) {
 			reading.get(i).setReadingDate(LocalDate.parse(date));
@@ -174,8 +174,7 @@ public class ReadingController {
 	@RequestMapping(value = "/Admin/Reading/readingGasSave", method = RequestMethod.POST)
 	public ModelAndView readingGasSave(@ModelAttribute("readingForm") ReadingGasForm readingForm, BindingResult result,
 			@RequestParam String date) {
-		// String date = req.getParameter("date");
-		// SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+
 		List<ReadingGas> reading = readingForm.getCurrentReadings();
 		for (int i = 0; i < reading.size(); i++) {
 			reading.get(i).setReadingDate(LocalDate.parse(date));

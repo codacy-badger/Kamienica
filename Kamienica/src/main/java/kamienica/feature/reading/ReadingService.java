@@ -67,9 +67,15 @@ public interface ReadingService {
 
 	public HashMap<Long, ReadingEnergy> getLatestEnergyReadings();
 
+	public List<ReadingEnergy> getLatestEnergyReadings2();
+
 	public HashMap<Long, ReadingGas> getLatestGasReadings();
+	
+	public List<ReadingGas> getLatestGasReadings2();
 
 	public HashMap<Long, ReadingWater> getLatestWaterReadings();
+	
+	public List<ReadingWater> getLatestWaterReadings2();
 
 	public HashMap<String, List<ReadingWater>> getWaterReadingsForGasConsumption(InvoiceGas invoice);
 
@@ -85,9 +91,11 @@ public interface ReadingService {
 
 	public int countLatestEnergyDays();
 
-	public  List<? extends ReadingAbstract> getReadingsForTenant(Apartment apartment, Media media);
-	
-//	public List<ReadingAbstract> getReadingsForTenant2(Apartment apartment, Media media);
-	
-//	public <T extends ReadingAbstract> List<T> getReadingsForTenant(Apartment apartment, Media media);
+	public List<? extends ReadingAbstract> getReadingsForTenant(Apartment apartment, Media media);
+
+	// public List<ReadingAbstract> getReadingsForTenant2(Apartment apartment,
+	// Media media);
+
+	// public <T extends ReadingAbstract> List<T> getReadingsForTenant(Apartment
+	// apartment, Media media);
 }

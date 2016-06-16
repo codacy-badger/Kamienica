@@ -58,9 +58,7 @@ public class ReadingEnergy extends ReadingAbstract implements Serializable {
 
 	@Override
 	public String toString() {
-		return "ReadingEnergy [unit=" + unit + ", meter=" + meter + ", isResolved()=" + isResolved() + ", toString()="
-				+ super.toString() + ", getReadingDate()=" + getReadingDate() + ", getValue()=" + getValue()
-				+ ", getId()=" + getId() + ", getClass()=" + getClass() + ", hashCode()=" + hashCode() + "]";
+		return "ReadingEnergy [unit=" + unit + ", meter=" + meter + " " + super.toString() + "]";
 	}
 
 }
