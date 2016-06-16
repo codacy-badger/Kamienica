@@ -30,16 +30,6 @@ public class ReadingController {
 	@Autowired
 	private ReadingService readingService;
 
-	// @InitBinder
-	// protected void initBinder(HttpServletRequest request,
-	// ServletRequestDataBinder binder) {
-	// SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-	// sdf.setLenient(true);
-	// binder.registerCustomEditor(Date.class, new CustomDateEditor(sdf, true));
-	// }
-
-	// SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
-	// Date today = new Date();
 	// -----------------------------------REGISTER---------------------------------------------------------------
 
 	@RequestMapping("/Admin/Reading/readingEnergyRegister")
@@ -198,7 +188,7 @@ public class ReadingController {
 
 	@RequestMapping(value = "/Admin/Reading/readingWaterSave", method = RequestMethod.POST)
 	public ModelAndView readingWaterSave(@ModelAttribute("readingForm") ReadingWaterForm readingWaterForm,
-			BindingResult result, @RequestParam String date) throws ParseException {
+			BindingResult result, @RequestParam String date) {
 		// String date = req.getParameter("date");
 		// SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 		List<ReadingWater> reading = readingWaterForm.getCurrentReadings();
@@ -236,7 +226,7 @@ public class ReadingController {
 	}
 	// ------------------------DELETE------------------------------
 
-	@RequestMapping(value = "/Admin/Reading/readingEnergyDelete", params = { "date" })
+	@RequestMapping(value = "/Admin/Reading/readingEnergyDelete")
 	public ModelAndView readingEnergyDelete(@RequestParam(value = "date") String date) {
 		List<ReadingEnergy> listToDelete = readingService.getReadingEnergyByDate(date);
 		if (listToDelete.get(0).isResolved() == true) {
@@ -249,7 +239,7 @@ public class ReadingController {
 		return new ModelAndView("redirect:/Admin/Reading/readingEnergyList.html");
 	}
 
-	@RequestMapping(value = "/Admin/Reading/readingGasDelete", params = { "date" })
+	@RequestMapping(value = "/Admin/Reading/readingGasDelete")
 	public ModelAndView readingGasDelete(@RequestParam(value = "date") String date) {
 		List<ReadingGas> listToDelete = readingService.getReadingGasByDate(date);
 		if (listToDelete.get(0).isResolved() == true) {
@@ -261,7 +251,7 @@ public class ReadingController {
 		return new ModelAndView("redirect:/Admin/Reading/readingGasList.html");
 	}
 
-	@RequestMapping(value = "/Admin/Reading/readingWaterDelete", params = { "date" })
+	@RequestMapping(value = "/Admin/Reading/readingWaterDelete")
 	public ModelAndView usunReadingWater(@RequestParam(value = "date") String date) {
 		List<ReadingWater> listToDelete = readingService.getReadingWaterByDate(date);
 		if (listToDelete.get(0).isResolved() == true) {
@@ -331,7 +321,6 @@ public class ReadingController {
 
 			List<ReadingGas> previousReading = readingService.getPreviousReadingGas(date);
 			oldDate = previousReading.get(0).getReadingDate().plusDays(1).toString();
-			System.out.println("--------------------------reading controler-> edit oldDate " + oldDate);
 			HashMap<String, ReadingGas> mapPreviousReadings = new HashMap<>();
 
 			for (ReadingGas i : previousReading) {
@@ -470,9 +459,4 @@ public class ReadingController {
 		return false;
 	}
 
-	// private static String getIncrementedDate(Date date) {
-	// long tt = 24 * 60 * 60 * 1000;
-	// SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
-	// return df.format(new Date(date.getTime() + tt));
-	// }
 }

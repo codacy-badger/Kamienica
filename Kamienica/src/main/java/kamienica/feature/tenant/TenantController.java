@@ -11,7 +11,6 @@ import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
-import org.springframework.validation.Validator;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -29,16 +28,6 @@ public class TenantController {
 	private ApartmentService apartmentService;
 	@Autowired
 	private TenantService tenantService;
-
-//	@InitBinder
-//	protected void initBinder(HttpServletRequest request, ServletRequestDataBinder binder) {
-//		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-//		sdf.setLenient(true);
-//		binder.registerCustomEditor(Date.class, new CustomDateEditor(sdf, true));
-//	}
-
-	@Autowired
-	private Validator validator;
 
 	@RequestMapping("/tenantRegister")
 	public ModelAndView tenantRegister(@ModelAttribute("tenant") Tenant tenant, BindingResult result) {
@@ -73,16 +62,15 @@ public class TenantController {
 		Map<String, Object> model = prepareTenantModel();
 		model.put("url", "/Admin/Tenant/tenantOverwrite.html");
 		Tenant tenant = tenantService.getTenantById(id);
-		ModelAndView mvc = new ModelAndView("/Admin/Tenant/TenantRegister", "model", model);
-		mvc.addObject("tenant", tenant);
-		return mvc;
+		return new ModelAndView("/Admin/Tenant/TenantRegister", "model", model).addObject("tenant", tenant);
+
 	}
 
 	@RequestMapping(value = "/tenantOverwrite", method = RequestMethod.POST)
-	public ModelAndView updateTenant(@ModelAttribute("tenant") Tenant tenant, BindingResult result) {
+	public ModelAndView updateTenant(@Valid @ModelAttribute("tenant") Tenant tenant, BindingResult result) {
 
 		TenantValidator.validateTenant(tenant, result);
-		validator.validate(tenant, result);
+
 		if (result.hasErrors()) {
 			Map<String, Object> model = prepareTenantModel();
 			return new ModelAndView("/Admin/Tenant/TenantRegister", "model", model);

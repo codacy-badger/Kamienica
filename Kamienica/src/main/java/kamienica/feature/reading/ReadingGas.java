@@ -19,6 +19,16 @@ public class ReadingGas extends ReadingAbstract implements Serializable {
 	private String unit;
 	@ManyToOne
 	MeterGas meter;
+//	@OneToOne
+//	ReadingGas nextReading;
+//	
+//	public ReadingGas getNextReading() {
+//		return nextReading;
+//	}
+//
+//	public void setNextReading(ReadingGas nextReading) {
+//		this.nextReading = nextReading;
+//	}
 
 	public String getUnit() {
 		return this.meter.getUnit();

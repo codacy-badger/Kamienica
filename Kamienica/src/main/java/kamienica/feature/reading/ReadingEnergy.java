@@ -19,6 +19,16 @@ public class ReadingEnergy extends ReadingAbstract implements Serializable {
 	private String unit;
 	@ManyToOne
 	MeterEnergy meter;
+//	@OneToOne
+//	ReadingEnergy nextReading;
+//
+//	public ReadingEnergy getNextReading() {
+//		return nextReading;
+//	}
+//
+//	public void setNextReading(ReadingEnergy nextReading) {
+//		this.nextReading = nextReading;
+//	}
 
 	public ReadingEnergy() {
 	}

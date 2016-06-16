@@ -19,6 +19,16 @@ public class ReadingWater extends ReadingAbstract implements Serializable {
 	private String unit;
 	@ManyToOne
 	MeterWater meter;
+//	@OneToOne
+//	ReadingWater nextReading;
+//
+//	public ReadingWater getNextReading() {
+//		return nextReading;
+//	}
+//
+//	public void setNextReading(ReadingWater nextReading) {
+//		this.nextReading = nextReading;
+//	}
 
 	public String getUnit() {
 		return this.meter.getUnit();

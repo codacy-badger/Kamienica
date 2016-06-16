@@ -12,7 +12,7 @@ import kamienica.feature.invoice.InvoiceEnergy;
 import kamienica.feature.tenant.Tenant;
 
 @Entity
-@Table(name="paymentenergy")
+@Table(name = "paymentenergy")
 public class PaymentEnergy extends PaymentAbstract implements Serializable {
 
 	@ManyToOne
@@ -26,9 +26,6 @@ public class PaymentEnergy extends PaymentAbstract implements Serializable {
 		super(id, paymentDate, paymentAmount, tenant);
 		this.invoice = invoice;
 	}
-
-
-	
 
 	public InvoiceEnergy getInvoice() {
 		return invoice;
