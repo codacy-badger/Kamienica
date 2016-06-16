@@ -60,11 +60,11 @@ public class AdminUserController {
 			model.put("readings", readingService.getReadingsForTenant(ap, Media.ENERGY));
 			break;
 		case "gas":
-			model.put("media", "Energia");
+			model.put("media", "Gas");
 			model.put("readings", readingService.getReadingsForTenant(ap, Media.GAS));
 			break;
 		case "water":
-			model.put("media", "Energia");
+			model.put("media", "Woda");
 			model.put("readings", readingService.getReadingsForTenant(ap, Media.WATER));
 			break;
 		default:

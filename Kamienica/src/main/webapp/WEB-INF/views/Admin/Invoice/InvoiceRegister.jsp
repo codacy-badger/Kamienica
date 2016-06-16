@@ -85,8 +85,8 @@
 								<div class="col-sm-9">
 
 									<form:input path="baseReading" items="${invoice.baseReading}"
-										itemValue="id" itemLabel="${invoice.baseReading.readingDate}" readonly="true"
-										class='ignore' />
+										itemValue="id" itemLabel="${invoice.baseReading.readingDate}"
+										readonly="true" class='ignore' />
 									<!--<form:input path="baseReading" class="form-control ignore"
 										disabled="true" value="${invoice.baseReading.readingDate }" /> -->
 									<p class="help-block">
@@ -126,8 +126,8 @@
 							<label for="totalAmount" class="col-sm-3 control-label">Wartość
 								Faktury</label>
 							<div class="col-sm-9">
-								<form:input type="text" class="form-control" name="totalAmount"
-									path='totalAmount' placeholder="Pole wymagane" />
+								<form:input class='form-control bfh-number' type="number"
+									step="any" name="totalAmount" path='totalAmount' />
 								<p class="help-block">
 									<form:errors path="totalAmount" class="error" />
 								</p>

@@ -85,7 +85,9 @@ public interface ReadingService {
 
 	public int countLatestEnergyDays();
 
-	public  List<?> getReadingsForTenant(Apartment apartment, Media media);
+	public  List<? extends ReadingAbstract> getReadingsForTenant(Apartment apartment, Media media);
+	
+//	public List<ReadingAbstract> getReadingsForTenant2(Apartment apartment, Media media);
 	
 //	public <T extends ReadingAbstract> List<T> getReadingsForTenant(Apartment apartment, Media media);
 }

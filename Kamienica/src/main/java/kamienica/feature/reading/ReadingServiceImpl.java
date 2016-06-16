@@ -256,26 +256,26 @@ public class ReadingServiceImpl implements ReadingService {
 		return energy.countDaysFromLastReading();
 	}
 
-//	 @Override
-	public  List<?> getReadingsForTenant(Apartment apartment, Media media) {
-	
+	@Override
+	public List<? extends ReadingAbstract> getReadingsForTenant(Apartment apartment, Media media) {
+
 		switch (media) {
 		case ENERGY:
 			System.out.println("getReadingsForTenant - energia");
 			return energy.getListForTenant(apartment);
-			
+
 		case GAS:
 			System.out.println("getReadingsForTenant - gas");
 			return gas.getListForTenant(apartment);
-			
+
 		case WATER:
 			System.out.println("getReadingsForTenant - woda");
 			return water.getListForTenant(apartment);
-			
+
 		default:
 			throw new IllegalArgumentException();
 		}
-	
+
 	}
 
 }
