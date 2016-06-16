@@ -1,7 +1,5 @@
 package kamienica.feature.payment;
 
-import java.text.SimpleDateFormat;
-
 import javax.persistence.Column;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
@@ -28,14 +26,12 @@ public abstract class PaymentAbstract {
 	@Column
 	@Temporal(TemporalType.DATE)
 	@DateTimeFormat(pattern = "yyyy-MM-dd")
-	@Type(type="org.jadira.usertype.dateandtime.joda.PersistentLocalDate")
+	@Type(type = "org.jadira.usertype.dateandtime.joda.PersistentLocalDate")
 	private LocalDate paymentDate;
 	@Column
 	private double paymentAmount;
 	@ManyToOne
 	private Tenant tenant;
-
-
 
 	public Long getId() {
 		return id;
@@ -69,12 +65,9 @@ public abstract class PaymentAbstract {
 		this.tenant = tenant;
 	}
 
-
-
 	@Override
 	public String toString() {
-		SimpleDateFormat df = new SimpleDateFormat("dd-MM-yyyy");
-		return "Opłata dla " + tenant.getFullName() + " z dnia " + df.format(paymentDate) + " Wynosi " + paymentAmount;
+		return "Opłata dla " + tenant.getFullName() + " z dnia " + paymentDate.toString() + " Wynosi " + paymentAmount;
 	}
 
 	public PaymentAbstract() {
@@ -85,6 +78,6 @@ public abstract class PaymentAbstract {
 		this.paymentDate = paymentDate;
 		this.paymentAmount = paymentAmount;
 		this.tenant = tenant;
-		
+
 	}
 }

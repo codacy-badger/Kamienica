@@ -6,26 +6,30 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.User;
 
 import kamienica.feature.apartment.Apartment;
+import kamienica.feature.tenant.Tenant;
 
-public class MyUser extends User {
+public class SecurityUser extends User {
 
+	private Tenant tenant;
 	private Apartment apartment;
-	private String name;
 
-	public String getName() {
-		return name;
-	}
 
-	public void setName(String name) {
-		this.name = name;
-	}
 
-	public MyUser(String username, String password, Apartment apartment, String name, boolean enabled,
+	public SecurityUser(Tenant tenant, String username, String password, Apartment apartment, boolean enabled,
 			boolean accountNonExpired, boolean credentialsNonExpired, boolean accountNonLocked,
 			Collection<? extends GrantedAuthority> authorities) {
 		super(username, password, enabled, accountNonExpired, credentialsNonExpired, accountNonLocked, authorities);
 		this.apartment = apartment;
-		this.name = name;
+
+		this.tenant = tenant;
+	}
+
+	public Tenant getTenant() {
+		return tenant;
+	}
+
+	public void setTenant(Tenant tenant) {
+		this.tenant = tenant;
 	}
 
 	public Apartment getApartment() {
@@ -38,9 +42,7 @@ public class MyUser extends User {
 
 	@Override
 	public String toString() {
-		return "MyUser [apartment=" + apartment + ", getAuthorities()=" + getAuthorities() + ", getPassword()="
-				+ getPassword() + ", getUsername()=" + getUsername() + "   credentials non expired: "
-				+ isCredentialsNonExpired();
+		return "SecurityUser [tenant=" + tenant + ", apartment=" + apartment + "]";
 	}
 
 }

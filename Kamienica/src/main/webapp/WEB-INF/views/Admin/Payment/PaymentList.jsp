@@ -35,11 +35,11 @@
 			</div>
 
 			<c:if test="${!empty payment}">
-				<table class='table table-stripped table-hover' width="600px">
+				<table class='table table-stripped table-hover' >
 					<thead>
 						<tr>
-							<th>Wartość Opłaty</th>
 							<th>Data Rachunku</th>
+							<th>Wartość Opłaty</th>
 							<th>Najemca</th>
 							<th>Data Faktury</th>
 							<th>Numer Faktury</th>
@@ -47,8 +47,8 @@
 					</thead>
 					<c:forEach items="${payment}" var="p">
 						<tr>
-							<td><c:out value="${p.paymentAmount}" /></td>
 							<td><c:out value="${p.paymentDate}" /></td>
+							<td><c:out value="${p.paymentAmount}" /></td>
 							<td><c:out value="${p.tenant.firstName}" /> <c:out
 									value="${p.tenant.lastName}" /></td>
 							<td><c:out value="${p.invoice.date}" /></td>

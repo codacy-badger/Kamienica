@@ -4,26 +4,23 @@ import java.util.HashMap;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
+import kamienica.core.Media;
+import kamienica.feature.apartment.Apartment;
 import kamienica.feature.payment.PaymentService;
 import kamienica.feature.reading.ReadingService;
 import kamienica.feature.tenant.Tenant;
-import kamienica.feature.tenant.TenantService;
 
 @Controller
 public class AdminUserController {
 
 	@Autowired
 	private PaymentService paymentService;
-	@Autowired
-	private TenantService tenantService;
 	@Autowired
 	private ReadingService readingService;
 	@Autowired
@@ -42,7 +39,7 @@ public class AdminUserController {
 	@RequestMapping("/User/userHome")
 	public ModelAndView userHome() {
 		Map<String, Object> model = new HashMap<String, Object>();
-		MyUser myUser = getMyUser();
+		SecurityUser myUser = userDetailsService.getCurrentUser();
 		if (myUser != null) {
 			model.put("user", myUser);
 
@@ -56,32 +53,52 @@ public class AdminUserController {
 	@RequestMapping("/User/userReadings")
 	public ModelAndView aparmtnetRest(@RequestParam(value = "media") String media) {
 		HashMap<String, Object> model = new HashMap<>();
-		if (media.equals("energy")) {
-			Tenant tenant = tenantService.loadByMail(getMyUser().getUsername());
+		Apartment ap = userDetailsService.getCurrentUser().getApartment();
+		switch (media) {
+		case "energy":
 			model.put("media", "Energia");
-			model.put("readings", readingService.getReadingEnergyForTenant(tenant.getApartment()));
+			model.put("readings", readingService.getReadingsForTenant(ap, Media.ENERGY));
+			break;
+		case "gas":
+			model.put("media", "Energia");
+			model.put("readings", readingService.getReadingsForTenant(ap, Media.GAS));
+			break;
+		case "water":
+			model.put("media", "Energia");
+			model.put("readings", readingService.getReadingsForTenant(ap, Media.WATER));
+			break;
+		default:
+			break;
 		}
-		if (media.equals("gas")) {
-			Tenant tenant = tenantService.loadByMail(getMyUser().getUsername());
-			model.put("media", "Gaz");
-			model.put("readings", readingService.getReadingGasForTenant(tenant.getApartment()));
-		}
-		if (media.equals("water")) {
-			Tenant tenant = tenantService.loadByMail(getMyUser().getUsername());
-			model.put("media", "Woda");
-			model.put("readings", readingService.getReadingWaterForTenant(tenant.getApartment()));
-		}
+		// if (media.equals("energy")) {
+		// Tenant tenant = tenantService.loadByMail(getMyUser().getUsername());
+		// model.put("media", "Energia");
+		// model.put("readings",
+		// readingService.getReadingEnergyForTenant(tenant.getApartment()));
+		// }
+		// if (media.equals("gas")) {
+		// Tenant tenant = tenantService.loadByMail(getMyUser().getUsername());
+		// model.put("media", "Gaz");
+		// model.put("readings",
+		// readingService.getReadingGasForTenant(tenant.getApartment()));
+		// }
+		// if (media.equals("water")) {
+		// Tenant tenant = tenantService.loadByMail(getMyUser().getUsername());
+		// model.put("media", "Woda");
+		// model.put("readings",
+		// readingService.getReadingWaterForTenant(tenant.getApartment()));
+		// }
+
 		return new ModelAndView("/User/UserReadings", "model", model);
 	}
 
 	@RequestMapping("/User/userPayment")
 	public ModelAndView userPayment() {
 		Map<String, Object> model = new HashMap<String, Object>();
-		Tenant tenant = tenantService.loadByMail(getMyUser().getUsername());
+		Tenant tenant = userDetailsService.getCurrentUser().getTenant();
+
 		model.put("energy", paymentService.getPaymentEnergyForTenant(tenant));
-
 		model.put("water", paymentService.getPaymentWaterForTenant(tenant));
-
 		model.put("gas", paymentService.getPaymentGasForTenant(tenant));
 
 		return new ModelAndView("/User/UserPayment", "model", model);
@@ -109,18 +126,8 @@ public class AdminUserController {
 		}
 		model.put("class", "alert-success");
 		model.put("msg", "Hasło zostało zmienione");
-		model.put("user", getMyUser());
+		model.put("user", userDetailsService.getCurrentUser().getTenant());
 		return new ModelAndView("/User/UserHome", "model", model);
 	}
 
-	private MyUser getMyUser() {
-
-		UserDetails userDetail = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-
-		try {
-			return (MyUser) userDetailsService.loadUserByUsername(userDetail.getUsername());
-		} catch (UsernameNotFoundException e) {
-			return null;
-		}
-	}
 }

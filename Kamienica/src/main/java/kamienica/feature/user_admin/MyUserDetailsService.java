@@ -6,6 +6,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -31,7 +32,7 @@ public class MyUserDetailsService implements UserDetailsService {
 
 		List<GrantedAuthority> authorities = new ArrayList<GrantedAuthority>();
 		authorities.add(new SimpleGrantedAuthority("ROLE_" + tenant.getRole()));
-		MyUser myUser = new MyUser(tenant.getEmail(), tenant.getPassword(), tenant.getApartment(), tenant.getFullName(),
+		SecurityUser myUser = new SecurityUser(tenant, tenant.getEmail(), tenant.getPassword(), tenant.getApartment(),
 				tenant.getStatus().equals(UserStatus.ACTIVE.getUserStatus()), true, true, true, authorities);
 
 		return myUser;
@@ -46,6 +47,11 @@ public class MyUserDetailsService implements UserDetailsService {
 			userDAO.updateTenant(tenant);
 		}
 
+	}
+
+	protected SecurityUser getCurrentUser() {
+		SecurityUser user = (SecurityUser) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		return user;
 	}
 
 }

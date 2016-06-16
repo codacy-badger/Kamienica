@@ -3,6 +3,7 @@ package kamienica.feature.reading;
 import java.util.HashMap;
 import java.util.List;
 
+import kamienica.core.Media;
 import kamienica.feature.apartment.Apartment;
 import kamienica.feature.invoice.InvoiceGas;
 
@@ -77,10 +78,14 @@ public interface ReadingService {
 	public List<ReadingGas> getUnresolvedReadingsGas();
 
 	public List<ReadingWater> getUnresolvedReadingsWater();
-	
+
 	public int countLatestGasDays();
-	
+
 	public int countLatestWaterDays();
-	
+
 	public int countLatestEnergyDays();
+
+	public  List<?> getReadingsForTenant(Apartment apartment, Media media);
+	
+//	public <T extends ReadingAbstract> List<T> getReadingsForTenant(Apartment apartment, Media media);
 }

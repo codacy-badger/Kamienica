@@ -37,9 +37,13 @@
 		<div class="row">
 			<div class="well">
 				<h1>Kamienica - Strona użytkownika</h1>
-				<p>Użytkownik: ${model.user.name }</p>
-				<p>Mieszkanie nr. ${model.user.apartment.apartmentNumber}
-					"${model.user.apartment.description}"</p>
+				<p>
+					<strong>Użytkownik:</strong> ${model.user.tenant.getFullName() }
+				</p>
+				<p>
+					<b>Mieszkanie: </b> ${model.user.apartment.apartmentNumber}
+					"${model.user.apartment.description}"
+				</p>
 			</div>
 		</div>
 

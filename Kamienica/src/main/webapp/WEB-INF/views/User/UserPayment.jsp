@@ -98,11 +98,11 @@
 							<th>Nr Faktury</th>
 						</tr>
 					</thead>
-					<c:forEach items="${model.water}" var="water">
+					<c:forEach items="${model.gas}" var="gas">
 						<tr>
-							<td><c:out value="${water.paymentDate}" /></td>
-							<td><c:out value="${water.paymentAmount}" /></td>
-							<td><c:out value="${water.invoice.serialNumber}" /></td>
+							<td><c:out value="${gas.paymentDate}" /></td>
+							<td><c:out value="${gas.paymentAmount}" /></td>
+							<td><c:out value="${gas.invoice.serialNumber}" /></td>
 						</tr>
 					</c:forEach>
 				</table>

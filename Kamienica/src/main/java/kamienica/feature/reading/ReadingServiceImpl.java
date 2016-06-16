@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import kamienica.core.Media;
 import kamienica.feature.apartment.Apartment;
 import kamienica.feature.invoice.InvoiceEnergy;
 import kamienica.feature.invoice.InvoiceGas;
@@ -253,6 +254,28 @@ public class ReadingServiceImpl implements ReadingService {
 	@Override
 	public int countLatestEnergyDays() {
 		return energy.countDaysFromLastReading();
+	}
+
+//	 @Override
+	public  List<?> getReadingsForTenant(Apartment apartment, Media media) {
+	
+		switch (media) {
+		case ENERGY:
+			System.out.println("getReadingsForTenant - energia");
+			return energy.getListForTenant(apartment);
+			
+		case GAS:
+			System.out.println("getReadingsForTenant - gas");
+			return gas.getListForTenant(apartment);
+			
+		case WATER:
+			System.out.println("getReadingsForTenant - woda");
+			return water.getListForTenant(apartment);
+			
+		default:
+			throw new IllegalArgumentException();
+		}
+	
 	}
 
 }
