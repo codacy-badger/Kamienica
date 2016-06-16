@@ -1,5 +1,7 @@
 package kamienica.feature.division;
 
+import java.io.Serializable;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -17,7 +19,7 @@ import kamienica.feature.tenant.Tenant;
 
 @Entity
 @Table(name = "division")
-public class Division {
+public class Division implements Serializable {
 	@Id
 	@GeneratedValue
 	private Long id;

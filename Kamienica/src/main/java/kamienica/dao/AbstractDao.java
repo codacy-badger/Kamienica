@@ -62,7 +62,7 @@ public abstract class AbstractDao<PK extends Serializable, T> {
 	@SuppressWarnings("unchecked")
 	public List<T> getList() {
 		Criteria criteria = createEntityCriteria();
-		return (List<T>) criteria.list();
+		return criteria.list();
 	}
 
 	protected Criteria createEntityCriteria() {

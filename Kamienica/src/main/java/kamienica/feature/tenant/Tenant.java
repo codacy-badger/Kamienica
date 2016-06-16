@@ -1,6 +1,6 @@
 package kamienica.feature.tenant;
 
-import java.util.Date;
+import java.io.Serializable;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -21,8 +21,8 @@ import org.springframework.format.annotation.DateTimeFormat;
 import kamienica.feature.apartment.Apartment;
 
 @Entity
-@Table(name="tenant")
-public class Tenant {
+@Table(name = "tenant")
+public class Tenant implements Serializable {
 
 	@Id
 	@GeneratedValue
@@ -49,10 +49,10 @@ public class Tenant {
 	private String status = UserStatus.ACTIVE.getUserStatus();
 	@Column(nullable = false)
 	@DateTimeFormat(pattern = "yyyy-MM-dd")
-	@Type(type="org.jadira.usertype.dateandtime.joda.PersistentLocalDate")
+	@Type(type = "org.jadira.usertype.dateandtime.joda.PersistentLocalDate")
 	private LocalDate movementDate;
-	@Length(min=5, message="Hasło musi mieć minimum 5 znaków")
-	@Column( nullable = false)
+	@Length(min = 5, message = "Hasło musi mieć minimum 5 znaków")
+	@Column(nullable = false)
 	@NotEmpty(message = "Wprowadź hasło")
 	private String password;
 

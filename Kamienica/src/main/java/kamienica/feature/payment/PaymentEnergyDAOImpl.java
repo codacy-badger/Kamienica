@@ -16,6 +16,7 @@ import kamienica.feature.tenant.Tenant;
 public class PaymentEnergyDAOImpl extends AbstractDao<Integer, PaymentEnergy>
 		implements PaymentDao<PaymentEnergy, ReadingEnergy> {
 
+	@Override
 	@SuppressWarnings("unchecked")
 	public List<PaymentEnergy> getByInvoice(Invoice invoice) {
 		Query query = getSession().createSQLQuery("Select * from paymentenergy where invoice_id = :id")

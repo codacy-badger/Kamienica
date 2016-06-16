@@ -1,5 +1,7 @@
 package kamienica.feature.payment;
 
+import java.io.Serializable;
+
 import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
@@ -11,7 +13,7 @@ import kamienica.feature.tenant.Tenant;
 
 @Entity
 @Table(name="paymentgas")
-public class PaymentGas extends PaymentAbstract {
+public class PaymentGas extends PaymentAbstract implements Serializable {
 
 	@ManyToOne
 	private InvoiceGas invoice;

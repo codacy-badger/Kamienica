@@ -23,6 +23,7 @@ public class PaymentGasDAOImpl extends AbstractDao<Integer, PaymentGas> implemen
 		return list;
 	}
 
+	@Override
 	@SuppressWarnings("unchecked")
 	public List<PaymentGas> getByInvoice(Invoice invoice) {
 		Query query = getSession().createSQLQuery("Select * from paymentenergy where invoice_id = :id")

@@ -12,13 +12,15 @@ import kamienica.dao.AbstractDao;
 @Repository("tenantDao")
 public class TenantDaoImpl extends AbstractDao<Integer, Tenant> implements TenantDao {
 
+	@Override
 	@SuppressWarnings("unchecked")
 	public List<Tenant> getActiveTenants() {
 		Criteria criteria = createEntityCriteria();
 		criteria.add(Restrictions.eq("status", UserStatus.ACTIVE.getUserStatus()));
-		return (List<Tenant>) criteria.list();
+		return criteria.list();
 	}
 
+	@Override
 	public Tenant loadByMail(String mail) {
 		Criteria criteria = createEntityCriteria();
 		criteria.add(Restrictions.eq("email", mail));

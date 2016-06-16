@@ -1,5 +1,7 @@
 package kamienica.feature.meter;
 
+import java.io.Serializable;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Table;
@@ -10,7 +12,7 @@ import kamienica.feature.apartment.Apartment;
 
 @Entity
 @Table(name="meterwater")
-public class MeterWater extends MeterAbstract {
+public class MeterWater extends MeterAbstract implements Serializable {
 	@Column(nullable = false)
 	private boolean isWarmWater;
 
@@ -34,6 +36,7 @@ public class MeterWater extends MeterAbstract {
 		return isWarmWater;
 	}
 
+	@Override
 	public String toString() {
 		String opisMieszkania;
 		try {

@@ -1,5 +1,7 @@
 package kamienica.feature.reading;
 
+import java.io.Serializable;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
@@ -10,8 +12,9 @@ import org.joda.time.LocalDate;
 import kamienica.feature.meter.MeterEnergy;
 
 @Entity
-@Table(name="readingenergy")
-public class ReadingEnergy extends ReadingAbstract {
+@Table(name = "readingenergy")
+public class ReadingEnergy extends ReadingAbstract implements Serializable {
+
 	@Column(nullable = false)
 	private String unit;
 	@ManyToOne
@@ -26,6 +29,7 @@ public class ReadingEnergy extends ReadingAbstract {
 		this.meter = meter;
 	}
 
+	@Override
 	public MeterEnergy getMeter() {
 		return meter;
 	}

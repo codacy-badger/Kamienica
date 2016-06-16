@@ -1,5 +1,7 @@
 package kamienica.feature.reading;
 
+import java.io.Serializable;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
@@ -11,7 +13,7 @@ import kamienica.feature.meter.MeterGas;
 
 @Entity
 @Table(name="readinggas")
-public class ReadingGas extends ReadingAbstract {
+public class ReadingGas extends ReadingAbstract implements Serializable {
 
 	@Column(nullable = false)
 	private String unit;
@@ -35,6 +37,7 @@ public class ReadingGas extends ReadingAbstract {
 	public ReadingGas() {
 	}
 
+	@Override
 	public MeterGas getMeter() {
 		return meter;
 	}

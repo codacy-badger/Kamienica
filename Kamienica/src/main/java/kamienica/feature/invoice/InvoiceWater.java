@@ -1,5 +1,7 @@
 package kamienica.feature.invoice;
 
+import java.io.Serializable;
+
 import javax.persistence.Entity;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
@@ -10,7 +12,7 @@ import kamienica.feature.reading.ReadingWater;
 
 @Entity
 @Table(name="invoicewater")
-public class InvoiceWater extends Invoice {
+public class InvoiceWater extends Invoice implements Serializable {
 
 	@OneToOne
 	private ReadingWater baseReading;

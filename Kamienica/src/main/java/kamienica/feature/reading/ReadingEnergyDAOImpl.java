@@ -53,6 +53,7 @@ public class ReadingEnergyDAOImpl extends AbstractDao<Integer, ReadingEnergy>
 		return result;
 	}
 
+	@Override
 	@SuppressWarnings("unchecked")
 	public List<ReadingEnergy> getLatestList() {
 		// String original = "Select * from (select * from readingEnergy order

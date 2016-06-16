@@ -1,5 +1,7 @@
 package kamienica.feature.apartment;
 
+import java.io.Serializable;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -15,7 +17,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 @Entity
 @Table(name="apartment")
-public class Apartment {
+public class Apartment implements Serializable {
 
 	@Id
 	@GeneratedValue
@@ -46,6 +48,7 @@ public class Apartment {
 	public Apartment() {
 	}
 
+	@Override
 	public String toString() {
 		return "Number " + apartmentNumber + "; " + description;
 	}

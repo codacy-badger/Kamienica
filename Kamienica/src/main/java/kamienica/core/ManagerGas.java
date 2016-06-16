@@ -7,7 +7,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 
-import org.joda.time.DateTime;
 import org.joda.time.Days;
 
 import kamienica.feature.apartment.Apartment;

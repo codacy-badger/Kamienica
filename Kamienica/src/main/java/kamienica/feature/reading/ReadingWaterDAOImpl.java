@@ -95,6 +95,7 @@ public class ReadingWaterDAOImpl extends AbstractDao<Integer, ReadingWater> impl
 
 	}
 
+	@Override
 	@SuppressWarnings("unchecked")
 	public HashMap<String, List<ReadingWater>> getWaterReadingForGasConsumption(InvoiceGas invoice) {
 		HashMap<String, List<ReadingWater>> out = new HashMap<String, List<ReadingWater>>();

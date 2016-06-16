@@ -24,6 +24,7 @@ public class PaymentWaterDAOImpl extends AbstractDao<Integer, PaymentWater>
 		return list;
 	}
 
+	@Override
 	@SuppressWarnings("unchecked")
 	public List<PaymentWater> getByInvoice(Invoice invoice) {
 		Query query = getSession().createSQLQuery("Select * from paymentwater where invoice_id = :id")
