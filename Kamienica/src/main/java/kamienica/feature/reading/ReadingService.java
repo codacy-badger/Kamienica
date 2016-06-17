@@ -51,11 +51,11 @@ public interface ReadingService {
 
 	public List<ReadingWater> getPreviousReadingWater(String date);
 
-	public List<ReadingEnergy> getLatestEnergyReadings(Set<Long> meterIdList);
+	public List<ReadingEnergy> energyLatest(Set<Long> meterIdList);
 
-	public List<ReadingGas> getLatestGasReadings(Set<Long> meterIdList);
+	public List<ReadingGas> gasLatest(Set<Long> meterIdList);
 
-	public List<ReadingWater> getLatestWaterReadings(Set<Long> meterIdList);
+	public List<ReadingWater> waterLatest(Set<Long> meterIdList);
 
 	public HashMap<String, List<ReadingWater>> getWaterReadingsForGasConsumption(InvoiceGas invoice);
 
@@ -65,8 +65,7 @@ public interface ReadingService {
 
 	public List<ReadingWater> getUnresolvedReadingsWater();
 
-
-	public Set<Long> getEnergyIdList();
+	// public Set<Long> getEnergyIdList();
 
 	// public List<ReadingAbstract> getReadingsForTenant2(Apartment apartment,
 	// Media media);

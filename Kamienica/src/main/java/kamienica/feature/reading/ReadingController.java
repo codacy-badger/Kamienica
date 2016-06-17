@@ -42,7 +42,7 @@ public class ReadingController {
 			return new ModelAndView("/Admin/Reading/ReadingEnergyRegister", "model", model);
 		}
 
-		List<ReadingEnergy> readings = readingService.getLatestEnergyReadings(meterService.getIdList(Media.ENERGY));
+		List<ReadingEnergy> readings = readingService.energyLatest(meterService.getIdList(Media.ENERGY));
 		model.put("date", new LocalDate());
 		readingForm.setCurrentReadings(readings);
 		readingForm.setNewReadings(readings);
@@ -66,7 +66,7 @@ public class ReadingController {
 			model.put("url", "/Admin/Reading/readingEnergySave.html");
 			return new ModelAndView("/Admin/Reading/ReadingEnergyRegister", "model", model);
 		}
-		List<ReadingGas> readings = readingService.getLatestGasReadings(meterService.getIdList(Media.GAS));
+		List<ReadingGas> readings = readingService.gasLatest(meterService.getIdList(Media.GAS));
 		model.put("date", new LocalDate());
 
 		readingForm.setCurrentReadings(readings);
@@ -90,7 +90,7 @@ public class ReadingController {
 			model.put("error", "Brakuje licznika głównego. Wprowadź brakujące liczniki");
 			return new ModelAndView("/Admin/Reading/ReadingEnergyRegister", "model", model);
 		}
-		List<ReadingWater> readings = readingService.getLatestWaterReadings(meterService.getIdList(Media.WATER));
+		List<ReadingWater> readings = readingService.waterLatest(meterService.getIdList(Media.WATER));
 
 		model.put("date", new LocalDate());
 
@@ -227,41 +227,46 @@ public class ReadingController {
 	@RequestMapping(value = "/Admin/Reading/readingEnergyEdit")
 	public ModelAndView readingEnergyEdit(@RequestParam(value = "date") String date,
 			@ModelAttribute("readingForm") ReadingEnergyForm readingForm) {
+		readingForm.setCurrentReadings(readingService.energyLatest(meterService.getIdList(Media.ENERGY)));
+		readingForm.setPreviousReadings(readingService.getPreviousReadingEnergy(readingForm.getDate().toString()));
+
 		List<ReadingEnergy> readings = readingService.getReadingEnergyByDate(date);
 		List<ReadingEnergy> readings2 = readingService.getReadingEnergyByDate(date);
 
 		readingForm.setCurrentReadings(readings);
-		String oldDate = "2000-01-01";
-		if (!readingService.getPreviousReadingEnergy(date).isEmpty()) {
-
-			List<ReadingEnergy> previousReading = readingService.getPreviousReadingEnergy(date);
-			oldDate = previousReading.get(0).getReadingDate().plusDays(1).toString();
-			HashMap<String, ReadingEnergy> mapPreviousReadings = new HashMap<>();
-
-			for (ReadingEnergy i : previousReading) {
-				mapPreviousReadings.put(i.getMeter().getSerialNumber(), i);
-			}
-
-			for (int i = 0; i < readings2.size(); i++) {
-				String serialNumber = readings2.get(i).getMeter().getSerialNumber();
-				if (mapPreviousReadings.get(serialNumber) != null) {
-					readings2.get(i).setValue(mapPreviousReadings.get(serialNumber).getValue());
-				} else {
-					readings2.get(i).setValue(0);
-				}
-			}
-			readingForm.setPreviousReadings(readings2);
-		} else {
-
-			for (int i = 0; i < readings2.size(); i++) {
-				readings2.get(i).setValue(0);
-			}
-			readingForm.setPreviousReadings(readings2);
-			readingForm.setCurrentReadings(readings);
-		}
+		// String oldDate = "2000-01-01";
+		// if (!readingService.getPreviousReadingEnergy(date).isEmpty()) {
+		//
+		// List<ReadingEnergy> previousReading =
+		// readingService.getPreviousReadingEnergy(date);
+		// oldDate =
+		// previousReading.get(0).getReadingDate().plusDays(1).toString();
+		// HashMap<String, ReadingEnergy> mapPreviousReadings = new HashMap<>();
+		//
+		// for (ReadingEnergy i : previousReading) {
+		// mapPreviousReadings.put(i.getMeter().getSerialNumber(), i);
+		// }
+		//
+		// for (int i = 0; i < readings2.size(); i++) {
+		// String serialNumber = readings2.get(i).getMeter().getSerialNumber();
+		// if (mapPreviousReadings.get(serialNumber) != null) {
+		// readings2.get(i).setValue(mapPreviousReadings.get(serialNumber).getValue());
+		// } else {
+		// readings2.get(i).setValue(0);
+		// }
+		// }
+		// readingForm.setPreviousReadings(readings2);
+		// } else {
+		//
+		// for (int i = 0; i < readings2.size(); i++) {
+		// readings2.get(i).setValue(0);
+		// }
+		// readingForm.setPreviousReadings(readings2);
+		// readingForm.setCurrentReadings(readings);
+		// }
 		Map<String, Object> model = new HashMap<String, Object>();
 		model.put("date", date);
-		model.put("oldDate", oldDate);
+		// model.put("oldDate", oldDate);
 		model.put("readingForm", readingForm);
 		model.put("previousReadings", readings2);
 		model.put("currentReadigns", readings);

@@ -34,17 +34,6 @@ public class ReadingEnergyDAOImpl extends AbstractDao<Long, ReadingEnergy>
 	}
 
 	@Override
-	public List<ReadingEnergy> getPrevious(String readingDate) {
-		Query query = getSession()
-				.createSQLQuery(
-						"SELECT * FROM readingEnergy where readingDate =(SELECT max(readingDate) FROM readingEnergy WHERE readingDate < :date )")
-				.addEntity(ReadingEnergy.class).setString("date", readingDate);
-		@SuppressWarnings("unchecked")
-		List<ReadingEnergy> result = query.list();
-		return result;
-	}
-
-	@Override
 	public List<ReadingEnergy> getByDate(String readingDate) {
 		Query query = getSession().createSQLQuery("SELECT * FROM readingEnergy where readingDate=:date")
 				.addEntity(ReadingEnergy.class).setString("date", readingDate);
@@ -62,6 +51,17 @@ public class ReadingEnergyDAOImpl extends AbstractDao<Long, ReadingEnergy>
 		Query query = getSession().createSQLQuery(test).addEntity(ReadingEnergy.class);
 		return query.list();
 
+	}
+
+	@Override
+	public List<ReadingEnergy> getPrevious(String readingDate) {
+		Query query = getSession()
+				.createSQLQuery(
+						"SELECT * FROM readingEnergy where readingDate =(SELECT max(readingDate) FROM readingEnergy WHERE readingDate < :date )")
+				.addEntity(ReadingEnergy.class).setString("date", readingDate);
+		@SuppressWarnings("unchecked")
+		List<ReadingEnergy> result = query.list();
+		return result;
 	}
 
 	@Override

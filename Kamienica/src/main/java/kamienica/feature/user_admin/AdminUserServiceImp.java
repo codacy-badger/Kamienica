@@ -2,27 +2,23 @@ package kamienica.feature.user_admin;
 
 import java.util.HashMap;
 import java.util.List;
-import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import kamienica.core.Media;
-import kamienica.dao.DaoInterface;
 import kamienica.feature.apartment.Apartment;
 import kamienica.feature.apartment.ApartmentDao;
+import kamienica.feature.invoice.InvoiceDao;
 import kamienica.feature.invoice.InvoiceEnergy;
 import kamienica.feature.invoice.InvoiceGas;
-import kamienica.feature.invoice.InvoiceService;
-import kamienica.feature.meter.MeterEnergy;
-import kamienica.feature.meter.MeterGas;
-import kamienica.feature.meter.MeterWater;
+import kamienica.feature.invoice.InvoiceWater;
 import kamienica.feature.reading.ReadingAbstract;
 import kamienica.feature.reading.ReadingDao;
 import kamienica.feature.reading.ReadingEnergy;
 import kamienica.feature.reading.ReadingGas;
-import kamienica.feature.reading.ReadingService;
 import kamienica.feature.reading.ReadingWater;
 import kamienica.feature.reading.ReadingWaterDAO;
 
@@ -31,23 +27,22 @@ import kamienica.feature.reading.ReadingWaterDAO;
 public class AdminUserServiceImp implements AdminUserService {
 
 	@Autowired
-	ApartmentDao apartmentDao;
+	private ApartmentDao apartmentDao;
 	@Autowired
-	private ReadingService readingService;
+	private ReadingDao<ReadingEnergy, InvoiceEnergy> energyDao;
 	@Autowired
-	private InvoiceService invoiceService;
+	private ReadingWaterDAO waterDao;
 	@Autowired
-	ReadingDao<ReadingEnergy, InvoiceEnergy> energyDao;
+	private ReadingDao<ReadingGas, InvoiceGas> gasDao;
 	@Autowired
-	ReadingWaterDAO waterDao;
+	@Qualifier("invoiceEnergy")
+	private InvoiceDao<InvoiceEnergy> invoiceEnergyDao;
 	@Autowired
-	ReadingDao<ReadingGas, InvoiceGas> gasDao;
+	@Qualifier("invoiceWater")
+	private InvoiceDao<InvoiceWater> invoiceWaterDao;
 	@Autowired
-	DaoInterface<MeterEnergy> meterEnergyDao;
-	@Autowired
-	DaoInterface<MeterGas> meterGasDao;
-	@Autowired
-	DaoInterface<MeterWater> meterWaterDao;
+	@Qualifier("invoiceGas")
+	private InvoiceDao<InvoiceGas> invoiceGasDao;
 
 	@Override
 	public HashMap<String, Object> getMainData() {
@@ -77,9 +72,9 @@ public class AdminUserServiceImp implements AdminUserService {
 		model.put("readingMedia", media);
 		model.put("radingDays", days);
 
-		energy = invoiceService.getDaysForEnergy();
-		gas = invoiceService.getDaysForGas();
-		water = invoiceService.getDaysForWater();
+		energy = invoiceEnergyDao.getDaysOfLastInvoice();
+		gas = invoiceGasDao.getDaysOfLastInvoice();
+		water = invoiceWaterDao.getDaysOfLastInvoice();
 
 		if (energy > gas && energy > water) {
 			days = energy;
@@ -133,7 +128,4 @@ public class AdminUserServiceImp implements AdminUserService {
 
 	}
 
-	
-
-	
 }

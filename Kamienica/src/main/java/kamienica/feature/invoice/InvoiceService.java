@@ -50,10 +50,4 @@ public interface InvoiceService {
 
 	public InvoiceGas getLatestPaidGas();
 
-	public int getDaysForGas();
-
-	public int getDaysForWater();
-
-	public int getDaysForEnergy();
-
 }

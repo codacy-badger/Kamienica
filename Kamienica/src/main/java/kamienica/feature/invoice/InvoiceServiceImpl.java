@@ -208,21 +208,4 @@ public class InvoiceServiceImpl implements InvoiceService {
 		return invoiceGas.getLastResolved();
 	}
 
-	@Override
-	public int getDaysForGas() {
-		return invoiceGas.getDaysOfLastInvoice();
-
-	}
-
-	@Override
-	public int getDaysForWater() {
-		return invoiceWater.getDaysOfLastInvoice();
-
-	}
-
-	@Override
-	public int getDaysForEnergy() {
-		return invoiceEnergy.getDaysOfLastInvoice();
-
-	}
 }

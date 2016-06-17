@@ -50,7 +50,7 @@ public class ReadingServiceImpl implements ReadingService {
 	}
 
 	@Override
-	public List<ReadingEnergy> getLatestEnergyReadings(Set<Long> idList) {
+	public List<ReadingEnergy> energyLatest(Set<Long> idList) {
 		List<ReadingEnergy> energyList = energy.getLatestList();
 		// if this the very first time user creates readings
 		if (energyList.isEmpty()) {
@@ -73,6 +73,15 @@ public class ReadingServiceImpl implements ReadingService {
 		return energyList;
 
 	}
+	
+	@Override
+	public List<ReadingEnergy> getPreviousReadingEnergy(String date) {
+
+	
+		return energy.getPrevious(date);
+		
+		
+	}
 
 	/**
 	 * @return latest gas readings
@@ -80,7 +89,7 @@ public class ReadingServiceImpl implements ReadingService {
 	 *         if there hasn't been any readings yet the
 	 */
 	@Override
-	public List<ReadingGas> getLatestGasReadings(Set<Long> idList) {
+	public List<ReadingGas> gasLatest(Set<Long> idList) {
 
 		List<ReadingGas> gasList = gas.getLatestList();
 		// if this the very first time user creates readings
@@ -105,7 +114,7 @@ public class ReadingServiceImpl implements ReadingService {
 	}
 
 	@Override
-	public List<ReadingWater> getLatestWaterReadings(Set<Long> idList) {
+	public List<ReadingWater> waterLatest(Set<Long> idList) {
 		List<ReadingWater> waterList = water.getLatestList();
 		// if this the very first time user creates readings
 		if (waterList.isEmpty()) {
@@ -128,11 +137,7 @@ public class ReadingServiceImpl implements ReadingService {
 
 	}
 
-	@Override
-	public List<ReadingEnergy> getPreviousReadingEnergy(String date) {
-
-		return energy.getPrevious(date);
-	}
+	
 
 	@Override
 	public List<ReadingGas> getPreviousReadingGas(String date) {
@@ -265,8 +270,6 @@ public class ReadingServiceImpl implements ReadingService {
 		}
 	}
 
-
-
 	@Override
 	public void updateEnergyList(List<ReadingEnergy> readings) {
 		for (ReadingEnergy readingEnergy : readings) {
@@ -275,10 +278,9 @@ public class ReadingServiceImpl implements ReadingService {
 
 	}
 
-	@Override
-	public Set<Long> getEnergyIdList() {
-		return energy.getIdList();
-	}
-
+	// @Override
+	// public Set<Long> getEnergyIdList() {
+	// return energy.getIdList();
+	// }
 
 }

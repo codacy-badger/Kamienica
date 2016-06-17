@@ -3,6 +3,8 @@ package kamienica.feature.reading;
 import java.util.LinkedList;
 import java.util.List;
 
+import org.joda.time.LocalDate;
+
 public class ReadingEnergyForm {
 
 	private List<ReadingEnergy> currentReadings = new LinkedList<>();
@@ -10,8 +12,8 @@ public class ReadingEnergyForm {
 	private List<ReadingEnergy> newReadings = new LinkedList<>();
 
 	public String toString() {
-		return "ReadingEnergyForm [currentReadings=" + currentReadings + ", previousReadings=" + previousReadings
-				+ ", newReadings=" + newReadings + "]";
+		return "currentReadings=\n" + currentReadings + "\n previousReadings\n" + previousReadings + "\n newReadings\n"
+				+ newReadings;
 	}
 
 	public ReadingEnergyForm() {
@@ -44,5 +46,9 @@ public class ReadingEnergyForm {
 
 	public void setNewReadings(List<ReadingEnergy> newReadings) {
 		this.newReadings = newReadings;
+	}
+
+	public LocalDate getDate() {
+		return currentReadings.get(0).getReadingDate();
 	}
 }
