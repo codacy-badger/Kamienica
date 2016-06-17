@@ -13,7 +13,6 @@ import org.springframework.web.servlet.ModelAndView;
 import kamienica.core.Media;
 import kamienica.feature.apartment.Apartment;
 import kamienica.feature.payment.PaymentService;
-import kamienica.feature.reading.ReadingService;
 import kamienica.feature.tenant.Tenant;
 
 @Controller
@@ -22,16 +21,14 @@ public class AdminUserController {
 	@Autowired
 	private PaymentService paymentService;
 	@Autowired
-	private ReadingService readingService;
-	@Autowired
 	private MyUserDetailsService userDetailsService;
 	@Autowired
-	private AdminService adminService;
+	private AdminUserService adminUserService;
 
 	// ===========ADMIN===========================================
 	@RequestMapping("/Admin/home")
 	public ModelAndView home() {
-		HashMap<String, Object> model = adminService.getMainData();
+		HashMap<String, Object> model = adminUserService.getMainData();
 		return new ModelAndView("/Admin/Home", "model", model);
 	}
 
@@ -57,15 +54,15 @@ public class AdminUserController {
 		switch (media) {
 		case "energy":
 			model.put("media", "Energia");
-			model.put("readings", readingService.getReadingsForTenant(ap, Media.ENERGY));
+			model.put("readings", adminUserService.getReadingsForTenant(ap, Media.ENERGY));
 			break;
 		case "gas":
 			model.put("media", "Gas");
-			model.put("readings", readingService.getReadingsForTenant(ap, Media.GAS));
+			model.put("readings", adminUserService.getReadingsForTenant(ap, Media.GAS));
 			break;
 		case "water":
 			model.put("media", "Woda");
-			model.put("readings", readingService.getReadingsForTenant(ap, Media.WATER));
+			model.put("readings", adminUserService.getReadingsForTenant(ap, Media.WATER));
 			break;
 		default:
 			break;

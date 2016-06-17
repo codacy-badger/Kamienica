@@ -23,17 +23,17 @@ import org.springframework.web.servlet.view.ContentNegotiatingViewResolver;
 import org.springframework.web.servlet.view.InternalResourceViewResolver;
 import org.springframework.web.servlet.view.JstlView;
 
-import kamienica.feature.apartment.ApartmentConverter;
+import kamienica.conventer.ApartmentConverter;
+import kamienica.conventer.ReadingEnergyConverter;
+import kamienica.conventer.ReadingGasConverter;
+import kamienica.conventer.ReadingWaterConverter;
+import kamienica.conventer.TenantConverter;
 import kamienica.feature.invoice.InvoiceEnergyConverter;
 import kamienica.feature.invoice.InvoiceGasConverter;
 import kamienica.feature.invoice.InvoiceWaterConverter;
 import kamienica.feature.meter.MeterEnergyConverter;
 import kamienica.feature.meter.MeterGasConverter;
 import kamienica.feature.meter.MeterWaterConverter;
-import kamienica.feature.reading.ReadingEnergyConverter;
-import kamienica.feature.reading.ReadingGasConverter;
-import kamienica.feature.reading.ReadingWaterConverter;
-import kamienica.feature.tenant.TenantConverter;
 
 @Configuration
 @EnableWebMvc

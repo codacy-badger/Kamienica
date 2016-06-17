@@ -11,7 +11,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import kamienica.core.Media;
 import kamienica.dao.DaoInterface;
-import kamienica.feature.apartment.Apartment;
 import kamienica.feature.invoice.InvoiceEnergy;
 import kamienica.feature.invoice.InvoiceGas;
 import kamienica.feature.meter.MeterEnergy;
@@ -41,21 +40,6 @@ public class ReadingServiceImpl implements ReadingService {
 	}
 
 	@Override
-	public List<ReadingEnergy> getReadingEnergyForTenant(Apartment aparmtent) {
-		return energy.getListForTenant(aparmtent);
-	}
-
-	@Override
-	public List<ReadingGas> getReadingGasForTenant(Apartment aparmtent) {
-		return gas.getListForTenant(aparmtent);
-	}
-
-	@Override
-	public List<ReadingWater> getReadingWaterForTenant(Apartment aparmtent) {
-		return water.getListForTenant(aparmtent);
-	}
-
-	@Override
 	public List<ReadingGas> getReadingGas() {
 		return gas.getList();
 	}
@@ -63,24 +47,6 @@ public class ReadingServiceImpl implements ReadingService {
 	@Override
 	public List<ReadingWater> getReadingWater() {
 		return water.getList();
-	}
-
-	@Override
-	public void deleteReadingEnergy(Long id) {
-		energy.deleteById(id);
-
-	}
-
-	@Override
-	public void deleteReadingGas(Long id) {
-		gas.deleteById(id);
-
-	}
-
-	@Override
-	public void deleteReadingWater(Long id) {
-		water.deleteById(id);
-
 	}
 
 	@Override
@@ -277,28 +243,29 @@ public class ReadingServiceImpl implements ReadingService {
 	}
 
 	@Override
-	public void deleteReadingEnergyList(List<ReadingEnergy> list) {
-		for (ReadingEnergy reading : list) {
-			energy.deleteById(reading.getId());
+	public void deleteList(List<? extends ReadingAbstract> list, Media media) {
+		switch (media) {
+		case ENERGY:
+			for (ReadingAbstract reading : list) {
+				energy.deleteById(reading.getId());
+			}
+			break;
+		case GAS:
+			for (ReadingAbstract reading : list) {
+				gas.deleteById(reading.getId());
+			}
+			break;
+		case WATER:
+			for (ReadingAbstract reading : list) {
+				water.deleteById(reading.getId());
+			}
+			break;
+		default:
+			break;
 		}
-
 	}
 
-	@Override
-	public void deleteReadingGasList(List<ReadingGas> list) {
-		for (ReadingGas reading : list) {
-			gas.deleteById(reading.getId());
-		}
 
-	}
-
-	@Override
-	public void deleteReadingWaterList(List<ReadingWater> list) {
-		for (ReadingWater reading : list) {
-			water.deleteById(reading.getId());
-		}
-
-	}
 
 	@Override
 	public void updateEnergyList(List<ReadingEnergy> readings) {
@@ -309,45 +276,9 @@ public class ReadingServiceImpl implements ReadingService {
 	}
 
 	@Override
-	public int countLatestGasDays() {
-		return gas.countDaysFromLastReading();
-	}
-
-	@Override
-	public int countLatestWaterDays() {
-		return water.countDaysFromLastReading();
-	}
-
-	@Override
-	public int countLatestEnergyDays() {
-		return energy.countDaysFromLastReading();
-	}
-
-	@Override
-	public List<? extends ReadingAbstract> getReadingsForTenant(Apartment apartment, Media media) {
-
-		switch (media) {
-		case ENERGY:
-			System.out.println("getReadingsForTenant - energia");
-			return energy.getListForTenant(apartment);
-
-		case GAS:
-			System.out.println("getReadingsForTenant - gas");
-			return gas.getListForTenant(apartment);
-
-		case WATER:
-			System.out.println("getReadingsForTenant - woda");
-			return water.getListForTenant(apartment);
-
-		default:
-			throw new IllegalArgumentException();
-		}
-
-	}
-
-	@Override
 	public Set<Long> getEnergyIdList() {
 		return energy.getIdList();
 	}
+
 
 }

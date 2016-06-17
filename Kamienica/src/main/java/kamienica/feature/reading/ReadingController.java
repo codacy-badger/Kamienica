@@ -1,12 +1,12 @@
 package kamienica.feature.reading;
 
-import java.text.ParseException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import org.joda.time.LocalDate;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.expression.ParseException;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -193,8 +193,8 @@ public class ReadingController {
 			model.put("error", "Nie można usuwać odczytu, dla którego wprowadzono Fakturę.");
 			return new ModelAndView("/Admin/Reading/ReadingList?media=ENERGY", "model", model);
 		}
-		readingService.deleteReadingEnergyList(listToDelete);
 
+		readingService.deleteList(listToDelete, Media.ENERGY);
 		return new ModelAndView("redirect:/Admin/Reading/readingList.html?media=ENERGY");
 	}
 
@@ -206,7 +206,8 @@ public class ReadingController {
 			model.put("error", "Nie można usuwać odczytu, dla którego wprowadzono Fakturę.");
 			return new ModelAndView("/Admin/Reading/ReadingList?media=GAS", "model", model);
 		}
-		readingService.deleteReadingGasList(listToDelete);
+
+		readingService.deleteList(listToDelete, Media.GAS);
 		return new ModelAndView("redirect:/Admin/Reading/readingList.html?media=GAS");
 	}
 
@@ -218,8 +219,8 @@ public class ReadingController {
 			model.put("error", "Nie można usuwać odczytu, dla którego wprowadzono Fakturę.");
 			return new ModelAndView("/Admin/Reading/ReadingList?media=WATER", "model", model);
 		}
-		readingService.deleteReadingWaterList(listToDelete);
-		return new ModelAndView("redirect:/Admin/Reading/readingList.html?media=ENERGY");
+		readingService.deleteList(listToDelete, Media.WATER);
+		return new ModelAndView("redirect:/Admin/Reading/readingList.html?media=WATER");
 	}
 
 	// ------------------------------EDIT-----------------------------------

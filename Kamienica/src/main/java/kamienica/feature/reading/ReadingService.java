@@ -7,7 +7,6 @@ import java.util.Set;
 import org.joda.time.LocalDate;
 
 import kamienica.core.Media;
-import kamienica.feature.apartment.Apartment;
 import kamienica.feature.invoice.InvoiceGas;
 
 public interface ReadingService {
@@ -34,8 +33,6 @@ public interface ReadingService {
 
 	public List<ReadingEnergy> getReadingEnergy();
 
-	public List<ReadingEnergy> getReadingEnergyForTenant(Apartment apartment);
-
 	public List<ReadingEnergy> getReadingEnergyByDate(String date);
 
 	public List<ReadingGas> getReadingGas();
@@ -44,23 +41,9 @@ public interface ReadingService {
 
 	public List<ReadingWater> getReadingWater();
 
-	public List<ReadingWater> getReadingWaterForTenant(Apartment apartment);
-
-	public List<ReadingGas> getReadingGasForTenant(Apartment apartment);
-
 	public List<ReadingWater> getReadingWaterByDate(String date);
 
-	public void deleteReadingEnergy(Long id);
-
-	public void deleteReadingGas(Long id);
-
-	public void deleteReadingWater(Long id);
-
-	public void deleteReadingEnergyList(List<ReadingEnergy> list);
-
-	public void deleteReadingGasList(List<ReadingGas> list);
-
-	public void deleteReadingWaterList(List<ReadingWater> list);
+	public void deleteList(List<? extends ReadingAbstract> list, Media media);
 
 	public List<ReadingEnergy> getPreviousReadingEnergy(String date);
 
@@ -82,13 +65,6 @@ public interface ReadingService {
 
 	public List<ReadingWater> getUnresolvedReadingsWater();
 
-	public int countLatestGasDays();
-
-	public int countLatestWaterDays();
-
-	public int countLatestEnergyDays();
-
-	public List<? extends ReadingAbstract> getReadingsForTenant(Apartment apartment, Media media);
 
 	public Set<Long> getEnergyIdList();
 
