@@ -1,11 +1,13 @@
 package kamienica.feature.meter;
 
 import java.util.List;
+import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import kamienica.core.Media;
 import kamienica.dao.DaoInterface;
 
 @Service
@@ -104,6 +106,21 @@ public class MeterServiceImpl implements MeterService {
 	@Override
 	public MeterWater getWaterByID(Long id) {
 		return water.getById(id);
+	}
+
+	@Override
+	public Set<Long> getIdList(Media media) {
+		switch (media) {
+		case ENERGY:
+			return energy.getIdList();
+		case WATER:
+			return water.getIdList();
+		case GAS:
+			return gas.getIdList();
+
+		default:
+			return null;
+		}
 	}
 
 }

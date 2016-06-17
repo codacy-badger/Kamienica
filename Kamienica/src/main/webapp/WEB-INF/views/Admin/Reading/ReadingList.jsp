@@ -18,9 +18,10 @@
 <!-- MetisMenu CSS -->
 <link href="<c:url value='/static/css/metisMenu.min.css' />"
 	rel="stylesheet">
+
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Odczyty Gazu</title>
+<title>Odczyty Energii</title>
 </head>
 <body>
 	<div id="wrapper">
@@ -29,14 +30,15 @@
 		<div id="page-wrapper">
 			<div class='row'>
 				<div class="col-lg-12">
-					<h1 class="page-header well">Odczyty Gazu</h1>
+					<h1 class="page-header well">
+						Odczyty:<strong> ${model.media }</strong>
+					</h1>
 				</div>
 			</div>
 
-
 			<div class='row'>
-				<c:if test="${!empty reading}">
-					<table class='table table-stripped table-hover'>
+				<c:if test="${!empty model.reading}">
+					<table class='table table-stripped table-hover'">
 						<thead>
 							<tr>
 								<th>Data</th>
@@ -45,24 +47,23 @@
 								<th>Licznik</th>
 								<th>Edytuj</th>
 								<th>Usuń</th>
-
 							</tr>
 						</thead>
-						<c:forEach items="${reading}" var="reading">
+						<c:forEach items="${model.reading}" var="readingEnergy">
 							<tr>
-								<td><c:out value="${reading.readingDate}" /></td>
-								<td><c:out value="${reading.value}" /></td>
-								<td><c:out value="${reading.unit}" /></td>
-								<td><c:out value="${reading.meter.description}" /></td>
+								<td><c:out value="${readingEnergy.readingDate}" /></td>
+								<td><c:out value="${readingEnergy.value}" /></td>
+								<td><c:out value="${readingEnergy.unit}" /></td>
+								<td><c:out value="${readingEnergy.meter.description}" /></td>
 								<td><a
-									href='<c:url value="/Admin/Reading/readingGasEdit.html?date=${reading.readingDate}" />'
+									href="<c:url value="${model.editUrl}${readingEnergy.readingDate}" />"
 									role="button" class="btn-xs btn-warning"><i
 										class="fa fa-pencil-square-o" aria-hidden="true"></i></a></td>
 								<td><a
-									href='<c:url value="/Admin/Reading/readingGasDelete.html?date=${reading.readingDate}"  />'
-									role="button" class="btn-xs btn-danger"
-									onclick="return confirm('UWAGA! Usunięte zostaną wszystkie odczyty z tą datą!\n Na pewno usunąć?')"><i
-										class="fa fa-times" aria-hidden="true"></i></a></td>
+									href="<c:url value="${model.delUrl}${readingEnergy.readingDate}"  />"
+									onclick="return confirm('UWAGA!!! Usunięte zostaną wszystkie odczyty z tą datą!\n Na pewno usunąć?')"
+									role="button" class="btn-xs btn-danger"><i
+										class="fa fa-times" aria-hidden="true"></i> </a></td>
 
 							</tr>
 						</c:forEach>

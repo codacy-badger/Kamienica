@@ -11,7 +11,7 @@ import kamienica.feature.apartment.Apartment;
 import kamienica.feature.invoice.InvoiceGas;
 
 @Repository("readingGasDao")
-public class ReadingGasDAOImpl extends AbstractDao<Integer, ReadingGas> implements ReadingDao<ReadingGas, InvoiceGas> {
+public class ReadingGasDAOImpl extends AbstractDao<Long, ReadingGas> implements ReadingDao<ReadingGas, InvoiceGas> {
 
 	@Override
 	public List<ReadingGas> getList() {

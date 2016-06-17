@@ -11,7 +11,7 @@ import kamienica.dao.AbstractDao;
 import kamienica.feature.apartment.Apartment;
 
 @Repository("tenantDao")
-public class TenantDaoImpl extends AbstractDao<Integer, Tenant> implements TenantDao {
+public class TenantDaoImpl extends AbstractDao<Long, Tenant> implements TenantDao {
 
 	@Override
 	@SuppressWarnings("unchecked")

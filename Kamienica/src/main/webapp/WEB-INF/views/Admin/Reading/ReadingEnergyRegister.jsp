@@ -74,9 +74,16 @@
 								<div class="col-sm-9">
 									<input name="currentReadings[${i.index}].meter"
 										value="${reading.meter.id}" type="hidden" /> <input
-										class='form-control bfh-number' type="number" step="any"
+										class='form-control bfh-number' type="hidden" step="any"
 										min="${reading.value}"
 										name="currentReadings[${i.index}].value"
+										value="${reading.value}" />
+										
+										<input name="newReadings[${i.index}].meter"
+										value="${reading.meter.id}" type="hidden" /> <input
+										class='form-control bfh-number' type="number" step="any"
+										min="${reading.value}"
+										name="newReadings[${i.index}].value"
 										value="${reading.value}" />
 								</div>
 							</div>

@@ -2,15 +2,21 @@ package kamienica.feature.reading;
 
 import java.util.HashMap;
 import java.util.List;
+import java.util.Set;
 
+import org.joda.time.LocalDate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import kamienica.core.Media;
+import kamienica.dao.DaoInterface;
 import kamienica.feature.apartment.Apartment;
 import kamienica.feature.invoice.InvoiceEnergy;
 import kamienica.feature.invoice.InvoiceGas;
+import kamienica.feature.meter.MeterEnergy;
+import kamienica.feature.meter.MeterGas;
+import kamienica.feature.meter.MeterWater;
 
 @Service
 @Transactional
@@ -22,6 +28,12 @@ public class ReadingServiceImpl implements ReadingService {
 	ReadingWaterDAO water;
 	@Autowired
 	ReadingDao<ReadingGas, InvoiceGas> gas;
+	@Autowired
+	DaoInterface<MeterEnergy> meterEnergy;
+	@Autowired
+	DaoInterface<MeterGas> meterGas;
+	@Autowired
+	DaoInterface<MeterWater> meterWater;
 
 	@Override
 	public List<ReadingEnergy> getReadingEnergy() {
@@ -72,30 +84,81 @@ public class ReadingServiceImpl implements ReadingService {
 	}
 
 	@Override
-	public HashMap<Long, ReadingEnergy> getLatestEnergyReadings() {
-		List<ReadingEnergy> result = energy.getLatestList();
-		HashMap<Long, ReadingEnergy> mappedResult = new HashMap<>();
-		for (ReadingEnergy i : result) {
-			mappedResult.put(i.getMeter().getId(), i);
+	public List<ReadingEnergy> getLatestEnergyReadings(Set<Long> idList) {
+		List<ReadingEnergy> energyList = energy.getLatestList();
+		// if this the very first time user creates readings
+		if (energyList.isEmpty()) {
+			for (Long tmpLong : idList) {
+
+				energyList.add(new ReadingEnergy(new LocalDate().minusDays(100), 0.0, meterEnergy.getById(tmpLong)));
+			}
+
+		} else {
+			// checks if there has been a new meter and adds fake '0' reading
+			for (ReadingEnergy readingEnergy : energyList) {
+				idList.remove(readingEnergy.getMeter().getId());
+			}
+			for (Long tmpLong : idList) {
+
+				energyList
+						.add(new ReadingEnergy(energyList.get(0).getReadingDate(), 0.0, meterEnergy.getById(tmpLong)));
+			}
 		}
-		return mappedResult;
-	}
-
-	@Override
-	public List<ReadingEnergy> getLatestEnergyReadings2() {
-		return energy.getLatestList();
+		return energyList;
 
 	}
 
+	/**
+	 * @return latest gas readings
+	 * 
+	 *         if there hasn't been any readings yet the
+	 */
 	@Override
-	public List<ReadingGas> getLatestGasReadings2() {
-		return gas.getLatestList();
+	public List<ReadingGas> getLatestGasReadings(Set<Long> idList) {
+
+		List<ReadingGas> gasList = gas.getLatestList();
+		// if this the very first time user creates readings
+		if (gasList.isEmpty()) {
+			for (Long tmpLong : idList) {
+
+				gasList.add(new ReadingGas(new LocalDate().minusDays(100), 0.0, meterGas.getById(tmpLong)));
+			}
+
+		} else {
+			// checks if there has been a new meter and adds fake '0' reading
+			for (ReadingGas readingGas : gasList) {
+				idList.remove(readingGas.getMeter().getId());
+			}
+			for (Long tmpLong : idList) {
+
+				gasList.add(new ReadingGas(gasList.get(0).getReadingDate(), 0.0, meterGas.getById(tmpLong)));
+			}
+		}
+		return gasList;
 
 	}
 
 	@Override
-	public List<ReadingWater> getLatestWaterReadings2() {
-		return water.getLatestList();
+	public List<ReadingWater> getLatestWaterReadings(Set<Long> idList) {
+		List<ReadingWater> waterList = water.getLatestList();
+		// if this the very first time user creates readings
+		if (waterList.isEmpty()) {
+			for (Long tmpLong : idList) {
+
+				waterList.add(new ReadingWater(new LocalDate().minusDays(100), 0.0, meterWater.getById(tmpLong)));
+			}
+
+		} else {
+			// checks if there has been a new meter and adds fake '0' reading
+			for (ReadingWater readingWater : waterList) {
+				idList.remove(readingWater.getMeter().getId());
+			}
+			for (Long tmpLong : idList) {
+
+				waterList.add(new ReadingWater(waterList.get(0).getReadingDate(), 0.0, meterWater.getById(tmpLong)));
+			}
+		}
+		return waterList;
 
 	}
 
@@ -122,26 +185,6 @@ public class ReadingServiceImpl implements ReadingService {
 	}
 
 	@Override
-	public HashMap<Long, ReadingGas> getLatestGasReadings() {
-		List<ReadingGas> result = gas.getLatestList();
-		HashMap<Long, ReadingGas> mappedResult = new HashMap<>();
-		for (ReadingGas i : result) {
-			mappedResult.put(i.getMeter().getId(), i);
-		}
-		return mappedResult;
-	}
-
-	@Override
-	public HashMap<Long, ReadingWater> getLatestWaterReadings() {
-		List<ReadingWater> result = water.getLatestList();
-		HashMap<Long, ReadingWater> mappedResult = new HashMap<>();
-		for (ReadingWater i : result) {
-			mappedResult.put(i.getMeter().getId(), i);
-		}
-		return mappedResult;
-	}
-
-	@Override
 	public List<ReadingGas> getReadingGasByDate(String date) {
 		return gas.getByDate(date);
 	}
@@ -152,23 +195,29 @@ public class ReadingServiceImpl implements ReadingService {
 	}
 
 	@Override
-	public void saveGasList(List<ReadingGas> reading) {
+	public void saveGasList(List<ReadingGas> reading, LocalDate date) {
 		for (ReadingGas i : reading) {
+			i.setReadingDate(date);
+			i.setUnit(i.getMeter().getUnit());
 			gas.save(i);
 		}
 	}
 
 	@Override
-	public void saveWaterList(List<ReadingWater> reading) {
+	public void saveWaterList(List<ReadingWater> reading, LocalDate date) {
 		for (ReadingWater i : reading) {
+			i.setReadingDate(date);
+			i.setUnit(i.getMeter().getUnit());
 			water.save(i);
 		}
 
 	}
 
 	@Override
-	public void saveEnergyList(List<ReadingEnergy> reading) {
+	public void saveEnergyList(List<ReadingEnergy> reading, LocalDate date) {
 		for (ReadingEnergy readingEnergy : reading) {
+			readingEnergy.setReadingDate(date);
+			readingEnergy.setUnit(readingEnergy.getMeter().getUnit());
 			energy.save(readingEnergy);
 		}
 
@@ -294,6 +343,11 @@ public class ReadingServiceImpl implements ReadingService {
 			throw new IllegalArgumentException();
 		}
 
+	}
+
+	@Override
+	public Set<Long> getEnergyIdList() {
+		return energy.getIdList();
 	}
 
 }

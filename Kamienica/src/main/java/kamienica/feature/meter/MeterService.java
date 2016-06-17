@@ -1,6 +1,9 @@
 package kamienica.feature.meter;
 
 import java.util.List;
+import java.util.Set;
+
+import kamienica.core.Media;
 
 public interface MeterService {
 
@@ -33,4 +36,7 @@ public interface MeterService {
 	public MeterGas getGasByID(Long id);
 
 	public MeterWater getWaterByID(Long id);
+	
+	public Set<Long> getIdList(Media media);
+
 }

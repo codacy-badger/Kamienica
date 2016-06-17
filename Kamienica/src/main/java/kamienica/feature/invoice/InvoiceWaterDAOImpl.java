@@ -11,7 +11,7 @@ import kamienica.feature.payment.PaymentStatus;
 
 @Repository("invoiceWater")
 @Transactional
-public class InvoiceWaterDAOImpl extends AbstractDao<Integer, InvoiceWater> implements InvoiceDao<InvoiceWater> {
+public class InvoiceWaterDAOImpl extends AbstractDao<Long, InvoiceWater> implements InvoiceDao<InvoiceWater> {
 
 	@Override
 	public InvoiceWater getLatest() {

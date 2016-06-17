@@ -219,7 +219,7 @@
 							<ul class="nav nav-third-level">
 								<li><a href="${path}/Admin/Reading/readingGasRegister.html"><i
 										class="fa fa-plus" aria-hidden="true"></i> Nowe</a></li>
-								<li><a href="${path}/Admin/Reading/readingGasList.html"><i
+								<li><a href="${path}/Admin/Reading/readingList.html?media=GAS"><i
 										class="fa fa-list" aria-hidden="true"></i> Lista</a></li>
 							</ul></li>
 						<li><a href="buttons.html">Woda<span class="fa arrow"></a>
@@ -227,7 +227,7 @@
 								<li><a
 									href="${path}/Admin/Reading/readingWaterRegister.html"><i
 										class="fa fa-plus" aria-hidden="true"></i> Nowe</a></li>
-								<li><a href="${path}/Admin/Reading/readingWaterList.html"><i
+								<li><a href="${path}/Admin/Reading/readingList.html?media=WATER"><i
 										class="fa fa-list" aria-hidden="true"></i> Lista</a></li>
 							</ul></li>
 						<li><a href="notifications.html">Energia<span
@@ -236,7 +236,7 @@
 								<li><a
 									href="${path}/Admin/Reading/readingEnergyRegister.html"><i
 										class="fa fa-plus" aria-hidden="true"></i> Nowe</a></li>
-								<li><a href="${path}/Admin/Reading/readingEnergyList.html"><i
+								<li><a href="${path}/Admin/Reading/readingList.html?media=ENERGY"><i
 										class="fa fa-list" aria-hidden="true"></i> Lista</a></li>
 							</ul></li>
 

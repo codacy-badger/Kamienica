@@ -6,6 +6,6 @@ import kamienica.dao.AbstractDao;
 import kamienica.dao.DaoInterface;
 
 @Repository("meterEnergyDao")
-public class MeterEnergyDAOIml extends AbstractDao<Integer, MeterEnergy> implements DaoInterface<MeterEnergy> {
+public class MeterEnergyDAOIml extends AbstractDao<Long, MeterEnergy> implements DaoInterface<MeterEnergy> {
 
 }

@@ -1,16 +1,17 @@
 package kamienica.feature.reading;
 
-import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 
 public class ReadingEnergyForm {
 
-	private List<ReadingEnergy> currentReadings = new ArrayList<>();
-	private List<ReadingEnergy> previousReadings = new ArrayList<>();
+	private List<ReadingEnergy> currentReadings = new LinkedList<>();
+	private List<ReadingEnergy> previousReadings = new LinkedList<>();
+	private List<ReadingEnergy> newReadings = new LinkedList<>();
 
-	@Override
 	public String toString() {
-		return currentReadings.toString();
+		return "ReadingEnergyForm [currentReadings=" + currentReadings + ", previousReadings=" + previousReadings
+				+ ", newReadings=" + newReadings + "]";
 	}
 
 	public ReadingEnergyForm() {
@@ -35,5 +36,13 @@ public class ReadingEnergyForm {
 
 	public void setCurrentReadings(List<ReadingEnergy> currentReadings) {
 		this.currentReadings = currentReadings;
+	}
+
+	public List<ReadingEnergy> getNewReadings() {
+		return newReadings;
+	}
+
+	public void setNewReadings(List<ReadingEnergy> newReadings) {
+		this.newReadings = newReadings;
 	}
 }
