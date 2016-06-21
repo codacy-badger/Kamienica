@@ -4,7 +4,6 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib prefix="mytags" tagdir="/WEB-INF/tags"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
-
 <html>
 <head>
 <link href="<c:url value='/static/css/bootstrap.css' />"
@@ -90,14 +89,10 @@
 	</div>
 	<!-- jQuery -->
 	<script src="<c:url value='/static/js/jquery.min.js' />"></script>
-
 	<!-- Bootstrap Core JavaScript -->
 	<script src="<c:url value='/static/js/bootstrap.min.js' />"></script>
-
 	<!-- Metis Menu Plugin JavaScript -->
 	<script src="<c:url value='/static/js/metisMenu.min.js' />"></script>
-
-
 	<!-- Custom Theme JavaScript -->
 	<script src="<c:url value='/static/js/sb-admin-2.js' />"></script>
 </body>

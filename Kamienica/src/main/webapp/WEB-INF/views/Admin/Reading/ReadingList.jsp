@@ -54,7 +54,8 @@
 								<td><c:out value="${readingEnergy.readingDate}" /></td>
 								<td><c:out value="${readingEnergy.value}" /></td>
 								<td><c:out value='${readingEnergy.unit}' /></td>
-								<td><c:out 	value='${ !empty readingEnergy.meter ? readingEnergy.meter.description : "(usunięto)"}' /></td>
+								<td><c:out
+										value='${ !empty readingEnergy.meter ? readingEnergy.meter.description : "(usunięto)"}' /></td>
 								<td><a
 									href="<c:url value="${model.editUrl}${readingEnergy.readingDate}" />"
 									role="button" class="btn-xs btn-warning"><i
@@ -67,7 +68,7 @@
 
 							</tr>
 						</c:forEach>
-					</table>
+					</table>	${  model.media == 'Energia' ? 'jest energia :)' : 'inne'} <br> ${model.date =='2016-06-21'}
 				</c:if>
 			</div>
 		</div>

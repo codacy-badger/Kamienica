@@ -16,11 +16,9 @@
 <!-- MetisMenu CSS -->
 <link href="<c:url value='/static/css/metisMenu.min.css' />"
 	rel="stylesheet">
-<script>
-	$(function() {
-		$("#datepicker").datepicker();
-	});
-</script>
+
+
+
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Rejestracja Odczytów Energii</title>
@@ -38,7 +36,7 @@
 					</div>
 				</div>
 			</div>
-
+		
 
 			<div class='row'>
 				<c:if test="${!empty model.error}">
@@ -59,8 +57,10 @@
 									placeholder="Pole wymagane" value="${model.date}"
 									min="${model.oldDate}" />
 								<p>
-									Date: <input type="text" id="datepicker">
+									<input class="span2" value="02/16/12"
+										data-date-format="mm/dd/yy" id="datepicker" type="text">
 								</p>
+
 							</div>
 						</div>
 
@@ -103,17 +103,15 @@
 		</div>
 	</div>
 	<!-- jQuery -->
+	<!-- jQuery -->
 	<script src="<c:url value='/static/js/jquery.min.js' />"></script>
-
 	<!-- Bootstrap Core JavaScript -->
 	<script src="<c:url value='/static/js/bootstrap.min.js' />"></script>
-
 	<!-- Metis Menu Plugin JavaScript -->
 	<script src="<c:url value='/static/js/metisMenu.min.js' />"></script>
-
-	<script src="//code.jquery.com/jquery-1.10.2.js"></script>
-	<script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
 	<!-- Custom Theme JavaScript -->
 	<script src="<c:url value='/static/js/sb-admin-2.js' />"></script>
+
+
 </body>
 </html>

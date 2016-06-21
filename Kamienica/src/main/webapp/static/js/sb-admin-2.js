@@ -36,5 +36,3 @@ $(function() {
 });
 
 
-$('#sandbox-container input').datepicker({
-});
