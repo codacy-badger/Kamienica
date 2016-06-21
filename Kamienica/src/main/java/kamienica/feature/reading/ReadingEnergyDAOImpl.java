@@ -1,7 +1,9 @@
 package kamienica.feature.reading;
 
 import java.util.List;
+import java.util.Set;
 
+import org.apache.commons.collections.bag.SynchronizedSortedBag;
 import org.hibernate.Query;
 import org.hibernate.criterion.Order;
 import org.springframework.stereotype.Repository;
@@ -44,21 +46,22 @@ public class ReadingEnergyDAOImpl extends AbstractDao<Long, ReadingEnergy>
 
 	@Override
 	@SuppressWarnings("unchecked")
-	public List<ReadingEnergy> getLatestList() {
-		// String original = "Select * from (select * from readingEnergy order
-		// by readingDate desc) as c group by meter_id";
-		String test = "Select * from readingEnergy where readingDate=(select MAX(readingDate) from readingEnergy)";
-		Query query = getSession().createSQLQuery(test).addEntity(ReadingEnergy.class);
+	public List<ReadingEnergy> getLatestList(Set<Long> meterId) {
+
+		String test = "Select * from readingEnergy where readingDate=(select MAX(readingDate) from readingEnergy) AND meter_id IN(:list)";
+		Query query = getSession().createSQLQuery(test).addEntity(ReadingEnergy.class).setParameterList("list",
+				meterId);
+		System.out.println("nowa metoda");
 		return query.list();
 
 	}
 
 	@Override
-	public List<ReadingEnergy> getPrevious(String readingDate) {
+	public List<ReadingEnergy> getPrevious(String readingDate, Set<Long> meterId) {
 		Query query = getSession()
 				.createSQLQuery(
-						"SELECT * FROM readingEnergy where readingDate =(SELECT max(readingDate) FROM readingEnergy WHERE readingDate < :date )")
-				.addEntity(ReadingEnergy.class).setString("date", readingDate);
+						"SELECT * FROM readingEnergy where readingDate=(SELECT max(readingDate) FROM readingEnergy WHERE readingDate < :date )  AND meter_id IN(:list)")
+				.addEntity(ReadingEnergy.class).setString("date", readingDate).setParameterList("list", meterId);
 		@SuppressWarnings("unchecked")
 		List<ReadingEnergy> result = query.list();
 		return result;

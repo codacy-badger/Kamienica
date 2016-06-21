@@ -31,7 +31,7 @@ public class ReadingWater extends ReadingAbstract implements Serializable {
 //	}
 
 	public String getUnit() {
-		return this.meter.getUnit();
+		return this.unit;
 	}
 
 	public ReadingWater(LocalDate date, double value, MeterWater meter) {

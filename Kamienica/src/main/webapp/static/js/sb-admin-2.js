@@ -34,3 +34,7 @@ $(function() {
         element.addClass('active');
     }
 });
+
+
+$('#sandbox-container input').datepicker({
+});

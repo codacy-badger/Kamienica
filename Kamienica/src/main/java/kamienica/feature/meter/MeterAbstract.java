@@ -8,6 +8,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.MappedSuperclass;
 
 import org.hibernate.validator.constraints.NotEmpty;
+import org.joda.time.LocalDate;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import kamienica.feature.apartment.Apartment;
@@ -21,20 +22,22 @@ public abstract class MeterAbstract {
 	@Column
 	protected Long id;
 	@Column(nullable = false)
-	@NotEmpty(message="Wprowadź wartość")
+	@NotEmpty(message = "Wprowadź wartość")
 	protected String description;
 	@Column(nullable = false, unique = true)
-	@NotEmpty(message="Wprowadź wartość")
+	@NotEmpty(message = "Wprowadź wartość")
 	protected String serialNumber;
 	@Column(nullable = false)
-	@NotEmpty(message="Wprowadź wartość")
+	@NotEmpty(message = "Wprowadź wartość")
 	protected String unit;
 	@ManyToOne
 	protected Apartment apartment;
+	@Column(columnDefinition = "TINYINT(1)")
+	protected boolean main = false;
+	protected LocalDate deactivation = LocalDate.parse("2600-01-01");
 
 	@Autowired
-	public MeterAbstract(String description, String serialNumber,
-			String unit, Apartment apartment) {
+	public MeterAbstract(String description, String serialNumber, String unit, Apartment apartment) {
 		super();
 		this.description = description;
 		this.serialNumber = serialNumber;
@@ -76,14 +79,12 @@ public abstract class MeterAbstract {
 		try {
 			opisMieszkania = apartment.getDescription();
 		} catch (NullPointerException e) {
-		
+
 			opisMieszkania = "brak";
 		}
-		return "\n" + description + ", serialNumber:" + serialNumber
-				+ ", Mieszkanie:" + opisMieszkania;
+		return "\n" + description + ", serialNumber:" + serialNumber + ", Mieszkanie:" + opisMieszkania;
 	}
 
-	
 	public Apartment getApartment() {
 		return apartment;
 	}
@@ -99,6 +100,13 @@ public abstract class MeterAbstract {
 	public void setId(Long id) {
 		this.id = id;
 	}
-	
-	
+
+	public boolean isMain() {
+		return main;
+	}
+
+	public void setMain(boolean main) {
+		this.main = main;
+	}
+
 }

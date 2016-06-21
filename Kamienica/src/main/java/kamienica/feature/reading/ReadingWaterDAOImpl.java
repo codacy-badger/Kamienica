@@ -3,6 +3,7 @@ package kamienica.feature.reading;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Set;
 
 import org.hibernate.Query;
 import org.hibernate.criterion.Order;
@@ -36,7 +37,7 @@ public class ReadingWaterDAOImpl extends AbstractDao<Long, ReadingWater> impleme
 	}
 
 	@Override
-	public List<ReadingWater> getPrevious(String readingDate) {
+	public List<ReadingWater> getPrevious(String readingDate, Set<Long> meterId) {
 		Query query = getSession()
 				.createSQLQuery(
 						"SELECT * FROM readingwater where readingDate =(SELECT max(readingDate) FROM readingwater WHERE readingDate <  :date )")
@@ -56,7 +57,7 @@ public class ReadingWaterDAOImpl extends AbstractDao<Long, ReadingWater> impleme
 	}
 
 	@Override
-	public List<ReadingWater> getLatestList() {
+	public List<ReadingWater> getLatestList(Set<Long> meterId) {
 		// String original = "Select * from (select * from readingWater order by
 		// readingDate desc) as c group by meter_id";
 		String test = "Select * from readingWater where readingDate=(select MAX(readingDate) from readingWater)";
@@ -130,4 +131,5 @@ public class ReadingWaterDAOImpl extends AbstractDao<Long, ReadingWater> impleme
 			return 0;
 		}
 	}
+
 }

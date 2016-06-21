@@ -25,18 +25,27 @@ public class MeterServiceImpl implements MeterService {
 
 	@Override
 	public void saveGas(MeterGas meter) {
+		if (meter.getApartment() == null) {
+			meter.main = true;
+		}
 		gas.save(meter);
 
 	}
 
 	@Override
 	public void saveWater(MeterWater meter) {
+		if (meter.getApartment() == null) {
+			meter.main = true;
+		}
 		water.save(meter);
 
 	}
 
 	@Override
 	public void saveEnergy(MeterEnergy meter) {
+		if (meter.getApartment() == null) {
+			meter.main = true;
+		}
 		energy.save(meter);
 
 	}

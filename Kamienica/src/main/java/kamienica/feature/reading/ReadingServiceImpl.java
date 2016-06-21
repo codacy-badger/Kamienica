@@ -1,6 +1,7 @@
 package kamienica.feature.reading;
 
 import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Set;
 
@@ -50,37 +51,34 @@ public class ReadingServiceImpl implements ReadingService {
 	}
 
 	@Override
-	public List<ReadingEnergy> energyLatest(Set<Long> idList) {
-		List<ReadingEnergy> energyList = energy.getLatestList();
+	public List<ReadingEnergy> energyLatestNew(Set<Long> idList) {
+		List<ReadingEnergy> energyList = energy.getLatestList(idList);
 		// if this the very first time user creates readings
 		if (energyList.isEmpty()) {
 			for (Long tmpLong : idList) {
-
 				energyList.add(new ReadingEnergy(new LocalDate().minusDays(100), 0.0, meterEnergy.getById(tmpLong)));
 			}
-
 		} else {
 			// checks if there has been a new meter and adds fake '0' reading
 			for (ReadingEnergy readingEnergy : energyList) {
 				idList.remove(readingEnergy.getMeter().getId());
 			}
 			for (Long tmpLong : idList) {
-
 				energyList
 						.add(new ReadingEnergy(energyList.get(0).getReadingDate(), 0.0, meterEnergy.getById(tmpLong)));
 			}
 		}
 		return energyList;
-
 	}
-	
-	@Override
-	public List<ReadingEnergy> getPreviousReadingEnergy(String date) {
 
-	
-		return energy.getPrevious(date);
-		
-		
+	@Override
+	public List<ReadingEnergy> energyLatestEdit(Set<Long> idList) {
+		return energy.getLatestList(idList);
+	}
+
+	@Override
+	public List<ReadingEnergy> getPreviousReadingEnergy(String date, Set<Long> idList) {
+		return energy.getPrevious(date, idList);
 	}
 
 	/**
@@ -90,46 +88,39 @@ public class ReadingServiceImpl implements ReadingService {
 	 */
 	@Override
 	public List<ReadingGas> gasLatest(Set<Long> idList) {
+		List<ReadingGas> gasList = gas.getLatestList(idList);
 
-		List<ReadingGas> gasList = gas.getLatestList();
 		// if this the very first time user creates readings
 		if (gasList.isEmpty()) {
 			for (Long tmpLong : idList) {
-
 				gasList.add(new ReadingGas(new LocalDate().minusDays(100), 0.0, meterGas.getById(tmpLong)));
 			}
-
 		} else {
 			// checks if there has been a new meter and adds fake '0' reading
 			for (ReadingGas readingGas : gasList) {
 				idList.remove(readingGas.getMeter().getId());
 			}
 			for (Long tmpLong : idList) {
-
 				gasList.add(new ReadingGas(gasList.get(0).getReadingDate(), 0.0, meterGas.getById(tmpLong)));
 			}
 		}
 		return gasList;
-
 	}
 
 	@Override
 	public List<ReadingWater> waterLatest(Set<Long> idList) {
-		List<ReadingWater> waterList = water.getLatestList();
+		List<ReadingWater> waterList = water.getLatestList(idList);
 		// if this the very first time user creates readings
 		if (waterList.isEmpty()) {
 			for (Long tmpLong : idList) {
-
 				waterList.add(new ReadingWater(new LocalDate().minusDays(100), 0.0, meterWater.getById(tmpLong)));
 			}
-
 		} else {
 			// checks if there has been a new meter and adds fake '0' reading
 			for (ReadingWater readingWater : waterList) {
 				idList.remove(readingWater.getMeter().getId());
 			}
 			for (Long tmpLong : idList) {
-
 				waterList.add(new ReadingWater(waterList.get(0).getReadingDate(), 0.0, meterWater.getById(tmpLong)));
 			}
 		}
@@ -137,16 +128,14 @@ public class ReadingServiceImpl implements ReadingService {
 
 	}
 
-	
-
 	@Override
-	public List<ReadingGas> getPreviousReadingGas(String date) {
-		return gas.getPrevious(date);
+	public List<ReadingGas> getPreviousReadingGas(String date, Set<Long> idList) {
+		return gas.getPrevious(date, idList);
 	}
 
 	@Override
-	public List<ReadingWater> getPreviousReadingWater(String date) {
-		return water.getPrevious(date);
+	public List<ReadingWater> getPreviousReadingWater(String date, Set<Long> idList) {
+		return water.getPrevious(date, idList);
 	}
 
 	@Override

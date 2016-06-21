@@ -1,6 +1,7 @@
 package kamienica.feature.reading;
 
 import java.util.List;
+import java.util.Set;
 
 import org.hibernate.Query;
 import org.hibernate.criterion.Order;
@@ -33,7 +34,7 @@ public class ReadingGasDAOImpl extends AbstractDao<Long, ReadingGas> implements 
 	}
 
 	@Override
-	public List<ReadingGas> getPrevious(String readingDate) {
+	public List<ReadingGas> getPrevious(String readingDate, Set<Long> meterId) {
 		Query query = getSession()
 				.createSQLQuery(
 						"SELECT * FROM readinggas where readingDate =(SELECT max(readingDate) FROM readinggas WHERE readingDate < :date)")
@@ -53,7 +54,7 @@ public class ReadingGasDAOImpl extends AbstractDao<Long, ReadingGas> implements 
 	}
 
 	@Override
-	public List<ReadingGas> getLatestList() {
+	public List<ReadingGas> getLatestList(Set<Long> meterId) {
 		//		String original = "Select * from (select * from readingGas order by readingDate desc) as c group by meter_id";
 		String test = "Select * from readingGas where readingDate=(select MAX(readingDate) from readingGas)";
 		Query query = getSession().createSQLQuery(test).addEntity(ReadingGas.class);
@@ -100,4 +101,6 @@ public class ReadingGasDAOImpl extends AbstractDao<Long, ReadingGas> implements 
 			return 0;
 		}
 	}
+
+
 }

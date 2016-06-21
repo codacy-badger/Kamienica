@@ -21,11 +21,13 @@ import kamienica.core.ManagerEnergy;
 import kamienica.core.ManagerGas;
 import kamienica.core.ManagerPayment;
 import kamienica.core.ManagerWater;
+import kamienica.core.Media;
 import kamienica.feature.apartment.Apartment;
 import kamienica.feature.apartment.ApartmentService;
 import kamienica.feature.division.Division;
 import kamienica.feature.division.DivisionService;
 import kamienica.feature.division.DivisionValidator;
+import kamienica.feature.meter.MeterService;
 import kamienica.feature.payment.PaymentEnergy;
 import kamienica.feature.payment.PaymentGas;
 import kamienica.feature.payment.PaymentService;
@@ -53,16 +55,18 @@ public class InvoiceController {
 	private DivisionService divisionService;
 	@Autowired
 	private PaymentService paymentService;
-
-//	@InitBinder
-//	protected void initBinder(HttpServletRequest request, ServletRequestDataBinder binder) {
-//		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-//		sdf.setLenient(true);
-//		binder.registerCustomEditor(Date.class, new CustomDateEditor(sdf, true));
-//	}
-//
-//	Date date = new Date();
-//	SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
+	@Autowired
+	private MeterService meterService;
+	// @InitBinder
+	// protected void initBinder(HttpServletRequest request,
+	// ServletRequestDataBinder binder) {
+	// SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+	// sdf.setLenient(true);
+	// binder.registerCustomEditor(Date.class, new CustomDateEditor(sdf, true));
+	// }
+	//
+	// Date date = new Date();
+	// SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
 
 	// -------------------REJESTRACJA----------------------------------------------
 	@RequestMapping("/Admin/Invoice/invoiceGasRegister")
@@ -160,7 +164,7 @@ public class InvoiceController {
 		ArrayList<Division> division = (ArrayList<Division>) divisionService.getList();
 		ArrayList<Apartment> apartments = (ArrayList<Apartment>) apartmentService.getList();
 
-		readingGasOld = readingService.getPreviousReadingGas(invoice.getBaseReading().getReadingDate().toString());
+		readingGasOld = readingService.getPreviousReadingGas(invoice.getBaseReading().getReadingDate().toString(), meterService.getIdList(Media.GAS));
 
 		HashMap<String, List<ReadingWater>> waterForGas = readingService.getWaterReadingsForGasConsumption(invoice);
 		if (waterForGas.isEmpty()) {
@@ -203,7 +207,7 @@ public class InvoiceController {
 		ArrayList<Division> division = (ArrayList<Division>) divisionService.getList();
 		ArrayList<Apartment> apartments = (ArrayList<Apartment>) apartmentService.getList();
 
-		readingWaterOld = readingService.getPreviousReadingWater(invoice.getBaseReading().getReadingDate().toString());
+		readingWaterOld = readingService.getPreviousReadingWater(invoice.getBaseReading().getReadingDate().toString(),  meterService.getIdList(Media.GAS));
 
 		List<ReadingWater> readingWaterNew = readingService
 				.getReadingWaterByDate(invoice.getBaseReading().getReadingDate().toString());
@@ -236,7 +240,7 @@ public class InvoiceController {
 		ArrayList<Apartment> apartments = (ArrayList<Apartment>) apartmentService.getList();
 
 		List<ReadingEnergy> readingEnergyOld = readingService
-				.getPreviousReadingEnergy(invoice.getBaseReading().getReadingDate().toString());
+				.getPreviousReadingEnergy(invoice.getBaseReading().getReadingDate().toString(),  meterService.getIdList(Media.GAS));
 
 		List<ReadingEnergy> readingEnergyNew = readingService
 				.getReadingEnergyByDate(invoice.getBaseReading().getReadingDate().toString());

@@ -38,7 +38,7 @@
 
 			<div class='row'>
 				<c:if test="${!empty model.reading}">
-					<table class='table table-stripped table-hover'">
+					<table class='table table-stripped table-hover'>
 						<thead>
 							<tr>
 								<th>Data</th>
@@ -53,8 +53,8 @@
 							<tr>
 								<td><c:out value="${readingEnergy.readingDate}" /></td>
 								<td><c:out value="${readingEnergy.value}" /></td>
-								<td><c:out value="${readingEnergy.unit}" /></td>
-								<td><c:out value="${readingEnergy.meter.description}" /></td>
+								<td><c:out value='${readingEnergy.unit}' /></td>
+								<td><c:out 	value='${ !empty readingEnergy.meter ? readingEnergy.meter.description : "(usunięto)"}' /></td>
 								<td><a
 									href="<c:url value="${model.editUrl}${readingEnergy.readingDate}" />"
 									role="button" class="btn-xs btn-warning"><i

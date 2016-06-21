@@ -16,8 +16,11 @@
 <!-- MetisMenu CSS -->
 <link href="<c:url value='/static/css/metisMenu.min.css' />"
 	rel="stylesheet">
-
-
+<script>
+	$(function() {
+		$("#datepicker").datepicker();
+	});
+</script>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Rejestracja Odczytów Energii</title>
@@ -55,7 +58,9 @@
 								<input type="date" class="form-control" name="date" path='date'
 									placeholder="Pole wymagane" value="${model.date}"
 									min="${model.oldDate}" />
-
+								<p>
+									Date: <input type="text" id="datepicker">
+								</p>
 							</div>
 						</div>
 
@@ -64,8 +69,10 @@
 								class="col-sm-3 ">Wartość Odczytu</label>
 
 						</div>
-						
-						
+
+
+
+
 						<c:forEach items="${readingForm.currentReadings}" varStatus="i"
 							var="reading">
 							<div class="form-group">
@@ -77,13 +84,11 @@
 										class='form-control bfh-number' type="hidden" step="any"
 										min="${reading.value}"
 										name="currentReadings[${i.index}].value"
-										value="${reading.value}" />
-										
-										<input name="newReadings[${i.index}].meter"
+										value="${reading.value}" /> <input
+										name="newReadings[${i.index}].meter"
 										value="${reading.meter.id}" type="hidden" /> <input
 										class='form-control bfh-number' type="number" step="any"
-										min="${reading.value}"
-										name="newReadings[${i.index}].value"
+										min="${reading.value}" name="newReadings[${i.index}].value"
 										value="${reading.value}" />
 								</div>
 							</div>
@@ -106,7 +111,8 @@
 	<!-- Metis Menu Plugin JavaScript -->
 	<script src="<c:url value='/static/js/metisMenu.min.js' />"></script>
 
-
+	<script src="//code.jquery.com/jquery-1.10.2.js"></script>
+	<script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
 	<!-- Custom Theme JavaScript -->
 	<script src="<c:url value='/static/js/sb-admin-2.js' />"></script>
 </body>

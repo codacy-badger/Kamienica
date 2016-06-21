@@ -135,6 +135,8 @@ public class MeterController {
 	@RequestMapping("/Admin/Meter/meterEnergyList")
 	public ModelAndView meterEnergyList() {
 		Map<String, Object> model = new HashMap<String, Object>();
+		System.out.println("666666666666666666666666666");
+		System.out.println( meterService.getEnergyList());
 		model.put("meter", meterService.getEnergyList());
 		return new ModelAndView("/Admin/Meter/MeterEnergyList", model);
 

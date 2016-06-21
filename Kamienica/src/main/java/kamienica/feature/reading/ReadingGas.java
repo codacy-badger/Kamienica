@@ -31,7 +31,7 @@ public class ReadingGas extends ReadingAbstract implements Serializable {
 //	}
 
 	public String getUnit() {
-		return this.meter.getUnit();
+		return this.unit;
 	}
 
 	public boolean getIsCWU() {

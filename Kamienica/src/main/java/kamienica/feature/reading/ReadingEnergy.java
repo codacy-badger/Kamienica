@@ -45,7 +45,7 @@ public class ReadingEnergy extends ReadingAbstract implements Serializable {
 	}
 
 	public String getUnit() {
-		return this.meter.getUnit();
+		return this.unit;
 	}
 
 	public void setMeter(MeterEnergy meter) {

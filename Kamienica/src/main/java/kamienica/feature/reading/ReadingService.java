@@ -1,5 +1,6 @@
 package kamienica.feature.reading;
 
+import java.io.Reader;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Set;
@@ -45,14 +46,16 @@ public interface ReadingService {
 
 	public void deleteList(List<? extends ReadingAbstract> list, Media media);
 
-	public List<ReadingEnergy> getPreviousReadingEnergy(String date);
+	public List<ReadingEnergy> getPreviousReadingEnergy(String date, Set<Long> meterIdList);
 
-	public List<ReadingGas> getPreviousReadingGas(String date);
+	public List<ReadingGas> getPreviousReadingGas(String date, Set<Long> meterIdList);
 
-	public List<ReadingWater> getPreviousReadingWater(String date);
+	public List<ReadingWater> getPreviousReadingWater(String date, Set<Long> meterIdList);
 
-	public List<ReadingEnergy> energyLatest(Set<Long> meterIdList);
+	public List<ReadingEnergy> energyLatestNew(Set<Long> meterIdList);
 
+	public List<ReadingEnergy> energyLatestEdit(Set<Long> meterIdList);
+	
 	public List<ReadingGas> gasLatest(Set<Long> meterIdList);
 
 	public List<ReadingWater> waterLatest(Set<Long> meterIdList);
