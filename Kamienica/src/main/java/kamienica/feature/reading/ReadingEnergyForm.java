@@ -51,4 +51,12 @@ public class ReadingEnergyForm {
 	public LocalDate getDate() {
 		return currentReadings.get(0).getReadingDate();
 	}
+
+	public LocalDate getPreviousDate() {
+		if (previousReadings.isEmpty()) {
+			return LocalDate.parse("2010-01-01");
+		} else {
+			return previousReadings.get(0).getReadingDate();
+		}
+	}
 }

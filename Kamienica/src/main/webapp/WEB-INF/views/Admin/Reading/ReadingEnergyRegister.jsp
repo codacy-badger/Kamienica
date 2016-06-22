@@ -36,7 +36,7 @@
 					</div>
 				</div>
 			</div>
-		
+
 
 			<div class='row'>
 				<c:if test="${!empty model.error}">
@@ -56,10 +56,6 @@
 								<input type="date" class="form-control" name="date" path='date'
 									placeholder="Pole wymagane" value="${model.date}"
 									min="${model.oldDate}" />
-								<p>
-									<input class="span2" value="02/16/12"
-										data-date-format="mm/dd/yy" id="datepicker" type="text">
-								</p>
 
 							</div>
 						</div>
@@ -69,9 +65,6 @@
 								class="col-sm-3 ">Wartość Odczytu</label>
 
 						</div>
-
-
-
 
 						<c:forEach items="${readingForm.currentReadings}" varStatus="i"
 							var="reading">

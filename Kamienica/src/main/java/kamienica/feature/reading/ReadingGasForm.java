@@ -3,6 +3,8 @@ package kamienica.feature.reading;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.joda.time.LocalDate;
+
 public class ReadingGasForm {
 
 	private List<ReadingGas> currentReadings = new ArrayList<>();
@@ -33,5 +35,15 @@ public class ReadingGasForm {
 		return "OdczytGazFormularz [odczytyGazu=" + currentReadings + ", poprzednieOdczytyGazu=" + previousReadings
 				+ "]";
 	}
-
+	
+	public LocalDate getDate() {
+		return currentReadings.get(0).getReadingDate();
+	}
+	public LocalDate getPreviousDate() {
+		if (previousReadings.isEmpty()) {
+			return LocalDate.parse("2010-01-01");
+		} else {
+			return previousReadings.get(0).getReadingDate();
+		}
+	}
 }

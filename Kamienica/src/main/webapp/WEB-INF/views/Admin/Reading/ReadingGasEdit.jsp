@@ -50,7 +50,8 @@
 						<label for="date" class="col-sm-3 control-label">Data</label>
 						<div class="col-sm-9">
 							<input class="form-control" name="date" id="date" type="date"
-								class='ignore' value="${model.date}" min="${model.oldDate}" />
+								class='ignore' value="${model.date}" min="${model.oldDate}"
+								readonly="readonly" />
 						</div>
 					</div>
 
@@ -74,7 +75,7 @@
 									class="form-control" type="number" step="any"
 									name="currentReadings[${i.index}].value"
 									value="${reading.value}"
-									min="${readingForm.previousReadings[i.index].value}" />
+									min='${ !empty readingForm.previousReadings[i.index].value ? readingForm.previousReadings[i.index].value : 0}' />
 							</div>
 						</div>
 					</c:forEach>

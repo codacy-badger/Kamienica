@@ -3,9 +3,11 @@ package kamienica.feature.reading;
 import java.util.List;
 import java.util.Set;
 
-import org.apache.commons.collections.bag.SynchronizedSortedBag;
+import org.hibernate.Criteria;
 import org.hibernate.Query;
 import org.hibernate.criterion.Order;
+import org.hibernate.criterion.Projections;
+import org.joda.time.LocalDate;
 import org.springframework.stereotype.Repository;
 
 import kamienica.dao.AbstractDao;
@@ -51,7 +53,7 @@ public class ReadingEnergyDAOImpl extends AbstractDao<Long, ReadingEnergy>
 		String test = "Select * from readingEnergy where readingDate=(select MAX(readingDate) from readingEnergy) AND meter_id IN(:list)";
 		Query query = getSession().createSQLQuery(test).addEntity(ReadingEnergy.class).setParameterList("list",
 				meterId);
-		System.out.println("nowa metoda");
+
 		return query.list();
 
 	}
@@ -104,6 +106,21 @@ public class ReadingEnergyDAOImpl extends AbstractDao<Long, ReadingEnergy>
 		} catch (Exception e) {
 			return 0;
 		}
+	}
+
+	@Override
+	public void deleteLatestReadings(LocalDate date) {
+		Query query = getSession().createSQLQuery("delete from readingenergy where readingDate=:date and resolved=:res");
+		query.setParameter("date", date.toString()).setParameter("res", false);
+		query.executeUpdate();
+
+	}
+
+	@Override
+	public LocalDate getLatestDate() {
+		Criteria criteria = getSession().createCriteria(ReadingEnergy.class)
+				.setProjection(Projections.max("readingDate"));
+		return (LocalDate) criteria.uniqueResult();
 	}
 
 }

@@ -3,8 +3,11 @@ package kamienica.feature.reading;
 import java.util.List;
 import java.util.Set;
 
+import org.hibernate.Criteria;
 import org.hibernate.Query;
 import org.hibernate.criterion.Order;
+import org.hibernate.criterion.Projections;
+import org.joda.time.LocalDate;
 import org.springframework.stereotype.Repository;
 
 import kamienica.dao.AbstractDao;
@@ -102,5 +105,18 @@ public class ReadingGasDAOImpl extends AbstractDao<Long, ReadingGas> implements 
 		}
 	}
 
+	@Override
+	public void deleteLatestReadings(LocalDate date) {
+		Query query = getSession().createSQLQuery("delete from readingGas where readingDate=:date and resolved = :res");
+		query.setParameter("date", date.toString()).setParameter("res", false);
+		query.executeUpdate();
 
+	}
+
+	@Override
+	public LocalDate getLatestDate() {
+		Criteria criteria = getSession().createCriteria(ReadingGas.class)
+				.setProjection(Projections.max("readingDate"));
+		return (LocalDate) criteria.uniqueResult();
+	}
 }

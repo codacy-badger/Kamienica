@@ -77,6 +77,16 @@ public class ReadingServiceImpl implements ReadingService {
 	}
 
 	@Override
+	public List<ReadingGas> gasLatestEdit(Set<Long> idList) {
+		return gas.getLatestList(idList);
+	}
+
+	@Override
+	public List<ReadingWater> waterLatestEdit(Set<Long> idList) {
+		return water.getLatestList(idList);
+	}
+
+	@Override
 	public List<ReadingEnergy> getPreviousReadingEnergy(String date, Set<Long> idList) {
 		return energy.getPrevious(date, idList);
 	}
@@ -184,24 +194,6 @@ public class ReadingServiceImpl implements ReadingService {
 	}
 
 	@Override
-	public void updateEnergy(ReadingEnergy reading) {
-		energy.update(reading);
-
-	}
-
-	@Override
-	public void updateGas(ReadingGas reading) {
-		gas.update(reading);
-
-	}
-
-	@Override
-	public void updateWater(ReadingWater reading) {
-		water.update(reading);
-
-	}
-
-	@Override
 	public ReadingEnergy getEnergyById(Long id) {
 		return energy.getById(id);
 	}
@@ -260,9 +252,64 @@ public class ReadingServiceImpl implements ReadingService {
 	}
 
 	@Override
-	public void updateEnergyList(List<ReadingEnergy> readings) {
+	public void updateEnergyList(List<ReadingEnergy> readings, String date) {
 		for (ReadingEnergy readingEnergy : readings) {
+			if (readingEnergy.getValue() < 0) {
+				throw new IllegalArgumentException();
+			}
+			readingEnergy.setReadingDate(LocalDate.parse(date));
+			readingEnergy.setUnit(readingEnergy.getMeter().getUnit());
 			energy.update(readingEnergy);
+		}
+
+	}
+
+	@Override
+	public void updateGasList(List<ReadingGas> readings, String date) {
+		for (ReadingGas readingEnergy : readings) {
+			if (readingEnergy.getValue() < 0) {
+				throw new IllegalArgumentException();
+			}
+			readingEnergy.setReadingDate(LocalDate.parse(date));
+			readingEnergy.setUnit(readingEnergy.getMeter().getUnit());
+			gas.update(readingEnergy);
+		}
+
+	}
+
+	@Override
+	public void updateWaterList(List<ReadingWater> readings, String date) {
+		for (ReadingWater readingEnergy : readings) {
+			if (readingEnergy.getValue() < 0) {
+				throw new IllegalArgumentException();
+			}
+			readingEnergy.setReadingDate(LocalDate.parse(date));
+			readingEnergy.setUnit(readingEnergy.getMeter().getUnit());
+			water.update(readingEnergy);
+		}
+
+	}
+
+	@Override
+	public void deleteLatestReadings(Media media) {
+		switch (media) {
+		case ENERGY:
+
+			energy.deleteLatestReadings(energy.getLatestDate());
+
+			break;
+		case GAS:
+
+			gas.deleteLatestReadings(gas.getLatestDate());
+
+			break;
+		case WATER:
+
+			water.deleteLatestReadings(water.getLatestDate());
+
+			break;
+		default:
+			break;
 		}
 
 	}

@@ -56,19 +56,27 @@
 								<td><c:out value='${readingEnergy.unit}' /></td>
 								<td><c:out
 										value='${ !empty readingEnergy.meter ? readingEnergy.meter.description : "(usunięto)"}' /></td>
-								<td><a
-									href="<c:url value="${model.editUrl}${readingEnergy.readingDate}" />"
-									role="button" class="btn-xs btn-warning"><i
-										class="fa fa-pencil-square-o" aria-hidden="true"></i></a></td>
-								<td><a
-									href="<c:url value="${model.delUrl}${readingEnergy.readingDate}"  />"
-									onclick="return confirm('UWAGA!!! Usunięte zostaną wszystkie odczyty z tą datą!\n Na pewno usunąć?')"
-									role="button" class="btn-xs btn-danger"><i
-										class="fa fa-times" aria-hidden="true"></i> </a></td>
+
+
+								<td><c:if
+										test="${ model.date == readingEnergy.readingDate }">
+										<a
+											href="<c:url value="${model.editUrl}${readingEnergy.readingDate}" />"
+											role="button" class="btn-xs btn-warning"><i
+											class="fa fa-pencil-square-o" aria-hidden="true"></i></a>
+									</c:if></td>
+								<td><c:if
+										test="${ model.date == readingEnergy.readingDate }">
+										<a
+											href="<c:url value="${model.delUrl}${readingEnergy.readingDate}"  />"
+											onclick="return confirm('UWAGA!!! Usunięte zostaną wszystkie odczyty z tą datą!\n Na pewno usunąć?')"
+											role="button" class="btn-xs btn-danger"><i
+											class="fa fa-times" aria-hidden="true"></i> </a>
+									</c:if></td>
 
 							</tr>
 						</c:forEach>
-					</table>	${  model.media == 'Energia' ? 'jest energia :)' : 'inne'} <br> ${model.date =='2016-06-21'}
+					</table>
 				</c:if>
 			</div>
 		</div>
