@@ -16,11 +16,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import kamienica.core.Media;
-import kamienica.feature.meter.MeterAbstract;
-import kamienica.feature.meter.MeterEnergy;
-import kamienica.feature.meter.MeterGas;
 import kamienica.feature.meter.MeterService;
-import kamienica.feature.meter.MeterWater;
 
 @Controller
 public class ReadingController {
@@ -36,9 +32,10 @@ public class ReadingController {
 	@RequestMapping("/Admin/Reading/readingEnergyRegister")
 	public ModelAndView readingEnergyRegister(@ModelAttribute("readingForm") ReadingEnergyForm readingForm,
 			BindingResult result) {
-		List<MeterEnergy> meterEnergy = meterService.getEnergyList();
+System.out.println("-------------------------------");
+System.out.println(meterService.ifMainExists(Media.ENERGY));
 		HashMap<String, Object> model = new HashMap<>();
-		if (!validateMeters(meterEnergy)) {
+		if (!meterService.ifMainExists(Media.ENERGY)) {
 			model.put("error", NO_MAIN_COUNTER);
 			return new ModelAndView("/Admin/Reading/ReadingEnergyRegister", "model", model);
 		}
@@ -61,9 +58,9 @@ public class ReadingController {
 	@RequestMapping("/Admin/Reading/readingGasRegister")
 	public ModelAndView readingGasRegister(@ModelAttribute("readingForm") ReadingGasForm readingForm,
 			BindingResult result) {
-		List<MeterGas> meterGas = meterService.getGasList();
+
 		HashMap<String, Object> model = new HashMap<>();
-		if (!validateMeters(meterGas)) {
+		if (!meterService.ifMainExists(Media.GAS)) {
 			model.put("error", NO_MAIN_COUNTER);
 			model.put("url", "/Admin/Reading/readingEnergySave.html");
 			return new ModelAndView("/Admin/Reading/ReadingEnergyRegister", "model", model);
@@ -86,9 +83,9 @@ public class ReadingController {
 	@RequestMapping("/Admin/Reading/readingWaterRegister")
 	public ModelAndView readingWaterRegister(@ModelAttribute("readingForm") ReadingWaterForm readingWaterForm,
 			BindingResult result) {
-		List<MeterWater> meterWater = meterService.getWaterList();
+
 		HashMap<String, Object> model = new HashMap<>();
-		if (!validateMeters(meterWater)) {
+		if (!meterService.ifMainExists(Media.WATER)) {
 			model.put("error", NO_MAIN_COUNTER);
 			return new ModelAndView("/Admin/Reading/ReadingEnergyRegister", "model", model);
 		}
@@ -111,6 +108,12 @@ public class ReadingController {
 	public ModelAndView readingEnergySave(@ModelAttribute("readingForm") ReadingEnergyForm readingForm,
 			BindingResult result, @RequestParam String date) {
 
+		HashMap<String, Object> model = new HashMap<>();
+		if (!meterService.ifMainExists(Media.WATER)) {
+			model.put("error", NO_MAIN_COUNTER);
+			return new ModelAndView("/Admin/Reading/ReadingEnergyRegister", "model", model);
+		}
+		
 		if (ReadingValidator.validateMeterReadings(readingForm.getCurrentReadings(), readingForm.getNewReadings())) {
 			return new ModelAndView("/Admin/Reading/ReadingEnergyRegister", "error",
 					"Nowa wartość nie może być mniejsza od poprzedniej");
@@ -304,20 +307,6 @@ public class ReadingController {
 
 		readingService.updateWaterList(readingForm.getCurrentReadings(), date);
 		return new ModelAndView("redirect:/Admin/Reading/readingList.html?media=WATER");
-	}
-
-	// -----------------------CONTROLER_METHODS-----------------------------------------------------------------------------
-	private static boolean validateMeters(List<? extends MeterAbstract> meters) {
-		if (meters.isEmpty()) {
-			return false;
-		}
-		for (MeterAbstract meter : meters) {
-			if (meter.getApartment() == null) {
-				return true;
-			}
-		}
-
-		return false;
 	}
 
 }

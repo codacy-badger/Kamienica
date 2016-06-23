@@ -75,14 +75,17 @@ public abstract class MeterAbstract {
 
 	@Override
 	public String toString() {
-		String opisMieszkania;
-		try {
-			opisMieszkania = apartment.getDescription();
-		} catch (NullPointerException e) {
 
-			opisMieszkania = "brak";
+		if (this.apartment == null) {
+			return "\n" + "id=" + id + ", description=" + description + ", serialNumber=" + serialNumber + ", unit="
+					+ unit + ", apartment= null , main=" + main + ", deactivation=" + deactivation + "]";
+
+		} else {
+
+			return "\nid=" + id + ", description=" + description + ", serialNumber=" + serialNumber + ", unit=" + unit
+					+ ", apartment=" + apartment + ", main=" + main + ", deactivation=" + deactivation + "]";
 		}
-		return "\n" + description + ", serialNumber:" + serialNumber + ", Mieszkanie:" + opisMieszkania;
+
 	}
 
 	public Apartment getApartment() {
@@ -91,6 +94,9 @@ public abstract class MeterAbstract {
 
 	public void setApartment(Apartment apartment) {
 		this.apartment = apartment;
+		if (apartment == null) {
+			this.main = true;
+		}
 	}
 
 	public Long getId() {
@@ -106,7 +112,9 @@ public abstract class MeterAbstract {
 	}
 
 	public void setMain(boolean main) {
+
 		this.main = main;
+
 	}
 
 }

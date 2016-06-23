@@ -9,6 +9,7 @@ import org.hibernate.Criteria;
 import org.hibernate.Query;
 import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Projections;
+import org.hibernate.criterion.Restrictions;
 import org.joda.time.LocalDate;
 import org.springframework.stereotype.Repository;
 
@@ -137,7 +138,8 @@ public class ReadingWaterDAOImpl extends AbstractDao<Long, ReadingWater> impleme
 
 	@Override
 	public void deleteLatestReadings(LocalDate date) {
-		Query query = getSession().createSQLQuery("delete from readingWater where readingDate=:date and resolved = :res");
+		Query query = getSession()
+				.createSQLQuery("delete from readingWater where readingDate=:date and resolved = :res");
 		query.setParameter("date", date.toString()).setParameter("res", false);
 		query.executeUpdate();
 
@@ -149,4 +151,6 @@ public class ReadingWaterDAOImpl extends AbstractDao<Long, ReadingWater> impleme
 				.setProjection(Projections.max("readingDate"));
 		return (LocalDate) criteria.uniqueResult();
 	}
+
+
 }

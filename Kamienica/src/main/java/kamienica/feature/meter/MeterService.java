@@ -38,5 +38,8 @@ public interface MeterService {
 	public MeterWater getWaterByID(Long id);
 	
 	public Set<Long> getIdList(Media media);
+	
+
+	public boolean ifMainExists(Media media);
 
 }

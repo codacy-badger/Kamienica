@@ -44,7 +44,7 @@ public interface ReadingService {
 
 	public void deleteList(List<? extends ReadingAbstract> list, Media media);
 
-	//public void deleteLatestReadings(Media media);
+	// public void deleteLatestReadings(Media media);
 
 	public List<ReadingEnergy> getPreviousReadingEnergy(String date, Set<Long> meterIdList);
 
@@ -55,9 +55,9 @@ public interface ReadingService {
 	public List<ReadingEnergy> energyLatestNew(Set<Long> meterIdList);
 
 	public List<ReadingEnergy> energyLatestEdit(Set<Long> meterIdList);
-	
+
 	public List<ReadingGas> gasLatestEdit(Set<Long> meterIdList);
-	
+
 	public List<ReadingWater> waterLatestEdit(Set<Long> meterIdList);
 
 	public List<ReadingGas> gasLatest(Set<Long> meterIdList);
@@ -73,6 +73,7 @@ public interface ReadingService {
 	public List<ReadingWater> getUnresolvedReadingsWater();
 
 	public void deleteLatestReadings(Media media);
+
 
 	// public Set<Long> getEnergyIdList();
 

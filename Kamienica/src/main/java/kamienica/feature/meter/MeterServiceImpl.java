@@ -8,20 +8,19 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import kamienica.core.Media;
-import kamienica.dao.DaoInterface;
 
 @Service
 @Transactional
 public class MeterServiceImpl implements MeterService {
 
 	@Autowired
-	DaoInterface<MeterEnergy> energy;
+	MeterDao<MeterEnergy> energy;
 
 	@Autowired
-	DaoInterface<MeterGas> gas;
+	MeterDao<MeterGas> gas;
 
 	@Autowired
-	DaoInterface<MeterWater> water;
+	MeterDao<MeterWater> water;
 
 	@Override
 	public void saveGas(MeterGas meter) {
@@ -132,4 +131,23 @@ public class MeterServiceImpl implements MeterService {
 		}
 	}
 
+	@Override
+	public boolean ifMainExists(Media media) {
+		switch (media) {
+		case ENERGY:
+
+			return energy.ifMainExists();
+
+		case GAS:
+
+			return gas.ifMainExists();
+
+		case WATER:
+
+			return water.ifMainExists();
+
+		default:
+			return false;
+		}
+	}
 }

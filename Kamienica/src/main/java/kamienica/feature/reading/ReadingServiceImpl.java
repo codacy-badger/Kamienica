@@ -314,6 +314,7 @@ public class ReadingServiceImpl implements ReadingService {
 
 	}
 
+
 	// @Override
 	// public Set<Long> getEnergyIdList() {
 	// return energy.getIdList();

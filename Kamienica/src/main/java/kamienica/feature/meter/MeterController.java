@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
+import kamienica.core.Media;
 import kamienica.feature.apartment.Apartment;
 import kamienica.feature.apartment.ApartmentService;
 
@@ -28,16 +29,16 @@ public class MeterController {
 	@Autowired
 	private MeterService meterService;
 
-//	@InitBinder
-//	public void initBinder(WebDataBinder binder) {
-//		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-//		sdf.setLenient(true);
-//		binder.registerCustomEditor(Date.class, new CustomDateEditor(sdf, true));
-//	}
+	// @InitBinder
+	// public void initBinder(WebDataBinder binder) {
+	// SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+	// sdf.setLenient(true);
+	// binder.registerCustomEditor(Date.class, new CustomDateEditor(sdf, true));
+	// }
 
 	private final String DUPLICATE = "Istnieje już w bazie licznik z takim numerem seryjnym";
 	private final String WARM_CWU = "Licznik Główny nie może być licznikiem CWU bądź Ciepłej Wody";
-
+	private final String MAIN_EXISTS = "Istnieje już w bazie licznik główny";
 	// ------------------Register-------------------------------------
 
 	@RequestMapping("/Admin/Meter/meterEnergyRegister")
@@ -66,6 +67,10 @@ public class MeterController {
 	@RequestMapping(value = "/Admin/Meter/meterEnergySave", method = RequestMethod.POST)
 	public ModelAndView meterEnergySave(@Valid @ModelAttribute("meter") MeterEnergy meter, BindingResult result) {
 
+		if (meter.main && meterService.ifMainExists(Media.ENERGY)) {
+			result.rejectValue("apartment", "error.meter", MAIN_EXISTS);
+		}
+
 		if (result.hasErrors()) {
 			Map<String, Object> model = prepareModel();
 			model.put("url", "/Admin/Meter/meterEnergySave.html");
@@ -87,6 +92,10 @@ public class MeterController {
 	public ModelAndView meterWaterSave(@Valid @ModelAttribute("meter") MeterWater meter, BindingResult result) {
 		if (meter.getApartment() == null && meter.getIsWarmWater() == true) {
 			result.rejectValue("isWarmWater", "error.meter", WARM_CWU);
+		}
+
+		if (meter.main && meterService.ifMainExists(Media.WATER)) {
+			result.rejectValue("apartment", "error.meter", MAIN_EXISTS);
 		}
 
 		if (result.hasErrors()) {
@@ -112,6 +121,9 @@ public class MeterController {
 		if (meter.getApartment() == null && meter.isCwu() == true) {
 			result.rejectValue("cwu", "error.meter", WARM_CWU);
 		}
+		if (meter.main && meterService.ifMainExists(Media.GAS)) {
+			result.rejectValue("apartment", "error.meter", MAIN_EXISTS);
+		}
 		if (result.hasErrors()) {
 			Map<String, Object> model = prepareModel();
 			model.put("url", "/Admin/Meter/meterGasSave.html");
@@ -135,8 +147,7 @@ public class MeterController {
 	@RequestMapping("/Admin/Meter/meterEnergyList")
 	public ModelAndView meterEnergyList() {
 		Map<String, Object> model = new HashMap<String, Object>();
-		System.out.println("666666666666666666666666666");
-		System.out.println( meterService.getEnergyList());
+
 		model.put("meter", meterService.getEnergyList());
 		return new ModelAndView("/Admin/Meter/MeterEnergyList", model);
 

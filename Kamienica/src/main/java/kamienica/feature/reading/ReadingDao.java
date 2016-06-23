@@ -30,4 +30,6 @@ public interface ReadingDao<R extends ReadingAbstract, I extends Invoice> extend
 	public void deleteLatestReadings(LocalDate date);
 
 	public LocalDate getLatestDate();
+	
+
 }
