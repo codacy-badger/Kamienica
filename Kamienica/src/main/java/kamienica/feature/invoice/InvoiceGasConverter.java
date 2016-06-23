@@ -20,7 +20,7 @@ public class InvoiceGasConverter implements Converter<Object, InvoiceGas> {
 
 	@Override
 	public InvoiceGas convert(Object element) {
-		Integer id = Integer.parseInt((String) element);
+		Long id = Long.parseLong((String) element);
 		return service.getGasByID(id);
 	}
 

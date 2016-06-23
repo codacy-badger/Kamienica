@@ -1,8 +1,11 @@
-package kamienica.feature.apartment;
+package kamienica.conventer;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.convert.converter.Converter;
 import org.springframework.stereotype.Component;
+
+import kamienica.feature.apartment.Apartment;
+import kamienica.feature.apartment.ApartmentService;
 
 /**
  * 
@@ -20,7 +23,7 @@ public class ApartmentConverter implements Converter<Object, Apartment> {
 
 	@Override
 	public Apartment convert(Object element) {
-		Integer id = Integer.parseInt((String) element);
+		Long id = Long.parseLong((String) element);
 		return service.getById(id);
 	}
 

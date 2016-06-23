@@ -17,6 +17,7 @@ import kamienica.feature.reading.ReadingWater;
 import kamienica.feature.reading.ReadingWaterDAO;
 
 @Service
+@Transactional
 public class InvoiceServiceImpl implements InvoiceService {
 
 	@Autowired
@@ -41,7 +42,7 @@ public class InvoiceServiceImpl implements InvoiceService {
 	@Override
 	public void saveEnergy(InvoiceEnergy invoice, List<PaymentEnergy> payment) {
 		invoiceEnergy.save(invoice);
-		readingEnergy.ResolveReadings(invoice);
+		readingEnergy.resolveReadings(invoice);
 		for (PaymentEnergy paymentEnergy : payment) {
 			paymentEnergyDao.save(paymentEnergy);
 		}
@@ -51,7 +52,7 @@ public class InvoiceServiceImpl implements InvoiceService {
 	@Override
 	public void saveGas(InvoiceGas invoice, List<PaymentGas> payment) {
 		invoiceGas.save(invoice);
-		readingGas.ResolveReadings(invoice);
+		readingGas.resolveReadings(invoice);
 
 		for (PaymentGas paymentGas : payment) {
 			paymentGasDao.save(paymentGas);
@@ -61,7 +62,7 @@ public class InvoiceServiceImpl implements InvoiceService {
 	@Override
 	public void saveWater(InvoiceWater invoice, List<PaymentWater> payment) {
 		invoiceWater.save(invoice);
-		readingWater.ResolveReadings(invoice);
+		readingWater.resolveReadings(invoice);
 
 		for (PaymentWater paymentWater : payment) {
 			paymentWaterDao.save(paymentWater);
@@ -70,8 +71,8 @@ public class InvoiceServiceImpl implements InvoiceService {
 	}
 
 	@Override
-	public void deleteEnergyByID(int id) {
-		readingEnergy.UnresolveReadings(invoiceEnergy.getById(id));
+	public void deleteEnergyByID(Long id) {
+		readingEnergy.unresolveReadings(invoiceEnergy.getById(id));
 		invoiceEnergy.deleteById(id);
 	}
 
@@ -85,7 +86,7 @@ public class InvoiceServiceImpl implements InvoiceService {
 	}
 
 	@Override
-	public InvoiceEnergy getEnergyByID(int id) {
+	public InvoiceEnergy getEnergyByID(Long id) {
 		return invoiceEnergy.getById(id);
 	}
 
@@ -95,16 +96,16 @@ public class InvoiceServiceImpl implements InvoiceService {
 	}
 
 	@Override
-	public void deleteGasByID(int id) {
-		readingGas.UnresolveReadings(invoiceGas.getById(id));
+	public void deleteGasByID(Long id) {
+		readingGas.unresolveReadings(invoiceGas.getById(id));
 		invoiceGas.deleteById(id);
 
 	}
 
 	@Override
-	public void deleteWaterByID(int id) {
+	public void deleteWaterByID(Long id) {
 		// temporaryFix...
-		readingWater.UnresolveReadings(invoiceWater.getById(id));
+		readingWater.unresolveReadings(invoiceWater.getById(id));
 		invoiceWater.deleteById(id);
 
 	}
@@ -129,12 +130,12 @@ public class InvoiceServiceImpl implements InvoiceService {
 	}
 
 	@Override
-	public InvoiceGas getGasByID(int id) {
+	public InvoiceGas getGasByID(Long id) {
 		return invoiceGas.getById(id);
 	}
 
 	@Override
-	public InvoiceWater getWaterByID(int id) {
+	public InvoiceWater getWaterByID(Long id) {
 		return invoiceWater.getById(id);
 	}
 
@@ -207,21 +208,4 @@ public class InvoiceServiceImpl implements InvoiceService {
 		return invoiceGas.getLastResolved();
 	}
 
-	@Override
-	public int getDaysForGas() {
-		return invoiceGas.getDaysOfLastInvoice();
-
-	}
-
-	@Override
-	public int getDaysForWater() {
-		return invoiceWater.getDaysOfLastInvoice();
-
-	}
-
-	@Override
-	public int getDaysForEnergy() {
-		return invoiceEnergy.getDaysOfLastInvoice();
-
-	}
 }

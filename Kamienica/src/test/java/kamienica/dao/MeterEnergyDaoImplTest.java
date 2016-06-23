@@ -13,8 +13,8 @@ public class MeterEnergyDaoImplTest extends EntityDaoImplTest {
 
 	@Test
 	public void findById() {
-		Assert.assertNotNull(meterDao.getById(1));
-		Assert.assertNull(meterDao.getById(7));
+		Assert.assertNotNull(meterDao.getById(1L));
+		Assert.assertNull(meterDao.getById(7L));
 	}
 
 	@Test
@@ -25,13 +25,13 @@ public class MeterEnergyDaoImplTest extends EntityDaoImplTest {
 
 	@Test
 	public void deleteById() {
-		meterDao.deleteById(5);
+		meterDao.deleteById(5L);
 		Assert.assertEquals(meterDao.getList().size(), 4);
 	}
 
 	@Test
 	public void deletetByInvalidId() {
-		meterDao.deleteById(9);
+		meterDao.deleteById(9L);
 		Assert.assertEquals(meterDao.getList().size(), 4);
 	}
 

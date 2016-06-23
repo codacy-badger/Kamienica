@@ -21,7 +21,7 @@ public class DivisionManager {
 				tmp.setApartment(ap);
 				tmp.setTenant(ten);
 				if (ap.getApartmentNumber() == 0) {
-					tmp.setDivisionValue(Double.valueOf(decimalFormat((double) (1 / (double) tenantList.size()))));
+					tmp.setDivisionValue(Double.valueOf(decimalFormat(1 / (double) tenantList.size())));
 				} else if (ap.getApartmentNumber() == ten.getApartment().getApartmentNumber()) {
 					tmp.setDivisionValue(1);
 				} else {

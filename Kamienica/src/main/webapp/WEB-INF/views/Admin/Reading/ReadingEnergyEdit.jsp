@@ -35,13 +35,11 @@
 				</div>
 			</div>
 
-
 			<div class='row'>
 				<c:if test="${!empty model.error}">
 					<p class='alert alert-danger'>${model.error}</p>
 				</c:if>
 			</div>
-
 
 			<c:if test="${!empty readingForm.currentReadings}">
 				<c:url var="odczyty"
@@ -53,12 +51,11 @@
 					<div class="form-group">
 						<label for="date" class="col-sm-3 control-label">Data</label>
 						<div class="col-sm-9">
-							<input name="date"class="form-control"  id="date" type="date" class='ignore'
-								value="${model.date}" min="${model.oldDate}" />
+							<input name="date" class="form-control" id="date" type="date"
+								class='ignore' value="${model.date}" min="${model.oldDate}"
+								readonly="readonly" />
 						</div>
 					</div>
-
-
 
 					<div class="row">
 						<label class="col-sm-3 text-right">Opis Licznika </label><label
@@ -81,7 +78,7 @@
 									type="number" step="any" class="form-control"
 									name="currentReadings[${i.index}].value"
 									value="${reading.value}"
-									min="${readingForm.previousReadings[i.index].value}" />
+									min= '${ !empty readingForm.previousReadings[i.index].value ? readingForm.previousReadings[i.index].value : 0}'  />
 							</div>
 						</div>
 					</c:forEach>
@@ -100,11 +97,8 @@
 
 	<!-- Bootstrap Core JavaScript -->
 	<script src="<c:url value='/static/js/bootstrap.min.js' />"></script>
-
 	<!-- Metis Menu Plugin JavaScript -->
 	<script src="<c:url value='/static/js/metisMenu.min.js' />"></script>
-
-
 	<!-- Custom Theme JavaScript -->
 	<script src="<c:url value='/static/js/sb-admin-2.js' />"></script>
 </body>

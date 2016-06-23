@@ -3,6 +3,8 @@ package kamienica.feature.reading;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.joda.time.LocalDate;
+
 public class ReadingWaterForm {
 
 	private List<ReadingWater> currentReadings = new ArrayList<>();
@@ -34,4 +36,15 @@ public class ReadingWaterForm {
 				+ "]";
 	}
 
+	public LocalDate getDate() {
+		return currentReadings.get(0).getReadingDate();
+	}
+
+	public LocalDate getPreviousDate() {
+		if (previousReadings.isEmpty()) {
+			return LocalDate.parse("2010-01-01");
+		} else {
+			return previousReadings.get(0).getReadingDate();
+		}
+	}
 }

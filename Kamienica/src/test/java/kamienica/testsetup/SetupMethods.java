@@ -1,12 +1,12 @@
 package kamienica.testsetup;
 
 import java.text.DateFormat;
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 import java.util.Locale;
+
+import org.joda.time.LocalDate;
 
 import kamienica.feature.apartment.Apartment;
 import kamienica.feature.division.Division;
@@ -44,11 +44,11 @@ public class SetupMethods {
 
 		Tenant tenant2 = new Tenant("Maciej (Admin)", "Fol", "kowalski@wp.pl", "222222", apartments.get(1));
 		tenant2.setStatus(UserStatus.ACTIVE.getUserStatus());
-		tenant2.setId(1);
+		tenant2.setId(1L);
 		tenant2.setRole(UserRole.ADMIN.getUserRole());
 		Tenant tenant3 = new Tenant("Adam", "Nowak", "nowak@wp.pl", "111111", apartments.get(2));
 		tenant3.setStatus(UserStatus.ACTIVE.getUserStatus());
-		tenant3.setId(2);
+		tenant3.setId(2L);
 
 		ArrayList<Tenant> tenants = new ArrayList<Tenant>();
 		tenants.add(tenant2);
@@ -58,15 +58,15 @@ public class SetupMethods {
 
 	public static ArrayList<Division> getDivisionList(List<Apartment> apartments, List<Tenant> tenants) {
 		ArrayList<Division> division = new ArrayList<>();
-		division.add(new Division(1, new Date(), tenants.get(0), apartments.get(0), 0.5));
-		division.add(new Division(2, new Date(), tenants.get(0), apartments.get(1), 1));
-		division.add(new Division(3, new Date(), tenants.get(0), apartments.get(2), 0));
-		division.add(new Division(4, new Date(), tenants.get(0), apartments.get(3), 1));
+		division.add(new Division(1L, new LocalDate(), tenants.get(0), apartments.get(0), 0.5));
+		division.add(new Division(2L, new LocalDate(), tenants.get(0), apartments.get(1), 1));
+		division.add(new Division(3L, new LocalDate(), tenants.get(0), apartments.get(2), 0));
+		division.add(new Division(4L, new LocalDate(), tenants.get(0), apartments.get(3), 1));
 
-		division.add(new Division(6, new Date(), tenants.get(1), apartments.get(0), 0.5));
-		division.add(new Division(7, new Date(), tenants.get(1), apartments.get(1), 0));
-		division.add(new Division(8, new Date(), tenants.get(1), apartments.get(2), 1));
-		division.add(new Division(9, new Date(), tenants.get(1), apartments.get(3), 0));
+		division.add(new Division(6L, new LocalDate(), tenants.get(1), apartments.get(0), 0.5));
+		division.add(new Division(7L, new LocalDate(), tenants.get(1), apartments.get(1), 0));
+		division.add(new Division(8L, new LocalDate(), tenants.get(1), apartments.get(2), 1));
+		division.add(new Division(9L, new LocalDate(), tenants.get(1), apartments.get(3), 0));
 
 		return division;
 	}
@@ -112,68 +112,52 @@ public class SetupMethods {
 
 	public static List<ReadingWater> getReadingsWaterOld(List<MeterWater> meters) {
 		List<ReadingWater> readings = new ArrayList<>();
-		DateFormat format = new SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH);
-		try {
-			readings.add(new ReadingWater(format.parse("2015-02-01"), 80, meters.get(6)));
-			readings.add(new ReadingWater(format.parse("2015-02-01"), 10, meters.get(0)));
-			readings.add(new ReadingWater(format.parse("2015-02-01"), 10, meters.get(1)));
-			readings.add(new ReadingWater(format.parse("2015-02-01"), 15, meters.get(2)));
-			readings.add(new ReadingWater(format.parse("2015-02-01"), 15, meters.get(3)));
-			readings.add(new ReadingWater(format.parse("2015-02-01"), 12, meters.get(4)));
-			readings.add(new ReadingWater(format.parse("2015-02-01"), 12, meters.get(5)));
-		} catch (ParseException e) {
-			e.printStackTrace();
-		}
+		readings.add(new ReadingWater(LocalDate.parse("2015-02-01"), 80, meters.get(6)));
+		readings.add(new ReadingWater(LocalDate.parse("2015-02-01"), 10, meters.get(0)));
+		readings.add(new ReadingWater(LocalDate.parse("2015-02-01"), 10, meters.get(1)));
+		readings.add(new ReadingWater(LocalDate.parse("2015-02-01"), 15, meters.get(2)));
+		readings.add(new ReadingWater(LocalDate.parse("2015-02-01"), 15, meters.get(3)));
+		readings.add(new ReadingWater(LocalDate.parse("2015-02-01"), 12, meters.get(4)));
+		readings.add(new ReadingWater(LocalDate.parse("2015-02-01"), 12, meters.get(5)));
+
 		return readings;
 	}
 
 	public static List<ReadingWater> getReadingsWaterNew(List<MeterWater> meters) {
 		List<ReadingWater> readings = new ArrayList<>();
-		DateFormat format = new SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH);
-		try {
-			readings.add(new ReadingWater(format.parse("2015-03-01"), 100, meters.get(6)));
-			readings.add(new ReadingWater(format.parse("2015-03-01"), 11, meters.get(0)));
-			readings.add(new ReadingWater(format.parse("2015-03-01"), 11, meters.get(1)));
-			readings.add(new ReadingWater(format.parse("2015-03-01"), 20, meters.get(2)));
-			readings.add(new ReadingWater(format.parse("2015-03-01"), 20, meters.get(3)));
-			readings.add(new ReadingWater(format.parse("2015-03-01"), 15, meters.get(4)));
-			readings.add(new ReadingWater(format.parse("2015-03-01"), 15, meters.get(5)));
-		} catch (ParseException e) {
 
-			e.printStackTrace();
-		}
+		readings.add(new ReadingWater(LocalDate.parse("2015-03-01"), 100, meters.get(6)));
+		readings.add(new ReadingWater(LocalDate.parse("2015-03-01"), 11, meters.get(0)));
+		readings.add(new ReadingWater(LocalDate.parse("2015-03-01"), 11, meters.get(1)));
+		readings.add(new ReadingWater(LocalDate.parse("2015-03-01"), 20, meters.get(2)));
+		readings.add(new ReadingWater(LocalDate.parse("2015-03-01"), 20, meters.get(3)));
+		readings.add(new ReadingWater(LocalDate.parse("2015-03-01"), 15, meters.get(4)));
+		readings.add(new ReadingWater(LocalDate.parse("2015-03-01"), 15, meters.get(5)));
+
 		return readings;
 	}
 
 	public static List<ReadingEnergy> getReadingsEnergyOld(List<MeterEnergy> meters) {
 		List<ReadingEnergy> readingsEnergyOld = new ArrayList<>();
-		DateFormat format = new SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH);
-		try {
 
-			readingsEnergyOld.add(new ReadingEnergy(format.parse("2015-02-01"), 5, meters.get(0)));
-			readingsEnergyOld.add(new ReadingEnergy(format.parse("2015-02-01"), 5, meters.get(1)));
-			readingsEnergyOld.add(new ReadingEnergy(format.parse("2015-02-01"), 10, meters.get(2)));
-			readingsEnergyOld.add(new ReadingEnergy(format.parse("2015-02-01"), 15, meters.get(3)));
-			readingsEnergyOld.add(new ReadingEnergy(format.parse("2015-02-01"), 35, meters.get(4)));
-		} catch (ParseException e) {
-			e.printStackTrace();
-		}
+		readingsEnergyOld.add(new ReadingEnergy(LocalDate.parse("2015-02-01"), 5, meters.get(0)));
+		readingsEnergyOld.add(new ReadingEnergy(LocalDate.parse("2015-02-01"), 5, meters.get(1)));
+		readingsEnergyOld.add(new ReadingEnergy(LocalDate.parse("2015-02-01"), 10, meters.get(2)));
+		readingsEnergyOld.add(new ReadingEnergy(LocalDate.parse("2015-02-01"), 15, meters.get(3)));
+		readingsEnergyOld.add(new ReadingEnergy(LocalDate.parse("2015-02-01"), 35, meters.get(4)));
+
 		return readingsEnergyOld;
 	}
 
 	public static List<ReadingEnergy> getReadingsEnergyNew(List<MeterEnergy> meters) {
 		List<ReadingEnergy> readingsEnergyNew = new ArrayList<>();
-		DateFormat format = new SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH);
-		try {
 
-			readingsEnergyNew.add(new ReadingEnergy(format.parse("2015-03-01"), 15, meters.get(0)));
-			readingsEnergyNew.add(new ReadingEnergy(format.parse("2015-03-01"), 10, meters.get(1)));
-			readingsEnergyNew.add(new ReadingEnergy(format.parse("2015-03-01"), 25, meters.get(2)));
-			readingsEnergyNew.add(new ReadingEnergy(format.parse("2015-03-01"), 20, meters.get(3)));
-			readingsEnergyNew.add(new ReadingEnergy(format.parse("2015-03-01"), 70, meters.get(4)));
-		} catch (ParseException e) {
-			e.printStackTrace();
-		}
+		readingsEnergyNew.add(new ReadingEnergy(LocalDate.parse("2015-03-01"), 15, meters.get(0)));
+		readingsEnergyNew.add(new ReadingEnergy(LocalDate.parse("2015-03-01"), 10, meters.get(1)));
+		readingsEnergyNew.add(new ReadingEnergy(LocalDate.parse("2015-03-01"), 25, meters.get(2)));
+		readingsEnergyNew.add(new ReadingEnergy(LocalDate.parse("2015-03-01"), 20, meters.get(3)));
+		readingsEnergyNew.add(new ReadingEnergy(LocalDate.parse("2015-03-01"), 70, meters.get(4)));
+
 		return readingsEnergyNew;
 	}
 
@@ -191,49 +175,42 @@ public class SetupMethods {
 
 	public static List<ReadingGas> getReadingsGasOld(List<MeterGas> meters) {
 		List<ReadingGas> readingsGasOld = new ArrayList<>();
-		DateFormat format = new SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH);
-		try {
-			readingsGasOld.add(new ReadingGas(format.parse("2015-03-01"), 73, meters.get(0)));
-			readingsGasOld.add(new ReadingGas(format.parse("2015-03-01"), 10, meters.get(1)));
-			readingsGasOld.add(new ReadingGas(format.parse("2015-03-01"), 12, meters.get(2)));
-			readingsGasOld.add(new ReadingGas(format.parse("2015-03-01"), 10, meters.get(3)));
-			readingsGasOld.add(new ReadingGas(format.parse("2015-03-01"), 18, meters.get(4)));
-			readingsGasOld.add(new ReadingGas(format.parse("2015-03-01"), 11, meters.get(5)));
-			readingsGasOld.add(new ReadingGas(format.parse("2015-03-01"), 12, meters.get(6)));
-		} catch (ParseException e) {
-			e.printStackTrace();
-		}
+
+		readingsGasOld.add(new ReadingGas(LocalDate.parse("2015-03-01"), 73, meters.get(0)));
+		readingsGasOld.add(new ReadingGas(LocalDate.parse("2015-03-01"), 10, meters.get(1)));
+		readingsGasOld.add(new ReadingGas(LocalDate.parse("2015-03-01"), 12, meters.get(2)));
+		readingsGasOld.add(new ReadingGas(LocalDate.parse("2015-03-01"), 10, meters.get(3)));
+		readingsGasOld.add(new ReadingGas(LocalDate.parse("2015-03-01"), 18, meters.get(4)));
+		readingsGasOld.add(new ReadingGas(LocalDate.parse("2015-03-01"), 11, meters.get(5)));
+		readingsGasOld.add(new ReadingGas(LocalDate.parse("2015-03-01"), 12, meters.get(6)));
+
 		return readingsGasOld;
 	}
 
 	public static List<ReadingGas> getReadingsGasNew(List<MeterGas> meters) {
 		List<ReadingGas> readingsGasNew = new ArrayList<>();
-		DateFormat format = new SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH);
-		try {
 
-			readingsGasNew.add(new ReadingGas(format.parse("2015-03-01"), 100, meters.get(0)));
-			readingsGasNew.add(new ReadingGas(format.parse("2015-03-01"), 15, meters.get(1)));
-			readingsGasNew.add(new ReadingGas(format.parse("2015-03-01"), 15, meters.get(2)));
-			readingsGasNew.add(new ReadingGas(format.parse("2015-03-01"), 20, meters.get(3)));
-			readingsGasNew.add(new ReadingGas(format.parse("2015-03-01"), 20, meters.get(4)));
-			readingsGasNew.add(new ReadingGas(format.parse("2015-03-01"), 15, meters.get(5)));
-			readingsGasNew.add(new ReadingGas(format.parse("2015-03-01"), 15, meters.get(6)));
-		} catch (ParseException e) {
-			e.printStackTrace();
-		}
+		readingsGasNew.add(new ReadingGas(LocalDate.parse("2015-03-01"), 100, meters.get(0)));
+		readingsGasNew.add(new ReadingGas(LocalDate.parse("2015-03-01"), 15, meters.get(1)));
+		readingsGasNew.add(new ReadingGas(LocalDate.parse("2015-03-01"), 15, meters.get(2)));
+		readingsGasNew.add(new ReadingGas(LocalDate.parse("2015-03-01"), 20, meters.get(3)));
+		readingsGasNew.add(new ReadingGas(LocalDate.parse("2015-03-01"), 20, meters.get(4)));
+		readingsGasNew.add(new ReadingGas(LocalDate.parse("2015-03-01"), 15, meters.get(5)));
+		readingsGasNew.add(new ReadingGas(LocalDate.parse("2015-03-01"), 15, meters.get(6)));
+
 		return readingsGasNew;
 	}
 
 	public static InvoiceEnergy getInvoiceEnergy(List<ReadingEnergy> newReadings) {
-		return new InvoiceEnergy("23424", "energia", new Date(), 150, newReadings.get(0));
+		return new InvoiceEnergy("23424", "energia", new LocalDate(), 150, newReadings.get(0));
 	}
 
 	public static InvoiceWater getInvoiceWater(List<ReadingWater> newReadings) {
-		return new InvoiceWater("23424", "energia", new Date(), 200, newReadings.get(0));
+		return new InvoiceWater("23424", "energia", new LocalDate(), 200, newReadings.get(0));
 	}
 
 	public static InvoiceGas getInvoiceGas(List<ReadingGas> newReadings) {
-		return new InvoiceGas("23424", "energia", new Date(), 300, newReadings.get(0));
+		return new InvoiceGas("23424", "energia", new LocalDate(), 300, newReadings.get(0));
 	}
 
 	public static ArrayList<UsageValue> usageEnergy(List<Apartment> apartments) {

@@ -20,7 +20,7 @@ public class InvoiceWaterConverter implements Converter<Object, InvoiceWater> {
 
 	@Override
 	public InvoiceWater convert(Object element) {
-		Integer id = Integer.parseInt((String) element);
+		Long id = Long.parseLong((String) element);
 		return service.getWaterByID(id);
 	}
 

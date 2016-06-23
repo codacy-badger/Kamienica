@@ -1,6 +1,7 @@
 package kamienica.dao;
 
 import java.util.List;
+import java.util.Set;
 
 public interface DaoInterface<T extends Object> {
 
@@ -9,11 +10,11 @@ public interface DaoInterface<T extends Object> {
 
 	public List<T> getList();
 
-	public void deleteById(int id);
+	public void deleteById(Long id);
 
 	public void update(T object);
 
-	public T getById(int id);
+	public T getById(Long id);
 	
-
+	public Set<Long> getIdList();
 }

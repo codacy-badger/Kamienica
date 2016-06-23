@@ -1,5 +1,7 @@
 package kamienica.feature.meter;
 
+import java.io.Serializable;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Table;
@@ -10,7 +12,7 @@ import kamienica.feature.apartment.Apartment;
 
 @Entity
 @Table(name="metergas")
-public class MeterGas extends MeterAbstract {
+public class MeterGas extends MeterAbstract implements Serializable {
 	@Column(nullable=false)
 	private boolean cwu;
 
@@ -26,6 +28,7 @@ public class MeterGas extends MeterAbstract {
 	}
 
 
+	@Override
 	public String toString() {
 		String apartment;
 		try {

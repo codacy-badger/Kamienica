@@ -13,7 +13,7 @@ import kamienica.feature.reading.ReadingGas;
 import kamienica.feature.tenant.Tenant;
 
 @Repository("paymentGasDao")
-public class PaymentGasDAOImpl extends AbstractDao<Integer, PaymentGas> implements PaymentDao<PaymentGas, ReadingGas> {
+public class PaymentGasDAOImpl extends AbstractDao<Long, PaymentGas> implements PaymentDao<PaymentGas, ReadingGas> {
 
 	@Override
 	public List<PaymentGas> getPaymentForTenant(Tenant tenant) {
@@ -23,10 +23,11 @@ public class PaymentGasDAOImpl extends AbstractDao<Integer, PaymentGas> implemen
 		return list;
 	}
 
+	@Override
 	@SuppressWarnings("unchecked")
 	public List<PaymentGas> getByInvoice(Invoice invoice) {
 		Query query = getSession().createSQLQuery("Select * from paymentenergy where invoice_id = :id")
-				.addEntity(PaymentGas.class).setInteger("id", invoice.getId());
+				.addEntity(PaymentGas.class).setLong("id", invoice.getId());
 		List<PaymentGas> result = query.list();
 		return result;
 	}
@@ -34,7 +35,7 @@ public class PaymentGasDAOImpl extends AbstractDao<Integer, PaymentGas> implemen
 	@Override
 	public List<PaymentGas> getByReading(ReadingGas reading) {
 		Query query = getSession().createSQLQuery("Select * from paymentenergy where readingdate >=:date")
-				.addEntity(PaymentGas.class).setDate("date", reading.getReadingDate());
+				.addEntity(PaymentGas.class).setParameter("date", reading.getReadingDate());
 		@SuppressWarnings("unchecked")
 		List<PaymentGas> result = query.list();
 		return result;

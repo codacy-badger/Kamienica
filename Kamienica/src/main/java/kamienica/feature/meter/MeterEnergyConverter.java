@@ -20,7 +20,7 @@ public class MeterEnergyConverter implements Converter<Object, MeterEnergy> {
 
 	@Override
 	public MeterEnergy convert(Object element) {
-		Integer id = Integer.parseInt((String) element);
+		Long id = Long.parseLong((String) element);
 		return service.getEnergyByID(id);
 	}
 

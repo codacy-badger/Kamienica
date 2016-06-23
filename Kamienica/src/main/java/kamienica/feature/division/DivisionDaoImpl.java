@@ -6,7 +6,7 @@ import org.springframework.stereotype.Repository;
 import kamienica.dao.AbstractDao;
 
 @Repository("divisionDao")
-public class DivisionDaoImpl extends AbstractDao<Integer, Division> implements DivisionDao {
+public class DivisionDaoImpl extends AbstractDao<Long, Division> implements DivisionDao {
 
 	@Override
 	public void deleteAll() {

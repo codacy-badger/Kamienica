@@ -1,32 +1,44 @@
 package kamienica.feature.reading;
 
-import java.util.Date;
+import java.io.Serializable;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+import org.joda.time.LocalDate;
+
 import kamienica.feature.meter.MeterGas;
 
 @Entity
 @Table(name="readinggas")
-public class ReadingGas extends ReadingAbstract {
+public class ReadingGas extends ReadingAbstract implements Serializable {
 
 	@Column(nullable = false)
 	private String unit;
 	@ManyToOne
 	MeterGas meter;
+//	@OneToOne
+//	ReadingGas nextReading;
+//	
+//	public ReadingGas getNextReading() {
+//		return nextReading;
+//	}
+//
+//	public void setNextReading(ReadingGas nextReading) {
+//		this.nextReading = nextReading;
+//	}
 
 	public String getUnit() {
-		return this.meter.getUnit();
+		return this.unit;
 	}
 
 	public boolean getIsCWU() {
 		return this.meter.isCwu();
 	}
 
-	public ReadingGas(Date date, double value, MeterGas meter) {
+	public ReadingGas(LocalDate date, double value, MeterGas meter) {
 		super(date, value);
 		this.unit = meter.getUnit();
 		this.meter = meter;
@@ -35,6 +47,7 @@ public class ReadingGas extends ReadingAbstract {
 	public ReadingGas() {
 	}
 
+	@Override
 	public MeterGas getMeter() {
 		return meter;
 	}

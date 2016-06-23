@@ -1,22 +1,16 @@
 package kamienica.feature.invoice;
 
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
 import org.hibernate.exception.ConstraintViolationException;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.propertyeditors.CustomDateEditor;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.ServletRequestDataBinder;
-import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -27,11 +21,13 @@ import kamienica.core.ManagerEnergy;
 import kamienica.core.ManagerGas;
 import kamienica.core.ManagerPayment;
 import kamienica.core.ManagerWater;
+import kamienica.core.Media;
 import kamienica.feature.apartment.Apartment;
 import kamienica.feature.apartment.ApartmentService;
 import kamienica.feature.division.Division;
 import kamienica.feature.division.DivisionService;
 import kamienica.feature.division.DivisionValidator;
+import kamienica.feature.meter.MeterService;
 import kamienica.feature.payment.PaymentEnergy;
 import kamienica.feature.payment.PaymentGas;
 import kamienica.feature.payment.PaymentService;
@@ -59,16 +55,18 @@ public class InvoiceController {
 	private DivisionService divisionService;
 	@Autowired
 	private PaymentService paymentService;
-
-	@InitBinder
-	protected void initBinder(HttpServletRequest request, ServletRequestDataBinder binder) {
-		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-		sdf.setLenient(true);
-		binder.registerCustomEditor(Date.class, new CustomDateEditor(sdf, true));
-	}
-
-	Date date = new Date();
-	SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
+	@Autowired
+	private MeterService meterService;
+	// @InitBinder
+	// protected void initBinder(HttpServletRequest request,
+	// ServletRequestDataBinder binder) {
+	// SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+	// sdf.setLenient(true);
+	// binder.registerCustomEditor(Date.class, new CustomDateEditor(sdf, true));
+	// }
+	//
+	// Date date = new Date();
+	// SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
 
 	// -------------------REJESTRACJA----------------------------------------------
 	@RequestMapping("/Admin/Invoice/invoiceGasRegister")
@@ -166,7 +164,7 @@ public class InvoiceController {
 		ArrayList<Division> division = (ArrayList<Division>) divisionService.getList();
 		ArrayList<Apartment> apartments = (ArrayList<Apartment>) apartmentService.getList();
 
-		readingGasOld = readingService.getPreviousReadingGas(invoice.getBaseReading().getReadingDate().toString());
+		readingGasOld = readingService.getPreviousReadingGas(invoice.getBaseReading().getReadingDate().toString(), meterService.getIdList(Media.GAS));
 
 		HashMap<String, List<ReadingWater>> waterForGas = readingService.getWaterReadingsForGasConsumption(invoice);
 		if (waterForGas.isEmpty()) {
@@ -209,7 +207,7 @@ public class InvoiceController {
 		ArrayList<Division> division = (ArrayList<Division>) divisionService.getList();
 		ArrayList<Apartment> apartments = (ArrayList<Apartment>) apartmentService.getList();
 
-		readingWaterOld = readingService.getPreviousReadingWater(invoice.getBaseReading().getReadingDate().toString());
+		readingWaterOld = readingService.getPreviousReadingWater(invoice.getBaseReading().getReadingDate().toString(),  meterService.getIdList(Media.GAS));
 
 		List<ReadingWater> readingWaterNew = readingService
 				.getReadingWaterByDate(invoice.getBaseReading().getReadingDate().toString());
@@ -242,7 +240,7 @@ public class InvoiceController {
 		ArrayList<Apartment> apartments = (ArrayList<Apartment>) apartmentService.getList();
 
 		List<ReadingEnergy> readingEnergyOld = readingService
-				.getPreviousReadingEnergy(invoice.getBaseReading().getReadingDate().toString());
+				.getPreviousReadingEnergy(invoice.getBaseReading().getReadingDate().toString(),  meterService.getIdList(Media.GAS));
 
 		List<ReadingEnergy> readingEnergyNew = readingService
 				.getReadingEnergyByDate(invoice.getBaseReading().getReadingDate().toString());
@@ -300,7 +298,7 @@ public class InvoiceController {
 	// -------------------EDYCJA----------------------------------------------
 
 	@RequestMapping(value = "/Admin/Invoice/invoiceGasEdit")
-	public ModelAndView invoiceGasEdit(@RequestParam(value = "id") int id) {
+	public ModelAndView invoiceGasEdit(@RequestParam(value = "id") Long id) {
 		HashMap<String, Object> model = new HashMap<>();
 		model.put("saveUrl", "/Admin/Invoice/invoiceGasOverwrite.html");
 		model.put("media", "Gaz");
@@ -309,7 +307,7 @@ public class InvoiceController {
 	}
 
 	@RequestMapping(value = "/Admin/Invoice/invoiceWaterEdit")
-	public ModelAndView edytujFakturaWoda(@RequestParam(value = "id") int id) {
+	public ModelAndView edytujFakturaWoda(@RequestParam(value = "id") Long id) {
 		HashMap<String, Object> model = new HashMap<>();
 		model.put("saveUrl", "/Admin/Invoice/invoiceWaterOverwrite.html");
 		model.put("media", "Woda");
@@ -318,7 +316,7 @@ public class InvoiceController {
 	}
 
 	@RequestMapping(value = "/Admin/Invoice/invoiceEnergyEdit")
-	public ModelAndView edytujFakture(@RequestParam(value = "id") int id) {
+	public ModelAndView edytujFakture(@RequestParam(value = "id") Long id) {
 		HashMap<String, Object> model = new HashMap<>();
 		model.put("saveUrl", "/Admin/Invoice/invoiceEnergyOverwrite.html");
 		model.put("media", "Energia");
@@ -416,7 +414,7 @@ public class InvoiceController {
 	// -----------------------------USUN------------------------------------------------
 
 	@RequestMapping(value = "/Admin/Invoice/invoiceGasDelete")
-	public ModelAndView invoiceGaz(@RequestParam(value = "id") int id) {
+	public ModelAndView invoiceGaz(@RequestParam(value = "id") Long id) {
 
 		invoiceService.deleteGasByID(id);
 		return new ModelAndView("redirect:/Admin/Invoice/invoiceGasList.html");
@@ -424,7 +422,7 @@ public class InvoiceController {
 	}
 
 	@RequestMapping(value = "/Admin/Invoice/invoiceWaterDelete")
-	public ModelAndView invoiceWoda(@RequestParam(value = "id") int id) {
+	public ModelAndView invoiceWoda(@RequestParam(value = "id") Long id) {
 
 		invoiceService.deleteWaterByID(id);
 		return new ModelAndView("redirect:/Admin/Invoice/invoiceWaterList.html");
@@ -432,7 +430,7 @@ public class InvoiceController {
 	}
 
 	@RequestMapping(value = "/Admin/Invoice/invoiceEnergyDelete")
-	public ModelAndView invoiceEnergia(@RequestParam(value = "id") int id) {
+	public ModelAndView invoiceEnergia(@RequestParam(value = "id") Long id) {
 		invoiceService.deleteEnergyByID(id);
 		return new ModelAndView("redirect:/Admin/Invoice/invoiceEnergyList.html");
 	}

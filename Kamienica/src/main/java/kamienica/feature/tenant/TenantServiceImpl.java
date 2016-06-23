@@ -14,9 +14,15 @@ public class TenantServiceImpl implements TenantService {
 	TenantDao tenantDao;
 
 	@Override
-	public void saveTenant(Tenant tenant) {
-		tenantDao.deactivateByApparmentId(tenant.getApartment().getId());
-		tenantDao.save(tenant);
+	public void saveTenant(Tenant newTenant) {
+		Tenant currentTenant = tenantDao.getTenantForApartment(newTenant.getApartment());
+		if (currentTenant.getMovementDate().isAfter(newTenant.getMovementDate())) {
+			newTenant.setStatus(UserStatus.INACTIVE.getUserStatus());
+			tenantDao.save(newTenant);
+		} else {
+			tenantDao.deactivateByApparmentId(newTenant.getApartment().getId());
+			tenantDao.save(newTenant);
+		}
 
 	}
 
@@ -26,7 +32,7 @@ public class TenantServiceImpl implements TenantService {
 	}
 
 	@Override
-	public void deleteTenant(int id) {
+	public void deleteTenant(Long id) {
 		tenantDao.deleteById(id);
 
 	}
@@ -38,20 +44,18 @@ public class TenantServiceImpl implements TenantService {
 	}
 
 	@Override
-	public Tenant getTenantById(int id) {
+	public Tenant getTenantById(Long id) {
 		return tenantDao.getById(id);
 
 	}
 
 	@Override
 	public List<Tenant> getCurrentTenants() {
-
 		return tenantDao.getActiveTenants();
 	}
 
 	@Override
 	public Tenant loadByMail(String mail) {
-
 		return tenantDao.loadByMail(mail);
 	}
 

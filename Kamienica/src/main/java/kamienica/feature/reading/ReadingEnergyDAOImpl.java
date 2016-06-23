@@ -1,9 +1,14 @@
 package kamienica.feature.reading;
 
 import java.util.List;
+import java.util.Set;
 
+import org.hibernate.Criteria;
 import org.hibernate.Query;
 import org.hibernate.criterion.Order;
+import org.hibernate.criterion.Projections;
+import org.hibernate.criterion.Restrictions;
+import org.joda.time.LocalDate;
 import org.springframework.stereotype.Repository;
 
 import kamienica.dao.AbstractDao;
@@ -11,7 +16,7 @@ import kamienica.feature.apartment.Apartment;
 import kamienica.feature.invoice.InvoiceEnergy;
 
 @Repository("readingEnergyDao")
-public class ReadingEnergyDAOImpl extends AbstractDao<Integer, ReadingEnergy>
+public class ReadingEnergyDAOImpl extends AbstractDao<Long, ReadingEnergy>
 		implements ReadingDao<ReadingEnergy, InvoiceEnergy> {
 
 	@Override
@@ -34,17 +39,6 @@ public class ReadingEnergyDAOImpl extends AbstractDao<Integer, ReadingEnergy>
 	}
 
 	@Override
-	public List<ReadingEnergy> getPrevious(String readingDate) {
-		Query query = getSession()
-				.createSQLQuery(
-						"SELECT * FROM readingEnergy where readingDate =(SELECT max(readingDate) FROM readingEnergy WHERE readingDate < :date )")
-				.addEntity(ReadingEnergy.class).setString("date", readingDate);
-		@SuppressWarnings("unchecked")
-		List<ReadingEnergy> result = query.list();
-		return result;
-	}
-
-	@Override
 	public List<ReadingEnergy> getByDate(String readingDate) {
 		Query query = getSession().createSQLQuery("SELECT * FROM readingEnergy where readingDate=:date")
 				.addEntity(ReadingEnergy.class).setString("date", readingDate);
@@ -53,13 +47,27 @@ public class ReadingEnergyDAOImpl extends AbstractDao<Integer, ReadingEnergy>
 		return result;
 	}
 
+	@Override
 	@SuppressWarnings("unchecked")
-	public List<ReadingEnergy> getLatestList() {
-//		String original = "Select * from (select * from readingEnergy order by readingDate desc) as c group by meter_id";
-		String test = "Select * from readingEnergy where readingDate=(select MAX(readingDate) from readingEnergy)";
-		Query query = getSession().createSQLQuery(test).addEntity(ReadingEnergy.class);
+	public List<ReadingEnergy> getLatestList(Set<Long> meterId) {
+
+		String test = "Select * from readingEnergy where readingDate=(select MAX(readingDate) from readingEnergy) AND meter_id IN(:list)";
+		Query query = getSession().createSQLQuery(test).addEntity(ReadingEnergy.class).setParameterList("list",
+				meterId);
+
 		return query.list();
 
+	}
+
+	@Override
+	public List<ReadingEnergy> getPrevious(String readingDate, Set<Long> meterId) {
+		Query query = getSession()
+				.createSQLQuery(
+						"SELECT * FROM readingEnergy where readingDate=(SELECT max(readingDate) FROM readingEnergy WHERE readingDate < :date )  AND meter_id IN(:list)")
+				.addEntity(ReadingEnergy.class).setString("date", readingDate).setParameterList("list", meterId);
+		@SuppressWarnings("unchecked")
+		List<ReadingEnergy> result = query.list();
+		return result;
 	}
 
 	@Override
@@ -73,19 +81,19 @@ public class ReadingEnergyDAOImpl extends AbstractDao<Integer, ReadingEnergy>
 	}
 
 	@Override
-	public void ResolveReadings(InvoiceEnergy invoice) {
+	public void resolveReadings(InvoiceEnergy invoice) {
 		Query query = getSession()
 				.createSQLQuery("update readingenergy set resolved= :res where readingDate = :paramdate")
-				.setParameter("paramdate", invoice.getBaseReading().getReadingDate()).setParameter("res", true);
+				.setDate("paramdate", invoice.getBaseReading().getReadingDate().toDate()).setParameter("res", true);
 		query.executeUpdate();
 
 	}
 
 	@Override
-	public void UnresolveReadings(InvoiceEnergy invoice) {
+	public void unresolveReadings(InvoiceEnergy invoice) {
 		Query query = getSession()
 				.createSQLQuery("update readingenergy set resolved= :res where readingDate = :paramdate")
-				.setParameter("paramdate", invoice.getBaseReading().getReadingDate()).setParameter("res", false);
+				.setDate("paramdate", invoice.getBaseReading().getReadingDate().toDate()).setParameter("res", false);
 		query.executeUpdate();
 
 	}
@@ -100,5 +108,23 @@ public class ReadingEnergyDAOImpl extends AbstractDao<Integer, ReadingEnergy>
 			return 0;
 		}
 	}
+
+	@Override
+	public void deleteLatestReadings(LocalDate date) {
+		Query query = getSession()
+				.createSQLQuery("delete from readingenergy where readingDate=:date and resolved=:res");
+		query.setParameter("date", date.toString()).setParameter("res", false);
+		query.executeUpdate();
+
+	}
+
+	@Override
+	public LocalDate getLatestDate() {
+		Criteria criteria = getSession().createCriteria(ReadingEnergy.class)
+				.setProjection(Projections.max("readingDate"));
+		return (LocalDate) criteria.uniqueResult();
+	}
+
+	
 
 }

@@ -152,7 +152,6 @@
 			</form:form>
 		</div>
 	</div>
-	</div>
 	<!-- jQuery -->
 	<script src="<c:url value='/static/js/jquery.min.js' />"></script>
 

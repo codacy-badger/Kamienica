@@ -11,7 +11,8 @@ public class HsqlDataTypeFactory
 {
 //  private static final Log log = LogFactory.getLog(HsqlDataTypeFactory.class);
  
-  public DataType createDataType(int sqlType, String sqlTypeName)
+  @Override
+public DataType createDataType(int sqlType, String sqlTypeName)
     throws DataTypeException
   {
     if (sqlType == Types.BOOLEAN)

@@ -7,7 +7,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 
-import org.joda.time.DateTime;
 import org.joda.time.Days;
 
 import kamienica.feature.apartment.Apartment;
@@ -52,8 +51,11 @@ public class ManagerGas {
 			tmp.setUsage(usage);
 			tmp.setUnit(gasNew.get(0).getUnit());
 			if (!gasOld.isEmpty()) {
-				tmp.setDaysBetweenReadings(Days.daysBetween(new DateTime(gasOld.get(0).getReadingDate()),
-						new DateTime(gasNew.get(0).getReadingDate())).getDays());
+				tmp.setDaysBetweenReadings(
+						Days.daysBetween(gasOld.get(0).getReadingDate(), gasNew.get(0).getReadingDate()).getDays());
+				// tmp.setDaysBetweenReadings(Days.daysBetween(new
+				// DateTime(gasOld.get(0).getReadingDate()),
+				// new DateTime(gasNew.get(0).getReadingDate())).getDays());
 			} else {
 				tmp.setDaysBetweenReadings(0);
 			}
@@ -63,8 +65,7 @@ public class ManagerGas {
 		double zuzycieCWU = ManagerGas.sumCWU(gasOld, gasNew);
 		if (zuzycieCWU != 0) {
 			double sumaZuzyciaCieplejWody = ManagerWater.countWarmWaterUsage(waterOld, waterNew);
-			HashMap<Integer, Double> mapaZuzyciaCieplejWody = ManagerGas.hotWaterUsageMap(waterOld,
-					waterNew);
+			HashMap<Integer, Double> mapaZuzyciaCieplejWody = ManagerGas.hotWaterUsageMap(waterOld, waterNew);
 			for (int i = 0; i < out.size(); i++) {
 				if (out.get(i).getApartment().getApartmentNumber() != 0) {
 					int nrMieszkania = out.get(i).getApartment().getApartmentNumber();
@@ -78,7 +79,6 @@ public class ManagerGas {
 		return out;
 
 	}
-
 
 	private static HashMap<Integer, Double> hotWaterUsageMap(List<ReadingWater> oldReading,
 			List<ReadingWater> newReading) {
@@ -116,7 +116,6 @@ public class ManagerGas {
 		return out;
 	}
 
-	
 	private static double decimalFormat(double input) {
 		NumberFormat nf = NumberFormat.getNumberInstance(Locale.ENGLISH);
 		DecimalFormat df = (DecimalFormat) nf;

@@ -20,11 +20,11 @@ public interface InvoiceService {
 
 	public List<InvoiceEnergy> getEnergyInvoiceList();
 
-	public void deleteGasByID(int id);
+	public void deleteGasByID(Long id);
 
-	public void deleteWaterByID(int id);
+	public void deleteWaterByID(Long id);
 
-	public void deleteEnergyByID(int id);
+	public void deleteEnergyByID(Long id);
 
 	public void updateGas(InvoiceGas invoice, List<PaymentGas> payments);
 
@@ -32,11 +32,11 @@ public interface InvoiceService {
 
 	public void updateEnergy(InvoiceEnergy invoice, List<PaymentEnergy> payments);
 
-	public InvoiceGas getGasByID(int id);
+	public InvoiceGas getGasByID(Long id);
 
-	public InvoiceWater getWaterByID(int id);
+	public InvoiceWater getWaterByID(Long id);
 
-	public InvoiceEnergy getEnergyByID(int id);
+	public InvoiceEnergy getEnergyByID(Long id);
 
 	public List<InvoiceEnergy> getUnpaidInvoiceEnergy();
 
@@ -49,11 +49,5 @@ public interface InvoiceService {
 	public InvoiceWater getLatestPaidWater();
 
 	public InvoiceGas getLatestPaidGas();
-
-	public int getDaysForGas();
-
-	public int getDaysForWater();
-
-	public int getDaysForEnergy();
 
 }

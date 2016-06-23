@@ -1,35 +1,26 @@
 package kamienica.feature.reading;
 
-import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import org.joda.time.LocalDate;
 
 public class ReadingEnergyForm {
 
-	private List<ReadingEnergy> currentReadings = new ArrayList<>();
-	private List<ReadingEnergy> previousReadings = new ArrayList<>();
+	private List<ReadingEnergy> currentReadings = new LinkedList<>();
+	private List<ReadingEnergy> previousReadings = new LinkedList<>();
+	private List<ReadingEnergy> newReadings = new LinkedList<>();
 
-	public List<ReadingEnergy> getCurrentReadings() {
-		return currentReadings;
-	}
-
-	public void setCurrentReadings(List<ReadingEnergy> currentReadings) {
-		this.currentReadings = currentReadings;
-	}
-
-	@Override
 	public String toString() {
-		return currentReadings.toString();
+		return "currentReadings=\n" + currentReadings + "\n previousReadings\n" + previousReadings + "\n newReadings\n"
+				+ newReadings;
 	}
 
 	public ReadingEnergyForm() {
 
 	}
 
-	@Autowired
 	public ReadingEnergyForm(List<ReadingEnergy> odczytyEnergii) {
-		super();
 		this.currentReadings = odczytyEnergii;
 	}
 
@@ -41,7 +32,31 @@ public class ReadingEnergyForm {
 		this.previousReadings = previousReadings;
 	}
 
-//	public void dodajBrakujacyOdczytZPoprzedniejListy(ReadingEnergy odczyt) {
-//		this.previousReadings.add(odczyt);
-//	}
+	public List<ReadingEnergy> getCurrentReadings() {
+		return currentReadings;
+	}
+
+	public void setCurrentReadings(List<ReadingEnergy> currentReadings) {
+		this.currentReadings = currentReadings;
+	}
+
+	public List<ReadingEnergy> getNewReadings() {
+		return newReadings;
+	}
+
+	public void setNewReadings(List<ReadingEnergy> newReadings) {
+		this.newReadings = newReadings;
+	}
+
+	public LocalDate getDate() {
+		return currentReadings.get(0).getReadingDate();
+	}
+
+	public LocalDate getPreviousDate() {
+		if (previousReadings.isEmpty()) {
+			return LocalDate.parse("2010-01-01");
+		} else {
+			return previousReadings.get(0).getReadingDate();
+		}
+	}
 }

@@ -2,17 +2,18 @@ package kamienica.feature.invoice;
 
 import java.util.List;
 
-import javax.transaction.Transactional;
+
 
 import org.hibernate.Query;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 import kamienica.dao.AbstractDao;
 import kamienica.feature.payment.PaymentStatus;
 
 @Repository("invoiceGas")
 @Transactional
-public class InvoiceGasDAOImpl extends AbstractDao<Integer, InvoiceGas> implements InvoiceDao<InvoiceGas> {
+public class InvoiceGasDAOImpl extends AbstractDao<Long, InvoiceGas> implements InvoiceDao<InvoiceGas> {
 
 	@Override
 	public InvoiceGas getLatest() {

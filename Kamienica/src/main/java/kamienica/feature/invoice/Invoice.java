@@ -1,18 +1,16 @@
 package kamienica.feature.invoice;
 
-import java.util.Date;
-
 import javax.persistence.Column;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Inheritance;
 import javax.persistence.MappedSuperclass;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 
+import org.hibernate.annotations.Type;
 import org.hibernate.validator.constraints.NotEmpty;
+import org.joda.time.LocalDate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
 
@@ -23,17 +21,17 @@ public abstract class Invoice {
 	@Id
 	@GeneratedValue
 	@Column(name = "id")
-	private int id;
+	private Long id;
 	@Column(nullable = false, unique = true)
 	@NotEmpty(message = "Podaj wartość")
 	private String serialNumber;
 	@Column
 	private String description;
 	@Column(nullable = false, unique = true)
-	@Temporal(TemporalType.DATE)
-	@DateTimeFormat(pattern = "yyyy.MM.dd")
+	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	@NotNull(message = "Wprowadź datę")
-	private Date date;
+	@Type(type="org.jadira.usertype.dateandtime.joda.PersistentLocalDate")
+	private LocalDate date;
 	@Column(nullable = false)
 	@Min(value = 0, message = "Tylko wartości dodatnie")
 	@NotNull(message = "Podaj wartość")
@@ -41,7 +39,7 @@ public abstract class Invoice {
 
 
 	@Autowired
-	public Invoice(String serialNumber, String description, Date date, double totalAmount) {
+	public Invoice(String serialNumber, String description, LocalDate date, double totalAmount) {
 		this.serialNumber = serialNumber;
 		this.description = description;
 		this.date = date;
@@ -50,14 +48,14 @@ public abstract class Invoice {
 	}
 
 	public Invoice() {
-		this.date = new Date();
+		this.date = new LocalDate();
 	}
 
-	public int getId() {
+	public Long getId() {
 		return id;
 	}
 
-	public void setId(int id) {
+	public void setId(Long id) {
 		this.id = id;
 	}
 
@@ -77,11 +75,11 @@ public abstract class Invoice {
 		this.description = description;
 	}
 
-	public Date getDate() {
+	public LocalDate getDate() {
 		return date;
 	}
 
-	public void setDate(Date date) {
+	public void setDate(LocalDate date) {
 		this.date = date;
 	}
 

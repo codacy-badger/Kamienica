@@ -2,6 +2,7 @@ package kamienica.feature.division;
 
 import java.util.List;
 
+import org.joda.time.LocalDate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -18,7 +19,7 @@ public class DivisionServiceImpl implements DivisionService {
 	}
 
 	@Override
-	public void deleteByID(int id) {
+	public void deleteByID(Long id) {
 		divisionDAO.deleteById(id);
 
 	}
@@ -35,12 +36,12 @@ public class DivisionServiceImpl implements DivisionService {
 	}
 
 	@Override
-	public void saveList(List<Division> division) {
+	public void saveList(List<Division> division, LocalDate date) {
 		divisionDAO.deleteAll();
 		for (Division div : division) {
+			div.setDate(date);
 			divisionDAO.save(div);
 		}
-
 
 	}
 

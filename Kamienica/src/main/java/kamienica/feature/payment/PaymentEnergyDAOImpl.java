@@ -13,13 +13,14 @@ import kamienica.feature.reading.ReadingEnergy;
 import kamienica.feature.tenant.Tenant;
 
 @Repository("paymentEnergyDao")
-public class PaymentEnergyDAOImpl extends AbstractDao<Integer, PaymentEnergy>
+public class PaymentEnergyDAOImpl extends AbstractDao<Long, PaymentEnergy>
 		implements PaymentDao<PaymentEnergy, ReadingEnergy> {
 
+	@Override
 	@SuppressWarnings("unchecked")
 	public List<PaymentEnergy> getByInvoice(Invoice invoice) {
 		Query query = getSession().createSQLQuery("Select * from paymentenergy where invoice_id = :id")
-				.addEntity(PaymentEnergy.class).setInteger("id", invoice.getId());
+				.addEntity(PaymentEnergy.class).setLong("id", invoice.getId());
 		List<PaymentEnergy> result = query.list();
 		return result;
 	}
@@ -27,7 +28,7 @@ public class PaymentEnergyDAOImpl extends AbstractDao<Integer, PaymentEnergy>
 	@Override
 	public List<PaymentEnergy> getByReading(ReadingEnergy reading) {
 		Query query = getSession().createSQLQuery("Select * from paymentenergy where readingdate =:date")
-				.addEntity(PaymentEnergy.class).setDate("date", reading.getReadingDate());
+				.addEntity(PaymentEnergy.class).setParameter("date", reading.getReadingDate());
 		@SuppressWarnings("unchecked")
 		List<PaymentEnergy> result = query.list();
 		return result;

@@ -13,7 +13,7 @@ import kamienica.feature.reading.ReadingWater;
 import kamienica.feature.tenant.Tenant;
 
 @Repository("paymentWaterDao")
-public class PaymentWaterDAOImpl extends AbstractDao<Integer, PaymentWater>
+public class PaymentWaterDAOImpl extends AbstractDao<Long, PaymentWater>
 		implements PaymentDao<PaymentWater, ReadingWater> {
 
 	@Override
@@ -24,10 +24,11 @@ public class PaymentWaterDAOImpl extends AbstractDao<Integer, PaymentWater>
 		return list;
 	}
 
+	@Override
 	@SuppressWarnings("unchecked")
 	public List<PaymentWater> getByInvoice(Invoice invoice) {
 		Query query = getSession().createSQLQuery("Select * from paymentwater where invoice_id = :id")
-				.addEntity(PaymentWater.class).setInteger("id", invoice.getId());
+				.addEntity(PaymentWater.class).setLong("id", invoice.getId());
 		List<PaymentWater> result = query.list();
 		return result;
 	}
@@ -35,7 +36,7 @@ public class PaymentWaterDAOImpl extends AbstractDao<Integer, PaymentWater>
 	@Override
 	public List<PaymentWater> getByReading(ReadingWater reading) {
 		Query query = getSession().createSQLQuery("Select * from paymentwater where readingdate >=:date")
-				.addEntity(PaymentWater.class).setDate("date", reading.getReadingDate());
+				.addEntity(PaymentWater.class).setParameter("date", reading.getReadingDate());
 		@SuppressWarnings("unchecked")
 		List<PaymentWater> result = query.list();
 		return result;

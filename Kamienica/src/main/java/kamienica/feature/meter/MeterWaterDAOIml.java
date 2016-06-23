@@ -1,11 +1,25 @@
 package kamienica.feature.meter;
 
+import org.hibernate.Criteria;
+import org.hibernate.criterion.Projections;
+import org.hibernate.criterion.Restrictions;
 import org.springframework.stereotype.Repository;
 
 import kamienica.dao.AbstractDao;
 import kamienica.dao.DaoInterface;
+import kamienica.feature.reading.ReadingWater;
 
 @Repository("meterWaterDao")
-public class MeterWaterDAOIml extends AbstractDao<Integer, MeterWater> implements DaoInterface<MeterWater> {
+public class MeterWaterDAOIml extends AbstractDao<Long, MeterWater> implements MeterDao<MeterWater> {
+
+	@Override
+	public boolean ifMainExists() {
+
+		Criteria crit = getSession().createCriteria(MeterWater.class);
+		crit.add(Restrictions.eq("main", true));
+		crit.setProjection(Projections.rowCount());
+		Long count = (Long) crit.uniqueResult();
+		return (count >= 1) ? true : false;
+	}
 
 }

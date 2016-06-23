@@ -1,8 +1,11 @@
-package kamienica.feature.tenant;
+package kamienica.conventer;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.convert.converter.Converter;
 import org.springframework.stereotype.Component;
+
+import kamienica.feature.tenant.Tenant;
+import kamienica.feature.tenant.TenantService;
 /**
  * 
  * @author macfol
@@ -19,7 +22,7 @@ public class TenantConverter implements Converter<Object, Tenant> {
 
 	@Override
 	public Tenant convert(Object element) {
-		Integer id = Integer.parseInt((String) element);
+		Long id = Long.parseLong((String) element);
 		return service.getTenantById(id);
 	}
 

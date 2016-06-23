@@ -1,9 +1,14 @@
 package kamienica.feature.reading;
 
 import java.util.List;
+import java.util.Set;
 
+import org.hibernate.Criteria;
 import org.hibernate.Query;
 import org.hibernate.criterion.Order;
+import org.hibernate.criterion.Projections;
+import org.hibernate.criterion.Restrictions;
+import org.joda.time.LocalDate;
 import org.springframework.stereotype.Repository;
 
 import kamienica.dao.AbstractDao;
@@ -11,7 +16,7 @@ import kamienica.feature.apartment.Apartment;
 import kamienica.feature.invoice.InvoiceGas;
 
 @Repository("readingGasDao")
-public class ReadingGasDAOImpl extends AbstractDao<Integer, ReadingGas> implements ReadingDao<ReadingGas, InvoiceGas> {
+public class ReadingGasDAOImpl extends AbstractDao<Long, ReadingGas> implements ReadingDao<ReadingGas, InvoiceGas> {
 
 	@Override
 	public List<ReadingGas> getList() {
@@ -33,7 +38,7 @@ public class ReadingGasDAOImpl extends AbstractDao<Integer, ReadingGas> implemen
 	}
 
 	@Override
-	public List<ReadingGas> getPrevious(String readingDate) {
+	public List<ReadingGas> getPrevious(String readingDate, Set<Long> meterId) {
 		Query query = getSession()
 				.createSQLQuery(
 						"SELECT * FROM readinggas where readingDate =(SELECT max(readingDate) FROM readinggas WHERE readingDate < :date)")
@@ -53,7 +58,7 @@ public class ReadingGasDAOImpl extends AbstractDao<Integer, ReadingGas> implemen
 	}
 
 	@Override
-	public List<ReadingGas> getLatestList() {
+	public List<ReadingGas> getLatestList(Set<Long> meterId) {
 		//		String original = "Select * from (select * from readingGas order by readingDate desc) as c group by meter_id";
 		String test = "Select * from readingGas where readingDate=(select MAX(readingDate) from readingGas)";
 		Query query = getSession().createSQLQuery(test).addEntity(ReadingGas.class);
@@ -75,17 +80,17 @@ public class ReadingGasDAOImpl extends AbstractDao<Integer, ReadingGas> implemen
 	}
 
 	@Override
-	public void ResolveReadings(InvoiceGas invoice) {
+	public void resolveReadings(InvoiceGas invoice) {
 		Query query = getSession().createSQLQuery("update readinggas set resolved= :res where readingDate = :paramdate")
-				.setParameter("paramdate", invoice.getBaseReading().getReadingDate()).setParameter("res", true);
+				.setDate("paramdate", invoice.getBaseReading().getReadingDate().toDate()).setParameter("res", true);
 		query.executeUpdate();
 
 	}
 
 	@Override
-	public void UnresolveReadings(InvoiceGas invoice) {
+	public void unresolveReadings(InvoiceGas invoice) {
 		Query query = getSession().createSQLQuery("update readinggas set resolved= :res where readingDate = :paramdate")
-				.setParameter("paramdate", invoice.getBaseReading().getReadingDate()).setParameter("res", false);
+				.setDate("paramdate", invoice.getBaseReading().getReadingDate().toDate()).setParameter("res", false);
 		query.executeUpdate();
 
 	}
@@ -100,4 +105,20 @@ public class ReadingGasDAOImpl extends AbstractDao<Integer, ReadingGas> implemen
 			return 0;
 		}
 	}
+
+	@Override
+	public void deleteLatestReadings(LocalDate date) {
+		Query query = getSession().createSQLQuery("delete from readingGas where readingDate=:date and resolved = :res");
+		query.setParameter("date", date.toString()).setParameter("res", false);
+		query.executeUpdate();
+
+	}
+
+	@Override
+	public LocalDate getLatestDate() {
+		Criteria criteria = getSession().createCriteria(ReadingGas.class)
+				.setProjection(Projections.max("readingDate"));
+		return (LocalDate) criteria.uniqueResult();
+	}
+
 }

@@ -1,8 +1,5 @@
 package kamienica.feature.payment;
 
-import java.text.SimpleDateFormat;
-import java.util.Date;
-
 import javax.persistence.Column;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
@@ -12,6 +9,8 @@ import javax.persistence.MappedSuperclass;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
+import org.hibernate.annotations.Type;
+import org.joda.time.LocalDate;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import kamienica.feature.tenant.Tenant;
@@ -23,31 +22,30 @@ public abstract class PaymentAbstract {
 	@Id
 	@GeneratedValue
 	@Column
-	private int id;
+	private Long id;
 	@Column
 	@Temporal(TemporalType.DATE)
-	@DateTimeFormat(pattern = "yyyy.MM.dd")
-	private Date paymentDate;
+	@DateTimeFormat(pattern = "yyyy-MM-dd")
+	@Type(type = "org.jadira.usertype.dateandtime.joda.PersistentLocalDate")
+	private LocalDate paymentDate;
 	@Column
 	private double paymentAmount;
 	@ManyToOne
 	private Tenant tenant;
 
-
-
-	public int getId() {
+	public Long getId() {
 		return id;
 	}
 
-	public void setId(int id) {
+	public void setId(Long id) {
 		this.id = id;
 	}
 
-	public Date getPaymentDate() {
+	public LocalDate getPaymentDate() {
 		return paymentDate;
 	}
 
-	public void setPaymentDate(Date paymentDate) {
+	public void setPaymentDate(LocalDate paymentDate) {
 		this.paymentDate = paymentDate;
 	}
 
@@ -67,22 +65,19 @@ public abstract class PaymentAbstract {
 		this.tenant = tenant;
 	}
 
-
-
 	@Override
 	public String toString() {
-		SimpleDateFormat df = new SimpleDateFormat("dd-MM-yyyy");
-		return "Opłata dla " + tenant.getFullName() + " z dnia " + df.format(paymentDate) + " Wynosi " + paymentAmount;
+		return "Opłata dla " + tenant.getFullName() + " z dnia " + paymentDate.toString() + " Wynosi " + paymentAmount;
 	}
 
 	public PaymentAbstract() {
 	}
 
-	public PaymentAbstract(int id, Date paymentDate, double paymentAmount, Tenant tenant) {
+	public PaymentAbstract(Long id, LocalDate paymentDate, double paymentAmount, Tenant tenant) {
 		this.id = id;
 		this.paymentDate = paymentDate;
 		this.paymentAmount = paymentAmount;
 		this.tenant = tenant;
-		
+
 	}
 }

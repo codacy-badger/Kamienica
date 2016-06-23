@@ -1,6 +1,9 @@
 package kamienica.feature.meter;
 
 import java.util.List;
+import java.util.Set;
+
+import kamienica.core.Media;
 
 public interface MeterService {
 
@@ -22,15 +25,21 @@ public interface MeterService {
 
 	public List<MeterWater> getWaterList();
 
-	public void deleteEnergyByID(int id);
+	public void deleteEnergyByID(Long id);
 
-	public void deleteGasByID(int id);
+	public void deleteGasByID(Long id);
 
-	public void deleteWaterByID(int id);
+	public void deleteWaterByID(Long id);
 
-	public MeterEnergy getEnergyByID(int id);
+	public MeterEnergy getEnergyByID(Long id);
 
-	public MeterGas getGasByID(int id);
+	public MeterGas getGasByID(Long id);
 
-	public MeterWater getWaterByID(int id);
+	public MeterWater getWaterByID(Long id);
+	
+	public Set<Long> getIdList(Media media);
+	
+
+	public boolean ifMainExists(Media media);
+
 }

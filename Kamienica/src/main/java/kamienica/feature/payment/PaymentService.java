@@ -31,10 +31,10 @@ public interface PaymentService {
 
 	public List<PaymentWater> getPaymentWaterList();
 
-	public void deleteEnergyByDate(int id);
+	public void deleteEnergyByDate(Long id);
 
-	public void deleteWaterByDate(int id);
+	public void deleteWaterByDate(Long id);
 
-	public void deleteGasByDate(int id);
+	public void deleteGasByDate(Long id);
 
 }

@@ -1,6 +1,6 @@
 package kamienica.feature.division;
 
-import java.util.Date;
+import java.io.Serializable;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -8,9 +8,9 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
 
+import org.hibernate.annotations.Type;
+import org.joda.time.LocalDate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
 
@@ -18,15 +18,15 @@ import kamienica.feature.apartment.Apartment;
 import kamienica.feature.tenant.Tenant;
 
 @Entity
-@Table(name="division")
-public class Division {
+@Table(name = "division")
+public class Division implements Serializable {
 	@Id
 	@GeneratedValue
-	private int id;
+	private Long id;
 	@Column(nullable = false)
-	@Temporal(TemporalType.DATE)
-	@DateTimeFormat(pattern = "yyyy.MM.dd")
-	private Date date;
+	@DateTimeFormat(pattern = "yyyy-MM-dd")
+	@Type(type="org.jadira.usertype.dateandtime.joda.PersistentLocalDate")
+	private LocalDate date;
 	@ManyToOne
 	private Tenant tenant;
 	@ManyToOne
@@ -34,19 +34,19 @@ public class Division {
 	@Column(nullable = false)
 	private double divisionValue;
 
-	public int getId() {
+	public Long getId() {
 		return id;
 	}
 
-	public void setId(int id) {
+	public void setId(Long id) {
 		this.id = id;
 	}
 
-	public Date getDate() {
+	public LocalDate getDate() {
 		return date;
 	}
 
-	public void setDate(Date date) {
+	public void setDate(LocalDate date) {
 		this.date = date;
 	}
 
@@ -75,10 +75,10 @@ public class Division {
 	}
 
 	@Autowired
-	public Division(int id, Date date, Tenant tenant, Apartment apartment, double divisionValue) {
+	public Division(Long id, LocalDate LocalDate, Tenant tenant, Apartment apartment, double divisionValue) {
 		super();
 		this.id = id;
-		this.date = date;
+		this.date = LocalDate;
 		this.tenant = tenant;
 		this.apartment = apartment;
 		this.divisionValue = divisionValue;
@@ -90,7 +90,7 @@ public class Division {
 	@Override
 	public String toString() {
 		return "\nPodzial: " + tenant.getFullName() + "->" + apartment.getDescription() + "-> podzial=" + divisionValue
-				+ "]" + " ID " +getId();
+				+ "]" + " ID " + getId();
 	}
 
 }

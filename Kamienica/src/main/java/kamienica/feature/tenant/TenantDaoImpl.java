@@ -8,19 +8,20 @@ import org.hibernate.criterion.Restrictions;
 import org.springframework.stereotype.Repository;
 
 import kamienica.dao.AbstractDao;
+import kamienica.feature.apartment.Apartment;
 
 @Repository("tenantDao")
-public class TenantDaoImpl extends AbstractDao<Integer, Tenant> implements TenantDao {
+public class TenantDaoImpl extends AbstractDao<Long, Tenant> implements TenantDao {
 
-
-
+	@Override
 	@SuppressWarnings("unchecked")
 	public List<Tenant> getActiveTenants() {
 		Criteria criteria = createEntityCriteria();
 		criteria.add(Restrictions.eq("status", UserStatus.ACTIVE.getUserStatus()));
-		return (List<Tenant>) criteria.list();
+		return criteria.list();
 	}
 
+	@Override
 	public Tenant loadByMail(String mail) {
 		Criteria criteria = createEntityCriteria();
 		criteria.add(Restrictions.eq("email", mail));
@@ -28,11 +29,20 @@ public class TenantDaoImpl extends AbstractDao<Integer, Tenant> implements Tenan
 	}
 
 	@Override
-	public void deactivateByApparmentId(int id) {
+	public void deactivateByApparmentId(Long id) {
 		Query query = getSession().createSQLQuery("update tenant set status =:status where apartment_id =:id")
-				.setParameter("id", id).setParameter("status", UserStatus.INACTIVE.getUserStatus());
+				.setLong("id", id).setParameter("status", UserStatus.INACTIVE.getUserStatus());
 		query.executeUpdate();
 
+	}
+
+	@Override
+	public Tenant getTenantForApartment(Apartment ap) {
+		Criteria criteria = createEntityCriteria();
+		criteria.add(Restrictions.eq("apartment", ap))
+				.add(Restrictions.eq("status", UserStatus.ACTIVE.getUserStatus()));
+
+		return (Tenant) criteria.uniqueResult();
 	}
 
 }

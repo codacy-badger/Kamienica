@@ -1,36 +1,51 @@
 package kamienica.feature.reading;
 
-import java.util.ArrayList;
-import java.util.List;
+public class ReadingForm {
 
-public class ReadingForm<R extends ReadingAbstract> {
-
-	private List<R> currentReadings = new ArrayList<>();
-	private List<R> previousReadings = new ArrayList<>();
+	private Long meterId;
+	private String desciption;
+	private double previousReading;
+	private double currentReading;
 
 	public ReadingForm() {
-
 	}
 
-	public List<R> getCurrentReadings() {
-		return currentReadings;
+	public Long getMeterId() {
+		return meterId;
 	}
 
-	public void setCurrentReadings(List<R> odczytyGazu) {
-		this.currentReadings = odczytyGazu;
+	public void setMeterId(Long meterId) {
+		this.meterId = meterId;
 	}
 
-	public List<R> getPreviousReadings() {
-		return previousReadings;
+	public double getPreviousReading() {
+		return previousReading;
 	}
 
-	public void setPreviousReadings(List<R> previousRearing) {
-		this.previousReadings = previousRearing;
+	public void setPreviousReading(double previousReading) throws IllegalArgumentException {
+		if (previousReading < 0) {
+			throw new IllegalArgumentException();
+		}
+		this.previousReading = previousReading;
 	}
 
-	@Override
-	public String toString() {
-		return "OdczytGazFormularz [odczytyGazu=" + currentReadings + ", poprzednieOdczytyGazu=" + previousReadings
-				+ "]";
+	public double getCurrentReading() {
+		return currentReading;
 	}
+
+	public void setCurrentReading(double currentReading) throws IllegalArgumentException {
+		if (currentReading < previousReading) {
+			throw new IllegalArgumentException();
+		}
+		this.currentReading = currentReading;
+	}
+
+	public String getDesciption() {
+		return desciption;
+	}
+
+	public void setDesciption(String desciption) {
+		this.desciption = desciption;
+	}
+
 }

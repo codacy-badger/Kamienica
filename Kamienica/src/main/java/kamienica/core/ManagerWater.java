@@ -3,7 +3,6 @@ package kamienica.core;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.joda.time.DateTime;
 import org.joda.time.Days;
 
 import kamienica.feature.apartment.Apartment;
@@ -51,8 +50,9 @@ public class ManagerWater {
 			tmpUsage.setUsage(zuzycie);
 			tmpUsage.setUnit(newRading.get(0).getUnit());
 			if (!oldReading.isEmpty()) {
-				tmpUsage.setDaysBetweenReadings(Days.daysBetween(new DateTime(oldReading.get(0).getReadingDate()),
-						new DateTime(newRading.get(0).getReadingDate())).getDays());
+				tmpUsage.setDaysBetweenReadings(Days.daysBetween(oldReading.get(0).getReadingDate(), newRading.get(0).getReadingDate()).getDays());
+//				tmpUsage.setDaysBetweenReadings(Days.daysBetween(oldReading.get(0).getReadingDate()),
+//						newRading.get(0).getReadingDate()).getDays());
 			} else {
 				tmpUsage.setDaysBetweenReadings(0);
 			}

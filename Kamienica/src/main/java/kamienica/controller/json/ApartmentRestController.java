@@ -18,13 +18,13 @@ import kamienica.feature.apartment.ApartmentService;
 
 @RestController
 @RequestMapping("/Rest")
-public class ApartmentRestController  {
+public class ApartmentRestController {
 
 	@Autowired
 	ApartmentService apartmentService;
 
 	// @RequestMapping("/apartment/{id}")
-	// public String getRestApartment(@PathVariable int id, Model model) {
+	// public String getRestApartment(@PathVariable Long id, Model model) {
 	// @SuppressWarnings("unchecked")
 	// List<Apartment> aparment = (List<Apartment>)
 	// apartmentService.getById(id);
@@ -40,23 +40,25 @@ public class ApartmentRestController  {
 
 	// --------------single_apartment----
 	@RequestMapping(value = "/apartments/{id}", method = RequestMethod.GET)
-	public ResponseEntity<Apartment> getRestApartment(@PathVariable int id) {
+	public ResponseEntity<Apartment> getRestApartment(@PathVariable Long id) {
 		Apartment apartment = apartmentService.getById(id);
 		if (apartment == null) {
 			return new ResponseEntity<Apartment>(HttpStatus.NOT_FOUND);
 		}
 		return new ResponseEntity<Apartment>(apartment, HttpStatus.OK);
 	}
-	
-//	@RequestMapping(value = "/apartments", params= {"id"}, method = RequestMethod.GET)
-//	public ResponseEntity<Apartment> getRestApartment2(@PathVariable int id) {
-//		Apartment apartment = apartmentService.getById(id);
-//		if (apartment == null) {
-//			return new ResponseEntity<Apartment>(HttpStatus.NOT_FOUND);
-//		}
-//		return new ResponseEntity<Apartment>(apartment, HttpStatus.OK);
-//	}
-//	
+
+	// @RequestMapping(value = "/apartments", params= {"id"}, method =
+	// RequestMethod.GET)
+	// public ResponseEntity<Apartment> getRestApartment2(@PathVariable Long id)
+	// {
+	// Apartment apartment = apartmentService.getById(id);
+	// if (apartment == null) {
+	// return new ResponseEntity<Apartment>(HttpStatus.NOT_FOUND);
+	// }
+	// return new ResponseEntity<Apartment>(apartment, HttpStatus.OK);
+	// }
+	//
 
 	// create new
 	@RequestMapping(value = "/apartments", method = RequestMethod.POST)
@@ -73,7 +75,7 @@ public class ApartmentRestController  {
 
 	// update
 	@RequestMapping(value = "/apartments/{id}", method = RequestMethod.PUT)
-	public ResponseEntity<Apartment> updateUser(@PathVariable("id") int id, @RequestBody Apartment apartment) {
+	public ResponseEntity<Apartment> updateUser(@PathVariable("id") Long id, @RequestBody Apartment apartment) {
 
 		Apartment currentApartment = apartmentService.getById(id);
 
@@ -88,16 +90,17 @@ public class ApartmentRestController  {
 		apartmentService.update(currentApartment);
 		return new ResponseEntity<Apartment>(currentApartment, HttpStatus.OK);
 	}
+
 	// delete by id
-	 @RequestMapping(value = "/apartments/{id}", method = RequestMethod.DELETE)
-	    public ResponseEntity<Apartment> deleteUser(@PathVariable("id") int id) {    
-		 Apartment apartment = apartmentService.getById(id);
-	        if (apartment == null) {
-	          
-	            return new ResponseEntity<Apartment>(HttpStatus.NOT_FOUND);
-	        }
-	 
-	        apartmentService.deleteByID(id);
-	        return new ResponseEntity<Apartment>(HttpStatus.NO_CONTENT);
-	    }
+	@RequestMapping(value = "/apartments/{id}", method = RequestMethod.DELETE)
+	public ResponseEntity<Apartment> deleteUser(@PathVariable("id") Long id) {
+		Apartment apartment = apartmentService.getById(id);
+		if (apartment == null) {
+
+			return new ResponseEntity<Apartment>(HttpStatus.NOT_FOUND);
+		}
+
+		apartmentService.deleteByID(id);
+		return new ResponseEntity<Apartment>(HttpStatus.NO_CONTENT);
+	}
 }

@@ -1,40 +1,50 @@
 package kamienica.feature.meter;
 
 import java.util.List;
+import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import kamienica.dao.DaoInterface;
+import kamienica.core.Media;
 
 @Service
 @Transactional
 public class MeterServiceImpl implements MeterService {
 
 	@Autowired
-	DaoInterface<MeterEnergy> energy;
+	MeterDao<MeterEnergy> energy;
 
 	@Autowired
-	DaoInterface<MeterGas> gas;
+	MeterDao<MeterGas> gas;
 
 	@Autowired
-	DaoInterface<MeterWater> water;
+	MeterDao<MeterWater> water;
 
 	@Override
 	public void saveGas(MeterGas meter) {
+		if (meter.getApartment() == null) {
+			meter.main = true;
+		}
 		gas.save(meter);
 
 	}
 
 	@Override
 	public void saveWater(MeterWater meter) {
+		if (meter.getApartment() == null) {
+			meter.main = true;
+		}
 		water.save(meter);
 
 	}
 
 	@Override
 	public void saveEnergy(MeterEnergy meter) {
+		if (meter.getApartment() == null) {
+			meter.main = true;
+		}
 		energy.save(meter);
 
 	}
@@ -74,36 +84,70 @@ public class MeterServiceImpl implements MeterService {
 	}
 
 	@Override
-	public void deleteEnergyByID(int id) {
+	public void deleteEnergyByID(Long id) {
 		energy.deleteById(id);
 
 	}
 
 	@Override
-	public void deleteGasByID(int id) {
+	public void deleteGasByID(Long id) {
 		gas.deleteById(id);
 
 	}
 
 	@Override
-	public void deleteWaterByID(int id) {
+	public void deleteWaterByID(Long id) {
 		water.deleteById(id);
 
 	}
 
 	@Override
-	public MeterEnergy getEnergyByID(int id) {
+	public MeterEnergy getEnergyByID(Long id) {
 		return energy.getById(id);
 	}
 
 	@Override
-	public MeterGas getGasByID(int id) {
+	public MeterGas getGasByID(Long id) {
 		return gas.getById(id);
 	}
 
 	@Override
-	public MeterWater getWaterByID(int id) {
+	public MeterWater getWaterByID(Long id) {
 		return water.getById(id);
 	}
 
+	@Override
+	public Set<Long> getIdList(Media media) {
+		switch (media) {
+		case ENERGY:
+			return energy.getIdList();
+		case WATER:
+			return water.getIdList();
+		case GAS:
+			return gas.getIdList();
+
+		default:
+			return null;
+		}
+	}
+
+	@Override
+	public boolean ifMainExists(Media media) {
+		switch (media) {
+		case ENERGY:
+
+			return energy.ifMainExists();
+
+		case GAS:
+
+			return gas.ifMainExists();
+
+		case WATER:
+
+			return water.ifMainExists();
+
+		default:
+			return false;
+		}
+	}
 }

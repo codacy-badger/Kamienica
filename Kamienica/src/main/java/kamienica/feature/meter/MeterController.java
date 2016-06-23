@@ -1,8 +1,6 @@
 package kamienica.feature.meter;
 
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -11,17 +9,15 @@ import javax.validation.Valid;
 
 import org.hibernate.exception.ConstraintViolationException;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.propertyeditors.CustomDateEditor;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.WebDataBinder;
-import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
+import kamienica.core.Media;
 import kamienica.feature.apartment.Apartment;
 import kamienica.feature.apartment.ApartmentService;
 
@@ -33,16 +29,16 @@ public class MeterController {
 	@Autowired
 	private MeterService meterService;
 
-	@InitBinder
-	public void initBinder(WebDataBinder binder) {
-		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-		sdf.setLenient(true);
-		binder.registerCustomEditor(Date.class, new CustomDateEditor(sdf, true));
-	}
+	// @InitBinder
+	// public void initBinder(WebDataBinder binder) {
+	// SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+	// sdf.setLenient(true);
+	// binder.registerCustomEditor(Date.class, new CustomDateEditor(sdf, true));
+	// }
 
 	private final String DUPLICATE = "Istnieje już w bazie licznik z takim numerem seryjnym";
 	private final String WARM_CWU = "Licznik Główny nie może być licznikiem CWU bądź Ciepłej Wody";
-
+	private final String MAIN_EXISTS = "Istnieje już w bazie licznik główny";
 	// ------------------Register-------------------------------------
 
 	@RequestMapping("/Admin/Meter/meterEnergyRegister")
@@ -71,6 +67,10 @@ public class MeterController {
 	@RequestMapping(value = "/Admin/Meter/meterEnergySave", method = RequestMethod.POST)
 	public ModelAndView meterEnergySave(@Valid @ModelAttribute("meter") MeterEnergy meter, BindingResult result) {
 
+		if (meter.main && meterService.ifMainExists(Media.ENERGY)) {
+			result.rejectValue("apartment", "error.meter", MAIN_EXISTS);
+		}
+
 		if (result.hasErrors()) {
 			Map<String, Object> model = prepareModel();
 			model.put("url", "/Admin/Meter/meterEnergySave.html");
@@ -92,6 +92,10 @@ public class MeterController {
 	public ModelAndView meterWaterSave(@Valid @ModelAttribute("meter") MeterWater meter, BindingResult result) {
 		if (meter.getApartment() == null && meter.getIsWarmWater() == true) {
 			result.rejectValue("isWarmWater", "error.meter", WARM_CWU);
+		}
+
+		if (meter.main && meterService.ifMainExists(Media.WATER)) {
+			result.rejectValue("apartment", "error.meter", MAIN_EXISTS);
 		}
 
 		if (result.hasErrors()) {
@@ -117,6 +121,9 @@ public class MeterController {
 		if (meter.getApartment() == null && meter.isCwu() == true) {
 			result.rejectValue("cwu", "error.meter", WARM_CWU);
 		}
+		if (meter.main && meterService.ifMainExists(Media.GAS)) {
+			result.rejectValue("apartment", "error.meter", MAIN_EXISTS);
+		}
 		if (result.hasErrors()) {
 			Map<String, Object> model = prepareModel();
 			model.put("url", "/Admin/Meter/meterGasSave.html");
@@ -140,6 +147,7 @@ public class MeterController {
 	@RequestMapping("/Admin/Meter/meterEnergyList")
 	public ModelAndView meterEnergyList() {
 		Map<String, Object> model = new HashMap<String, Object>();
+
 		model.put("meter", meterService.getEnergyList());
 		return new ModelAndView("/Admin/Meter/MeterEnergyList", model);
 
@@ -164,7 +172,7 @@ public class MeterController {
 	// ----------------------EDIT----------------------------------------
 
 	@RequestMapping(value = "/Admin/Meter/meterEnergyEdit")
-	public ModelAndView meterEnergyEdit(@RequestParam(value = "id") int id,
+	public ModelAndView meterEnergyEdit(@RequestParam(value = "id") Long id,
 			@ModelAttribute("meter") MeterEnergy meter) {
 		Map<String, Object> model = prepareModel();
 		model.put("url", "/Admin/Meter/meterEnergyOverwrite.html");
@@ -174,7 +182,7 @@ public class MeterController {
 	}
 
 	@RequestMapping(value = "/Admin/Meter/meterWaterEdit")
-	public ModelAndView meterWaterEdit(@RequestParam(value = "id") int id) {
+	public ModelAndView meterWaterEdit(@RequestParam(value = "id") Long id) {
 		Map<String, Object> model = prepareModel();
 		model.put("url", "/Admin/Meter/meterWaterOverwrite.html");
 		return new ModelAndView("/Admin/Meter/MeterWaterRegister", "model", model).addObject("meter",
@@ -183,7 +191,7 @@ public class MeterController {
 	}
 
 	@RequestMapping(value = "/Admin/Meter/meterGasEdit")
-	public ModelAndView meterGasEdit(@RequestParam(value = "id") int id) {
+	public ModelAndView meterGasEdit(@RequestParam(value = "id") Long id) {
 		Map<String, Object> model = prepareModel();
 		model.put("url", "/Admin/Meter/meterGasOverwrite.html");
 		return new ModelAndView("/Admin/Meter/MeterGasRegister", "model", model).addObject("meter",
@@ -257,19 +265,19 @@ public class MeterController {
 	// ------------------DELETE-------------------------------------
 
 	@RequestMapping(value = "/Admin/Meter/meterEnergyDelete", params = { "id" })
-	public ModelAndView usunLicznikEnergia(@RequestParam(value = "id") int id) {
+	public ModelAndView usunLicznikEnergia(@RequestParam(value = "id") Long id) {
 		meterService.deleteEnergyByID(id);
 		return new ModelAndView("redirect:/Admin/Meter/meterEnergyList.html");
 	}
 
 	@RequestMapping(value = "/Admin/Meter/meterWaterDelete", params = { "id" })
-	public ModelAndView meterWaterDelete(@RequestParam(value = "id") int id) {
+	public ModelAndView meterWaterDelete(@RequestParam(value = "id") Long id) {
 		meterService.deleteWaterByID(id);
 		return new ModelAndView("redirect:/Admin/Meter/meterWaterList.html");
 	}
 
 	@RequestMapping(value = "/Admin/Meter/meterGasDelete", params = { "id" })
-	public ModelAndView meterGasDelete(@RequestParam(value = "id") int id) {
+	public ModelAndView meterGasDelete(@RequestParam(value = "id") Long id) {
 		meterService.deleteGasByID(id);
 		return new ModelAndView("redirect:/Admin/Meter/meterGasList.html");
 	}
@@ -298,7 +306,7 @@ public class MeterController {
 		Apartment m = new Apartment();
 		m.setDescription("Licznik Główny");
 		m.setApartmentNumber(-1);
-		m.setId(-1);
+		m.setId(-1L);
 		return m;
 	}
 }

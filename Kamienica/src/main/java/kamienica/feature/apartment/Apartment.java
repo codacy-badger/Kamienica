@@ -1,5 +1,7 @@
 package kamienica.feature.apartment;
 
+import java.io.Serializable;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -15,12 +17,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 @Entity
 @Table(name="apartment")
-public class Apartment {
+public class Apartment implements Serializable {
 
 	@Id
 	@GeneratedValue
 	@Column
-	private int id;
+	private Long id;
 	@Column(nullable = false, unique = true)
 	@NotNull(message = "Wstaw wartość liczbową")
 	@Min(value = 0, message = "Nie może być wartość ujemna")
@@ -46,6 +48,7 @@ public class Apartment {
 	public Apartment() {
 	}
 
+	@Override
 	public String toString() {
 		return "Number " + apartmentNumber + "; " + description;
 	}
@@ -74,11 +77,11 @@ public class Apartment {
 		this.apartmentNumber = nrMiekszania;
 	}
 
-	public int getId() {
+	public Long getId() {
 		return id;
 	}
 
-	public void setId(int id) {
+	public void setId(Long id) {
 		this.id = id;
 	}
 

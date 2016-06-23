@@ -12,7 +12,7 @@ public class MeterGasConverter implements Converter<Object, MeterGas> {
 
 	@Override
 	public MeterGas convert(Object element) {
-		Integer id = Integer.parseInt((String) element);
+		Long id = Long.parseLong((String) element);
 		return service.getGasByID(id);
 	}
 }

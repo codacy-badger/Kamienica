@@ -1,37 +1,51 @@
 package kamienica.feature.reading;
 
-import java.util.Date;
+import java.io.Serializable;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+import org.joda.time.LocalDate;
+
 import kamienica.feature.meter.MeterEnergy;
 
 @Entity
-@Table(name="readingenergy")
-public class ReadingEnergy extends ReadingAbstract {
+@Table(name = "readingenergy")
+public class ReadingEnergy extends ReadingAbstract implements Serializable {
+
 	@Column(nullable = false)
 	private String unit;
 	@ManyToOne
 	MeterEnergy meter;
+//	@OneToOne
+//	ReadingEnergy nextReading;
+//
+//	public ReadingEnergy getNextReading() {
+//		return nextReading;
+//	}
+//
+//	public void setNextReading(ReadingEnergy nextReading) {
+//		this.nextReading = nextReading;
+//	}
 
 	public ReadingEnergy() {
 	}
 
-	public ReadingEnergy(Date date, double value, MeterEnergy meter) {
+	public ReadingEnergy(LocalDate date, double value, MeterEnergy meter) {
 		super(date, value);
 		this.unit = meter.getUnit();
 		this.meter = meter;
 	}
 
+	@Override
 	public MeterEnergy getMeter() {
 		return meter;
 	}
 
 	public String getUnit() {
-		return this.meter.getUnit();
+		return this.unit;
 	}
 
 	public void setMeter(MeterEnergy meter) {
@@ -44,9 +58,7 @@ public class ReadingEnergy extends ReadingAbstract {
 
 	@Override
 	public String toString() {
-		return "ReadingEnergy [unit=" + unit + ", meter=" + meter + ", isResolved()=" + isResolved() + ", toString()="
-				+ super.toString() + ", getReadingDate()=" + getReadingDate() + ", getValue()=" + getValue()
-				+ ", getId()=" + getId() + ", getClass()=" + getClass() + ", hashCode()=" + hashCode() + "]";
+		return "ReadingEnergy [unit=" + unit + ", meter=" + meter + " " + super.toString() + "]";
 	}
 
 }

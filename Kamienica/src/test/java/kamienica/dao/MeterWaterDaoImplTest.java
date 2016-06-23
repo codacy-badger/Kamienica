@@ -15,21 +15,21 @@ public class MeterWaterDaoImplTest extends EntityDaoImplTest {
 
 	@Test
 	public void findById() {
-		Assert.assertNotNull(meterDao.getById(1));
-		Assert.assertNull(meterDao.getById(8));
+		Assert.assertNotNull(meterDao.getById(1L));
+		Assert.assertNull(meterDao.getById(8L));
 	}
 
 	@Test
 	public void saveAndDelete() {
 		meterDao.save(getSampleMeter());
 		Assert.assertEquals(meterDao.getList().size(), 6);
-		meterDao.deleteById(6);
+		meterDao.deleteById(6L);
 		Assert.assertEquals(meterDao.getList().size(), 5);
 	}
 
 	@Test
 	public void deletetByInvalidId() {
-		meterDao.deleteById(9);
+		meterDao.deleteById(9L);
 		Assert.assertEquals(meterDao.getList().size(), 5);
 	}
 

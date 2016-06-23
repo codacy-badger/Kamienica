@@ -2,12 +2,15 @@ package kamienica.dao;
 
 import java.io.Serializable;
 import java.lang.reflect.ParameterizedType;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import org.hibernate.Criteria;
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.hibernate.criterion.Projections;
 import org.springframework.beans.factory.annotation.Autowired;
 
 public abstract class AbstractDao<PK extends Serializable, T> {
@@ -35,8 +38,8 @@ public abstract class AbstractDao<PK extends Serializable, T> {
 	// getByID
 	// getById
 	@SuppressWarnings("unchecked")
-	public T getById(int id) {
-		return (T) getSession().get(persistentClass, new Integer((int) id));
+	public T getById(Long id) {
+		return (T) getSession().get(persistentClass, id);
 	}
 
 	public void save(T entity) {
@@ -49,9 +52,9 @@ public abstract class AbstractDao<PK extends Serializable, T> {
 
 	}
 
-	public void deleteById(int id) {
+	public void deleteById(Long id) {
 		Query query = getSession().createSQLQuery("delete from " + persistentClass.getSimpleName() + " where id = :id");
-		query.setInteger("id", id);
+		query.setLong("id", id);
 		query.executeUpdate();
 	}
 
@@ -62,7 +65,14 @@ public abstract class AbstractDao<PK extends Serializable, T> {
 	@SuppressWarnings("unchecked")
 	public List<T> getList() {
 		Criteria criteria = createEntityCriteria();
-		return (List<T>) criteria.list();
+		return criteria.list();
+	}
+
+	@SuppressWarnings("unchecked")
+	public Set<PK> getIdList() {
+		Criteria criteria = createEntityCriteria().setProjection(Projections.property("id"));
+		return new HashSet<PK>(criteria.list());
+
 	}
 
 	protected Criteria createEntityCriteria() {
