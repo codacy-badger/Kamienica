@@ -132,7 +132,7 @@ public class Tenant implements Serializable {
 	public void setId(Long id) {
 		this.id = id;
 	}
-
+//	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss.SSSZ")
 	public LocalDate getMovementDate() {
 		return movementDate;
 	}
@@ -145,7 +145,7 @@ public class Tenant implements Serializable {
 	public String toString() {
 		return "Tenant [id=" + id + ", firstName=" + firstName + ", lastName=" + lastName + ", email=" + email
 				+ ", phone=" + phone + ", apartment=" + apartment + ", role=" + role + ", status=" + status
-				+ ", movementDate=" + movementDate + ", password=" + password + "]";
+				+ ", movementDate=" + movementDate.toString()+  ", password=" + password + "]";
 	}
 
 	public Apartment getApartment() {

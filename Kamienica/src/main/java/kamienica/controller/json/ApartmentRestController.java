@@ -17,7 +17,7 @@ import kamienica.feature.apartment.Apartment;
 import kamienica.feature.apartment.ApartmentService;
 
 @RestController
-@RequestMapping("/Rest")
+@RequestMapping("/api/apartments")
 public class ApartmentRestController {
 
 	@Autowired
@@ -33,13 +33,13 @@ public class ApartmentRestController {
 	// }
 
 	// --------------multiple_apartments----
-	@RequestMapping(value = "/apartments", method = RequestMethod.GET)
+	@RequestMapping(value = "", method = RequestMethod.GET)
 	public List<Apartment> listAllApartments() {
 		return apartmentService.getList();
 	}
 
 	// --------------single_apartment----
-	@RequestMapping(value = "/apartments/{id}", method = RequestMethod.GET)
+	@RequestMapping(value = "/{id}", method = RequestMethod.GET)
 	public ResponseEntity<Apartment> getRestApartment(@PathVariable Long id) {
 		Apartment apartment = apartmentService.getById(id);
 		if (apartment == null) {
