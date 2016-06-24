@@ -6,7 +6,6 @@ import org.hibernate.criterion.Restrictions;
 import org.springframework.stereotype.Repository;
 
 import kamienica.dao.AbstractDao;
-import kamienica.feature.reading.ReadingEnergy;
 
 @Repository("meterEnergyDao")
 public class MeterEnergyDAOIml extends AbstractDao<Long, MeterEnergy> implements MeterDao<MeterEnergy> {

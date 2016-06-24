@@ -11,6 +11,7 @@ public class ReadingEnergyForm {
 	private List<ReadingEnergy> previousReadings = new LinkedList<>();
 	private List<ReadingEnergy> newReadings = new LinkedList<>();
 
+	@Override
 	public String toString() {
 		return "currentReadings=\n" + currentReadings + "\n previousReadings\n" + previousReadings + "\n newReadings\n"
 				+ newReadings;

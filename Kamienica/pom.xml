@@ -158,6 +158,13 @@
 			<artifactId>jackson-annotations</artifactId>
 			<version>2.4.1</version>
 		</dependency>
+
+		<!-- for parsing localdate -->
+		<dependency>
+			<groupId>com.fasterxml.jackson.datatype</groupId>
+			<artifactId>jackson-datatype-joda</artifactId>
+			<version>2.4.0</version>
+		</dependency>
 		<!-- Spring Security -->
 		<dependency>
 			<groupId>org.springframework.security</groupId>
@@ -186,7 +193,7 @@
 			<url>http://repo.springsource.org/snapshot</url>
 		</repository>
 	</repositories>
-	
+
 	<build>
 		<plugins>
 			<plugin>
