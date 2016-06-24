@@ -14,17 +14,19 @@ import kamienica.feature.tenant.Tenant;
 import kamienica.feature.tenant.TenantService;
 
 @RestController
-@RequestMapping("/api/tenants")
+@RequestMapping("/api/v1/tenants")
 public class TenantRestController {
 
 	@Autowired
 	TenantService service;
 
 	@RequestMapping(value = "", method = RequestMethod.GET)
-	public List<Tenant> getList() {
-
-		return service.getList();
-
+	public ResponseEntity<List<Tenant>> getList() {
+		List<Tenant> list = service.getList();
+		if (list.isEmpty()) {
+			return new ResponseEntity<List<Tenant>>(HttpStatus.NOT_FOUND);
+		}
+		return new ResponseEntity<List<Tenant>>(list, HttpStatus.OK);
 	}
 
 	@RequestMapping(value = "/{id}", method = RequestMethod.GET)

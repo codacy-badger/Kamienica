@@ -17,7 +17,7 @@ import kamienica.feature.apartment.Apartment;
 import kamienica.feature.apartment.ApartmentService;
 
 @RestController
-@RequestMapping("/api/apartments")
+@RequestMapping("/api/v1/apartments")
 public class ApartmentRestController {
 
 	@Autowired
@@ -34,8 +34,12 @@ public class ApartmentRestController {
 
 	// --------------multiple_apartments----
 	@RequestMapping(value = "", method = RequestMethod.GET)
-	public List<Apartment> listAllApartments() {
-		return apartmentService.getList();
+	public ResponseEntity<List<Apartment>> listAllApartments() {
+		List<Apartment> list = apartmentService.getList();
+		if (list.isEmpty()) {
+			return new ResponseEntity<List<Apartment>>(HttpStatus.NOT_FOUND);
+		}
+		return new ResponseEntity<List<Apartment>>(list, HttpStatus.OK);
 	}
 
 	// --------------single_apartment----
