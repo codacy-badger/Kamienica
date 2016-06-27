@@ -18,6 +18,7 @@ import kamienica.feature.invoice.InvoiceEnergy;
 public class ReadingEnergyDAOImpl extends AbstractDao<Long, ReadingEnergy>
 		implements ReadingDao<ReadingEnergy, InvoiceEnergy> {
 
+	
 	@Override
 	public List<ReadingEnergy> getList() {
 		@SuppressWarnings("unchecked")

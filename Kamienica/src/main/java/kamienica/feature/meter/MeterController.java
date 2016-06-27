@@ -29,13 +29,6 @@ public class MeterController {
 	@Autowired
 	private MeterService meterService;
 
-	// @InitBinder
-	// public void initBinder(WebDataBinder binder) {
-	// SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-	// sdf.setLenient(true);
-	// binder.registerCustomEditor(Date.class, new CustomDateEditor(sdf, true));
-	// }
-
 	private final String DUPLICATE_SERIAL = "Istnieje już w bazie licznik z takim numerem seryjnym";
 	private final String WARM_CWU = "Licznik Główny nie może być licznikiem CWU bądź Ciepłej Wody";
 	private final String MAIN_EXISTS = "Istnieje już w bazie licznik główny";
