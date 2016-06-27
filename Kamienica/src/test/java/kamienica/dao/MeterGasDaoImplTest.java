@@ -1,15 +1,18 @@
 package kamienica.dao;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
+import kamienica.feature.meter.MeterDao;
 import kamienica.feature.meter.MeterGas;
 
 public class MeterGasDaoImplTest extends EntityDaoImplTest {
 
 	@Autowired
-	DaoInterface<MeterGas> meterDao;
+	@Qualifier("meterGasDao")
+	MeterDao<MeterGas> meterDao;
 	//
 	// @Override
 	// protected IDataSet getDataSet() throws Exception {

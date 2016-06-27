@@ -7,9 +7,11 @@ import javax.persistence.Inheritance;
 import javax.persistence.ManyToOne;
 import javax.persistence.MappedSuperclass;
 
+import org.hibernate.annotations.Type;
 import org.hibernate.validator.constraints.NotEmpty;
 import org.joda.time.LocalDate;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import kamienica.feature.apartment.Apartment;
 
@@ -21,7 +23,7 @@ public abstract class MeterAbstract {
 	@GeneratedValue
 	@Column
 	protected Long id;
-	@Column(nullable = false)
+	@Column(nullable = false, unique = true)
 	@NotEmpty(message = "Wprowadź wartość")
 	protected String description;
 	@Column(nullable = false, unique = true)
@@ -34,6 +36,8 @@ public abstract class MeterAbstract {
 	protected Apartment apartment;
 	@Column(columnDefinition = "TINYINT(1)")
 	protected boolean main = false;
+	@DateTimeFormat(pattern = "yyyy-MM-dd")
+	@Type(type = "org.jadira.usertype.dateandtime.joda.PersistentLocalDate")
 	protected LocalDate deactivation = LocalDate.parse("2600-01-01");
 
 	@Autowired

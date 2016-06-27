@@ -24,7 +24,7 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 @Configuration
 @EnableTransactionManagement
-@ComponentScan({ "kamienica.dao" })
+@ComponentScan({ "kamienica.feature" })
 public class HibernateTestConfiguration {
 
 //	@Autowired
@@ -36,7 +36,7 @@ public class HibernateTestConfiguration {
 	public LocalSessionFactoryBean sessionFactory() {
 		LocalSessionFactoryBean sessionFactory = new LocalSessionFactoryBean();
 		sessionFactory.setDataSource(dataSource());
-		sessionFactory.setPackagesToScan(new String[] { "kamienica.model" });
+		sessionFactory.setPackagesToScan(new String[] { "kamienica" });
 		sessionFactory.setHibernateProperties(hibernateProperties());
 		System.out.println(Arrays.asList(applicationContext.getBeanDefinitionNames()));
 		return sessionFactory;

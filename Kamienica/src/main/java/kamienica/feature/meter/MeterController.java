@@ -36,9 +36,10 @@ public class MeterController {
 	// binder.registerCustomEditor(Date.class, new CustomDateEditor(sdf, true));
 	// }
 
-	private final String DUPLICATE = "Istnieje już w bazie licznik z takim numerem seryjnym";
+	private final String DUPLICATE_SERIAL = "Istnieje już w bazie licznik z takim numerem seryjnym";
 	private final String WARM_CWU = "Licznik Główny nie może być licznikiem CWU bądź Ciepłej Wody";
 	private final String MAIN_EXISTS = "Istnieje już w bazie licznik główny";
+	private final String DUPLICATE_DESC = "Opis musi być unikatowy";
 	// ------------------Register-------------------------------------
 
 	@RequestMapping("/Admin/Meter/meterEnergyRegister")
@@ -80,8 +81,14 @@ public class MeterController {
 			meterService.saveEnergy(meter);
 		} catch (ConstraintViolationException e) {
 			Map<String, Object> model = prepareModel();
+			if (e.getCause().toString().contains("description")) {
+				result.rejectValue("description", "error.meter", DUPLICATE_DESC);
+			} else {
+				result.rejectValue("serialNumber", "error.meter", DUPLICATE_SERIAL);
+			}
+
 			model.put("url", "/Admin/Meter/meterEnergySave.html");
-			result.rejectValue("serialNumber", "error.meter", DUPLICATE);
+
 			return new ModelAndView("/Admin/Meter/MeterEnergyRegister", "model", model);
 
 		}
@@ -107,8 +114,13 @@ public class MeterController {
 			meterService.saveWater(meter);
 		} catch (ConstraintViolationException e) {
 			Map<String, Object> model = prepareModel();
+			if (e.getCause().toString().contains("description")) {
+				result.rejectValue("description", "error.meter", DUPLICATE_DESC);
+			} else {
+				result.rejectValue("serialNumber", "error.meter", DUPLICATE_SERIAL);
+			}
 			model.put("url", "/Admin/Meter/meterWaterSave.html");
-			result.rejectValue("serialNumber", "error.meter", DUPLICATE);
+
 			return new ModelAndView("/Admin/Meter/MeterWaterRegister", "model", model);
 
 		}
@@ -133,8 +145,13 @@ public class MeterController {
 			meterService.saveGas(meter);
 		} catch (ConstraintViolationException e) {
 			Map<String, Object> model = prepareModel();
+			if (e.getCause().toString().contains("description")) {
+				result.rejectValue("description", "error.meter", DUPLICATE_DESC);
+			} else {
+				result.rejectValue("serialNumber", "error.meter", DUPLICATE_SERIAL);
+			}
 			model.put("url", "/Admin/Meter/meterGasSave.html");
-			result.rejectValue("serialNumber", "error.meter", DUPLICATE);
+
 			return new ModelAndView("/Admin/Meter/MeterGasRegister", "model", model);
 
 		}
@@ -210,9 +227,14 @@ public class MeterController {
 		try {
 			meterService.updateEnergy(meter);
 		} catch (org.springframework.dao.DataIntegrityViolationException e) {
+		
 			Map<String, Object> model = prepareModel();
 			model.put("url", "/Admin/Meter/meterEnergyOverwrite.html");
-			result.rejectValue("serialNumber", "error.meter", DUPLICATE);
+			if (e.getRootCause().toString().contains("description")) {
+				result.rejectValue("description", "error.meter", DUPLICATE_DESC);
+			} else {
+				result.rejectValue("serialNumber", "error.meter", DUPLICATE_SERIAL);
+			}
 			return new ModelAndView("/Admin/Meter/MeterEnergyRegister", "model", model);
 		}
 		return new ModelAndView("redirect:/Admin/Meter/meterEnergyList.html");
@@ -235,7 +257,11 @@ public class MeterController {
 		} catch (org.springframework.dao.DataIntegrityViolationException e) {
 			Map<String, Object> model = prepareModel();
 			model.put("url", "/Admin/Meter/meterWaterOverwrite.html");
-			result.rejectValue("serialNumber", "error.meter", DUPLICATE);
+			if (e.getRootCause().toString().contains("description")) {
+				result.rejectValue("description", "error.meter", DUPLICATE_DESC);
+			} else {
+				result.rejectValue("serialNumber", "error.meter", DUPLICATE_SERIAL);
+			}
 			return new ModelAndView("/Admin/Meter/MeterWaterRegister", "model", model);
 		}
 		return new ModelAndView("redirect:/Admin/Meter/meterWaterList.html");
@@ -256,7 +282,11 @@ public class MeterController {
 		} catch (org.springframework.dao.DataIntegrityViolationException e) {
 			Map<String, Object> model = prepareModel();
 			model.put("url", "/Admin/Meter/meterGasOverwrite.html");
-			result.rejectValue("serialNumber", "error.meter", DUPLICATE);
+			if (e.getRootCause().toString().contains("description")) {
+				result.rejectValue("description", "error.meter", DUPLICATE_DESC);
+			} else {
+				result.rejectValue("serialNumber", "error.meter", DUPLICATE_SERIAL);
+			}
 			return new ModelAndView("/Admin/Meter/MeterGasRegister", "model", model);
 		}
 		return new ModelAndView("redirect:/Admin/Meter/meterGasList.html");

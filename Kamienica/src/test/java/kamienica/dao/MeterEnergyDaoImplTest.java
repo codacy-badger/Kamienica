@@ -4,12 +4,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
+import kamienica.feature.meter.MeterDao;
 import kamienica.feature.meter.MeterEnergy;
 
 public class MeterEnergyDaoImplTest extends EntityDaoImplTest {
 
 	@Autowired
-	DaoInterface<MeterEnergy> meterDao;
+	MeterDao<MeterEnergy> meterDao;
 
 	@Test
 	public void findById() {
