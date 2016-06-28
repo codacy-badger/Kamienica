@@ -19,6 +19,7 @@ import kamienica.core.Media;
 import kamienica.feature.meter.MeterService;
 
 @Controller
+@RequestMapping("/Admin/Reading")
 public class ReadingController {
 
 	@Autowired
@@ -29,11 +30,10 @@ public class ReadingController {
 
 	// -----------------------------------REGISTER---------------------------------------------------------------
 
-	@RequestMapping("/Admin/Reading/readingEnergyRegister")
+	@RequestMapping("/readingEnergyRegister")
 	public ModelAndView readingEnergyRegister(@ModelAttribute("readingForm") ReadingEnergyForm readingForm,
 			BindingResult result) {
-System.out.println("-------------------------------");
-System.out.println(meterService.ifMainExists(Media.ENERGY));
+
 		HashMap<String, Object> model = new HashMap<>();
 		if (!meterService.ifMainExists(Media.ENERGY)) {
 			model.put("error", NO_MAIN_COUNTER);
@@ -47,7 +47,6 @@ System.out.println(meterService.ifMainExists(Media.ENERGY));
 		readingForm.setNewReadings(readings);
 		if (readings.isEmpty()) {
 			model.put("oldDate", "2000-01-01");
-
 		} else {
 			model.put("oldDate", readings.get(0).getReadingDate().plusDays(1));
 		}
@@ -55,7 +54,7 @@ System.out.println(meterService.ifMainExists(Media.ENERGY));
 		return new ModelAndView("/Admin/Reading/ReadingEnergyRegister", "model", model);
 	}
 
-	@RequestMapping("/Admin/Reading/readingGasRegister")
+	@RequestMapping("/readingGasRegister")
 	public ModelAndView readingGasRegister(@ModelAttribute("readingForm") ReadingGasForm readingForm,
 			BindingResult result) {
 
@@ -72,7 +71,6 @@ System.out.println(meterService.ifMainExists(Media.ENERGY));
 
 		if (readings.isEmpty()) {
 			model.put("oldDate", "2000-01-01");
-
 		} else {
 			model.put("oldDate", readings.get(0).getReadingDate().plusDays(1));
 		}
@@ -80,7 +78,7 @@ System.out.println(meterService.ifMainExists(Media.ENERGY));
 		return new ModelAndView("/Admin/Reading/ReadingGasRegister", "model", model);
 	}
 
-	@RequestMapping("/Admin/Reading/readingWaterRegister")
+	@RequestMapping("/readingWaterRegister")
 	public ModelAndView readingWaterRegister(@ModelAttribute("readingForm") ReadingWaterForm readingWaterForm,
 			BindingResult result) {
 
@@ -104,16 +102,16 @@ System.out.println(meterService.ifMainExists(Media.ENERGY));
 	}
 	// --------------------------------SAVE-----------------------------------------------------------------
 
-	@RequestMapping(value = "/Admin/Reading/readingEnergySave", method = RequestMethod.POST)
+	@RequestMapping(value = "/readingEnergySave", method = RequestMethod.POST)
 	public ModelAndView readingEnergySave(@ModelAttribute("readingForm") ReadingEnergyForm readingForm,
 			BindingResult result, @RequestParam String date) {
 
-		HashMap<String, Object> model = new HashMap<>();
-		if (!meterService.ifMainExists(Media.WATER)) {
+		if (!meterService.ifMainExists(Media.ENERGY)) {
+			HashMap<String, Object> model = new HashMap<>();
 			model.put("error", NO_MAIN_COUNTER);
 			return new ModelAndView("/Admin/Reading/ReadingEnergyRegister", "model", model);
 		}
-		
+
 		if (ReadingValidator.validateMeterReadings(readingForm.getCurrentReadings(), readingForm.getNewReadings())) {
 			return new ModelAndView("/Admin/Reading/ReadingEnergyRegister", "error",
 					"Nowa wartość nie może być mniejsza od poprzedniej");
@@ -123,24 +121,33 @@ System.out.println(meterService.ifMainExists(Media.ENERGY));
 		return new ModelAndView("redirect:/Admin/Reading/readingList.html?media=ENERGY");
 	}
 
-	@RequestMapping(value = "/Admin/Reading/readingGasSave", method = RequestMethod.POST)
+	@RequestMapping(value = "/readingGasSave", method = RequestMethod.POST)
 	public ModelAndView readingGasSave(@ModelAttribute("readingForm") ReadingGasForm readingForm, BindingResult result,
 			@RequestParam String date) {
 
+		if (!meterService.ifMainExists(Media.GAS)) {
+			HashMap<String, Object> model = new HashMap<>();
+			model.put("error", NO_MAIN_COUNTER);
+			return new ModelAndView("/Admin/Reading/ReadingGasRegister", "model", model);
+		}
 		readingService.saveGasList(readingForm.getCurrentReadings(), LocalDate.parse(date));
 		return new ModelAndView("redirect:/Admin/Reading/readingList.html?media=GAS");
 	}
 
-	@RequestMapping(value = "/Admin/Reading/readingWaterSave", method = RequestMethod.POST)
+	@RequestMapping(value = "/readingWaterSave", method = RequestMethod.POST)
 	public ModelAndView readingWaterSave(@ModelAttribute("readingForm") ReadingWaterForm readingWaterForm,
 			BindingResult result, @RequestParam String date) {
-
+		if (!meterService.ifMainExists(Media.WATER)) {
+			HashMap<String, Object> model = new HashMap<>();
+			model.put("error", NO_MAIN_COUNTER);
+			return new ModelAndView("/Admin/Reading/ReadingGasRegister", "model", model);
+		}
 		readingService.saveWaterList(readingWaterForm.getCurrentReadings(), LocalDate.parse(date));
 		return new ModelAndView("redirect:/Admin/Reading/readingList.html?media=WATER");
 	}
 	// -----------------------------LIST-------------------------------------------------------
 
-	@RequestMapping("/Admin/Reading/readingList")
+	@RequestMapping("/readingList")
 	public ModelAndView readingList(@RequestParam("media") Media media) {
 		Map<String, Object> model = new HashMap<String, Object>();
 		switch (media) {
@@ -185,7 +192,7 @@ System.out.println(meterService.ifMainExists(Media.ENERGY));
 
 	// ------------------------DELETE------------------------------
 
-	@RequestMapping(value = "/Admin/Reading/readingEnergyDelete")
+	@RequestMapping(value = "/readingEnergyDelete")
 	public ModelAndView readingEnergyDelete() {
 		// List<ReadingEnergy> listToDelete =
 		// readingService.getReadingEnergyByDate(date);
@@ -201,7 +208,7 @@ System.out.println(meterService.ifMainExists(Media.ENERGY));
 		return new ModelAndView("redirect:/Admin/Reading/readingList.html?media=ENERGY");
 	}
 
-	@RequestMapping(value = "/Admin/Reading/readingGasDelete")
+	@RequestMapping(value = "/readingGasDelete")
 	public ModelAndView readingGasDelete() {
 		// List<ReadingGas> listToDelete =
 		// readingService.getReadingGasByDate(date);
@@ -217,7 +224,7 @@ System.out.println(meterService.ifMainExists(Media.ENERGY));
 		return new ModelAndView("redirect:/Admin/Reading/readingList.html?media=GAS");
 	}
 
-	@RequestMapping(value = "/Admin/Reading/readingWaterDelete")
+	@RequestMapping(value = "/readingWaterDelete")
 	public ModelAndView usunReadingWater() {
 		// List<ReadingWater> listToDelete =
 		// readingService.getReadingWaterByDate(date);
@@ -233,7 +240,7 @@ System.out.println(meterService.ifMainExists(Media.ENERGY));
 	}
 
 	// ------------------------------EDIT-----------------------------------
-	@RequestMapping(value = "/Admin/Reading/readingEnergyEdit")
+	@RequestMapping(value = "/readingEnergyEdit")
 	public ModelAndView readingEnergyEdit(@ModelAttribute("readingForm") ReadingEnergyForm readingForm) {
 
 		readingForm.setCurrentReadings(readingService.energyLatestEdit(meterService.getIdList(Media.ENERGY)));
@@ -250,7 +257,7 @@ System.out.println(meterService.ifMainExists(Media.ENERGY));
 		return new ModelAndView("/Admin/Reading/ReadingEnergyEdit", "model", model);
 	}
 
-	@RequestMapping(value = "/Admin/Reading/readingGasEdit")
+	@RequestMapping(value = "/readingGasEdit")
 	public ModelAndView readingGasEdit(@ModelAttribute("readingForm") ReadingGasForm readingForm) {
 
 		readingForm.setCurrentReadings(readingService.gasLatestEdit(meterService.getIdList(Media.GAS)));
@@ -267,7 +274,7 @@ System.out.println(meterService.ifMainExists(Media.ENERGY));
 		return new ModelAndView("/Admin/Reading/ReadingGasEdit", "model", model);
 	}
 
-	@RequestMapping(value = "/Admin/Reading/readingWaterEdit")
+	@RequestMapping(value = "/readingWaterEdit")
 	public ModelAndView readingWaterEdit(@ModelAttribute("readingForm") ReadingWaterForm readingForm) {
 
 		readingForm.setCurrentReadings(readingService.waterLatestEdit(meterService.getIdList(Media.WATER)));
@@ -285,7 +292,7 @@ System.out.println(meterService.ifMainExists(Media.ENERGY));
 	}
 
 	// -------------------------OVERWRITE--------------------------------------------
-	@RequestMapping("/Admin/Reading/readingEnergyOverwrite")
+	@RequestMapping("/readingEnergyOverwrite")
 	public ModelAndView readingEnergyOverwite(@ModelAttribute("readingForm") ReadingEnergyForm readingForm,
 			BindingResult result, @RequestParam String date) throws ParseException {
 
@@ -293,7 +300,7 @@ System.out.println(meterService.ifMainExists(Media.ENERGY));
 		return new ModelAndView("redirect:/Admin/Reading/readingList.html?media=ENERGY");
 	}
 
-	@RequestMapping("/Admin/Reading/readingGasOverwrite")
+	@RequestMapping("/readingGasOverwrite")
 	public ModelAndView readingGasOverwrite(@ModelAttribute("readingForm") ReadingGasForm readingForm,
 			BindingResult result, @RequestParam String date) throws ParseException {
 
@@ -301,7 +308,7 @@ System.out.println(meterService.ifMainExists(Media.ENERGY));
 		return new ModelAndView("redirect:/Admin/Reading/readingList.html?media=GAS");
 	}
 
-	@RequestMapping("/Admin/Reading/readingWaterOverwrite")
+	@RequestMapping("/readingWaterOverwrite")
 	public ModelAndView readingWaterOverwrite(@ModelAttribute("readingForm") ReadingWaterForm readingForm,
 			BindingResult result, @RequestParam String date) throws ParseException {
 

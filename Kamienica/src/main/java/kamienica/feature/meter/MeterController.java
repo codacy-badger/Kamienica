@@ -74,7 +74,7 @@ public class MeterController {
 			meterService.saveEnergy(meter);
 		} catch (ConstraintViolationException e) {
 			Map<String, Object> model = prepareModel();
-			if (e.getCause().toString().contains("description")) {
+			if (e.getCause().toString().contains("desc")) {
 				result.rejectValue("description", "error.meter", DUPLICATE_DESC);
 			} else {
 				result.rejectValue("serialNumber", "error.meter", DUPLICATE_SERIAL);
@@ -107,7 +107,7 @@ public class MeterController {
 			meterService.saveWater(meter);
 		} catch (ConstraintViolationException e) {
 			Map<String, Object> model = prepareModel();
-			if (e.getCause().toString().contains("description")) {
+			if (e.getCause().toString().contains("desc")) {
 				result.rejectValue("description", "error.meter", DUPLICATE_DESC);
 			} else {
 				result.rejectValue("serialNumber", "error.meter", DUPLICATE_SERIAL);
@@ -138,7 +138,7 @@ public class MeterController {
 			meterService.saveGas(meter);
 		} catch (ConstraintViolationException e) {
 			Map<String, Object> model = prepareModel();
-			if (e.getCause().toString().contains("description")) {
+			if (e.getCause().toString().contains("desc")) {
 				result.rejectValue("description", "error.meter", DUPLICATE_DESC);
 			} else {
 				result.rejectValue("serialNumber", "error.meter", DUPLICATE_SERIAL);
@@ -220,10 +220,10 @@ public class MeterController {
 		try {
 			meterService.updateEnergy(meter);
 		} catch (org.springframework.dao.DataIntegrityViolationException e) {
-		
+
 			Map<String, Object> model = prepareModel();
 			model.put("url", "/Admin/Meter/meterEnergyOverwrite.html");
-			if (e.getRootCause().toString().contains("description")) {
+			if (e.getRootCause().toString().contains("desc")) {
 				result.rejectValue("description", "error.meter", DUPLICATE_DESC);
 			} else {
 				result.rejectValue("serialNumber", "error.meter", DUPLICATE_SERIAL);
@@ -250,7 +250,7 @@ public class MeterController {
 		} catch (org.springframework.dao.DataIntegrityViolationException e) {
 			Map<String, Object> model = prepareModel();
 			model.put("url", "/Admin/Meter/meterWaterOverwrite.html");
-			if (e.getRootCause().toString().contains("description")) {
+			if (e.getRootCause().toString().contains("desc")) {
 				result.rejectValue("description", "error.meter", DUPLICATE_DESC);
 			} else {
 				result.rejectValue("serialNumber", "error.meter", DUPLICATE_SERIAL);
@@ -275,7 +275,7 @@ public class MeterController {
 		} catch (org.springframework.dao.DataIntegrityViolationException e) {
 			Map<String, Object> model = prepareModel();
 			model.put("url", "/Admin/Meter/meterGasOverwrite.html");
-			if (e.getRootCause().toString().contains("description")) {
+			if (e.getRootCause().toString().contains("desc")) {
 				result.rejectValue("description", "error.meter", DUPLICATE_DESC);
 			} else {
 				result.rejectValue("serialNumber", "error.meter", DUPLICATE_SERIAL);
