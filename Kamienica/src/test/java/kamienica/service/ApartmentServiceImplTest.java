@@ -18,14 +18,14 @@ import org.testng.Assert;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
-import kamienica.dao.DaoInterface;
 import kamienica.feature.apartment.Apartment;
+import kamienica.feature.apartment.ApartmentDao;
 import kamienica.feature.apartment.ApartmentServiceImpl;
 
 public class ApartmentServiceImplTest {
 
 	@Mock
-	DaoInterface<Apartment> dao;
+	ApartmentDao dao;
 
 	@InjectMocks
 	ApartmentServiceImpl apartmentService;

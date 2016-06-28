@@ -1,5 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE xml>
+
 <dataset>
 	<readingGas id="1" readingDate="2010-01-01" value="100"
 		resolved="true" unit='kmw' meter_id="1" />

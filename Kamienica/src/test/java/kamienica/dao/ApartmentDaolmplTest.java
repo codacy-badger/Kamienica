@@ -5,11 +5,12 @@ import org.testng.Assert;
 import org.testng.annotations.Test;
 
 import kamienica.feature.apartment.Apartment;
+import kamienica.feature.apartment.ApartmentDao;
 
 public class ApartmentDaolmplTest extends EntityDaoImplTest {
 
 	@Autowired
-	DaoInterface<Apartment> apartemtnDao;
+	ApartmentDao apartemtnDao;
 
 	// @BeforeClass
 	// @Override

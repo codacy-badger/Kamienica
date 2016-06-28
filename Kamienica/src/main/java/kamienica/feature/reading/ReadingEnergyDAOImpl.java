@@ -3,6 +3,8 @@ package kamienica.feature.reading;
 import java.util.List;
 import java.util.Set;
 
+
+
 import org.hibernate.Criteria;
 import org.hibernate.Query;
 import org.hibernate.criterion.Order;
@@ -63,7 +65,8 @@ public class ReadingEnergyDAOImpl extends AbstractDao<Long, ReadingEnergy>
 		Query query = getSession()
 				.createSQLQuery(
 						"SELECT * FROM readingEnergy where readingDate=(SELECT max(readingDate) FROM readingEnergy WHERE readingDate < :date )  AND meter_id IN(:list)")
-				.addEntity(ReadingEnergy.class).setString("date", readingDate).setParameterList("list", meterId);
+				.addEntity(ReadingEnergy.class).setString("date", readingDate.toString())
+				.setParameterList("list", meterId);
 		@SuppressWarnings("unchecked")
 		List<ReadingEnergy> result = query.list();
 		return result;
@@ -123,7 +126,5 @@ public class ReadingEnergyDAOImpl extends AbstractDao<Long, ReadingEnergy>
 				.setProjection(Projections.max("readingDate"));
 		return (LocalDate) criteria.uniqueResult();
 	}
-
-	
 
 }

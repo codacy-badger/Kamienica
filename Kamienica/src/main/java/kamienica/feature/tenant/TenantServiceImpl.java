@@ -16,7 +16,9 @@ public class TenantServiceImpl implements TenantService {
 	@Override
 	public void saveTenant(Tenant newTenant) {
 		Tenant currentTenant = tenantDao.getTenantForApartment(newTenant.getApartment());
-		if (currentTenant.getMovementDate().isAfter(newTenant.getMovementDate())) {
+		if (currentTenant == null) {
+			tenantDao.save(newTenant);
+		} else if (currentTenant.getMovementDate().isAfter(newTenant.getMovementDate())) {
 			newTenant.setStatus(UserStatus.INACTIVE.getUserStatus());
 			tenantDao.save(newTenant);
 		} else {

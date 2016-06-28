@@ -14,6 +14,8 @@ import org.joda.time.LocalDate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
 
+import kamienica.feature.reading.ReadingAbstract;
+
 @MappedSuperclass
 @Inheritance
 public abstract class Invoice {
@@ -92,6 +94,7 @@ public abstract class Invoice {
 	}
 
 
+	public abstract ReadingAbstract getBaseReading();
 
 	@Override
 	public String toString() {
@@ -99,4 +102,5 @@ public abstract class Invoice {
 				+ date + ", totalAmount=" + totalAmount + "]";
 	}
 
+	
 }
