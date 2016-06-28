@@ -4,12 +4,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
-import kamienica.model.Apartment;
+import kamienica.feature.apartment.Apartment;
+import kamienica.feature.apartment.ApartmentDao;
 
 public class ApartmentDaolmplTest extends EntityDaoImplTest {
 
 	@Autowired
-	DaoInterface<Apartment> apartemtnDao;
+	ApartmentDao apartemtnDao;
 
 	// @BeforeClass
 	// @Override
@@ -21,8 +22,8 @@ public class ApartmentDaolmplTest extends EntityDaoImplTest {
 
 	@Test
 	public void findById() {
-		Assert.assertNotNull(apartemtnDao.getById(1));
-		Assert.assertNull(apartemtnDao.getById(4));
+		Assert.assertNotNull(apartemtnDao.getById(1L));
+		Assert.assertNull(apartemtnDao.getById(4L));
 	}
 
 	@Test
@@ -30,14 +31,14 @@ public class ApartmentDaolmplTest extends EntityDaoImplTest {
 		Assert.assertEquals(apartemtnDao.getList().size(), 3);
 		apartemtnDao.save(getSampleApartment());
 		Assert.assertEquals(apartemtnDao.getList().size(), 4);
-		apartemtnDao.deleteById(4);
+		apartemtnDao.deleteById(4L);
 		// apartemtnDao.deleteByID(4);
 		Assert.assertEquals(apartemtnDao.getList().size(), 3);
 	}
 
 	@Test
 	public void deleteApartmentByInvalidId() {
-		apartemtnDao.deleteById(8);
+		apartemtnDao.deleteById(8L);
 		Assert.assertEquals(apartemtnDao.getList().size(), 3);
 	}
 

@@ -18,13 +18,14 @@ import org.testng.Assert;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
-import kamienica.dao.DaoInterface;
-import kamienica.model.Apartment;
+import kamienica.feature.apartment.Apartment;
+import kamienica.feature.apartment.ApartmentDao;
+import kamienica.feature.apartment.ApartmentServiceImpl;
 
 public class ApartmentServiceImplTest {
 
 	@Mock
-	DaoInterface<Apartment> dao;
+	ApartmentDao dao;
 
 	@InjectMocks
 	ApartmentServiceImpl apartmentService;
@@ -41,7 +42,7 @@ public class ApartmentServiceImplTest {
 	@Test
 	public void findById() {
 		Apartment ap = apartments.get(0);
-		when(dao.getById(anyInt())).thenReturn(ap);
+		when(dao.getById((long) anyInt())).thenReturn(ap);
 		Assert.assertEquals(apartmentService.getById(ap.getId()), ap);
 	}
 
@@ -55,16 +56,16 @@ public class ApartmentServiceImplTest {
 	@Test
 	public void updateApartment() {
 		Apartment ap = apartments.get(0);
-		when(dao.getById(anyInt())).thenReturn(ap);
+		when(dao.getById((long) anyInt())).thenReturn(ap);
 		apartmentService.update(ap);
-		verify(dao, atLeastOnce()).getById(anyInt());
+		verify(dao, atLeastOnce()).getById((long)anyInt());
 	}
 
 	@Test
 	public void deleteApartmentById() {
-		doNothing().when(dao).deleteById(anyInt());
-		apartmentService.deleteByID(anyInt());
-		verify(dao, atLeastOnce()).deleteById(anyInt());
+		doNothing().when(dao).deleteById((long)anyInt());
+		apartmentService.deleteByID((long)anyInt());
+		verify(dao, atLeastOnce()).deleteById((long)anyInt());
 	}
 
 	@Test
@@ -76,21 +77,21 @@ public class ApartmentServiceImplTest {
 	@Test
 	public void findApartmentById() {
 		Apartment ap = apartments.get(0);
-		when(dao.getById(anyInt())).thenReturn(ap);
-		Assert.assertEquals(apartmentService.getById(anyInt()), ap);
+		when(dao.getById((long) anyInt())).thenReturn(ap);
+		Assert.assertEquals(apartmentService.getById((long) anyInt()), ap);
 	}
 
 	public List<Apartment> getApartmentList() {
 		Apartment ap1 = new Apartment();
 		ap1.setApartmentNumber(0);
 		ap1.setDescription("ap1");
-		ap1.setId(1);
+		ap1.setId(1L);
 		ap1.setIntercom("0000");
 
 		Apartment ap2 = new Apartment();
 		ap2.setApartmentNumber(0);
 		ap2.setDescription("ap2");
-		ap2.setId(1);
+		ap2.setId(1L);
 		ap2.setIntercom("0000");
 
 		apartments.add(ap1);

@@ -29,7 +29,7 @@ public class HibernateConfiguration {
 	public LocalSessionFactoryBean sessionFactory() {
 		LocalSessionFactoryBean sessionFactory = new LocalSessionFactoryBean();
 		sessionFactory.setDataSource(dataSource());
-		sessionFactory.setPackagesToScan(new String[] { "kamienica.model" });
+		sessionFactory.setPackagesToScan(new String[] { "kamienica" });
 		sessionFactory.setHibernateProperties(hibernateProperties());
 		return sessionFactory;
 	}
@@ -53,8 +53,6 @@ public class HibernateConfiguration {
 		properties.put("hibernate.connection.characterEncoding", environment.getRequiredProperty("hibernate.connection.characterEncoding"));
 		properties.put("hibernate.connection.charSet", environment.getRequiredProperty("hibernate.connection.charSet"));
 //		properties.put("hibernate.connectio.setNames", environment.getRequiredProperty("hibernate.connectio.setNames"));
-		
-		
 		return properties;
 	}
 

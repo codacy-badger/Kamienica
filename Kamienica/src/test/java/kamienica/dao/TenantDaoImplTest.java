@@ -1,12 +1,12 @@
 package kamienica.dao;
 
-import java.util.Date;
-
+import org.joda.time.LocalDate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
-import kamienica.model.Tenant;
+import kamienica.feature.tenant.Tenant;
+import kamienica.feature.tenant.TenantDao;
 
 public class TenantDaoImplTest extends EntityDaoImplTest {
 
@@ -27,8 +27,8 @@ public class TenantDaoImplTest extends EntityDaoImplTest {
 
 	@Test
 	public void findById() {
-		Assert.assertNotNull(dao.getById(1));
-		Assert.assertNull(dao.getById(5));
+		Assert.assertNotNull(dao.getById(1L));
+		Assert.assertNull(dao.getById(5L));
 	}
 
 	@Test
@@ -39,13 +39,13 @@ public class TenantDaoImplTest extends EntityDaoImplTest {
 
 	@Test
 	public void deleteById() {
-		dao.deleteById(1);
+		dao.deleteById(1L);
 		Assert.assertEquals(dao.getList().size(), 3);
 	}
 
 	@Test
 	public void deleteInvalidId() {
-		dao.deleteById(8);
+		dao.deleteById(8L);
 		Assert.assertEquals(dao.getList().size(), 4);
 	}
 
@@ -67,7 +67,7 @@ public class TenantDaoImplTest extends EntityDaoImplTest {
 		ap.setEmail("gdf@wp.pl");
 		ap.setFirstName("ab");
 		ap.setApartment(null);
-		ap.setMovementDate(new Date());
+		ap.setMovementDate(new LocalDate());
 		ap.setPhone("345");
 		ap.setRole("ADMIN");
 		ap.setStatus("ACTIVE");
@@ -82,7 +82,7 @@ public class TenantDaoImplTest extends EntityDaoImplTest {
 		ap.setEmail("c@wp.pl");
 		ap.setFirstName("ab");
 		ap.setApartment(null);
-		ap.setMovementDate(new Date());
+		ap.setMovementDate(new LocalDate());
 		ap.setPhone("345");
 		ap.setRole("ADMIN");
 		ap.setStatus("ACTIVE");

@@ -3,19 +3,20 @@ package kamienica.core;
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.Locale;
 
-import kamienica.model.Division;
-import kamienica.model.InvoiceEnergy;
-import kamienica.model.InvoiceGas;
-import kamienica.model.InvoiceWater;
-import kamienica.model.PaymentEnergy;
-import kamienica.model.PaymentGas;
-import kamienica.model.PaymentWater;
-import kamienica.model.Tenant;
-import kamienica.model.UsageValue;
+import org.joda.time.LocalDate;
+
+import kamienica.feature.division.Division;
+import kamienica.feature.invoice.InvoiceEnergy;
+import kamienica.feature.invoice.InvoiceGas;
+import kamienica.feature.invoice.InvoiceWater;
+import kamienica.feature.payment.PaymentEnergy;
+import kamienica.feature.payment.PaymentGas;
+import kamienica.feature.payment.PaymentWater;
+import kamienica.feature.tenant.Tenant;
+import kamienica.feature.usagevalue.UsageValue;
 
 public class ManagerPayment {
 
@@ -40,7 +41,7 @@ public class ManagerPayment {
 			forList.setInvoice(invoice);
 			forList.setTenant(tenant);
 			forList.setPaymentAmount(payment);
-			forList.setPaymentDate(new Date());
+			forList.setPaymentDate(new LocalDate());
 			listToReturn.add(forList);
 		}
 
@@ -68,7 +69,7 @@ public class ManagerPayment {
 			forList.setInvoice(invoice);
 			forList.setTenant(tenant);
 			forList.setPaymentAmount(payment);
-			forList.setPaymentDate(new Date());
+			forList.setPaymentDate(new LocalDate());
 
 			listToReturn.add(forList);
 		}
@@ -97,7 +98,7 @@ public class ManagerPayment {
 			forList.setInvoice(invoice);
 			forList.setTenant(tenant);
 			forList.setPaymentAmount(payment);
-			forList.setPaymentDate(new Date());
+			forList.setPaymentDate(new LocalDate());
 			listToReturn.add(forList);
 		}
 		return listToReturn;

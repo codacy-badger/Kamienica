@@ -5,11 +5,11 @@
 .inputAndError {
 	text-align: left;
 }
+
 .myListGroup {
 	background-color: black !important;
 	border-color: black !important;
 }
-
 
 th, td {
 	text-align: center;
@@ -84,4 +84,14 @@ table input {
 .paymentButton {
 	color: #C3C3C3 !important;
 	background-color: #020202 !important;
+}
+
+.userBody {
+	padding-top: 100px;
+	background-color: white;
+}
+
+.list-group-header {
+	background-color: black;
+	color: white;
 }

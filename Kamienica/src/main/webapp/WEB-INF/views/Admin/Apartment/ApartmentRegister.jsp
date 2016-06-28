@@ -2,185 +2,108 @@
 	pageEncoding="UTF-8"%>
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib prefix="mytags" tagdir="/WEB-INF/tags"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 
-<html>
+<html lang="en">
 <head>
-
-<link class="row" href="<c:url value='/static/css/bootstrap.css' />"
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="">
+<meta name="author" content="">
+<link href="<c:url value='/static/css/bootstrap.css' />"
+	rel="stylesheet">
+<link href="<c:url value='/static/css/style.css' />" rel="stylesheet">
+<link href="<c:url value='/static/css/sb-admin-2.css' />"
+	rel="stylesheet">
+<link href="<c:url value='/static/css/font-awesome.min.css' />"
+	rel="stylesheet" type="text/css">
+<!-- MetisMenu CSS -->
+<link href="<c:url value='/static/css/metisMenu.min.css' />"
 	rel="stylesheet">
 
-<link class="row" href="<c:url value='/static/css/style.css' />"
-	rel="stylesheet">
-<script type="text/javascript"
-	src="<c:url value='/static/js/jquery-2.2.0.js' />"></script>
-<script type="text/javascript"
-	src="<c:url value='/static/js/bootstrap.js' />"></script>
-
-
-
-<script type="text/javascript" src="<c:url value='/static/js/jq.js' />"></script>
-
-<script type="text/javascript"
-	src="<c:url value='/static/js/jquery.validate.js' />"></script>
-
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Rejestracja Nowego Mieszkania</title>
 </head>
 <body>
 
+	<div id="wrapper">
+		<mytags:navbarAdmin />
 
+		<div id="page-wrapper">
 
-
-	<nav class="navbar navbar-inverse navbar-fixed-top">
-	<div class="container-fluid">
-		<!-- Brand and toggle get grouped for better mobile display -->
-		<div class="navbar-header">
-			<button type="button" class="navbar-toggle collapsed"
-				data-toggle="collapse" data-target="#bs-example-navbar-collapse-1"
-				aria-expanded="false">
-				<span class="sr-only">Toggle navigation</span> <span
-					class="icon-bar"></span> <span class="icon-bar"></span> <span
-					class="icon-bar"></span>
-			</button>
-			<a class="navbar-brand" href="../../Admin/home">Strona Główna</a>
-		</div>
-
-		<!-- Collect the nav links, forms, and other content for toggling -->
-		<div class="collapse navbar-collapse"
-			id="bs-example-navbar-collapse-1">
-			<ul class="nav navbar-nav">
-
-
-
-				<!-- Faktury -->
-				<li class="dropdown"><a href="#" class="dropdown-toggle"
-					data-toggle="dropdown" role="button" aria-haspopup="true"
-					aria-expanded="false">Faktury <span class="caret"></span></a>
-
-					<ul class="dropdown-menu">
-						<li class="dropdown-header">Wprowadź nowe</li>
-						<li><a href="../../Admin/Invoice/invoiceGasRegister">Gaz</a></li>
-						<li><a href="../../Admin/Invoice/invoiceEnergyRegister">Energia</a></li>
-						<li><a href="../../Admin/Invoice/invoiceWaterRegister">Woda</a></li>
-						<li role="separator" class="divider"></li>
-						<li class="dropdown-header">Sprawdź/Edytuj</li>
-						<li><a href="../../Admin/Invoice/invoiceGasList">Gaz</a></li>
-						<li><a href="../../Admin/Invoice/invoiceEnergyList">Energia</a></li>
-						<li><a href="../../Admin/Invoice/invoiceWaterList">Woda</a></li>
-					</ul></li>
-
-				<li class="dropdown"><a href="#" class="dropdown-toggle"
-					data-toggle="dropdown" role="button" aria-haspopup="true"
-					aria-expanded="false">Odczyty <span class="caret"></span></a>
-
-					<ul class="dropdown-menu">
-						<li class="dropdown-header">Wprowadź nowe</li>
-						<li><a href="../../Admin/Reading/readingGasRegister">Gaz</a></li>
-						<li><a href="../../Admin/Reading/readingEnergyRegister">Energia</a></li>
-						<li><a href="../../Admin/Reading/readingWaterRegister">Woda</a></li>
-						<li role="separator" class="divider"></li>
-						<li class="dropdown-header">Sprawdź/Edytuj</li>
-						<li><a href="../../Admin/Reading/readingGasList">Gaz</a></li>
-						<li><a href="../../Admin/Reading/readingEnergyList">Energia</a></li>
-						<li><a href="../../Admin/Reading/readingWaterList">Woda</a></li>
-					</ul></li>
-
-				<li class="dropdown"><a href="#" class="dropdown-toggle"
-					data-toggle="dropdown" role="button" aria-haspopup="true"
-					aria-expanded="false">Opłaty <span class="caret"></span></a>
-
-				<ul class="dropdown-menu">
-						<li><a href="../../Admin/Payment/paymentGasList">Gaz</a></li>
-						<li><a href="../../Admin/Payment/paymentEnergyList">Energia</a></li>
-						<li><a href="../../Admin/Payment/paymentWaterList">Woda</a></li>
-
-					</ul></li>
-			</ul>
-
-			<ul class="nav navbar-nav navbar-right">
-				<li class="dropdown"><a href="#" class="dropdown-toggle"
-					data-toggle="dropdown" role="button" aria-haspopup="true"
-					aria-expanded="false">Nawiguj <span class="caret"></span></a>
-
-					<ul class="dropdown-menu">
-						<li><a href="../../index">Strona Powitalna</a></li>
-						<li><a href="../../User/userHome">Strona Użytkownika</a></li>
-					</ul></li>
-
-				<li><a href="../../logout.html">Wyloguj</a></li>
-
-			</ul>
-		</div>
-		<!-- /.navbar-collapse -->
-	</div>
-	<!-- /.container-fluid --> </nav>
-
-
-	<div id="container">
-
-		<div class='row'>
-			<div class='jumbotron'>
-				<h1>Rejestracja nowego mieszkania</h1>
-				<a href="../home.html">Strona Główna</a>
+			<div class='row'>
+				<div class='row'>
+					<div class="col-lg-12">
+						<h1 class="page-header well">Formularz Mieszkań</h1>
+					</div>
+				</div>
 			</div>
-		</div>
 
-
-		<div class='row'>
-			<c:url var="rejestrujMieszkanie"
-				value="/Admin/Apartment/apartmentSave.html" />
-			<form:form id="rejestrujMieszkanie" modelAttribute="apartment"
-				method="post" class="form-horizontal"
+			<c:url var="rejestrujMieszkanie" value="${url}" />
+			<form:form class="form-horizontal" role="form"
+				modelAttribute="apartment" method="post"
 				action="${rejestrujMieszkanie}">
+				<form:input path="id" readonly="true" type='hidden' />
 
 				<div class="form-group">
-					<label class="col-xs-6 control-label">Domofon</label>
-					<div class="col-xs-3">
-						<input class='form-control' name="intercom" />
-					</div>
-					<div class="col-xs-3 messageContainer">
-						<form:errors path="intercom" class="error" />
+					<label for="inputEmail3" class="col-sm-3 control-label">Domofon</label>
+					<div class="col-sm-9">
+						<form:input type="text" class="form-control" name="intercom"
+							path='intercom' placeholder="Pole wymagane" />
+						<p class="help-block">
+							<form:errors path="intercom" class="error" />
+						</p>
 					</div>
 				</div>
 
 				<div class="form-group">
-					<label class="col-xs-6 control-label">Numer Mieszkania</label>
-					<div class="col-xs-3">
-						<input class='form-control' name="apartmentNumber" />
-					</div>
-					<div class="col-xs-3 messageContainer">
-						<form:errors path="apartmentNumber" class="error" />
+					<label for="inputEmail3" class="col-sm-3 control-label">Numer
+						Mieszkania</label>
+					<div class="col-sm-9">
+						<form:input type="text" class="form-control" id="inputEmail3"
+							path='apartmentNumber' placeholder="Pole wymagane"
+							name="apartmentNumber" />
+						<p class="help-block">
+							<form:errors path="apartmentNumber" class="error" />
+						</p>
 					</div>
 				</div>
-
 
 				<div class="form-group">
-					<label class="col-xs-6 control-label">Opis Mieszkania</label>
-					<div class="col-xs-3">
-						<input class='form-control' name="description" />
-					</div>
-					<div class="col-xs-3 messageContainer">
-						<form:errors path="description" class="error" />
-					</div>
-				</div>
-
-
-
-
-				<div class="row">
-					<div class="col-md-12  ">
-						<button class="btn btn-primary" type="submit">Zapisz</button>
-						<button class="btn btn-primary" type="reset">Resetuj</button>
+					<label for="inputEmail3" class="col-sm-3 control-label">Opis</label>
+					<div class="col-sm-9">
+						<form:input type="text" class="form-control" id="inputEmail3"
+							path='description' placeholder="Pole wymagane" name="description" />
+						<p class="help-block">
+							<form:errors path="description" class="error" />
+						</p>
 					</div>
 				</div>
-
+				<div class="form-group">
+					<button type="submit" class="btn btn-default">Zapisz</button>
+					<button class="btn btn-default" type="reset">Resetuj</button>
+				</div>
 
 			</form:form>
+
+
+
+
 		</div>
 	</div>
 
+	<!-- jQuery -->
+	<script src="<c:url value='/static/js/jquery.min.js' />"></script>
 
+	<!-- Bootstrap Core JavaScript -->
+	<script src="<c:url value='/static/js/bootstrap.min.js' />"></script>
+
+	<!-- Metis Menu Plugin JavaScript -->
+	<script src="<c:url value='/static/js/metisMenu.min.js' />"></script>
+
+
+	<!-- Custom Theme JavaScript -->
+	<script src="<c:url value='/static/js/sb-admin-2.js' />"></script>
 </body>
 </html>

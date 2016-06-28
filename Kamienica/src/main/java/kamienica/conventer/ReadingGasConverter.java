@@ -4,9 +4,17 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.convert.converter.Converter;
 import org.springframework.stereotype.Component;
 
-import kamienica.model.ReadingGas;
-import kamienica.service.ReadingService;
+import kamienica.feature.reading.ReadingGas;
+import kamienica.feature.reading.ReadingService;
 
+/**
+ * 
+ * @author macfol
+ * 
+ *         The class's role is to convert string value from the jsp form into
+ *         object from DB
+ *
+ */
 @Component
 public class ReadingGasConverter implements Converter<Object, ReadingGas> {
 
@@ -15,7 +23,7 @@ public class ReadingGasConverter implements Converter<Object, ReadingGas> {
 
 	@Override
 	public ReadingGas convert(Object element) {
-		Integer id = Integer.parseInt((String) element);
+		Long id = Long.parseLong((String) element);
 		return readingService.getGasById(id);
 	}
 

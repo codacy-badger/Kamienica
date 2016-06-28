@@ -5,8 +5,9 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
-import kamienica.model.InvoiceGas;
-import kamienica.model.MeterGas;
+import kamienica.feature.invoice.InvoiceDao;
+import kamienica.feature.invoice.InvoiceGas;
+import kamienica.feature.meter.MeterGas;
 
 public class InvoiceGasDaoImplTest extends EntityDaoImplTest {
 
@@ -17,8 +18,8 @@ public class InvoiceGasDaoImplTest extends EntityDaoImplTest {
 
 	@Test
 	public void findById() {
-		Assert.assertNotNull(invDao.getById(1));
-		Assert.assertNull(invDao.getById(2));
+		Assert.assertNotNull(invDao.getById(1L));
+		Assert.assertNull(invDao.getById(2L));
 	}
 
 	// @Test

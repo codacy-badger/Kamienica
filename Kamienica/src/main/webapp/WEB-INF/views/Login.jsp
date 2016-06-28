@@ -24,7 +24,7 @@
 </head>
 
 <body>
-	<div class="container">
+	<div class="container text-center">
 		<div class='row'>
 			<div class='jumbotron'>
 				<h1>Kamienica</h1>

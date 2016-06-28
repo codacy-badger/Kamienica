@@ -6,9 +6,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
-import kamienica.model.Apartment;
-import kamienica.model.Division;
-import kamienica.model.Tenant;
+import kamienica.feature.apartment.Apartment;
+import kamienica.feature.division.Division;
+import kamienica.feature.tenant.Tenant;
 
 public class DivisionManager {
 
@@ -21,7 +21,7 @@ public class DivisionManager {
 				tmp.setApartment(ap);
 				tmp.setTenant(ten);
 				if (ap.getApartmentNumber() == 0) {
-					tmp.setDivisionValue(Double.valueOf(decimalFormat((double) (1 / (double) tenantList.size()))));
+					tmp.setDivisionValue(Double.valueOf(decimalFormat(1 / (double) tenantList.size())));
 				} else if (ap.getApartmentNumber() == ten.getApartment().getApartmentNumber()) {
 					tmp.setDivisionValue(1);
 				} else {
