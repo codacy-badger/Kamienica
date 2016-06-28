@@ -13,23 +13,36 @@ import org.joda.time.LocalDate;
 import kamienica.dao.AbstractDao;
 import kamienica.feature.invoice.Invoice;
 
-public abstract class ReadingAbstractDao<T extends ReadingAbstract, I extends Invoice> extends AbstractDao<Long, T> {
+public abstract class ReadingAbstractDao<T extends ReadingAbstract> extends AbstractDao<Long, T> {
+
+	//
+	// @SuppressWarnings("unchecked")
+	// public ReadingAbstractDao() {
+	// this.persistentClass = (Class<T>) ((ParameterizedType)
+	// this.getClass().getGenericSuperclass())
+	// .getActualTypeArguments()[1];
+	// }
 
 	public List<T> getList() {
+
+		System.out.println(persistentClass);
 		@SuppressWarnings("unchecked")
-		List<T> list = createEntityCriteria().addOrder(Order.desc("readingDate")).list();
+		List<T> list = createEntityCriteria().addOrder(Order.desc("readingdate")).list();
 		return list;
 	}
 
-//	public List<T> getListForTenant(Apartment apartment) {
-//		String old = "select * from :clazz where meter_id IN(select id from  meterenergy where apartment_id IN(SELECT id FROM apartment where apartmentnumber IN(0, :num))) order by readingDate desc;";
-//		// String newer = "select * from T join ";
-//		Query query = getSession().createSQLQuery(old).addEntity(T.class).setInteger("num",
-//				apartment.getApartmentNumber());
-//		@SuppressWarnings("unchecked")
-//		List<T> result = query.list();
-//		return result;
-//	}
+	// public List<T> getListForTenant(Apartment apartment) {
+	// String old = "select * from :clazz where meter_id IN(select id from
+	// meterenergy where apartment_id IN(SELECT id FROM apartment where
+	// apartmentnumber IN(0, :num))) order by readingDate desc;";
+	// // String newer = "select * from T join ";
+	// Query query =
+	// getSession().createSQLQuery(old).addEntity(T.class).setInteger("num",
+	// apartment.getApartmentNumber());
+	// @SuppressWarnings("unchecked")
+	// List<T> result = query.list();
+	// return result;
+	// }
 
 	public List<T> getByDate(String readingDate) {
 		@SuppressWarnings("unchecked")
@@ -52,7 +65,7 @@ public abstract class ReadingAbstractDao<T extends ReadingAbstract, I extends In
 	public List<T> getPrevious(String readingDate, Set<Long> meterId) {
 		Query query = getSession()
 				.createSQLQuery(
-						"SELECT * FROM T where readingDate=(SELECT max(readingDate) FROM :clazz WHERE readingDate < :date ) AND meter_id IN(:list)")
+						"SELECT * FROM :clazz where readingDate=(SELECT max(readingDate) FROM :clazz WHERE readingDate < :date ) AND meter_id IN(:list)")
 				.setString("clazz", persistentClass.getSimpleName()).setString("date", readingDate)
 				.setParameterList("list", meterId);
 		@SuppressWarnings("unchecked")
@@ -75,7 +88,7 @@ public abstract class ReadingAbstractDao<T extends ReadingAbstract, I extends In
 
 	}
 
-	public void resolveReadings(I invoice) {
+	public void resolveReadings(Invoice invoice) {
 		Query query = getSession().createSQLQuery("update :clazz set resolved= :res where readingDate = :paramdate")
 				.setDate("paramdate", invoice.getBaseReading().getReadingDate().toDate()).setParameter("res", true)
 				.setString("clazz", persistentClass.getSimpleName());
@@ -83,7 +96,7 @@ public abstract class ReadingAbstractDao<T extends ReadingAbstract, I extends In
 
 	}
 
-	public void unresolveReadings(I invoice) {
+	public void unresolveReadings(Invoice invoice) {
 		Query query = getSession().createSQLQuery("update :clazz set resolved= :res where readingDate = :paramdate")
 				.setDate("paramdate", invoice.getBaseReading().getReadingDate().toDate()).setParameter("res", false)
 				.setString("clazz", persistentClass.getSimpleName());

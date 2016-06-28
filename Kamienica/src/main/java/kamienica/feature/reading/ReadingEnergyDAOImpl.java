@@ -3,6 +3,8 @@ package kamienica.feature.reading;
 import java.util.List;
 import java.util.Set;
 
+
+
 import org.hibernate.Criteria;
 import org.hibernate.Query;
 import org.hibernate.criterion.Order;
@@ -60,8 +62,6 @@ public class ReadingEnergyDAOImpl extends AbstractDao<Long, ReadingEnergy>
 
 	@Override
 	public List<ReadingEnergy> getPrevious(String readingDate, Set<Long> meterId) {
-		System.out.println("czy jestem nullem????????????????????" + readingDate);
-		System.out.println(meterId);
 		Query query = getSession()
 				.createSQLQuery(
 						"SELECT * FROM readingEnergy where readingDate=(SELECT max(readingDate) FROM readingEnergy WHERE readingDate < :date )  AND meter_id IN(:list)")

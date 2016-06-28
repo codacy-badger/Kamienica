@@ -194,15 +194,6 @@ public class ReadingController {
 
 	@RequestMapping(value = "/readingEnergyDelete")
 	public ModelAndView readingEnergyDelete() {
-		// List<ReadingEnergy> listToDelete =
-		// readingService.getReadingEnergyByDate(date);
-		// if (listToDelete.get(0).isResolved() == true) {
-		// Map<String, Object> model = new HashMap<String, Object>();
-		// model.put("error", "Nie można usuwać odczytu, dla którego wprowadzono
-		// Fakturę.");
-		// return new ModelAndView("/Admin/Reading/ReadingList?media=ENERGY",
-		// "model", model);
-		// }
 
 		readingService.deleteLatestReadings(Media.ENERGY);
 		return new ModelAndView("redirect:/Admin/Reading/readingList.html?media=ENERGY");
@@ -210,31 +201,13 @@ public class ReadingController {
 
 	@RequestMapping(value = "/readingGasDelete")
 	public ModelAndView readingGasDelete() {
-		// List<ReadingGas> listToDelete =
-		// readingService.getReadingGasByDate(date);
-		// if (listToDelete.get(0).isResolved() == true) {
-		// Map<String, Object> model = new HashMap<String, Object>();
-		// model.put("error", "Nie można usuwać odczytu, dla którego wprowadzono
-		// Fakturę.");
-		// return new ModelAndView("/Admin/Reading/ReadingList?media=GAS",
-		// "model", model);
-		// }
-
+	
 		readingService.deleteLatestReadings(Media.GAS);
 		return new ModelAndView("redirect:/Admin/Reading/readingList.html?media=GAS");
 	}
 
 	@RequestMapping(value = "/readingWaterDelete")
 	public ModelAndView usunReadingWater() {
-		// List<ReadingWater> listToDelete =
-		// readingService.getReadingWaterByDate(date);
-		// if (listToDelete.get(0).isResolved() == true) {
-		// Map<String, Object> model = new HashMap<String, Object>();
-		// model.put("error", "Nie można usuwać odczytu, dla którego wprowadzono
-		// Fakturę.");
-		// return new ModelAndView("/Admin/Reading/ReadingList?media=WATER",
-		// "model", model);
-		// }
 		readingService.deleteLatestReadings(Media.WATER);
 		return new ModelAndView("redirect:/Admin/Reading/readingList.html?media=WATER");
 	}
