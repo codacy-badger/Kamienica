@@ -18,7 +18,6 @@ import kamienica.feature.invoice.InvoiceEnergy;
 public class ReadingEnergyDAOImpl extends AbstractDao<Long, ReadingEnergy>
 		implements ReadingDao<ReadingEnergy, InvoiceEnergy> {
 
-	
 	@Override
 	public List<ReadingEnergy> getList() {
 		@SuppressWarnings("unchecked")
@@ -61,10 +60,13 @@ public class ReadingEnergyDAOImpl extends AbstractDao<Long, ReadingEnergy>
 
 	@Override
 	public List<ReadingEnergy> getPrevious(String readingDate, Set<Long> meterId) {
+		System.out.println("czy jestem nullem????????????????????" + readingDate);
+		System.out.println(meterId);
 		Query query = getSession()
 				.createSQLQuery(
 						"SELECT * FROM readingEnergy where readingDate=(SELECT max(readingDate) FROM readingEnergy WHERE readingDate < :date )  AND meter_id IN(:list)")
-				.addEntity(ReadingEnergy.class).setString("date", readingDate).setParameterList("list", meterId);
+				.addEntity(ReadingEnergy.class).setString("date", readingDate.toString())
+				.setParameterList("list", meterId);
 		@SuppressWarnings("unchecked")
 		List<ReadingEnergy> result = query.list();
 		return result;
@@ -124,7 +126,5 @@ public class ReadingEnergyDAOImpl extends AbstractDao<Long, ReadingEnergy>
 				.setProjection(Projections.max("readingDate"));
 		return (LocalDate) criteria.uniqueResult();
 	}
-
-	
 
 }

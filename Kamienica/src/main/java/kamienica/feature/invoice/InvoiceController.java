@@ -207,7 +207,7 @@ public class InvoiceController {
 		ArrayList<Division> division = (ArrayList<Division>) divisionService.getList();
 		ArrayList<Apartment> apartments = (ArrayList<Apartment>) apartmentService.getList();
 
-		readingWaterOld = readingService.getPreviousReadingWater(invoice.getBaseReading().getReadingDate().toString(),  meterService.getIdList(Media.GAS));
+		readingWaterOld = readingService.getPreviousReadingWater(invoice.getBaseReading().getReadingDate().toString(),  meterService.getIdList(Media.WATER));
 
 		List<ReadingWater> readingWaterNew = readingService
 				.getReadingWaterByDate(invoice.getBaseReading().getReadingDate().toString());
@@ -240,7 +240,7 @@ public class InvoiceController {
 		ArrayList<Apartment> apartments = (ArrayList<Apartment>) apartmentService.getList();
 
 		List<ReadingEnergy> readingEnergyOld = readingService
-				.getPreviousReadingEnergy(invoice.getBaseReading().getReadingDate().toString(),  meterService.getIdList(Media.GAS));
+				.getPreviousReadingEnergy(invoice.getBaseReading().getReadingDate().toString(),  meterService.getIdList(Media.ENERGY));
 
 		List<ReadingEnergy> readingEnergyNew = readingService
 				.getReadingEnergyByDate(invoice.getBaseReading().getReadingDate().toString());
