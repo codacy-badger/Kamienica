@@ -16,7 +16,8 @@
 <br><br>
 <a href="Admin/home.html">Strona Admina</a>
 <br><br>
-<a href="api/apartments.json">REST (pierwszy przykład)</a>
+<a href="api/v1/home/users.json">REST (dane usera)</a>
+<a href="api/v1/apartments.json">REST (lista mieszkan)</a>
 </div>
 </body>
 </html>

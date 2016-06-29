@@ -1,22 +1,19 @@
 package kamienica.controller.json;
 
-import java.util.HashMap;
+import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.servlet.ModelAndView;
 
 import kamienica.core.Media;
 import kamienica.feature.apartment.Apartment;
+import kamienica.feature.payment.PaymentAbstract;
 import kamienica.feature.payment.PaymentService;
 import kamienica.feature.reading.ReadingAbstract;
 import kamienica.feature.tenant.Tenant;
@@ -38,9 +35,8 @@ public class AdminUserRestController {
 	// =====================USER===========================================
 	@RequestMapping(value = "/users", method = RequestMethod.GET)
 	public ResponseEntity<SecurityUser> userHome() {
-
 		SecurityUser myUser = userDetailsService.getCurrentUser();
-		if (myUser != null) {
+		if (myUser == null) {
 			return new ResponseEntity<SecurityUser>(HttpStatus.NOT_FOUND);
 		}
 		return new ResponseEntity<SecurityUser>(myUser, HttpStatus.OK);
@@ -51,16 +47,16 @@ public class AdminUserRestController {
 		List<? extends ReadingAbstract> readings = null;
 		Apartment ap = userDetailsService.getCurrentUser().getApartment();
 		switch (media) {
-		case "energy":
 
+		case "energy":
 			readings = adminUserService.getReadingsForTenant(ap, Media.ENERGY);
 			break;
-		case "gas":
 
+		case "gas":
 			readings = adminUserService.getReadingsForTenant(ap, Media.GAS);
 			break;
-		case "water":
 
+		case "water":
 			readings = adminUserService.getReadingsForTenant(ap, Media.WATER);
 			break;
 		default:
@@ -74,41 +70,58 @@ public class AdminUserRestController {
 		return new ResponseEntity<List<? extends ReadingAbstract>>(readings, HttpStatus.OK);
 	}
 
-	@RequestMapping("/User/userPayment")
-	public ModelAndView userPayment() {
-		Map<String, Object> model = new HashMap<String, Object>();
+	@RequestMapping(value = "/user/{media}/payments", method = RequestMethod.GET)
+	public ResponseEntity<List<? extends PaymentAbstract>> userPayment(@PathVariable(value = "media") String media) {
 		Tenant tenant = userDetailsService.getCurrentUser().getTenant();
+		List<? extends PaymentAbstract> list = new ArrayList<>();
+		switch (media) {
 
-		model.put("energy", paymentService.getPaymentEnergyForTenant(tenant));
-		model.put("water", paymentService.getPaymentWaterForTenant(tenant));
-		model.put("gas", paymentService.getPaymentGasForTenant(tenant));
+		case "energy":
+			list = paymentService.getPaymentEnergyForTenant(tenant);
+			break;
 
-		return new ModelAndView("/User/UserPayment", "model", model);
-	}
+		case "gas":
+			list = paymentService.getPaymentGasForTenant(tenant);
+			break;
 
-	@RequestMapping("/User/userPassword")
-	public ModelAndView changePassword() {
-		return new ModelAndView("/User/UserPassword");
-	}
-
-	@RequestMapping("/User/userUpdatePassword")
-	public ModelAndView updatePassword(@RequestParam String email, @RequestParam String oldPassword,
-			@RequestParam String newPassword, @RequestParam String newPassword2) {
-		HashMap<String, Object> model = new HashMap<>();
-		if (!newPassword.equals(newPassword2) || newPassword == "" || newPassword2 == "") {
-			model.put("error", "Wpisz poprawnie nowe hasło");
-			return new ModelAndView("/User/UserPassword", "model", model);
+		case "water":
+			list = paymentService.getPaymentWaterForTenant(tenant);
+			break;
+		default:
+			break;
 		}
 
-		try {
-			userDetailsService.changePassword(email, oldPassword, newPassword);
-		} catch (UsernameNotFoundException e) {
-			model.put("error", "Niepoprawny login lub hasło");
-			return new ModelAndView("/User/UserPassword", "model", model);
+		if (list.isEmpty()) {
+			return new ResponseEntity<List<? extends PaymentAbstract>>(HttpStatus.NOT_FOUND);
 		}
-		model.put("class", "alert-success");
-		model.put("msg", "Hasło zostało zmienione");
-		model.put("user", userDetailsService.getCurrentUser().getTenant());
-		return new ModelAndView("/User/UserHome", "model", model);
+		return new ResponseEntity<List<? extends PaymentAbstract>>(list, HttpStatus.OK);
 	}
+
+	// @RequestMapping("/User/userPassword")
+	// public ModelAndView changePassword() {
+	// return new ModelAndView("/User/UserPassword");
+	// }
+	//
+	// @RequestMapping("/User/userUpdatePassword")
+	// public ModelAndView updatePassword(@RequestParam String email,
+	// @RequestParam String oldPassword,
+	// @RequestParam String newPassword, @RequestParam String newPassword2) {
+	// HashMap<String, Object> model = new HashMap<>();
+	// if (!newPassword.equals(newPassword2) || newPassword == "" ||
+	// newPassword2 == "") {
+	// model.put("error", "Wpisz poprawnie nowe hasło");
+	// return new ModelAndView("/User/UserPassword", "model", model);
+	// }
+	//
+	// try {
+	// userDetailsService.changePassword(email, oldPassword, newPassword);
+	// } catch (UsernameNotFoundException e) {
+	// model.put("error", "Niepoprawny login lub hasło");
+	// return new ModelAndView("/User/UserPassword", "model", model);
+	// }
+	// model.put("class", "alert-success");
+	// model.put("msg", "Hasło zostało zmienione");
+	// model.put("user", userDetailsService.getCurrentUser().getTenant());
+	// return new ModelAndView("/User/UserHome", "model", model);
+	// }
 }
