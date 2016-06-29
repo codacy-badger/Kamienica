@@ -5,6 +5,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -15,12 +16,17 @@ import kamienica.feature.invoice.InvoiceDao;
 import kamienica.feature.invoice.InvoiceEnergy;
 import kamienica.feature.invoice.InvoiceGas;
 import kamienica.feature.invoice.InvoiceWater;
+import kamienica.feature.payment.PaymentDao;
+import kamienica.feature.payment.PaymentEnergy;
+import kamienica.feature.payment.PaymentGas;
+import kamienica.feature.payment.PaymentWater;
 import kamienica.feature.reading.ReadingAbstract;
 import kamienica.feature.reading.ReadingDao;
 import kamienica.feature.reading.ReadingEnergy;
 import kamienica.feature.reading.ReadingGas;
 import kamienica.feature.reading.ReadingWater;
 import kamienica.feature.reading.ReadingWaterDAO;
+import kamienica.feature.tenant.Tenant;
 
 @Service
 @Transactional
@@ -43,6 +49,12 @@ public class AdminUserServiceImp implements AdminUserService {
 	@Autowired
 	@Qualifier("invoiceGas")
 	private InvoiceDao<InvoiceGas> invoiceGasDao;
+//	@Autowired
+//	private PaymentDao<PaymentEnergy, ReadingEnergy> pamymentEnergyDao;
+//	@Autowired
+//	private PaymentDao<PaymentGas, ReadingEnergy> pamymentGasDao;
+//	@Autowired
+//	private PaymentDao<PaymentWater, ReadingEnergy> pamymentWaterDao;
 
 	@Override
 	public HashMap<String, Object> getMainData() {
@@ -128,4 +140,24 @@ public class AdminUserServiceImp implements AdminUserService {
 
 	}
 
+//	@Override
+//	public List<PaymentEnergy> getPaymentEnergyForTenant() {
+//		return energy.getPaymentForTenant(tenant);
+//	}
+//
+//	@Override
+//	public List<PaymentGas> getPaymentGasForTenant() {
+//		return gas.getPaymentForTenant(tenant);
+//	}
+//
+//	@Override
+//	public List<PaymentWater> getPaymentWaterForTenant() {
+//		return water.getPaymentForTenant(tenant);
+//	}
+	
+	
+	public SecurityUser getCurrentUser() {
+		SecurityUser user = (SecurityUser) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		return user;
+	}
 }

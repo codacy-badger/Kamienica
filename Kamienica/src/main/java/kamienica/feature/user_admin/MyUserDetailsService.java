@@ -49,7 +49,7 @@ public class MyUserDetailsService implements UserDetailsService {
 
 	}
 
-	protected SecurityUser getCurrentUser() {
+	public SecurityUser getCurrentUser() {
 		SecurityUser user = (SecurityUser) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 		return user;
 	}

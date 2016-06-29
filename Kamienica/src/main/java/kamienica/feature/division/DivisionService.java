@@ -1,8 +1,12 @@
 package kamienica.feature.division;
 
 import java.util.List;
+import java.util.Map;
 
 import org.joda.time.LocalDate;
+
+import kamienica.feature.apartment.Apartment;
+import kamienica.feature.tenant.Tenant;
 
 public interface DivisionService {
 
@@ -16,4 +20,6 @@ public interface DivisionService {
 	public void update(Division division);
 
 	public void deleteAll();
+	
+	List<Division> prepareDivisionListForRegistration(List<Tenant> tenantList, List<Apartment> apartmentList);
 }

@@ -67,25 +67,7 @@ public class AdminUserController {
 		default:
 			break;
 		}
-		// if (media.equals("energy")) {
-		// Tenant tenant = tenantService.loadByMail(getMyUser().getUsername());
-		// model.put("media", "Energia");
-		// model.put("readings",
-		// readingService.getReadingEnergyForTenant(tenant.getApartment()));
-		// }
-		// if (media.equals("gas")) {
-		// Tenant tenant = tenantService.loadByMail(getMyUser().getUsername());
-		// model.put("media", "Gaz");
-		// model.put("readings",
-		// readingService.getReadingGasForTenant(tenant.getApartment()));
-		// }
-		// if (media.equals("water")) {
-		// Tenant tenant = tenantService.loadByMail(getMyUser().getUsername());
-		// model.put("media", "Woda");
-		// model.put("readings",
-		// readingService.getReadingWaterForTenant(tenant.getApartment()));
-		// }
-
+	
 		return new ModelAndView("/User/UserReadings", "model", model);
 	}
 

@@ -14,7 +14,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
-import kamienica.core.DivisionManager;
 import kamienica.feature.apartment.Apartment;
 import kamienica.feature.apartment.ApartmentService;
 import kamienica.feature.tenant.Tenant;
@@ -31,12 +30,6 @@ public class DivisionController {
 	@Autowired
 	private DivisionService divisionService;
 
-//	@InitBinder
-//	protected void initBinder(HttpServletRequest request, ServletRequestDataBinder binder) {
-//		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-//		sdf.setLenient(true);
-//		binder.registerCustomEditor(Date.class, new CustomDateEditor(sdf, true));
-//	}
 
 	@RequestMapping("/divisionRegister")
 	public ModelAndView divisionRegister(@ModelAttribute("divisionForm") DivisionForm divisionForm,
@@ -48,9 +41,8 @@ public class DivisionController {
 			model.put("error", "Brakuje danych. Upewnij się że dane dotyczące mieszkań i najemców są poprawne");
 			return new ModelAndView("/Admin/Division/DivisionRegister", "model", model);
 		}
-		ArrayList<Division> divisionList = DivisionManager.prepareDivisionListForRegistration(tenantList,
-				apartmentList);
-		divisionForm.setDivisionList(divisionList);
+
+		divisionForm.setDivisionList(divisionService.prepareDivisionListForRegistration(tenantList, apartmentList));
 		model.put("apartment", apartmentList);
 		model.put("tenantList", tenantList);
 		return new ModelAndView("/Admin/Division/DivisionRegister", "model", model);
