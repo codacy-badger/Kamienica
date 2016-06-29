@@ -1,22 +1,32 @@
-package kamienica.feature.user_admin;
+package kamienica.controller.json;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
-import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
 import kamienica.core.Media;
 import kamienica.feature.apartment.Apartment;
 import kamienica.feature.payment.PaymentService;
+import kamienica.feature.reading.ReadingAbstract;
 import kamienica.feature.tenant.Tenant;
+import kamienica.feature.user_admin.AdminUserService;
+import kamienica.feature.user_admin.MyUserDetailsService;
+import kamienica.feature.user_admin.SecurityUser;
 
-@Controller
-public class AdminUserController {
+@RestController
+@RequestMapping("/api/v1/home")
+public class AdminUserRestController {
 
 	@Autowired
 	private PaymentService paymentService;
@@ -25,50 +35,43 @@ public class AdminUserController {
 	@Autowired
 	private AdminUserService adminUserService;
 
-	// ===========ADMIN===========================================
-	@RequestMapping("/Admin/home")
-	public ModelAndView home() {
-		HashMap<String, Object> model = adminUserService.getMainData();
-		return new ModelAndView("/Admin/Home", "model", model);
-	}
-
 	// =====================USER===========================================
-	@RequestMapping("/User/userHome")
-	public ModelAndView userHome() {
-		Map<String, Object> model = new HashMap<String, Object>();
+	@RequestMapping(value = "/users", method = RequestMethod.GET)
+	public ResponseEntity<SecurityUser> userHome() {
+
 		SecurityUser myUser = userDetailsService.getCurrentUser();
 		if (myUser != null) {
-			model.put("user", myUser);
-
-		} else {
-			return new ModelAndView("/User/UserHome");
+			return new ResponseEntity<SecurityUser>(HttpStatus.NOT_FOUND);
 		}
-
-		return new ModelAndView("/User/UserHome", "model", model);
+		return new ResponseEntity<SecurityUser>(myUser, HttpStatus.OK);
 	}
 
-	@RequestMapping("/User/userReadings")
-	public ModelAndView aparmtnetRest(@RequestParam(value = "media") String media) {
-		HashMap<String, Object> model = new HashMap<>();
+	@RequestMapping(value = "/user/{media}/readings", method = RequestMethod.GET)
+	public ResponseEntity<List<? extends ReadingAbstract>> getReadings(@PathVariable(value = "media") String media) {
+		List<? extends ReadingAbstract> readings = null;
 		Apartment ap = userDetailsService.getCurrentUser().getApartment();
 		switch (media) {
 		case "energy":
-			model.put("media", "Energia");
-			model.put("readings", adminUserService.getReadingsForTenant(ap, Media.ENERGY));
+
+			readings = adminUserService.getReadingsForTenant(ap, Media.ENERGY);
 			break;
 		case "gas":
-			model.put("media", "Gas");
-			model.put("readings", adminUserService.getReadingsForTenant(ap, Media.GAS));
+
+			readings = adminUserService.getReadingsForTenant(ap, Media.GAS);
 			break;
 		case "water":
-			model.put("media", "Woda");
-			model.put("readings", adminUserService.getReadingsForTenant(ap, Media.WATER));
+
+			readings = adminUserService.getReadingsForTenant(ap, Media.WATER);
 			break;
 		default:
 			break;
 		}
-	
-		return new ModelAndView("/User/UserReadings", "model", model);
+
+		if (readings.isEmpty()) {
+			return new ResponseEntity<List<? extends ReadingAbstract>>(HttpStatus.NOT_FOUND);
+		}
+
+		return new ResponseEntity<List<? extends ReadingAbstract>>(readings, HttpStatus.OK);
 	}
 
 	@RequestMapping("/User/userPayment")
@@ -108,5 +111,4 @@ public class AdminUserController {
 		model.put("user", userDetailsService.getCurrentUser().getTenant());
 		return new ModelAndView("/User/UserHome", "model", model);
 	}
-
 }
