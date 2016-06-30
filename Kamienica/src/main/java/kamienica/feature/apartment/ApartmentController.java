@@ -22,12 +22,13 @@ public class ApartmentController {
 	@Autowired
 	private ApartmentService apartmentService;
 
-//	@InitBinder
-//	protected void initBinder(HttpServletRequest request, ServletRequestDataBinder binder) {
-//		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-//		sdf.setLenient(true);
-//		binder.registerCustomEditor(Date.class, new CustomDateEditor(sdf, true));
-//	}
+	// @InitBinder
+	// protected void initBinder(HttpServletRequest request,
+	// ServletRequestDataBinder binder) {
+	// SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+	// sdf.setLenient(true);
+	// binder.registerCustomEditor(Date.class, new CustomDateEditor(sdf, true));
+	// }
 
 	@RequestMapping(value = "/apartmentRegister", method = RequestMethod.GET)
 	public ModelAndView ApartmentRegister(@ModelAttribute("apartment") Apartment apartment, BindingResult result) {
@@ -89,6 +90,13 @@ public class ApartmentController {
 		Map<String, Object> model = new HashMap<String, Object>();
 		model.put("apartment", apartmentService.getList());
 		return new ModelAndView("/Admin/Apartment/ApartmentList", model);
+
+	}
+
+	@RequestMapping(value = "/apartmentList2", method = RequestMethod.GET)
+	public ModelAndView apartmentList2() {
+
+		return new ModelAndView("/Admin/Apartment/ApartmentList2");
 
 	}
 

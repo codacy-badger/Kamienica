@@ -26,6 +26,7 @@ public class ApartmentRestController {
 	// --------------multiple_apartments----
 	@RequestMapping(value = "", method = RequestMethod.GET)
 	public ResponseEntity<List<Apartment>> listAllApartments() {
+		System.out.println("pobieranie listy mieszkań....");
 		List<Apartment> list = apartmentService.getList();
 		if (list.isEmpty()) {
 			return new ResponseEntity<List<Apartment>>(HttpStatus.NOT_FOUND);
@@ -44,7 +45,7 @@ public class ApartmentRestController {
 	}
 
 	// create new
-	@RequestMapping(value = "/apartments", method = RequestMethod.POST)
+	@RequestMapping(value = "", method = RequestMethod.POST)
 	public ResponseEntity<Void> createApartment(@RequestBody Apartment apartment, UriComponentsBuilder ucBuilder) {
 		if (apartmentService.getById(apartment.getId()) != null) {
 			return new ResponseEntity<Void>(HttpStatus.CONFLICT);

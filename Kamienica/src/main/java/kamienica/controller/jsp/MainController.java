@@ -54,9 +54,6 @@ public class MainController {
 		return new ModelAndView("test");
 	}
 
-	@RequestMapping(method = RequestMethod.GET)
-	public String getIndexPage() {
-		return "UserManagement";
-	}
+
 
 }
