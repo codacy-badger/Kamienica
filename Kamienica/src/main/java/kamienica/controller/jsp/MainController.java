@@ -29,8 +29,6 @@ public class MainController {
 		return "index";
 	}
 
-
-
 	@RequestMapping(value = "/logout")
 	public ModelAndView updatePassword(HttpServletRequest req, HttpServletResponse response) {
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
@@ -48,6 +46,17 @@ public class MainController {
 	@RequestMapping("/404")
 	public ModelAndView notExsists() {
 		return new ModelAndView("404");
+	}
+
+	@RequestMapping(value = "/test")
+	public ModelAndView test() {
+
+		return new ModelAndView("test");
+	}
+
+	@RequestMapping(method = RequestMethod.GET)
+	public String getIndexPage() {
+		return "UserManagement";
 	}
 
 }
