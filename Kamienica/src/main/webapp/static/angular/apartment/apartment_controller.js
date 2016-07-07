@@ -64,9 +64,9 @@ App.controller('ApartmentController', ['$scope', 'Apartment', function($scope, A
           };
 
           
-          self.reset = function(){
-              self.apartment= new Apartment();
-              $scope.myForm.$setPristine(); //reset Form
-          };
+//          self.reset = function(){
+//              self.apartment= new Apartment();
+//              $scope.myForm.$setPristine(); //reset Form
+//          };
 
       }]);

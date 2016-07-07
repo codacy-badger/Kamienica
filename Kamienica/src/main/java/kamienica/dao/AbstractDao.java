@@ -53,7 +53,8 @@ public abstract class AbstractDao<PK extends Serializable, T> {
 	}
 
 	public void deleteById(Long id) {
-		Query query = getSession().createSQLQuery("delete from " + persistentClass.getSimpleName() + " where id = :id");
+		Query query = getSession()
+				.createSQLQuery("delete from " + persistentClass.getSimpleName().toLowerCase() + " where id = :id");
 		query.setLong("id", id);
 		query.executeUpdate();
 	}

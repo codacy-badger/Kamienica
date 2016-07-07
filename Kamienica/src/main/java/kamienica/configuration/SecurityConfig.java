@@ -2,6 +2,7 @@ package kamienica.configuration;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -21,7 +22,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	public void configureGlobalSecurity(AuthenticationManagerBuilder auth) throws Exception {
 		auth.inMemoryAuthentication().withUser("superuser").password("override").roles("ADMIN");
 		auth.userDetailsService(userDetailsService);
-		
+
 	}
 
 	@Override
@@ -32,23 +33,19 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 		filter.setForceEncoding(true);
 		http.addFilterBefore(filter, CsrfFilter.class);
 
-		http.authorizeRequests().antMatchers("/", "/index").permitAll()
-		.antMatchers("/Admin/**").access("hasRole('ADMIN')")
-		.antMatchers("/api/**").access("hasRole('ADMIN') or hasRole('USER')")
-		.antMatchers("/User/**").access("hasRole('ADMIN') or hasRole('USER')")
-		.and().formLogin().loginPage("/login").usernameParameter("email").passwordParameter("password")
-		.and().csrf()
-		.and().exceptionHandling().accessDeniedPage("/403");
-		
-		
-//		//added to make rest part work
-//		http.httpBasic().and()
-//	      .authorizeRequests()
-//	      .antMatchers(HttpMethod.GET, "/Rest").permitAll()
-//	        .antMatchers(HttpMethod.POST, "/Rest").permitAll()
-//	        .antMatchers(HttpMethod.PUT, "/Rest/**").permitAll()
-//	        .antMatchers(HttpMethod.PATCH, "/Rest/**").permitAll().and().csrf().disable();
-		
+		http.authorizeRequests().antMatchers("/", "/index").permitAll().antMatchers("/Admin/**")
+				.access("hasRole('ADMIN')")
+				// .antMatchers("/api/**").access("hasRole('ADMIN') or
+				// hasRole('USER')")
+				.antMatchers("/User/**").access("hasRole('ADMIN') or hasRole('USER')").and().formLogin()
+				.loginPage("/login").usernameParameter("email").passwordParameter("password").and().csrf().and()
+				.exceptionHandling().accessDeniedPage("/403");
+
+		// added to make rest part work
+		//more on link:
+		//https://spring.io/guides/tutorials/spring-security-and-angular-js/
+		http.httpBasic().and().authorizeRequests().antMatchers("/api/**").access("hasRole('ADMIN') or hasRole('USER')")
+				.and().csrf().disable();
 
 	}
 }
