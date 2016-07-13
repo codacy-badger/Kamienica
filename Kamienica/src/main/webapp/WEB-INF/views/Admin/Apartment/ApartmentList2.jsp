@@ -2,6 +2,7 @@
 	pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib prefix="mytags" tagdir="/WEB-INF/tags"%>
+<%@ taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 
 <html>
@@ -24,7 +25,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Lista Mieszkań - REST</title>
 </head>
-<body ng-app="myApp">
+<body ng-app="apartment">
 	<div id="wrapper">
 		<mytags:navbarAdmin />
 
@@ -34,7 +35,56 @@
 					<h1 class="page-header well">Lista Mieszkań - REST</h1>
 				</div>
 			</div>
+			<div class='row'>
 
+				<c:url var="rejestrujMieszkanie" value="${url}" />
+				<form class="form-horizontal" 
+					modelAttribute="apartment" method="post"
+					action="${rejestrujMieszkanie}" ng-submit="ctrl.submit()" name="myForm">
+					<input path="id" readonly="true" type='hidden' />
+
+					<div class="form-group">
+						<label for="inputEmail3" class="col-sm-3 control-label">Domofon</label>
+						<div class="col-sm-9">
+							<input type="text" class="form-control" name="intercom"
+								path='intercom' placeholder="Pole wymagane" />
+							<p class="help-block">
+								<form:errors path="intercom" class="error" />
+							</p>
+						</div>
+					</div>
+
+					<div class="form-group">
+						<label for="inputEmail3" class="col-sm-3 control-label">Numer
+							Mieszkania</label>
+						<div class="col-sm-9">
+							<input type="text" class="form-control" id="inputEmail3"
+								path='apartmentNumber' placeholder="Pole wymagane"
+								name="apartmentNumber" />
+							<p class="help-block">
+								<form:errors path="apartmentNumber" class="error" />
+							</p>
+						</div>
+					</div>
+
+					<div class="form-group">
+						<label for="inputEmail3" class="col-sm-3 control-label">Opis</label>
+						<div class="col-sm-9">
+							<input type="text" class="form-control" id="inputEmail3"
+								path='description' placeholder="Pole wymagane"
+								name="description" />
+							<p class="help-block">
+								<form:errors path="description" class="error" />
+							</p>
+						</div>
+					</div>
+					<div class="form-group">
+						<button type="submit" class="btn btn-default">Zapisz</button>
+						<button class="btn btn-default" type="reset">Resetuj</button>
+					</div>
+
+				</form>
+			</div>
 			<div class='row'>
 
 				<div>

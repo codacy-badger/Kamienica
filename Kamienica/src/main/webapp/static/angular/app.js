@@ -1,5 +1,5 @@
 'use strict';
 
-var App = angular.module('myApp',['ngResource']);
+var Apartment = angular.module('apartment',['ngResource']);
 
 
