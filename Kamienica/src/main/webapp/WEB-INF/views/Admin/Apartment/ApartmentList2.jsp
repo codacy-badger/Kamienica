@@ -37,17 +37,17 @@
 			</div>
 			<div class='row'>
 
-				<c:url var="rejestrujMieszkanie" value="${url}" />
-				<form class="form-horizontal" 
-					modelAttribute="apartment" method="post"
-					action="${rejestrujMieszkanie}" ng-submit="ctrl.submit()" name="myForm">
-					<input path="id" readonly="true" type='hidden' />
 
+				<form class="form-horizontal" ng-submit="ctrl.submit()"
+					name="myForm">
+					<input path="id" readonly="true" type='hidden' /> <input
+						type="hidden" ng-model="ctrl.apartment.id" />
 					<div class="form-group">
 						<label for="inputEmail3" class="col-sm-3 control-label">Domofon</label>
 						<div class="col-sm-9">
-							<input type="text" class="form-control" name="intercom"
-								path='intercom' placeholder="Pole wymagane" />
+							<input type="text" ng-model="ctrl.apartment.intercom"
+								class="form-control" name="intercom" path='intercom'
+								placeholder="Pole wymagane" />
 							<p class="help-block">
 								<form:errors path="intercom" class="error" />
 							</p>
@@ -58,9 +58,9 @@
 						<label for="inputEmail3" class="col-sm-3 control-label">Numer
 							Mieszkania</label>
 						<div class="col-sm-9">
-							<input type="text" class="form-control" id="inputEmail3"
-								path='apartmentNumber' placeholder="Pole wymagane"
-								name="apartmentNumber" />
+							<input type="text" ng-model="ctrl.apartment.apartmentNumber"
+								class="form-control" id="inputEmail3" path='apartmentNumber'
+								placeholder="Pole wymagane" name="apartmentNumber" />
 							<p class="help-block">
 								<form:errors path="apartmentNumber" class="error" />
 							</p>
@@ -70,17 +70,22 @@
 					<div class="form-group">
 						<label for="inputEmail3" class="col-sm-3 control-label">Opis</label>
 						<div class="col-sm-9">
-							<input type="text" class="form-control" id="inputEmail3"
-								path='description' placeholder="Pole wymagane"
-								name="description" />
+							<input type="text" ng-model="ctrl.apartment.description"
+								class="form-control" id="inputEmail3" path='description'
+								placeholder="Pole wymagane" name="description" />
 							<p class="help-block">
 								<form:errors path="description" class="error" />
 							</p>
 						</div>
 					</div>
 					<div class="form-group">
-						<button type="submit" class="btn btn-default">Zapisz</button>
-						<button class="btn btn-default" type="reset">Resetuj</button>
+
+						<input type="submit"
+							value="{{!ctrl.apartment.id ? 'Add' : 'Update'}}"
+							class="btn btn-default btn-sm" ng-disabled="myForm.$invalid">
+						<button type="button" ng-click="ctrl.reset()"
+							class="btn btn-default btn-sm" ng-disabled="myForm.$pristine">Reset
+							Form</button>
 					</div>
 
 				</form>
