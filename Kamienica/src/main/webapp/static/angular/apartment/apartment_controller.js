@@ -4,6 +4,7 @@ Apartment.controller('ApartmentController', [
 		'$scope',
 		'Apartment',
 		function($scope, Apartment) {
+			$scope.toggle = true;
 			var self = this;
 			self.apartment = new Apartment();
 
@@ -23,6 +24,7 @@ Apartment.controller('ApartmentController', [
 				self.apartment.$update(function() {
 					self.fetchAllUsers();
 				});
+
 			};
 
 			self.deleteUser = function(identity) {
@@ -38,6 +40,14 @@ Apartment.controller('ApartmentController', [
 
 			self.fetchAllUsers();
 
+			$scope.toggleFilter = function() {
+				$scope.toggle = $scope.toggle === false ? true : false;
+			}
+			$scope.$watch('toggle', function() {
+				$scope.text = $scope.toggle ? 'Dodaj mieszkanie'
+						: 'Lista mieszkań';
+			})
+
 			self.submit = function() {
 				if (self.apartment.id == null) {
 					console.log('Saving New Apartment', self.apartment);
@@ -51,10 +61,12 @@ Apartment.controller('ApartmentController', [
 									self.apartment.id);
 				}
 				self.reset();
+				$scope.toggle = $scope.toggle === false ? true : false;
 			};
 
 			self.edit = function(id) {
 				console.log('id to be edited', id);
+				$scope.toggle = $scope.toggle === false ? true : false;
 				for (var i = 0; i < self.apartments.length; i++) {
 					if (self.apartments[i].id === id) {
 						self.apartment = angular.copy(self.apartments[i]);

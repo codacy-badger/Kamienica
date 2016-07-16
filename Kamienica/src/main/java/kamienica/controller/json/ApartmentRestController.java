@@ -47,14 +47,15 @@ public class ApartmentRestController {
 	// create new
 	@RequestMapping(value = "", method = RequestMethod.POST)
 	public ResponseEntity<Void> createApartment(@RequestBody Apartment apartment, UriComponentsBuilder ucBuilder) {
-		if (apartmentService.getById(apartment.getId()) != null) {
-			return new ResponseEntity<Void>(HttpStatus.CONFLICT);
-		}
+//		if (apartmentService.getById(apartment.getId()) != null) {
+//			return new ResponseEntity<Void>(HttpStatus.CONFLICT);
+//		}
 		apartmentService.save(apartment);
 
-		HttpHeaders headers = new HttpHeaders();
-		headers.setLocation(ucBuilder.path("/apartments/{id}").buildAndExpand(apartment.getId()).toUri());
-		return new ResponseEntity<Void>(headers, HttpStatus.CREATED);
+//		HttpHeaders headers = new HttpHeaders();
+		//headers.setLocation(ucBuilder.path("/apartments/{id}").buildAndExpand(apartment.getId()).toUri());
+//		return new ResponseEntity<Void>(headers, HttpStatus.CREATED);
+		return new ResponseEntity<Void>( HttpStatus.CREATED);
 	}
 
 	// update

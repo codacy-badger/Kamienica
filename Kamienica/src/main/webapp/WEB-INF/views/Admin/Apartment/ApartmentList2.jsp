@@ -29,14 +29,16 @@
 	<div id="wrapper">
 		<mytags:navbarAdmin />
 
-		<div id="page-wrapper" ng-controller="ApartmentController as ctrl">
+		<div id="page-wrapper" ng-controller="ApartmentController as ctrl" >
 			<div class='row'>
 				<div class="col-lg-12">
 					<h1 class="page-header well">Lista Mieszkań - REST</h1>
+					<button id='mySwitch' ng-click="toggle = !toggle" class="btn-panel"> {{text}}</button>
 				</div>
 			</div>
-			<div class='row'>
+			<div id='form' class="fadein fadeout showpanel panel row"  ng-show="!toggle">
 
+<!-- http://www.w3schools.com/angular/tryit.asp?filename=try_ng_validate_show -->
 
 				<form class="form-horizontal" ng-submit="ctrl.submit()"
 					name="myForm">
@@ -90,8 +92,9 @@
 
 				</form>
 			</div>
-			<div class='row'>
-
+			
+			
+			<div id='list' class="row fadein fadeout showpanel panel"  ng-show="toggle">
 				<div>
 					<table class='table table-stripped table-hover'>
 						<thead>
