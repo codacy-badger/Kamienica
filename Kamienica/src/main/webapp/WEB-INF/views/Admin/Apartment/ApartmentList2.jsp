@@ -29,16 +29,18 @@
 	<div id="wrapper">
 		<mytags:navbarAdmin />
 
-		<div id="page-wrapper" ng-controller="ApartmentController as ctrl" >
+		<div id="page-wrapper" ng-controller="ApartmentController as ctrl">
 			<div class='row'>
 				<div class="col-lg-12">
 					<h1 class="page-header well">Lista Mieszkań - REST</h1>
-					<button id='mySwitch' ng-click="toggle = !toggle" class="btn-panel"> {{text}}</button>
+					<button id='mySwitch' ng-click="toggle = !toggle"
+						class="btn btn-default btn-sm">{{text}}</button>
 				</div>
 			</div>
-			<div id='form' class="fadein fadeout showpanel panel row"  ng-show="!toggle">
+			<div id='form' class="fadein fadeout showpanel panel row"
+				ng-show="!toggle">
 
-<!-- http://www.w3schools.com/angular/tryit.asp?filename=try_ng_validate_show -->
+				<!-- http://www.w3schools.com/angular/tryit.asp?filename=try_ng_validate_show -->
 
 				<form class="form-horizontal" ng-submit="ctrl.submit()"
 					name="myForm">
@@ -49,52 +51,62 @@
 						<div class="col-sm-9">
 							<input type="text" ng-model="ctrl.apartment.intercom"
 								class="form-control" name="intercom" path='intercom'
-								placeholder="Pole wymagane" />
+								ng-pattern="/^[0-9]{1,7}$/" placeholder="Pole wymagane"
+								ng-required='true' ng-minlength="4" ng-maxlength="4" />
 							<p class="help-block">
-								<form:errors path="intercom" class="error" />
+								<span class='error' ng-show="myForm.intercom.$invalid">Domofon
+									musi zawierać 4 cyfry</span>
 							</p>
 						</div>
 					</div>
-
+					<!-- <span class="error" ng-show="myForm.intercom.$error.minlength">
+									Musi zawierać 4 cyfry</span> <span
+									ng-show="myForm.intercom.$error.pattern">Tylko cyfry</span> <span
+									ng-show="myForm.intercom.$error.maxlength">Musi zawierać
+									4 cyfry</span> -->
 					<div class="form-group">
 						<label for="inputEmail3" class="col-sm-3 control-label">Numer
 							Mieszkania</label>
 						<div class="col-sm-9">
 							<input type="text" ng-model="ctrl.apartment.apartmentNumber"
-								class="form-control" id="inputEmail3" path='apartmentNumber'
-								placeholder="Pole wymagane" name="apartmentNumber" />
+								class="form-control" path='apartmentNumber'
+								placeholder="Pole wymagane" name="apartmentNumber"
+								ng-required='true' ng-pattern="/^[0-9]{1,7}$/" />
 							<p class="help-block">
-								<form:errors path="apartmentNumber" class="error" />
+								<span class='error' ng-show="myForm.apartmentNumber.$invalid">Tylko
+									cyfry</span>
 							</p>
 						</div>
 					</div>
-
+					<!-- https://scotch.io/tutorials/angularjs-form-validation -->
 					<div class="form-group">
 						<label for="inputEmail3" class="col-sm-3 control-label">Opis</label>
 						<div class="col-sm-9">
 							<input type="text" ng-model="ctrl.apartment.description"
-								class="form-control" id="inputEmail3" path='description'
-								placeholder="Pole wymagane" name="description" />
+								class="form-control"  path='description'
+								placeholder="Pole wymagane" ng-required='true' name="description" />
 							<p class="help-block">
-								<form:errors path="description" class="error" />
+								<span class='error' ng-show="myForm.description.$invalid">Pole wymagane</span>
 							</p>
 						</div>
 					</div>
-					<div class="form-group">
+					<div class="form-group ">
 
 						<input type="submit"
-							value="{{!ctrl.apartment.id ? 'Add' : 'Update'}}"
-							class="btn btn-default btn-sm" ng-disabled="myForm.$invalid">
+							value="{{!ctrl.apartment.id ? 'Dodaj' : 'Nadpisz'}}"
+							class="btn btn-default " ng-disabled="myForm.$invalid">
 						<button type="button" ng-click="ctrl.reset()"
-							class="btn btn-default btn-sm" ng-disabled="myForm.$pristine">Reset
-							Form</button>
+							class="btn btn-default " ng-disabled="myForm.$pristine">Reset
+						</button>
+
 					</div>
 
 				</form>
 			</div>
-			
-			
-			<div id='list' class="row fadein fadeout showpanel panel"  ng-show="toggle">
+
+
+			<div id='list' class="row fadein fadeout showpanel panel"
+				ng-show="toggle">
 				<div>
 					<table class='table table-stripped table-hover'>
 						<thead>
