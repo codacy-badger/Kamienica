@@ -71,7 +71,9 @@
 							<input type="text" ng-model="ctrl.apartment.apartmentNumber"
 								class="form-control" path='apartmentNumber'
 								placeholder="Pole wymagane" name="apartmentNumber"
-								ng-required='true' ng-pattern="/^[0-9]{1,7}$/" />
+								/>
+								
+								<!-- ng-required='true' ng-pattern="/^[0-9]{1,7}$/"  -->
 							<p class="help-block">
 								<span class='error' ng-show="myForm.apartmentNumber.$invalid">Tylko
 									cyfry</span>

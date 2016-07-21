@@ -5,6 +5,7 @@ import java.util.List;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
@@ -47,44 +48,45 @@ public class ApartmentRestController {
 	}
 
 	// create new
-	@RequestMapping(value = "", method = RequestMethod.POST)
-	public ResponseEntity<Void> createApartment(@Valid @RequestBody Apartment apartment 
-			//,UriComponentsBuilder ucBuilder
-			,BindingResult result
-			
-			) {
-//		if (apartmentService.getById(apartment.getId()) != null) {
-//			return new ResponseEntity<Void>(HttpStatus.CONFLICT);
-//		}
-		
+	@RequestMapping(method = RequestMethod.POST)
+	public ResponseEntity<Apartment> createApartment(@Valid @RequestBody Apartment apartment
+//	 ,UriComponentsBuilder ucBuilder
+			, BindingResult result
+
+	) {
+		// if (apartmentService.getById(apartment.getId()) != null) {
+		// return new ResponseEntity<Void>(HttpStatus.CONFLICT);
+		// }
+
 		System.out.println("=========================zapis===================");
-		if(result.hasErrors()) {
+		if (result.hasErrors()) {
 			System.out.println("zle!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
+			return new ResponseEntity<Apartment>(apartment, HttpStatus.UNPROCESSABLE_ENTITY);
 		}
 		apartmentService.save(apartment);
 
-//		HttpHeaders headers = new HttpHeaders();
-		//headers.setLocation(ucBuilder.path("/apartments/{id}").buildAndExpand(apartment.getId()).toUri());
-//		return new ResponseEntity<Void>(headers, HttpStatus.CREATED);
-		return new ResponseEntity<Void>( HttpStatus.CREATED);
+//		 HttpHeaders headers = new HttpHeaders();
+//		 headers.setLocation(ucBuilder.path("/apartments/{id}").buildAndExpand(apartment.getId()).toUri());
+//		 return new ResponseEntity<Void>(headers, HttpStatus.CREATED);
+		return new ResponseEntity<Apartment>(apartment, HttpStatus.CREATED);
 	}
 
 	// update
 	@RequestMapping(value = "/{id}", method = RequestMethod.PUT)
 	public ResponseEntity<Apartment> updateUser(@PathVariable("id") Long id, @RequestBody Apartment apartment) {
 
-		Apartment currentApartment = apartmentService.getById(id);
+//		Apartment currentApartment = apartmentService.getById(id);
 
-		if (currentApartment == null) {
-			return new ResponseEntity<Apartment>(HttpStatus.NOT_FOUND);
-		}
+//		if (currentApartment == null) {
+//			return new ResponseEntity<Apartment>(HttpStatus.NOT_FOUND);
+//		}
 
-		currentApartment.setApartmentNumber(apartment.getApartmentNumber());
-		currentApartment.setDescription(apartment.getDescription());
-		currentApartment.setIntercom(apartment.getIntercom());
+//		currentApartment.setApartmentNumber(apartment.getApartmentNumber());
+//		currentApartment.setDescription(apartment.getDescription());
+//		currentApartment.setIntercom(apartment.getIntercom());
 
-		apartmentService.update(currentApartment);
-		return new ResponseEntity<Apartment>(currentApartment, HttpStatus.OK);
+		apartmentService.update(apartment);
+		return new ResponseEntity<Apartment>(apartment, HttpStatus.OK);
 	}
 
 	// delete by id
