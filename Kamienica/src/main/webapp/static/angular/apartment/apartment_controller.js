@@ -60,8 +60,8 @@ Apartment.controller('ApartmentController', [
 							.log('Apartment updated with id ',
 									self.apartment.id);
 				}
-				self.reset();
-				$scope.toggle = $scope.toggle === false ? true : false;
+				//self.reset();
+				//$scope.toggle = $scope.toggle === false ? true : false;
 			};
 
 			self.edit = function(id) {
