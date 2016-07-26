@@ -54,7 +54,7 @@ public class Tenant implements Serializable {
 	@Length(min = 5, message = "Hasło musi mieć minimum 5 znaków")
 	@Column(nullable = false)
 	@NotEmpty(message = "Wprowadź hasło")
-	private String password;
+	private String password = "witaj";
 
 	@Autowired
 	public Tenant(String firstName, String lastName, String email, String phone, Apartment apartment) {

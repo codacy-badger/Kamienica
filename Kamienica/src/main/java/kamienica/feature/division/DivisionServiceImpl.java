@@ -63,6 +63,7 @@ public class DivisionServiceImpl implements DivisionService {
 			List<Apartment> apartmentList) {
 		
 		
+		
 		ArrayList<Division> divisionList = new ArrayList<>();
 		for (Tenant ten : tenantList) {
 			for (Apartment ap : apartmentList) {
