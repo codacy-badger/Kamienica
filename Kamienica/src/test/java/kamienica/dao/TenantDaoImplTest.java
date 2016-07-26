@@ -25,7 +25,7 @@ public class TenantDaoImplTest extends EntityDaoImplTest {
 
 	@Test(expectedExceptions = javax.validation.ConstraintViolationException.class)
 	public void saveNull() {
-		System.out.println(dao.getList());
+		
 		dao.save(new Tenant());
 		Tenant tenant = getSample();
 		// tenant.setEmail("dfg");
