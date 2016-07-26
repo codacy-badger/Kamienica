@@ -37,7 +37,7 @@ public class Apartment implements Serializable {
 	private String description;
 
 	@Autowired
-	public Apartment(int id, int apartmentNumber, String intecom, String description) {
+	public Apartment(Long id, int apartmentNumber, String intecom, String description) {
 
 		this.apartmentNumber = apartmentNumber;
 		this.intercom = intecom;

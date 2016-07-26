@@ -27,10 +27,10 @@ import kamienica.feature.usagevalue.UsageValue;
 public class SetupMethods {
 
 	public static ArrayList<Apartment> getApartmentList() {
-		Apartment apartment0 = new Apartment(1, 0, "0000", "Czesc Wspolna");
-		Apartment apartment1 = new Apartment(2, 1, "1111", "Piwnica");
-		Apartment apartment2 = new Apartment(3, 2, "2222", "Parter");
-		Apartment apartment3 = new Apartment(4, 3, "3333", "1 pietro");
+		Apartment apartment0 = new Apartment(1L, 0, "0000", "Czesc Wspolna");
+		Apartment apartment1 = new Apartment(2L, 1, "1111", "Piwnica");
+		Apartment apartment2 = new Apartment(3L, 2, "2222", "Parter");
+		Apartment apartment3 = new Apartment(4L, 3, "3333", "1 pietro");
 
 		ArrayList<Apartment> apartments = new ArrayList<Apartment>();
 		apartments.add(apartment0);

@@ -1,5 +1,7 @@
 package kamienica.dao;
 
+import java.util.Arrays;
+
 import javax.sql.DataSource;
 
 import org.dbunit.database.DatabaseConfig;
@@ -12,7 +14,7 @@ import org.dbunit.operation.DatabaseOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.testng.AbstractTransactionalTestNGSpringContextTests;
-import org.testng.annotations.BeforeMethod;
+import org.testng.annotations.BeforeClass;
 
 import kamienica.configuration.HibernateTestConfiguration;
 import kamienica.testsetup.HsqlDataTypeFactory;
@@ -23,7 +25,7 @@ public abstract class EntityDaoImplTest extends AbstractTransactionalTestNGSprin
 	@Autowired
 	DataSource dataSource;
 
-	@BeforeMethod
+	@BeforeClass
 	public void setUp() throws Exception {
 		IDatabaseConnection dbConn = new DatabaseDataSourceConnection(dataSource);
 		DatabaseConfig config = dbConn.getConfig();
@@ -42,7 +44,7 @@ public abstract class EntityDaoImplTest extends AbstractTransactionalTestNGSprin
 				new FlatXmlDataSet(this.getClass().getClassLoader().getResourceAsStream("ReadingGas.xml")),
 				new FlatXmlDataSet(this.getClass().getClassLoader().getResourceAsStream("Incoices.xml")),
 				new FlatXmlDataSet(this.getClass().getClassLoader().getResourceAsStream("Tenant.xml")) };
-		System.out.println(datasets);
+		System.out.println(Arrays.toString(datasets));
 		return new CompositeDataSet(datasets);
 	
 	}

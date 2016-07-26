@@ -1,9 +1,13 @@
 <dataset>
 	<apartment id="1" apartmentNumber="0" intercom="0000"
-		description="Część Wpólna" />
+		description="Część Wspólna" />
 	<apartment id="2" apartmentNumber="1" intercom="0000"
 		description="Piwnica" />
 	<apartment id="3" apartmentNumber="2" intercom="0000"
 		description="Parter" />
-		
+	<apartment id="4" apartmentNumber="3" intercom="0000"
+		description="I Piętro" />
+	<apartment id="5" apartmentNumber="4" intercom="0000"
+		description="II Piętro- Mozna kasować" />
+
 </dataset>
