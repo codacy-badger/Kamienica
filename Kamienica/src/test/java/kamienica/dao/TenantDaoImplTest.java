@@ -1,5 +1,9 @@
 package kamienica.dao;
 
+import java.util.Arrays;
+import java.util.HashSet;
+import java.util.Set;
+
 import org.joda.time.LocalDate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.annotation.Rollback;
@@ -10,6 +14,7 @@ import kamienica.feature.apartment.Apartment;
 import kamienica.feature.apartment.ApartmentDao;
 import kamienica.feature.tenant.Tenant;
 import kamienica.feature.tenant.TenantDao;
+import kamienica.feature.tenant.UserStatus;
 
 public class TenantDaoImplTest extends EntityDaoImplTest {
 
@@ -39,20 +44,28 @@ public class TenantDaoImplTest extends EntityDaoImplTest {
 	@Test
 	@Rollback
 	public void deactivateTenant() {
-		Assert.assertEquals(dao.getById(1L).getStatus(), "ACTIVE");
-		dao.deactivateByApparmentId(2L);
-		Assert.assertEquals(dao.getById(1L).getStatus(), "INACTIVE");
+		Tenant tenant = dao.getById(1L);
+		
+		Assert.assertEquals(tenant.getStatus(), UserStatus.ACTIVE.getUserStatus());
+
+		dao.deactivateByApparmentId(tenant.getApartment().getId());
+		Assert.assertEquals(dao.getById(1L).getStatus(), UserStatus.INACTIVE.getUserStatus());
+	}
+
+	@Test
+	public void getIdList() {
+		Set<Long> tested = dao.getIdList();
+		Set<Long> expected = new HashSet<>();
+		expected.addAll(Arrays.asList(1L,2L,3L,4L));
+
+		Assert.assertEquals(tested, expected);
 	}
 
 	@Test
 	public void getCurrentTenant() {
 		Apartment ap = apDao.getById(2L);
-		System.out.println("==================");
-		System.out.println(ap);
 		Tenant ten = dao.getTenantForApartment(ap);
-		System.out.println(ten);
-		System.out.println("==================");
-		Assert.assertEquals(dao.getTenantForApartment(ap).getFirstName(), "Maciej");
+		Assert.assertEquals(ten.getFirstName(), "Maciej");
 	}
 
 	@Rollback
@@ -103,7 +116,6 @@ public class TenantDaoImplTest extends EntityDaoImplTest {
 
 	@Test
 	public void findAll() {
-		System.out.println(dao.getList());
 		Assert.assertEquals(dao.getList().size(), 4);
 	}
 
