@@ -1,5 +1,7 @@
 package kamienica.service;
 
+import java.util.List;
+
 import org.joda.time.LocalDate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.testng.Assert;
@@ -30,6 +32,7 @@ public class TenantServiceTest extends EntityDaoImplTest {
 		Tenant t = getTenant(apDao);
 		t.setMovementDate(new LocalDate(1990, 10, 10));
 		service.saveTenant(t);
+		
 		Assert.assertEquals(service.getTenantById(1L).getStatus(), UserStatus.ACTIVE.getUserStatus());
 		Assert.assertNotSame(service.getTenantById(5L), UserStatus.INACTIVE.getUserStatus());
 
@@ -39,11 +42,18 @@ public class TenantServiceTest extends EntityDaoImplTest {
 	public void newTenantShouldDeactivatePrevious() {
 		Tenant t = getTenant(apDao);
 		t.setMovementDate(new LocalDate());
+		List<Tenant> list = service.getList();
+		for (Tenant tenant : list) {
+			System.out.println(tenant);
+		}
+		System.out.println("====================");
 		service.saveTenant(t);
-		
-		System.out.println(service.getTenantById(1L));
+		list = service.getList();
+		for (Tenant tenant : list) {
+			System.out.println(tenant);
+		}
 		Assert.assertEquals(service.getTenantById(1L).getStatus(), UserStatus.INACTIVE.getUserStatus());
-		Assert.assertNotSame(service.getTenantById(5L), UserStatus.ACTIVE.getUserStatus());
+		Assert.assertEquals(service.getTenantById(5L), UserStatus.ACTIVE.getUserStatus());
 	}
 
 	// public void saveTenant(Tenant newTenant) {

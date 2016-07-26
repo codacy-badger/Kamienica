@@ -59,11 +59,23 @@ public class DivisionServiceImpl implements DivisionService {
 	}
 
 	@Override
-	public  List<Division> prepareDivisionListForRegistration(List<Tenant> tenantList,
-			List<Apartment> apartmentList) {
+	public DivisionForm prepareForm() {
+		List<Tenant> tenantList = tenantDAO.getList();
+		List<Apartment> apartmentList = apartmentDAO.getList();
+		DivisionForm form = new DivisionForm();
+
+		form.setDivisionList(prepareDivisionListForRegistration(tenantList, apartmentList));
+		form.setDate(new LocalDate());
+		form.setApartments(apartmentList);
+		form.setTenants(tenantList);
 		
-		
-		
+		System.out.println(form);
+		return form;
+	}
+
+	@Override
+	public List<Division> prepareDivisionListForRegistration(List<Tenant> tenantList, List<Apartment> apartmentList) {
+
 		ArrayList<Division> divisionList = new ArrayList<>();
 		for (Tenant ten : tenantList) {
 			for (Apartment ap : apartmentList) {

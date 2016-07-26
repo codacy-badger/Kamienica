@@ -30,7 +30,6 @@ public class DivisionController {
 	@Autowired
 	private DivisionService divisionService;
 
-
 	@RequestMapping("/divisionRegister")
 	public ModelAndView divisionRegister(@ModelAttribute("divisionForm") DivisionForm divisionForm,
 			BindingResult result) {

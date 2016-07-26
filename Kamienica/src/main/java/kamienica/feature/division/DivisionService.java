@@ -21,5 +21,7 @@ public interface DivisionService {
 
 	public void deleteAll();
 	
+	DivisionForm prepareForm();
+	
 	List<Division> prepareDivisionListForRegistration(List<Tenant> tenantList, List<Apartment> apartmentList);
 }
