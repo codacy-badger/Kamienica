@@ -79,7 +79,11 @@ public class ManagerGas {
 		return out;
 
 	}
-
+	
+	/**
+	 * Counts warm water usage for each apartment
+	 * 
+	 * */
 	private static HashMap<Integer, Double> hotWaterUsageMap(List<ReadingWater> oldReading,
 			List<ReadingWater> newReading) {
 		HashMap<Integer, Double> output = new HashMap<>();

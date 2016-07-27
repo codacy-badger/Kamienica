@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.joda.time.LocalDate;
 
+import kamienica.core.exception.InvalidDivisionException;
 import kamienica.core.exception.WrongInputForDivision;
 import kamienica.feature.apartment.Apartment;
 import kamienica.feature.tenant.Tenant;
@@ -12,7 +13,7 @@ public interface DivisionService {
 
 	public void saveList(List<Division> division, LocalDate date);
 
-	public void saveList(DivisionForm form);
+	public void saveList(DivisionForm form) throws InvalidDivisionException;
 
 	public List<Division> getList();
 

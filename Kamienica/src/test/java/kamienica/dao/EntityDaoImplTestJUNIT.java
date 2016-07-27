@@ -3,6 +3,7 @@ package kamienica.dao;
 import java.util.Arrays;
 
 import javax.sql.DataSource;
+import javax.transaction.Transactional;
 
 import org.dbunit.database.DatabaseConfig;
 import org.dbunit.database.DatabaseDataSourceConnection;
@@ -13,14 +14,15 @@ import org.dbunit.dataset.xml.FlatXmlDataSet;
 import org.dbunit.operation.DatabaseOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.testng.AbstractTransactionalTestNGSpringContextTests;
 import org.testng.annotations.BeforeClass;
 
 import kamienica.configuration.HibernateTestConfiguration;
 import kamienica.testsetup.HsqlDataTypeFactory;
 
+@Transactional
 @ContextConfiguration(classes = { HibernateTestConfiguration.class })
-public abstract class EntityDaoImplTest extends AbstractTransactionalTestNGSpringContextTests {
+
+public abstract class EntityDaoImplTestJUNIT  {
 
 	@Autowired
 	DataSource dataSource;
@@ -39,15 +41,13 @@ public abstract class EntityDaoImplTest extends AbstractTransactionalTestNGSprin
 		IDataSet[] datasets = new IDataSet[] {
 				new FlatXmlDataSet(this.getClass().getClassLoader().getResourceAsStream("Apartment.xml")),
 				new FlatXmlDataSet(this.getClass().getClassLoader().getResourceAsStream("Meters.xml")),
-				// new
-				// FlatXmlDataSet(this.getClass().getClassLoader().getResourceAsStream("ReadingWater.xml")),
+				new FlatXmlDataSet(this.getClass().getClassLoader().getResourceAsStream("ReadingWater.xml")),
 				new FlatXmlDataSet(this.getClass().getClassLoader().getResourceAsStream("ReadingEnergy.xml")),
-				// new
-				// FlatXmlDataSet(this.getClass().getClassLoader().getResourceAsStream("ReadingGas.xml")),
+				new FlatXmlDataSet(this.getClass().getClassLoader().getResourceAsStream("ReadingGas.xml")),
 				new FlatXmlDataSet(this.getClass().getClassLoader().getResourceAsStream("Incoices.xml")),
 				new FlatXmlDataSet(this.getClass().getClassLoader().getResourceAsStream("Tenant.xml")) };
 		System.out.println(Arrays.toString(datasets));
 		return new CompositeDataSet(datasets);
-
+	
 	}
 }

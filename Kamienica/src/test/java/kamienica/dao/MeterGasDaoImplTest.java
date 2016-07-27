@@ -2,6 +2,7 @@ package kamienica.dao;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.test.annotation.Rollback;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
@@ -28,34 +29,34 @@ public class MeterGasDaoImplTest extends EntityDaoImplTest {
 	@Test
 	public void findById() {
 		Assert.assertNotNull(meterDao.getById(1L));
-		Assert.assertNotNull(meterDao.getById(3L));
-		Assert.assertNotNull(meterDao.getById(5L));
-		Assert.assertNull(meterDao.getById(6L));
+		Assert.assertNotNull(meterDao.getById(2L));
+		Assert.assertNull(meterDao.getById(8L));
 
 	}
 
 	@Test
 	public void save() {
 		meterDao.save(getSampleMeter());
-		Assert.assertEquals(meterDao.getList().size(), 6);
+		Assert.assertEquals(meterDao.getList().size(), 4);
 	}
 
+	@Rollback
 	@Test
 	public void deleteById() {
 		meterDao.deleteById(1L);
-		Assert.assertEquals(meterDao.getList().size(), 4);
+		Assert.assertEquals(meterDao.getList().size(), 2);
 	}
 
 	@Test
 	public void deletetByInvalidId() {
 		meterDao.deleteById(9L);
-		Assert.assertEquals(meterDao.getList().size(), 5);
+		Assert.assertEquals(meterDao.getList().size(), 3);
 	}
 
 	@Test
 	public void findAll() {
-	
-		Assert.assertEquals(meterDao.getList().size(), 5);
+
+		Assert.assertEquals(meterDao.getList().size(), 3);
 	}
 
 	@Test(expectedExceptions = org.hibernate.exception.ConstraintViolationException.class)
