@@ -8,9 +8,13 @@ import java.util.Locale;
 
 import org.joda.time.LocalDate;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.web.session.InvalidSessionAccessDeniedHandler;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.servlet.ModelAndView;
 
+import kamienica.core.exception.InvalidDivisionException;
+import kamienica.core.exception.WrongInputForDivision;
 import kamienica.feature.apartment.Apartment;
 import kamienica.feature.apartment.ApartmentDao;
 import kamienica.feature.tenant.Tenant;
@@ -50,6 +54,7 @@ public class DivisionServiceImpl implements DivisionService {
 
 	@Override
 	public void saveList(List<Division> division, LocalDate date) {
+
 		divisionDAO.deleteAll();
 		for (Division div : division) {
 			div.setDate(date);
@@ -59,18 +64,29 @@ public class DivisionServiceImpl implements DivisionService {
 	}
 
 	@Override
-	public DivisionForm prepareForm() {
-		List<Tenant> tenantList = tenantDAO.getList();
+	public void saveList(DivisionForm form) throws InvalidDivisionException {
+		if (DivisionValidator.checksumForDivision(form.getApartments(), form.getDivisionList())) {
+			throw new InvalidDivisionException();
+		}
+
+		saveList(form.getDivisionList(), form.getDate());
+
+	}
+
+	@Override
+	public void prepareForm(DivisionForm form) throws WrongInputForDivision {
+		List<Tenant> tenantList = tenantDAO.getActiveTenants();
 		List<Apartment> apartmentList = apartmentDAO.getList();
-		DivisionForm form = new DivisionForm();
+
+		if (tenantList.isEmpty() || apartmentList.isEmpty()) {
+			throw new WrongInputForDivision();
+		}
 
 		form.setDivisionList(prepareDivisionListForRegistration(tenantList, apartmentList));
 		form.setDate(new LocalDate());
 		form.setApartments(apartmentList);
 		form.setTenants(tenantList);
-		
-		System.out.println(form);
-		return form;
+
 	}
 
 	@Override
