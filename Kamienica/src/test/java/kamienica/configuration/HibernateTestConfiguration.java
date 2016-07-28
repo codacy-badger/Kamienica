@@ -38,7 +38,6 @@ public class HibernateTestConfiguration {
 		sessionFactory.setDataSource(dataSource());
 		sessionFactory.setPackagesToScan(new String[] { "kamienica" });
 		sessionFactory.setHibernateProperties(hibernateProperties());
-		System.out.println(Arrays.asList(applicationContext.getBeanDefinitionNames()));
 		return sessionFactory;
 	}
 
@@ -46,8 +45,11 @@ public class HibernateTestConfiguration {
 	public DataSource dataSource() {
 		DriverManagerDataSource dataSource = new DriverManagerDataSource();
 		dataSource.setDriverClassName("org.h2.Driver");
+		// dataSource.setUrl(
+		//		"jdbc:h2:mem:kamienica;INIT=runscript from 'classpath:/import.sql';MODE=MySQL;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=FALSE");
 		dataSource.setUrl(
-				"jdbc:h2:mem:test;MODE=MySQL;DB_CLOSE_DELAY=-1;INIT=CREATE SCHEMA IF NOT EXISTS kamienica;DB_CLOSE_ON_EXIT=FALSE");
+				"jdbc:h2:mem:kamienica;MODE=MySQL;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=FALSE");
+	
 		dataSource.setUsername("sa");
 		dataSource.setPassword("");
 		return dataSource;
@@ -56,7 +58,11 @@ public class HibernateTestConfiguration {
 	private Properties hibernateProperties() {
 		Properties properties = new Properties();
 		properties.put("hibernate.dialect", "org.hibernate.dialect.H2Dialect");
-		properties.put("hibernate.hbm2ddl.auto", "update");
+		properties.put("hibernate.hbm2ddl.auto", "create");
+		//properties.put("hibernate.show_sql", true);
+		//properties.put("hibernate.format_sql", true);
+		//properties.put("hibernate.use_sql_comments", true);
+		//properties.put("hibernate.hbm2ddl.import_files", "import.sql");
 		return properties;
 	}
 

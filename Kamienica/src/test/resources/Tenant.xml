@@ -5,13 +5,13 @@
 		password="witaj" apartment_id="2" />
 	<tenant id="2" firstName="Andrzej" lastName="Fol" email="b@wp"
 		phone="234234" role="USER" status="NIEAKTYWNY" movementDate="2010-01-01"
-		password="witaj" apartment_id="2"/>
+		password="witaj" apartment_id="2" />
 	<tenant id="3" firstName="ccc" lastName="Fol" email="c@wp.pl"
-		phone="234234" role="USER" status="AKTYWNY" movementDate="2014-01-01"
-		password="witaj" apartment_id="3"/>
+		phone="234234" role="USER" apartment_id="3" status="AKTYWNY"
+		movementDate="2014-01-01" password="witaj" />
 	<tenant id="4" firstName="dddd" lastName="Fol" email="d@wp"
 		phone="234234" role="ADMIN" status="NIEAKTYWNY" movementDate="2014-01-01"
-		password="witaj" apartment_id="4"/>
+		password="witaj" apartment_id="4" />
 
 </dataset>
 

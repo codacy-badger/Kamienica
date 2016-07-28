@@ -5,6 +5,8 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import javax.validation.ConstraintViolationException;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.annotation.Rollback;
 import org.testng.Assert;
@@ -47,8 +49,8 @@ public class MeterEnergyDaoImplTest extends EntityDaoImplTest {
 	}
 
 	@Rollback
-	@Test(dependsOnMethods = { "findAll" })
-	public void deleteById() {
+	@Test(dependsOnMethods = { "findAll" }, expectedExceptions= org.hibernate.exception.ConstraintViolationException.class)
+	public void deleteWhereThereAreReadingsForIt() {
 		meterDao.deleteById(5L);
 		Assert.assertEquals(meterDao.getList().size(), 4);
 	}

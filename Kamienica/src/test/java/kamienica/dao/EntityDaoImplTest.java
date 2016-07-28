@@ -25,14 +25,15 @@ import kamienica.testsetup.HsqlDataTypeFactory;
 public abstract class EntityDaoImplTest extends AbstractTransactionalTestNGSpringContextTests {
 
 	@Autowired
-	DataSource dataSource = dataSource();
+	DataSource dataSource;
 
 	@BeforeClass
 	public void setUp() throws Exception {
+
 		IDatabaseConnection dbConn = new DatabaseDataSourceConnection(dataSource);
 		DatabaseConfig config = dbConn.getConfig();
 		config.setProperty(DatabaseConfig.PROPERTY_DATATYPE_FACTORY, new HsqlDataTypeFactory());
-		//DatabaseOperation.INSERT.execute(dbConn, getDataSet());
+		DatabaseOperation.CLEAN_INSERT.execute(dbConn, getDataSet());
 	}
 
 	// protected abstract IDataSet getDataSet() throws Exception;
@@ -41,7 +42,8 @@ public abstract class EntityDaoImplTest extends AbstractTransactionalTestNGSprin
 		IDataSet[] datasets = new IDataSet[] {
 				new FlatXmlDataSet(this.getClass().getClassLoader().getResourceAsStream("Apartment.xml")),
 				new FlatXmlDataSet(this.getClass().getClassLoader().getResourceAsStream("Tenant.xml")),
-				new FlatXmlDataSet(this.getClass().getClassLoader().getResourceAsStream("Meters.xml")),
+				new FlatXmlDataSet(this.getClass().getClassLoader().getResourceAsStream("MeterEnergy.xml")),
+				//new FlatXmlDataSet(this.getClass().getClassLoader().getResourceAsStream("Meters.xml")),
 				
 				// new
 				// FlatXmlDataSet(this.getClass().getClassLoader().getResourceAsStream("ReadingWater.xml")),
@@ -55,15 +57,15 @@ public abstract class EntityDaoImplTest extends AbstractTransactionalTestNGSprin
 
 	}
 	
-	@Bean
-	public DataSource dataSource() {
+	
+	public DataSource gatDataSource() {
 		
 		// no need shutdown, EmbeddedDatabaseFactoryBean will take care of this
 		EmbeddedDatabaseBuilder builder = new EmbeddedDatabaseBuilder();
 		EmbeddedDatabase db = builder
 			.setType(EmbeddedDatabaseType.H2) //.H2 or .DERBY
 		//	.addScript("create-db.sql")
-			.addScript("insert-data.sql")
+			.addScript("import.sql")
 			.build();
 		System.out.println("-----------------------------------------dataSource-------------------");
 		return db;
