@@ -2,6 +2,7 @@ package kamienica.dao;
 
 import java.util.Arrays;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 import org.joda.time.LocalDate;
@@ -116,7 +117,9 @@ public class TenantDaoImplTest extends EntityDaoImplTest {
 
 	@Test
 	public void findAll() {
-		Assert.assertEquals(dao.getList().size(), 4);
+		List<Tenant> list = dao.getList();
+		System.out.println(list);
+		Assert.assertEquals(list.size(), 4);
 	}
 
 	@Test(dependsOnMethods = { "findAll" })

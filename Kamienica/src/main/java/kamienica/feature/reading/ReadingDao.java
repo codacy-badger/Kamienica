@@ -9,6 +9,12 @@ import kamienica.dao.DaoInterface;
 import kamienica.feature.apartment.Apartment;
 import kamienica.feature.invoice.Invoice;
 
+/**
+ * @author kdeveloper
+ *
+ * @param <R extends ReadingAbstract>
+ * @param <I>
+ */
 public interface ReadingDao<R extends ReadingAbstract, I extends Invoice> extends DaoInterface<R> {
 
 	public List<R> getByDate(String date);
@@ -19,6 +25,13 @@ public interface ReadingDao<R extends ReadingAbstract, I extends Invoice> extend
 
 	public List<R> getListForTenant(Apartment apartment);
 
+	
+	/**
+	 * @return List<R extends ReadingAbsract
+	 * 
+	 * Returns list of unresolved reading for main counter. 
+	 * This list is used for new Incoives
+	 */
 	public List<R> getUnresolvedReadings();
 
 	public void resolveReadings(I invoice);

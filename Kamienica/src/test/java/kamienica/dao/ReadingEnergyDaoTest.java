@@ -26,7 +26,9 @@ public class ReadingEnergyDaoTest extends EntityDaoImplTest {
 
 	@Test
 	public void getUnresolvedReadings() {
-		Assert.assertEquals(dao.getUnresolvedReadings().size(), 2);
+		List<ReadingEnergy> list = dao.getUnresolvedReadings();
+		System.out.println(list);
+		Assert.assertEquals(list.size(), 2);
 	}
 
 	@Test

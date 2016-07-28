@@ -47,7 +47,7 @@ public class HibernateTestConfiguration {
 		DriverManagerDataSource dataSource = new DriverManagerDataSource();
 		dataSource.setDriverClassName("org.h2.Driver");
 		dataSource.setUrl(
-				"jdbc:h2:mem:test;MODE=MYSQL;DB_CLOSE_DELAY=-1;INIT=CREATE SCHEMA IF NOT EXISTS kamienica;DB_CLOSE_ON_EXIT=FALSE");
+				"jdbc:h2:mem:test;MODE=MySQL;DB_CLOSE_DELAY=-1;INIT=CREATE SCHEMA IF NOT EXISTS kamienica;DB_CLOSE_ON_EXIT=FALSE");
 		dataSource.setUsername("sa");
 		dataSource.setPassword("");
 		return dataSource;

@@ -2,6 +2,7 @@ package kamienica.dao;
 
 import java.util.Arrays;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -60,7 +61,9 @@ public class MeterEnergyDaoImplTest extends EntityDaoImplTest {
 
 	@Test
 	public void findAll() {
-		Assert.assertEquals(meterDao.getList().size(), 5);
+		List<MeterEnergy> list = meterDao.getList();
+		System.out.println(list);
+		Assert.assertEquals(list.size(), 5);
 	}
 
 	@Test(expectedExceptions = org.hibernate.exception.ConstraintViolationException.class)

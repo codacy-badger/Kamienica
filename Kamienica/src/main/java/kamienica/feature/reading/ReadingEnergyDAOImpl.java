@@ -3,8 +3,6 @@ package kamienica.feature.reading;
 import java.util.List;
 import java.util.Set;
 
-
-
 import org.hibernate.Criteria;
 import org.hibernate.Query;
 import org.hibernate.criterion.Order;
@@ -16,6 +14,14 @@ import kamienica.dao.AbstractDao;
 import kamienica.feature.apartment.Apartment;
 import kamienica.feature.invoice.InvoiceEnergy;
 
+/**
+ * @author kdeveloper
+ *
+ */
+/**
+ * @author kdeveloper
+ *
+ */
 @Repository("readingEnergyDao")
 public class ReadingEnergyDAOImpl extends AbstractDao<Long, ReadingEnergy>
 		implements ReadingDao<ReadingEnergy, InvoiceEnergy> {
@@ -78,6 +84,9 @@ public class ReadingEnergyDAOImpl extends AbstractDao<Long, ReadingEnergy>
 		Query query = getSession().createSQLQuery("SELECT r.id, r.readingDate, r.value, r.unit, r.meter_id, r.resolved "
 				+ "FROM readingenergy r join meterEnergy m on r.meter_id = m.id "
 				+ "where r.resolved = 0 and m.apartment_id is null").addEntity(ReadingEnergy.class);
+		System.out.println("99999999999999");
+		System.out.println(query.list());
+		System.out.println("99999999999999");
 		return query.list();
 
 	}
@@ -85,7 +94,7 @@ public class ReadingEnergyDAOImpl extends AbstractDao<Long, ReadingEnergy>
 	@Override
 	public void resolveReadings(InvoiceEnergy invoice) {
 		Query query = getSession()
-				.createSQLQuery("update readingenergy set resolved= :res where readingDate = :paramdate")
+				.createSQLQuery("update readingenergy " + "set resolved= :res " + "where readingDate = :paramdate")
 				.setDate("paramdate", invoice.getBaseReading().getReadingDate().toDate()).setParameter("res", true);
 		query.executeUpdate();
 
