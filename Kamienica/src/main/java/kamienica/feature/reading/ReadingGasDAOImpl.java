@@ -59,8 +59,9 @@ public class ReadingGasDAOImpl extends AbstractDao<Long, ReadingGas> implements 
 	@Override
 	public List<ReadingGas> getLatestList(Set<Long> meterId) {
 		//		String original = "Select * from (select * from readingGas order by readingDate desc) as c group by meter_id";
-		String test = "Select * from readingGas where readingDate=(select MAX(readingDate) from readingGas)";
-		Query query = getSession().createSQLQuery(test).addEntity(ReadingGas.class);
+		String test = "Select * from readinggas where readingDate=(select MAX(readingDate) from readinggas) AND meter_id IN(:list)";
+		Query query = getSession().createSQLQuery(test).addEntity(ReadingGas.class).setParameterList("list",
+				meterId);
 		@SuppressWarnings("unchecked")
 		List<ReadingGas> result = query.list();
 		return result;

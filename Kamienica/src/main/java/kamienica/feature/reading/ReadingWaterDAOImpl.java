@@ -63,8 +63,9 @@ public class ReadingWaterDAOImpl extends AbstractDao<Long, ReadingWater> impleme
 	public List<ReadingWater> getLatestList(Set<Long> meterId) {
 		// String original = "Select * from (select * from readingWater order by
 		// readingDate desc) as c group by meter_id";
-		String test = "Select * from readingWater where readingDate=(select MAX(readingDate) from readingWater)";
-		Query query = getSession().createSQLQuery(test).addEntity(ReadingWater.class);
+		String test = "Select * from readingwater where readingDate=(select MAX(readingDate) from readingwater) AND meter_id IN(:list)";
+		Query query = getSession().createSQLQuery(test).addEntity(ReadingWater.class).setParameterList("list",
+				meterId);;
 		@SuppressWarnings("unchecked")
 		List<ReadingWater> result = query.list();
 

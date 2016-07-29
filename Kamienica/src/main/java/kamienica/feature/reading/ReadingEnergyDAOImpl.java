@@ -58,7 +58,7 @@ public class ReadingEnergyDAOImpl extends AbstractDao<Long, ReadingEnergy>
 	@SuppressWarnings("unchecked")
 	public List<ReadingEnergy> getLatestList(Set<Long> meterId) {
 
-		String test = "Select * from readingEnergy where readingDate=(select MAX(readingDate) from readingEnergy) AND meter_id IN(:list)";
+		String test = "Select * from readingenergy where readingDate=(select MAX(readingDate) from readingEnergy) AND meter_id IN(:list)";
 		Query query = getSession().createSQLQuery(test).addEntity(ReadingEnergy.class).setParameterList("list",
 				meterId);
 
