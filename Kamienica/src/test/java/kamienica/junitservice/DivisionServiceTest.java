@@ -46,4 +46,10 @@ public class DivisionServiceTest extends AbstractServiceTest {
 		
 	}
 
+	@Override
+	public void addWithValidationError() {
+		// TODO Auto-generated method stub
+		
+	}
+
 }

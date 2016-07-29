@@ -43,4 +43,10 @@ public class ReadingWaterServiceTest extends AbstractServiceTest {
 
 	}
 
+	@Override
+	public void addWithValidationError() {
+		// TODO Auto-generated method stub
+		
+	}
+
 }

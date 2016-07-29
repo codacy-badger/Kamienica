@@ -47,6 +47,12 @@ public class MeterWaterServiceTest extends AbstractServiceTest {
 		// TODO Auto-generated method stub
 		
 	}
+
+	@Override
+	public void addWithValidationError() {
+		// TODO Auto-generated method stub
+		
+	}
 	
 	
 
