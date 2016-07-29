@@ -64,26 +64,29 @@ public class ManagerGas {
 
 		double zuzycieCWU = ManagerGas.sumCWU(gasOld, gasNew);
 		if (zuzycieCWU != 0) {
+
 			double sumaZuzyciaCieplejWody = ManagerWater.countWarmWaterUsage(waterOld, waterNew);
 			HashMap<Integer, Double> mapaZuzyciaCieplejWody = ManagerGas.hotWaterUsageMap(waterOld, waterNew);
 			for (int i = 0; i < out.size(); i++) {
 				if (out.get(i).getApartment().getApartmentNumber() != 0) {
 					int nrMieszkania = out.get(i).getApartment().getApartmentNumber();
-					double zuzycieGazuCwuDlaDanegoMieszkania = (mapaZuzyciaCieplejWody.get(nrMieszkania)
-							/ sumaZuzyciaCieplejWody) * zuzycieCWU;
-					double tmp = out.get(i).getUsage() + zuzycieGazuCwuDlaDanegoMieszkania;
-					out.get(i).setUsage(decimalFormat(tmp));
+					if (mapaZuzyciaCieplejWody.containsKey(nrMieszkania)) {
+						double zuzycieGazuCwuDlaDanegoMieszkania = (mapaZuzyciaCieplejWody.get(nrMieszkania)
+								/ sumaZuzyciaCieplejWody) * zuzycieCWU;
+						double tmp = out.get(i).getUsage() + zuzycieGazuCwuDlaDanegoMieszkania;
+						out.get(i).setUsage(decimalFormat(tmp));
+					}
 				}
 			}
 		}
 		return out;
 
 	}
-	
+
 	/**
 	 * Counts warm water usage for each apartment
 	 * 
-	 * */
+	 */
 	private static HashMap<Integer, Double> hotWaterUsageMap(List<ReadingWater> oldReading,
 			List<ReadingWater> newReading) {
 		HashMap<Integer, Double> output = new HashMap<>();

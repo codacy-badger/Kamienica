@@ -112,13 +112,13 @@ public class ReadingWaterDAOImpl extends AbstractDao<Long, ReadingWater> impleme
 		// ORDER BY readingdate desc limit 1)"
 		HashMap<String, List<ReadingWater>> out = new HashMap<String, List<ReadingWater>>();
 		List<ReadingWater> oldReadings = new ArrayList<>();
-		Query query = getSession().createSQLQuery(queryString).addEntity(ReadingWater.class).setParameter("date",
-				invoice.getBaseReading().getReadingDate());
+		Query query = getSession().createSQLQuery(queryString).addEntity(ReadingWater.class).setDate("date",
+				invoice.getBaseReading().getReadingDate().toDate());
 		List<ReadingWater> newReadings = query.list();
 		if (!newReadings.isEmpty()) {
 
-			query = getSession().createSQLQuery(queryString).addEntity(ReadingWater.class).setParameter("date",
-					newReadings.get(0).getReadingDate());
+			query = getSession().createSQLQuery(queryString).addEntity(ReadingWater.class).setDate("date",
+					newReadings.get(0).getReadingDate().toDate());
 			oldReadings = query.list();
 		}
 
