@@ -22,7 +22,7 @@ import kamienica.feature.invoice.InvoiceEnergy;
  * @author kdeveloper
  *
  */
-@Repository("readingEnergyDao")
+@Repository("readingenergyDao")
 public class ReadingEnergyDAOImpl extends AbstractDao<Long, ReadingEnergy>
 		implements ReadingDao<ReadingEnergy, InvoiceEnergy> {
 
@@ -47,7 +47,7 @@ public class ReadingEnergyDAOImpl extends AbstractDao<Long, ReadingEnergy>
 
 	@Override
 	public List<ReadingEnergy> getByDate(String readingDate) {
-		Query query = getSession().createSQLQuery("SELECT * FROM readingEnergy where readingDate=:date")
+		Query query = getSession().createSQLQuery("SELECT * FROM readingenergy where readingDate=:date")
 				.addEntity(ReadingEnergy.class).setString("date", readingDate);
 		@SuppressWarnings("unchecked")
 		List<ReadingEnergy> result = query.list();
@@ -58,7 +58,7 @@ public class ReadingEnergyDAOImpl extends AbstractDao<Long, ReadingEnergy>
 	@SuppressWarnings("unchecked")
 	public List<ReadingEnergy> getLatestList(Set<Long> meterId) {
 
-		String test = "Select * from readingenergy where readingDate=(select MAX(readingDate) from readingEnergy) AND meter_id IN(:list)";
+		String test = "Select * from readingenergy where readingDate=(select MAX(readingDate) from readingenergy) AND meter_id IN(:list)";
 		Query query = getSession().createSQLQuery(test).addEntity(ReadingEnergy.class).setParameterList("list",
 				meterId);
 
@@ -70,7 +70,7 @@ public class ReadingEnergyDAOImpl extends AbstractDao<Long, ReadingEnergy>
 	public List<ReadingEnergy> getPrevious(String readingDate, Set<Long> meterId) {
 		Query query = getSession()
 				.createSQLQuery(
-						"SELECT * FROM readingEnergy where readingDate=(SELECT max(readingDate) FROM readingEnergy WHERE readingDate < :date )  AND meter_id IN(:list)")
+						"SELECT * FROM readingenergy where readingDate=(SELECT max(readingDate) FROM readingenergy WHERE readingDate < :date )  AND meter_id IN(:list)")
 				.addEntity(ReadingEnergy.class).setString("date", readingDate.toString())
 				.setParameterList("list", meterId);
 		@SuppressWarnings("unchecked")
@@ -82,11 +82,8 @@ public class ReadingEnergyDAOImpl extends AbstractDao<Long, ReadingEnergy>
 	@SuppressWarnings("unchecked")
 	public List<ReadingEnergy> getUnresolvedReadings() {
 		Query query = getSession().createSQLQuery("SELECT r.id, r.readingDate, r.value, r.unit, r.meter_id, r.resolved "
-				+ "FROM readingenergy r join meterEnergy m on r.meter_id = m.id "
+				+ "FROM readingenergy r join meterenergy m on r.meter_id = m.id "
 				+ "where r.resolved = 0 and m.apartment_id is null").addEntity(ReadingEnergy.class);
-		System.out.println("99999999999999");
-		System.out.println(query.list());
-		System.out.println("99999999999999");
 		return query.list();
 
 	}

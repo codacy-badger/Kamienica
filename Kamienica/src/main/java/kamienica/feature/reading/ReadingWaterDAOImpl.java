@@ -17,7 +17,7 @@ import kamienica.feature.apartment.Apartment;
 import kamienica.feature.invoice.InvoiceGas;
 import kamienica.feature.invoice.InvoiceWater;
 
-@Repository("readingWaterDao")
+@Repository("readingwaterDao")
 public class ReadingWaterDAOImpl extends AbstractDao<Long, ReadingWater> implements ReadingWaterDAO {
 
 	@Override
@@ -52,7 +52,7 @@ public class ReadingWaterDAOImpl extends AbstractDao<Long, ReadingWater> impleme
 
 	@Override
 	public List<ReadingWater> getByDate(String readingDate) {
-		Query query = getSession().createSQLQuery("SELECT * FROM readingWater where readingDate=:date")
+		Query query = getSession().createSQLQuery("SELECT * FROM readingwater where readingDate=:date")
 				.addEntity(ReadingWater.class).setString("date", readingDate);
 		@SuppressWarnings("unchecked")
 		List<ReadingWater> result = query.list();
@@ -61,11 +61,11 @@ public class ReadingWaterDAOImpl extends AbstractDao<Long, ReadingWater> impleme
 
 	@Override
 	public List<ReadingWater> getLatestList(Set<Long> meterId) {
-		// String original = "Select * from (select * from readingWater order by
+		// String original = "Select * from (select * from readingwater order by
 		// readingDate desc) as c group by meter_id";
 		String test = "Select * from readingwater where readingDate=(select MAX(readingDate) from readingwater) AND meter_id IN(:list)";
-		Query query = getSession().createSQLQuery(test).addEntity(ReadingWater.class).setParameterList("list",
-				meterId);;
+		Query query = getSession().createSQLQuery(test).addEntity(ReadingWater.class).setParameterList("list", meterId);
+		;
 		@SuppressWarnings("unchecked")
 		List<ReadingWater> result = query.list();
 
@@ -103,19 +103,22 @@ public class ReadingWaterDAOImpl extends AbstractDao<Long, ReadingWater> impleme
 	@Override
 	@SuppressWarnings("unchecked")
 	public HashMap<String, List<ReadingWater>> getWaterReadingForGasConsumption(InvoiceGas invoice) {
+		String queryString = "SELECT * FROM readingwater where readingdate = (select MAX(readingdate) from readingwater where readingdate < :date)";
+		// "SELECT * FROM readingwater where readingdate = (select readingdate
+		// from readingwater where readingdate < :date GROUP BY readingdate
+		// ORDER BY readingdate desc limit 1)"
+		// "SELECT * FROM readingwater where readingdate = (select readingdate
+		// from readingwater where readingdate < :date GROUP BY readingdate
+		// ORDER BY readingdate desc limit 1)"
 		HashMap<String, List<ReadingWater>> out = new HashMap<String, List<ReadingWater>>();
 		List<ReadingWater> oldReadings = new ArrayList<>();
-		Query query = getSession()
-				.createSQLQuery(
-						"SELECT * FROM readingwater where readingdate = (select readingdate from readingwater where readingdate < :date GROUP BY readingdate ORDER BY readingdate desc limit 1)")
-				.addEntity(ReadingWater.class).setParameter("date", invoice.getBaseReading().getReadingDate());
+		Query query = getSession().createSQLQuery(queryString).addEntity(ReadingWater.class).setParameter("date",
+				invoice.getBaseReading().getReadingDate());
 		List<ReadingWater> newReadings = query.list();
 		if (!newReadings.isEmpty()) {
 
-			query = getSession()
-					.createSQLQuery(
-							"SELECT * FROM readingwater where readingdate = (select readingdate from readingwater where readingdate < :date GROUP BY readingdate ORDER BY readingdate desc limit 1)")
-					.addEntity(ReadingWater.class).setParameter("date", newReadings.get(0).getReadingDate());
+			query = getSession().createSQLQuery(queryString).addEntity(ReadingWater.class).setParameter("date",
+					newReadings.get(0).getReadingDate());
 			oldReadings = query.list();
 		}
 
@@ -139,7 +142,7 @@ public class ReadingWaterDAOImpl extends AbstractDao<Long, ReadingWater> impleme
 	@Override
 	public void deleteLatestReadings(LocalDate date) {
 		Query query = getSession()
-				.createSQLQuery("delete from readingWater where readingDate=:date and resolved = :res");
+				.createSQLQuery("delete from readingwater where readingDate=:date and resolved = :res");
 		query.setParameter("date", date.toString()).setParameter("res", false);
 		query.executeUpdate();
 
@@ -151,6 +154,5 @@ public class ReadingWaterDAOImpl extends AbstractDao<Long, ReadingWater> impleme
 				.setProjection(Projections.max("readingDate"));
 		return (LocalDate) criteria.uniqueResult();
 	}
-
 
 }

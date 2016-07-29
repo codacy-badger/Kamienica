@@ -14,7 +14,7 @@ import kamienica.dao.AbstractDao;
 import kamienica.feature.apartment.Apartment;
 import kamienica.feature.invoice.InvoiceGas;
 
-@Repository("readingGasDao")
+@Repository("readinggasDao")
 public class ReadingGasDAOImpl extends AbstractDao<Long, ReadingGas> implements ReadingDao<ReadingGas, InvoiceGas> {
 
 	@Override
@@ -49,7 +49,7 @@ public class ReadingGasDAOImpl extends AbstractDao<Long, ReadingGas> implements 
 
 	@Override
 	public List<ReadingGas> getByDate(String readingDate) {
-		Query query = getSession().createSQLQuery("SELECT * FROM readingGas where readingDate= :date")
+		Query query = getSession().createSQLQuery("SELECT * FROM readinggas where readingDate= :date")
 				.addEntity(ReadingGas.class).setString("date", readingDate);
 		@SuppressWarnings("unchecked")
 		List<ReadingGas> result = query.list();
@@ -58,7 +58,7 @@ public class ReadingGasDAOImpl extends AbstractDao<Long, ReadingGas> implements 
 
 	@Override
 	public List<ReadingGas> getLatestList(Set<Long> meterId) {
-		//		String original = "Select * from (select * from readingGas order by readingDate desc) as c group by meter_id";
+		//		String original = "Select * from (select * from readinggas order by readingDate desc) as c group by meter_id";
 		String test = "Select * from readinggas where readingDate=(select MAX(readingDate) from readinggas) AND meter_id IN(:list)";
 		Query query = getSession().createSQLQuery(test).addEntity(ReadingGas.class).setParameterList("list",
 				meterId);
@@ -71,7 +71,7 @@ public class ReadingGasDAOImpl extends AbstractDao<Long, ReadingGas> implements 
 	@SuppressWarnings("unchecked")
 	public List<ReadingGas> getUnresolvedReadings() {
 		Query query = getSession().createSQLQuery("SELECT r.id, r.readingDate, r.value, r.unit, r.meter_id, r.resolved "
-				+ "FROM readinggas r join meterGas m on r.meter_id = m.id "
+				+ "FROM readinggas r join metergas m on r.meter_id = m.id "
 				+ "where r.resolved = 0 and m.apartment_id is null").addEntity(ReadingGas.class);
 		;
 
@@ -108,7 +108,7 @@ public class ReadingGasDAOImpl extends AbstractDao<Long, ReadingGas> implements 
 
 	@Override
 	public void deleteLatestReadings(LocalDate date) {
-		Query query = getSession().createSQLQuery("delete from readingGas where readingDate=:date and resolved = :res");
+		Query query = getSession().createSQLQuery("delete from readinggas where readingDate=:date and resolved = :res");
 		query.setParameter("date", date.toString()).setParameter("res", false);
 		query.executeUpdate();
 
