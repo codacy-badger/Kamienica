@@ -28,7 +28,7 @@ public class ApartmentServiceTest extends AbstractServiceTest {
 	@Override
 	public void getById() {
 		Apartment apartment = service.getById(3L);
-		assertEquals(1, apartment.getApartmentNumber());
+		assertEquals(2, apartment.getApartmentNumber());
 
 	}
 

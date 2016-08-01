@@ -11,11 +11,15 @@ import kamienica.feature.invoice.InvoiceGas;
 
 public interface ReadingService {
 
-	public ReadingEnergy getEnergyById(Long id);
+	// public ReadingEnergy getEnergyById(Long id);
+	//
+	// public ReadingGas getGasById(Long id);
+	//
+	// public ReadingWater getWaterById(Long id);
 
-	public ReadingGas getGasById(Long id);
+	public <T extends ReadingAbstract> T getById(Long id, Media media);
 
-	public ReadingWater getWaterById(Long id);
+	public <T extends ReadingAbstract> void save(List<T> reading, LocalDate localDate, Media media);
 
 	public void saveGasList(List<ReadingGas> reading, LocalDate localDate);
 
@@ -72,7 +76,6 @@ public interface ReadingService {
 	public List<ReadingWater> getUnresolvedReadingsWater();
 
 	public void deleteLatestReadings(Media media);
-
 
 	// public Set<Long> getEnergyIdList();
 

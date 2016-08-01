@@ -17,13 +17,14 @@ import kamienica.feature.invoice.InvoiceGas;
 @Repository("readinggasDao")
 public class ReadingGasDAOImpl extends AbstractDao<Long, ReadingGas> implements ReadingDao<ReadingGas, InvoiceGas> {
 
-	@Override
-	public List<ReadingGas> getList() {
-		@SuppressWarnings("unchecked")
-		List<ReadingGas> list = getSession().createCriteria(ReadingGas.class).addOrder(Order.desc("readingDate"))
-				.list();
-		return list;
-	}
+	// @Override
+	// public List<ReadingGas> getList() {
+	// @SuppressWarnings("unchecked")
+	// List<ReadingGas> list =
+	// getSession().createCriteria(ReadingGas.class).addOrder(Order.desc("readingDate"))
+	// .list();
+	// return list;
+	// }
 
 	@Override
 	public List<ReadingGas> getListForTenant(Apartment apartment) {
@@ -58,10 +59,10 @@ public class ReadingGasDAOImpl extends AbstractDao<Long, ReadingGas> implements 
 
 	@Override
 	public List<ReadingGas> getLatestList(Set<Long> meterId) {
-		//		String original = "Select * from (select * from readinggas order by readingDate desc) as c group by meter_id";
+		// String original = "Select * from (select * from readinggas order by
+		// readingDate desc) as c group by meter_id";
 		String test = "Select * from readinggas where readingDate=(select MAX(readingDate) from readinggas) AND meter_id IN(:list)";
-		Query query = getSession().createSQLQuery(test).addEntity(ReadingGas.class).setParameterList("list",
-				meterId);
+		Query query = getSession().createSQLQuery(test).addEntity(ReadingGas.class).setParameterList("list", meterId);
 		@SuppressWarnings("unchecked")
 		List<ReadingGas> result = query.list();
 		return result;
@@ -116,8 +117,7 @@ public class ReadingGasDAOImpl extends AbstractDao<Long, ReadingGas> implements 
 
 	@Override
 	public LocalDate getLatestDate() {
-		Criteria criteria = getSession().createCriteria(ReadingGas.class)
-				.setProjection(Projections.max("readingDate"));
+		Criteria criteria = getSession().createCriteria(ReadingGas.class).setProjection(Projections.max("readingDate"));
 		return (LocalDate) criteria.uniqueResult();
 	}
 

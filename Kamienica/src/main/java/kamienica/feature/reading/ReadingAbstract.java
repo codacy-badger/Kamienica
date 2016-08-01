@@ -77,5 +77,7 @@ public abstract class ReadingAbstract {
 		this.id = id;
 	}
 
+	public abstract void setUnit(String unit);
+	
 	public abstract MeterAbstract getMeter();
 }

@@ -5,6 +5,7 @@ import static org.junit.Assert.assertEquals;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import kamienica.core.Media;
 import kamienica.feature.meter.MeterService;
 
 public class MeterGasServiceTest extends AbstractServiceTest {
@@ -15,7 +16,7 @@ public class MeterGasServiceTest extends AbstractServiceTest {
 	@Test
 	@Override
 	public void getList() {
-		assertEquals(6, service.getGasList().size());
+		assertEquals(6, service.getList(Media.GAS).size());
 
 	}
 

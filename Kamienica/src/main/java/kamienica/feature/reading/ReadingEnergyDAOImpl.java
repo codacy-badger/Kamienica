@@ -5,7 +5,6 @@ import java.util.Set;
 
 import org.hibernate.Criteria;
 import org.hibernate.Query;
-import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Projections;
 import org.joda.time.LocalDate;
 import org.springframework.stereotype.Repository;
@@ -26,13 +25,13 @@ import kamienica.feature.invoice.InvoiceEnergy;
 public class ReadingEnergyDAOImpl extends AbstractDao<Long, ReadingEnergy>
 		implements ReadingDao<ReadingEnergy, InvoiceEnergy> {
 
-	@Override
-	public List<ReadingEnergy> getList() {
-		@SuppressWarnings("unchecked")
-		List<ReadingEnergy> list = getSession().createCriteria(ReadingEnergy.class).addOrder(Order.desc("readingDate"))
-				.list();
-		return list;
-	}
+//	@Override
+//	public List<ReadingEnergy> getList() {
+//		@SuppressWarnings("unchecked")
+//		List<ReadingEnergy> list = getSession().createCriteria(ReadingEnergy.class).addOrder(Order.desc("readingDate"))
+//				.list();
+//		return list;
+//	}
 
 	@Override
 	public List<ReadingEnergy> getListForTenant(Apartment apartment) {

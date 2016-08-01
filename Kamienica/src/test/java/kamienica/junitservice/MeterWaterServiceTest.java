@@ -7,6 +7,7 @@ import java.util.List;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import kamienica.core.Media;
 import kamienica.feature.meter.MeterService;
 import kamienica.feature.meter.MeterWater;
 
@@ -18,7 +19,7 @@ public class MeterWaterServiceTest extends AbstractServiceTest {
 	@Test
 	@Override
 	public void getList() {
-		List<MeterWater> list = service.getWaterList();
+		List<MeterWater> list = service.getList(Media.WATER);
 		System.out.println(list);
 		assertEquals(8, list.size());
 		

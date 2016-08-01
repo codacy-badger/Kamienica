@@ -18,8 +18,7 @@ public class DivisionServiceTest extends AbstractServiceTest {
 	@Test
 	public void getList() {
 		List<Division> list = service.getList();
-		System.out.println(list);
-		assertEquals(15, list.size());
+		assertEquals(12, list.size());
 	}
 
 	@Override

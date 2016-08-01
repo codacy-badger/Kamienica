@@ -30,21 +30,21 @@ public class MeterRestController {
 		List<? extends MeterAbstract> list;
 		switch (media) {
 		case ENERGY:
-			list = service.getEnergyList();
+			list = service.getList(Media.ENERGY);
 			if (list.isEmpty()) {
 				return new ResponseEntity<List<? extends MeterAbstract>>(HttpStatus.NOT_FOUND);
 			}
 			return new ResponseEntity<List<? extends MeterAbstract>>(list, HttpStatus.OK);
 
 		case GAS:
-			list = service.getGasList();
+			list = service.getList(Media.GAS);
 			if (list.isEmpty()) {
 				return new ResponseEntity<List<? extends MeterAbstract>>(HttpStatus.NOT_FOUND);
 			}
 			return new ResponseEntity<List<? extends MeterAbstract>>(list, HttpStatus.OK);
 
 		case WATER:
-			list = service.getWaterList();
+			list = service.getList(Media.WATER);
 			if (list.isEmpty()) {
 				return new ResponseEntity<List<? extends MeterAbstract>>(HttpStatus.NOT_FOUND);
 			}

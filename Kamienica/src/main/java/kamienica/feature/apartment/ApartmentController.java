@@ -21,13 +21,7 @@ public class ApartmentController {
 
 	@Autowired
 	private ApartmentService apartmentService;
-
-//	@InitBinder
-//	protected void initBinder(HttpServletRequest request, ServletRequestDataBinder binder) {
-//		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-//		sdf.setLenient(true);
-//		binder.registerCustomEditor(Date.class, new CustomDateEditor(sdf, true));
-//	}
+	private final String DUPLICATE_EROR = "Istnieje już taki numer mieszkania w bazie";
 
 	@RequestMapping(value = "/apartmentRegister", method = RequestMethod.GET)
 	public ModelAndView ApartmentRegister(@ModelAttribute("apartment") Apartment apartment, BindingResult result) {
@@ -45,7 +39,7 @@ public class ApartmentController {
 		try {
 			apartmentService.save(apartment);
 		} catch (ConstraintViolationException e) {
-			result.rejectValue("apartmentNumber", "error.apartment", "Istnieje już taki numer mieszkania w bazie");
+			result.rejectValue("apartmentNumber", "error.apartment", DUPLICATE_EROR);
 			return new ModelAndView("/Admin/Apartment/ApartmentRegister");
 		}
 
@@ -72,7 +66,7 @@ public class ApartmentController {
 		try {
 			apartmentService.update(apartment);
 		} catch (org.springframework.dao.DataIntegrityViolationException e) {
-			result.rejectValue("apartmentNumber", "error.apartment", "Istnieje już taki numer mieszkania w bazie");
+			result.rejectValue("apartmentNumber", "error.apartment", DUPLICATE_EROR);
 			return new ModelAndView("/Admin/Apartment/ApartmentRegister");
 		}
 		return new ModelAndView("redirect:/Admin/Apartment/apartmentList.html");

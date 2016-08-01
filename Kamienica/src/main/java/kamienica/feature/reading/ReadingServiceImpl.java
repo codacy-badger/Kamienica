@@ -164,6 +164,39 @@ public class ReadingServiceImpl implements ReadingService {
 	}
 
 	@Override
+	public <T extends ReadingAbstract> void save(List<T> reading, LocalDate localDate, Media media) {
+		switch (media) {
+		case ENERGY:
+			for (T t : reading) {
+				t.setReadingDate(localDate);
+				t.setUnit(t.getMeter().getUnit());
+				energy.save((ReadingEnergy) t);
+			}
+			break;
+
+		case GAS:
+			for (T t : reading) {
+				t.setReadingDate(localDate);
+				t.setUnit(t.getMeter().getUnit());
+				gas.save((ReadingGas) t);
+			}
+
+			break;
+		case WATER:
+
+			for (T t : reading) {
+				t.setReadingDate(localDate);
+				t.setUnit(t.getMeter().getUnit());
+				water.save((ReadingWater) t);
+			}
+			break;
+		default:
+			break;
+		}
+
+	}
+
+	@Override
 	public void saveGasList(List<ReadingGas> reading, LocalDate date) {
 		for (ReadingGas i : reading) {
 			i.setReadingDate(date);
@@ -192,20 +225,39 @@ public class ReadingServiceImpl implements ReadingService {
 
 	}
 
+	@SuppressWarnings("unchecked")
 	@Override
-	public ReadingEnergy getEnergyById(Long id) {
-		return energy.getById(id);
+	public <T extends ReadingAbstract> T getById(Long id, Media media) {
+		switch (media) {
+		case ENERGY:
+
+			return (T) energy.getById(id);
+		case GAS:
+
+			return (T) gas.getById(id);
+		case WATER:
+
+			return (T) water.getById(id);
+
+		default:
+			return null;
+		}
 	}
 
-	@Override
-	public ReadingGas getGasById(Long id) {
-		return gas.getById(id);
-	}
-
-	@Override
-	public ReadingWater getWaterById(Long id) {
-		return water.getById(id);
-	}
+	// @Override
+	// public ReadingEnergy getEnergyById(Long id) {
+	// return energy.getById(id);
+	// }
+	//
+	// @Override
+	// public ReadingGas getGasById(Long id) {
+	// return gas.getById(id);
+	// }
+	//
+	// @Override
+	// public ReadingWater getWaterById(Long id) {
+	// return water.getById(id);
+	// }
 
 	@Override
 	public List<ReadingEnergy> getUnresolvedReadingsEnergy() {
@@ -312,7 +364,6 @@ public class ReadingServiceImpl implements ReadingService {
 		}
 
 	}
-
 
 	// @Override
 	// public Set<Long> getEnergyIdList() {

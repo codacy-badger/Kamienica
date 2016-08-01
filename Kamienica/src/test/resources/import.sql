@@ -15,17 +15,17 @@ INSERT INTO  division  ( id , date , divisionValue , apartment_id , tenant_id ) 
 INSERT INTO  division  ( id , date , divisionValue , apartment_id , tenant_id ) VALUES (2,'2016-07-01',1,2,1);
 INSERT INTO  division  ( id , date , divisionValue , apartment_id , tenant_id ) VALUES (3,'2016-07-01',0,3,1);
 INSERT INTO  division  ( id , date , divisionValue , apartment_id , tenant_id ) VALUES (4,'2016-07-01',0,4,1);
-INSERT INTO  division  ( id , date , divisionValue , apartment_id , tenant_id ) VALUES (5,'2016-07-01',1,5,1);
+--INSERT INTO  division  ( id , date , divisionValue , apartment_id , tenant_id ) VALUES (5,'2016-07-01',1,5,1);
 INSERT INTO  division  ( id , date , divisionValue , apartment_id , tenant_id ) VALUES (6,'2016-07-01',0.33,1,3);
 INSERT INTO  division  ( id , date , divisionValue , apartment_id , tenant_id ) VALUES (7,'2016-07-01',0,2,3);
 INSERT INTO  division  ( id , date , divisionValue , apartment_id , tenant_id ) VALUES (8,'2016-07-01',0,3,3);
 INSERT INTO  division  ( id , date , divisionValue , apartment_id , tenant_id ) VALUES (9,'2016-07-01',1,4,3);
-INSERT INTO  division  ( id , date , divisionValue , apartment_id , tenant_id ) VALUES (10,'2016-07-01',0,5,3);
+--INSERT INTO  division  ( id , date , divisionValue , apartment_id , tenant_id ) VALUES (10,'2016-07-01',0,5,3);
 INSERT INTO  division  ( id , date , divisionValue , apartment_id , tenant_id ) VALUES (11,'2016-07-01',0.33,1,4);
 INSERT INTO  division  ( id , date , divisionValue , apartment_id , tenant_id ) VALUES (12,'2016-07-01',0,2,4);
 INSERT INTO  division  ( id , date , divisionValue , apartment_id , tenant_id ) VALUES (13,'2016-07-01',1,3,4);
 INSERT INTO  division  ( id , date , divisionValue , apartment_id , tenant_id ) VALUES (14,'2016-07-01',0,4,4);
-INSERT INTO  division  ( id , date , divisionValue , apartment_id , tenant_id ) VALUES (15,'2016-07-01',0,5,4);
+--INSERT INTO  division  ( id , date , divisionValue , apartment_id , tenant_id ) VALUES (15,'2016-07-01',0,5,4);
 
 INSERT INTO  meterenergy  ( id , deactivation , description , main , serialNumber , unit , apartment_id ) VALUES (1,'2600-01-01','Główny',1,'0','kWh',NULL);
 INSERT INTO  meterenergy  ( id , deactivation , description , main , serialNumber , unit , apartment_id ) VALUES (2,'2600-01-01','Czesc Wspolna',0,'00','kWh',1);
