@@ -1,5 +1,6 @@
 package kamienica.feature.reading;
 
+import java.lang.reflect.ParameterizedType;
 import java.util.List;
 import java.util.Set;
 
@@ -13,7 +14,8 @@ import org.joda.time.LocalDate;
 import kamienica.dao.AbstractDao;
 import kamienica.feature.invoice.Invoice;
 
-public abstract class ReadingAbstractDaoImpl<T extends ReadingAbstract> extends AbstractDao<Long, T> {
+public abstract class ReadingAbstractDaoImpl<T extends ReadingAbstract> extends AbstractDao<T> {
+
 
 	@Override
 	public List<T> getList() {

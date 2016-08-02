@@ -10,11 +10,12 @@ import kamienica.feature.payment.PaymentDao;
 import kamienica.feature.payment.PaymentEnergy;
 import kamienica.feature.payment.PaymentGas;
 import kamienica.feature.payment.PaymentWater;
-import kamienica.feature.reading.ReadingDao;
 import kamienica.feature.reading.ReadingEnergy;
+import kamienica.feature.reading.ReadingEnergyDao;
 import kamienica.feature.reading.ReadingGas;
+import kamienica.feature.reading.ReadingGasDao;
 import kamienica.feature.reading.ReadingWater;
-import kamienica.feature.reading.ReadingWaterDAO;
+import kamienica.feature.reading.ReadingWaterDao;
 
 @Service
 @Transactional
@@ -27,11 +28,11 @@ public class InvoiceServiceImpl implements InvoiceService {
 	@Autowired
 	InvoiceDao<InvoiceWater> invoiceWater;
 	@Autowired
-	ReadingDao<ReadingEnergy, InvoiceEnergy> readingEnergy;
+	ReadingEnergyDao readingEnergy;
 	@Autowired
-	ReadingDao<ReadingGas, InvoiceGas> readingGas;
+	ReadingGasDao readingGas;
 	@Autowired
-	ReadingWaterDAO readingWater;
+	ReadingWaterDao readingWater;
 	@Autowired
 	private PaymentDao<PaymentGas, ReadingGas> paymentGasDao;
 	@Autowired

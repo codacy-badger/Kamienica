@@ -14,17 +14,17 @@ import kamienica.dao.AbstractDao;
 import kamienica.feature.apartment.Apartment;
 import kamienica.feature.invoice.InvoiceGas;
 
-@Repository("readinggasDao")
-public class ReadingGasDAOImpl extends AbstractDao<Long, ReadingGas> implements ReadingDao<ReadingGas, InvoiceGas> {
+@Repository("readingGasDao")
+public class ReadingGasDAOImpl extends AbstractDao<ReadingGas> implements ReadingGasDao {
 
-	// @Override
-	// public List<ReadingGas> getList() {
-	// @SuppressWarnings("unchecked")
-	// List<ReadingGas> list =
-	// getSession().createCriteria(ReadingGas.class).addOrder(Order.desc("readingDate"))
-	// .list();
-	// return list;
-	// }
+	 @Override
+	 public List<ReadingGas> getList() {
+	 @SuppressWarnings("unchecked")
+	 List<ReadingGas> list =
+	 getSession().createCriteria(ReadingGas.class).addOrder(Order.desc("readingDate"))
+	 .list();
+	 return list;
+	 }
 
 	@Override
 	public List<ReadingGas> getListForTenant(Apartment apartment) {

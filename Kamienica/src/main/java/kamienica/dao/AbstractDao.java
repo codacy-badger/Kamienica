@@ -13,15 +13,30 @@ import org.hibernate.SessionFactory;
 import org.hibernate.criterion.Projections;
 import org.springframework.beans.factory.annotation.Autowired;
 
-public abstract class AbstractDao<PK extends Serializable, T> {
+public abstract class AbstractDao<T> {
 
 	protected final Class<T> persistentClass;
 
 	@SuppressWarnings("unchecked")
 	public AbstractDao() {
+		
 		this.persistentClass = (Class<T>) ((ParameterizedType) this.getClass().getGenericSuperclass())
-				.getActualTypeArguments()[1];
+				.getActualTypeArguments()[0];
+		
+		
+		System.out.println("=====================================================");
+		System.out.println((Class<T>) ((ParameterizedType) this.getClass().getGenericSuperclass())
+				.getActualTypeArguments()[0]);
+	
+		
 	}
+
+	// @SuppressWarnings("unchecked")
+	// public AbstractDao() {
+	// // TODO Auto-generated constructor stub
+	//
+	// this.persistentClass = (Class<T>) this.getClass();
+	// }
 
 	@Autowired
 	protected SessionFactory sessionFactory;
@@ -53,7 +68,8 @@ public abstract class AbstractDao<PK extends Serializable, T> {
 	}
 
 	public void deleteById(Long id) {
-		Query query = getSession().createSQLQuery("delete from " + persistentClass.getSimpleName().toLowerCase() + " where id = :id");
+		Query query = getSession()
+				.createSQLQuery("delete from " + persistentClass.getSimpleName().toLowerCase() + " where id = :id");
 		query.setLong("id", id);
 		query.executeUpdate();
 	}
@@ -69,9 +85,9 @@ public abstract class AbstractDao<PK extends Serializable, T> {
 	}
 
 	@SuppressWarnings("unchecked")
-	public Set<PK> getIdList() {
+	public Set<Long> getIdList() {
 		Criteria criteria = createEntityCriteria().setProjection(Projections.property("id"));
-		return new HashSet<PK>(criteria.list());
+		return new HashSet<Long>(criteria.list());
 
 	}
 

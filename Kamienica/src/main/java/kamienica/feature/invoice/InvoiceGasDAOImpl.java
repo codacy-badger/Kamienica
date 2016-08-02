@@ -13,7 +13,7 @@ import kamienica.feature.payment.PaymentStatus;
 
 @Repository("invoiceGas")
 @Transactional
-public class InvoiceGasDAOImpl extends AbstractDao<Long, InvoiceGas> implements InvoiceDao<InvoiceGas> {
+public class InvoiceGasDAOImpl extends AbstractDao<InvoiceGas> implements InvoiceDao<InvoiceGas> {
 
 	@Override
 	public InvoiceGas getLatest() {

@@ -16,17 +16,13 @@ import kamienica.feature.invoice.InvoiceDao;
 import kamienica.feature.invoice.InvoiceEnergy;
 import kamienica.feature.invoice.InvoiceGas;
 import kamienica.feature.invoice.InvoiceWater;
-import kamienica.feature.payment.PaymentDao;
-import kamienica.feature.payment.PaymentEnergy;
-import kamienica.feature.payment.PaymentGas;
-import kamienica.feature.payment.PaymentWater;
 import kamienica.feature.reading.ReadingAbstract;
-import kamienica.feature.reading.ReadingDao;
 import kamienica.feature.reading.ReadingEnergy;
+import kamienica.feature.reading.ReadingEnergyDao;
 import kamienica.feature.reading.ReadingGas;
+import kamienica.feature.reading.ReadingGasDao;
 import kamienica.feature.reading.ReadingWater;
-import kamienica.feature.reading.ReadingWaterDAO;
-import kamienica.feature.tenant.Tenant;
+import kamienica.feature.reading.ReadingWaterDao;
 
 @Service
 @Transactional
@@ -35,11 +31,11 @@ public class AdminUserServiceImp implements AdminUserService {
 	@Autowired
 	private ApartmentDao apartmentDao;
 	@Autowired
-	private ReadingDao<ReadingEnergy, InvoiceEnergy> energyDao;
+	private ReadingEnergyDao energyDao;
 	@Autowired
-	private ReadingWaterDAO waterDao;
+	private ReadingWaterDao waterDao;
 	@Autowired
-	private ReadingDao<ReadingGas, InvoiceGas> gasDao;
+	private ReadingGasDao gasDao;
 	@Autowired
 	@Qualifier("invoiceEnergy")
 	private InvoiceDao<InvoiceEnergy> invoiceEnergyDao;

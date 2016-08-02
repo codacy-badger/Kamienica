@@ -8,7 +8,7 @@ import org.springframework.stereotype.Repository;
 import kamienica.dao.AbstractDao;
 
 @Repository("meterGasDao")
-public class MeterGasDAOImpl extends AbstractDao<Long, MeterGas> implements MeterDao<MeterGas> {
+public class MeterGasDAOImpl extends AbstractDao<MeterGas> implements MeterDao<MeterGas> {
 
 	
 	@Override

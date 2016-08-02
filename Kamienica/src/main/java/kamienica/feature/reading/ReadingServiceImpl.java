@@ -6,12 +6,12 @@ import java.util.Set;
 
 import org.joda.time.LocalDate;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import kamienica.core.Media;
 import kamienica.dao.DaoInterface;
-import kamienica.feature.invoice.InvoiceEnergy;
 import kamienica.feature.invoice.InvoiceGas;
 import kamienica.feature.meter.MeterEnergy;
 import kamienica.feature.meter.MeterGas;
@@ -21,12 +21,13 @@ import kamienica.feature.meter.MeterWater;
 @Transactional
 public class ReadingServiceImpl implements ReadingService {
 
+	@Qualifier("readingEnergyDao")
 	@Autowired
-	ReadingDao<ReadingEnergy, InvoiceEnergy> energy;
+	ReadingEnergyDao energy;
 	@Autowired
-	ReadingWaterDAO water;
+	ReadingWaterDao water;
 	@Autowired
-	ReadingDao<ReadingGas, InvoiceGas> gas;
+	ReadingGasDao gas;
 	@Autowired
 	DaoInterface<MeterEnergy> meterEnergy;
 	@Autowired
