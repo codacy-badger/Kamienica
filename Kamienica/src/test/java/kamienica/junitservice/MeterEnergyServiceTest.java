@@ -7,6 +7,7 @@ import java.util.List;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.annotation.Rollback;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.validation.BindingResult;
 
 import kamienica.core.Media;
@@ -63,6 +64,8 @@ public class MeterEnergyServiceTest extends AbstractServiceTest {
 		assertEquals("uPdate", meter.getDescription());
 	}
 
+	
+	
 	@Override
 	public void addWithValidationError() {
 		// TODO Auto-generated method stub

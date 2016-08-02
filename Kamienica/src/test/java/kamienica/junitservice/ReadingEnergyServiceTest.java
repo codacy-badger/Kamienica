@@ -3,6 +3,7 @@ package kamienica.junitservice;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotEquals;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
@@ -14,6 +15,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 
 import kamienica.core.Media;
+import kamienica.feature.meter.MeterEnergy;
+import kamienica.feature.meter.MeterService;
 import kamienica.feature.reading.ReadingEnergy;
 import kamienica.feature.reading.ReadingService;
 
@@ -21,13 +24,15 @@ public class ReadingEnergyServiceTest extends AbstractServiceTest {
 
 	@Autowired
 	ReadingService service;
+	@Autowired
+	MeterService meterService;
 
 	private Set<Long> meterIdList = new HashSet<>(Arrays.asList(1L, 2L, 3L, 4L, 5L));
 
 	@Test
 	public void getLatest() {
 
-		List<ReadingEnergy> list = service.energyLatestNew(meterIdList);
+		List<ReadingEnergy> list = service.energyLatestNew();
 		assertEquals(5, list.size());
 		for (ReadingEnergy readingEnergy : list) {
 			assertEquals(LocalDate.parse("2016-09-01"), readingEnergy.getReadingDate());
@@ -53,20 +58,20 @@ public class ReadingEnergyServiceTest extends AbstractServiceTest {
 
 	@Test
 	public void shouldRetrieviePreviousReadings() {
-		List<ReadingEnergy> list =	service.getPreviousReadingEnergy("2016-09-01", meterIdList);
+		List<ReadingEnergy> list = service.getPreviousReadingEnergy("2016-09-01", meterIdList);
 		for (ReadingEnergy readingEnergy : list) {
 			assertEquals(LocalDate.parse("2016-08-01"), readingEnergy.getReadingDate());
 		}
 	}
-	
+
 	@Test
 	public void getByDate() {
-		List<ReadingEnergy> list = service.getReadingEnergyByDate("2016-07-01");
+		List<ReadingEnergy> list = service.getReadingEnergyByDate(LocalDate.parse("2016-07-01"));
 		for (ReadingEnergy readingEnergy : list) {
 			assertEquals(LocalDate.parse("2016-07-01"), readingEnergy.getReadingDate());
 		}
 	}
-	
+
 	@Test
 	public void getUnresolved() {
 		List<ReadingEnergy> list = service.getUnresolvedReadingsEnergy();
@@ -74,20 +79,49 @@ public class ReadingEnergyServiceTest extends AbstractServiceTest {
 		assertEquals("2016-07-01", list.get(0).getReadingDate().toString());
 		assertEquals(true, list.get(0).getMeter().isMain());
 		assertEquals("2016-09-01", list.get(1).getReadingDate().toString());
-		
-		System.out.println(service.energyLatestEdit(meterIdList));
+
 	}
-	
+
+	@Transactional
+	@Test
+	public void firstReadingForANewMeter() {
+		MeterEnergy meter = new MeterEnergy("test", "34", "3535", null);
+		meterService.save(meter, Media.ENERGY);
+		List<ReadingEnergy> list = service.energyLatestNew();
+		assertEquals(6, list.size());
+	}
+
 	@Override
 	public void getById() {
-		// TODO Auto-generated method stub
+		ReadingEnergy reading = service.getById(4L, Media.ENERGY);
+		assertEquals(LocalDate.parse("2016-07-01"), reading.getReadingDate());
+		assertEquals(2, reading.getValue(), 0);
 
 	}
 
+	@Test
+	public void getPreviousReadings() {
+		List<ReadingEnergy> list = service.getPreviousReadingEnergy("2016-08-01", meterIdList);
+		assertEquals(5, list.size());
+		for (ReadingEnergy readingEnergy : list) {
+			assertEquals("2016-07-01", readingEnergy.getReadingDate().toString());
+
+		}
+	}
+
+	@Transactional
+	@Test
 	@Override
 	public void add() {
-		// TODO Auto-generated method stub
-
+		List<MeterEnergy> list = meterService.getList(Media.ENERGY);
+		List<ReadingEnergy> toSave = new ArrayList<>();
+		for (MeterEnergy meter : list) {
+			ReadingEnergy reading = new ReadingEnergy(LocalDate.parse("2050-01-01"), 800, meter);
+			toSave.add(reading);
+		}
+		service.save(toSave, LocalDate.parse("2050-01-01"), Media.ENERGY);
+		assertEquals(20, service.getReadingEnergy().size());
+		assertEquals(LocalDate.parse("2050-01-01"), service.energyLatestNew().get(0).getReadingDate());
 	}
 
 	@Override
@@ -98,7 +132,6 @@ public class ReadingEnergyServiceTest extends AbstractServiceTest {
 
 	@Override
 	public void update() {
-		// TODO Auto-generated method stub
 
 	}
 

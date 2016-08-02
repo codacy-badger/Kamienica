@@ -57,16 +57,7 @@ public class InvoiceController {
 	private PaymentService paymentService;
 	@Autowired
 	private MeterService meterService;
-	// @InitBinder
-	// protected void initBinder(HttpServletRequest request,
-	// ServletRequestDataBinder binder) {
-	// SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-	// sdf.setLenient(true);
-	// binder.registerCustomEditor(Date.class, new CustomDateEditor(sdf, true));
-	// }
-	//
-	// Date date = new Date();
-	// SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
+
 
 	// -------------------REJESTRACJA----------------------------------------------
 	@RequestMapping("/Admin/Invoice/invoiceGasRegister")
@@ -243,7 +234,7 @@ public class InvoiceController {
 				.getPreviousReadingEnergy(invoice.getBaseReading().getReadingDate().toString(),  meterService.getIdList(Media.ENERGY));
 
 		List<ReadingEnergy> readingEnergyNew = readingService
-				.getReadingEnergyByDate(invoice.getBaseReading().getReadingDate().toString());
+				.getReadingEnergyByDate(invoice.getBaseReading().getReadingDate());
 
 		ArrayList<UsageValue> usageEnergy = ManagerEnergy.countConsupmtion(apartments, readingEnergyOld,
 				readingEnergyNew);

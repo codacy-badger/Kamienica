@@ -1,6 +1,5 @@
 package kamienica.dao;
 
-import java.io.Serializable;
 import java.lang.reflect.ParameterizedType;
 import java.util.HashSet;
 import java.util.List;
@@ -19,16 +18,9 @@ public abstract class AbstractDao<T> {
 
 	@SuppressWarnings("unchecked")
 	public AbstractDao() {
-		
 		this.persistentClass = (Class<T>) ((ParameterizedType) this.getClass().getGenericSuperclass())
 				.getActualTypeArguments()[0];
-		
-		
-		System.out.println("=====================================================");
-		System.out.println((Class<T>) ((ParameterizedType) this.getClass().getGenericSuperclass())
-				.getActualTypeArguments()[0]);
-	
-		
+
 	}
 
 	// @SuppressWarnings("unchecked")

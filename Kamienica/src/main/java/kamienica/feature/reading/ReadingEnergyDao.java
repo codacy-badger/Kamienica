@@ -11,11 +11,13 @@ import kamienica.feature.invoice.InvoiceEnergy;
 
 public interface ReadingEnergyDao extends DaoInterface<ReadingEnergy> {
 
-	public List<ReadingEnergy> getByDate(String date);
+	public List<ReadingEnergy> getByDate(LocalDate date);
 
 	public List<ReadingEnergy> getPrevious(String date, Set<Long> meterId);
 
-	public List<ReadingEnergy> getLatestList(Set<Long> meterId);
+	public List<ReadingEnergy> getLatestList(LocalDate date);
+	
+	//public List<ReadingEnergy> getLatestList(Set<Long> meterId, LocalDate date);
 
 	public List<ReadingEnergy> getListForTenant(Apartment apartment);
 

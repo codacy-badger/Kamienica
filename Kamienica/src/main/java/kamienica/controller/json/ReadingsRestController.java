@@ -33,7 +33,7 @@ public class ReadingsRestController {
 			if (date == null) {
 				list = service.getReadingEnergy();
 			} else {
-				list = service.getReadingEnergyByDate(date.toString());
+				list = service.getReadingEnergyByDate(date);
 			}
 			if (list.isEmpty()) {
 				return new ResponseEntity<List<? extends ReadingAbstract>>(HttpStatus.NOT_FOUND);

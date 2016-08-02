@@ -7,6 +7,7 @@ import java.util.Set;
 import org.joda.time.LocalDate;
 
 import kamienica.core.Media;
+import kamienica.core.exception.AbsentMainMeterException;
 import kamienica.feature.invoice.InvoiceGas;
 
 public interface ReadingService {
@@ -21,11 +22,18 @@ public interface ReadingService {
 
 	public <T extends ReadingAbstract> void save(List<T> reading, LocalDate localDate, Media media);
 
-	public void saveGasList(List<ReadingGas> reading, LocalDate localDate);
+	// public<F extends ReadingForm> F prepareForm(F form, Media media) throws
+	// AbsentMainMeterException;
 
-	public void saveWaterList(List<ReadingWater> reading, LocalDate localDate);
+	// public void saveGasList(List<ReadingGas> reading, LocalDate localDate);
+	//
+	// public void saveWaterList(List<ReadingWater> reading, LocalDate
+	// localDate);
+	//
+	// public void saveEnergyList(List<ReadingEnergy> reading, LocalDate
+	// localDate);
 
-	public void saveEnergyList(List<ReadingEnergy> reading, LocalDate localDate);
+
 
 	public void updateEnergyList(List<ReadingEnergy> readings, String date);
 
@@ -35,7 +43,7 @@ public interface ReadingService {
 
 	public List<ReadingEnergy> getReadingEnergy();
 
-	public List<ReadingEnergy> getReadingEnergyByDate(String date);
+	public List<ReadingEnergy> getReadingEnergyByDate(LocalDate date);
 
 	public List<ReadingGas> getReadingGas();
 
@@ -55,9 +63,9 @@ public interface ReadingService {
 
 	public List<ReadingWater> getPreviousReadingWater(String date, Set<Long> meterIdList);
 
-	public List<ReadingEnergy> energyLatestNew(Set<Long> meterIdList);
+	public List<ReadingEnergy> energyLatestNew();
 
-	public List<ReadingEnergy> energyLatestEdit(Set<Long> meterIdList);
+	public List<ReadingEnergy> energyLatestEdit();
 
 	public List<ReadingGas> gasLatestEdit(Set<Long> meterIdList);
 
@@ -68,6 +76,8 @@ public interface ReadingService {
 	public List<ReadingWater> waterLatest(Set<Long> meterIdList);
 
 	public HashMap<String, List<ReadingWater>> getWaterReadingsForGasConsumption(InvoiceGas invoice);
+	
+	
 
 	public List<ReadingEnergy> getUnresolvedReadingsEnergy();
 

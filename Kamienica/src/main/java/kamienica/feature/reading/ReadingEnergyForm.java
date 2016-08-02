@@ -5,7 +5,7 @@ import java.util.List;
 
 import org.joda.time.LocalDate;
 
-public class ReadingEnergyForm {
+public class ReadingEnergyForm extends ReadingForm<ReadingEnergy> {
 
 	private List<ReadingEnergy> currentReadings = new LinkedList<>();
 	private List<ReadingEnergy> previousReadings = new LinkedList<>();
@@ -19,6 +19,14 @@ public class ReadingEnergyForm {
 
 	public ReadingEnergyForm() {
 
+	}
+
+	public ReadingEnergyForm(LocalDate oldDate, LocalDate newDate, List<ReadingEnergy> currentReadings,
+			List<ReadingEnergy> previousReadings, List<ReadingEnergy> newReadings) {
+		super(oldDate, newDate);
+		this.currentReadings = currentReadings;
+		this.previousReadings = previousReadings;
+		this.newReadings = newReadings;
 	}
 
 	public ReadingEnergyForm(List<ReadingEnergy> odczytyEnergii) {

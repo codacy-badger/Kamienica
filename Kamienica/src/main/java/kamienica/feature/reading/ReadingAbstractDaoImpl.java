@@ -6,26 +6,28 @@ import java.util.Set;
 
 import org.hibernate.Criteria;
 import org.hibernate.Query;
+import org.hibernate.criterion.Criterion;
+import org.hibernate.criterion.Expression;
 import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
 import org.joda.time.LocalDate;
 
 import kamienica.dao.AbstractDao;
+import kamienica.feature.apartment.Apartment;
 import kamienica.feature.invoice.Invoice;
 
 public abstract class ReadingAbstractDaoImpl<T extends ReadingAbstract> extends AbstractDao<T> {
-
 
 	@Override
 	public List<T> getList() {
 
 		@SuppressWarnings("unchecked")
-		List<T> list = createEntityCriteria().addOrder(Order.desc("readingdate")).list();
+		List<T> list = createEntityCriteria().addOrder(Order.desc("readingDate")).list();
 		return list;
 	}
 
-	public List<T> getByDate(String readingDate) {
+	public List<T> getByDate(LocalDate readingDate) {
 		@SuppressWarnings("unchecked")
 		List<T> list = createEntityCriteria().add(Restrictions.eq("readingDate", readingDate)).list();
 		return list;
@@ -33,13 +35,20 @@ public abstract class ReadingAbstractDaoImpl<T extends ReadingAbstract> extends 
 	}
 
 	@SuppressWarnings("unchecked")
-	public List<T> getLatestList(Set<Long> meterId) {
+	public List<T> getLatestList( LocalDate date) {
+		List<T> list = createEntityCriteria()
+				//.add(Restrictions.in("meter", meterId))
+				.add(Restrictions.eq("readingDate", date)).list();
 
-		String test = "Select * from :clazz where readingDate=(select MAX(readingDate)  from T) AND meter_id IN(:list)";
-		Query query = getSession().createSQLQuery(test).setParameterList("list", meterId).setString("clazz",
-				persistentClass.getSimpleName());
+		return list;
 
-		return query.list();
+		// String test = "Select * from readingEnergy where readingDate=(select
+		// MAX(readingDate) from readingEnergy) AND meter_id IN(:list)";
+		// Query query =
+		// getSession().createSQLQuery(test).setParameterList("list", meterId)
+		// //.setString("clazz",persistentClass.getSimpleName())
+		// ;
+		// return query.list();
 
 	}
 

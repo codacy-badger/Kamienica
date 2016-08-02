@@ -10,7 +10,6 @@ import org.hibernate.criterion.Projections;
 import org.joda.time.LocalDate;
 import org.springframework.stereotype.Repository;
 
-import kamienica.dao.AbstractDao;
 import kamienica.feature.apartment.Apartment;
 import kamienica.feature.invoice.InvoiceEnergy;
 
@@ -26,13 +25,13 @@ import kamienica.feature.invoice.InvoiceEnergy;
 public class ReadingEnergyDAOImpl extends ReadingAbstractDaoImpl<ReadingEnergy>
 		implements ReadingEnergyDao {
 
-	@Override
-	public List<ReadingEnergy> getList() {
-		@SuppressWarnings("unchecked")
-		List<ReadingEnergy> list = getSession().createCriteria(ReadingEnergy.class).addOrder(Order.desc("readingDate"))
-				.list();
-		return list;
-	}
+//	@Override
+//	public List<ReadingEnergy> getList() {
+//		@SuppressWarnings("unchecked")
+//		List<ReadingEnergy> list = getSession().createCriteria(ReadingEnergy.class).addOrder(Order.desc("readingDate"))
+//				.list();
+//		return list;
+//	}
 
 	@Override
 	public List<ReadingEnergy> getListForTenant(Apartment apartment) {
@@ -45,26 +44,26 @@ public class ReadingEnergyDAOImpl extends ReadingAbstractDaoImpl<ReadingEnergy>
 		return result;
 	}
 
-	@Override
-	public List<ReadingEnergy> getByDate(String readingDate) {
-		Query query = getSession().createSQLQuery("SELECT * FROM readingenergy where readingDate=:date")
-				.addEntity(ReadingEnergy.class).setString("date", readingDate);
-		@SuppressWarnings("unchecked")
-		List<ReadingEnergy> result = query.list();
-		return result;
-	}
-
-	@Override
-	@SuppressWarnings("unchecked")
-	public List<ReadingEnergy> getLatestList(Set<Long> meterId) {
-
-		String test = "Select * from readingenergy where readingDate=(select MAX(readingDate) from readingenergy) AND meter_id IN(:list)";
-		Query query = getSession().createSQLQuery(test).addEntity(ReadingEnergy.class).setParameterList("list",
-				meterId);
-
-		return query.list();
-
-	}
+//	@Override
+//	public List<ReadingEnergy> getByDate(String readingDate) {
+//		Query query = getSession().createSQLQuery("SELECT * FROM readingenergy where readingDate=:date")
+//				.addEntity(ReadingEnergy.class).setString("date", readingDate);
+//		@SuppressWarnings("unchecked")
+//		List<ReadingEnergy> result = query.list();
+//		return result;
+//	}
+//
+//	@Override
+//	@SuppressWarnings("unchecked")
+//	public List<ReadingEnergy> getLatestList(Set<Long> meterId) {
+//
+//		String test = "Select * from readingenergy where readingDate=(select MAX(readingDate) from readingenergy) AND meter_id IN(:list)";
+//		Query query = getSession().createSQLQuery(test).addEntity(ReadingEnergy.class).setParameterList("list",
+//				meterId);
+//
+//		return query.list();
+//
+//	}
 
 	@Override
 	public List<ReadingEnergy> getPrevious(String readingDate, Set<Long> meterId) {

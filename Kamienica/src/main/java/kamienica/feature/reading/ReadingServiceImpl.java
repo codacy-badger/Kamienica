@@ -11,8 +11,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import kamienica.core.Media;
-import kamienica.dao.DaoInterface;
+import kamienica.core.exception.AbsentMainMeterException;
 import kamienica.feature.invoice.InvoiceGas;
+import kamienica.feature.meter.MeterDao;
 import kamienica.feature.meter.MeterEnergy;
 import kamienica.feature.meter.MeterGas;
 import kamienica.feature.meter.MeterWater;
@@ -29,11 +30,11 @@ public class ReadingServiceImpl implements ReadingService {
 	@Autowired
 	ReadingGasDao gas;
 	@Autowired
-	DaoInterface<MeterEnergy> meterEnergy;
+	MeterDao<MeterEnergy> meterEnergy;
 	@Autowired
-	DaoInterface<MeterGas> meterGas;
+	MeterDao<MeterGas> meterGas;
 	@Autowired
-	DaoInterface<MeterWater> meterWater;
+	MeterDao<MeterWater> meterWater;
 
 	@Override
 	public List<ReadingEnergy> getReadingEnergy() {
@@ -51,8 +52,9 @@ public class ReadingServiceImpl implements ReadingService {
 	}
 
 	@Override
-	public List<ReadingEnergy> energyLatestNew(Set<Long> idList) {
-		List<ReadingEnergy> energyList = energy.getLatestList(idList);
+	public List<ReadingEnergy> energyLatestNew() {
+		Set<Long> idList = meterEnergy.getIdList();
+		List<ReadingEnergy> energyList = energyLatestEdit();
 		// if this the very first time user creates readings
 		if (energyList.isEmpty()) {
 			for (Long tmpLong : idList) {
@@ -72,8 +74,9 @@ public class ReadingServiceImpl implements ReadingService {
 	}
 
 	@Override
-	public List<ReadingEnergy> energyLatestEdit(Set<Long> idList) {
-		return energy.getLatestList(idList);
+	public List<ReadingEnergy> energyLatestEdit() {
+
+		return energy.getLatestList( energy.getLatestDate());
 	}
 
 	@Override
@@ -149,7 +152,7 @@ public class ReadingServiceImpl implements ReadingService {
 	}
 
 	@Override
-	public List<ReadingEnergy> getReadingEnergyByDate(String date) {
+	public List<ReadingEnergy> getReadingEnergyByDate(LocalDate date) {
 
 		return energy.getByDate(date);
 	}
@@ -197,34 +200,34 @@ public class ReadingServiceImpl implements ReadingService {
 
 	}
 
-	@Override
-	public void saveGasList(List<ReadingGas> reading, LocalDate date) {
-		for (ReadingGas i : reading) {
-			i.setReadingDate(date);
-			i.setUnit(i.getMeter().getUnit());
-			gas.save(i);
-		}
-	}
-
-	@Override
-	public void saveWaterList(List<ReadingWater> reading, LocalDate date) {
-		for (ReadingWater i : reading) {
-			i.setReadingDate(date);
-			i.setUnit(i.getMeter().getUnit());
-			water.save(i);
-		}
-
-	}
-
-	@Override
-	public void saveEnergyList(List<ReadingEnergy> reading, LocalDate date) {
-		for (ReadingEnergy readingEnergy : reading) {
-			readingEnergy.setReadingDate(date);
-			readingEnergy.setUnit(readingEnergy.getMeter().getUnit());
-			energy.save(readingEnergy);
-		}
-
-	}
+	// @Override
+	// public void saveGasList(List<ReadingGas> reading, LocalDate date) {
+	// for (ReadingGas i : reading) {
+	// i.setReadingDate(date);
+	// i.setUnit(i.getMeter().getUnit());
+	// gas.save(i);
+	// }
+	// }
+	//
+	// @Override
+	// public void saveWaterList(List<ReadingWater> reading, LocalDate date) {
+	// for (ReadingWater i : reading) {
+	// i.setReadingDate(date);
+	// i.setUnit(i.getMeter().getUnit());
+	// water.save(i);
+	// }
+	//
+	// }
+	//
+	// @Override
+	// public void saveEnergyList(List<ReadingEnergy> reading, LocalDate date) {
+	// for (ReadingEnergy readingEnergy : reading) {
+	// readingEnergy.setReadingDate(date);
+	// readingEnergy.setUnit(readingEnergy.getMeter().getUnit());
+	// energy.save(readingEnergy);
+	// }
+	//
+	// }
 
 	@SuppressWarnings("unchecked")
 	@Override
@@ -303,6 +306,45 @@ public class ReadingServiceImpl implements ReadingService {
 		}
 	}
 
+//	@Override
+//	public <T extends ReadingAbstract> void update(List<T> readings, String date, Media media) {
+//		switch (media) {
+//		case ENERGY:
+//			for (T readingEnergy : readings) {
+//				if (readingEnergy.getValue() < 0) {
+//					throw new IllegalArgumentException();
+//				}
+//				readingEnergy.setReadingDate(LocalDate.parse(date));
+//				readingEnergy.setUnit(readingEnergy.getMeter().getUnit());
+//				energy.update((ReadingEnergy) readingEnergy);
+//			}
+//			
+//			break;
+//		case GAS:
+//			for (T readingEnergy : readings) {
+//				if (readingEnergy.getValue() < 0) {
+//					throw new IllegalArgumentException();
+//				}
+//				readingEnergy.setReadingDate(LocalDate.parse(date));
+//				readingEnergy.setUnit(readingEnergy.getMeter().getUnit());
+//				gas.update((ReadingGas) readingEnergy);
+//			}
+//			break;
+//		case WATER:
+//			for (T readingEnergy : readings) {
+//				if (readingEnergy.getValue() < 0) {
+//					throw new IllegalArgumentException();
+//				}
+//				readingEnergy.setReadingDate(LocalDate.parse(date));
+//				readingEnergy.setUnit(readingEnergy.getMeter().getUnit());
+//				water.update((ReadingWater) readingEnergy);
+//			}
+//			break;
+//		default:
+//			break;
+//		}
+//	}
+
 	@Override
 	public void updateEnergyList(List<ReadingEnergy> readings, String date) {
 		for (ReadingEnergy readingEnergy : readings) {
@@ -365,6 +407,46 @@ public class ReadingServiceImpl implements ReadingService {
 		}
 
 	}
+
+	// @Override
+	// public <F extends ReadingForm> void prepareForm(F form, Media media)
+	// throws AbsentMainMeterException {
+	//
+	// //
+	// //
+	// // List<ReadingEnergy> readings =
+	// // readingService.energyLatestNew(meterService.getIdList(Media.ENERGY));
+	// //
+	// // model.put("date", new LocalDate());
+	// // readingForm.setCurrentReadings(readings);
+	// // readingForm.setNewReadings(readings);
+	// // if (readings.isEmpty()) {
+	// // model.put("oldDate", "2000-01-01");
+	// // } else {
+	// // model.put("oldDate", readings.get(0).getReadingDate().plusDays(1));
+	// // }
+	//
+	// switch (media) {
+	// case ENERGY:
+	// if (!meterEnergy.ifMainExists()) {
+	// throw new AbsentMainMeterException();
+	// }
+	//
+	// List<ReadingEnergy> readings = energyLatestNew(meterEnergy.getIdList());
+	// form.setCurrentReadings(readings);
+	// form.setNewReadings(readings);
+	// if (readings.isEmpty()) {
+	// form.setOldDate(LocalDate.parse("2000-01-01"));
+	// } else {
+	// form.setOldDate(readings.get(0).getReadingDate().plusDays(1));
+	// }
+	// break;
+	//
+	// default:
+	// break;
+	// }
+	//
+	// }
 
 	// @Override
 	// public Set<Long> getEnergyIdList() {
