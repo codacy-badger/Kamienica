@@ -12,30 +12,10 @@ import kamienica.dao.AbstractDao;
 import kamienica.feature.payment.PaymentStatus;
 
 @Repository("invoiceEnergy")
-@Transactional
-public class InvoiceEnergyDAOImpl extends AbstractDao<InvoiceEnergy> implements InvoiceDao<InvoiceEnergy> {
+public class InvoiceEnergyDAOImpl extends AbstractDao<InvoiceEnergy> implements InvoiceAbstractDao<InvoiceEnergy> {
 
-	@Override
-	public InvoiceEnergy getLatest() {
-//		List<InvoiceEnergy> list = getSession().createQuery(
-//				"select * from kamienica.invoiceenergy where date = (select MAX(date) from kamienica.invoiceenergy)").list();
-		Query query = getSession().createSQLQuery(
-				"select * from kamienica.invoiceenergy where date = (select MAX(date) from kamienica.invoiceenergy)");
-		return (InvoiceEnergy) query.uniqueResult();
 
-	}
 
-	@SuppressWarnings("unchecked")
-	@Override
-	public List<InvoiceEnergy> getInvoicesForCalulation(Invoice invoice) {
-		Query query = getSession()
-				.createSQLQuery(
-						"select * from kamienica.invoiceenergy where status = :status and date <= :date and baseReading_id is not null order by date asc")
-				.addEntity(InvoiceEnergy.class).setParameter("date", invoice.getDate())
-				.setParameter("status", PaymentStatus.UNPAID.getPaymentStatus());
-		return query.list();
-
-	}
 
 	@Override
 	public List<InvoiceEnergy> getUnpaidInvoices() {

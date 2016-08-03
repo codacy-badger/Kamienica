@@ -16,7 +16,7 @@ import org.hibernate.validator.constraints.NotEmpty;
 import org.springframework.beans.factory.annotation.Autowired;
 
 @Entity
-@Table(name="apartment")
+@Table(name = "apartment")
 public class Apartment implements Serializable {
 
 	@Id
@@ -38,6 +38,15 @@ public class Apartment implements Serializable {
 
 	@Autowired
 	public Apartment(Long id, int apartmentNumber, String intecom, String description) {
+		this.id = id;
+		this.apartmentNumber = apartmentNumber;
+		this.intercom = intecom;
+		this.description = description;
+
+	}
+
+	@Autowired
+	public Apartment(int apartmentNumber, String intecom, String description) {
 
 		this.apartmentNumber = apartmentNumber;
 		this.intercom = intecom;

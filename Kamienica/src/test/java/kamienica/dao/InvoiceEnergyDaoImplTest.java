@@ -5,7 +5,7 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
-import kamienica.feature.invoice.InvoiceDao;
+import kamienica.feature.invoice.InvoiceAbstractDao;
 import kamienica.feature.invoice.InvoiceEnergy;
 import kamienica.feature.meter.MeterEnergy;
 
@@ -14,7 +14,7 @@ public class InvoiceEnergyDaoImplTest extends EntityDaoImplTest {
 
 	@Autowired
 	@Qualifier("invoiceEnergy")
-	InvoiceDao<InvoiceEnergy> invDao;
+	InvoiceAbstractDao<InvoiceEnergy> invDao;
 
 	@Test
 	public void findById() {

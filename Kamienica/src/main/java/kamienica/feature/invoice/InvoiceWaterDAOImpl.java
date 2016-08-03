@@ -10,28 +10,21 @@ import kamienica.dao.AbstractDao;
 import kamienica.feature.payment.PaymentStatus;
 
 @Repository("invoiceWater")
-@Transactional
-public class InvoiceWaterDAOImpl extends AbstractDao<InvoiceWater> implements InvoiceDao<InvoiceWater> {
+public class InvoiceWaterDAOImpl extends AbstractDao<InvoiceWater> implements InvoiceAbstractDao<InvoiceWater> {
 
-	@Override
-	public InvoiceWater getLatest() {
-		Query query = getSession().createSQLQuery(
-				"select * from kamienica.invoicewater where date = (select MAX(date) from kamienica.invoicewater)");
-		return (InvoiceWater) query.uniqueResult();
 
-	}
-
-	@SuppressWarnings("unchecked")
-	@Override
-	public List<InvoiceWater> getInvoicesForCalulation(Invoice invoice) {
-		Query query = getSession()
-				.createSQLQuery(
-						"select * from kamienica.invoiceWater where status = :status and date <= :date and baseReading_id is not null order by date asc")
-				.addEntity(InvoiceWater.class).setParameter("date", invoice.getDate())
-				.setParameter("status", PaymentStatus.UNPAID.getPaymentStatus());
-		return query.list();
-
-	}
+//
+//	@SuppressWarnings("unchecked")
+//	@Override
+//	public List<InvoiceWater> getInvoicesForCalulation(Invoice invoice) {
+//		Query query = getSession()
+//				.createSQLQuery(
+//						"select * from kamienica.invoiceWater where status = :status and date <= :date and baseReading_id is not null order by date asc")
+//				.addEntity(InvoiceWater.class).setParameter("date", invoice.getDate())
+//				.setParameter("status", PaymentStatus.UNPAID.getPaymentStatus());
+//		return query.list();
+//
+//	}
 
 	@Override
 	public List<InvoiceWater> getUnpaidInvoices() {

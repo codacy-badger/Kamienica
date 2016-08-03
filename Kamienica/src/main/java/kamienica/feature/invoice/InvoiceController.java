@@ -22,6 +22,7 @@ import kamienica.core.ManagerGas;
 import kamienica.core.ManagerPayment;
 import kamienica.core.ManagerWater;
 import kamienica.core.Media;
+import kamienica.core.exception.InvalidDivisionException;
 import kamienica.feature.apartment.Apartment;
 import kamienica.feature.apartment.ApartmentService;
 import kamienica.feature.division.Division;
@@ -91,17 +92,16 @@ public class InvoiceController {
 		HashMap<String, Object> model = new HashMap<>();
 		model.put("saveUrl", "/Admin/Invoice/invoiceEnergySave.html");
 		model.put("media", "Energia");
-		ArrayList<Tenant> tenants = (ArrayList<Tenant>) tenantService.getCurrentTenants();
-		ArrayList<Division> division = (ArrayList<Division>) divisionService.getList();
-		ArrayList<Apartment> apartments = (ArrayList<Apartment>) apartmentService.getList();
 
-		if (!DivisionValidator.validateDivision(apartments, division, tenants)) {
+		List<ReadingEnergy> readings;
+		try {
+			readings = invoiceService.prepareForRegistration(Media.ENERGY);
+		} catch (InvalidDivisionException e) {
 			String message = "Lista aktualnych najemców i mieszkań się nie zgadza. Sprawdź algorytm podziału";
 			model.put("error", message);
 			return new ModelAndView("/Admin/Invoice/InvoiceRegister", "model", model);
 		}
 
-		List<ReadingEnergy> readings = readingService.getUnresolvedReadingsEnergy();
 		if (readings.isEmpty()) {
 			model.put("error", "Brakuje odczytów dla nowej faktury");
 		} else {

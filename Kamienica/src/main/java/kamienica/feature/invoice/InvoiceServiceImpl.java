@@ -1,38 +1,65 @@
 package kamienica.feature.invoice;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.servlet.ModelAndView;
 
+import kamienica.core.ManagerEnergy;
+import kamienica.core.ManagerPayment;
+import kamienica.core.Media;
+import kamienica.core.exception.InvalidDivisionException;
+import kamienica.feature.apartment.Apartment;
+import kamienica.feature.apartment.ApartmentDao;
+import kamienica.feature.division.Division;
+import kamienica.feature.division.DivisionDao;
+import kamienica.feature.division.DivisionValidator;
+import kamienica.feature.meter.MeterService;
 import kamienica.feature.payment.PaymentDao;
 import kamienica.feature.payment.PaymentEnergy;
 import kamienica.feature.payment.PaymentGas;
 import kamienica.feature.payment.PaymentWater;
+import kamienica.feature.reading.ReadingAbstract;
 import kamienica.feature.reading.ReadingEnergy;
 import kamienica.feature.reading.ReadingEnergyDao;
 import kamienica.feature.reading.ReadingGas;
 import kamienica.feature.reading.ReadingGasDao;
+import kamienica.feature.reading.ReadingService;
 import kamienica.feature.reading.ReadingWater;
 import kamienica.feature.reading.ReadingWaterDao;
+import kamienica.feature.tenant.Tenant;
+import kamienica.feature.tenant.TenantDao;
+import kamienica.feature.usagevalue.UsageValue;
 
 @Service
 @Transactional
 public class InvoiceServiceImpl implements InvoiceService {
 
 	@Autowired
-	InvoiceDao<InvoiceEnergy> invoiceEnergy;
+	TenantDao tenantDao;
 	@Autowired
-	InvoiceDao<InvoiceGas> invoiceGas;
+	DivisionDao divisionDao;
 	@Autowired
-	InvoiceDao<InvoiceWater> invoiceWater;
+	ApartmentDao apartmentDao;
 	@Autowired
-	ReadingEnergyDao readingEnergy;
+	ReadingService readingService;
 	@Autowired
-	ReadingGasDao readingGas;
+	MeterService meterService;
 	@Autowired
-	ReadingWaterDao readingWater;
+	InvoiceAbstractDao<InvoiceEnergy> invoiceEnergyDao;
+	@Autowired
+	InvoiceAbstractDao<InvoiceGas> invoiceGasDao;
+	@Autowired
+	InvoiceAbstractDao<InvoiceWater> invoiceWaterDao;
+	@Autowired
+	ReadingEnergyDao readingEnergyDao;
+	@Autowired
+	ReadingGasDao readingGasDao;
+	@Autowired
+	ReadingWaterDao readingWaterDao;
 	@Autowired
 	private PaymentDao<PaymentGas, ReadingGas> paymentGasDao;
 	@Autowired
@@ -41,9 +68,48 @@ public class InvoiceServiceImpl implements InvoiceService {
 	private PaymentDao<PaymentWater, ReadingWater> paymentWaterDao;
 
 	@Override
+	public <T extends Invoice> void save(T invoice, Media media) {
+		switch (media) {
+		case ENERGY:
+
+			List<Tenant> tenants = tenantDao.getActiveTenants();
+			List<Division> division = divisionDao.getList();
+			List<Apartment> apartments = apartmentDao.getList();
+
+			List<ReadingEnergy> readingEnergyOld = readingService.getPreviousReadingEnergy(
+					invoice.getBaseReading().getReadingDate(), meterService.getIdList(Media.ENERGY));
+
+			List<ReadingEnergy> readingEnergyNew = readingService.getByDate(invoice.getBaseReading().getReadingDate(),
+					Media.ENERGY);
+
+			List<UsageValue> usageEnergy = ManagerEnergy.countConsupmtion(apartments, readingEnergyOld,
+					readingEnergyNew);
+			List<PaymentEnergy> paymentEnergy = ManagerPayment.createPaymentEnergyList(tenants, (InvoiceEnergy) invoice,
+					division, usageEnergy);
+
+			invoiceEnergyDao.save((InvoiceEnergy) invoice);
+			readingEnergyDao.changeResolvmentState(invoice, true);
+			for (PaymentEnergy payment : paymentEnergy) {
+				paymentEnergyDao.save(payment);
+			}
+			break;
+
+		case GAS:
+
+			break;
+		case WATER:
+
+			break;
+		default:
+			break;
+		}
+
+	}
+
+	@Override
 	public void saveEnergy(InvoiceEnergy invoice, List<PaymentEnergy> payment) {
-		invoiceEnergy.save(invoice);
-		readingEnergy.changeResolvmentState(invoice, true);
+		invoiceEnergyDao.save(invoice);
+		readingEnergyDao.changeResolvmentState(invoice, true);
 		for (PaymentEnergy paymentEnergy : payment) {
 			paymentEnergyDao.save(paymentEnergy);
 		}
@@ -52,8 +118,8 @@ public class InvoiceServiceImpl implements InvoiceService {
 
 	@Override
 	public void saveGas(InvoiceGas invoice, List<PaymentGas> payment) {
-		invoiceGas.save(invoice);
-		readingGas.resolveReadings(invoice);
+		invoiceGasDao.save(invoice);
+		readingGasDao.resolveReadings(invoice);
 
 		for (PaymentGas paymentGas : payment) {
 			paymentGasDao.save(paymentGas);
@@ -62,8 +128,8 @@ public class InvoiceServiceImpl implements InvoiceService {
 
 	@Override
 	public void saveWater(InvoiceWater invoice, List<PaymentWater> payment) {
-		invoiceWater.save(invoice);
-		readingWater.resolveReadings(invoice);
+		invoiceWaterDao.save(invoice);
+		readingWaterDao.resolveReadings(invoice);
 
 		for (PaymentWater paymentWater : payment) {
 			paymentWaterDao.save(paymentWater);
@@ -73,8 +139,8 @@ public class InvoiceServiceImpl implements InvoiceService {
 
 	@Override
 	public void deleteEnergyByID(Long id) {
-		readingEnergy.changeResolvmentState(invoiceEnergy.getById(id), false);
-		invoiceEnergy.deleteById(id);
+		readingEnergyDao.changeResolvmentState(invoiceEnergyDao.getById(id), false);
+		invoiceEnergyDao.deleteById(id);
 	}
 
 	@Override
@@ -82,32 +148,32 @@ public class InvoiceServiceImpl implements InvoiceService {
 		for (PaymentEnergy payment : payments) {
 			paymentEnergyDao.update(payment);
 		}
-		invoiceEnergy.update(invoice);
+		invoiceEnergyDao.update(invoice);
 
 	}
 
 	@Override
 	public InvoiceEnergy getEnergyByID(Long id) {
-		return invoiceEnergy.getById(id);
+		return invoiceEnergyDao.getById(id);
 	}
 
 	@Override
 	public List<InvoiceEnergy> getEnergyInvoiceList() {
-		return invoiceEnergy.getList();
+		return invoiceEnergyDao.getList();
 	}
 
 	@Override
 	public void deleteGasByID(Long id) {
-		readingGas.unresolveReadings(invoiceGas.getById(id));
-		invoiceGas.deleteById(id);
+		readingGasDao.unresolveReadings(invoiceGasDao.getById(id));
+		invoiceGasDao.deleteById(id);
 
 	}
 
 	@Override
 	public void deleteWaterByID(Long id) {
 		// temporaryFix...
-		readingWater.unresolveReadings(invoiceWater.getById(id));
-		invoiceWater.deleteById(id);
+		readingWaterDao.unresolveReadings(invoiceWaterDao.getById(id));
+		invoiceWaterDao.deleteById(id);
 
 	}
 
@@ -116,7 +182,7 @@ public class InvoiceServiceImpl implements InvoiceService {
 		for (PaymentGas payment : payments) {
 			paymentGasDao.update(payment);
 		}
-		invoiceGas.update(invoice);
+		invoiceGasDao.update(invoice);
 
 	}
 
@@ -126,26 +192,18 @@ public class InvoiceServiceImpl implements InvoiceService {
 			paymentWaterDao.update(payment);
 		}
 
-		invoiceWater.update(invoice);
+		invoiceWaterDao.update(invoice);
 
 	}
 
 	@Override
 	public InvoiceGas getGasByID(Long id) {
-		return invoiceGas.getById(id);
+		return invoiceGasDao.getById(id);
 	}
 
 	@Override
 	public InvoiceWater getWaterByID(Long id) {
-		return invoiceWater.getById(id);
-	}
-
-	public InvoiceGas getLatestGas() {
-		return invoiceGas.getLatest();
-	}
-
-	public InvoiceWater getLatestWater() {
-		return invoiceWater.getLatest();
+		return invoiceWaterDao.getById(id);
 	}
 
 	// @Override
@@ -169,44 +227,70 @@ public class InvoiceServiceImpl implements InvoiceService {
 
 	@Override
 	public List<InvoiceWater> getWaterInvoiceList() {
-		return invoiceWater.getList();
+		return invoiceWaterDao.getList();
 	}
 
 	@Override
 	public List<InvoiceGas> getGasInvoiceList() {
-		return invoiceGas.getList();
+		return invoiceGasDao.getList();
 	}
 
 	@Override
 	public List<InvoiceEnergy> getUnpaidInvoiceEnergy() {
 
-		return invoiceEnergy.getUnpaidInvoices();
+		return invoiceEnergyDao.getUnpaidInvoices();
 	}
 
 	@Override
 	public List<InvoiceGas> getUnpaidInvoiceGas() {
-		return invoiceGas.getUnpaidInvoices();
+		return invoiceGasDao.getUnpaidInvoices();
 	}
 
 	@Override
 	public List<InvoiceWater> getUnpaidInvoiceWater() {
-		return invoiceWater.getUnpaidInvoices();
+		return invoiceWaterDao.getUnpaidInvoices();
 	}
 
 	@Override
 	public InvoiceEnergy getLatestPaidEnergy() {
 
-		return invoiceEnergy.getLastResolved();
+		return invoiceEnergyDao.getLastResolved();
 	}
 
 	@Override
 	public InvoiceWater getLatestPaidWater() {
-		return invoiceWater.getLastResolved();
+		return invoiceWaterDao.getLastResolved();
 	}
 
 	@Override
 	public InvoiceGas getLatestPaidGas() {
-		return invoiceGas.getLastResolved();
+		return invoiceGasDao.getLastResolved();
+	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public <T extends ReadingAbstract> List<T> prepareForRegistration(Media media) throws InvalidDivisionException {
+
+		if (!DivisionValidator.validateDivision(apartmentDao.getList(), divisionDao.getList(),
+				tenantDao.getActiveTenants())) {
+			throw new InvalidDivisionException();
+		}
+		switch (media) {
+		case ENERGY:
+			return (List<T>) readingEnergyDao.getUnresolvedReadings();
+
+		case GAS:
+
+			return (List<T>) readingGasDao.getUnresolvedReadings();
+
+		case WATER:
+
+			return (List<T>) readingWaterDao.getUnresolvedReadings();
+
+		default:
+			return null;
+		}
+
 	}
 
 }

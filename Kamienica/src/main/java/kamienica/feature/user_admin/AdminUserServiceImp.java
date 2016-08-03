@@ -12,7 +12,7 @@ import org.springframework.transaction.annotation.Transactional;
 import kamienica.core.Media;
 import kamienica.feature.apartment.Apartment;
 import kamienica.feature.apartment.ApartmentDao;
-import kamienica.feature.invoice.InvoiceDao;
+import kamienica.feature.invoice.InvoiceAbstractDao;
 import kamienica.feature.invoice.InvoiceEnergy;
 import kamienica.feature.invoice.InvoiceGas;
 import kamienica.feature.invoice.InvoiceWater;
@@ -38,13 +38,13 @@ public class AdminUserServiceImp implements AdminUserService {
 	private ReadingGasDao gasDao;
 	@Autowired
 	@Qualifier("invoiceEnergy")
-	private InvoiceDao<InvoiceEnergy> invoiceEnergyDao;
+	private InvoiceAbstractDao<InvoiceEnergy> invoiceEnergyDao;
 	@Autowired
 	@Qualifier("invoiceWater")
-	private InvoiceDao<InvoiceWater> invoiceWaterDao;
+	private InvoiceAbstractDao<InvoiceWater> invoiceWaterDao;
 	@Autowired
 	@Qualifier("invoiceGas")
-	private InvoiceDao<InvoiceGas> invoiceGasDao;
+	private InvoiceAbstractDao<InvoiceGas> invoiceGasDao;
 //	@Autowired
 //	private PaymentDao<PaymentEnergy, ReadingEnergy> pamymentEnergyDao;
 //	@Autowired

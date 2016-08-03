@@ -4,6 +4,7 @@ import java.text.DecimalFormat;
 import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Locale;
 
 import org.joda.time.LocalDate;
@@ -20,8 +21,8 @@ import kamienica.feature.usagevalue.UsageValue;
 
 public class ManagerPayment {
 
-	public static ArrayList<PaymentEnergy> createPaymentEnergyList(ArrayList<Tenant> tenants, InvoiceEnergy invoice,
-			ArrayList<Division> division, ArrayList<UsageValue> usage) {
+	public static ArrayList<PaymentEnergy> createPaymentEnergyList(List<Tenant> tenants, InvoiceEnergy invoice,
+			List<Division> division, List<UsageValue> usage) {
 		double sumOfExpences = invoice.getTotalAmount();
 		ArrayList<PaymentEnergy> listToReturn = new ArrayList<PaymentEnergy>();
 
@@ -104,7 +105,7 @@ public class ManagerPayment {
 		return listToReturn;
 	}
 
-	private static double sumUsage(ArrayList<UsageValue> listaZuzycia) {
+	private static double sumUsage(List<UsageValue> listaZuzycia) {
 		double suma = 0;
 		for (UsageValue i : listaZuzycia) {
 			suma += i.getUsage();
@@ -113,7 +114,7 @@ public class ManagerPayment {
 		return suma;
 	}
 
-	private static HashMap<Integer, Double> setTenantDivision(ArrayList<Division> division, Tenant tenant) {
+	private static HashMap<Integer, Double> setTenantDivision(List<Division> division, Tenant tenant) {
 		HashMap<Integer, Double> output = new HashMap<>();
 		for (Division p : division) {
 			if (tenant.getId() == p.getTenant().getId()) {

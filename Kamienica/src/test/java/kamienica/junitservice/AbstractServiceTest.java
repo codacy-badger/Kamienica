@@ -23,7 +23,6 @@ public abstract class AbstractServiceTest {
 	public abstract void add();
 
 	@Test
-	@Transactional
 	public abstract void remove();
 
 	@Test

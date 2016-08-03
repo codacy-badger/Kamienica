@@ -35,7 +35,7 @@ public class MeterEnergyServiceTest extends AbstractServiceTest {
 
 	}
 
-	@Rollback
+	@Transactional
 	@Override
 	public void add() {
 		MeterEnergy meter = createDummyMeter();
@@ -43,7 +43,7 @@ public class MeterEnergyServiceTest extends AbstractServiceTest {
 		assertEquals(6, service.getIdList(Media.ENERGY).size());
 	}
 
-	@Rollback
+	@Transactional
 	@Override
 	public void remove() {
 		MeterEnergy meter = createDummyMeter();

@@ -4,11 +4,9 @@ import static org.junit.Assert.assertEquals;
 
 import java.util.List;
 
-import javax.validation.ConstraintViolationException;
-
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.test.annotation.Rollback;
+import org.springframework.transaction.annotation.Transactional;
 
 import kamienica.feature.apartment.Apartment;
 import kamienica.feature.apartment.ApartmentService;
@@ -21,7 +19,7 @@ public class ApartmentServiceTest extends AbstractServiceTest {
 	@Test
 	public void getList() {
 		List<Apartment> list = service.getList();
-		assertEquals(5, list.size());
+		assertEquals(4, list.size());
 	}
 
 	@Override
@@ -37,6 +35,7 @@ public class ApartmentServiceTest extends AbstractServiceTest {
 
 	}
 
+	@Transactional
 	@Override
 	public void remove() {
 		service.deleteByID(5L);
@@ -46,10 +45,10 @@ public class ApartmentServiceTest extends AbstractServiceTest {
 
 	@Override
 	public void update() {
-		Apartment ap = service.getById(5L);
+		Apartment ap = service.getById(4L);
 		ap.setDescription("test");
 		service.update(ap);
-		assertEquals("test", service.getById(5L).getDescription());
+		assertEquals("test", service.getById(4L).getDescription());
 
 	}
 

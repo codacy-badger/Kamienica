@@ -4,11 +4,12 @@ import java.util.List;
 
 import kamienica.dao.DaoInterface;
 
-public interface InvoiceDao<I extends Invoice> extends DaoInterface<I> {
+public interface InvoiceAbstractDao<I extends Invoice> extends DaoInterface<I> {
 
-	public I getLatest();
+//	public I getLatest();
 
-	public List<I> getInvoicesForCalulation(Invoice invoice);
+
+//	public List<I> getInvoicesForCalulation(Invoice invoice);
 
 	public List<I> getUnpaidInvoices();
 

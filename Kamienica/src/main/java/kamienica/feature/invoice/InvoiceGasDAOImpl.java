@@ -12,27 +12,20 @@ import kamienica.dao.AbstractDao;
 import kamienica.feature.payment.PaymentStatus;
 
 @Repository("invoiceGas")
-@Transactional
-public class InvoiceGasDAOImpl extends AbstractDao<InvoiceGas> implements InvoiceDao<InvoiceGas> {
+public class InvoiceGasDAOImpl extends AbstractDao<InvoiceGas> implements InvoiceAbstractDao<InvoiceGas> {
 
-	@Override
-	public InvoiceGas getLatest() {
-		Query query = getSession().createSQLQuery(
-				"select * from kamienica.invoicegas where date = (select MAX(date) from kamienica.invoicegas)");
-		return (InvoiceGas) query.uniqueResult();
 
-	}
-
-	@SuppressWarnings("unchecked")
-	@Override
-	public List<InvoiceGas> getInvoicesForCalulation(Invoice invoice) {
-		Query query = getSession()
-				.createSQLQuery(
-						"select * from kamienica.invoicegas where status = :status and date <= :date and baseReading_id is not null order by date asc")
-				.addEntity(InvoiceGas.class).setParameter("date", invoice.getDate())
-				.setParameter("status", PaymentStatus.UNPAID.getPaymentStatus());
-		return query.list();
-	}
+//
+//	@SuppressWarnings("unchecked")
+//	@Override
+//	public List<InvoiceGas> getInvoicesForCalulation(Invoice invoice) {
+//		Query query = getSession()
+//				.createSQLQuery(
+//						"select * from kamienica.invoicegas where status = :status and date <= :date and baseReading_id is not null order by date asc")
+//				.addEntity(InvoiceGas.class).setParameter("date", invoice.getDate())
+//				.setParameter("status", PaymentStatus.UNPAID.getPaymentStatus());
+//		return query.list();
+//	}
 
 	@Override
 	public List<InvoiceGas> getUnpaidInvoices() {

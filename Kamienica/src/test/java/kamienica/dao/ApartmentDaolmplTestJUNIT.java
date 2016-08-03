@@ -8,8 +8,7 @@ import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.annotation.Rollback;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
-
-
+import org.springframework.transaction.annotation.Transactional;
 
 import kamienica.feature.apartment.Apartment;
 import kamienica.feature.apartment.ApartmentDao;
@@ -55,14 +54,14 @@ public class ApartmentDaolmplTestJUNIT extends EntityDaoImplTestJUNIT {
 		Assert.assertEquals(apartemtnDao.getList().size(), 5);
 	}
 
-	@Test
+	@Test(expected= ConstraintViolationException.class)
 	public void saveDuplicateAppNuber() {
 		apartemtnDao.save(getDuplcateNubmerApartment());
 		Assert.assertEquals(apartemtnDao.getList().size(), 3);
 	}
 
-	@Rollback
-	@Test
+	@Transactional
+	@Test(expected= ConstraintViolationException.class)
 	public void deleteApartmentWhereThereIsMeterOrTenant() {
 		apartemtnDao.deleteById(2L);
 	}

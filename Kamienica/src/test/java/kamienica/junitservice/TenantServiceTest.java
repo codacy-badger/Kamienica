@@ -18,7 +18,6 @@ public class TenantServiceTest extends AbstractServiceTest {
 	@Test
 	public void getList() {
 		List<Tenant> list = service.getList();
-		System.out.println(list);
 
 		assertEquals(5, list.size());
 	}
@@ -26,31 +25,30 @@ public class TenantServiceTest extends AbstractServiceTest {
 	@Override
 	public void getById() {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
 	public void add() {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
 	public void remove() {
-		// TODO Auto-generated method stub
-		
+	
 	}
 
 	@Override
 	public void update() {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
 	public void addWithValidationError() {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 }
