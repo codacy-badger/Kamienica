@@ -21,7 +21,6 @@ public class ApartmentServiceTest extends AbstractServiceTest {
 	@Test
 	public void getList() {
 		List<Apartment> list = service.getList();
-		System.out.println(list.toString());
 		assertEquals(5, list.size());
 	}
 

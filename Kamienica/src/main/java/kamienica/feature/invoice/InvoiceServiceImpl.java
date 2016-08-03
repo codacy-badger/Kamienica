@@ -43,7 +43,7 @@ public class InvoiceServiceImpl implements InvoiceService {
 	@Override
 	public void saveEnergy(InvoiceEnergy invoice, List<PaymentEnergy> payment) {
 		invoiceEnergy.save(invoice);
-		readingEnergy.resolveReadings(invoice);
+		readingEnergy.changeResolvmentState(invoice, true);
 		for (PaymentEnergy paymentEnergy : payment) {
 			paymentEnergyDao.save(paymentEnergy);
 		}
@@ -73,7 +73,7 @@ public class InvoiceServiceImpl implements InvoiceService {
 
 	@Override
 	public void deleteEnergyByID(Long id) {
-		readingEnergy.unresolveReadings(invoiceEnergy.getById(id));
+		readingEnergy.changeResolvmentState(invoiceEnergy.getById(id), false);
 		invoiceEnergy.deleteById(id);
 	}
 

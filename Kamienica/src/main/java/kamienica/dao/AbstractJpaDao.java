@@ -129,6 +129,7 @@ public abstract class AbstractJpaDao<T extends Object, Id extends Serializable> 
 	}
 
 	protected List<T> findByCriteria(final Criterion... criterion) {
+		
 		return findByCriteria(-1, -1, null, criterion);
 	}
 

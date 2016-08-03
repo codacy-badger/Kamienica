@@ -1,17 +1,11 @@
 package kamienica.feature.reading;
 
 import java.util.List;
-import java.util.Set;
 
-import org.hibernate.Criteria;
 import org.hibernate.Query;
-import org.hibernate.criterion.Order;
-import org.hibernate.criterion.Projections;
-import org.joda.time.LocalDate;
 import org.springframework.stereotype.Repository;
 
 import kamienica.feature.apartment.Apartment;
-import kamienica.feature.invoice.InvoiceEnergy;
 
 /**
  * @author kdeveloper
@@ -65,71 +59,71 @@ public class ReadingEnergyDAOImpl extends ReadingAbstractDaoImpl<ReadingEnergy>
 //
 //	}
 
-	@Override
-	public List<ReadingEnergy> getPrevious(String readingDate, Set<Long> meterId) {
-		Query query = getSession()
-				.createSQLQuery(
-						"SELECT * FROM readingenergy where readingDate=(SELECT max(readingDate) FROM readingenergy WHERE readingDate < :date )  AND meter_id IN(:list)")
-				.addEntity(ReadingEnergy.class).setString("date", readingDate.toString())
-				.setParameterList("list", meterId);
-		@SuppressWarnings("unchecked")
-		List<ReadingEnergy> result = query.list();
-		return result;
-	}
+//	@Override
+//	public List<ReadingEnergy> getPrevious(String readingDate, Set<Long> meterId) {
+//		Query query = getSession()
+//				.createSQLQuery(
+//						"SELECT * FROM readingenergy where readingDate=(SELECT max(readingDate) FROM readingenergy WHERE readingDate < :date )  AND meter_id IN(:list)")
+//				.addEntity(ReadingEnergy.class).setString("date", readingDate.toString())
+//				.setParameterList("list", meterId);
+//		@SuppressWarnings("unchecked")
+//		List<ReadingEnergy> result = query.list();
+//		return result;
+//	}
 
-	@Override
-	@SuppressWarnings("unchecked")
-	public List<ReadingEnergy> getUnresolvedReadings() {
-		Query query = getSession().createSQLQuery("SELECT r.id, r.readingDate, r.value, r.unit, r.meter_id, r.resolved "
-				+ "FROM readingenergy r join meterenergy m on r.meter_id = m.id "
-				+ "where r.resolved = 0 and m.apartment_id is null").addEntity(ReadingEnergy.class);
-		return query.list();
+//	@Override
+//	@SuppressWarnings("unchecked")
+//	public List<ReadingEnergy> getUnresolvedReadings() {
+//		Query query = getSession().createSQLQuery("SELECT r.id, r.readingDate, r.value, r.unit, r.meter_id, r.resolved "
+//				+ "FROM readingenergy r join meterenergy m on r.meter_id = m.id "
+//				+ "where r.resolved = 0 and m.apartment_id is null").addEntity(ReadingEnergy.class);
+//		return query.list();
+//
+//	}
 
-	}
+//	@Override
+//	public void resolveReadings(InvoiceEnergy invoice) {
+//		Query query = getSession()
+//				.createSQLQuery("update readingenergy " + "set resolved= :res " + "where readingDate = :paramdate")
+//				.setDate("paramdate", invoice.getBaseReading().getReadingDate().toDate()).setParameter("res", true);
+//		query.executeUpdate();
+//
+//	}
+//
+//	@Override
+//	public void unresolveReadings(InvoiceEnergy invoice) {
+//		Query query = getSession()
+//				.createSQLQuery("update readingenergy set resolved= :res where readingDate = :paramdate")
+//				.setDate("paramdate", invoice.getBaseReading().getReadingDate().toDate()).setParameter("res", false);
+//		query.executeUpdate();
+//
+//	}
 
-	@Override
-	public void resolveReadings(InvoiceEnergy invoice) {
-		Query query = getSession()
-				.createSQLQuery("update readingenergy " + "set resolved= :res " + "where readingDate = :paramdate")
-				.setDate("paramdate", invoice.getBaseReading().getReadingDate().toDate()).setParameter("res", true);
-		query.executeUpdate();
+//	@Override
+//	public int countDaysFromLastReading() {
+//		try {
+//			Query query = getSession().createSQLQuery(
+//					"SELECT DATEDIFF(CURDATE()  ,readingenergy.readingDate) FROM readingenergy order by readingDate  desc limit 1");
+//			return ((Number) query.uniqueResult()).intValue();
+//		} catch (Exception e) {
+//			return 0;
+//		}
+//	}
 
-	}
+//	@Override
+//	public void deleteLatestReadings(LocalDate date) {
+//		Query query = getSession()
+//				.createSQLQuery("delete from readingenergy where readingDate=:date and resolved=:res");
+//		query.setParameter("date", date.toString()).setParameter("res", false);
+//		query.executeUpdate();
+//
+//	}
 
-	@Override
-	public void unresolveReadings(InvoiceEnergy invoice) {
-		Query query = getSession()
-				.createSQLQuery("update readingenergy set resolved= :res where readingDate = :paramdate")
-				.setDate("paramdate", invoice.getBaseReading().getReadingDate().toDate()).setParameter("res", false);
-		query.executeUpdate();
-
-	}
-
-	@Override
-	public int countDaysFromLastReading() {
-		try {
-			Query query = getSession().createSQLQuery(
-					"SELECT DATEDIFF(CURDATE()  ,readingenergy.readingDate) FROM readingenergy order by readingDate  desc limit 1");
-			return ((Number) query.uniqueResult()).intValue();
-		} catch (Exception e) {
-			return 0;
-		}
-	}
-
-	@Override
-	public void deleteLatestReadings(LocalDate date) {
-		Query query = getSession()
-				.createSQLQuery("delete from readingenergy where readingDate=:date and resolved=:res");
-		query.setParameter("date", date.toString()).setParameter("res", false);
-		query.executeUpdate();
-
-	}
-
-	@Override
-	public LocalDate getLatestDate() {
-		Criteria criteria = getSession().createCriteria(ReadingEnergy.class)
-				.setProjection(Projections.max("readingDate"));
-		return (LocalDate) criteria.uniqueResult();
-	}
+//	@Override
+//	public LocalDate getLatestDate() {
+//		Criteria criteria = getSession().createCriteria(ReadingEnergy.class)
+//				.setProjection(Projections.max("readingDate"));
+//		return (LocalDate) criteria.uniqueResult();
+//	}
 
 }

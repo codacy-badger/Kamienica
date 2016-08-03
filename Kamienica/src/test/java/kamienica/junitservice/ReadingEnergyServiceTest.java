@@ -31,10 +31,15 @@ public class ReadingEnergyServiceTest extends AbstractServiceTest {
 
 	@Test
 	public void getLatest() {
-
+		List<ReadingEnergy> list2 = service.getLatestNew(Media.ENERGY);
 		List<ReadingEnergy> list = service.energyLatestNew();
 		assertEquals(5, list.size());
 		for (ReadingEnergy readingEnergy : list) {
+			assertEquals(LocalDate.parse("2016-09-01"), readingEnergy.getReadingDate());
+		}
+
+		assertEquals(5, list2.size());
+		for (ReadingEnergy readingEnergy : list2) {
 			assertEquals(LocalDate.parse("2016-09-01"), readingEnergy.getReadingDate());
 		}
 	}
@@ -58,7 +63,7 @@ public class ReadingEnergyServiceTest extends AbstractServiceTest {
 
 	@Test
 	public void shouldRetrieviePreviousReadings() {
-		List<ReadingEnergy> list = service.getPreviousReadingEnergy("2016-09-01", meterIdList);
+		List<ReadingEnergy> list = service.getPreviousReadingEnergy(LocalDate.parse("2016-09-01"), meterIdList);
 		for (ReadingEnergy readingEnergy : list) {
 			assertEquals(LocalDate.parse("2016-08-01"), readingEnergy.getReadingDate());
 		}
@@ -66,7 +71,7 @@ public class ReadingEnergyServiceTest extends AbstractServiceTest {
 
 	@Test
 	public void getByDate() {
-		List<ReadingEnergy> list = service.getReadingEnergyByDate(LocalDate.parse("2016-07-01"));
+		List<ReadingEnergy> list = service.getByDate(LocalDate.parse("2016-07-01"), Media.ENERGY);
 		for (ReadingEnergy readingEnergy : list) {
 			assertEquals(LocalDate.parse("2016-07-01"), readingEnergy.getReadingDate());
 		}
@@ -101,7 +106,7 @@ public class ReadingEnergyServiceTest extends AbstractServiceTest {
 
 	@Test
 	public void getPreviousReadings() {
-		List<ReadingEnergy> list = service.getPreviousReadingEnergy("2016-08-01", meterIdList);
+		List<ReadingEnergy> list = service.getPreviousReadingEnergy(LocalDate.parse("2016-08-01"), meterIdList);
 		assertEquals(5, list.size());
 		for (ReadingEnergy readingEnergy : list) {
 			assertEquals("2016-07-01", readingEnergy.getReadingDate().toString());
@@ -132,7 +137,16 @@ public class ReadingEnergyServiceTest extends AbstractServiceTest {
 
 	@Override
 	public void update() {
-
+		List<ReadingEnergy> list = service.getLatestNew(Media.ENERGY);
+		for (int i = 0; i < list.size(); i++) {
+			list.get(i).setValue(6767.0);
+		}
+		service.update(list, new LocalDate(), Media.ENERGY);
+		List<ReadingEnergy> list2 = service.getLatestNew(Media.ENERGY);
+		assertEquals(5, list2.size());
+		for (ReadingEnergy readingEnergy : list2) {
+			assertEquals(6767, readingEnergy.getValue(), 0);
+		}
 	}
 
 	@Override

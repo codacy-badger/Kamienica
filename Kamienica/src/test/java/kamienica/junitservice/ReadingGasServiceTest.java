@@ -32,7 +32,7 @@ public class ReadingGasServiceTest extends AbstractServiceTest {
 	@Test
 	public void getLatest() {
 
-		List<ReadingGas> list = service.gasLatest(meterIdList);
+		List<ReadingGas> list = service.getLatestNew(Media.GAS);
 		assertEquals(6, list.size());
 		for (ReadingGas readingGas : list) {
 			assertEquals(LocalDate.parse("2016-10-01"), readingGas.getReadingDate());
@@ -58,7 +58,8 @@ public class ReadingGasServiceTest extends AbstractServiceTest {
 
 	@Test
 	public void shouldRetrieviePreviousReadings() {
-		List<ReadingGas> list = service.getPreviousReadingGas("2016-08-01", meterIdList);
+		List<ReadingGas> list = service.getPreviousReadingGas(LocalDate.parse("2016-08-01"), meterIdList);
+
 		for (ReadingGas readingGas : list) {
 			assertEquals(LocalDate.parse("2016-07-29"), readingGas.getReadingDate());
 		}
@@ -66,7 +67,7 @@ public class ReadingGasServiceTest extends AbstractServiceTest {
 
 	@Test
 	public void getByDate() {
-		List<ReadingGas> list = service.getReadingGasByDate("2016-07-01");
+		List<ReadingGas> list = service.getByDate(LocalDate.parse("2016-07-01"), Media.GAS);
 		for (ReadingGas readingGas : list) {
 			assertEquals(LocalDate.parse("2016-07-01"), readingGas.getReadingDate());
 		}
@@ -87,8 +88,8 @@ public class ReadingGasServiceTest extends AbstractServiceTest {
 	public void firstReadingForANewMeter() {
 		MeterGas meter = new MeterGas("test", "34", "3535", null, false);
 		meterService.save(meter, Media.GAS);
-		List<ReadingGas> list = service.gasLatest(meterIdList);
-		assertEquals(6, list.size());
+		List<ReadingGas> list = service.getLatestNew(Media.GAS);
+		assertEquals(7, list.size());
 	}
 
 	@Override
@@ -101,7 +102,7 @@ public class ReadingGasServiceTest extends AbstractServiceTest {
 
 	@Test
 	public void getPreviousReadings() {
-		List<ReadingGas> list = service.getPreviousReadingGas("2016-10-01", meterIdList);
+		List<ReadingGas> list = service.getPreviousReadingGas(LocalDate.parse("2016-10-01"), meterIdList);
 		assertEquals(6, list.size());
 		for (ReadingGas readingGas : list) {
 			assertEquals("2016-09-01", readingGas.getReadingDate().toString());
@@ -121,7 +122,7 @@ public class ReadingGasServiceTest extends AbstractServiceTest {
 		}
 		service.save(toSave, LocalDate.parse("2050-01-01"), Media.GAS);
 		assertEquals(24, service.getReadingGas().size());
-		assertEquals(LocalDate.parse("2050-01-01"), service.gasLatest(meterIdList).get(0).getReadingDate());
+		assertEquals(LocalDate.parse("2050-01-01"), service.getLatestNew(Media.GAS).get(0).getReadingDate());
 	}
 
 	@Override

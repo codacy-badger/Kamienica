@@ -21,7 +21,7 @@ public class MeterWaterServiceTest extends AbstractServiceTest {
 	public void getList() {
 		List<MeterWater> list = service.getList(Media.WATER);
 		System.out.println(list);
-		assertEquals(8, list.size());
+		assertEquals(7, list.size());
 		
 	}
 

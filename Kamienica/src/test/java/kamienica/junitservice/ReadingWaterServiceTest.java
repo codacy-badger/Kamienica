@@ -27,13 +27,13 @@ public class ReadingWaterServiceTest extends AbstractServiceTest {
 	@Autowired
 	MeterService meterService;
 
-	private Set<Long> meterIdList = new HashSet<>(Arrays.asList(1L, 2L, 3L, 4L, 5L, 6L, 7l, 8L));
+	private Set<Long> meterIdList = new HashSet<>(Arrays.asList(1L, 2L, 3L, 4L, 5L, 6L, 7l));
 
 	@Test
 	public void getLatest() {
 
-		List<ReadingWater> list = service.waterLatest(meterIdList);
-		assertEquals(6, list.size());
+		List<ReadingWater> list = service.getLatestNew(Media.WATER);
+		assertEquals(7, list.size());
 		for (ReadingWater readingWater : list) {
 			assertEquals(LocalDate.parse("2016-09-01"), readingWater.getReadingDate());
 		}
@@ -58,7 +58,7 @@ public class ReadingWaterServiceTest extends AbstractServiceTest {
 
 	@Test
 	public void shouldRetrieviePreviousReadings() {
-		List<ReadingWater> list = service.getPreviousReadingWater("2016-08-01", meterIdList);
+		List<ReadingWater> list = service.getPreviousReadingWater(LocalDate.parse("2016-08-01"), meterIdList);
 		for (ReadingWater readingWater : list) {
 			assertEquals(LocalDate.parse("2016-07-01"), readingWater.getReadingDate());
 		}
@@ -66,7 +66,7 @@ public class ReadingWaterServiceTest extends AbstractServiceTest {
 
 	@Test
 	public void getByDate() {
-		List<ReadingWater> list = service.getReadingWaterByDate("2016-07-01");
+		List<ReadingWater> list = service.getByDate(LocalDate.parse("2016-07-01"), Media.WATER);
 		for (ReadingWater readingWater : list) {
 			assertEquals(LocalDate.parse("2016-07-01"), readingWater.getReadingDate());
 		}
@@ -85,10 +85,10 @@ public class ReadingWaterServiceTest extends AbstractServiceTest {
 	@Transactional
 	@Test
 	public void firstReadingForANewMeter() {
-		MeterWater meter = new MeterWater("test", "34", "3535", null, false);
+		MeterWater meter = new MeterWater("test", "346767676", "3535", null, false);
 		meterService.save(meter, Media.WATER);
-		List<ReadingWater> list = service.waterLatest(meterIdList);
-		assertEquals(6, list.size());
+		List<ReadingWater> list = service.getLatestNew(Media.WATER);
+		assertEquals(8, list.size());
 	}
 
 	@Override
@@ -101,7 +101,7 @@ public class ReadingWaterServiceTest extends AbstractServiceTest {
 
 	@Test
 	public void getPreviousReadings() {
-		List<ReadingWater> list = service.getPreviousReadingWater("2016-09-01", meterIdList);
+		List<ReadingWater> list = service.getPreviousReadingWater(LocalDate.parse("2016-09-01"), meterIdList);
 		assertEquals(7, list.size());
 		for (ReadingWater readingWater : list) {
 			assertEquals("2016-08-01", readingWater.getReadingDate().toString());
@@ -121,7 +121,7 @@ public class ReadingWaterServiceTest extends AbstractServiceTest {
 		}
 		service.save(toSave, LocalDate.parse("2050-01-01"), Media.WATER);
 		assertEquals(28, service.getReadingWater().size());
-		assertEquals(LocalDate.parse("2050-01-01"), service.waterLatest(meterIdList).get(0).getReadingDate());
+		assertEquals(LocalDate.parse("2050-01-01"), service.getLatestNew(Media.WATER).get(0).getReadingDate());
 	}
 
 	@Override

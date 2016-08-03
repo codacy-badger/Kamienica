@@ -51,10 +51,85 @@ public class ReadingServiceImpl implements ReadingService {
 		return water.getList();
 	}
 
+	/**
+	 * 
+	 * Method designed for creating new readings. If this is the first input the
+	 * method will create fake '0' readings for each meter. It will also create
+	 * 0 reading for every new meter that has been recently added
+	 * 
+	 */
+	@SuppressWarnings("unchecked")
+	@Override
+	public <T extends ReadingAbstract> List<T> getLatestNew(Media media) {
+		Set<Long> idList;
+		switch (media) {
+		case ENERGY:
+			idList = meterEnergy.getIdList();
+			List<ReadingEnergy> energyList = latestEdit(Media.ENERGY);
+			if (energyList.isEmpty()) {
+				for (Long tmpLong : idList) {
+					energyList
+							.add(new ReadingEnergy(new LocalDate().minusDays(100), 0.0, meterEnergy.getById(tmpLong)));
+				}
+			} else {
+				for (ReadingEnergy readingEnergy : energyList) {
+					idList.remove(readingEnergy.getMeter().getId());
+				}
+				for (Long tmpLong : idList) {
+					energyList.add(
+							new ReadingEnergy(energyList.get(0).getReadingDate(), 0.0, meterEnergy.getById(tmpLong)));
+				}
+			}
+			return (List<T>) energyList;
+		case GAS:
+			idList = meterGas.getIdList();
+			List<ReadingGas> gasList = latestEdit(Media.GAS);
+
+			// if this the very first time user creates readings
+			if (gasList.isEmpty()) {
+				for (Long tmpLong : idList) {
+					gasList.add(new ReadingGas(new LocalDate().minusDays(100), 0.0, meterGas.getById(tmpLong)));
+				}
+			} else {
+				// checks if there has been a new meter and adds fake '0'
+				// reading
+				for (ReadingGas readingGas : gasList) {
+					idList.remove(readingGas.getMeter().getId());
+				}
+				for (Long tmpLong : idList) {
+					gasList.add(new ReadingGas(gasList.get(0).getReadingDate(), 0.0, meterGas.getById(tmpLong)));
+				}
+			}
+			return (List<T>) gasList;
+
+		case WATER:
+			idList = meterWater.getIdList();
+			List<ReadingWater> waterList = latestEdit(Media.WATER);
+			if (waterList.isEmpty()) {
+				for (Long tmpLong : idList) {
+					waterList.add(new ReadingWater(new LocalDate().minusDays(100), 0.0, meterWater.getById(tmpLong)));
+				}
+			} else {
+				for (ReadingWater readingWater : waterList) {
+					idList.remove(readingWater.getMeter().getId());
+				}
+				for (Long tmpLong : idList) {
+					waterList
+							.add(new ReadingWater(waterList.get(0).getReadingDate(), 0.0, meterWater.getById(tmpLong)));
+				}
+			}
+			return (List<T>) waterList;
+
+		default:
+			break;
+		}
+		return null;
+	}
+
 	@Override
 	public List<ReadingEnergy> energyLatestNew() {
 		Set<Long> idList = meterEnergy.getIdList();
-		List<ReadingEnergy> energyList = energyLatestEdit();
+		List<ReadingEnergy> energyList = latestEdit(Media.ENERGY);
 		// if this the very first time user creates readings
 		if (energyList.isEmpty()) {
 			for (Long tmpLong : idList) {
@@ -73,99 +148,133 @@ public class ReadingServiceImpl implements ReadingService {
 		return energyList;
 	}
 
+	// @Override
+	// public List<ReadingGas> gasLatest() {
+	// List<ReadingGas> gasList = gas.getLatestList(idList);
+	//
+	// // if this the very first time user creates readings
+	// if (gasList.isEmpty()) {
+	// for (Long tmpLong : idList) {
+	// gasList.add(new ReadingGas(new LocalDate().minusDays(100), 0.0,
+	// meterGas.getById(tmpLong)));
+	// }
+	// } else {
+	// // checks if there has been a new meter and adds fake '0' reading
+	// for (ReadingGas readingGas : gasList) {
+	// idList.remove(readingGas.getMeter().getId());
+	// }
+	// for (Long tmpLong : idList) {
+	// gasList.add(new ReadingGas(gasList.get(0).getReadingDate(), 0.0,
+	// meterGas.getById(tmpLong)));
+	// }
+	// }
+	// return gasList;
+	// }
+	//
+	// @Override
+	// public List<ReadingWater> waterLatest(Set<Long> idList) {
+	// List<ReadingWater> waterList = water.getLatestList(idList);
+	// // if this the very first time user creates readings
+	// if (waterList.isEmpty()) {
+	// for (Long tmpLong : idList) {
+	// waterList.add(new ReadingWater(new LocalDate().minusDays(100), 0.0,
+	// meterWater.getById(tmpLong)));
+	// }
+	// } else {
+	// // checks if there has been a new meter and adds fake '0' reading
+	// for (ReadingWater readingWater : waterList) {
+	// idList.remove(readingWater.getMeter().getId());
+	// }
+	// for (Long tmpLong : idList) {
+	// waterList.add(new ReadingWater(waterList.get(0).getReadingDate(), 0.0,
+	// meterWater.getById(tmpLong)));
+	// }
+	// }
+	// return waterList;
+	//
+	// }
+	@SuppressWarnings("unchecked")
+	@Override
+	public <T extends ReadingAbstract> List<T> latestEdit(Media media) {
+		switch (media) {
+		case ENERGY:
+
+			return (List<T>) energy.getLatestList(energy.getLatestDate());
+		case GAS:
+
+			return (List<T>) gas.getLatestList(gas.getLatestDate());
+		case WATER:
+
+			return (List<T>) water.getLatestList(water.getLatestDate());
+
+		default:
+			break;
+		}
+		return null;
+	}
+
 	@Override
 	public List<ReadingEnergy> energyLatestEdit() {
 
-		return energy.getLatestList( energy.getLatestDate());
+		return energy.getLatestList(energy.getLatestDate());
 	}
 
 	@Override
-	public List<ReadingGas> gasLatestEdit(Set<Long> idList) {
-		return gas.getLatestList(idList);
+	public List<ReadingGas> gasLatestEdit() {
+		return gas.getLatestList(gas.getLatestDate());
 	}
 
 	@Override
-	public List<ReadingWater> waterLatestEdit(Set<Long> idList) {
-		return water.getLatestList(idList);
+	public List<ReadingWater> waterLatestEdit() {
+		return water.getLatestList(water.getLatestDate());
 	}
 
 	@Override
-	public List<ReadingEnergy> getPreviousReadingEnergy(String date, Set<Long> idList) {
+	public List<ReadingEnergy> getPreviousReadingEnergy(LocalDate date, Set<Long> idList) {
 		return energy.getPrevious(date, idList);
 	}
 
-	/**
-	 * @return latest gas readings
-	 * 
-	 *         if there hasn't been any readings yet the
-	 */
 	@Override
-	public List<ReadingGas> gasLatest(Set<Long> idList) {
-		List<ReadingGas> gasList = gas.getLatestList(idList);
-
-		// if this the very first time user creates readings
-		if (gasList.isEmpty()) {
-			for (Long tmpLong : idList) {
-				gasList.add(new ReadingGas(new LocalDate().minusDays(100), 0.0, meterGas.getById(tmpLong)));
-			}
-		} else {
-			// checks if there has been a new meter and adds fake '0' reading
-			for (ReadingGas readingGas : gasList) {
-				idList.remove(readingGas.getMeter().getId());
-			}
-			for (Long tmpLong : idList) {
-				gasList.add(new ReadingGas(gasList.get(0).getReadingDate(), 0.0, meterGas.getById(tmpLong)));
-			}
-		}
-		return gasList;
-	}
-
-	@Override
-	public List<ReadingWater> waterLatest(Set<Long> idList) {
-		List<ReadingWater> waterList = water.getLatestList(idList);
-		// if this the very first time user creates readings
-		if (waterList.isEmpty()) {
-			for (Long tmpLong : idList) {
-				waterList.add(new ReadingWater(new LocalDate().minusDays(100), 0.0, meterWater.getById(tmpLong)));
-			}
-		} else {
-			// checks if there has been a new meter and adds fake '0' reading
-			for (ReadingWater readingWater : waterList) {
-				idList.remove(readingWater.getMeter().getId());
-			}
-			for (Long tmpLong : idList) {
-				waterList.add(new ReadingWater(waterList.get(0).getReadingDate(), 0.0, meterWater.getById(tmpLong)));
-			}
-		}
-		return waterList;
-
-	}
-
-	@Override
-	public List<ReadingGas> getPreviousReadingGas(String date, Set<Long> idList) {
+	public List<ReadingGas> getPreviousReadingGas(LocalDate date, Set<Long> idList) {
 		return gas.getPrevious(date, idList);
 	}
 
 	@Override
-	public List<ReadingWater> getPreviousReadingWater(String date, Set<Long> idList) {
+	public List<ReadingWater> getPreviousReadingWater(LocalDate date, Set<Long> idList) {
 		return water.getPrevious(date, idList);
 	}
 
-	@Override
-	public List<ReadingEnergy> getReadingEnergyByDate(LocalDate date) {
+	@SuppressWarnings("unchecked")
+	public <T extends ReadingAbstract> List<T> getByDate(LocalDate date, Media media) {
+		switch (media) {
+		case ENERGY:
+			return (List<T>) energy.getByDate(date);
+		case GAS:
+			return (List<T>) gas.getByDate(date);
+		case WATER:
+			return (List<T>) water.getByDate(date);
 
-		return energy.getByDate(date);
+		default:
+			return null;
+		}
+
 	}
 
-	@Override
-	public List<ReadingGas> getReadingGasByDate(String date) {
-		return gas.getByDate(date);
-	}
-
-	@Override
-	public List<ReadingWater> getReadingWaterByDate(String date) {
-		return water.getByDate(date);
-	}
+	// @Override
+	// public List<ReadingEnergy> getReadingEnergyByDate(LocalDate date) {
+	//
+	// return energy.getByDate(date);
+	// }
+	//
+	// @Override
+	// public List<ReadingGas> getReadingGasByDate(LocalDate date) {
+	// return gas.getByDate(date);
+	// }
+	//
+	// @Override
+	// public List<ReadingWater> getReadingWaterByDate(LocalDate date) {
+	// return water.getByDate(date);
+	// }
 
 	@Override
 	public <T extends ReadingAbstract> void save(List<T> reading, LocalDate localDate, Media media) {
@@ -306,83 +415,122 @@ public class ReadingServiceImpl implements ReadingService {
 		}
 	}
 
+	// @Override
+	// public <T extends ReadingAbstract> void update(List<T> readings, String
+	// date, Media media) {
+	// switch (media) {
+	// case ENERGY:
+	// for (T readingEnergy : readings) {
+	// if (readingEnergy.getValue() < 0) {
+	// throw new IllegalArgumentException();
+	// }
+	// readingEnergy.setReadingDate(LocalDate.parse(date));
+	// readingEnergy.setUnit(readingEnergy.getMeter().getUnit());
+	// energy.update((ReadingEnergy) readingEnergy);
+	// }
+	//
+	// break;
+	// case GAS:
+	// for (T readingEnergy : readings) {
+	// if (readingEnergy.getValue() < 0) {
+	// throw new IllegalArgumentException();
+	// }
+	// readingEnergy.setReadingDate(LocalDate.parse(date));
+	// readingEnergy.setUnit(readingEnergy.getMeter().getUnit());
+	// gas.update((ReadingGas) readingEnergy);
+	// }
+	// break;
+	// case WATER:
+	// for (T readingEnergy : readings) {
+	// if (readingEnergy.getValue() < 0) {
+	// throw new IllegalArgumentException();
+	// }
+	// readingEnergy.setReadingDate(LocalDate.parse(date));
+	// readingEnergy.setUnit(readingEnergy.getMeter().getUnit());
+	// water.update((ReadingWater) readingEnergy);
+	// }
+	// break;
+	// default:
+	// break;
+	// }
+	// }
+	@Override
+	public <T extends ReadingAbstract> void update(List<T> readings, LocalDate date, Media media) {
+		switch (media) {
+		case ENERGY:
+			for (T readingEnergy : readings) {
+				if (readingEnergy.getValue() < 0) {
+					throw new IllegalArgumentException();
+				}
+				readingEnergy.setReadingDate(date);
+				readingEnergy.setUnit(readingEnergy.getMeter().getUnit());
+				energy.update((ReadingEnergy) readingEnergy);
+			}
+			break;
+		case GAS:
+			for (T readingGas : readings) {
+				if (readingGas.getValue() < 0) {
+					throw new IllegalArgumentException();
+				}
+				readingGas.setReadingDate(date);
+				readingGas.setUnit(readingGas.getMeter().getUnit());
+				gas.update((ReadingGas) readingGas);
+			}
+			break;
+		case WATER:
+			for (T readingEnergy : readings) {
+				if (readingEnergy.getValue() < 0) {
+					throw new IllegalArgumentException();
+				}
+				readingEnergy.setReadingDate(date);
+				readingEnergy.setUnit(readingEnergy.getMeter().getUnit());
+				water.update((ReadingWater) readingEnergy);
+			}
+			break;
+
+		default:
+			break;
+		}
+	}
+
 //	@Override
-//	public <T extends ReadingAbstract> void update(List<T> readings, String date, Media media) {
-//		switch (media) {
-//		case ENERGY:
-//			for (T readingEnergy : readings) {
-//				if (readingEnergy.getValue() < 0) {
-//					throw new IllegalArgumentException();
-//				}
-//				readingEnergy.setReadingDate(LocalDate.parse(date));
-//				readingEnergy.setUnit(readingEnergy.getMeter().getUnit());
-//				energy.update((ReadingEnergy) readingEnergy);
+//	public void updateEnergyList(List<ReadingEnergy> readings, String date) {
+//		for (ReadingEnergy readingEnergy : readings) {
+//			if (readingEnergy.getValue() < 0) {
+//				throw new IllegalArgumentException();
 //			}
-//			
-//			break;
-//		case GAS:
-//			for (T readingEnergy : readings) {
-//				if (readingEnergy.getValue() < 0) {
-//					throw new IllegalArgumentException();
-//				}
-//				readingEnergy.setReadingDate(LocalDate.parse(date));
-//				readingEnergy.setUnit(readingEnergy.getMeter().getUnit());
-//				gas.update((ReadingGas) readingEnergy);
-//			}
-//			break;
-//		case WATER:
-//			for (T readingEnergy : readings) {
-//				if (readingEnergy.getValue() < 0) {
-//					throw new IllegalArgumentException();
-//				}
-//				readingEnergy.setReadingDate(LocalDate.parse(date));
-//				readingEnergy.setUnit(readingEnergy.getMeter().getUnit());
-//				water.update((ReadingWater) readingEnergy);
-//			}
-//			break;
-//		default:
-//			break;
+//			readingEnergy.setReadingDate(LocalDate.parse(date));
+//			readingEnergy.setUnit(readingEnergy.getMeter().getUnit());
+//			energy.update(readingEnergy);
 //		}
+//
 //	}
-
-	@Override
-	public void updateEnergyList(List<ReadingEnergy> readings, String date) {
-		for (ReadingEnergy readingEnergy : readings) {
-			if (readingEnergy.getValue() < 0) {
-				throw new IllegalArgumentException();
-			}
-			readingEnergy.setReadingDate(LocalDate.parse(date));
-			readingEnergy.setUnit(readingEnergy.getMeter().getUnit());
-			energy.update(readingEnergy);
-		}
-
-	}
-
-	@Override
-	public void updateGasList(List<ReadingGas> readings, String date) {
-		for (ReadingGas readingEnergy : readings) {
-			if (readingEnergy.getValue() < 0) {
-				throw new IllegalArgumentException();
-			}
-			readingEnergy.setReadingDate(LocalDate.parse(date));
-			readingEnergy.setUnit(readingEnergy.getMeter().getUnit());
-			gas.update(readingEnergy);
-		}
-
-	}
-
-	@Override
-	public void updateWaterList(List<ReadingWater> readings, String date) {
-		for (ReadingWater readingEnergy : readings) {
-			if (readingEnergy.getValue() < 0) {
-				throw new IllegalArgumentException();
-			}
-			readingEnergy.setReadingDate(LocalDate.parse(date));
-			readingEnergy.setUnit(readingEnergy.getMeter().getUnit());
-			water.update(readingEnergy);
-		}
-
-	}
+//
+//	@Override
+//	public void updateGasList(List<ReadingGas> readings, String date) {
+//		for (ReadingGas readingEnergy : readings) {
+//			if (readingEnergy.getValue() < 0) {
+//				throw new IllegalArgumentException();
+//			}
+//			readingEnergy.setReadingDate(LocalDate.parse(date));
+//			readingEnergy.setUnit(readingEnergy.getMeter().getUnit());
+//			gas.update(readingEnergy);
+//		}
+//
+//	}
+//
+//	@Override
+//	public void updateWaterList(List<ReadingWater> readings, String date) {
+//		for (ReadingWater readingEnergy : readings) {
+//			if (readingEnergy.getValue() < 0) {
+//				throw new IllegalArgumentException();
+//			}
+//			readingEnergy.setReadingDate(LocalDate.parse(date));
+//			readingEnergy.setUnit(readingEnergy.getMeter().getUnit());
+//			water.update(readingEnergy);
+//		}
+//
+//	}
 
 	@Override
 	public void deleteLatestReadings(Media media) {

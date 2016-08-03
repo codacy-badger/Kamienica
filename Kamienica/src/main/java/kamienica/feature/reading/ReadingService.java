@@ -33,51 +33,55 @@ public interface ReadingService {
 	// public void saveEnergyList(List<ReadingEnergy> reading, LocalDate
 	// localDate);
 
+	public <T extends ReadingAbstract> void update(List<T> readings, LocalDate date, Media media);
 
-
-	public void updateEnergyList(List<ReadingEnergy> readings, String date);
-
-	public void updateGasList(List<ReadingGas> readings, String date);
-
-	public void updateWaterList(List<ReadingWater> readings, String date);
+//	public void updateEnergyList(List<ReadingEnergy> readings, String date);
+//
+//	public void updateGasList(List<ReadingGas> readings, String date);
+//
+//	public void updateWaterList(List<ReadingWater> readings, String date);
 
 	public List<ReadingEnergy> getReadingEnergy();
 
-	public List<ReadingEnergy> getReadingEnergyByDate(LocalDate date);
+	public <T extends ReadingAbstract> List<T> getByDate(LocalDate date, Media media);
+
+	// public List<ReadingEnergy> getReadingEnergyByDate(LocalDate date);
 
 	public List<ReadingGas> getReadingGas();
 
-	public List<ReadingGas> getReadingGasByDate(String date);
+	// public List<ReadingGas> getReadingGasByDate(LocalDate date);
 
 	public List<ReadingWater> getReadingWater();
 
-	public List<ReadingWater> getReadingWaterByDate(String date);
+	// public List<ReadingWater> getReadingWaterByDate(LocalDate date);
 
 	public void deleteList(List<? extends ReadingAbstract> list, Media media);
 
 	// public void deleteLatestReadings(Media media);
 
-	public List<ReadingEnergy> getPreviousReadingEnergy(String date, Set<Long> meterIdList);
+	public List<ReadingEnergy> getPreviousReadingEnergy(LocalDate date, Set<Long> meterIdList);
 
-	public List<ReadingGas> getPreviousReadingGas(String date, Set<Long> meterIdList);
+	public List<ReadingGas> getPreviousReadingGas(LocalDate date, Set<Long> meterIdList);
 
-	public List<ReadingWater> getPreviousReadingWater(String date, Set<Long> meterIdList);
+	public List<ReadingWater> getPreviousReadingWater(LocalDate date, Set<Long> meterIdList);
 
 	public List<ReadingEnergy> energyLatestNew();
 
+	// public List<ReadingGas> gasLatestNew();
+	//
+	// public List<ReadingWater> waterLatestNew();
+
+	public <T extends ReadingAbstract> List<T> getLatestNew(Media media);
+
+	public <T extends ReadingAbstract> List<T> latestEdit(Media media);
+
 	public List<ReadingEnergy> energyLatestEdit();
 
-	public List<ReadingGas> gasLatestEdit(Set<Long> meterIdList);
+	public List<ReadingGas> gasLatestEdit();
 
-	public List<ReadingWater> waterLatestEdit(Set<Long> meterIdList);
-
-	public List<ReadingGas> gasLatest(Set<Long> meterIdList);
-
-	public List<ReadingWater> waterLatest(Set<Long> meterIdList);
+	public List<ReadingWater> waterLatestEdit();
 
 	public HashMap<String, List<ReadingWater>> getWaterReadingsForGasConsumption(InvoiceGas invoice);
-	
-	
 
 	public List<ReadingEnergy> getUnresolvedReadingsEnergy();
 

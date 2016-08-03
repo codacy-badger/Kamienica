@@ -33,7 +33,7 @@ public class ReadingsRestController {
 			if (date == null) {
 				list = service.getReadingEnergy();
 			} else {
-				list = service.getReadingEnergyByDate(date);
+				list = service.getByDate(date, Media.ENERGY);
 			}
 			if (list.isEmpty()) {
 				return new ResponseEntity<List<? extends ReadingAbstract>>(HttpStatus.NOT_FOUND);
@@ -43,7 +43,7 @@ public class ReadingsRestController {
 			if (date == null) {
 				list = service.getReadingGas();
 			} else {
-				list = service.getReadingGasByDate(date.toString());
+				list = service.getByDate(date, Media.GAS);
 			}
 			if (list.isEmpty()) {
 				return new ResponseEntity<List<? extends ReadingAbstract>>(HttpStatus.NOT_FOUND);
@@ -53,7 +53,7 @@ public class ReadingsRestController {
 			if (date == null) {
 				list = service.getReadingWater();
 			} else {
-				list = service.getReadingWaterByDate(date.toString());
+				list = service.getByDate(date, Media.WATER);
 			}
 			if (list.isEmpty()) {
 				return new ResponseEntity<List<? extends ReadingAbstract>>(HttpStatus.NOT_FOUND);
@@ -66,34 +66,42 @@ public class ReadingsRestController {
 
 	}
 
-//	@RequestMapping(value = "/{media}{date}", method = RequestMethod.GET)
-//	public ResponseEntity<List<? extends ReadingAbstract>> getListByDate(@PathVariable Media media,
-//			@RequestParam LocalDate date) {
-//		System.out.println("lista z datą");
-//		List<? extends ReadingAbstract> list;
-//		switch (media) {
-//		case ENERGY:
-//
-//			if (list.isEmpty()) {
-//				return new ResponseEntity<List<? extends ReadingAbstract>>(HttpStatus.NOT_FOUND);
-//			}
-//			return new ResponseEntity<List<? extends ReadingAbstract>>(list, HttpStatus.OK);
-//		case GAS:
-//			list = service.getReadingGasByDate(date.toString());
-//			if (list.isEmpty()) {
-//				return new ResponseEntity<List<? extends ReadingAbstract>>(HttpStatus.NOT_FOUND);
-//			}
-//			return new ResponseEntity<List<? extends ReadingAbstract>>(list, HttpStatus.OK);
-//		case WATER:
-//			list = service.getReadingWaterByDate(date.toString());
-//			if (list.isEmpty()) {
-//				return new ResponseEntity<List<? extends ReadingAbstract>>(HttpStatus.NOT_FOUND);
-//			}
-//			return new ResponseEntity<List<? extends ReadingAbstract>>(list, HttpStatus.OK);
-//
-//		default:
-//			return new ResponseEntity<List<? extends ReadingAbstract>>(HttpStatus.NO_CONTENT);
-//		}
-//
-//	}
+	// @RequestMapping(value = "/{media}{date}", method = RequestMethod.GET)
+	// public ResponseEntity<List<? extends ReadingAbstract>>
+	// getListByDate(@PathVariable Media media,
+	// @RequestParam LocalDate date) {
+	// System.out.println("lista z datą");
+	// List<? extends ReadingAbstract> list;
+	// switch (media) {
+	// case ENERGY:
+	//
+	// if (list.isEmpty()) {
+	// return new ResponseEntity<List<? extends
+	// ReadingAbstract>>(HttpStatus.NOT_FOUND);
+	// }
+	// return new ResponseEntity<List<? extends ReadingAbstract>>(list,
+	// HttpStatus.OK);
+	// case GAS:
+	// list = service.getReadingGasByDate(date.toString());
+	// if (list.isEmpty()) {
+	// return new ResponseEntity<List<? extends
+	// ReadingAbstract>>(HttpStatus.NOT_FOUND);
+	// }
+	// return new ResponseEntity<List<? extends ReadingAbstract>>(list,
+	// HttpStatus.OK);
+	// case WATER:
+	// list = service.getReadingWaterByDate(date.toString());
+	// if (list.isEmpty()) {
+	// return new ResponseEntity<List<? extends
+	// ReadingAbstract>>(HttpStatus.NOT_FOUND);
+	// }
+	// return new ResponseEntity<List<? extends ReadingAbstract>>(list,
+	// HttpStatus.OK);
+	//
+	// default:
+	// return new ResponseEntity<List<? extends
+	// ReadingAbstract>>(HttpStatus.NO_CONTENT);
+	// }
+	//
+	// }
 }

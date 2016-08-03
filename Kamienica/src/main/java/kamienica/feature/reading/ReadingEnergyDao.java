@@ -7,13 +7,14 @@ import org.joda.time.LocalDate;
 
 import kamienica.dao.DaoInterface;
 import kamienica.feature.apartment.Apartment;
+import kamienica.feature.invoice.Invoice;
 import kamienica.feature.invoice.InvoiceEnergy;
 
 public interface ReadingEnergyDao extends DaoInterface<ReadingEnergy> {
 
 	public List<ReadingEnergy> getByDate(LocalDate date);
 
-	public List<ReadingEnergy> getPrevious(String date, Set<Long> meterId);
+	public List<ReadingEnergy> getPrevious(LocalDate date, Set<Long> meterId);
 
 	public List<ReadingEnergy> getLatestList(LocalDate date);
 	
@@ -28,10 +29,12 @@ public interface ReadingEnergyDao extends DaoInterface<ReadingEnergy> {
 	 *         used for new Incoives
 	 */
 	public List<ReadingEnergy> getUnresolvedReadings();
+	
+	public void changeResolvmentState(Invoice invoice, boolean resolved);
 
-	public void resolveReadings(InvoiceEnergy invoice);
-
-	public void unresolveReadings(InvoiceEnergy invoice);
+//	public void resolveReadings(InvoiceEnergy invoice);
+//
+//	public void unresolveReadings(InvoiceEnergy invoice);
 
 	public int countDaysFromLastReading();
 

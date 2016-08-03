@@ -58,7 +58,6 @@ public class InvoiceController {
 	@Autowired
 	private MeterService meterService;
 
-
 	// -------------------REJESTRACJA----------------------------------------------
 	@RequestMapping("/Admin/Invoice/invoiceGasRegister")
 	public ModelAndView registerInvoiceGas(@ModelAttribute("invoice") InvoiceGas invoice, BindingResult result) {
@@ -155,7 +154,8 @@ public class InvoiceController {
 		ArrayList<Division> division = (ArrayList<Division>) divisionService.getList();
 		ArrayList<Apartment> apartments = (ArrayList<Apartment>) apartmentService.getList();
 
-		readingGasOld = readingService.getPreviousReadingGas(invoice.getBaseReading().getReadingDate().toString(), meterService.getIdList(Media.GAS));
+		readingGasOld = readingService.getPreviousReadingGas(invoice.getBaseReading().getReadingDate(),
+				meterService.getIdList(Media.GAS));
 
 		HashMap<String, List<ReadingWater>> waterForGas = readingService.getWaterReadingsForGasConsumption(invoice);
 		if (waterForGas.isEmpty()) {
@@ -167,8 +167,7 @@ public class InvoiceController {
 			return new ModelAndView("/Admin/Invoice/InvoiceRegister", "model", model);
 		}
 
-		List<ReadingGas> readingGasNew = readingService
-				.getReadingGasByDate(invoice.getBaseReading().getReadingDate().toString());
+		List<ReadingGas> readingGasNew = readingService.getByDate(invoice.getBaseReading().getReadingDate(), Media.GAS);
 
 		ArrayList<UsageValue> usageGas = ManagerGas.countConsumption(apartments, readingGasOld, readingGasNew,
 				waterForGas.get("old"), waterForGas.get("new"));
@@ -198,10 +197,11 @@ public class InvoiceController {
 		ArrayList<Division> division = (ArrayList<Division>) divisionService.getList();
 		ArrayList<Apartment> apartments = (ArrayList<Apartment>) apartmentService.getList();
 
-		readingWaterOld = readingService.getPreviousReadingWater(invoice.getBaseReading().getReadingDate().toString(),  meterService.getIdList(Media.WATER));
+		readingWaterOld = readingService.getPreviousReadingWater(invoice.getBaseReading().getReadingDate(),
+				meterService.getIdList(Media.WATER));
 
-		List<ReadingWater> readingWaterNew = readingService
-				.getReadingWaterByDate(invoice.getBaseReading().getReadingDate().toString());
+		List<ReadingWater> readingWaterNew = readingService.getByDate(invoice.getBaseReading().getReadingDate(),
+				Media.WATER);
 
 		ArrayList<UsageValue> usageWater = ManagerWater.countConsumption(apartments, readingWaterOld, readingWaterNew);
 		List<PaymentWater> paymentWater = ManagerPayment.createPaymentWaterList(tenants, invoice, division, usageWater);
@@ -230,11 +230,11 @@ public class InvoiceController {
 		ArrayList<Division> division = (ArrayList<Division>) divisionService.getList();
 		ArrayList<Apartment> apartments = (ArrayList<Apartment>) apartmentService.getList();
 
-		List<ReadingEnergy> readingEnergyOld = readingService
-				.getPreviousReadingEnergy(invoice.getBaseReading().getReadingDate().toString(),  meterService.getIdList(Media.ENERGY));
+		List<ReadingEnergy> readingEnergyOld = readingService.getPreviousReadingEnergy(
+				invoice.getBaseReading().getReadingDate(), meterService.getIdList(Media.ENERGY));
 
-		List<ReadingEnergy> readingEnergyNew = readingService
-				.getReadingEnergyByDate(invoice.getBaseReading().getReadingDate());
+		List<ReadingEnergy> readingEnergyNew = readingService.getByDate(invoice.getBaseReading().getReadingDate(),
+				Media.ENERGY);
 
 		ArrayList<UsageValue> usageEnergy = ManagerEnergy.countConsupmtion(apartments, readingEnergyOld,
 				readingEnergyNew);

@@ -34,13 +34,12 @@ INSERT INTO  meterenergy  ( id , deactivation , description , main , serialNumbe
 INSERT INTO  meterenergy  ( id , deactivation , description , main , serialNumber , unit , apartment_id ) VALUES (5,'2600-01-01','I pietro',0,'3','kWh',4);
 
 INSERT INTO  meterwater  ( id , deactivation , description , main , serialNumber , unit , isWarmWater , apartment_id ) VALUES (1,'2600-01-01','G?ówny',1,'00','m3','0',NULL);
-INSERT INTO  meterwater  ( id , deactivation , description , main , serialNumber , unit , isWarmWater , apartment_id ) VALUES (2,'2600-01-01','Czesc Wspolna',0,'0000','m3','0',1);
-INSERT INTO  meterwater  ( id , deactivation , description , main , serialNumber , unit , isWarmWater , apartment_id ) VALUES (3,'2600-01-01','Piwnica',0,'1','m3','0',2);
-INSERT INTO  meterwater  ( id , deactivation , description , main , serialNumber , unit , isWarmWater , apartment_id ) VALUES (4,'2600-01-01','Piwnica ciepla',0,'11','m3','1',2);
-INSERT INTO  meterwater  ( id , deactivation , description , main , serialNumber , unit , isWarmWater , apartment_id ) VALUES (5,'2600-01-01','Parter zimna',0,'22','m3','0',3);
-INSERT INTO  meterwater  ( id , deactivation , description , main , serialNumber , unit , isWarmWater , apartment_id ) VALUES (6,'2600-01-01','Parter ciepla',0,'1111','m3','1',3);
-INSERT INTO  meterwater  ( id , deactivation , description , main , serialNumber , unit , isWarmWater , apartment_id ) VALUES (7,'2600-01-01','I pietro zimna',0,'3','m3','0',4);
-INSERT INTO  meterwater  ( id , deactivation , description , main , serialNumber , unit , isWarmWater , apartment_id ) VALUES (8,'2600-01-01','I pietro ciepla',0,'34','m3','1',4);
+INSERT INTO  meterwater  ( id , deactivation , description , main , serialNumber , unit , isWarmWater , apartment_id ) VALUES (2,'2600-01-01','Piwnica',0,'1','m3','0',2);
+INSERT INTO  meterwater  ( id , deactivation , description , main , serialNumber , unit , isWarmWater , apartment_id ) VALUES (3,'2600-01-01','Piwnica ciepla',0,'11','m3','1',2);
+INSERT INTO  meterwater  ( id , deactivation , description , main , serialNumber , unit , isWarmWater , apartment_id ) VALUES (4,'2600-01-01','Parter zimna',0,'22','m3','0',3);
+INSERT INTO  meterwater  ( id , deactivation , description , main , serialNumber , unit , isWarmWater , apartment_id ) VALUES (5,'2600-01-01','Parter ciepla',0,'1111','m3','1',3);
+INSERT INTO  meterwater  ( id , deactivation , description , main , serialNumber , unit , isWarmWater , apartment_id ) VALUES (6,'2600-01-01','I pietro zimna',0,'3','m3','0',4);
+INSERT INTO  meterwater  ( id , deactivation , description , main , serialNumber , unit , isWarmWater , apartment_id ) VALUES (7,'2600-01-01','I pietro ciepla',0,'34','m3','1',4);
 
 
 INSERT INTO  metergas  ( id , deactivation , description , main , serialNumber , unit , cwu , apartment_id ) VALUES (1,'2600-01-01','Główny',1,'00','m3','0',NULL);
@@ -68,6 +67,7 @@ INSERT INTO  readinggas  ( id , readingDate , resolved , value , unit , meter_id
 INSERT INTO  readinggas  ( id , readingDate , resolved , value , unit , meter_id ) VALUES (16,'2016-10-01','0',5,'m3',4);
 INSERT INTO  readinggas  ( id , readingDate , resolved , value , unit , meter_id ) VALUES (17,'2016-10-01','0',10,'m3',5);
 INSERT INTO  readinggas  ( id , readingDate , resolved , value , unit , meter_id ) VALUES (18,'2016-10-01','0',170,'m3',6);
+---------
 
 INSERT INTO  readingwater  ( id , readingDate , resolved , value , unit , meter_id ) VALUES (1,'2016-07-01','0',33,'m3',1);
 INSERT INTO  readingwater  ( id , readingDate , resolved , value , unit , meter_id ) VALUES (2,'2016-07-01','0',4,'m3',2);
@@ -76,6 +76,7 @@ INSERT INTO  readingwater  ( id , readingDate , resolved , value , unit , meter_
 INSERT INTO  readingwater  ( id , readingDate , resolved , value , unit , meter_id ) VALUES (5,'2016-07-01','0',10,'m3',5);
 INSERT INTO  readingwater  ( id , readingDate , resolved , value , unit , meter_id ) VALUES (6,'2016-07-01','0',6,'m3',6);
 INSERT INTO  readingwater  ( id , readingDate , resolved , value , unit , meter_id ) VALUES (7,'2016-07-01','0',6,'m3',7);
+
 INSERT INTO  readingwater  ( id , readingDate , resolved , value , unit , meter_id ) VALUES (8,'2016-08-01','1',44,'m3',1);
 INSERT INTO  readingwater  ( id , readingDate , resolved , value , unit , meter_id ) VALUES (9,'2016-08-01','1',5,'m3',2);
 INSERT INTO  readingwater  ( id , readingDate , resolved , value , unit , meter_id ) VALUES (10,'2016-08-01','1',3,'m3',3);
@@ -83,6 +84,7 @@ INSERT INTO  readingwater  ( id , readingDate , resolved , value , unit , meter_
 INSERT INTO  readingwater  ( id , readingDate , resolved , value , unit , meter_id ) VALUES (12,'2016-08-01','1',12,'m3',5);
 INSERT INTO  readingwater  ( id , readingDate , resolved , value , unit , meter_id ) VALUES (13,'2016-08-01','1',10,'m3',6);
 INSERT INTO  readingwater  ( id , readingDate , resolved , value , unit , meter_id ) VALUES (14,'2016-08-01','1',7,'m3',7);
+
 INSERT INTO  readingwater  ( id , readingDate , resolved , value , unit , meter_id ) VALUES (15,'2016-09-01','0',56,'m3',1);
 INSERT INTO  readingwater  ( id , readingDate , resolved , value , unit , meter_id ) VALUES (16,'2016-09-01','0',6,'m3',2);
 INSERT INTO  readingwater  ( id , readingDate , resolved , value , unit , meter_id ) VALUES (17,'2016-09-01','0',4,'m3',3);
@@ -91,7 +93,7 @@ INSERT INTO  readingwater  ( id , readingDate , resolved , value , unit , meter_
 INSERT INTO  readingwater  ( id , readingDate , resolved , value , unit , meter_id ) VALUES (20,'2016-09-01','0',11,'m3',6);
 INSERT INTO  readingwater  ( id , readingDate , resolved , value , unit , meter_id ) VALUES (21,'2016-09-01','0',9,'m3',7);
 
-
+-------------------------------------------------
 INSERT INTO  readingenergy  ( id , readingDate , resolved , value , unit , meter_id ) VALUES (1,'2016-07-01','0',11,'kWh',1);
 INSERT INTO  readingenergy  ( id , readingDate , resolved , value , unit , meter_id ) VALUES (2,'2016-07-01','0',5,'kWh',2);
 INSERT INTO  readingenergy  ( id , readingDate , resolved , value , unit , meter_id ) VALUES (3,'2016-07-01','0',1,'kWh',3);

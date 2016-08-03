@@ -9,6 +9,8 @@ import org.hibernate.Criteria;
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.hibernate.criterion.Criterion;
+import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Projections;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -23,6 +25,9 @@ public abstract class AbstractDao<T> {
 
 	}
 
+	public String getTabName() {
+		return this.persistentClass.getSimpleName().toString();
+	}
 	// @SuppressWarnings("unchecked")
 	// public AbstractDao() {
 	// // TODO Auto-generated constructor stub
@@ -81,6 +86,31 @@ public abstract class AbstractDao<T> {
 		Criteria criteria = createEntityCriteria().setProjection(Projections.property("id"));
 		return new HashSet<Long>(criteria.list());
 
+	}
+
+	@SuppressWarnings("unchecked")
+	public List<T> findByCriteria(final int firstResult, final int maxResults, final Order order,
+			final Criterion... criterion) {
+		Session session = getSession();
+		Criteria crit = session.createCriteria(persistentClass);
+
+		for (final Criterion c : criterion) {
+			crit.add(c);
+		}
+
+		if (order != null) {
+			crit.addOrder(order);
+		}
+
+		if (firstResult > 0) {
+			crit.setFirstResult(firstResult);
+		}
+
+		if (maxResults > 0) {
+			crit.setMaxResults(maxResults);
+		}
+
+		return crit.list();
 	}
 
 	protected Criteria createEntityCriteria() {

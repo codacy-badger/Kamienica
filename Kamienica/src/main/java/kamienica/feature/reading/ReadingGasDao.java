@@ -7,15 +7,16 @@ import org.joda.time.LocalDate;
 
 import kamienica.dao.DaoInterface;
 import kamienica.feature.apartment.Apartment;
+import kamienica.feature.invoice.Invoice;
 import kamienica.feature.invoice.InvoiceGas;
 
 public interface ReadingGasDao extends DaoInterface<ReadingGas> {
 
-	public List<ReadingGas> getByDate(String date);
+	public List<ReadingGas> getByDate(LocalDate date);
 
-	public List<ReadingGas> getPrevious(String date, Set<Long> meterId);
+	public List<ReadingGas> getPrevious(LocalDate date, Set<Long> meterId);
 
-	public List<ReadingGas> getLatestList(Set<Long> meterId);
+	public List<ReadingGas> getLatestList(LocalDate date);
 
 	public List<ReadingGas> getListForTenant(Apartment apartment);
 
@@ -26,7 +27,9 @@ public interface ReadingGasDao extends DaoInterface<ReadingGas> {
 	 *         used for new Incoives
 	 */
 	public List<ReadingGas> getUnresolvedReadings();
-
+	
+	public void changeResolvmentState(Invoice invoice, boolean resolved);
+	
 	public void resolveReadings(InvoiceGas invoice);
 
 	public void unresolveReadings(InvoiceGas invoice);

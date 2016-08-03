@@ -1,13 +1,10 @@
 package kamienica.feature.reading;
 
-import java.lang.reflect.ParameterizedType;
 import java.util.List;
 import java.util.Set;
 
 import org.hibernate.Criteria;
 import org.hibernate.Query;
-import org.hibernate.criterion.Criterion;
-import org.hibernate.criterion.Expression;
 import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
@@ -35,29 +32,18 @@ public abstract class ReadingAbstractDaoImpl<T extends ReadingAbstract> extends 
 	}
 
 	@SuppressWarnings("unchecked")
-	public List<T> getLatestList( LocalDate date) {
-		List<T> list = createEntityCriteria()
-				//.add(Restrictions.in("meter", meterId))
-				.add(Restrictions.eq("readingDate", date)).list();
-
+	public List<T> getLatestList(LocalDate date) {
+		List<T> list = createEntityCriteria().add(Restrictions.eq("readingDate", date)).list();
 		return list;
-
-		// String test = "Select * from readingEnergy where readingDate=(select
-		// MAX(readingDate) from readingEnergy) AND meter_id IN(:list)";
-		// Query query =
-		// getSession().createSQLQuery(test).setParameterList("list", meterId)
-		// //.setString("clazz",persistentClass.getSimpleName())
-		// ;
-		// return query.list();
-
 	}
 
-	public List<T> getPrevious(String readingDate, Set<Long> meterId) {
-		Query query = getSession()
-				.createSQLQuery(
-						"SELECT * FROM :clazz where readingDate=(SELECT max(readingDate) FROM :clazz WHERE readingDate < :date ) AND meter_id IN(:list)")
-				.setString("clazz", persistentClass.getSimpleName()).setString("date", readingDate)
-				.setParameterList("list", meterId);
+	public List<T> getPrevious(LocalDate readingDate, Set<Long> meterId) {
+		String queryString = String.format(
+				"SELECT * FROM %1$s where readingDate=(SELECT max(readingDate) "
+						+ "FROM %1$s WHERE readingDate < :date )  AND meter_id IN(:list)",
+				persistentClass.getSimpleName().toString());
+		Query query = getSession().createSQLQuery(queryString).addEntity(this.persistentClass)
+				.setDate("date", readingDate.toDate()).setParameterList("list", meterId);
 		@SuppressWarnings("unchecked")
 		List<T> result = query.list();
 		return result;
@@ -65,51 +51,37 @@ public abstract class ReadingAbstractDaoImpl<T extends ReadingAbstract> extends 
 
 	@SuppressWarnings("unchecked")
 	public List<T> getUnresolvedReadings() {
-		// Query query = getSession().createSQLQuery("SELECT r.id,
-		// r.readingDate, r.value, r.unit, r.meter_id, r.resolved "
-		// + "FROM T r join meterEnergy m on r.meter_id = m.id "
-		// + "where r.resolved = 0 and m.apartment_id is
-		// null").addEntity(T.class);
-		// return query.list();
-
-		List<T> list = createEntityCriteria().add(Restrictions.eq("resolved", false))
-				.add(Restrictions.eq("apartment", null)).list();
-		return list;
+		Criteria readings = createEntityCriteria().add(Restrictions.eq("resolved", false));
+		Criteria meters = readings.createCriteria("meter");
+		meters.add(Restrictions.isNull("apartment"));
+		return readings.list();
 
 	}
 
-	public void resolveReadings(Invoice invoice) {
-		Query query = getSession().createSQLQuery("update :clazz set resolved= :res where readingDate = :paramdate")
-				.setDate("paramdate", invoice.getBaseReading().getReadingDate().toDate()).setParameter("res", true)
-				.setString("clazz", persistentClass.getSimpleName());
-		query.executeUpdate();
-
-	}
-
-	public void unresolveReadings(Invoice invoice) {
-		Query query = getSession().createSQLQuery("update :clazz set resolved= :res where readingDate = :paramdate")
-				.setDate("paramdate", invoice.getBaseReading().getReadingDate().toDate()).setParameter("res", false)
-				.setString("clazz", persistentClass.getSimpleName());
+	public void changeResolvmentState(Invoice invoice, boolean resolved) {
+		String sql = String.format("update %s set resolved= :res where readingDate = :paramdate", getTabName());
+		Query query = getSession().createSQLQuery(sql)
+				.setDate("paramdate", invoice.getBaseReading().getReadingDate().toDate()).setParameter("res", resolved);
 		query.executeUpdate();
 
 	}
 
 	public int countDaysFromLastReading() {
+		String sql = String.format("SELECT DATEDIFF(CURDATE() , readingDate) FROM %s order by readingDate desc limit 1",
+				persistentClass.getSimpleName().toString());
 		try {
-			Query query = getSession()
-					.createSQLQuery(
-							"SELECT DATEDIFF(CURDATE() , readingDate) FROM :clazz order by readingDate desc limit 1")
-					.setString("clazz", persistentClass.getSimpleName());
+			Query query = getSession().createSQLQuery(sql);
 			return ((Number) query.uniqueResult()).intValue();
 		} catch (Exception e) {
-			return 0;
+			return 999;
 		}
 	}
 
 	public void deleteLatestReadings(LocalDate date) {
-		Query query = getSession().createSQLQuery("delete from :clazz where readingDate=:date and resolved=:res");
-		query.setParameter("date", date.toString()).setParameter("res", false).setString("clazz",
-				persistentClass.getSimpleName());
+		String sql = String.format("delete from  %s where readingDate=:date and resolved=:res",
+				persistentClass.getSimpleName().toString());
+		Query query = getSession().createSQLQuery(sql);
+		query.setParameter("date", date.toString()).setParameter("res", false);
 		query.executeUpdate();
 
 	}
