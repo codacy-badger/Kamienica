@@ -11,6 +11,8 @@ public interface PaymentDao<P extends PaymentAbstract, R extends ReadingAbstract
 
 	public void deleteByDate(String date);
 
+	public void deleteForInvoice(Invoice invoice);
+
 	public List<P> getByInvoice(Invoice invoice);
 
 	public List<P> getByReading(R reading);
@@ -18,5 +20,5 @@ public interface PaymentDao<P extends PaymentAbstract, R extends ReadingAbstract
 	public List<P> getPaymentForTenant(Tenant tenant);
 
 	public P getLatestPayment();
- 
+
 }

@@ -26,7 +26,7 @@ public abstract class AbstractDao<T> {
 	}
 
 	public String getTabName() {
-		return this.persistentClass.getSimpleName().toString();
+		return persistentClass.getSimpleName().toLowerCase();
 	}
 	// @SuppressWarnings("unchecked")
 	// public AbstractDao() {

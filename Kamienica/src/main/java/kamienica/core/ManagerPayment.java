@@ -49,8 +49,8 @@ public class ManagerPayment {
 		return listToReturn;
 	}
 
-	public static ArrayList<PaymentGas> createPaymentGasList(ArrayList<Tenant> tenants, InvoiceGas invoice,
-			ArrayList<Division> division, ArrayList<UsageValue> usage) {
+	public static ArrayList<PaymentGas> createPaymentGasList(List<Tenant> tenants, InvoiceGas invoice,
+			List<Division> division, List<UsageValue> usage) {
 		double sumOfExpences = invoice.getTotalAmount();
 		ArrayList<PaymentGas> listToReturn = new ArrayList<PaymentGas>();
 
@@ -78,8 +78,8 @@ public class ManagerPayment {
 		return listToReturn;
 	}
 
-	public static ArrayList<PaymentWater> createPaymentWaterList(ArrayList<Tenant> tenants, InvoiceWater invoice,
-			ArrayList<Division> podzial, ArrayList<UsageValue> usage) {
+	public static ArrayList<PaymentWater> createPaymentWaterList(List<Tenant> tenants, InvoiceWater invoice,
+			List<Division> podzial, List<UsageValue> usage) {
 		ArrayList<PaymentWater> listToReturn = new ArrayList<PaymentWater>();
 
 		double sumOfExpences = invoice.getTotalAmount();

@@ -41,6 +41,8 @@ public interface ReadingWaterDao extends DaoInterface<ReadingWater> {
 	public void deleteLatestReadings(LocalDate date);
 
 	public LocalDate getLatestDate();
+	
+	public List<ReadingWater> getWaterReadingForGasConsumption2(InvoiceGas invoice);
 
 	public HashMap<String, List<ReadingWater>> getWaterReadingForGasConsumption(InvoiceGas invoice);
 

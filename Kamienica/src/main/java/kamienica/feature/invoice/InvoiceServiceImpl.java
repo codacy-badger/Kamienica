@@ -1,6 +1,7 @@
 package kamienica.feature.invoice;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,7 +10,9 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.servlet.ModelAndView;
 
 import kamienica.core.ManagerEnergy;
+import kamienica.core.ManagerGas;
 import kamienica.core.ManagerPayment;
+import kamienica.core.ManagerWater;
 import kamienica.core.Media;
 import kamienica.core.exception.InvalidDivisionException;
 import kamienica.feature.apartment.Apartment;
@@ -69,13 +72,11 @@ public class InvoiceServiceImpl implements InvoiceService {
 
 	@Override
 	public <T extends Invoice> void save(T invoice, Media media) {
+		List<Tenant> tenants = tenantDao.getActiveTenants();
+		List<Division> division = divisionDao.getList();
+		List<Apartment> apartments = apartmentDao.getList();
 		switch (media) {
 		case ENERGY:
-
-			List<Tenant> tenants = tenantDao.getActiveTenants();
-			List<Division> division = divisionDao.getList();
-			List<Apartment> apartments = apartmentDao.getList();
-
 			List<ReadingEnergy> readingEnergyOld = readingService.getPreviousReadingEnergy(
 					invoice.getBaseReading().getReadingDate(), meterService.getIdList(Media.ENERGY));
 
@@ -96,9 +97,40 @@ public class InvoiceServiceImpl implements InvoiceService {
 
 		case GAS:
 
+//			List<ReadingGas> readingGasOld =  readingService.getPreviousReadingGas(invoice.getBaseReading().getReadingDate(),
+//					meterService.getIdList(Media.GAS));
+//
+//			HashMap<String, List<ReadingWater>> waterForGas = readingWaterDao.getWaterReadingForGasConsumption(invoice);
+//			if (waterForGas.isEmpty()) {
+//				//excepion
+//			}
+//
+//			List<ReadingGas> readingGasNew = readingService.getByDate(invoice.getBaseReading().getReadingDate(), Media.GAS);
+//
+//			ArrayList<UsageValue> usageGas = ManagerGas.countConsumption(apartments, readingGasOld, readingGasNew,
+//					waterForGas.get("old"), waterForGas.get("new"));
+//			List<PaymentGas> paymentGas = ManagerPayment.createPaymentGasList(tenants, invoice, division, usageGas);
 			break;
 		case WATER:
 
+			
+
+			List<ReadingWater> readingWaterOld = readingService.getPreviousReadingWater(
+					invoice.getBaseReading().getReadingDate(), meterService.getIdList(Media.WATER));
+
+			List<ReadingWater> readingWaterNew = readingService.getByDate(invoice.getBaseReading().getReadingDate(),
+					Media.WATER);
+
+			List<UsageValue> usageWater = ManagerWater.countConsumption(apartments, readingWaterOld,
+					readingWaterNew);
+			List<PaymentWater> paymentWater = ManagerPayment.createPaymentWaterList(tenants, (InvoiceWater) invoice,
+					division, usageWater);
+
+			invoiceWaterDao.save((InvoiceWater) invoice);
+			readingWaterDao.changeResolvmentState(invoice, true);
+			for (PaymentWater payment : paymentWater) {
+				paymentWaterDao.save(payment);
+			}
 			break;
 		default:
 			break;
@@ -138,12 +170,6 @@ public class InvoiceServiceImpl implements InvoiceService {
 	}
 
 	@Override
-	public void deleteEnergyByID(Long id) {
-		readingEnergyDao.changeResolvmentState(invoiceEnergyDao.getById(id), false);
-		invoiceEnergyDao.deleteById(id);
-	}
-
-	@Override
 	public void updateEnergy(InvoiceEnergy invoice, List<PaymentEnergy> payments) {
 		for (PaymentEnergy payment : payments) {
 			paymentEnergyDao.update(payment);
@@ -152,14 +178,37 @@ public class InvoiceServiceImpl implements InvoiceService {
 
 	}
 
-	@Override
-	public InvoiceEnergy getEnergyByID(Long id) {
-		return invoiceEnergyDao.getById(id);
+	public void delete(Long id, Media media) {
+		Invoice invoice;
+		switch (media) {
+		case ENERGY:
+			invoice = invoiceEnergyDao.getById(id);
+			paymentEnergyDao.deleteForInvoice(invoice);
+			readingEnergyDao.changeResolvmentState(invoice, false);
+			invoiceEnergyDao.deleteById(id);
+			break;
+		case GAS:
+			invoice = invoiceGasDao.getById(id);
+			paymentGasDao.deleteForInvoice(invoice);
+			readingGasDao.unresolveReadings(invoiceGasDao.getById(id));
+			invoiceGasDao.deleteById(id);
+			break;
+		case WATER:
+			invoice = invoiceWaterDao.getById(id);
+			paymentWaterDao.deleteForInvoice(invoice);
+			readingWaterDao.unresolveReadings(invoiceWaterDao.getById(id));
+			invoiceWaterDao.deleteById(id);
+
+			break;
+		default:
+			break;
+		}
 	}
 
 	@Override
-	public List<InvoiceEnergy> getEnergyInvoiceList() {
-		return invoiceEnergyDao.getList();
+	public void deleteEnergyByID(Long id) {
+		readingEnergyDao.changeResolvmentState(invoiceEnergyDao.getById(id), false);
+		invoiceEnergyDao.deleteById(id);
 	}
 
 	@Override
@@ -175,6 +224,71 @@ public class InvoiceServiceImpl implements InvoiceService {
 		readingWaterDao.unresolveReadings(invoiceWaterDao.getById(id));
 		invoiceWaterDao.deleteById(id);
 
+	}
+
+	@Override
+	public InvoiceEnergy getEnergyByID(Long id) {
+		return invoiceEnergyDao.getById(id);
+	}
+
+	@Override
+	public List<InvoiceEnergy> getEnergyInvoiceList() {
+		return invoiceEnergyDao.getList();
+	}
+
+	@Override
+	public <T extends Invoice> void update(T invoice, Media media) {
+		double invFactor;
+		Invoice oldInv;
+		Long id = invoice.getId();
+		switch (media) {
+		case ENERGY:
+			System.out.println(invoiceEnergyDao.getList());
+			oldInv = invoiceEnergyDao.getById(id);
+
+			invFactor = (invoice.getTotalAmount() / oldInv.getTotalAmount());
+			List<PaymentEnergy> paymentsEnergy = paymentEnergyDao.getByInvoice(invoice);
+			for (int i = 0; i < paymentsEnergy.size(); i++) {
+				paymentsEnergy.get(i).setPaymentAmount(paymentsEnergy.get(i).getPaymentAmount() * invFactor);
+			}
+
+			for (PaymentEnergy payment : paymentsEnergy) {
+				paymentEnergyDao.update(payment);
+			}
+			invoiceEnergyDao.update((InvoiceEnergy) invoice);
+			break;
+		case GAS:
+
+			oldInv = invoiceGasDao.getById(invoice.getId());
+
+			invFactor = (invoice.getTotalAmount() / oldInv.getTotalAmount());
+			List<PaymentGas> paymentsGas = paymentGasDao.getByInvoice(invoice);
+			for (int i = 0; i < paymentsGas.size(); i++) {
+				paymentsGas.get(i).setPaymentAmount(paymentsGas.get(i).getPaymentAmount() * invFactor);
+			}
+
+			for (PaymentGas payment : paymentsGas) {
+				paymentGasDao.update(payment);
+			}
+			invoiceGasDao.update((InvoiceGas) invoice);
+			break;
+		case WATER:
+
+			oldInv = invoiceWaterDao.getById(invoice.getId());
+			invFactor = (invoice.getTotalAmount() / oldInv.getTotalAmount());
+			List<PaymentWater> paymentWater = paymentWaterDao.getByInvoice(invoice);
+			for (int i = 0; i < paymentWater.size(); i++) {
+				paymentWater.get(i).setPaymentAmount(paymentWater.get(i).getPaymentAmount() * invFactor);
+			}
+			for (PaymentWater payment : paymentWater) {
+				paymentWaterDao.update(payment);
+			}
+			invoiceWaterDao.update((InvoiceWater) invoice);
+			break;
+
+		default:
+			break;
+		}
 	}
 
 	@Override
@@ -273,7 +387,8 @@ public class InvoiceServiceImpl implements InvoiceService {
 
 		if (!DivisionValidator.validateDivision(apartmentDao.getList(), divisionDao.getList(),
 				tenantDao.getActiveTenants())) {
-			throw new InvalidDivisionException();
+			throw new InvalidDivisionException(
+					"Lista aktualnych najemców i mieszkań się nie zgadza. Sprawdź algorytm podziału");
 		}
 		switch (media) {
 		case ENERGY:

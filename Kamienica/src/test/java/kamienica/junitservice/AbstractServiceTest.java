@@ -12,6 +12,11 @@ import kamienica.configuration.JUnitConfig;
 @RunWith(SpringJUnit4ClassRunner.class)
 public abstract class AbstractServiceTest {
 
+	/**
+	 * difference factor for calculated data
+	 */
+	protected final double DELTA = 0.2;
+
 	@Test
 	public abstract void getList();
 

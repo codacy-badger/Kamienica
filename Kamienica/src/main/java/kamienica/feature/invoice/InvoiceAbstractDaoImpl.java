@@ -45,6 +45,14 @@ public class InvoiceAbstractDaoImpl<I extends Invoice> extends AbstractDao<I> {
 
 	}
 
+	public void setResolvement(I invoice, PaymentStatus status) {
+		String sql = String.format("update %s set status =  :stat  where id = :id", getTabName());
+		Query query = getSession().createSQLQuery(sql).addEntity(persistentClass)
+				.setParameter("stat", status.getPaymentStatus()).setParameter("id", invoice.getId());
+		query.executeUpdate();
+
+	}
+
 	public int getDaysOfLastInvoice() {
 		String sql = String.format("SELECT DATEDIFF(CURDATE()  ,I.date) FROM %s I order by date desc limit 1",
 				getTabName());

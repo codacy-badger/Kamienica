@@ -13,8 +13,8 @@ public interface InvoiceService {
 
 	public <T extends ReadingAbstract> List<T> prepareForRegistration(Media media) throws InvalidDivisionException;
 
-	public<T extends Invoice> void save(T invoice, Media media);
-	
+	public <T extends Invoice> void save(T invoice, Media media);
+
 	public void saveEnergy(InvoiceEnergy invoice, List<PaymentEnergy> payment);
 
 	public void saveGas(InvoiceGas invoice, List<PaymentGas> payment);
@@ -26,12 +26,16 @@ public interface InvoiceService {
 	public List<InvoiceGas> getGasInvoiceList();
 
 	public List<InvoiceEnergy> getEnergyInvoiceList();
+	
+	public void delete(Long id, Media media);
 
 	public void deleteGasByID(Long id);
 
 	public void deleteWaterByID(Long id);
 
 	public void deleteEnergyByID(Long id);
+
+	public <T extends Invoice> void update(T invoice, Media media);
 
 	public void updateGas(InvoiceGas invoice, List<PaymentGas> payments);
 

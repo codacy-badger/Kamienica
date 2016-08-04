@@ -77,7 +77,7 @@ INSERT INTO  readingwater  ( id , readingDate , resolved , value , unit , meter_
 INSERT INTO  readingwater  ( id , readingDate , resolved , value , unit , meter_id ) VALUES (6,'2016-07-01','0',6,'m3',6);
 INSERT INTO  readingwater  ( id , readingDate , resolved , value , unit , meter_id ) VALUES (7,'2016-07-01','0',6,'m3',7);
 
-INSERT INTO  readingwater  ( id , readingDate , resolved , value , unit , meter_id ) VALUES (8,'2016-08-01','1',44,'m3',1);
+INSERT INTO  readingwater  ( id , readingDate , resolved , value , unit , meter_id ) VALUES (8,'2016-08-01','1',46,'m3',1);
 INSERT INTO  readingwater  ( id , readingDate , resolved , value , unit , meter_id ) VALUES (9,'2016-08-01','1',5,'m3',2);
 INSERT INTO  readingwater  ( id , readingDate , resolved , value , unit , meter_id ) VALUES (10,'2016-08-01','1',3,'m3',3);
 INSERT INTO  readingwater  ( id , readingDate , resolved , value , unit , meter_id ) VALUES (11,'2016-08-01','1',7,'m3',4);
@@ -85,7 +85,7 @@ INSERT INTO  readingwater  ( id , readingDate , resolved , value , unit , meter_
 INSERT INTO  readingwater  ( id , readingDate , resolved , value , unit , meter_id ) VALUES (13,'2016-08-01','1',10,'m3',6);
 INSERT INTO  readingwater  ( id , readingDate , resolved , value , unit , meter_id ) VALUES (14,'2016-08-01','1',7,'m3',7);
 
-INSERT INTO  readingwater  ( id , readingDate , resolved , value , unit , meter_id ) VALUES (15,'2016-09-01','0',56,'m3',1);
+INSERT INTO  readingwater  ( id , readingDate , resolved , value , unit , meter_id ) VALUES (15,'2016-09-01','0',60,'m3',1);
 INSERT INTO  readingwater  ( id , readingDate , resolved , value , unit , meter_id ) VALUES (16,'2016-09-01','0',6,'m3',2);
 INSERT INTO  readingwater  ( id , readingDate , resolved , value , unit , meter_id ) VALUES (17,'2016-09-01','0',4,'m3',3);
 INSERT INTO  readingwater  ( id , readingDate , resolved , value , unit , meter_id ) VALUES (18,'2016-09-01','0',10,'m3',4);

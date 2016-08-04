@@ -11,7 +11,6 @@ import org.hibernate.criterion.Restrictions;
 import org.joda.time.LocalDate;
 
 import kamienica.dao.AbstractDao;
-import kamienica.feature.apartment.Apartment;
 import kamienica.feature.invoice.Invoice;
 
 public abstract class ReadingAbstractDaoImpl<T extends ReadingAbstract> extends AbstractDao<T> {
@@ -38,10 +37,8 @@ public abstract class ReadingAbstractDaoImpl<T extends ReadingAbstract> extends 
 	}
 
 	public List<T> getPrevious(LocalDate readingDate, Set<Long> meterId) {
-		String queryString = String.format(
-				"SELECT * FROM %1$s where readingDate=(SELECT max(readingDate) "
-						+ "FROM %1$s WHERE readingDate < :date )  AND meter_id IN(:list)",
-				persistentClass.getSimpleName().toString());
+		String queryString = String.format("SELECT * FROM %1$s where readingDate=(SELECT max(readingDate) "
+				+ "FROM %1$s WHERE readingDate < :date )  AND meter_id IN(:list)", getTabName());
 		Query query = getSession().createSQLQuery(queryString).addEntity(this.persistentClass)
 				.setDate("date", readingDate.toDate()).setParameterList("list", meterId);
 		@SuppressWarnings("unchecked")
@@ -68,7 +65,7 @@ public abstract class ReadingAbstractDaoImpl<T extends ReadingAbstract> extends 
 
 	public int countDaysFromLastReading() {
 		String sql = String.format("SELECT DATEDIFF(CURDATE() , readingDate) FROM %s order by readingDate desc limit 1",
-				persistentClass.getSimpleName().toString());
+				getTabName());
 		try {
 			Query query = getSession().createSQLQuery(sql);
 			return ((Number) query.uniqueResult()).intValue();
@@ -78,8 +75,7 @@ public abstract class ReadingAbstractDaoImpl<T extends ReadingAbstract> extends 
 	}
 
 	public void deleteLatestReadings(LocalDate date) {
-		String sql = String.format("delete from  %s where readingDate=:date and resolved=:res",
-				persistentClass.getSimpleName().toString());
+		String sql = String.format("delete from  %s where readingDate=:date and resolved=:res", getTabName());
 		Query query = getSession().createSQLQuery(sql);
 		query.setParameter("date", date.toString()).setParameter("res", false);
 		query.executeUpdate();
