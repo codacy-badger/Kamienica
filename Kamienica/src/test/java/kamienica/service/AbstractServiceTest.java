@@ -1,4 +1,4 @@
-package kamienica.junitservice;
+package kamienica.service;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -15,7 +15,7 @@ public abstract class AbstractServiceTest {
 	/**
 	 * difference factor for calculated data
 	 */
-	protected final double DELTA = 0.2;
+	protected final double DELTA = 0.35;
 
 	@Test
 	public abstract void getList();

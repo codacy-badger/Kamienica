@@ -11,10 +11,11 @@ import kamienica.feature.usagevalue.UsageValue;
 
 public class ManagerEnergy {
 
-	public static ArrayList<UsageValue> countConsupmtion(List<Apartment> apartment,
-			List<ReadingEnergy> oldReadings, List<ReadingEnergy> newReadings) {
+	public static ArrayList<UsageValue> countConsupmtion(List<Apartment> apartment, List<ReadingEnergy> oldReadings,
+			List<ReadingEnergy> newReadings) {
 		ArrayList<UsageValue> out = new ArrayList<UsageValue>();
 		for (Apartment m : apartment) {
+
 			UsageValue tmp = new UsageValue();
 			tmp.setDescription("Zuzycie calkowite za: " + m.getDescription());
 			tmp.setApartment(m);
@@ -36,7 +37,7 @@ public class ManagerEnergy {
 					}
 				}
 			}
-	
+
 			double usage = sumCurrent - sumPrevious;
 
 			tmp.setUsage(usage);
@@ -45,9 +46,12 @@ public class ManagerEnergy {
 				tmp.setDaysBetweenReadings(0);
 			} else {
 				tmp.setDaysBetweenReadings(
-						Days.daysBetween(oldReadings.get(0).getReadingDate(), newReadings.get(0).getReadingDate()).getDays());
-//				tmp.setDaysBetweenReadings(Days.daysBetween(new DateTime(oldReadings.get(0).getReadingDate()),
-//						new DateTime(newReadings.get(0).getReadingDate())).getDays());
+						Days.daysBetween(oldReadings.get(0).getReadingDate(), newReadings.get(0).getReadingDate())
+								.getDays());
+				// tmp.setDaysBetweenReadings(Days.daysBetween(new
+				// DateTime(oldReadings.get(0).getReadingDate()),
+				// new
+				// DateTime(newReadings.get(0).getReadingDate())).getDays());
 			}
 			out.add(tmp);
 		}

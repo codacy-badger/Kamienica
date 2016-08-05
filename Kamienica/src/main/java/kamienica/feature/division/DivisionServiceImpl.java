@@ -8,11 +8,8 @@ import java.util.Locale;
 
 import org.joda.time.LocalDate;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.web.session.InvalidSessionAccessDeniedHandler;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.servlet.ModelAndView;
-
 import kamienica.core.exception.InvalidDivisionException;
 import kamienica.core.exception.WrongDivisionInputException;
 import kamienica.feature.apartment.Apartment;

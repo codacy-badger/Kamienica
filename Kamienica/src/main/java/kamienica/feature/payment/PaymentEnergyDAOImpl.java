@@ -1,20 +1,10 @@
 package kamienica.feature.payment;
 
-import java.util.List;
-
-import org.hibernate.Query;
-import org.hibernate.criterion.Order;
-import org.hibernate.criterion.Restrictions;
 import org.springframework.stereotype.Repository;
-
-import kamienica.dao.AbstractDao;
-import kamienica.feature.invoice.Invoice;
-import kamienica.feature.reading.ReadingEnergy;
-import kamienica.feature.tenant.Tenant;
 
 @Repository("paymentEnergyDao")
 public class PaymentEnergyDAOImpl extends PaymentAbstractDaoImpl<PaymentEnergy>
-		implements PaymentDao<PaymentEnergy, ReadingEnergy> {
+		implements PaymentDao<PaymentEnergy> {
 
 //	@Override
 //	@SuppressWarnings("unchecked")

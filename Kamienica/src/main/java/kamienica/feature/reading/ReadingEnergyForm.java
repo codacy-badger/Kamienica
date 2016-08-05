@@ -33,26 +33,32 @@ public class ReadingEnergyForm extends ReadingForm<ReadingEnergy> {
 		this.currentReadings = odczytyEnergii;
 	}
 
+	@Override
 	public List<ReadingEnergy> getPreviousReadings() {
 		return previousReadings;
 	}
 
+	@Override
 	public void setPreviousReadings(List<ReadingEnergy> previousReadings) {
 		this.previousReadings = previousReadings;
 	}
 
+	@Override
 	public List<ReadingEnergy> getCurrentReadings() {
 		return currentReadings;
 	}
 
+	@Override
 	public void setCurrentReadings(List<ReadingEnergy> currentReadings) {
 		this.currentReadings = currentReadings;
 	}
 
+	@Override
 	public List<ReadingEnergy> getNewReadings() {
 		return newReadings;
 	}
 
+	@Override
 	public void setNewReadings(List<ReadingEnergy> newReadings) {
 		this.newReadings = newReadings;
 	}

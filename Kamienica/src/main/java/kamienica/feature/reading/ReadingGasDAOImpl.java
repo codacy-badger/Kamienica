@@ -2,10 +2,7 @@ package kamienica.feature.reading;
 
 import java.util.List;
 
-import org.hibernate.Criteria;
 import org.hibernate.Query;
-import org.hibernate.criterion.Projections;
-import org.joda.time.LocalDate;
 import org.springframework.stereotype.Repository;
 
 import kamienica.feature.apartment.Apartment;

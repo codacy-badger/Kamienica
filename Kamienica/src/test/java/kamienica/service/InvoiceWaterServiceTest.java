@@ -1,8 +1,6 @@
-package kamienica.junitservice;
+package kamienica.service;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.fail;
-
 import java.util.List;
 
 import org.joda.time.LocalDate;
@@ -20,7 +18,6 @@ import kamienica.feature.invoice.InvoiceWater;
 import kamienica.feature.invoice.InvoiceService;
 import kamienica.feature.payment.PaymentWater;
 import kamienica.feature.payment.PaymentService;
-import kamienica.feature.reading.ReadingWater;
 import kamienica.feature.reading.ReadingWater;
 import kamienica.feature.reading.ReadingService;
 
@@ -56,11 +53,7 @@ public class InvoiceWaterServiceTest extends AbstractServiceTest {
 		List<ReadingWater> list = readingService.getUnresolvedReadingsWater();
 		assertEquals(60, list.get(1).getValue(), 0);
 		InvoiceWater invoice = new InvoiceWater("112233", "test", new LocalDate(), 200, list.get(1));
-		try {
-			invoice.setBaseReading(list.get(1));
-		} catch (Exception e) {
-			fail();
-		}
+
 		invoiceService.save(invoice, Media.WATER);
 		assertEquals(2, invoiceService.getWaterInvoiceList().size());
 		List<PaymentWater> paymentList = paymentService.getPaymentWaterList();
@@ -73,6 +66,27 @@ public class InvoiceWaterServiceTest extends AbstractServiceTest {
 		assertEquals(38.09, paymentList.get(3).getPaymentAmount(), DELTA);
 		assertEquals(52.38, paymentList.get(4).getPaymentAmount(), DELTA);
 		assertEquals(109.52, paymentList.get(5).getPaymentAmount(), DELTA);
+
+		list = readingService.getUnresolvedReadingsWater();
+		assertEquals(1, list.size());
+		assertEquals(LocalDate.parse("2016-07-01"), list.get(0).getReadingDate());
+	}
+
+	@Transactional
+	public void addForFirstReading() {
+		List<ReadingWater> list = readingService.getUnresolvedReadingsWater();
+		assertEquals(60, list.get(1).getValue(), 0);
+		InvoiceWater invoice = new InvoiceWater("112233", "test", new LocalDate(), 200, list.get(1));
+
+		invoiceService.save(invoice, Media.WATER);
+		assertEquals(2, invoiceService.getWaterInvoiceList().size());
+		List<PaymentWater> paymentList = paymentService.getPaymentWaterList();
+
+		assertEquals(6, paymentList.size());
+
+		assertEquals(36.36, paymentList.get(3).getPaymentAmount(), DELTA);
+		assertEquals(72.72, paymentList.get(4).getPaymentAmount(), DELTA);
+		assertEquals(90.90, paymentList.get(5).getPaymentAmount(), DELTA);
 
 		list = readingService.getUnresolvedReadingsWater();
 		assertEquals(1, list.size());
@@ -131,7 +145,7 @@ public class InvoiceWaterServiceTest extends AbstractServiceTest {
 	public void prepareForRegistration() throws InvalidDivisionException {
 		apService.deleteByID(5L);
 		List<ReadingWater> list = invoiceService.prepareForRegistration(Media.WATER);
-		
+
 		assertEquals(2, list.size());
 		assertEquals(33, list.get(0).getValue(), 0);
 		assertEquals(60, list.get(1).getValue(), 0);

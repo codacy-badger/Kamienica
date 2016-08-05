@@ -3,16 +3,10 @@ package kamienica.feature.reading;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Set;
-
-import org.hibernate.Criteria;
 import org.hibernate.Query;
-import org.hibernate.criterion.Order;
-import org.hibernate.criterion.Projections;
 import org.joda.time.LocalDate;
 import org.springframework.stereotype.Repository;
 
-import kamienica.dao.AbstractDao;
 import kamienica.feature.apartment.Apartment;
 import kamienica.feature.invoice.InvoiceGas;
 import kamienica.feature.invoice.InvoiceWater;

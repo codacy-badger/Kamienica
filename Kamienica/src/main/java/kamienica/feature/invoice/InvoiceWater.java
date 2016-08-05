@@ -17,6 +17,7 @@ public class InvoiceWater extends Invoice implements Serializable {
 	@OneToOne
 	private ReadingWater baseReading;
 
+	@Override
 	public ReadingWater getBaseReading() {
 		return baseReading;
 	}

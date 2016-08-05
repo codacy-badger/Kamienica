@@ -1,6 +1,5 @@
 package kamienica.feature.division;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -75,7 +74,7 @@ public class DivisionController {
 	public ModelAndView divisionList() {
 		Map<String, Object> model = new HashMap<String, Object>();
 		DivisionForm divisionForm = new DivisionForm();
-		divisionForm.setDivisionList((ArrayList<Division>) divisionService.getList());
+		divisionForm.setDivisionList(divisionService.getList());
 		List<Tenant> tenants = tenantService.getCurrentTenants();
 		List<Apartment> apartments = apartmentService.getList();
 		if (!DivisionValidator.validateDivision(apartments, divisionForm.getDivisionList(), tenants)) {

@@ -6,7 +6,6 @@ import java.util.Map;
 
 import org.joda.time.LocalDate;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.expression.ParseException;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -222,6 +221,8 @@ public class ReadingController {
 	public ModelAndView readingEnergyEdit(@ModelAttribute("readingForm") ReadingEnergyForm readingForm) {
 
 		readingForm.setCurrentReadings(readingService.energyLatestEdit());
+
+		//readingForm.setPreviousReadings(readingService.getPreviousReadingEnergy(readingForm.getDate(), Media.ENERGY));
 		readingForm.setPreviousReadings(
 				readingService.getPreviousReadingEnergy(readingForm.getDate(), meterService.getIdList(Media.ENERGY)));
 

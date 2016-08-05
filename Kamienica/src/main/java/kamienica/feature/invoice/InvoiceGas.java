@@ -17,6 +17,7 @@ public class InvoiceGas extends Invoice implements Serializable{
 	@OneToOne
 	private ReadingGas baseReading;
 
+	@Override
 	public ReadingGas getBaseReading() {
 		return baseReading;
 	}

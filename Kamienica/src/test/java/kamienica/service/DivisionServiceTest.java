@@ -1,4 +1,4 @@
-package kamienica.junitservice;
+package kamienica.service;
 
 import static org.junit.Assert.assertEquals;
 
@@ -15,6 +15,7 @@ public class DivisionServiceTest extends AbstractServiceTest {
 	@Autowired
 	DivisionService service;
 
+	@Override
 	@Test
 	public void getList() {
 		List<Division> list = service.getList();

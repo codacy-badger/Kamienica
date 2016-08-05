@@ -5,14 +5,10 @@ import java.util.List;
 
 import kamienica.core.Media;
 import kamienica.feature.apartment.Apartment;
-import kamienica.feature.payment.PaymentEnergy;
-import kamienica.feature.payment.PaymentGas;
-import kamienica.feature.payment.PaymentWater;
 import kamienica.feature.reading.ReadingAbstract;
 import kamienica.feature.reading.ReadingEnergy;
 import kamienica.feature.reading.ReadingGas;
 import kamienica.feature.reading.ReadingWater;
-import kamienica.feature.tenant.Tenant;
 
 public interface AdminUserService {
 

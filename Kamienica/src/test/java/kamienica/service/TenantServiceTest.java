@@ -1,78 +1,55 @@
 package kamienica.service;
 
+import static org.junit.Assert.*;
+
 import java.util.List;
 
-import org.joda.time.LocalDate;
+import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.testng.Assert;
-import org.testng.annotations.Test;
 
-import kamienica.dao.EntityDaoImplTest;
-import kamienica.feature.apartment.ApartmentDao;
 import kamienica.feature.tenant.Tenant;
 import kamienica.feature.tenant.TenantService;
-import kamienica.feature.tenant.UserStatus;
 
-public class TenantServiceTest extends EntityDaoImplTest {
+public class TenantServiceTest extends AbstractServiceTest {
 
 	@Autowired
 	TenantService service;
 
-	@Autowired
-	ApartmentDao apDao;
-
-	/**
-	 * 
-	 * If new tenant's movement date is prior to current than he should be
-	 * deactivated first (data backfill case)
-	 * 
-	 */
+	@Override
 	@Test
-	public void olderTenantShouldBeInactivated() {
-		Tenant t = getTenant(apDao);
-		t.setMovementDate(new LocalDate(1990, 10, 10));
-		service.saveTenant(t);
-		
-		Assert.assertEquals(service.getTenantById(1L).getStatus(), UserStatus.ACTIVE.getUserStatus());
-		Assert.assertNotSame(service.getTenantById(5L), UserStatus.INACTIVE.getUserStatus());
-
-	}
-
-	@Test
-	public void newTenantShouldDeactivatePrevious() {
-		Tenant t = getTenant(apDao);
-		t.setMovementDate(new LocalDate());
+	public void getList() {
 		List<Tenant> list = service.getList();
-		for (Tenant tenant : list) {
-			System.out.println(tenant);
-		}
-		System.out.println("====================");
-		service.saveTenant(t);
-		list = service.getList();
-		for (Tenant tenant : list) {
-			System.out.println(tenant);
-		}
-		Assert.assertEquals(service.getTenantById(1L).getStatus(), UserStatus.INACTIVE.getUserStatus());
-		Assert.assertEquals(service.getTenantById(5L), UserStatus.ACTIVE.getUserStatus());
+
+		assertEquals(5, list.size());
 	}
 
-	// public void saveTenant(Tenant newTenant) {
-	// Tenant currentTenant =
-	// tenantDao.getTenantForApartment(newTenant.getApartment());
-	// if (currentTenant == null) {
-	// tenantDao.save(newTenant);
-	// } else if
-	// (currentTenant.getMovementDate().isAfter(newTenant.getMovementDate())) {
-	// newTenant.setStatus(UserStatus.INACTIVE.getUserStatus());
-	// tenantDao.save(newTenant);
-	// } else {
-	// tenantDao.deactivateByApparmentId(newTenant.getApartment().getId());
-	// tenantDao.save(newTenant);
-	// }
-	//
-	// }
+	@Override
+	public void getById() {
+		// TODO Auto-generated method stub
 
-	private static Tenant getTenant(ApartmentDao apDao) {
-		return new Tenant("Test", "tEST2", "TEST@wp.pl", "23234", apDao.getById(2L));
 	}
+
+	@Override
+	public void add() {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public void remove() {
+	
+	}
+
+	@Override
+	public void update() {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public void addWithValidationError() {
+		// TODO Auto-generated method stub
+
+	}
+
 }

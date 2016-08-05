@@ -6,10 +6,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import kamienica.core.Media;
 import kamienica.feature.invoice.Invoice;
-import kamienica.feature.reading.ReadingEnergy;
-import kamienica.feature.reading.ReadingGas;
-import kamienica.feature.reading.ReadingWater;
 import kamienica.feature.tenant.Tenant;
 
 @Service
@@ -17,11 +15,30 @@ import kamienica.feature.tenant.Tenant;
 public class PaymentServiceImpl implements PaymentService {
 
 	@Autowired
-	private PaymentDao<PaymentGas, ReadingGas> gas;
+	private PaymentDao<PaymentGas> gas;
 	@Autowired
-	private PaymentDao<PaymentEnergy, ReadingEnergy> energy;
+	private PaymentDao<PaymentEnergy> energy;
 	@Autowired
-	private PaymentDao<PaymentWater, ReadingWater> water;
+	private PaymentDao<PaymentWater> water;
+
+//	@Override
+//	public List<PaymentAbstract> list(Media media) {
+//		List<PaymentAbstract> list;
+//		switch (media) {
+//		case ENERGY:
+//
+//			return energy.getList();
+//		case GAS:
+//
+//			break;
+//		case WATER:
+//
+//			break;
+//
+//		default:
+//			break;
+//		}
+//	}
 
 	@Override
 	public List<PaymentGas> getPaymentGasByInvoice(Invoice invoice) {
@@ -50,28 +67,28 @@ public class PaymentServiceImpl implements PaymentService {
 		return water.getList();
 	}
 
-	@Override
-	public void saveGasList(List<PaymentGas> payment) {
-		for (PaymentGas paymentGas : payment) {
-			gas.save(paymentGas);
-		}
-
-	}
-
-	@Override
-	public void saveWaterList(List<PaymentWater> payment) {
-		for (PaymentWater paymentWater : payment) {
-			water.save(paymentWater);
-		}
-
-	}
-
-	@Override
-	public void saveEnergyList(List<PaymentEnergy> payment) {
-		for (PaymentEnergy paymentEnergy : payment) {
-			energy.save(paymentEnergy);
-		}
-	}
+	// @Override
+	// public void saveGasList(List<PaymentGas> payment) {
+	// for (PaymentGas paymentGas : payment) {
+	// gas.save(paymentGas);
+	// }
+	//
+	// }
+	//
+	// @Override
+	// public void saveWaterList(List<PaymentWater> payment) {
+	// for (PaymentWater paymentWater : payment) {
+	// water.save(paymentWater);
+	// }
+	//
+	// }
+	//
+	// @Override
+	// public void saveEnergyList(List<PaymentEnergy> payment) {
+	// for (PaymentEnergy paymentEnergy : payment) {
+	// energy.save(paymentEnergy);
+	// }
+	// }
 
 	@Override
 	public List<PaymentEnergy> getEnergyByInvoice(Invoice invoice) {
@@ -94,23 +111,23 @@ public class PaymentServiceImpl implements PaymentService {
 		return water.getPaymentForTenant(tenant);
 	}
 
-	@Override
-	public void deleteEnergyByDate(Long id) {
-		PaymentEnergy forDeletion = energy.getById(id);
-		energy.deleteByDate(forDeletion.getPaymentDate().toString());
-	}
-
-	@Override
-	public void deleteWaterByDate(Long id) {
-		PaymentWater forDeletion = water.getById(id);
-		water.deleteByDate(forDeletion.getPaymentDate().toString());
-
-	}
-
-	@Override
-	public void deleteGasByDate(Long id) {
-		PaymentGas forDeletion = gas.getById(id);
-		gas.deleteByDate(forDeletion.getPaymentDate().toString());
-	}
+	// @Override
+	// public void deleteEnergyByDate(Long id) {
+	// PaymentEnergy forDeletion = energy.getById(id);
+	// energy.deleteByDate(forDeletion.getPaymentDate().toString());
+	// }
+	//
+	// @Override
+	// public void deleteWaterByDate(Long id) {
+	// PaymentWater forDeletion = water.getById(id);
+	// water.deleteByDate(forDeletion.getPaymentDate().toString());
+	//
+	// }
+	//
+	// @Override
+	// public void deleteGasByDate(Long id) {
+	// PaymentGas forDeletion = gas.getById(id);
+	// gas.deleteByDate(forDeletion.getPaymentDate().toString());
+	// }
 
 }

@@ -1,4 +1,4 @@
-package kamienica.junitservice;
+package kamienica.service;
 
 import static org.junit.Assert.assertEquals;
 
@@ -6,10 +6,7 @@ import java.util.List;
 
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.test.annotation.Rollback;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.validation.BindingResult;
-
 import kamienica.core.Media;
 import kamienica.feature.meter.MeterEnergy;
 import kamienica.feature.meter.MeterService;
@@ -37,6 +34,7 @@ public class MeterEnergyServiceTest extends AbstractServiceTest {
 
 	@Transactional
 	@Override
+	@Test
 	public void add() {
 		MeterEnergy meter = createDummyMeter();
 		service.save(meter, Media.ENERGY);
@@ -50,6 +48,8 @@ public class MeterEnergyServiceTest extends AbstractServiceTest {
 		service.save(meter, Media.ENERGY);
 		assertEquals(6, service.getList(Media.ENERGY).size());
 		service.delete(6L, Media.ENERGY);
+		service.delete(7L, Media.ENERGY);
+		service.delete(8L, Media.ENERGY);
 		assertEquals(5, service.getList(Media.ENERGY).size());
 
 	}
@@ -64,8 +64,6 @@ public class MeterEnergyServiceTest extends AbstractServiceTest {
 		assertEquals("uPdate", meter.getDescription());
 	}
 
-	
-	
 	@Override
 	public void addWithValidationError() {
 		// TODO Auto-generated method stub
@@ -73,7 +71,7 @@ public class MeterEnergyServiceTest extends AbstractServiceTest {
 	}
 
 	private MeterEnergy createDummyMeter() {
-		return new MeterEnergy("test", "12345678", "test", service.getById(3L, Media.ENERGY).getApartment());
+		return new MeterEnergy("test", "test", "test", service.getById(3L, Media.ENERGY).getApartment());
 	}
 
 }

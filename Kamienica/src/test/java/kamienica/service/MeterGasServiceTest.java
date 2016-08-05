@@ -1,23 +1,22 @@
-package kamienica.junitservice;
+package kamienica.service;
 
 import static org.junit.Assert.assertEquals;
 
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import kamienica.feature.payment.PaymentService;
+import kamienica.core.Media;
+import kamienica.feature.meter.MeterService;
 
-public class PaymentServiceTest extends AbstractServiceTest {
+public class MeterGasServiceTest extends AbstractServiceTest {
 
 	@Autowired
-	PaymentService service;
-	
+	MeterService service;
+
 	@Test
 	@Override
 	public void getList() {
-		assertEquals(3, service.getPaymentEnergyList().size());
-		assertEquals(3, service.getPaymentGasList().size());
-		assertEquals(3, service.getPaymentWaterList().size());
+		assertEquals(6, service.getList(Media.GAS).size());
 
 	}
 

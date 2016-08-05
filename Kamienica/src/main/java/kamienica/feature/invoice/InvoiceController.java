@@ -1,6 +1,5 @@
 package kamienica.feature.invoice;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -17,42 +16,17 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
-import kamienica.core.ManagerGas;
-import kamienica.core.ManagerPayment;
 import kamienica.core.Media;
 import kamienica.core.exception.InvalidDivisionException;
-import kamienica.feature.apartment.Apartment;
-import kamienica.feature.apartment.ApartmentService;
-import kamienica.feature.division.Division;
-import kamienica.feature.division.DivisionService;
-import kamienica.feature.meter.MeterService;
-import kamienica.feature.payment.PaymentGas;
 import kamienica.feature.reading.ReadingEnergy;
 import kamienica.feature.reading.ReadingGas;
-import kamienica.feature.reading.ReadingService;
 import kamienica.feature.reading.ReadingWater;
-import kamienica.feature.tenant.Tenant;
-import kamienica.feature.tenant.TenantService;
-import kamienica.feature.usagevalue.UsageValue;
 
 @Controller
 public class InvoiceController {
 
 	@Autowired
 	private InvoiceService invoiceService;
-	@Autowired
-	private ReadingService readingService;
-	@Autowired
-	private ApartmentService apartmentService;
-	@Autowired
-	private TenantService tenantService;
-	@Autowired
-	private DivisionService divisionService;
-	// @Autowired
-	// private PaymentService paymentService;
-	@Autowired
-	private MeterService meterService;
-
 	private InvoiceControllerUtils utils;
 
 	// -------------------REGISTER----------------------------------------------
@@ -163,37 +137,49 @@ public class InvoiceController {
 
 		if (result.hasErrors()) {
 			HashMap<String, Object> model = new HashMap<>();
-			model.put("saveUrl", "/Admin/Invoice/invoiceGasSave");
-			model.put("media", "Gaz");
+			utils.setUrlForGas(model);
 			return new ModelAndView("/Admin/Invoice/InvoiceRegister", "model", model);
 		}
+		//
+		// List<ReadingGas> readingGasOld = new ArrayList<>();
+		// ArrayList<Tenant> tenants = (ArrayList<Tenant>)
+		// tenantService.getCurrentTenants();
+		// ArrayList<Division> division = (ArrayList<Division>)
+		// divisionService.getList();
+		// ArrayList<Apartment> apartments = (ArrayList<Apartment>)
+		// apartmentService.getList();
 
-		List<ReadingGas> readingGasOld = new ArrayList<>();
-		ArrayList<Tenant> tenants = (ArrayList<Tenant>) tenantService.getCurrentTenants();
-		ArrayList<Division> division = (ArrayList<Division>) divisionService.getList();
-		ArrayList<Apartment> apartments = (ArrayList<Apartment>) apartmentService.getList();
+		// readingGasOld =
+		// readingService.getPreviousReadingGas(invoice.getBaseReading().getReadingDate(),
+		// meterService.getIdList(Media.GAS));
 
-		readingGasOld = readingService.getPreviousReadingGas(invoice.getBaseReading().getReadingDate(),
-				meterService.getIdList(Media.GAS));
+		// HashMap<String, List<ReadingWater>> waterForGas =
+		// readingService.getWaterReadingsForGasConsumption(invoice);
+		// if (waterForGas.isEmpty()) {
+		// HashMap<String, Object> model = new HashMap<>();
+		// String message = "Brakuje odczytów wody. Bez nich niemożliwe jest
+		// obliczenie zużycia gazu dla pieca CWU";
+		// model.put("error", message);
+		// model.put("saveUrl", "/Admin/Invoice/invoiceGasSave");
+		// model.put("media", "Gaz");
+		// return new ModelAndView("/Admin/Invoice/InvoiceRegister", "model",
+		// model);
+		// }
 
-		HashMap<String, List<ReadingWater>> waterForGas = readingService.getWaterReadingsForGasConsumption(invoice);
-		if (waterForGas.isEmpty()) {
-			HashMap<String, Object> model = new HashMap<>();
-			String message = "Brakuje odczytów wody. Bez nich niemożliwe jest obliczenie zużycia gazu dla pieca CWU";
-			model.put("error", message);
-			model.put("saveUrl", "/Admin/Invoice/invoiceGasSave");
-			model.put("media", "Gaz");
-			return new ModelAndView("/Admin/Invoice/InvoiceRegister", "model", model);
-		}
-
-		List<ReadingGas> readingGasNew = readingService.getByDate(invoice.getBaseReading().getReadingDate(), Media.GAS);
-
-		ArrayList<UsageValue> usageGas = ManagerGas.countConsumption(apartments, readingGasOld, readingGasNew,
-				waterForGas.get("old"), waterForGas.get("new"));
-		List<PaymentGas> paymentGas = ManagerPayment.createPaymentGasList(tenants, invoice, division, usageGas);
+		// List<ReadingGas> readingGasNew =
+		// readingService.getByDate(invoice.getBaseReading().getReadingDate(),
+		// Media.GAS);
+		//
+		// ArrayList<UsageValue> usageGas =
+		// ManagerGas.countConsumption(apartments, readingGasOld, readingGasNew,
+		// waterForGas.get("old"), waterForGas.get("new"));
+		// List<PaymentGas> paymentGas =
+		// ManagerPayment.createPaymentGasList(tenants, invoice, division,
+		// usageGas);
 
 		try {
-			invoiceService.saveGas(invoice, paymentGas);
+			// invoiceService.saveGas(invoice, paymentGas);
+			invoiceService.save(invoice, Media.GAS);
 		} catch (ConstraintViolationException e) {
 			result.rejectValue("serialNumber", "error.invoice", "Podany numer już istnieje");
 			return new ModelAndView("/Admin/Invoice/InvoiceGasRegister");
@@ -254,13 +240,26 @@ public class InvoiceController {
 
 	// -------------------LIST----------------------------------------------
 
+	@RequestMapping("/Admin/Invoice/invoiceEnergyList")
+	public ModelAndView invoiceEnergyList() {
+		Map<String, Object> model = new HashMap<String, Object>();
+		invoiceService.list(model, Media.ENERGY);
+		// model.put("invoice", invoiceService.getEnergyInvoiceList());
+		// model.put("editlUrl", "/Admin/Invoice/invoiceEnergyEdit.html?id=");
+		// model.put("delUrl", "/Admin/Invoice/invoiceEnergyDelete.html?id=");
+		// model.put("media", "Energia");
+		return new ModelAndView("/Admin/Invoice/InvoiceList", model);
+
+	}
+
 	@RequestMapping("/Admin/Invoice/invoiceGasList")
 	public ModelAndView invoiceGasList() {
 		Map<String, Object> model = new HashMap<String, Object>();
-		model.put("invoice", invoiceService.getGasInvoiceList());
-		model.put("editlUrl", "/Admin/Invoice/invoiceGasEdit.html?id=");
-		model.put("delUrl", "/Admin/Invoice/invoiceGasDelete.html?id=");
-		model.put("media", "Gaz");
+		invoiceService.list(model, Media.GAS);
+		// model.put("invoice", invoiceService.getGasInvoiceList());
+		// model.put("editlUrl", "/Admin/Invoice/invoiceGasEdit.html?id=");
+		// model.put("delUrl", "/Admin/Invoice/invoiceGasDelete.html?id=");
+		// model.put("media", "Gaz");
 		return new ModelAndView("/Admin/Invoice/InvoiceList", model);
 
 	}
@@ -268,21 +267,11 @@ public class InvoiceController {
 	@RequestMapping("/Admin/Invoice/invoiceWaterList")
 	public ModelAndView invoiceWaterList() {
 		Map<String, Object> model = new HashMap<String, Object>();
-		model.put("invoice", invoiceService.getWaterInvoiceList());
-		model.put("editlUrl", "/Admin/Invoice/invoiceWaterEdit.html?id=");
-		model.put("delUrl", "/Admin/Invoice/invoiceWaterDelete.html?id=");
-		model.put("media", "Woda");
-		return new ModelAndView("/Admin/Invoice/InvoiceList", model);
-
-	}
-
-	@RequestMapping("/Admin/Invoice/invoiceEnergyList")
-	public ModelAndView invoiceEnergyList() {
-		Map<String, Object> model = new HashMap<String, Object>();
-		model.put("invoice", invoiceService.getEnergyInvoiceList());
-		model.put("editlUrl", "/Admin/Invoice/invoiceEnergyEdit.html?id=");
-		model.put("delUrl", "/Admin/Invoice/invoiceEnergyDelete.html?id=");
-		model.put("media", "Energia");
+		invoiceService.list(model, Media.WATER);
+		// model.put("invoice", invoiceService.getWaterInvoiceList());
+		// model.put("editlUrl", "/Admin/Invoice/invoiceWaterEdit.html?id=");
+		// model.put("delUrl", "/Admin/Invoice/invoiceWaterDelete.html?id=");
+		// model.put("media", "Woda");
 		return new ModelAndView("/Admin/Invoice/InvoiceList", model);
 
 	}
@@ -432,7 +421,7 @@ public class InvoiceController {
 	// return new ModelAndView("redirect:/Admin/Invoice/invoiceWaterList.html");
 	// }
 
-	// -----------------------------USUN------------------------------------------------
+	// -----------------------------DELETE------------------------------------------------
 
 	@RequestMapping(value = "/Admin/Invoice/invoiceGasDelete")
 	public ModelAndView invoiceGaz(@RequestParam(value = "id") Long id) {

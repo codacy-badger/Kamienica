@@ -1,14 +1,12 @@
 package kamienica.feature.invoice;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.servlet.ModelAndView;
-
 import kamienica.core.ManagerEnergy;
 import kamienica.core.ManagerGas;
 import kamienica.core.ManagerPayment;
@@ -64,11 +62,11 @@ public class InvoiceServiceImpl implements InvoiceService {
 	@Autowired
 	ReadingWaterDao readingWaterDao;
 	@Autowired
-	private PaymentDao<PaymentGas, ReadingGas> paymentGasDao;
+	private PaymentDao<PaymentGas> paymentGasDao;
 	@Autowired
-	private PaymentDao<PaymentEnergy, ReadingEnergy> paymentEnergyDao;
+	private PaymentDao<PaymentEnergy> paymentEnergyDao;
 	@Autowired
-	private PaymentDao<PaymentWater, ReadingWater> paymentWaterDao;
+	private PaymentDao<PaymentWater> paymentWaterDao;
 
 	@Override
 	public <T extends Invoice> void save(T invoice, Media media) {
@@ -184,6 +182,7 @@ public class InvoiceServiceImpl implements InvoiceService {
 
 	}
 
+	@Override
 	public void delete(Long id, Media media) {
 		Invoice invoice;
 		switch (media) {
@@ -410,6 +409,33 @@ public class InvoiceServiceImpl implements InvoiceService {
 
 		default:
 			return null;
+		}
+
+	}
+
+	@Override
+	public void list(Map<String, Object> model, Media media) {
+		switch (media) {
+		case ENERGY:
+			model.put("invoice", invoiceEnergyDao.getList());
+			model.put("editlUrl", "/Admin/Invoice/invoiceGasEdit.html?id=");
+			model.put("delUrl", "/Admin/Invoice/invoiceGasDelete.html?id=");
+			model.put("media", "Gaz");
+			break;
+		case GAS:
+			model.put("invoice", invoiceGasDao.getList());
+			model.put("editlUrl", "/Admin/Invoice/invoiceWaterEdit.html?id=");
+			model.put("delUrl", "/Admin/Invoice/invoiceWaterDelete.html?id=");
+			model.put("media", "Woda");
+			break;
+		case WATER:
+			model.put("invoice", invoiceWaterDao.getList());
+			model.put("editlUrl", "/Admin/Invoice/invoiceEnergyEdit.html?id=");
+			model.put("delUrl", "/Admin/Invoice/invoiceEnergyDelete.html?id=");
+			model.put("media", "Energia");
+			break;
+		default:
+			break;
 		}
 
 	}

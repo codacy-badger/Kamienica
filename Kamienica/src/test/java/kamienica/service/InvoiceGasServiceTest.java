@@ -1,8 +1,6 @@
-package kamienica.junitservice;
+package kamienica.service;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.fail;
-
 import java.util.List;
 
 import org.joda.time.LocalDate;
@@ -56,11 +54,7 @@ public class InvoiceGasServiceTest extends AbstractServiceTest {
 		List<ReadingGas> list = readingService.getUnresolvedReadingsGas();
 		assertEquals(196, list.get(1).getValue(), 0);
 		InvoiceGas invoice = new InvoiceGas("112233", "test", new LocalDate(), 200, list.get(1));
-		try {
-			invoice.setBaseReading(list.get(1));
-		} catch (Exception e) {
-			fail();
-		}
+
 		invoiceService.save(invoice, Media.GAS);
 		assertEquals(2, invoiceService.getGasInvoiceList().size());
 		List<PaymentGas> paymentList = paymentService.getPaymentGasList();
@@ -74,6 +68,27 @@ public class InvoiceGasServiceTest extends AbstractServiceTest {
 		list = readingService.getUnresolvedReadingsGas();
 		assertEquals(1, list.size());
 		assertEquals(LocalDate.parse("2016-07-29"), list.get(0).getReadingDate());
+	}
+
+	@Transactional
+	public void addForFirstReading() {
+		List<ReadingGas> list = readingService.getUnresolvedReadingsGas();
+		assertEquals(196, list.get(0).getValue(), 0);
+		InvoiceGas invoice = new InvoiceGas("112233", "test", new LocalDate(), 200, list.get(0));
+
+		invoiceService.save(invoice, Media.GAS);
+		assertEquals(2, invoiceService.getGasInvoiceList().size());
+		List<PaymentGas> paymentList = paymentService.getPaymentGasList();
+
+		assertEquals(6, paymentList.size());
+
+		assertEquals(59.74, paymentList.get(3).getPaymentAmount(), DELTA);
+		assertEquals(102.7, paymentList.get(4).getPaymentAmount(), DELTA);
+		assertEquals(37.55, paymentList.get(5).getPaymentAmount(), DELTA);
+
+		list = readingService.getUnresolvedReadingsGas();
+		assertEquals(1, list.size());
+		assertEquals(LocalDate.parse("2016-10-01"), list.get(0).getReadingDate());
 	}
 
 	@Transactional

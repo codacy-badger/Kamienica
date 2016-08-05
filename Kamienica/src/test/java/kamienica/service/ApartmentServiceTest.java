@@ -1,4 +1,4 @@
-package kamienica.junitservice;
+package kamienica.service;
 
 import static org.junit.Assert.assertEquals;
 
@@ -16,10 +16,11 @@ public class ApartmentServiceTest extends AbstractServiceTest {
 	@Autowired
 	ApartmentService service;
 
+	@Override
 	@Test
 	public void getList() {
 		List<Apartment> list = service.getList();
-		assertEquals(4, list.size());
+		assertEquals(5, list.size());
 	}
 
 	@Override

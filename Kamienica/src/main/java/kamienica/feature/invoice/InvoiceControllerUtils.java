@@ -22,7 +22,7 @@ public class InvoiceControllerUtils {
 	
 	public void setUrlForGas(HashMap<String, Object> model) {
 		model.put("saveUrl", "/Admin/Invoice/invoiceGasSave");
-		model.put("media", "Gas");
+		model.put("media", "Gaz");
 	}
 
 }

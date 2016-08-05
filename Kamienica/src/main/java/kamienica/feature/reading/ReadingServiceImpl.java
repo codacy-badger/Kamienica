@@ -11,7 +11,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import kamienica.core.Media;
-import kamienica.core.exception.AbsentMainMeterException;
 import kamienica.feature.invoice.InvoiceGas;
 import kamienica.feature.meter.MeterDao;
 import kamienica.feature.meter.MeterEnergy;
@@ -229,6 +228,26 @@ public class ReadingServiceImpl implements ReadingService {
 		return water.getLatestList(water.getLatestDate());
 	}
 
+	@SuppressWarnings("unchecked")
+	@Override
+	public <T extends ReadingAbstract> List<T> getPreviousReadingEnergy(LocalDate date, Media media) {
+		switch (media) {
+		case ENERGY:
+			return (List<T>) energy.getPrevious(date, meterEnergy.getIdList());
+			
+		case GAS:
+
+			return (List<T>) gas.getPrevious(date, meterGas.getIdList());
+		case WATER:
+
+			return (List<T>) water.getPrevious(date, meterWater.getIdList());
+
+		default:
+			break;
+		}
+		return null;
+	}
+
 	@Override
 	public List<ReadingEnergy> getPreviousReadingEnergy(LocalDate date, Set<Long> idList) {
 		return energy.getPrevious(date, idList);
@@ -244,6 +263,7 @@ public class ReadingServiceImpl implements ReadingService {
 		return water.getPrevious(date, idList);
 	}
 
+	@Override
 	@SuppressWarnings("unchecked")
 	public <T extends ReadingAbstract> List<T> getByDate(LocalDate date, Media media) {
 		switch (media) {
@@ -493,44 +513,44 @@ public class ReadingServiceImpl implements ReadingService {
 		}
 	}
 
-//	@Override
-//	public void updateEnergyList(List<ReadingEnergy> readings, String date) {
-//		for (ReadingEnergy readingEnergy : readings) {
-//			if (readingEnergy.getValue() < 0) {
-//				throw new IllegalArgumentException();
-//			}
-//			readingEnergy.setReadingDate(LocalDate.parse(date));
-//			readingEnergy.setUnit(readingEnergy.getMeter().getUnit());
-//			energy.update(readingEnergy);
-//		}
-//
-//	}
-//
-//	@Override
-//	public void updateGasList(List<ReadingGas> readings, String date) {
-//		for (ReadingGas readingEnergy : readings) {
-//			if (readingEnergy.getValue() < 0) {
-//				throw new IllegalArgumentException();
-//			}
-//			readingEnergy.setReadingDate(LocalDate.parse(date));
-//			readingEnergy.setUnit(readingEnergy.getMeter().getUnit());
-//			gas.update(readingEnergy);
-//		}
-//
-//	}
-//
-//	@Override
-//	public void updateWaterList(List<ReadingWater> readings, String date) {
-//		for (ReadingWater readingEnergy : readings) {
-//			if (readingEnergy.getValue() < 0) {
-//				throw new IllegalArgumentException();
-//			}
-//			readingEnergy.setReadingDate(LocalDate.parse(date));
-//			readingEnergy.setUnit(readingEnergy.getMeter().getUnit());
-//			water.update(readingEnergy);
-//		}
-//
-//	}
+	// @Override
+	// public void updateEnergyList(List<ReadingEnergy> readings, String date) {
+	// for (ReadingEnergy readingEnergy : readings) {
+	// if (readingEnergy.getValue() < 0) {
+	// throw new IllegalArgumentException();
+	// }
+	// readingEnergy.setReadingDate(LocalDate.parse(date));
+	// readingEnergy.setUnit(readingEnergy.getMeter().getUnit());
+	// energy.update(readingEnergy);
+	// }
+	//
+	// }
+	//
+	// @Override
+	// public void updateGasList(List<ReadingGas> readings, String date) {
+	// for (ReadingGas readingEnergy : readings) {
+	// if (readingEnergy.getValue() < 0) {
+	// throw new IllegalArgumentException();
+	// }
+	// readingEnergy.setReadingDate(LocalDate.parse(date));
+	// readingEnergy.setUnit(readingEnergy.getMeter().getUnit());
+	// gas.update(readingEnergy);
+	// }
+	//
+	// }
+	//
+	// @Override
+	// public void updateWaterList(List<ReadingWater> readings, String date) {
+	// for (ReadingWater readingEnergy : readings) {
+	// if (readingEnergy.getValue() < 0) {
+	// throw new IllegalArgumentException();
+	// }
+	// readingEnergy.setReadingDate(LocalDate.parse(date));
+	// readingEnergy.setUnit(readingEnergy.getMeter().getUnit());
+	// water.update(readingEnergy);
+	// }
+	//
+	// }
 
 	@Override
 	public void deleteLatestReadings(Media media) {

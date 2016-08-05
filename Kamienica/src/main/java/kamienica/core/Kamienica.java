@@ -5,7 +5,6 @@ import java.text.ParseException;
 import java.util.Arrays;
 import java.util.LinkedList;
 
-import kamienica.feature.reading.ReadingEnergyDAOImpl;
 import kamienica.feature.reading.ReadingGasDAOImpl;
 
 public class Kamienica {

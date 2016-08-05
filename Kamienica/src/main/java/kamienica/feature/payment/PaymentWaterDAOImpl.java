@@ -1,20 +1,10 @@
 package kamienica.feature.payment;
 
-import java.util.List;
-
-import org.hibernate.Query;
-import org.hibernate.criterion.Order;
-import org.hibernate.criterion.Restrictions;
 import org.springframework.stereotype.Repository;
-
-import kamienica.dao.AbstractDao;
-import kamienica.feature.invoice.Invoice;
-import kamienica.feature.reading.ReadingWater;
-import kamienica.feature.tenant.Tenant;
 
 @Repository("paymentWaterDao")
 public class PaymentWaterDAOImpl extends PaymentAbstractDaoImpl<PaymentWater>
-		implements PaymentDao<PaymentWater, ReadingWater> {
+		implements PaymentDao<PaymentWater> {
 
 //	@Override
 //	public List<PaymentWater> getPaymentForTenant(Tenant tenant) {
@@ -33,14 +23,14 @@ public class PaymentWaterDAOImpl extends PaymentAbstractDaoImpl<PaymentWater>
 //		return result;
 //	}
 //
-	@Override
-	public List<PaymentWater> getByReading(ReadingWater reading) {
-		Query query = getSession().createSQLQuery("Select * from paymentwater where readingdate >=:date")
-				.addEntity(PaymentWater.class).setParameter("date", reading.getReadingDate());
-		@SuppressWarnings("unchecked")
-		List<PaymentWater> result = query.list();
-		return result;
-	}
+//	@Override
+//	public List<PaymentWater> getByReading(ReadingWater reading) {
+//		Query query = getSession().createSQLQuery("Select * from paymentwater where readingdate >=:date")
+//				.addEntity(PaymentWater.class).setParameter("date", reading.getReadingDate());
+//		@SuppressWarnings("unchecked")
+//		List<PaymentWater> result = query.list();
+//		return result;
+//	}
 //
 //	@Override
 //	public List<PaymentWater> getList() {

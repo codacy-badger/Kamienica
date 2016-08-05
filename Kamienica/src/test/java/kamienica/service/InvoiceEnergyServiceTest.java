@@ -1,8 +1,6 @@
-package kamienica.junitservice;
+package kamienica.service;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.fail;
-
 import java.util.List;
 
 import org.joda.time.LocalDate;
@@ -56,11 +54,7 @@ public class InvoiceEnergyServiceTest extends AbstractServiceTest {
 		List<ReadingEnergy> list = readingService.getUnresolvedReadingsEnergy();
 		assertEquals(31, list.get(1).getValue(), 0);
 		InvoiceEnergy invoice = new InvoiceEnergy("112233", "test", new LocalDate(), 200, list.get(1));
-		try {
-			invoice.setBaseReading(list.get(1));
-		} catch (Exception e) {
-			fail();
-		}
+
 		invoiceService.save(invoice, Media.ENERGY);
 		assertEquals(2, invoiceService.getEnergyInvoiceList().size());
 		List<PaymentEnergy> paymentList = paymentService.getPaymentEnergyList();
@@ -73,6 +67,31 @@ public class InvoiceEnergyServiceTest extends AbstractServiceTest {
 		list = readingService.getUnresolvedReadingsEnergy();
 		assertEquals(1, list.size());
 		assertEquals(LocalDate.parse("2016-07-01"), list.get(0).getReadingDate());
+	}
+
+	@Transactional
+	@Test
+	public void addForFirstReading() {
+		List<ReadingEnergy> list = readingService.getUnresolvedReadingsEnergy();
+		assertEquals(11, list.get(0).getValue(), 0);
+
+		InvoiceEnergy invoice = new InvoiceEnergy("112233", "test", new LocalDate(), 200, list.get(0));
+		invoiceService.save(invoice, Media.ENERGY);
+		assertEquals(2, invoiceService.getEnergyInvoiceList().size());
+		List<PaymentEnergy> paymentList = paymentService.getPaymentEnergyList();
+
+		for (PaymentEnergy paymentEnergy : paymentList) {
+			System.out.println(paymentEnergy);
+		}
+		assertEquals(6, paymentList.size());
+
+		assertEquals(48.48, paymentList.get(3).getPaymentAmount(), DELTA);
+		assertEquals(84.85, paymentList.get(4).getPaymentAmount(), DELTA);
+		assertEquals(66.67, paymentList.get(5).getPaymentAmount(), DELTA);
+
+		list = readingService.getUnresolvedReadingsEnergy();
+		assertEquals(1, list.size());
+		assertEquals(LocalDate.parse("2016-09-01"), list.get(0).getReadingDate());
 	}
 
 	@Transactional
