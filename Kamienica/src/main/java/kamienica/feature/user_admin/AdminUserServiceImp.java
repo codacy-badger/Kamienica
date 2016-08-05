@@ -23,11 +23,15 @@ import kamienica.feature.reading.ReadingGas;
 import kamienica.feature.reading.ReadingGasDao;
 import kamienica.feature.reading.ReadingWater;
 import kamienica.feature.reading.ReadingWaterDao;
+import kamienica.feature.settings.Settings;
+import kamienica.feature.settings.SettingsDao;
 
 @Service
 @Transactional
 public class AdminUserServiceImp implements AdminUserService {
 
+	@Autowired
+	SettingsDao settingsDao;
 	@Autowired
 	private ApartmentDao apartmentDao;
 	@Autowired
@@ -45,19 +49,27 @@ public class AdminUserServiceImp implements AdminUserService {
 	@Autowired
 	@Qualifier("invoiceGas")
 	private InvoiceAbstractDao<InvoiceGas> invoiceGasDao;
-//	@Autowired
-//	private PaymentDao<PaymentEnergy, ReadingEnergy> pamymentEnergyDao;
-//	@Autowired
-//	private PaymentDao<PaymentGas, ReadingEnergy> pamymentGasDao;
-//	@Autowired
-//	private PaymentDao<PaymentWater, ReadingEnergy> pamymentWaterDao;
+	// @Autowired
+	// private PaymentDao<PaymentEnergy, ReadingEnergy> pamymentEnergyDao;
+	// @Autowired
+	// private PaymentDao<PaymentGas, ReadingEnergy> pamymentGasDao;
+	// @Autowired
+	// private PaymentDao<PaymentWater, ReadingEnergy> pamymentWaterDao;
 
 	@Override
 	public HashMap<String, Object> getMainData() {
 		HashMap<String, Object> model = new HashMap<>();
 		model.put("emptyApartments", apartmentDao.getNumOfEmptyApartment());
 		addLatestReadings(model);
+		checkConfig(model);
 		return model;
+	}
+
+	private void checkConfig(HashMap<String, Object> model) {
+		List<Settings> list = settingsDao.getList();
+		if (list.isEmpty()) {
+			model.put("settings", "BRAK USTAWIEŃ");
+		}
 	}
 
 	public void addLatestReadings(HashMap<String, Object> model) {
@@ -136,22 +148,21 @@ public class AdminUserServiceImp implements AdminUserService {
 
 	}
 
-//	@Override
-//	public List<PaymentEnergy> getPaymentEnergyForTenant() {
-//		return energy.getPaymentForTenant(tenant);
-//	}
-//
-//	@Override
-//	public List<PaymentGas> getPaymentGasForTenant() {
-//		return gas.getPaymentForTenant(tenant);
-//	}
-//
-//	@Override
-//	public List<PaymentWater> getPaymentWaterForTenant() {
-//		return water.getPaymentForTenant(tenant);
-//	}
-	
-	
+	// @Override
+	// public List<PaymentEnergy> getPaymentEnergyForTenant() {
+	// return energy.getPaymentForTenant(tenant);
+	// }
+	//
+	// @Override
+	// public List<PaymentGas> getPaymentGasForTenant() {
+	// return gas.getPaymentForTenant(tenant);
+	// }
+	//
+	// @Override
+	// public List<PaymentWater> getPaymentWaterForTenant() {
+	// return water.getPaymentForTenant(tenant);
+	// }
+
 	public SecurityUser getCurrentUser() {
 		SecurityUser user = (SecurityUser) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 		return user;

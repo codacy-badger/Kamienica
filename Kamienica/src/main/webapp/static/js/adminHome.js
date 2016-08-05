@@ -1,4 +1,6 @@
 $(document).ready(function() {
+	var settings = $('#settingsMsg').text().length;
+	
 	var invoice = $('#invoiceDays').text().split(" ", 1);
 	invoice = parseInt(invoice[0]);
 
@@ -17,6 +19,23 @@ $(document).ready(function() {
 		$("#apartment").addClass("panel-green");
 
 	}
+	
+	if (settings > 0) {
+		$("#config").addClass("panel-red");
+
+	} else {
+		$("#config").addClass("panel-green");
+
+	}
+//	
+//	if (apartments > 0) {
+//		$("#apartment").addClass("panel-red");
+//
+//	} else {
+//		$("#apartment").addClass("panel-green");
+//
+//	}
+	
 	// INVOICE
 	if (invoice <= 30) {
 		$("#invoice").addClass("panel-green");
