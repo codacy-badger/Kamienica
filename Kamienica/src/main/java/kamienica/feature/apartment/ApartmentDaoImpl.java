@@ -6,7 +6,7 @@ import org.springframework.stereotype.Repository;
 import kamienica.dao.AbstractDao;
 
 @Repository("apatmentDao")
-public class ApartmentDaoImpl extends AbstractDao<Long, Apartment> implements ApartmentDao {
+public class ApartmentDaoImpl extends AbstractDao<Apartment> implements ApartmentDao {
 
 	@Override
 	public int getNumOfEmptyApartment() {

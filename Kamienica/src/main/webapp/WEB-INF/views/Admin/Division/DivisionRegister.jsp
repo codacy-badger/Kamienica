@@ -46,53 +46,56 @@
 					<p class='alert alert-danger'>${model.error}</p>
 				</c:if>
 			</div>
+			
+			<c:if test="${empty model.error}">
 
 
-			<div class='row'>
-				<c:url var="division" value="/Admin/Division/divisionSave.html" />
-				<form:form modelAttribute="divisionForm" method="post"
-					action="${division}">
+				<div class='row'>
+					<c:url var="division" value="/Admin/Division/divisionSave.html" />
+					<form:form modelAttribute="divisionForm" method="post"
+						action="${division}">
 
-					<table class='table  table-condensed'>
-						<thead>
-							<tr>
-								<th><form:label path="date">
+						<table class='table  table-condensed'>
+							<thead>
+								<tr>
+									<th><form:label path="date">
 										Data
-									</form:label> <form:input path="date" type="date" />
-								</th>
-								<c:forEach items="${model.apartment}" var="m">
-									<th><c:out value="${m.description}" /></th>
-								</c:forEach>
-							</tr>
-						</thead>
-						<c:forEach items="${model.tenantList}" var="tenantList">
-							<tr>
-								<th><c:out
-										value="${tenantList.firstName} ${tenantList.lastName}" /></th>
-								<c:forEach items="${divisionForm.divisionList}" varStatus="i"
-									var="l">
+									</form:label> <form:input path="date" type="date" /></th>
+									<c:forEach items="${divisionForm.apartments}" var="m">
+										<th><c:out value="${m.description}" /></th>
+									</c:forEach>
+								</tr>
+							</thead>
+							<c:forEach items="${divisionForm.tenants}" var="tenantList">
+								<tr>
+									<th><c:out
+											value="${tenantList.firstName} ${tenantList.lastName}" /></th>
+									<c:forEach items="${divisionForm.divisionList}" varStatus="i"
+										var="l">
 
 
-									<c:if test="${tenantList.id.equals(l.tenant.id)}">
-										<input name="divisionList[${i.index}].tenant"
-											value="${l.tenant.id}" type="hidden" />
-										<input name="divisionList[${i.index}].apartment"
-											value="${l.apartment.id}" type="hidden" />
-										<td><input type="number" step="any" max="1.0" min="0"
-											name="divisionList[${i.index}].divisionValue"
-											value="${l.divisionValue}"></td>
-									</c:if>
-								</c:forEach>
-							</tr>
-						</c:forEach>
-					</table>
-					<br>
-					<div class="form-group">
-						<button type="submit" class="btn btn-default">Zapisz</button>
-						<button class="btn btn-default" type="reset">Resetuj</button>
-					</div>
-				</form:form>
-			</div>
+										<c:if test="${tenantList.id.equals(l.tenant.id)}">
+											<input name="divisionList[${i.index}].tenant"
+												value="${l.tenant.id}" type="hidden" />
+											<input name="divisionList[${i.index}].apartment"
+												value="${l.apartment.id}" type="hidden" />
+											<td><input type="number" step="any" max="1.0" min="0"
+												name="divisionList[${i.index}].divisionValue"
+												value="${l.divisionValue}"></td>
+										</c:if>
+									</c:forEach>
+								</tr>
+							</c:forEach>
+						</table>
+						<br>
+						<div class="form-group">
+							<button type="submit" class="btn btn-default">Zapisz</button>
+							<button class="btn btn-default" type="reset">Resetuj</button>
+						</div>
+					</form:form>
+				</div>
+
+			</c:if>
 		</div>
 
 	</div>

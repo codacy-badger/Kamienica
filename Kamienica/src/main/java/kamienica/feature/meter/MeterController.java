@@ -29,6 +29,7 @@ public class MeterController {
 	@Autowired
 	private MeterService meterService;
 
+	
 	private final String DUPLICATE_SERIAL = "Istnieje już w bazie licznik z takim numerem seryjnym";
 	private final String WARM_CWU = "Licznik Główny nie może być licznikiem CWU bądź Ciepłej Wody";
 	private final String MAIN_EXISTS = "Istnieje już w bazie licznik główny";
@@ -71,7 +72,8 @@ public class MeterController {
 			return new ModelAndView("/Admin/Meter/MeterEnergyRegister", "model", model);
 		}
 		try {
-			meterService.saveEnergy(meter);
+			meterService.save(meter, Media.ENERGY);
+			// meterService.saveEnergy(meter);
 		} catch (ConstraintViolationException e) {
 			Map<String, Object> model = prepareModel();
 			if (e.getCause().toString().contains("desc")) {
@@ -104,7 +106,8 @@ public class MeterController {
 			return new ModelAndView("/Admin/Meter/MeterWaterRegister", "model", model);
 		}
 		try {
-			meterService.saveWater(meter);
+			// meterService.saveWater(meter);
+			meterService.save(meter, Media.WATER);
 		} catch (ConstraintViolationException e) {
 			Map<String, Object> model = prepareModel();
 			if (e.getCause().toString().contains("desc")) {
@@ -135,7 +138,8 @@ public class MeterController {
 			return new ModelAndView("/Admin/Meter/MeterGasRegister", "model", model);
 		}
 		try {
-			meterService.saveGas(meter);
+			meterService.save(meter, Media.GAS);
+			// meterService.saveGas(meter);
 		} catch (ConstraintViolationException e) {
 			Map<String, Object> model = prepareModel();
 			if (e.getCause().toString().contains("desc")) {
@@ -158,7 +162,7 @@ public class MeterController {
 	public ModelAndView meterEnergyList() {
 		Map<String, Object> model = new HashMap<String, Object>();
 
-		model.put("meter", meterService.getEnergyList());
+		model.put("meter", meterService.getList(Media.ENERGY));
 		return new ModelAndView("/Admin/Meter/MeterEnergyList", model);
 
 	}
@@ -166,7 +170,7 @@ public class MeterController {
 	@RequestMapping("/Admin/Meter/meterWaterList")
 	public ModelAndView meterWaterList() {
 		Map<String, Object> model = new HashMap<String, Object>();
-		model.put("meter", meterService.getWaterList());
+		model.put("meter", meterService.getList(Media.WATER));
 		return new ModelAndView("/Admin/Meter/MeterWaterList", model);
 
 	}
@@ -174,7 +178,7 @@ public class MeterController {
 	@RequestMapping("/Admin/Meter/meterGasList")
 	public ModelAndView meterGasList() {
 		Map<String, Object> model = new HashMap<String, Object>();
-		model.put("meter", meterService.getGasList());
+		model.put("meter", meterService.getList(Media.GAS));
 		return new ModelAndView("/Admin/Meter/MeterGasList", model);
 
 	}
@@ -187,7 +191,7 @@ public class MeterController {
 		Map<String, Object> model = prepareModel();
 		model.put("url", "/Admin/Meter/meterEnergyOverwrite.html");
 		return new ModelAndView("/Admin/Meter/MeterEnergyRegister", "model", model).addObject("meter",
-				meterService.getEnergyByID(id));
+				meterService.getById(id, Media.ENERGY));
 
 	}
 
@@ -196,7 +200,7 @@ public class MeterController {
 		Map<String, Object> model = prepareModel();
 		model.put("url", "/Admin/Meter/meterWaterOverwrite.html");
 		return new ModelAndView("/Admin/Meter/MeterWaterRegister", "model", model).addObject("meter",
-				meterService.getWaterByID(id));
+				meterService.getById(id, Media.WATER));
 
 	}
 
@@ -205,7 +209,7 @@ public class MeterController {
 		Map<String, Object> model = prepareModel();
 		model.put("url", "/Admin/Meter/meterGasOverwrite.html");
 		return new ModelAndView("/Admin/Meter/MeterGasRegister", "model", model).addObject("meter",
-				meterService.getGasByID(id));
+				meterService.getById(id, Media.GAS));
 
 	}
 	// ------------------------------OVERWRITE-----------------------------------------
@@ -218,7 +222,8 @@ public class MeterController {
 			return new ModelAndView("/Admin/Meter/MeterEnergyRegister", "model", model);
 		}
 		try {
-			meterService.updateEnergy(meter);
+			meterService.update(meter, Media.ENERGY);
+			// meterService.updateEnergy(meter);
 		} catch (org.springframework.dao.DataIntegrityViolationException e) {
 
 			Map<String, Object> model = prepareModel();
@@ -246,7 +251,8 @@ public class MeterController {
 			return new ModelAndView("/Admin/Meter/MeterWaterRegister", "model", model);
 		}
 		try {
-			meterService.updateWater(meter);
+			meterService.update(meter, Media.WATER);
+			// meterService.updateWater(meter);
 		} catch (org.springframework.dao.DataIntegrityViolationException e) {
 			Map<String, Object> model = prepareModel();
 			model.put("url", "/Admin/Meter/meterWaterOverwrite.html");
@@ -271,7 +277,8 @@ public class MeterController {
 			return new ModelAndView("/Admin/Meter/MeterGasRegister", "model", model);
 		}
 		try {
-			meterService.updateGas(meter);
+			meterService.update(meter, Media.GAS);
+			// meterService.updateGas(meter);
 		} catch (org.springframework.dao.DataIntegrityViolationException e) {
 			Map<String, Object> model = prepareModel();
 			model.put("url", "/Admin/Meter/meterGasOverwrite.html");
@@ -289,19 +296,22 @@ public class MeterController {
 
 	@RequestMapping(value = "/Admin/Meter/meterEnergyDelete", params = { "id" })
 	public ModelAndView usunLicznikEnergia(@RequestParam(value = "id") Long id) {
-		meterService.deleteEnergyByID(id);
+		// meterService.deleteEnergyByID(id);
+		meterService.delete(id, Media.ENERGY);
 		return new ModelAndView("redirect:/Admin/Meter/meterEnergyList.html");
 	}
 
 	@RequestMapping(value = "/Admin/Meter/meterWaterDelete", params = { "id" })
 	public ModelAndView meterWaterDelete(@RequestParam(value = "id") Long id) {
-		meterService.deleteWaterByID(id);
+		// meterService.deleteWaterByID(id);
+		meterService.delete(id, Media.WATER);
 		return new ModelAndView("redirect:/Admin/Meter/meterWaterList.html");
 	}
 
 	@RequestMapping(value = "/Admin/Meter/meterGasDelete", params = { "id" })
 	public ModelAndView meterGasDelete(@RequestParam(value = "id") Long id) {
-		meterService.deleteGasByID(id);
+		// meterService.deleteGasByID(id);
+		meterService.delete(id, Media.GAS);
 		return new ModelAndView("redirect:/Admin/Meter/meterGasList.html");
 	}
 

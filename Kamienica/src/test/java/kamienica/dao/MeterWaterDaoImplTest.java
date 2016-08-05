@@ -36,6 +36,7 @@ public class MeterWaterDaoImplTest extends EntityDaoImplTest {
 
 	@Test
 	public void findAll() {
+		System.out.println(meterDao.getList());
 		Assert.assertEquals(meterDao.getList().size(), 5);
 	}
 

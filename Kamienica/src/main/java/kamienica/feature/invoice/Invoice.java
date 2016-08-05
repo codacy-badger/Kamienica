@@ -32,13 +32,12 @@ public abstract class Invoice {
 	@Column(nullable = false, unique = true)
 	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	@NotNull(message = "Wprowadź datę")
-	@Type(type="org.jadira.usertype.dateandtime.joda.PersistentLocalDate")
+	@Type(type = "org.jadira.usertype.dateandtime.joda.PersistentLocalDate")
 	private LocalDate date;
 	@Column(nullable = false)
 	@Min(value = 0, message = "Tylko wartości dodatnie")
 	@NotNull(message = "Podaj wartość")
 	private double totalAmount;
-
 
 	@Autowired
 	public Invoice(String serialNumber, String description, LocalDate date, double totalAmount) {
@@ -93,7 +92,6 @@ public abstract class Invoice {
 		this.totalAmount = totalAmount;
 	}
 
-
 	public abstract ReadingAbstract getBaseReading();
 
 	@Override
@@ -102,5 +100,6 @@ public abstract class Invoice {
 				+ date + ", totalAmount=" + totalAmount + "]";
 	}
 
-	
+	public abstract LocalDate getReadingDate();
+
 }

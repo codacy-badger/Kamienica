@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.convert.converter.Converter;
 import org.springframework.stereotype.Component;
 
+import kamienica.core.Media;
 import kamienica.feature.reading.ReadingGas;
 import kamienica.feature.reading.ReadingService;
 
@@ -24,7 +25,7 @@ public class ReadingGasConverter implements Converter<Object, ReadingGas> {
 	@Override
 	public ReadingGas convert(Object element) {
 		Long id = Long.parseLong((String) element);
-		return readingService.getGasById(id);
+		return readingService.getById(id, Media.GAS);
 	}
 
 }

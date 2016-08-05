@@ -52,6 +52,7 @@ public class ReadingEnergy extends ReadingAbstract implements Serializable {
 		this.meter = meter;
 	}
 
+	@Override
 	public void setUnit(String jednostka) {
 		this.unit = jednostka;
 	}
