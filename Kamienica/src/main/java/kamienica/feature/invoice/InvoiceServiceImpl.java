@@ -96,24 +96,31 @@ public class InvoiceServiceImpl implements InvoiceService {
 			break;
 
 		case GAS:
+			List<ReadingGas> readingGasOld = readingService.getPreviousReadingGas(invoice.getReadingDate(),
+					meterService.getIdList(Media.GAS));
 
-//			List<ReadingGas> readingGasOld =  readingService.getPreviousReadingGas(invoice.getBaseReading().getReadingDate(),
-//					meterService.getIdList(Media.GAS));
-//
-//			HashMap<String, List<ReadingWater>> waterForGas = readingWaterDao.getWaterReadingForGasConsumption(invoice);
-//			if (waterForGas.isEmpty()) {
-//				//excepion
-//			}
-//
-//			List<ReadingGas> readingGasNew = readingService.getByDate(invoice.getBaseReading().getReadingDate(), Media.GAS);
-//
-//			ArrayList<UsageValue> usageGas = ManagerGas.countConsumption(apartments, readingGasOld, readingGasNew,
-//					waterForGas.get("old"), waterForGas.get("new"));
-//			List<PaymentGas> paymentGas = ManagerPayment.createPaymentGasList(tenants, invoice, division, usageGas);
+			List<ReadingGas> readingGasNew = readingService.getByDate(invoice.getReadingDate(), Media.GAS);
+
+			List<ReadingWater> waterNew = readingWaterDao.getWaterReadingForGasConsumption2(invoice.getReadingDate());
+
+			List<ReadingWater> waterOld = readingWaterDao
+					.getWaterReadingForGasConsumption2(waterNew.get(0).getReadingDate());
+
+			ArrayList<UsageValue> usageGas = ManagerGas.countConsumption(apartments, readingGasOld, readingGasNew,
+					waterOld, waterNew);
+			List<PaymentGas> paymentGas = ManagerPayment.createPaymentGasList(tenants, (InvoiceGas) invoice, division,
+					usageGas);
+
+			invoiceGasDao.save((InvoiceGas) invoice);
+			readingGasDao.changeResolvmentState(invoice, true);
+
+			for (PaymentGas payment : paymentGas) {
+				paymentGasDao.save(payment);
+			}
+
 			break;
-		case WATER:
 
-			
+		case WATER:
 
 			List<ReadingWater> readingWaterOld = readingService.getPreviousReadingWater(
 					invoice.getBaseReading().getReadingDate(), meterService.getIdList(Media.WATER));
@@ -121,8 +128,7 @@ public class InvoiceServiceImpl implements InvoiceService {
 			List<ReadingWater> readingWaterNew = readingService.getByDate(invoice.getBaseReading().getReadingDate(),
 					Media.WATER);
 
-			List<UsageValue> usageWater = ManagerWater.countConsumption(apartments, readingWaterOld,
-					readingWaterNew);
+			List<UsageValue> usageWater = ManagerWater.countConsumption(apartments, readingWaterOld, readingWaterNew);
 			List<PaymentWater> paymentWater = ManagerPayment.createPaymentWaterList(tenants, (InvoiceWater) invoice,
 					division, usageWater);
 

@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
-import kamienica.core.exception.WrongInputForDivision;
+import kamienica.core.exception.WrongDivisionInputException;
 import kamienica.feature.apartment.Apartment;
 import kamienica.feature.apartment.ApartmentService;
 import kamienica.feature.tenant.Tenant;
@@ -37,7 +37,7 @@ public class DivisionController {
 		Map<String, Object> model = new HashMap<String, Object>();
 		try {
 			divisionService.prepareForm(divisionForm);
-		} catch (WrongInputForDivision e) {
+		} catch (WrongDivisionInputException e) {
 
 			model.put("error", "Brakuje danych. Upewnij się że dane dotyczące mieszkań i najemców są poprawne");
 			return new ModelAndView("/Admin/Division/DivisionRegister", "model", model);

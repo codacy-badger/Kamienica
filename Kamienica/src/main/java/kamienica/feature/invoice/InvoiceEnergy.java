@@ -41,6 +41,11 @@ public class InvoiceEnergy extends Invoice implements Serializable {
 
 	}
 
+	@Override
+	public LocalDate getReadingDate() {
+		return baseReading.getReadingDate();
+	}
+
 	
 
 }

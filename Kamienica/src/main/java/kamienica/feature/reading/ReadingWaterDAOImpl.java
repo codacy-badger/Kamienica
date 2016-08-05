@@ -111,13 +111,13 @@ public class ReadingWaterDAOImpl extends ReadingAbstractDaoImpl<ReadingWater> im
 
 	@Override
 	@SuppressWarnings("unchecked")
-	public List<ReadingWater> getWaterReadingForGasConsumption2(InvoiceGas invoice) {
+	public List<ReadingWater> getWaterReadingForGasConsumption2(LocalDate date) {
 		String queryString = "SELECT * FROM readingwater where readingdate = "
 				+ "(select MAX(readingdate) from readingwater where readingdate < :date)";
 		Query query = getSession().createSQLQuery(queryString).addEntity(persistentClass).setDate("date",
-				invoice.getBaseReading().getReadingDate().toDate());
-	
-		return null;
+				date.toDate());
+
+		return query.list();
 	}
 
 	@Override

@@ -14,7 +14,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.servlet.ModelAndView;
 
 import kamienica.core.exception.InvalidDivisionException;
-import kamienica.core.exception.WrongInputForDivision;
+import kamienica.core.exception.WrongDivisionInputException;
 import kamienica.feature.apartment.Apartment;
 import kamienica.feature.apartment.ApartmentDao;
 import kamienica.feature.tenant.Tenant;
@@ -74,12 +74,12 @@ public class DivisionServiceImpl implements DivisionService {
 	}
 
 	@Override
-	public void prepareForm(DivisionForm form) throws WrongInputForDivision {
+	public void prepareForm(DivisionForm form) throws WrongDivisionInputException {
 		List<Tenant> tenantList = tenantDAO.getActiveTenants();
 		List<Apartment> apartmentList = apartmentDAO.getList();
 
 		if (tenantList.isEmpty() || apartmentList.isEmpty()) {
-			throw new WrongInputForDivision();
+			throw new WrongDivisionInputException();
 		}
 
 		form.setDivisionList(prepareDivisionListForRegistration(tenantList, apartmentList));

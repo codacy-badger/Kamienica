@@ -43,5 +43,10 @@ public class InvoiceGas extends Invoice implements Serializable{
 	public String toString() {
 		return super.toString();
 	}
+	
+	@Override
+	public LocalDate getReadingDate() {
+		return baseReading.getReadingDate();
+	}
 
 }
