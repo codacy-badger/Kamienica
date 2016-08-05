@@ -25,17 +25,17 @@ import kamienica.feature.reading.ReadingWater;
 @Controller
 public class InvoiceController {
 
+	private InvoiceControllerUtils utils = new InvoiceControllerUtils();
+
 	@Autowired
 	private InvoiceService invoiceService;
-	private InvoiceControllerUtils utils;
 
 	// -------------------REGISTER----------------------------------------------
 
 	@RequestMapping("/Admin/Invoice/invoiceEnergyRegister")
 	public ModelAndView registerInvoiceEnergy(@ModelAttribute("invoice") InvoiceEnergy invoice, BindingResult result) {
 
-		HashMap<String, Object> model = new HashMap<>();
-		utils.setUrlForEnergy(model);
+		HashMap<String, Object> model = utils.setUrlForEnergy();
 
 		List<ReadingEnergy> readings;
 		try {

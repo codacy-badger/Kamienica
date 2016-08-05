@@ -416,19 +416,19 @@ public class InvoiceServiceImpl implements InvoiceService {
 	@Override
 	public void list(Map<String, Object> model, Media media) {
 		switch (media) {
-		case ENERGY:
+		case GAS:
 			model.put("invoice", invoiceEnergyDao.getList());
 			model.put("editlUrl", "/Admin/Invoice/invoiceGasEdit.html?id=");
 			model.put("delUrl", "/Admin/Invoice/invoiceGasDelete.html?id=");
 			model.put("media", "Gaz");
 			break;
-		case GAS:
+		case WATER:
 			model.put("invoice", invoiceGasDao.getList());
 			model.put("editlUrl", "/Admin/Invoice/invoiceWaterEdit.html?id=");
 			model.put("delUrl", "/Admin/Invoice/invoiceWaterDelete.html?id=");
 			model.put("media", "Woda");
 			break;
-		case WATER:
+		case ENERGY:
 			model.put("invoice", invoiceWaterDao.getList());
 			model.put("editlUrl", "/Admin/Invoice/invoiceEnergyEdit.html?id=");
 			model.put("delUrl", "/Admin/Invoice/invoiceEnergyDelete.html?id=");
