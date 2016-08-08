@@ -6,12 +6,16 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import kamienica.feature.settings.SettingsDao;
+
 @Service
 @Transactional
 public class TenantServiceImpl implements TenantService {
 
 	@Autowired
 	TenantDao tenantDao;
+	@Autowired
+	private SettingsDao settingsDao;
 
 	@Override
 	public void saveTenant(Tenant newTenant) {
@@ -25,7 +29,7 @@ public class TenantServiceImpl implements TenantService {
 			tenantDao.deactivateByApparmentId(newTenant.getApartment().getId());
 			tenantDao.save(newTenant);
 		}
-
+		settingsDao.changeDivisionState(false);
 	}
 
 	@Override
@@ -36,7 +40,7 @@ public class TenantServiceImpl implements TenantService {
 	@Override
 	public void deleteTenant(Long id) {
 		tenantDao.deleteById(id);
-
+		settingsDao.changeDivisionState(false);
 	}
 
 	@Override

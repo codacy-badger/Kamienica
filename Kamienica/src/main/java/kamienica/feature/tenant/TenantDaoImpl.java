@@ -7,7 +7,7 @@ import org.hibernate.Query;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.stereotype.Repository;
 
-import kamienica.dao.AbstractDao;
+import kamienica.core.dao.AbstractDao;
 import kamienica.feature.apartment.Apartment;
 
 @Repository("tenantDao")

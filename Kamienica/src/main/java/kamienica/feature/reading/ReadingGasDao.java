@@ -5,7 +5,7 @@ import java.util.Set;
 
 import org.joda.time.LocalDate;
 
-import kamienica.dao.DaoInterface;
+import kamienica.core.dao.DaoInterface;
 import kamienica.feature.apartment.Apartment;
 import kamienica.feature.invoice.Invoice;
 import kamienica.feature.invoice.InvoiceGas;

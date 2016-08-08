@@ -20,7 +20,7 @@ public class ApartmentServiceTest extends AbstractServiceTest {
 	@Test
 	public void getList() {
 		List<Apartment> list = service.getList();
-		assertEquals(5, list.size());
+		assertEquals(4, list.size());
 	}
 
 	@Override
@@ -38,6 +38,7 @@ public class ApartmentServiceTest extends AbstractServiceTest {
 
 	@Transactional
 	@Override
+	@Test
 	public void remove() {
 		service.deleteByID(5L);
 		assertEquals(4, service.getList().size());

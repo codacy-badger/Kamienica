@@ -46,7 +46,7 @@ public class InvoiceWaterServiceTest extends AbstractServiceTest {
 		// TODO Auto-generated method stub
 
 	}
-
+	@Test
 	@Transactional
 	@Override
 	public void add() {
@@ -71,11 +71,12 @@ public class InvoiceWaterServiceTest extends AbstractServiceTest {
 		assertEquals(1, list.size());
 		assertEquals(LocalDate.parse("2016-07-01"), list.get(0).getReadingDate());
 	}
-
+	@Test
 	@Transactional
 	public void addForFirstReading() {
 		List<ReadingWater> list = readingService.getUnresolvedReadingsWater();
-		assertEquals(60, list.get(1).getValue(), 0);
+		assertEquals(30, list.get(1).getValue(), 0);
+		assertEquals(60, list.get(1).getValue(), 1);
 		InvoiceWater invoice = new InvoiceWater("112233", "test", new LocalDate(), 200, list.get(1));
 
 		invoiceService.save(invoice, Media.WATER);
@@ -92,7 +93,7 @@ public class InvoiceWaterServiceTest extends AbstractServiceTest {
 		assertEquals(1, list.size());
 		assertEquals(LocalDate.parse("2016-07-01"), list.get(0).getReadingDate());
 	}
-
+	@Test
 	@Transactional
 	@Override
 	public void remove() {
@@ -143,7 +144,7 @@ public class InvoiceWaterServiceTest extends AbstractServiceTest {
 
 	@Test
 	public void prepareForRegistration() throws InvalidDivisionException {
-		apService.deleteByID(5L);
+	//	apService.deleteByID(5L);
 		List<ReadingWater> list = invoiceService.prepareForRegistration(Media.WATER);
 
 		assertEquals(2, list.size());
@@ -154,7 +155,9 @@ public class InvoiceWaterServiceTest extends AbstractServiceTest {
 	@Transactional
 	@Test(expected = InvalidDivisionException.class)
 	public void shouldThrowInvalidDivisionExceptionWhilePreparing() throws InvalidDivisionException {
+		System.out.println(divisionService.isDivisionCorrect());
 		divisionService.deleteAll();
+		System.out.println(divisionService.isDivisionCorrect());
 		List<ReadingWater> list = invoiceService.prepareForRegistration(Media.WATER);
 		assertEquals(0, list.size());
 	}

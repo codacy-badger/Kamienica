@@ -1,4 +1,4 @@
-package kamienica.dao;
+package kamienica.core.dao;
 
 import java.io.Serializable;
 import java.lang.reflect.ParameterizedType;

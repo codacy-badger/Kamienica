@@ -1,6 +1,6 @@
 package kamienica.feature.settings;
 
-import kamienica.dao.DaoInterface;
+import kamienica.core.dao.DaoInterface;
 
 
 public interface SettingsDao extends DaoInterface<Settings> {

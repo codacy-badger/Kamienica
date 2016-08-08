@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
+import org.hibernate.engine.transaction.jta.platform.internal.SynchronizationRegistryBasedSynchronizationStrategy;
 import org.joda.time.LocalDate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -14,6 +15,7 @@ import kamienica.core.exception.InvalidDivisionException;
 import kamienica.core.exception.WrongDivisionInputException;
 import kamienica.feature.apartment.Apartment;
 import kamienica.feature.apartment.ApartmentDao;
+import kamienica.feature.settings.SettingsDao;
 import kamienica.feature.tenant.Tenant;
 import kamienica.feature.tenant.TenantDao;
 
@@ -26,6 +28,8 @@ public class DivisionServiceImpl implements DivisionService {
 	TenantDao tenantDAO;
 	@Autowired
 	ApartmentDao apartmentDAO;
+	@Autowired
+	SettingsDao settingsDao;
 
 	@Override
 	public List<Division> getList() {
@@ -35,17 +39,20 @@ public class DivisionServiceImpl implements DivisionService {
 	@Override
 	public void deleteByID(Long id) {
 		divisionDAO.deleteById(id);
+		settingsDao.changeDivisionState(false);
 
 	}
 
 	@Override
 	public void update(Division division) {
 		divisionDAO.update(division);
+		settingsDao.changeDivisionState(true);
 	}
 
 	@Override
 	public void deleteAll() {
 		divisionDAO.deleteAll();
+		settingsDao.changeDivisionState(false);
 
 	}
 
@@ -57,6 +64,7 @@ public class DivisionServiceImpl implements DivisionService {
 			div.setDate(date);
 			divisionDAO.save(div);
 		}
+		settingsDao.changeDivisionState(true);
 
 	}
 
@@ -114,6 +122,11 @@ public class DivisionServiceImpl implements DivisionService {
 		DecimalFormat df = (DecimalFormat) nf;
 		df.applyPattern("#.00");
 		return Double.parseDouble(df.format(input));
+	}
+
+	@Override
+	public boolean isDivisionCorrect() {
+		return settingsDao.isDivisionCorrect();
 	}
 
 }

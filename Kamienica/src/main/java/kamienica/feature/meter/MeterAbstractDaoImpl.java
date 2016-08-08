@@ -4,7 +4,7 @@ import org.hibernate.Criteria;
 import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
 
-import kamienica.dao.AbstractDao;
+import kamienica.core.dao.AbstractDao;
 
 public class MeterAbstractDaoImpl<T extends MeterAbstract> extends AbstractDao<T> {
 

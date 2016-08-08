@@ -3,8 +3,10 @@ package kamienica.feature.settings;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.Table;
 
 @Entity
+@Table(name="settings")
 public class Settings {
 
 	@Id

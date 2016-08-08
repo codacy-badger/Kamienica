@@ -16,7 +16,7 @@ public class SettingsServiceImpl implements SettingsService {
 	@Override
 	public Settings getSettings() {
 		List<Settings> list = dao.getList();
-		if(list.isEmpty()) {
+		if (list.isEmpty()) {
 			return null;
 		}
 		return list.get(0);
@@ -35,6 +35,18 @@ public class SettingsServiceImpl implements SettingsService {
 		} else {
 			dao.update(settings);
 		}
+
+	}
+
+	@Override
+	public boolean isDivisionCorrect() {
+
+		return dao.isDivisionCorrect();
+	}
+
+	@Override
+	public void changeDivisionState(boolean state) {
+		dao.changeDivisionState(state);
 
 	}
 

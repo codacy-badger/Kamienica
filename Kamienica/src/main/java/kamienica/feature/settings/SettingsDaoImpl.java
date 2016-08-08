@@ -1,10 +1,12 @@
 package kamienica.feature.settings;
 
 import org.hibernate.Criteria;
+import org.hibernate.Query;
 import org.hibernate.criterion.Projections;
+import org.springframework.jdbc.object.SqlQuery;
 import org.springframework.stereotype.Repository;
 
-import kamienica.dao.AbstractDao;
+import kamienica.core.dao.AbstractDao;
 
 @Repository("settingsDao")
 public class SettingsDaoImpl extends AbstractDao<Settings> implements SettingsDao {
@@ -18,8 +20,11 @@ public class SettingsDaoImpl extends AbstractDao<Settings> implements SettingsDa
 
 	@Override
 	public void changeDivisionState(boolean state) {
-		// TODO Auto-generated method stub
-		
+		Query query = getSession().createSQLQuery("update settings set correctDivision = :state where id > 0");
+		query.setBoolean("state", state);
+		query.executeUpdate();
+
 	}
+	
 
 }

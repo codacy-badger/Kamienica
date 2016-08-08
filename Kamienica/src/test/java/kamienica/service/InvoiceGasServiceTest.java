@@ -48,6 +48,7 @@ public class InvoiceGasServiceTest extends AbstractServiceTest {
 
 	}
 
+	@Test
 	@Transactional
 	@Override
 	public void add() {
@@ -70,16 +71,17 @@ public class InvoiceGasServiceTest extends AbstractServiceTest {
 		assertEquals(LocalDate.parse("2016-07-29"), list.get(0).getReadingDate());
 	}
 
+	@Test
 	@Transactional
 	public void addForFirstReading() {
 		List<ReadingGas> list = readingService.getUnresolvedReadingsGas();
-		assertEquals(196, list.get(0).getValue(), 0);
+		assertEquals(114, list.get(0).getValue(), 0);
 		InvoiceGas invoice = new InvoiceGas("112233", "test", new LocalDate(), 200, list.get(0));
 
 		invoiceService.save(invoice, Media.GAS);
 		assertEquals(2, invoiceService.getGasInvoiceList().size());
 		List<PaymentGas> paymentList = paymentService.getPaymentGasList();
-
+		
 		assertEquals(6, paymentList.size());
 
 		assertEquals(59.74, paymentList.get(3).getPaymentAmount(), DELTA);
@@ -89,15 +91,16 @@ public class InvoiceGasServiceTest extends AbstractServiceTest {
 		list = readingService.getUnresolvedReadingsGas();
 		assertEquals(1, list.size());
 		assertEquals(LocalDate.parse("2016-10-01"), list.get(0).getReadingDate());
+
 	}
 
+	@Test
 	@Transactional
 	@Override
 	public void remove() {
 		invoiceService.delete(1L, Media.GAS);
 		List<ReadingGas> list = readingService.getUnresolvedReadingsGas();
 		assertEquals(3, list.size());
-
 	}
 
 	@Transactional
@@ -120,7 +123,6 @@ public class InvoiceGasServiceTest extends AbstractServiceTest {
 			double test = newList.get(i).getPaymentAmount() / oldList.get(i).getPaymentAmount();
 			assertEquals(2, test, 0);
 		}
-
 	}
 
 	@Override
@@ -140,19 +142,22 @@ public class InvoiceGasServiceTest extends AbstractServiceTest {
 		assertEquals(31, list.get(1).getValue(), 0);
 	}
 
+	@Transactional
 	@Test
 	public void prepareForRegistration() throws InvalidDivisionException {
-		apService.deleteByID(5L);
+		// apService.deleteByID(5L);
 		List<ReadingAbstract> list = invoiceService.prepareForRegistration(Media.GAS);
 		assertEquals(2, list.size());
 		assertEquals(114, list.get(0).getValue(), 0);
 		assertEquals(196, list.get(1).getValue(), 0);
+
 	}
 
 	@Transactional
 	@Test(expected = InvalidDivisionException.class)
 	public void shouldThrowInvalidDivisionExceptionWhilePreparing() throws InvalidDivisionException {
 		divisionService.deleteAll();
+
 		List<ReadingAbstract> list = invoiceService.prepareForRegistration(Media.GAS);
 		assertEquals(0, list.size());
 	}

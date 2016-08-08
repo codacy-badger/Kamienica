@@ -49,12 +49,6 @@ public class AdminUserServiceImp implements AdminUserService {
 	@Autowired
 	@Qualifier("invoiceGas")
 	private InvoiceAbstractDao<InvoiceGas> invoiceGasDao;
-	// @Autowired
-	// private PaymentDao<PaymentEnergy, ReadingEnergy> pamymentEnergyDao;
-	// @Autowired
-	// private PaymentDao<PaymentGas, ReadingEnergy> pamymentGasDao;
-	// @Autowired
-	// private PaymentDao<PaymentWater, ReadingEnergy> pamymentWaterDao;
 
 	@Override
 	public HashMap<String, Object> getMainData() {
@@ -69,6 +63,8 @@ public class AdminUserServiceImp implements AdminUserService {
 		List<Settings> list = settingsDao.getList();
 		if (list.isEmpty()) {
 			model.put("settings", "BRAK USTAWIEŃ");
+		} else if (!list.get(0).isCorrectDivision()) {
+			model.put("settings", "Podział niekatualny");
 		}
 	}
 
@@ -131,15 +127,12 @@ public class AdminUserServiceImp implements AdminUserService {
 
 		switch (media) {
 		case ENERGY:
-			System.out.println("getReadingsForTenant - energia");
 			return energyDao.getListForTenant(apartment);
 
 		case GAS:
-			System.out.println("getReadingsForTenant - gas");
 			return gasDao.getListForTenant(apartment);
 
 		case WATER:
-			System.out.println("getReadingsForTenant - woda");
 			return waterDao.getListForTenant(apartment);
 
 		default:

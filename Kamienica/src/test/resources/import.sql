@@ -3,7 +3,7 @@ insert into apartment(id, apartmentNumber, description, intercom) values(1, 0, '
 insert into apartment(id, apartmentNumber, description, intercom) values(2, 1, 'Piwnica','6666');
 insert into apartment(id, apartmentNumber, description, intercom) values(3, 2, 'Parter','6666');
 insert into apartment(id, apartmentNumber, description, intercom) values(4, 3, 'I Piętro','6666');
-insert into apartment(id, apartmentNumber, description, intercom) values(5, 4, 'II Piętro- Mozna kasować','6666');
+--insert into apartment(id, apartmentNumber, description, intercom) values(5, 4, 'II Piętro- Mozna kasować','6666');
 
 INSERT INTO  tenant  ( id , email , firstName , lastName , movementDate , password , phone , role , status , apartment_id ) VALUES (1,'folik@wp.pl','Maciej','Folik','2016-07-25','witaj','530081187','ADMIN','AKTYWNY',2);
 INSERT INTO  tenant  ( id , email , firstName , lastName , movementDate , password , phone , role , status , apartment_id ) VALUES (2,'kow@wp.pl','Andrzej','Kowalski','2014-07-01','witaj','4456','USER','NIEAKTYWNY',3);
@@ -127,3 +127,5 @@ INSERT INTO  paymentwater  ( id , paymentAmount , paymentDate , tenant_id , invo
 INSERT INTO  paymentwater  ( id , paymentAmount , paymentDate , tenant_id , invoice_id ) VALUES (2,68.18,'2016-07-29',3,1);
 INSERT INTO  paymentwater  ( id , paymentAmount , paymentDate , tenant_id , invoice_id ) VALUES (3,54.55,'2016-07-29',4,1);
 
+
+INSERT INTO  settings  ( id , correctDivision , garbage , gas , internet ) VALUES (1,'1','0','1','0');

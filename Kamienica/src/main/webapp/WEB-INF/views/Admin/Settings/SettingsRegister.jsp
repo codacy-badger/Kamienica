@@ -37,6 +37,9 @@
 				<div class='row'>
 					<div class="col-lg-12">
 						<h1 class="page-header well">Konfiguracja</h1>
+
+
+
 					</div>
 				</div>
 			</div>
@@ -49,56 +52,65 @@
 
 			<c:if test="${empty model.error}">
 
-
+				<!--<f  orm:options items="${model.labels}" itemLabel="active"
+											itelLabel="active"/>  -->
 				<div class='row'>
 					<c:url var="set" value="/Admin/Settings/save.html" />
 					<form:form modelAttribute="settings" method="post" action="${set}">
-						<form:input path="id" readonly="true" type='hidden' />
-	
+						<form:input path="id" readonly="true" value='${model.item.id }'
+							hidden='true' />
+
+
+
 						<div class="form-group">
-							<label  class="col-sm-3 control-label">Instalacja gazowa</label>
+							<label for="cwu" class="col-sm-3 control-label">Instalacja
+								gazowa</label>
 							<div class="col-sm-9">
-								<form:input type="text" class="form-control" name="gas"
-									path='gas' placeholder="Pole wymagane" />
+
+								<form:select path="gas" name="gas"
+									itemValue="${model.item.gas }">
+									<form:option value="true">Tak</form:option>
+									<form:option value="false">Nie</form:option>
+								</form:select>
+
 								<p class="help-block">
 									<form:errors path="gas" class="error" />
 								</p>
 							</div>
 						</div>
 
+
+
+						<form:input type="hidden" class="form-control"
+							path='correctDivision' name="correctDivision"
+							value='${model.item.correctDivision }' readonly="true"
+							 />
+
+
 						<div class="form-group">
-							<label  class="col-sm-3 control-label">Podział</label>
+							<label class="col-sm-3 control-label">Internet</label>
 							<div class="col-sm-9">
-								<form:input type="text" class="form-control" 
-									path='correctDivision' placeholder="Pole wymagane"
-									name="correctDivision" />
-								<p class="help-block">
-									<form:errors path="correctDivision" class="error" />
-								</p>
+
+								<form:select path="internet" name="internet"
+									itemValue="${model.item.internet }">
+									<form:option value="true">Tak</form:option>
+									<form:option value="false">Nie</form:option>
+								</form:select>
+
+
 							</div>
 						</div>
-						
+
 						<div class="form-group">
-							<label  class="col-sm-3 control-label">Internet</label>
+							<label class="col-sm-3 control-label">Śmieci</label>
 							<div class="col-sm-9">
-								<form:input type="text" class="form-control" 
-									path='internet' placeholder="Pole wymagane"
-									name="internet" />
-								<p class="help-block">
-									<form:errors path="internet" class="error" />
-								</p>
-							</div>
-						</div>
-						
-							<div class="form-group">
-							<label  class="col-sm-3 control-label">Śmieci</label>
-							<div class="col-sm-9">
-								<form:input type="text" class="form-control" 
-									path='garbage' placeholder="Pole wymagane"
-									name="garbage" />
-								<p class="help-block">
-									<form:errors path="garbage" class="error" />
-								</p>
+								<form:select path="garbage" name="garbage" readonly='true'
+									itemValue="${model.item.garbage }">
+									<form:option value="true">Tak</form:option>
+									<form:option value="false">Nie</form:option>
+								</form:select>
+
+
 							</div>
 						</div>
 

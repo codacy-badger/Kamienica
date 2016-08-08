@@ -1,4 +1,4 @@
-package kamienica.dao;
+package kamienica.core.dao;
 
 import java.lang.reflect.ParameterizedType;
 import java.util.HashSet;

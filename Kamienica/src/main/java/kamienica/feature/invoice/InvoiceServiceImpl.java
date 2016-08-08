@@ -31,6 +31,7 @@ import kamienica.feature.reading.ReadingGasDao;
 import kamienica.feature.reading.ReadingService;
 import kamienica.feature.reading.ReadingWater;
 import kamienica.feature.reading.ReadingWaterDao;
+import kamienica.feature.settings.SettingsDao;
 import kamienica.feature.tenant.Tenant;
 import kamienica.feature.tenant.TenantDao;
 import kamienica.feature.usagevalue.UsageValue;
@@ -40,33 +41,35 @@ import kamienica.feature.usagevalue.UsageValue;
 public class InvoiceServiceImpl implements InvoiceService {
 
 	@Autowired
-	TenantDao tenantDao;
+	private TenantDao tenantDao;
 	@Autowired
-	DivisionDao divisionDao;
+	private DivisionDao divisionDao;
 	@Autowired
-	ApartmentDao apartmentDao;
+	private ApartmentDao apartmentDao;
 	@Autowired
-	ReadingService readingService;
+	private ReadingService readingService;
 	@Autowired
-	MeterService meterService;
+	private MeterService meterService;
 	@Autowired
-	InvoiceAbstractDao<InvoiceEnergy> invoiceEnergyDao;
+	private InvoiceAbstractDao<InvoiceEnergy> invoiceEnergyDao;
 	@Autowired
-	InvoiceAbstractDao<InvoiceGas> invoiceGasDao;
+	private InvoiceAbstractDao<InvoiceGas> invoiceGasDao;
 	@Autowired
-	InvoiceAbstractDao<InvoiceWater> invoiceWaterDao;
+	private InvoiceAbstractDao<InvoiceWater> invoiceWaterDao;
 	@Autowired
-	ReadingEnergyDao readingEnergyDao;
+	private ReadingEnergyDao readingEnergyDao;
 	@Autowired
-	ReadingGasDao readingGasDao;
+	private ReadingGasDao readingGasDao;
 	@Autowired
-	ReadingWaterDao readingWaterDao;
+	private ReadingWaterDao readingWaterDao;
 	@Autowired
 	private PaymentDao<PaymentGas> paymentGasDao;
 	@Autowired
 	private PaymentDao<PaymentEnergy> paymentEnergyDao;
 	@Autowired
 	private PaymentDao<PaymentWater> paymentWaterDao;
+	@Autowired
+	private SettingsDao settingsDao;
 
 	@Override
 	public <T extends Invoice> void save(T invoice, Media media) {
@@ -390,8 +393,12 @@ public class InvoiceServiceImpl implements InvoiceService {
 	@Override
 	public <T extends ReadingAbstract> List<T> prepareForRegistration(Media media) throws InvalidDivisionException {
 
-		if (!DivisionValidator.validateDivision(apartmentDao.getList(), divisionDao.getList(),
-				tenantDao.getActiveTenants())) {
+		// if (!DivisionValidator.validateDivision(apartmentDao.getList(),
+		// divisionDao.getList(),
+		// tenantDao.getActiveTenants()))
+		if (!settingsDao.isDivisionCorrect())
+
+		{
 			throw new InvalidDivisionException(
 					"Lista aktualnych najemców i mieszkań się nie zgadza. Sprawdź algorytm podziału");
 		}
