@@ -46,6 +46,7 @@ public class InvoiceWaterServiceTest extends AbstractServiceTest {
 		// TODO Auto-generated method stub
 
 	}
+
 	@Test
 	@Transactional
 	@Override
@@ -57,10 +58,7 @@ public class InvoiceWaterServiceTest extends AbstractServiceTest {
 		invoiceService.save(invoice, Media.WATER);
 		assertEquals(2, invoiceService.getWaterInvoiceList().size());
 		List<PaymentWater> paymentList = paymentService.getPaymentWaterList();
-		System.out.println("sdfsfsdfsd");
-		for (PaymentWater paymentWater : paymentList) {
-			System.out.println(paymentWater);
-		}
+
 		assertEquals(6, paymentList.size());
 
 		assertEquals(38.09, paymentList.get(3).getPaymentAmount(), DELTA);
@@ -71,18 +69,22 @@ public class InvoiceWaterServiceTest extends AbstractServiceTest {
 		assertEquals(1, list.size());
 		assertEquals(LocalDate.parse("2016-07-01"), list.get(0).getReadingDate());
 	}
+
 	@Test
 	@Transactional
 	public void addForFirstReading() {
 		List<ReadingWater> list = readingService.getUnresolvedReadingsWater();
-		assertEquals(30, list.get(1).getValue(), 0);
+
+		assertEquals(33, list.get(0).getValue(), 0);
 		assertEquals(60, list.get(1).getValue(), 1);
-		InvoiceWater invoice = new InvoiceWater("112233", "test", new LocalDate(), 200, list.get(1));
+		InvoiceWater invoice = new InvoiceWater("112233", "test", new LocalDate(), 200, list.get(0));
 
 		invoiceService.save(invoice, Media.WATER);
 		assertEquals(2, invoiceService.getWaterInvoiceList().size());
 		List<PaymentWater> paymentList = paymentService.getPaymentWaterList();
-
+		for (PaymentWater paymentWater : paymentList) {
+			System.out.println(paymentWater);
+		}
 		assertEquals(6, paymentList.size());
 
 		assertEquals(36.36, paymentList.get(3).getPaymentAmount(), DELTA);
@@ -93,6 +95,7 @@ public class InvoiceWaterServiceTest extends AbstractServiceTest {
 		assertEquals(1, list.size());
 		assertEquals(LocalDate.parse("2016-07-01"), list.get(0).getReadingDate());
 	}
+
 	@Test
 	@Transactional
 	@Override
@@ -144,7 +147,7 @@ public class InvoiceWaterServiceTest extends AbstractServiceTest {
 
 	@Test
 	public void prepareForRegistration() throws InvalidDivisionException {
-	//	apService.deleteByID(5L);
+		// apService.deleteByID(5L);
 		List<ReadingWater> list = invoiceService.prepareForRegistration(Media.WATER);
 
 		assertEquals(2, list.size());

@@ -49,6 +49,7 @@ public abstract class ReadingAbstractDaoImpl<T extends ReadingAbstract> extends 
 	@SuppressWarnings("unchecked")
 	public List<T> getUnresolvedReadings() {
 		Criteria readings = createEntityCriteria().add(Restrictions.eq("resolved", false));
+		readings.addOrder(Order.asc("readingDate"));
 		Criteria meters = readings.createCriteria("meter");
 		meters.add(Restrictions.isNull("apartment"));
 		return readings.list();

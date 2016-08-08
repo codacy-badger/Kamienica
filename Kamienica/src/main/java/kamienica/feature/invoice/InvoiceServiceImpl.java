@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import org.hibernate.engine.transaction.jta.platform.internal.SynchronizationRegistryBasedSynchronizationStrategy;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -122,7 +123,6 @@ public class InvoiceServiceImpl implements InvoiceService {
 			break;
 
 		case WATER:
-
 			List<ReadingWater> readingWaterOld = readingService.getPreviousReadingWater(
 					invoice.getBaseReading().getReadingDate(), meterService.getIdList(Media.WATER));
 
