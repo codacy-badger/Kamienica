@@ -3,6 +3,8 @@ package kamienica.feature.user_admin;
 import java.util.HashMap;
 import java.util.List;
 
+import org.joda.time.Days;
+import org.joda.time.LocalDate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -70,9 +72,9 @@ public class AdminUserServiceImp implements AdminUserService {
 
 	public void addLatestReadings(HashMap<String, Object> model) {
 
-		int energy = energyDao.countDaysFromLastReading();
-		int gas = gasDao.countDaysFromLastReading();
-		int water = waterDao.countDaysFromLastReading();
+		int energy =  countDays(energyDao.getLatestDate());
+		int gas = countDays(gasDao.getLatestDate());
+		int water = countDays(waterDao.getLatestDate());
 		String media;
 		int days;
 		if (energy > gas && energy > water) {
@@ -159,5 +161,10 @@ public class AdminUserServiceImp implements AdminUserService {
 	public SecurityUser getCurrentUser() {
 		SecurityUser user = (SecurityUser) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 		return user;
+	}
+
+	private int countDays(LocalDate date) {
+		LocalDate now = LocalDate.now();
+		return Days.daysBetween(date, now).getDays();
 	}
 }

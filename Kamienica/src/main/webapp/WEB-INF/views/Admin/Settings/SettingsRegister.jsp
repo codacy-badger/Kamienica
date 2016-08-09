@@ -38,7 +38,7 @@
 					<div class="col-lg-12">
 						<h1 class="page-header well">Konfiguracja</h1>
 
-
+						${model.cwu}
 
 					</div>
 				</div>
@@ -83,8 +83,7 @@
 
 						<form:input type="hidden" class="form-control"
 							path='correctDivision' name="correctDivision"
-							value='${model.item.correctDivision }' readonly="true"
-							 />
+							value='${model.item.correctDivision }' readonly="true" />
 
 
 						<div class="form-group">
@@ -100,6 +99,20 @@
 
 							</div>
 						</div>
+
+
+						<div class="form-group">
+							<label class="col-sm-3 control-label">System ogrzewania wody</label>
+							<div class="col-sm-9">
+
+								<form:select path="waterHeatingSystem" name="waterHeatingSystem">
+									<form:options items="${model.cwu}" />
+								</form:select>
+
+
+							</div>
+						</div>
+
 
 						<div class="form-group">
 							<label class="col-sm-3 control-label">Śmieci</label>

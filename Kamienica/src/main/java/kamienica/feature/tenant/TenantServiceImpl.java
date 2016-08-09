@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import kamienica.core.Status;
 import kamienica.feature.settings.SettingsDao;
 
 @Service
@@ -23,7 +24,7 @@ public class TenantServiceImpl implements TenantService {
 		if (currentTenant == null) {
 			tenantDao.save(newTenant);
 		} else if (currentTenant.getMovementDate().isAfter(newTenant.getMovementDate())) {
-			newTenant.setStatus(UserStatus.INACTIVE.getUserStatus());
+			newTenant.setStatus(Status.INACTIVE.getStatus());
 			tenantDao.save(newTenant);
 		} else {
 			tenantDao.deactivateByApparmentId(newTenant.getApartment().getId());

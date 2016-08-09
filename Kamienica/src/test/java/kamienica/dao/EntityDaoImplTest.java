@@ -18,7 +18,7 @@ import org.springframework.test.context.testng.AbstractTransactionalTestNGSpring
 import org.testng.annotations.BeforeClass;
 
 import kamienica.configuration.HibernateTestConfiguration;
-import kamienica.testsetup.HsqlDataTypeFactory;
+import kamienica.testsetup.MySQLDataTypeFactory;
 
 @ContextConfiguration(classes = { HibernateTestConfiguration.class })
 public abstract class EntityDaoImplTest extends AbstractTransactionalTestNGSpringContextTests {
@@ -31,7 +31,7 @@ public abstract class EntityDaoImplTest extends AbstractTransactionalTestNGSprin
 
 		IDatabaseConnection dbConn = new DatabaseDataSourceConnection(dataSource);
 		DatabaseConfig config = dbConn.getConfig();
-		config.setProperty(DatabaseConfig.PROPERTY_DATATYPE_FACTORY, new HsqlDataTypeFactory());
+		config.setProperty(DatabaseConfig.PROPERTY_DATATYPE_FACTORY, new MySQLDataTypeFactory());
 		DatabaseOperation.CLEAN_INSERT.execute(dbConn, getDataSet());
 	}
 

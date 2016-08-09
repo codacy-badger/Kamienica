@@ -1,7 +1,17 @@
 package kamienica.feature.residence;
 
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.Table;
+import javax.persistence.UniqueConstraint;
+
+@Entity
+@Table(name = "residence", uniqueConstraints = { @UniqueConstraint(columnNames = { "street", "number", "city" }) })
 public class Residence {
 
+	@Id
+	@GeneratedValue
 	private Long id;
 	private String street;
 	private String number;

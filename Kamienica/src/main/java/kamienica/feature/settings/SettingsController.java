@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
+import kamienica.core.WaterHeatingSystem;
 import kamienica.feature.apartment.Apartment;
 
 @Controller
@@ -52,6 +53,7 @@ public class SettingsController {
 		model.put("item", service.getSettings());
 		model.put("values", values);
 		model.put("labels", labels);
+		model.put("cwu", WaterHeatingSystem.values());
 		return new ModelAndView("/Admin/Settings/SettingsRegister", "model", model);
 
 	}

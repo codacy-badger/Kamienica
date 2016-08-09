@@ -49,7 +49,8 @@
 							<table class='table table-stripped table-hover' width="100%">
 								<thead>
 									<tr>
-										<th>Ogrzewanie Gazowe</th>
+										<th>Instalacja gazowa</th>
+										<th>Ogrzewanie ciepłej wody</th>
 										<th>Poprawny Podzial</th>
 										<th>Internet</th>
 										<th>Śmieci</th>
@@ -60,6 +61,7 @@
 
 								<tr>
 									<td><c:out value="${model.settings.gas}" /></td>
+									<td><c:out value="${model.settings.waterHeatingSystem}" /></td>
 									<td><c:out value="${model.settings.correctDivision}" /></td>
 									<td><c:out value="${model.settings.internet}" /></td>
 									<td><c:out value="${model.settings.garbage}" /></td>

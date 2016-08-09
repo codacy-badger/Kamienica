@@ -1,23 +1,48 @@
 package kamienica.feature.settings;
 
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+import kamienica.core.WaterHeatingSystem;
+
 @Entity
-@Table(name="settings")
+@Table(name = "settings")
 public class Settings {
 
 	@Id
 	@GeneratedValue
 	private Long id;
-	boolean gas = true;
-	boolean correctDivision = false;
-	boolean internet = false;
-	boolean garbage = false;
+	private boolean gas = true;
+	private boolean correctDivision = false;
+	private boolean internet = false;
+	private boolean garbage = false;
+	@Enumerated(EnumType.STRING)
+	private WaterHeatingSystem waterHeatingSystem;
 
 	public Settings() {
+	}
+
+	public Settings(Long id, boolean gas, boolean correctDivision, boolean internet, boolean garbage,
+			WaterHeatingSystem waterHeatingSystem) {
+		super();
+		this.id = id;
+		this.gas = gas;
+		this.correctDivision = correctDivision;
+		this.internet = internet;
+		this.garbage = garbage;
+		this.waterHeatingSystem = waterHeatingSystem;
+	}
+
+	public WaterHeatingSystem getWaterHeatingSystem() {
+		return waterHeatingSystem;
+	}
+
+	public void setWaterHeatingSystem(WaterHeatingSystem waterHeatingSystem) {
+		this.waterHeatingSystem = waterHeatingSystem;
 	}
 
 	public Long getId() {
@@ -63,16 +88,7 @@ public class Settings {
 	@Override
 	public String toString() {
 		return "Settings [id=" + id + ", gas=" + gas + ", correctDivision=" + correctDivision + ", internet=" + internet
-				+ ", garbage=" + garbage + "]";
-	}
-
-	public Settings(Long id, boolean gas, boolean correctDivision, boolean internet, boolean garbage) {
-		super();
-		this.id = id;
-		this.gas = gas;
-		this.correctDivision = correctDivision;
-		this.internet = internet;
-		this.garbage = garbage;
+				+ ", garbage=" + garbage + ", waterHeatingSystem=" + waterHeatingSystem + "]";
 	}
 
 }

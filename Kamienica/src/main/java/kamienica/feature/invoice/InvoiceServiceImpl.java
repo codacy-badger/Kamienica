@@ -4,21 +4,22 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-import org.hibernate.engine.transaction.jta.platform.internal.SynchronizationRegistryBasedSynchronizationStrategy;
+import org.h2.util.TempFileDeleter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
 import kamienica.core.ManagerEnergy;
 import kamienica.core.ManagerGas;
 import kamienica.core.ManagerPayment;
 import kamienica.core.ManagerWater;
 import kamienica.core.Media;
+import kamienica.core.WaterHeatingSystem;
 import kamienica.core.exception.InvalidDivisionException;
 import kamienica.feature.apartment.Apartment;
 import kamienica.feature.apartment.ApartmentDao;
 import kamienica.feature.division.Division;
 import kamienica.feature.division.DivisionDao;
-import kamienica.feature.division.DivisionValidator;
 import kamienica.feature.meter.MeterService;
 import kamienica.feature.payment.PaymentDao;
 import kamienica.feature.payment.PaymentEnergy;
@@ -32,6 +33,7 @@ import kamienica.feature.reading.ReadingGasDao;
 import kamienica.feature.reading.ReadingService;
 import kamienica.feature.reading.ReadingWater;
 import kamienica.feature.reading.ReadingWaterDao;
+import kamienica.feature.settings.Settings;
 import kamienica.feature.settings.SettingsDao;
 import kamienica.feature.tenant.Tenant;
 import kamienica.feature.tenant.TenantDao;
@@ -74,9 +76,12 @@ public class InvoiceServiceImpl implements InvoiceService {
 
 	@Override
 	public <T extends Invoice> void save(T invoice, Media media) {
+
 		List<Tenant> tenants = tenantDao.getActiveTenants();
 		List<Division> division = divisionDao.getList();
 		List<Apartment> apartments = apartmentDao.getList();
+		Settings settinggs = settingsDao.getList().get(0);
+
 		switch (media) {
 		case ENERGY:
 			List<ReadingEnergy> readingEnergyOld = readingService.getPreviousReadingEnergy(
@@ -100,36 +105,23 @@ public class InvoiceServiceImpl implements InvoiceService {
 		case GAS:
 			List<ReadingGas> readingGasOld = readingService.getPreviousReadingGas(invoice.getReadingDate(),
 					meterService.getIdList(Media.GAS));
-			System.out.println("============START===================");
-			System.out.println("-----stary gaz--");
-			for (ReadingGas readingGas : readingGasOld) {
-				System.out.println(readingGas);
-			}
-			System.out.println("---nowy gaz----");
 			List<ReadingGas> readingGasNew = readingService.getByDate(invoice.getReadingDate(), Media.GAS);
-			for (ReadingGas readingGas : readingGasNew) {
-				System.out.println(readingGas);
+			ArrayList<UsageValue> usageGas;
+			if (settinggs.getWaterHeatingSystem().equals(WaterHeatingSystem.SHARED_GAS)) {
+				List<ReadingWater> waterNew = readingWaterDao
+						.getWaterReadingForGasConsumption2(invoice.getReadingDate());
+
+				List<ReadingWater> waterOld = readingWaterDao
+						.getWaterReadingForGasConsumption2(waterNew.get(0).getReadingDate());
+
+				usageGas = ManagerGas.countConsumption(apartments, readingGasOld, readingGasNew, waterOld, waterNew);
+			} else {
+				usageGas = ManagerGas.countConsumption(apartments, readingGasOld, readingGasNew);
 			}
-			System.out.println("---woda nowa---");
-			List<ReadingWater> waterNew = readingWaterDao.getWaterReadingForGasConsumption2(invoice.getReadingDate());
-			for (ReadingWater readingGas : waterNew) {
-				System.out.println(readingGas);
-			}
-			System.out.println("----woda stara---");
-			List<ReadingWater> waterOld = readingWaterDao
-					.getWaterReadingForGasConsumption2(waterNew.get(0).getReadingDate());
-			for (ReadingWater readingGas : waterOld) {
-				System.out.println(readingGas);
-			}
-			ArrayList<UsageValue> usageGas = ManagerGas.countConsumption(apartments, readingGasOld, readingGasNew,
-					waterOld, waterNew);
-			System.out.println("----zuzycie---");
-			for (UsageValue usageValue : usageGas) {
-				System.out.println(usageValue);
-			}
+
 			List<PaymentGas> paymentGas = ManagerPayment.createPaymentGasList(tenants, (InvoiceGas) invoice, division,
 					usageGas);
-			System.out.println("============KONIEC===================");
+
 			invoiceGasDao.save((InvoiceGas) invoice);
 			readingGasDao.changeResolvmentState(invoice, true);
 

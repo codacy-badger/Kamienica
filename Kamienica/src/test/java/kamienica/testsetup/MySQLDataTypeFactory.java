@@ -6,7 +6,7 @@ import org.dbunit.dataset.datatype.DataType;
 import org.dbunit.dataset.datatype.DataTypeException;
 import org.dbunit.dataset.datatype.DefaultDataTypeFactory;
  
-public class HsqlDataTypeFactory
+public class MySQLDataTypeFactory
   extends DefaultDataTypeFactory
 {
 //  private static final Log log = LogFactory.getLog(HsqlDataTypeFactory.class);

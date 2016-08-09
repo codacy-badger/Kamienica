@@ -1,6 +1,7 @@
 package kamienica.service;
 
 import static org.junit.Assert.assertEquals;
+
 import java.util.List;
 
 import org.joda.time.LocalDate;
@@ -10,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 
 import kamienica.core.Media;
+import kamienica.core.WaterHeatingSystem;
 import kamienica.core.exception.InvalidDivisionException;
 import kamienica.feature.apartment.Apartment;
 import kamienica.feature.apartment.ApartmentService;
@@ -21,6 +23,8 @@ import kamienica.feature.payment.PaymentService;
 import kamienica.feature.reading.ReadingAbstract;
 import kamienica.feature.reading.ReadingGas;
 import kamienica.feature.reading.ReadingService;
+import kamienica.feature.settings.Settings;
+import kamienica.feature.settings.SettingsService;
 
 public class InvoiceGasServiceTest extends AbstractServiceTest {
 
@@ -34,6 +38,8 @@ public class InvoiceGasServiceTest extends AbstractServiceTest {
 	DivisionService divisionService;
 	@Autowired
 	ApartmentService apService;
+	@Autowired
+	SettingsService settingsService;
 
 	@Test
 	@Override
@@ -73,7 +79,7 @@ public class InvoiceGasServiceTest extends AbstractServiceTest {
 
 	@Test
 	@Transactional
-	public void addForFirstReading() {
+	public void addForFirstReadingWithSharedWaterHeating() {
 		List<ReadingGas> list = readingService.getUnresolvedReadingsGas();
 		assertEquals(114, list.get(0).getValue(), 0);
 		InvoiceGas invoice = new InvoiceGas("112233", "test", new LocalDate(), 200, list.get(0));
@@ -87,6 +93,32 @@ public class InvoiceGasServiceTest extends AbstractServiceTest {
 		assertEquals(28.27, paymentList.get(3).getPaymentAmount(), DELTA);
 		assertEquals(68.13, paymentList.get(4).getPaymentAmount(), DELTA);
 		assertEquals(103.61, paymentList.get(5).getPaymentAmount(), DELTA);
+
+		list = readingService.getUnresolvedReadingsGas();
+		assertEquals(1, list.size());
+		assertEquals(LocalDate.parse("2016-10-01"), list.get(0).getReadingDate());
+
+	}
+
+	@Test
+	@Transactional
+	public void addForFirstReadingWithSeparateWaterHeating() {
+		List<ReadingGas> list = readingService.getUnresolvedReadingsGas();
+		Settings setings = settingsService.getSettings();
+		setings.setWaterHeatingSystem(WaterHeatingSystem.INDIVIDUAL_GAS);
+		settingsService.save(setings);
+		assertEquals(114, list.get(0).getValue(), 0);
+		InvoiceGas invoice = new InvoiceGas("112233", "test", new LocalDate(), 200, list.get(0));
+
+		invoiceService.save(invoice, Media.GAS);
+		assertEquals(2, invoiceService.getGasInvoiceList().size());
+		List<PaymentGas> paymentList = paymentService.getPaymentGasList();
+
+		assertEquals(6, paymentList.size());
+
+		assertEquals(71.43, paymentList.get(3).getPaymentAmount(), DELTA);
+		assertEquals(78.57, paymentList.get(4).getPaymentAmount(), DELTA);
+		assertEquals(50.00, paymentList.get(5).getPaymentAmount(), DELTA);
 
 		list = readingService.getUnresolvedReadingsGas();
 		assertEquals(1, list.size());

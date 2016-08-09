@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
+import kamienica.core.Status;
 import kamienica.feature.apartment.Apartment;
 import kamienica.feature.apartment.ApartmentService;
 
@@ -121,8 +122,8 @@ public class TenantController {
 		role.add(UserRole.ADMIN.getUserRole());
 		role.add(UserRole.USER.getUserRole());
 		ArrayList<String> status = new ArrayList<>();
-		status.add(UserStatus.ACTIVE.getUserStatus());
-		status.add(UserStatus.INACTIVE.getUserStatus());
+		status.add(Status.ACTIVE.getStatus());
+		status.add(Status.INACTIVE.getStatus());
 		output.put("role", role);
 		output.put("status", status);
 		Date date = new Date();

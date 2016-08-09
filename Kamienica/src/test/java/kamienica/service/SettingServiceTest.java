@@ -17,7 +17,7 @@ public class SettingServiceTest extends AbstractServiceTest {
 	@Override
 	public void getList() {
 		Settings settings = service.getSettings();
-		System.out.println(settings);
+		
 		assertEquals(true, settings.isCorrectDivision());
 
 	}

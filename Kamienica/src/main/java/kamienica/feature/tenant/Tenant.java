@@ -4,6 +4,7 @@ import java.io.Serializable;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.OneToOne;
@@ -18,6 +19,7 @@ import org.joda.time.LocalDate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
 
+import kamienica.core.Status;
 import kamienica.feature.apartment.Apartment;
 
 @Entity
@@ -46,7 +48,7 @@ public class Tenant implements Serializable {
 	@Column(nullable = false)
 	private String role = UserRole.USER.getUserRole();
 	@Column(nullable = false)
-	private String status = UserStatus.ACTIVE.getUserStatus();
+	private String status = Status.ACTIVE.getStatus();
 	@Column(nullable = false)
 	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	@Type(type = "org.jadira.usertype.dateandtime.joda.PersistentLocalDate")
@@ -67,13 +69,19 @@ public class Tenant implements Serializable {
 
 	}
 
+	
+
 	public String getStatus() {
 		return status;
 	}
 
+
+
 	public void setStatus(String status) {
 		this.status = status;
 	}
+
+
 
 	public String getRole() {
 		return role;

@@ -6,7 +6,6 @@ import java.util.List;
 
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.transaction.annotation.Transactional;
 
 import kamienica.feature.division.Division;
 import kamienica.feature.division.DivisionService;

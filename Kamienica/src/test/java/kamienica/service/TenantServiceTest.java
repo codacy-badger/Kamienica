@@ -23,6 +23,20 @@ public class TenantServiceTest extends AbstractServiceTest {
 		assertEquals(5, list.size());
 	}
 
+	@Test
+	public void getActiveTenants() {
+
+		List<Tenant> list = service.getCurrentTenants();
+		assertEquals(3, list.size());
+	}
+
+	@Test
+	public void loadByMail() {
+		Tenant tenant = service.loadByMail("folik@wp.pl");
+		assertNotNull(tenant);
+		assertEquals("Maciej Folik", tenant.getFullName());
+	}
+
 	@Override
 	public void getById() {
 		// TODO Auto-generated method stub
@@ -37,7 +51,7 @@ public class TenantServiceTest extends AbstractServiceTest {
 
 	@Override
 	public void remove() {
-	
+
 	}
 
 	@Override

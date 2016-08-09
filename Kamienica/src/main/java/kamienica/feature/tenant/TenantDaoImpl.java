@@ -7,6 +7,7 @@ import org.hibernate.Query;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.stereotype.Repository;
 
+import kamienica.core.Status;
 import kamienica.core.dao.AbstractDao;
 import kamienica.feature.apartment.Apartment;
 
@@ -17,7 +18,7 @@ public class TenantDaoImpl extends AbstractDao<Tenant> implements TenantDao {
 	@SuppressWarnings("unchecked")
 	public List<Tenant> getActiveTenants() {
 		Criteria criteria = createEntityCriteria();
-		criteria.add(Restrictions.eq("status", UserStatus.ACTIVE.getUserStatus()));
+		criteria.add(Restrictions.eq("status", Status.ACTIVE.getStatus()));
 		return criteria.list();
 	}
 
@@ -38,7 +39,7 @@ public class TenantDaoImpl extends AbstractDao<Tenant> implements TenantDao {
 //				.setLong("id", id).setString("status", UserStatus.INACTIVE.getUserStatus());
 //
 		Query query = getSession().createSQLQuery("update tenant set status =:status where apartment_id =:id")
-				.setLong("id", id).setString("status", UserStatus.INACTIVE.getUserStatus());
+				.setLong("id", id).setString("status", Status.INACTIVE.getStatus());
 		query.executeUpdate();
 
 	}
@@ -47,7 +48,7 @@ public class TenantDaoImpl extends AbstractDao<Tenant> implements TenantDao {
 	public Tenant getTenantForApartment(Apartment ap) {
 		Criteria criteria = createEntityCriteria();
 		criteria.add(Restrictions.eq("apartment", ap))
-				.add(Restrictions.eq("status", UserStatus.ACTIVE.getUserStatus()));
+				.add(Restrictions.eq("status", Status.ACTIVE.getStatus()));
 
 		return (Tenant) criteria.uniqueResult();
 	}
