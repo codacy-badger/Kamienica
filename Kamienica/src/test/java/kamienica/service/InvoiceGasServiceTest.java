@@ -81,12 +81,12 @@ public class InvoiceGasServiceTest extends AbstractServiceTest {
 		invoiceService.save(invoice, Media.GAS);
 		assertEquals(2, invoiceService.getGasInvoiceList().size());
 		List<PaymentGas> paymentList = paymentService.getPaymentGasList();
-		
+
 		assertEquals(6, paymentList.size());
 
-		assertEquals(59.74, paymentList.get(3).getPaymentAmount(), DELTA);
-		assertEquals(102.7, paymentList.get(4).getPaymentAmount(), DELTA);
-		assertEquals(37.55, paymentList.get(5).getPaymentAmount(), DELTA);
+		assertEquals(28.27, paymentList.get(3).getPaymentAmount(), DELTA);
+		assertEquals(68.13, paymentList.get(4).getPaymentAmount(), DELTA);
+		assertEquals(103.61, paymentList.get(5).getPaymentAmount(), DELTA);
 
 		list = readingService.getUnresolvedReadingsGas();
 		assertEquals(1, list.size());

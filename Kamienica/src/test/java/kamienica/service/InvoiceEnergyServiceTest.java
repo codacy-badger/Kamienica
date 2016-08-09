@@ -82,9 +82,6 @@ public class InvoiceEnergyServiceTest extends AbstractServiceTest {
 		assertEquals(2, invoiceService.getEnergyInvoiceList().size());
 		List<PaymentEnergy> paymentList = paymentService.getPaymentEnergyList();
 
-		for (PaymentEnergy paymentEnergy : paymentList) {
-			System.out.println(paymentEnergy);
-		}
 		assertEquals(6, paymentList.size());
 
 		assertEquals(48.48, paymentList.get(3).getPaymentAmount(), DELTA);
@@ -147,7 +144,7 @@ public class InvoiceEnergyServiceTest extends AbstractServiceTest {
 
 	@Test
 	public void prepareForRegistration() throws InvalidDivisionException {
-	//	apService.deleteByID(5L);
+		// apService.deleteByID(5L);
 		List<ReadingAbstract> list = invoiceService.prepareForRegistration(Media.ENERGY);
 		assertEquals(2, list.size());
 		assertEquals(11, list.get(0).getValue(), 0);

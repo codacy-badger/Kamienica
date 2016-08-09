@@ -82,9 +82,7 @@ public class InvoiceWaterServiceTest extends AbstractServiceTest {
 		invoiceService.save(invoice, Media.WATER);
 		assertEquals(2, invoiceService.getWaterInvoiceList().size());
 		List<PaymentWater> paymentList = paymentService.getPaymentWaterList();
-		for (PaymentWater paymentWater : paymentList) {
-			System.out.println(paymentWater);
-		}
+		
 		assertEquals(6, paymentList.size());
 
 		assertEquals(36.36, paymentList.get(3).getPaymentAmount(), DELTA);
@@ -93,7 +91,7 @@ public class InvoiceWaterServiceTest extends AbstractServiceTest {
 
 		list = readingService.getUnresolvedReadingsWater();
 		assertEquals(1, list.size());
-		assertEquals(LocalDate.parse("2016-07-01"), list.get(0).getReadingDate());
+		assertEquals(LocalDate.parse("2016-09-01"), list.get(0).getReadingDate());
 	}
 
 	@Test

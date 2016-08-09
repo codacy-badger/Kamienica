@@ -100,19 +100,36 @@ public class InvoiceServiceImpl implements InvoiceService {
 		case GAS:
 			List<ReadingGas> readingGasOld = readingService.getPreviousReadingGas(invoice.getReadingDate(),
 					meterService.getIdList(Media.GAS));
-
+			System.out.println("============START===================");
+			System.out.println("-----stary gaz--");
+			for (ReadingGas readingGas : readingGasOld) {
+				System.out.println(readingGas);
+			}
+			System.out.println("---nowy gaz----");
 			List<ReadingGas> readingGasNew = readingService.getByDate(invoice.getReadingDate(), Media.GAS);
-
+			for (ReadingGas readingGas : readingGasNew) {
+				System.out.println(readingGas);
+			}
+			System.out.println("---woda nowa---");
 			List<ReadingWater> waterNew = readingWaterDao.getWaterReadingForGasConsumption2(invoice.getReadingDate());
-
+			for (ReadingWater readingGas : waterNew) {
+				System.out.println(readingGas);
+			}
+			System.out.println("----woda stara---");
 			List<ReadingWater> waterOld = readingWaterDao
 					.getWaterReadingForGasConsumption2(waterNew.get(0).getReadingDate());
-
+			for (ReadingWater readingGas : waterOld) {
+				System.out.println(readingGas);
+			}
 			ArrayList<UsageValue> usageGas = ManagerGas.countConsumption(apartments, readingGasOld, readingGasNew,
 					waterOld, waterNew);
+			System.out.println("----zuzycie---");
+			for (UsageValue usageValue : usageGas) {
+				System.out.println(usageValue);
+			}
 			List<PaymentGas> paymentGas = ManagerPayment.createPaymentGasList(tenants, (InvoiceGas) invoice, division,
 					usageGas);
-
+			System.out.println("============KONIEC===================");
 			invoiceGasDao.save((InvoiceGas) invoice);
 			readingGasDao.changeResolvmentState(invoice, true);
 

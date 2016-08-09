@@ -15,7 +15,7 @@ public abstract class AbstractServiceTest {
 	/**
 	 * difference factor for calculated data
 	 */
-	protected final double DELTA = 2;
+	protected final double DELTA = 0.5;
 
 	@Test
 	public abstract void getList();
