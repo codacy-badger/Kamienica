@@ -35,20 +35,14 @@ public class InvoiceWaterServiceTest extends AbstractServiceTest {
 	ApartmentService apService;
 
 	@Test
-	@Override
 	public void getList() {
 		assertEquals(1, invoiceService.getWaterInvoiceList().size());
 
 	}
 
-	@Override
-	public void getById() {
-		// TODO Auto-generated method stub
-
-	}
-
+	
+	@Test
 	@Transactional
-	@Override
 	public void add() {
 		List<ReadingWater> list = readingService.getUnresolvedReadingsWater();
 		assertEquals(60, list.get(1).getValue(), 0);
@@ -57,10 +51,7 @@ public class InvoiceWaterServiceTest extends AbstractServiceTest {
 		invoiceService.save(invoice, Media.WATER);
 		assertEquals(2, invoiceService.getWaterInvoiceList().size());
 		List<PaymentWater> paymentList = paymentService.getPaymentWaterList();
-		System.out.println("sdfsfsdfsd");
-		for (PaymentWater paymentWater : paymentList) {
-			System.out.println(paymentWater);
-		}
+
 		assertEquals(6, paymentList.size());
 
 		assertEquals(38.09, paymentList.get(3).getPaymentAmount(), DELTA);
@@ -72,16 +63,19 @@ public class InvoiceWaterServiceTest extends AbstractServiceTest {
 		assertEquals(LocalDate.parse("2016-07-01"), list.get(0).getReadingDate());
 	}
 
+	@Test
 	@Transactional
 	public void addForFirstReading() {
 		List<ReadingWater> list = readingService.getUnresolvedReadingsWater();
-		assertEquals(60, list.get(1).getValue(), 0);
-		InvoiceWater invoice = new InvoiceWater("112233", "test", new LocalDate(), 200, list.get(1));
+
+		assertEquals(33, list.get(0).getValue(), 0);
+		assertEquals(60, list.get(1).getValue(), 1);
+		InvoiceWater invoice = new InvoiceWater("112233", "test", new LocalDate(), 200, list.get(0));
 
 		invoiceService.save(invoice, Media.WATER);
 		assertEquals(2, invoiceService.getWaterInvoiceList().size());
 		List<PaymentWater> paymentList = paymentService.getPaymentWaterList();
-
+		
 		assertEquals(6, paymentList.size());
 
 		assertEquals(36.36, paymentList.get(3).getPaymentAmount(), DELTA);
@@ -90,11 +84,11 @@ public class InvoiceWaterServiceTest extends AbstractServiceTest {
 
 		list = readingService.getUnresolvedReadingsWater();
 		assertEquals(1, list.size());
-		assertEquals(LocalDate.parse("2016-07-01"), list.get(0).getReadingDate());
+		assertEquals(LocalDate.parse("2016-09-01"), list.get(0).getReadingDate());
 	}
 
+	@Test
 	@Transactional
-	@Override
 	public void remove() {
 		invoiceService.delete(1L, Media.WATER);
 		List<ReadingWater> list = readingService.getUnresolvedReadingsWater();
@@ -103,9 +97,8 @@ public class InvoiceWaterServiceTest extends AbstractServiceTest {
 	}
 
 	@Transactional
-	@Override
-	@Ignore
 	@Test
+	@Ignore
 	public void update() {
 		InvoiceWater invoice = new InvoiceWater("23423423", "test", new LocalDate(), 400,
 				(ReadingWater) readingService.getById(6L, Media.WATER));
@@ -124,12 +117,7 @@ public class InvoiceWaterServiceTest extends AbstractServiceTest {
 
 	}
 
-	@Override
-	public void addWithValidationError() {
-		// TODO Auto-generated method stub
-
-	}
-
+	
 	@Transactional
 	@Test(expected = InvalidDivisionException.class)
 	public void prepareForRegistrationWithException() throws InvalidDivisionException {
@@ -143,7 +131,7 @@ public class InvoiceWaterServiceTest extends AbstractServiceTest {
 
 	@Test
 	public void prepareForRegistration() throws InvalidDivisionException {
-		apService.deleteByID(5L);
+		// apService.deleteByID(5L);
 		List<ReadingWater> list = invoiceService.prepareForRegistration(Media.WATER);
 
 		assertEquals(2, list.size());
@@ -154,7 +142,9 @@ public class InvoiceWaterServiceTest extends AbstractServiceTest {
 	@Transactional
 	@Test(expected = InvalidDivisionException.class)
 	public void shouldThrowInvalidDivisionExceptionWhilePreparing() throws InvalidDivisionException {
+		System.out.println(divisionService.isDivisionCorrect());
 		divisionService.deleteAll();
+		System.out.println(divisionService.isDivisionCorrect());
 		List<ReadingWater> list = invoiceService.prepareForRegistration(Media.WATER);
 		assertEquals(0, list.size());
 	}

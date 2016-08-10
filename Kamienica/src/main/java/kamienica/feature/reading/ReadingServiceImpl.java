@@ -2,6 +2,7 @@ package kamienica.feature.reading;
 
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 import org.joda.time.LocalDate;
@@ -11,6 +12,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import kamienica.core.Media;
+import kamienica.core.exception.NoMainCounterException;
 import kamienica.feature.invoice.InvoiceGas;
 import kamienica.feature.meter.MeterDao;
 import kamienica.feature.meter.MeterEnergy;
@@ -56,19 +58,25 @@ public class ReadingServiceImpl implements ReadingService {
 	 * method will create fake '0' readings for each meter. It will also create
 	 * 0 reading for every new meter that has been recently added
 	 * 
+	 * @throws NoMainCounterException
+	 * 
 	 */
 	@SuppressWarnings("unchecked")
 	@Override
-	public <T extends ReadingAbstract> List<T> getLatestNew(Media media) {
+	public <T extends ReadingAbstract> List<T> getLatestNew(Media media) throws NoMainCounterException {
 		Set<Long> idList;
+		LocalDate fakeDate = new LocalDate().minusDays(100);
 		switch (media) {
 		case ENERGY:
-			idList = meterEnergy.getIdList();
+			if (!meterEnergy.ifMainExists()) {
+				throw new NoMainCounterException();
+			}
+			idList = meterEnergy.getIdListForActiveMeters();
 			List<ReadingEnergy> energyList = latestEdit(Media.ENERGY);
 			if (energyList.isEmpty()) {
 				for (Long tmpLong : idList) {
 					energyList
-							.add(new ReadingEnergy(new LocalDate().minusDays(100), 0.0, meterEnergy.getById(tmpLong)));
+							.add(new ReadingEnergy(fakeDate, 0.0, meterEnergy.getById(tmpLong)));
 				}
 			} else {
 				for (ReadingEnergy readingEnergy : energyList) {
@@ -81,13 +89,16 @@ public class ReadingServiceImpl implements ReadingService {
 			}
 			return (List<T>) energyList;
 		case GAS:
-			idList = meterGas.getIdList();
+			if (!meterGas.ifMainExists()) {
+				throw new NoMainCounterException();
+			}
+			idList = meterGas.getIdListForActiveMeters();
 			List<ReadingGas> gasList = latestEdit(Media.GAS);
 
 			// if this the very first time user creates readings
 			if (gasList.isEmpty()) {
 				for (Long tmpLong : idList) {
-					gasList.add(new ReadingGas(new LocalDate().minusDays(100), 0.0, meterGas.getById(tmpLong)));
+					gasList.add(new ReadingGas(fakeDate, 0.0, meterGas.getById(tmpLong)));
 				}
 			} else {
 				// checks if there has been a new meter and adds fake '0'
@@ -102,11 +113,14 @@ public class ReadingServiceImpl implements ReadingService {
 			return (List<T>) gasList;
 
 		case WATER:
-			idList = meterWater.getIdList();
+			if (!meterWater.ifMainExists()) {
+				throw new NoMainCounterException();
+			}
+			idList = meterWater.getIdListForActiveMeters();
 			List<ReadingWater> waterList = latestEdit(Media.WATER);
 			if (waterList.isEmpty()) {
 				for (Long tmpLong : idList) {
-					waterList.add(new ReadingWater(new LocalDate().minusDays(100), 0.0, meterWater.getById(tmpLong)));
+					waterList.add(new ReadingWater(fakeDate, 0.0, meterWater.getById(tmpLong)));
 				}
 			} else {
 				for (ReadingWater readingWater : waterList) {
@@ -125,27 +139,29 @@ public class ReadingServiceImpl implements ReadingService {
 		return null;
 	}
 
-	@Override
-	public List<ReadingEnergy> energyLatestNew() {
-		Set<Long> idList = meterEnergy.getIdList();
-		List<ReadingEnergy> energyList = latestEdit(Media.ENERGY);
-		// if this the very first time user creates readings
-		if (energyList.isEmpty()) {
-			for (Long tmpLong : idList) {
-				energyList.add(new ReadingEnergy(new LocalDate().minusDays(100), 0.0, meterEnergy.getById(tmpLong)));
-			}
-		} else {
-			// checks if there has been a new meter and adds fake '0' reading
-			for (ReadingEnergy readingEnergy : energyList) {
-				idList.remove(readingEnergy.getMeter().getId());
-			}
-			for (Long tmpLong : idList) {
-				energyList
-						.add(new ReadingEnergy(energyList.get(0).getReadingDate(), 0.0, meterEnergy.getById(tmpLong)));
-			}
-		}
-		return energyList;
-	}
+	// @Override
+	// public List<ReadingEnergy> energyLatestNew() {
+	// Set<Long> idList = meterEnergy.getIdList();
+	// List<ReadingEnergy> energyList = latestEdit(Media.ENERGY);
+	// // if this the very first time user creates readings
+	// if (energyList.isEmpty()) {
+	// for (Long tmpLong : idList) {
+	// energyList.add(new ReadingEnergy(new LocalDate().minusDays(100), 0.0,
+	// meterEnergy.getById(tmpLong)));
+	// }
+	// } else {
+	// // checks if there has been a new meter and adds fake '0' reading
+	// for (ReadingEnergy readingEnergy : energyList) {
+	// idList.remove(readingEnergy.getMeter().getId());
+	// }
+	// for (Long tmpLong : idList) {
+	// energyList
+	// .add(new ReadingEnergy(energyList.get(0).getReadingDate(), 0.0,
+	// meterEnergy.getById(tmpLong)));
+	// }
+	// }
+	// return energyList;
+	// }
 
 	// @Override
 	// public List<ReadingGas> gasLatest() {
@@ -228,19 +244,19 @@ public class ReadingServiceImpl implements ReadingService {
 		return water.getLatestList(water.getLatestDate());
 	}
 
-	@SuppressWarnings("unchecked")
+	
 	@Override
-	public <T extends ReadingAbstract> List<T> getPreviousReadingEnergy(LocalDate date, Media media) {
+	public List <? extends ReadingAbstract> getPreviousReadingEnergy(LocalDate date, Media media) {
 		switch (media) {
 		case ENERGY:
-			return (List<T>) energy.getPrevious(date, meterEnergy.getIdList());
-			
+			return energy.getPrevious(date, meterEnergy.getIdList());
+
 		case GAS:
 
-			return (List<T>) gas.getPrevious(date, meterGas.getIdList());
+			return  gas.getPrevious(date, meterGas.getIdList());
 		case WATER:
 
-			return (List<T>) water.getPrevious(date, meterWater.getIdList());
+			return  water.getPrevious(date, meterWater.getIdList());
 
 		default:
 			break;
@@ -264,15 +280,14 @@ public class ReadingServiceImpl implements ReadingService {
 	}
 
 	@Override
-	@SuppressWarnings("unchecked")
-	public <T extends ReadingAbstract> List<T> getByDate(LocalDate date, Media media) {
+	public List<? extends ReadingAbstract>  getByDate(LocalDate date, Media media) {
 		switch (media) {
 		case ENERGY:
-			return (List<T>) energy.getByDate(date);
+			return energy.getByDate(date);
 		case GAS:
-			return (List<T>) gas.getByDate(date);
+			return  gas.getByDate(date);
 		case WATER:
-			return (List<T>) water.getByDate(date);
+			return water.getByDate(date);
 
 		default:
 			return null;
@@ -572,6 +587,18 @@ public class ReadingServiceImpl implements ReadingService {
 			break;
 		default:
 			break;
+		}
+
+	}
+
+	@Override
+	public <T extends ReadingAbstract> void setDates(Map<String, Object> model, List<T> list) {
+		model.put("date", new LocalDate());
+
+		if (list.isEmpty()) {
+			model.put("oldDate", "2000-01-01");
+		} else {
+			model.put("oldDate", list.get(0).getReadingDate().plusDays(1));
 		}
 
 	}

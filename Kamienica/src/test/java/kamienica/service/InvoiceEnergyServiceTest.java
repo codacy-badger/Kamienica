@@ -36,30 +36,25 @@ public class InvoiceEnergyServiceTest extends AbstractServiceTest {
 	ApartmentService apService;
 
 	@Test
-	@Override
 	public void getList() {
 		assertEquals(1, invoiceService.getEnergyInvoiceList().size());
 
 	}
 
-	@Override
-	public void getById() {
-		// TODO Auto-generated method stub
-
-	}
 
 	@Transactional
-	@Override
+	@Test
 	public void add() {
 		List<ReadingEnergy> list = readingService.getUnresolvedReadingsEnergy();
+		assertEquals(true, divisionService.isDivisionCorrect());
 		assertEquals(31, list.get(1).getValue(), 0);
 		InvoiceEnergy invoice = new InvoiceEnergy("112233", "test", new LocalDate(), 200, list.get(1));
 
 		invoiceService.save(invoice, Media.ENERGY);
 		assertEquals(2, invoiceService.getEnergyInvoiceList().size());
 		List<PaymentEnergy> paymentList = paymentService.getPaymentEnergyList();
-		assertEquals(6, paymentList.size());
 
+		assertEquals(6, paymentList.size());
 		assertEquals(30.30, paymentList.get(3).getPaymentAmount(), DELTA);
 		assertEquals(48.48, paymentList.get(4).getPaymentAmount(), DELTA);
 		assertEquals(121.212, paymentList.get(5).getPaymentAmount(), DELTA);
@@ -80,9 +75,6 @@ public class InvoiceEnergyServiceTest extends AbstractServiceTest {
 		assertEquals(2, invoiceService.getEnergyInvoiceList().size());
 		List<PaymentEnergy> paymentList = paymentService.getPaymentEnergyList();
 
-		for (PaymentEnergy paymentEnergy : paymentList) {
-			System.out.println(paymentEnergy);
-		}
 		assertEquals(6, paymentList.size());
 
 		assertEquals(48.48, paymentList.get(3).getPaymentAmount(), DELTA);
@@ -95,7 +87,7 @@ public class InvoiceEnergyServiceTest extends AbstractServiceTest {
 	}
 
 	@Transactional
-	@Override
+	@Test
 	public void remove() {
 		invoiceService.delete(1L, Media.ENERGY);
 		List<ReadingEnergy> list = readingService.getUnresolvedReadingsEnergy();
@@ -104,7 +96,6 @@ public class InvoiceEnergyServiceTest extends AbstractServiceTest {
 	}
 
 	@Transactional
-	@Override
 	@Ignore
 	@Test
 	public void update() {
@@ -114,7 +105,6 @@ public class InvoiceEnergyServiceTest extends AbstractServiceTest {
 		List<PaymentEnergy> oldList = paymentService.getEnergyByInvoice(invoice);
 
 		invoice.setTotalAmount(400.0);
-		System.out.println(invoice);
 		invoiceService.update(invoice, Media.ENERGY);
 
 		List<PaymentEnergy> newList = paymentService.getEnergyByInvoice(invoice);
@@ -126,12 +116,7 @@ public class InvoiceEnergyServiceTest extends AbstractServiceTest {
 
 	}
 
-	@Override
-	public void addWithValidationError() {
-		// TODO Auto-generated method stub
-
-	}
-
+	
 	@Transactional
 	@Test(expected = InvalidDivisionException.class)
 	public void prepareForRegistrationWithException() throws InvalidDivisionException {
@@ -145,7 +130,7 @@ public class InvoiceEnergyServiceTest extends AbstractServiceTest {
 
 	@Test
 	public void prepareForRegistration() throws InvalidDivisionException {
-		apService.deleteByID(5L);
+		// apService.deleteByID(5L);
 		List<ReadingAbstract> list = invoiceService.prepareForRegistration(Media.ENERGY);
 		assertEquals(2, list.size());
 		assertEquals(11, list.get(0).getValue(), 0);

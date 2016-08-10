@@ -1,4 +1,4 @@
-package kamienica.dao;
+package kamienica.core.dao;
 
 import java.lang.reflect.ParameterizedType;
 import java.util.HashSet;
@@ -80,6 +80,15 @@ public abstract class AbstractDao<T> {
 		Criteria criteria = createEntityCriteria();
 		return criteria.list();
 	}
+	
+	@SuppressWarnings("unchecked")
+	public List<T> paginatedList(Integer page, Integer maxResult){
+		Criteria criteria = createEntityCriteria();
+		criteria.setFirstResult((page*maxResult)-maxResult);
+		criteria.setMaxResults(maxResult);
+		return criteria.list();
+	}
+	
 
 	@SuppressWarnings("unchecked")
 	public Set<Long> getIdList() {

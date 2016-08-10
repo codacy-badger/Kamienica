@@ -26,4 +26,6 @@ public interface DivisionService {
 	public void prepareForm(DivisionForm form) throws WrongDivisionInputException;
 
 	List<Division> prepareDivisionListForRegistration(List<Tenant> tenantList, List<Apartment> apartmentList);
+
+	public boolean isDivisionCorrect();
 }

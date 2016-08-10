@@ -3,6 +3,8 @@ package kamienica.feature.user_admin;
 import java.util.HashMap;
 import java.util.List;
 
+import org.joda.time.Days;
+import org.joda.time.LocalDate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -23,11 +25,15 @@ import kamienica.feature.reading.ReadingGas;
 import kamienica.feature.reading.ReadingGasDao;
 import kamienica.feature.reading.ReadingWater;
 import kamienica.feature.reading.ReadingWaterDao;
+import kamienica.feature.settings.Settings;
+import kamienica.feature.settings.SettingsDao;
 
 @Service
 @Transactional
 public class AdminUserServiceImp implements AdminUserService {
 
+	@Autowired
+	SettingsDao settingsDao;
 	@Autowired
 	private ApartmentDao apartmentDao;
 	@Autowired
@@ -45,26 +51,30 @@ public class AdminUserServiceImp implements AdminUserService {
 	@Autowired
 	@Qualifier("invoiceGas")
 	private InvoiceAbstractDao<InvoiceGas> invoiceGasDao;
-//	@Autowired
-//	private PaymentDao<PaymentEnergy, ReadingEnergy> pamymentEnergyDao;
-//	@Autowired
-//	private PaymentDao<PaymentGas, ReadingEnergy> pamymentGasDao;
-//	@Autowired
-//	private PaymentDao<PaymentWater, ReadingEnergy> pamymentWaterDao;
 
 	@Override
 	public HashMap<String, Object> getMainData() {
 		HashMap<String, Object> model = new HashMap<>();
 		model.put("emptyApartments", apartmentDao.getNumOfEmptyApartment());
 		addLatestReadings(model);
+		checkConfig(model);
 		return model;
+	}
+
+	private void checkConfig(HashMap<String, Object> model) {
+		List<Settings> list = settingsDao.getList();
+		if (list.isEmpty()) {
+			model.put("settings", "BRAK USTAWIEŃ");
+		} else if (!list.get(0).isCorrectDivision()) {
+			model.put("settings", "Podział niekatualny");
+		}
 	}
 
 	public void addLatestReadings(HashMap<String, Object> model) {
 
-		int energy = energyDao.countDaysFromLastReading();
-		int gas = gasDao.countDaysFromLastReading();
-		int water = waterDao.countDaysFromLastReading();
+		int energy =  countDays(energyDao.getLatestDate());
+		int gas = countDays(gasDao.getLatestDate());
+		int water = countDays(waterDao.getLatestDate());
 		String media;
 		int days;
 		if (energy > gas && energy > water) {
@@ -119,15 +129,12 @@ public class AdminUserServiceImp implements AdminUserService {
 
 		switch (media) {
 		case ENERGY:
-			System.out.println("getReadingsForTenant - energia");
 			return energyDao.getListForTenant(apartment);
 
 		case GAS:
-			System.out.println("getReadingsForTenant - gas");
 			return gasDao.getListForTenant(apartment);
 
 		case WATER:
-			System.out.println("getReadingsForTenant - woda");
 			return waterDao.getListForTenant(apartment);
 
 		default:
@@ -136,24 +143,28 @@ public class AdminUserServiceImp implements AdminUserService {
 
 	}
 
-//	@Override
-//	public List<PaymentEnergy> getPaymentEnergyForTenant() {
-//		return energy.getPaymentForTenant(tenant);
-//	}
-//
-//	@Override
-//	public List<PaymentGas> getPaymentGasForTenant() {
-//		return gas.getPaymentForTenant(tenant);
-//	}
-//
-//	@Override
-//	public List<PaymentWater> getPaymentWaterForTenant() {
-//		return water.getPaymentForTenant(tenant);
-//	}
-	
-	
+	// @Override
+	// public List<PaymentEnergy> getPaymentEnergyForTenant() {
+	// return energy.getPaymentForTenant(tenant);
+	// }
+	//
+	// @Override
+	// public List<PaymentGas> getPaymentGasForTenant() {
+	// return gas.getPaymentForTenant(tenant);
+	// }
+	//
+	// @Override
+	// public List<PaymentWater> getPaymentWaterForTenant() {
+	// return water.getPaymentForTenant(tenant);
+	// }
+
 	public SecurityUser getCurrentUser() {
 		SecurityUser user = (SecurityUser) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 		return user;
+	}
+
+	private int countDays(LocalDate date) {
+		LocalDate now = LocalDate.now();
+		return Days.daysBetween(date, now).getDays();
 	}
 }

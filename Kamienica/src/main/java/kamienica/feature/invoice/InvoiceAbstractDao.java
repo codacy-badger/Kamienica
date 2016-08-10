@@ -2,7 +2,7 @@ package kamienica.feature.invoice;
 
 import java.util.List;
 
-import kamienica.dao.DaoInterface;
+import kamienica.core.dao.DaoInterface;
 import kamienica.feature.payment.PaymentStatus;
 
 public interface InvoiceAbstractDao<I extends Invoice> extends DaoInterface<I> {

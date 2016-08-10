@@ -15,6 +15,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 
 import kamienica.core.Media;
+import kamienica.core.exception.NoMainCounterException;
 import kamienica.feature.meter.MeterEnergy;
 import kamienica.feature.meter.MeterService;
 import kamienica.feature.reading.ReadingEnergy;
@@ -30,13 +31,8 @@ public class ReadingEnergyServiceTest extends AbstractServiceTest {
 	private Set<Long> meterIdList = new HashSet<>(Arrays.asList(1L, 2L, 3L, 4L, 5L));
 
 	@Test
-	public void getLatest() {
+	public void getLatest() throws NoMainCounterException {
 		List<ReadingEnergy> list2 = service.getLatestNew(Media.ENERGY);
-		List<ReadingEnergy> list = service.energyLatestNew();
-		assertEquals(5, list.size());
-		for (ReadingEnergy readingEnergy : list) {
-			assertEquals(LocalDate.parse("2016-09-01"), readingEnergy.getReadingDate());
-		}
 
 		assertEquals(5, list2.size());
 		for (ReadingEnergy readingEnergy : list2) {
@@ -44,8 +40,22 @@ public class ReadingEnergyServiceTest extends AbstractServiceTest {
 		}
 	}
 
+	@Transactional
 	@Test
-	@Override
+	public void getLatestActiveOnly() throws NoMainCounterException {
+		MeterEnergy meter = meterService.getById(3L, Media.ENERGY);
+		meter.setDeactivation(LocalDate.parse("2016-01-01"));
+		meterService.update(meter, Media.ENERGY);
+		
+		List<ReadingEnergy> list2 = service.getLatestNew(Media.ENERGY);
+
+		assertEquals(4, list2.size());
+		for (ReadingEnergy readingEnergy : list2) {
+			assertEquals(LocalDate.parse("2016-09-01"), readingEnergy.getReadingDate());
+		}
+	}
+
+	@Test
 	public void getList() {
 		assertEquals(15, service.getReadingEnergy().size());
 	}
@@ -64,14 +74,16 @@ public class ReadingEnergyServiceTest extends AbstractServiceTest {
 	@Test
 	public void shouldRetrieviePreviousReadings() {
 		List<ReadingEnergy> list = service.getPreviousReadingEnergy(LocalDate.parse("2016-09-01"), meterIdList);
+
 		for (ReadingEnergy readingEnergy : list) {
 			assertEquals(LocalDate.parse("2016-08-01"), readingEnergy.getReadingDate());
 		}
 	}
 
+	@SuppressWarnings("unchecked")
 	@Test
 	public void getByDate() {
-		List<ReadingEnergy> list = service.getByDate(LocalDate.parse("2016-07-01"), Media.ENERGY);
+		List<ReadingEnergy> list = (List<ReadingEnergy>) service.getByDate(LocalDate.parse("2016-07-01"), Media.ENERGY);
 		for (ReadingEnergy readingEnergy : list) {
 			assertEquals(LocalDate.parse("2016-07-01"), readingEnergy.getReadingDate());
 		}
@@ -89,14 +101,14 @@ public class ReadingEnergyServiceTest extends AbstractServiceTest {
 
 	@Transactional
 	@Test
-	public void firstReadingForANewMeter() {
+	public void firstReadingForANewMeter() throws NoMainCounterException {
 		MeterEnergy meter = new MeterEnergy("test", "34", "3535", null);
 		meterService.save(meter, Media.ENERGY);
-		List<ReadingEnergy> list = service.energyLatestNew();
+		List<ReadingEnergy> list = service.getLatestNew(Media.ENERGY);
 		assertEquals(6, list.size());
 	}
 
-	@Override
+	@Test
 	public void getById() {
 		ReadingEnergy reading = service.getById(4L, Media.ENERGY);
 		assertEquals(LocalDate.parse("2016-07-01"), reading.getReadingDate());
@@ -116,8 +128,7 @@ public class ReadingEnergyServiceTest extends AbstractServiceTest {
 
 	@Transactional
 	@Test
-	@Override
-	public void add() {
+	public void add() throws NoMainCounterException {
 		List<MeterEnergy> list = meterService.getList(Media.ENERGY);
 		List<ReadingEnergy> toSave = new ArrayList<>();
 		for (MeterEnergy meter : list) {
@@ -126,18 +137,14 @@ public class ReadingEnergyServiceTest extends AbstractServiceTest {
 		}
 		service.save(toSave, LocalDate.parse("2050-01-01"), Media.ENERGY);
 		assertEquals(20, service.getReadingEnergy().size());
-		assertEquals(LocalDate.parse("2050-01-01"), service.energyLatestNew().get(0).getReadingDate());
+		assertEquals(LocalDate.parse("2050-01-01"), service.getLatestNew(Media.ENERGY).get(0).getReadingDate());
 	}
 
-	@Override
-	public void remove() {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
-	public void update() {
+	@Transactional
+	@Test
+	public void update() throws NoMainCounterException {
 		List<ReadingEnergy> list = service.getLatestNew(Media.ENERGY);
+
 		for (int i = 0; i < list.size(); i++) {
 			list.get(i).setValue(6767.0);
 		}
@@ -147,12 +154,6 @@ public class ReadingEnergyServiceTest extends AbstractServiceTest {
 		for (ReadingEnergy readingEnergy : list2) {
 			assertEquals(6767, readingEnergy.getValue(), 0);
 		}
-	}
-
-	@Override
-	public void addWithValidationError() {
-		// TODO Auto-generated method stub
-
 	}
 
 }

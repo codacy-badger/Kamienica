@@ -7,7 +7,7 @@ import org.hibernate.Query;
 import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
 
-import kamienica.dao.AbstractDao;
+import kamienica.core.dao.AbstractDao;
 import kamienica.feature.payment.PaymentStatus;
 
 public class InvoiceAbstractDaoImpl<I extends Invoice> extends AbstractDao<I> {

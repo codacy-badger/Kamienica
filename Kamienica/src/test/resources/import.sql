@@ -3,13 +3,13 @@ insert into apartment(id, apartmentNumber, description, intercom) values(1, 0, '
 insert into apartment(id, apartmentNumber, description, intercom) values(2, 1, 'Piwnica','6666');
 insert into apartment(id, apartmentNumber, description, intercom) values(3, 2, 'Parter','6666');
 insert into apartment(id, apartmentNumber, description, intercom) values(4, 3, 'I Piętro','6666');
-insert into apartment(id, apartmentNumber, description, intercom) values(5, 4, 'II Piętro- Mozna kasować','6666');
+--insert into apartment(id, apartmentNumber, description, intercom) values(5, 4, 'II Piętro- Mozna kasować','6666');
 
-INSERT INTO  tenant  ( id , email , firstName , lastName , movementDate , password , phone , role , status , apartment_id ) VALUES (1,'folik@wp.pl','Maciej','Folik','2016-07-25','witaj','530081187','ADMIN','AKTYWNY',2);
-INSERT INTO  tenant  ( id , email , firstName , lastName , movementDate , password , phone , role , status , apartment_id ) VALUES (2,'kow@wp.pl','Andrzej','Kowalski','2014-07-01','witaj','4456','USER','NIEAKTYWNY',3);
-INSERT INTO  tenant  ( id , email , firstName , lastName , movementDate , password , phone , role , status , apartment_id ) VALUES (3,'par@wp.pl','Kasia','Para','2015-07-26','witaj','23636','USER','AKTYWNY',4);
-INSERT INTO  tenant  ( id , email , firstName , lastName , movementDate , password , phone , role , status , apartment_id ) VALUES (4,'kasia@wp.pl','Kasia','Kowalska','2016-07-29','witaj','3456775','USER','AKTYWNY',3);
-INSERT INTO  tenant  ( id , email , firstName , lastName , movementDate , password , phone , role , status , apartment_id ) VALUES (5,'klej@wp.pl','Piotr','Kulej','2010-07-29','witaj','23526564','USER','NIEAKTYWNY',2);
+INSERT INTO  tenant  ( id , email , firstName , lastName , movementDate , password , phone , role , status , apartment_id ) VALUES (1,'folik@wp.pl','Maciej','Folik','2016-07-25','witaj','530081187','ADMIN','Aktywny',2);
+INSERT INTO  tenant  ( id , email , firstName , lastName , movementDate , password , phone , role , status , apartment_id ) VALUES (2,'kow@wp.pl','Andrzej','Kowalski','2014-07-01','witaj','4456','USER','Nieaktywny',3);
+INSERT INTO  tenant  ( id , email , firstName , lastName , movementDate , password , phone , role , status , apartment_id ) VALUES (3,'par@wp.pl','Kasia','Para','2015-07-26','witaj','23636','USER','Aktywny',4);
+INSERT INTO  tenant  ( id , email , firstName , lastName , movementDate , password , phone , role , status , apartment_id ) VALUES (4,'kasia@wp.pl','Kasia','Kowalska','2016-07-29','witaj','3456775','USER','Aktywny',3);
+INSERT INTO  tenant  ( id , email , firstName , lastName , movementDate , password , phone , role , status , apartment_id ) VALUES (5,'klej@wp.pl','Piotr','Kulej','2010-07-29','witaj','23526564','USER','Nieaktywny',2);
 
 INSERT INTO  division  ( id , date , divisionValue , apartment_id , tenant_id ) VALUES (1,'2016-07-01',0.33,1,1);
 INSERT INTO  division  ( id , date , divisionValue , apartment_id , tenant_id ) VALUES (2,'2016-07-01',1,2,1);
@@ -55,12 +55,14 @@ INSERT INTO  readinggas  ( id , readingDate , resolved , value , unit , meter_id
 INSERT INTO  readinggas  ( id , readingDate , resolved , value , unit , meter_id ) VALUES (4,'2016-07-29','0',3,'m3',4);
 INSERT INTO  readinggas  ( id , readingDate , resolved , value , unit , meter_id ) VALUES (5,'2016-07-29','0',5,'m3',5);
 INSERT INTO  readinggas  ( id , readingDate , resolved , value , unit , meter_id ) VALUES (6,'2016-07-29','0',100,'m3',6);
+
 INSERT INTO  readinggas  ( id , readingDate , resolved , value , unit , meter_id ) VALUES (7,'2016-09-01','1',169,'m3',1);
 INSERT INTO  readinggas  ( id , readingDate , resolved , value , unit , meter_id ) VALUES (8,'2016-09-01','1',2,'m3',2);
 INSERT INTO  readinggas  ( id , readingDate , resolved , value , unit , meter_id ) VALUES (9,'2016-09-01','1',6,'m3',3);
 INSERT INTO  readinggas  ( id , readingDate , resolved , value , unit , meter_id ) VALUES (10,'2016-09-01','1',4,'m3',4);
 INSERT INTO  readinggas  ( id , readingDate , resolved , value , unit , meter_id ) VALUES (11,'2016-09-01','1',7,'m3',5);
 INSERT INTO  readinggas  ( id , readingDate , resolved , value , unit , meter_id ) VALUES (12,'2016-09-01','1',150,'m3',6);
+
 INSERT INTO  readinggas  ( id , readingDate , resolved , value , unit , meter_id ) VALUES (13,'2016-10-01','0',196,'m3',1);
 INSERT INTO  readinggas  ( id , readingDate , resolved , value , unit , meter_id ) VALUES (14,'2016-10-01','0',2,'m3',2);
 INSERT INTO  readinggas  ( id , readingDate , resolved , value , unit , meter_id ) VALUES (15,'2016-10-01','0',9,'m3',3);
@@ -112,7 +114,7 @@ INSERT INTO  readingenergy  ( id , readingDate , resolved , value , unit , meter
 
 INSERT INTO  invoicewater  ( id , date , description , serialNumber , totalAmount , baseReading_id ) VALUES (1,'2016-08-01','Faktura Za Wode','123',150,8);
 INSERT INTO  invoicegas  ( id , date , description , serialNumber , totalAmount , baseReading_id ) VALUES (1,'2016-09-01','Faktura Za Gaz','123',150,7);
-INSERT INTO  invoiceenergy  ( id , date , description , serialNumber , totalAmount , baseReading_id ) VALUES (1,'2016-08-01','Faktura Za Energi?','1',200,6);
+INSERT INTO  invoiceenergy  ( id , date , description , serialNumber , totalAmount , baseReading_id ) VALUES (1,'2016-08-01','Faktura Za Energię','1',200,6);
 
 
 INSERT INTO  paymentenergy  ( id , paymentAmount , paymentDate , tenant_id , invoice_id ) VALUES (1,88.67,'2016-07-29',1,1);
@@ -127,3 +129,5 @@ INSERT INTO  paymentwater  ( id , paymentAmount , paymentDate , tenant_id , invo
 INSERT INTO  paymentwater  ( id , paymentAmount , paymentDate , tenant_id , invoice_id ) VALUES (2,68.18,'2016-07-29',3,1);
 INSERT INTO  paymentwater  ( id , paymentAmount , paymentDate , tenant_id , invoice_id ) VALUES (3,54.55,'2016-07-29',4,1);
 
+
+INSERT INTO  settings  ( id , correctDivision , garbage , gas , internet , waterHeatingSystem ) VALUES (1,'1','0','1','0','SHARED_GAS');

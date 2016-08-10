@@ -117,7 +117,7 @@
 		</dependency>
 
 		<!-- Testing dependencies -->
-		
+
 		<dependency>
 			<groupId>junit</groupId>
 			<artifactId>junit</artifactId>
@@ -129,12 +129,7 @@
 			<version>${springframework.version}</version>
 			<scope>test</scope>
 		</dependency>
-		<dependency>
-			<groupId>org.testng</groupId>
-			<artifactId>testng</artifactId>
-			<version>${testng.version}</version>
-			<scope>test</scope>
-		</dependency>
+
 		<dependency>
 			<groupId>org.mockito</groupId>
 			<artifactId>mockito-all</artifactId>
@@ -147,12 +142,10 @@
 			<version>${h2.version}</version>
 			<scope>test</scope>
 		</dependency>
-		<dependency>
-			<groupId>dbunit</groupId>
-			<artifactId>dbunit</artifactId>
-			<version>${dbunit.version}</version>
-			<scope>test</scope>
-		</dependency>
+		<!-- <dependency> <groupId>dbunit</groupId> <artifactId>dbunit</artifactId> 
+			<version>${dbunit.version}</version> <scope>test</scope> </dependency> <dependency> 
+			<groupId>org.testng</groupId> <artifactId>testng</artifactId> <version>${testng.version}</version> 
+			<scope>test</scope> </dependency> -->
 
 		<!-- for rest -->
 		<dependency>

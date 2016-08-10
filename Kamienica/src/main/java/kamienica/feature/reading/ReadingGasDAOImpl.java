@@ -6,7 +6,6 @@ import org.hibernate.Query;
 import org.springframework.stereotype.Repository;
 
 import kamienica.feature.apartment.Apartment;
-import kamienica.feature.invoice.InvoiceGas;
 
 @Repository("readingGasDao")
 public class ReadingGasDAOImpl extends ReadingAbstractDaoImpl<ReadingGas> implements ReadingGasDao {
@@ -73,22 +72,22 @@ public class ReadingGasDAOImpl extends ReadingAbstractDaoImpl<ReadingGas> implem
 //		return query.list();
 //
 //	}
-
-	@Override
-	public void resolveReadings(InvoiceGas invoice) {
-		Query query = getSession().createSQLQuery("update readinggas set resolved= :res where readingDate = :paramdate")
-				.setDate("paramdate", invoice.getBaseReading().getReadingDate().toDate()).setParameter("res", true);
-		query.executeUpdate();
-
-	}
-
-	@Override
-	public void unresolveReadings(InvoiceGas invoice) {
-		Query query = getSession().createSQLQuery("update readinggas set resolved= :res where readingDate = :paramdate")
-				.setDate("paramdate", invoice.getBaseReading().getReadingDate().toDate()).setParameter("res", false);
-		query.executeUpdate();
-
-	}
+//
+//	@Override
+//	public void resolveReadings(InvoiceGas invoice) {
+//		Query query = getSession().createSQLQuery("update readinggas set resolved= :res where readingDate = :paramdate")
+//				.setDate("paramdate", invoice.getBaseReading().getReadingDate().toDate()).setParameter("res", true);
+//		query.executeUpdate();
+//
+//	}
+//
+//	@Override
+//	public void unresolveReadings(InvoiceGas invoice) {
+//		Query query = getSession().createSQLQuery("update readinggas set resolved= :res where readingDate = :paramdate")
+//				.setDate("paramdate", invoice.getBaseReading().getReadingDate().toDate()).setParameter("res", false);
+//		query.executeUpdate();
+//
+//	}
 
 //	@Override
 //	public int countDaysFromLastReading() {

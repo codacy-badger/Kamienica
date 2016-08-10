@@ -10,7 +10,7 @@ import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
 import org.joda.time.LocalDate;
 
-import kamienica.dao.AbstractDao;
+import kamienica.core.dao.AbstractDao;
 import kamienica.feature.invoice.Invoice;
 
 public abstract class ReadingAbstractDaoImpl<T extends ReadingAbstract> extends AbstractDao<T> {
@@ -32,8 +32,12 @@ public abstract class ReadingAbstractDaoImpl<T extends ReadingAbstract> extends 
 
 	@SuppressWarnings("unchecked")
 	public List<T> getLatestList(LocalDate date) {
-		List<T> list = createEntityCriteria().add(Restrictions.eq("readingDate", date)).list();
-		return list;
+		Criteria readings = createEntityCriteria().add(Restrictions.eq("readingDate", date));
+		Criteria meters = readings.createCriteria("meter");
+		meters.add(Restrictions.gt("deactivation", LocalDate.now()));
+		
+		
+		return readings.list();
 	}
 
 	public List<T> getPrevious(LocalDate readingDate, Set<Long> meterId) {
@@ -49,6 +53,7 @@ public abstract class ReadingAbstractDaoImpl<T extends ReadingAbstract> extends 
 	@SuppressWarnings("unchecked")
 	public List<T> getUnresolvedReadings() {
 		Criteria readings = createEntityCriteria().add(Restrictions.eq("resolved", false));
+		readings.addOrder(Order.asc("readingDate"));
 		Criteria meters = readings.createCriteria("meter");
 		meters.add(Restrictions.isNull("apartment"));
 		return readings.list();

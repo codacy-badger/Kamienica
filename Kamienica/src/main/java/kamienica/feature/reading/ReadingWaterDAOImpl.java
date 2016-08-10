@@ -9,7 +9,6 @@ import org.springframework.stereotype.Repository;
 
 import kamienica.feature.apartment.Apartment;
 import kamienica.feature.invoice.InvoiceGas;
-import kamienica.feature.invoice.InvoiceWater;
 
 @Repository("readingWaterDao")
 public class ReadingWaterDAOImpl extends ReadingAbstractDaoImpl<ReadingWater> implements ReadingWaterDao {
@@ -84,24 +83,24 @@ public class ReadingWaterDAOImpl extends ReadingAbstractDaoImpl<ReadingWater> im
 	// return query.list();
 	//
 	// }
-
-	@Override
-	public void resolveReadings(InvoiceWater invoice) {
-		Query query = getSession()
-				.createSQLQuery("update readingwater set resolved= :res where readingDate = :paramdate")
-				.setDate("paramdate", invoice.getBaseReading().getReadingDate().toDate()).setParameter("res", true);
-		query.executeUpdate();
-
-	}
-
-	@Override
-	public void unresolveReadings(InvoiceWater invoice) {
-		Query query = getSession()
-				.createSQLQuery("update readingwater set resolved= :res where readingDate = :paramdate")
-				.setDate("paramdate", invoice.getBaseReading().getReadingDate().toDate()).setParameter("res", false);
-		query.executeUpdate();
-
-	}
+//
+//	@Override
+//	public void resolveReadings(InvoiceWater invoice) {
+//		Query query = getSession()
+//				.createSQLQuery("update readingwater set resolved= :res where readingDate = :paramdate")
+//				.setDate("paramdate", invoice.getBaseReading().getReadingDate().toDate()).setParameter("res", true);
+//		query.executeUpdate();
+//
+//	}
+//
+//	@Override
+//	public void unresolveReadings(InvoiceWater invoice) {
+//		Query query = getSession()
+//				.createSQLQuery("update readingwater set resolved= :res where readingDate = :paramdate")
+//				.setDate("paramdate", invoice.getBaseReading().getReadingDate().toDate()).setParameter("res", false);
+//		query.executeUpdate();
+//
+//	}
 
 	@Override
 	@SuppressWarnings("unchecked")

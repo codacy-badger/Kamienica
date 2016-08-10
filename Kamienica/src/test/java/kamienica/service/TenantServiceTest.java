@@ -15,7 +15,6 @@ public class TenantServiceTest extends AbstractServiceTest {
 	@Autowired
 	TenantService service;
 
-	@Override
 	@Test
 	public void getList() {
 		List<Tenant> list = service.getList();
@@ -23,33 +22,18 @@ public class TenantServiceTest extends AbstractServiceTest {
 		assertEquals(5, list.size());
 	}
 
-	@Override
-	public void getById() {
-		// TODO Auto-generated method stub
+	@Test
+	public void getActiveTenants() {
 
+		List<Tenant> list = service.getCurrentTenants();
+		assertEquals(3, list.size());
 	}
 
-	@Override
-	public void add() {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
-	public void remove() {
-	
-	}
-
-	@Override
-	public void update() {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
-	public void addWithValidationError() {
-		// TODO Auto-generated method stub
-
+	@Test
+	public void loadByMail() {
+		Tenant tenant = service.loadByMail("folik@wp.pl");
+		assertNotNull(tenant);
+		assertEquals("Maciej Folik", tenant.getFullName());
 	}
 
 }

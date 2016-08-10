@@ -7,17 +7,18 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
 import kamienica.core.ManagerEnergy;
 import kamienica.core.ManagerGas;
 import kamienica.core.ManagerPayment;
 import kamienica.core.ManagerWater;
 import kamienica.core.Media;
+import kamienica.core.WaterHeatingSystem;
 import kamienica.core.exception.InvalidDivisionException;
 import kamienica.feature.apartment.Apartment;
 import kamienica.feature.apartment.ApartmentDao;
 import kamienica.feature.division.Division;
 import kamienica.feature.division.DivisionDao;
-import kamienica.feature.division.DivisionValidator;
 import kamienica.feature.meter.MeterService;
 import kamienica.feature.payment.PaymentDao;
 import kamienica.feature.payment.PaymentEnergy;
@@ -31,6 +32,8 @@ import kamienica.feature.reading.ReadingGasDao;
 import kamienica.feature.reading.ReadingService;
 import kamienica.feature.reading.ReadingWater;
 import kamienica.feature.reading.ReadingWaterDao;
+import kamienica.feature.settings.Settings;
+import kamienica.feature.settings.SettingsDao;
 import kamienica.feature.tenant.Tenant;
 import kamienica.feature.tenant.TenantDao;
 import kamienica.feature.usagevalue.UsageValue;
@@ -40,45 +43,51 @@ import kamienica.feature.usagevalue.UsageValue;
 public class InvoiceServiceImpl implements InvoiceService {
 
 	@Autowired
-	TenantDao tenantDao;
+	private TenantDao tenantDao;
 	@Autowired
-	DivisionDao divisionDao;
+	private DivisionDao divisionDao;
 	@Autowired
-	ApartmentDao apartmentDao;
+	private ApartmentDao apartmentDao;
 	@Autowired
-	ReadingService readingService;
+	private ReadingService readingService;
 	@Autowired
-	MeterService meterService;
+	private MeterService meterService;
 	@Autowired
-	InvoiceAbstractDao<InvoiceEnergy> invoiceEnergyDao;
+	private InvoiceAbstractDao<InvoiceEnergy> invoiceEnergyDao;
 	@Autowired
-	InvoiceAbstractDao<InvoiceGas> invoiceGasDao;
+	private InvoiceAbstractDao<InvoiceGas> invoiceGasDao;
 	@Autowired
-	InvoiceAbstractDao<InvoiceWater> invoiceWaterDao;
+	private InvoiceAbstractDao<InvoiceWater> invoiceWaterDao;
 	@Autowired
-	ReadingEnergyDao readingEnergyDao;
+	private ReadingEnergyDao readingEnergyDao;
 	@Autowired
-	ReadingGasDao readingGasDao;
+	private ReadingGasDao readingGasDao;
 	@Autowired
-	ReadingWaterDao readingWaterDao;
+	private ReadingWaterDao readingWaterDao;
 	@Autowired
 	private PaymentDao<PaymentGas> paymentGasDao;
 	@Autowired
 	private PaymentDao<PaymentEnergy> paymentEnergyDao;
 	@Autowired
 	private PaymentDao<PaymentWater> paymentWaterDao;
+	@Autowired
+	private SettingsDao settingsDao;
 
+	@SuppressWarnings("unchecked")
 	@Override
 	public <T extends Invoice> void save(T invoice, Media media) {
+
 		List<Tenant> tenants = tenantDao.getActiveTenants();
 		List<Division> division = divisionDao.getList();
 		List<Apartment> apartments = apartmentDao.getList();
+		Settings settinggs = settingsDao.getList().get(0);
+
 		switch (media) {
 		case ENERGY:
 			List<ReadingEnergy> readingEnergyOld = readingService.getPreviousReadingEnergy(
 					invoice.getBaseReading().getReadingDate(), meterService.getIdList(Media.ENERGY));
 
-			List<ReadingEnergy> readingEnergyNew = readingService.getByDate(invoice.getBaseReading().getReadingDate(),
+			List<ReadingEnergy> readingEnergyNew = (List<ReadingEnergy>) readingService.getByDate(invoice.getBaseReading().getReadingDate(),
 					Media.ENERGY);
 
 			List<UsageValue> usageEnergy = ManagerEnergy.countConsupmtion(apartments, readingEnergyOld,
@@ -96,16 +105,20 @@ public class InvoiceServiceImpl implements InvoiceService {
 		case GAS:
 			List<ReadingGas> readingGasOld = readingService.getPreviousReadingGas(invoice.getReadingDate(),
 					meterService.getIdList(Media.GAS));
+			List<ReadingGas> readingGasNew = (List<ReadingGas>) readingService.getByDate(invoice.getReadingDate(), Media.GAS);
+			ArrayList<UsageValue> usageGas;
+			if (settinggs.getWaterHeatingSystem().equals(WaterHeatingSystem.SHARED_GAS)) {
+				List<ReadingWater> waterNew = readingWaterDao
+						.getWaterReadingForGasConsumption2(invoice.getReadingDate());
 
-			List<ReadingGas> readingGasNew = readingService.getByDate(invoice.getReadingDate(), Media.GAS);
+				List<ReadingWater> waterOld = readingWaterDao
+						.getWaterReadingForGasConsumption2(waterNew.get(0).getReadingDate());
 
-			List<ReadingWater> waterNew = readingWaterDao.getWaterReadingForGasConsumption2(invoice.getReadingDate());
+				usageGas = ManagerGas.countConsumption(apartments, readingGasOld, readingGasNew, waterOld, waterNew);
+			} else {
+				usageGas = ManagerGas.countConsumption(apartments, readingGasOld, readingGasNew);
+			}
 
-			List<ReadingWater> waterOld = readingWaterDao
-					.getWaterReadingForGasConsumption2(waterNew.get(0).getReadingDate());
-
-			ArrayList<UsageValue> usageGas = ManagerGas.countConsumption(apartments, readingGasOld, readingGasNew,
-					waterOld, waterNew);
 			List<PaymentGas> paymentGas = ManagerPayment.createPaymentGasList(tenants, (InvoiceGas) invoice, division,
 					usageGas);
 
@@ -119,11 +132,10 @@ public class InvoiceServiceImpl implements InvoiceService {
 			break;
 
 		case WATER:
-
 			List<ReadingWater> readingWaterOld = readingService.getPreviousReadingWater(
 					invoice.getBaseReading().getReadingDate(), meterService.getIdList(Media.WATER));
 
-			List<ReadingWater> readingWaterNew = readingService.getByDate(invoice.getBaseReading().getReadingDate(),
+			List<ReadingWater> readingWaterNew = (List<ReadingWater>) readingService.getByDate(invoice.getBaseReading().getReadingDate(),
 					Media.WATER);
 
 			List<UsageValue> usageWater = ManagerWater.countConsumption(apartments, readingWaterOld, readingWaterNew);
@@ -155,7 +167,7 @@ public class InvoiceServiceImpl implements InvoiceService {
 	@Override
 	public void saveGas(InvoiceGas invoice, List<PaymentGas> payment) {
 		invoiceGasDao.save(invoice);
-		readingGasDao.resolveReadings(invoice);
+		readingGasDao.changeResolvmentState(invoice, true);
 
 		for (PaymentGas paymentGas : payment) {
 			paymentGasDao.save(paymentGas);
@@ -165,7 +177,7 @@ public class InvoiceServiceImpl implements InvoiceService {
 	@Override
 	public void saveWater(InvoiceWater invoice, List<PaymentWater> payment) {
 		invoiceWaterDao.save(invoice);
-		readingWaterDao.resolveReadings(invoice);
+		readingWaterDao.changeResolvmentState(invoice, true);
 
 		for (PaymentWater paymentWater : payment) {
 			paymentWaterDao.save(paymentWater);
@@ -195,13 +207,13 @@ public class InvoiceServiceImpl implements InvoiceService {
 		case GAS:
 			invoice = invoiceGasDao.getById(id);
 			paymentGasDao.deleteForInvoice(invoice);
-			readingGasDao.unresolveReadings(invoiceGasDao.getById(id));
+			readingGasDao.changeResolvmentState(invoice, false);
 			invoiceGasDao.deleteById(id);
 			break;
 		case WATER:
 			invoice = invoiceWaterDao.getById(id);
 			paymentWaterDao.deleteForInvoice(invoice);
-			readingWaterDao.unresolveReadings(invoiceWaterDao.getById(id));
+			readingWaterDao.changeResolvmentState(invoice, false);
 			invoiceWaterDao.deleteById(id);
 
 			break;
@@ -218,7 +230,7 @@ public class InvoiceServiceImpl implements InvoiceService {
 
 	@Override
 	public void deleteGasByID(Long id) {
-		readingGasDao.unresolveReadings(invoiceGasDao.getById(id));
+		readingGasDao.changeResolvmentState(invoiceEnergyDao.getById(id), false);
 		invoiceGasDao.deleteById(id);
 
 	}
@@ -226,7 +238,7 @@ public class InvoiceServiceImpl implements InvoiceService {
 	@Override
 	public void deleteWaterByID(Long id) {
 		// temporaryFix...
-		readingWaterDao.unresolveReadings(invoiceWaterDao.getById(id));
+		readingWaterDao.changeResolvmentState(invoiceEnergyDao.getById(id), false);
 		invoiceWaterDao.deleteById(id);
 
 	}
@@ -390,8 +402,12 @@ public class InvoiceServiceImpl implements InvoiceService {
 	@Override
 	public <T extends ReadingAbstract> List<T> prepareForRegistration(Media media) throws InvalidDivisionException {
 
-		if (!DivisionValidator.validateDivision(apartmentDao.getList(), divisionDao.getList(),
-				tenantDao.getActiveTenants())) {
+		// if (!DivisionValidator.validateDivision(apartmentDao.getList(),
+		// divisionDao.getList(),
+		// tenantDao.getActiveTenants()))
+		if (!settingsDao.isDivisionCorrect())
+
+		{
 			throw new InvalidDivisionException(
 					"Lista aktualnych najemców i mieszkań się nie zgadza. Sprawdź algorytm podziału");
 		}
