@@ -3,6 +3,7 @@ package kamienica.feature.meter;
 import java.util.List;
 import java.util.Set;
 
+import org.joda.time.LocalDate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -246,6 +247,21 @@ public class MeterServiceImpl implements MeterService {
 	}
 
 	@Override
+	public Set<Long> getIdListForActiveMeters(Media media) {
+		switch (media) {
+		case ENERGY:
+			return energy.getIdListForActiveMeters();
+		case WATER:
+			return water.getIdListForActiveMeters();
+		case GAS:
+			return gas.getIdListForActiveMeters();
+
+		default:
+			return null;
+		}
+	}
+
+	@Override
 	public boolean ifMainExists(Media media) {
 		switch (media) {
 		case ENERGY:
@@ -293,6 +309,26 @@ public class MeterServiceImpl implements MeterService {
 				result.rejectValue("isWarmWater", "error.meter", WARM_CWU);
 			}
 			break;
+		default:
+			break;
+		}
+
+	}
+
+	public <T extends MeterAbstract> void deactivateMeter(T meter, Media media) {
+		meter.setDeactivation(LocalDate.now());
+
+		switch (media) {
+		case ENERGY:
+			energy.update((MeterEnergy) meter);
+			break;
+		case GAS:
+			gas.update((MeterGas) meter);
+			break;
+		case WATER:
+			water.update((MeterWater) meter);
+			break;
+
 		default:
 			break;
 		}

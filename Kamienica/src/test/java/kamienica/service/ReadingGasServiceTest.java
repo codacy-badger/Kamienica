@@ -15,6 +15,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 
 import kamienica.core.Media;
+import kamienica.core.exception.NoMainCounterException;
 import kamienica.feature.meter.MeterGas;
 import kamienica.feature.meter.MeterService;
 import kamienica.feature.reading.ReadingGas;
@@ -30,7 +31,7 @@ public class ReadingGasServiceTest extends AbstractServiceTest {
 	private Set<Long> meterIdList = new HashSet<>(Arrays.asList(1L, 2L, 3L, 4L, 5L, 6L));
 
 	@Test
-	public void getLatest() {
+	public void getLatest() throws NoMainCounterException {
 
 		List<ReadingGas> list = service.getLatestNew(Media.GAS);
 		assertEquals(6, list.size());
@@ -40,7 +41,6 @@ public class ReadingGasServiceTest extends AbstractServiceTest {
 	}
 
 	@Test
-	@Override
 	public void getList() {
 		assertEquals(18, service.getReadingGas().size());
 	}
@@ -85,14 +85,14 @@ public class ReadingGasServiceTest extends AbstractServiceTest {
 
 	@Transactional
 	@Test
-	public void firstReadingForANewMeter() {
+	public void firstReadingForANewMeter() throws NoMainCounterException {
 		MeterGas meter = new MeterGas("test", "34", "3535", null, false);
 		meterService.save(meter, Media.GAS);
 		List<ReadingGas> list = service.getLatestNew(Media.GAS);
 		assertEquals(7, list.size());
 	}
 
-	@Override
+	@Test
 	public void getById() {
 		ReadingGas reading = service.getById(4L, Media.GAS);
 		assertEquals(LocalDate.parse("2016-07-29"), reading.getReadingDate());
@@ -112,8 +112,7 @@ public class ReadingGasServiceTest extends AbstractServiceTest {
 
 	@Transactional
 	@Test
-	@Override
-	public void add() {
+	public void add() throws NoMainCounterException {
 		List<MeterGas> list = meterService.getList(Media.GAS);
 		List<ReadingGas> toSave = new ArrayList<>();
 		for (MeterGas meter : list) {
@@ -125,21 +124,5 @@ public class ReadingGasServiceTest extends AbstractServiceTest {
 		assertEquals(LocalDate.parse("2050-01-01"), service.getLatestNew(Media.GAS).get(0).getReadingDate());
 	}
 
-	@Override
-	public void remove() {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
-	public void update() {
-
-	}
-
-	@Override
-	public void addWithValidationError() {
-		// TODO Auto-generated method stub
-
-	}
 
 }

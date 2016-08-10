@@ -36,20 +36,13 @@ public class InvoiceEnergyServiceTest extends AbstractServiceTest {
 	ApartmentService apService;
 
 	@Test
-	@Override
 	public void getList() {
 		assertEquals(1, invoiceService.getEnergyInvoiceList().size());
 
 	}
 
-	@Override
-	public void getById() {
-		// TODO Auto-generated method stub
-
-	}
 
 	@Transactional
-	@Override
 	@Test
 	public void add() {
 		List<ReadingEnergy> list = readingService.getUnresolvedReadingsEnergy();
@@ -94,7 +87,6 @@ public class InvoiceEnergyServiceTest extends AbstractServiceTest {
 	}
 
 	@Transactional
-	@Override
 	@Test
 	public void remove() {
 		invoiceService.delete(1L, Media.ENERGY);
@@ -104,7 +96,6 @@ public class InvoiceEnergyServiceTest extends AbstractServiceTest {
 	}
 
 	@Transactional
-	@Override
 	@Ignore
 	@Test
 	public void update() {
@@ -125,12 +116,7 @@ public class InvoiceEnergyServiceTest extends AbstractServiceTest {
 
 	}
 
-	@Override
-	public void addWithValidationError() {
-		// TODO Auto-generated method stub
-
-	}
-
+	
 	@Transactional
 	@Test(expected = InvalidDivisionException.class)
 	public void prepareForRegistrationWithException() throws InvalidDivisionException {

@@ -2,14 +2,18 @@ package kamienica.feature.reading;
 
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 import org.joda.time.LocalDate;
 
 import kamienica.core.Media;
+import kamienica.core.exception.NoMainCounterException;
 import kamienica.feature.invoice.InvoiceGas;
 
 public interface ReadingService {
+
+	public<T extends ReadingAbstract> void setDates(Map<String, Object> map, List<T> list);
 
 	// public ReadingEnergy getEnergyById(Long id);
 	//
@@ -34,11 +38,11 @@ public interface ReadingService {
 
 	public <T extends ReadingAbstract> void update(List<T> readings, LocalDate date, Media media);
 
-//	public void updateEnergyList(List<ReadingEnergy> readings, String date);
-//
-//	public void updateGasList(List<ReadingGas> readings, String date);
-//
-//	public void updateWaterList(List<ReadingWater> readings, String date);
+	// public void updateEnergyList(List<ReadingEnergy> readings, String date);
+	//
+	// public void updateGasList(List<ReadingGas> readings, String date);
+	//
+	// public void updateWaterList(List<ReadingWater> readings, String date);
 
 	public List<ReadingEnergy> getReadingEnergy();
 
@@ -57,8 +61,8 @@ public interface ReadingService {
 	public void deleteList(List<? extends ReadingAbstract> list, Media media);
 
 	// public void deleteLatestReadings(Media media);
-	
-	public<T extends ReadingAbstract> List<T> getPreviousReadingEnergy(LocalDate date, Media media);
+
+	public  List<? extends ReadingAbstract> getPreviousReadingEnergy(LocalDate date, Media media);
 
 	public List<ReadingEnergy> getPreviousReadingEnergy(LocalDate date, Set<Long> meterIdList);
 
@@ -66,13 +70,13 @@ public interface ReadingService {
 
 	public List<ReadingWater> getPreviousReadingWater(LocalDate date, Set<Long> meterIdList);
 
-	public List<ReadingEnergy> energyLatestNew();
+	//public List<ReadingEnergy> energyLatestNew();
 
 	// public List<ReadingGas> gasLatestNew();
 	//
 	// public List<ReadingWater> waterLatestNew();
 
-	public <T extends ReadingAbstract> List<T> getLatestNew(Media media);
+	public <T extends ReadingAbstract> List<T> getLatestNew(Media media) throws NoMainCounterException;
 
 	public <T extends ReadingAbstract> List<T> latestEdit(Media media);
 

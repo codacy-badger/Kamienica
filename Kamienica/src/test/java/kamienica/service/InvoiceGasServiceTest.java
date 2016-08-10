@@ -42,21 +42,15 @@ public class InvoiceGasServiceTest extends AbstractServiceTest {
 	SettingsService settingsService;
 
 	@Test
-	@Override
 	public void getList() {
 		assertEquals(1, invoiceService.getGasInvoiceList().size());
 
 	}
 
-	@Override
-	public void getById() {
-		// TODO Auto-generated method stub
-
-	}
+	
 
 	@Test
 	@Transactional
-	@Override
 	public void add() {
 		List<ReadingGas> list = readingService.getUnresolvedReadingsGas();
 		assertEquals(196, list.get(1).getValue(), 0);
@@ -128,7 +122,6 @@ public class InvoiceGasServiceTest extends AbstractServiceTest {
 
 	@Test
 	@Transactional
-	@Override
 	public void remove() {
 		invoiceService.delete(1L, Media.GAS);
 		List<ReadingGas> list = readingService.getUnresolvedReadingsGas();
@@ -136,7 +129,6 @@ public class InvoiceGasServiceTest extends AbstractServiceTest {
 	}
 
 	@Transactional
-	@Override
 	@Ignore
 	@Test
 	public void update() {
@@ -157,11 +149,7 @@ public class InvoiceGasServiceTest extends AbstractServiceTest {
 		}
 	}
 
-	@Override
-	public void addWithValidationError() {
-		// TODO Auto-generated method stub
-
-	}
+	
 
 	@Transactional
 	@Test(expected = InvalidDivisionException.class)

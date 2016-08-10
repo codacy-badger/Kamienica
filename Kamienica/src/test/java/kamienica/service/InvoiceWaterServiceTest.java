@@ -35,21 +35,14 @@ public class InvoiceWaterServiceTest extends AbstractServiceTest {
 	ApartmentService apService;
 
 	@Test
-	@Override
 	public void getList() {
 		assertEquals(1, invoiceService.getWaterInvoiceList().size());
 
 	}
 
-	@Override
-	public void getById() {
-		// TODO Auto-generated method stub
-
-	}
-
+	
 	@Test
 	@Transactional
-	@Override
 	public void add() {
 		List<ReadingWater> list = readingService.getUnresolvedReadingsWater();
 		assertEquals(60, list.get(1).getValue(), 0);
@@ -96,7 +89,6 @@ public class InvoiceWaterServiceTest extends AbstractServiceTest {
 
 	@Test
 	@Transactional
-	@Override
 	public void remove() {
 		invoiceService.delete(1L, Media.WATER);
 		List<ReadingWater> list = readingService.getUnresolvedReadingsWater();
@@ -105,9 +97,8 @@ public class InvoiceWaterServiceTest extends AbstractServiceTest {
 	}
 
 	@Transactional
-	@Override
-	@Ignore
 	@Test
+	@Ignore
 	public void update() {
 		InvoiceWater invoice = new InvoiceWater("23423423", "test", new LocalDate(), 400,
 				(ReadingWater) readingService.getById(6L, Media.WATER));
@@ -126,12 +117,7 @@ public class InvoiceWaterServiceTest extends AbstractServiceTest {
 
 	}
 
-	@Override
-	public void addWithValidationError() {
-		// TODO Auto-generated method stub
-
-	}
-
+	
 	@Transactional
 	@Test(expected = InvalidDivisionException.class)
 	public void prepareForRegistrationWithException() throws InvalidDivisionException {

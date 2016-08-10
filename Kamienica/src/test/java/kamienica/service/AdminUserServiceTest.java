@@ -3,6 +3,7 @@ package kamienica.service;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertTrue;
 
 import java.util.List;
 import java.util.Map;
@@ -43,50 +44,29 @@ public class AdminUserServiceTest extends AbstractServiceTest {
 	public void getListsForTenants() {
 		Apartment aparmtent = apService.getById(2L);
 		List<ReadingEnergy> energy = service.getReadingEnergyForTenant(aparmtent);
+		assertEquals(6, energy.size());
+		for (ReadingEnergy readingEnergy : energy) {
+			int apNum = readingEnergy.getMeter().getApartment().getApartmentNumber();
+			assertTrue(apNum == 0 || apNum == 1);
+		}
 
 		List<ReadingGas> gas = service.getReadingGasForTenant(aparmtent);
-		System.out.println(gas);
+		for (ReadingGas readingGas : gas) {
+			int apNum = readingGas.getMeter().getApartment().getApartmentNumber();
+			assertTrue(apNum == 0 || apNum == 1);
+		}
+
 		List<ReadingWater> water = service.getReadingWaterForTenant(aparmtent);
+		for (ReadingWater readingWater : water) {
+			int apNum = readingWater.getMeter().getApartment().getApartmentNumber();
+			assertTrue(apNum == 0 || apNum == 1);
+		}
 
-		assertEquals(6, energy.size());
-		assertEquals(6, gas.size());
+		assertEquals(9, gas.size());
 		assertEquals(6, water.size());
-	}
-
-	@Override
-	public void getList() {
-		// TODO Auto-generated method stub
 
 	}
 
-	@Override
-	public void getById() {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
-	public void add() {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
-	public void remove() {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
-	public void update() {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
-	public void addWithValidationError() {
-		// TODO Auto-generated method stub
-
-	}
+	
 
 }

@@ -13,7 +13,6 @@ public class PaymentServiceTest extends AbstractServiceTest {
 	PaymentService service;
 	
 	@Test
-	@Override
 	public void getList() {
 		assertEquals(3, service.getPaymentEnergyList().size());
 		assertEquals(3, service.getPaymentGasList().size());
@@ -21,34 +20,6 @@ public class PaymentServiceTest extends AbstractServiceTest {
 
 	}
 
-	@Override
-	public void getById() {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
-	public void add() {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
-	public void remove() {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
-	public void update() {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
-	public void addWithValidationError() {
-		// TODO Auto-generated method stub
-		
-	}
+	
 
 }

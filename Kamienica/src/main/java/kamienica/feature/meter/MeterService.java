@@ -48,11 +48,15 @@ public interface MeterService {
 	// public MeterGas getGasByID(Long id);
 	//
 	// public MeterWater getWaterByID(Long id);
+	
+	public <T extends MeterAbstract> void deactivateMeter(T meter, Media media);
 
 	public Set<Long> getIdList(Media media);
 
+	public Set<Long> getIdListForActiveMeters(Media media);
+
 	public boolean ifMainExists(Media media);
 
-	public<T extends MeterAbstract> void validateMeter(BindingResult result, Media media, T meter);
+	public <T extends MeterAbstract> void validateMeter(BindingResult result, Media media, T meter);
 
 }
