@@ -8,7 +8,6 @@ import org.joda.time.LocalDate;
 import kamienica.core.dao.DaoInterface;
 import kamienica.feature.apartment.Apartment;
 import kamienica.feature.invoice.Invoice;
-import kamienica.feature.invoice.InvoiceGas;
 
 public interface ReadingGasDao extends DaoInterface<ReadingGas> {
 

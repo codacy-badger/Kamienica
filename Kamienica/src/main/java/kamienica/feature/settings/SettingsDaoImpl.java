@@ -3,7 +3,6 @@ package kamienica.feature.settings;
 import org.hibernate.Criteria;
 import org.hibernate.Query;
 import org.hibernate.criterion.Projections;
-import org.springframework.jdbc.object.SqlQuery;
 import org.springframework.stereotype.Repository;
 
 import kamienica.core.dao.AbstractDao;

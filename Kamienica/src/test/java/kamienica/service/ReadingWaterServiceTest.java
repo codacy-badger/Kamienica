@@ -39,6 +39,21 @@ public class ReadingWaterServiceTest extends AbstractServiceTest {
 			assertEquals(LocalDate.parse("2016-09-01"), readingWater.getReadingDate());
 		}
 	}
+	
+	@Transactional
+	@Test
+	public void getLatestActiveOnly() throws NoMainCounterException {
+		MeterWater meter = meterService.getById(3L, Media.WATER);
+		meter.setDeactivation(LocalDate.parse("2016-01-01"));
+		meterService.update(meter, Media.WATER);
+		
+		List<ReadingWater> list2 = service.getLatestNew(Media.WATER);
+
+		assertEquals(6, list2.size());
+		for (ReadingWater readingWater : list2) {
+			assertEquals(LocalDate.parse("2016-09-01"), readingWater.getReadingDate());
+		}
+	}
 
 	@Test
 	public void getList() {

@@ -6,7 +6,6 @@ import org.hibernate.Query;
 import org.springframework.stereotype.Repository;
 
 import kamienica.feature.apartment.Apartment;
-import kamienica.feature.invoice.InvoiceGas;
 
 @Repository("readingGasDao")
 public class ReadingGasDAOImpl extends ReadingAbstractDaoImpl<ReadingGas> implements ReadingGasDao {

@@ -336,6 +336,7 @@ public class MeterServiceImpl implements MeterService {
 
 	}
 
+	@Override
 	public <T extends MeterAbstract> void deactivateMeter(T meter, Media media) {
 		meter.setDeactivation(LocalDate.now());
 

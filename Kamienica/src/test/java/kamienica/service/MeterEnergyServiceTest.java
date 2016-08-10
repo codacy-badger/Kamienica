@@ -2,10 +2,7 @@ package kamienica.service;
 
 import static org.junit.Assert.assertEquals;
 
-import java.util.Arrays;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 import org.joda.time.LocalDate;
 import org.junit.Test;
@@ -20,7 +17,6 @@ public class MeterEnergyServiceTest extends AbstractServiceTest {
 
 	@Autowired
 	MeterService service;
-
 //	private Set<Long> idSet = new HashSet<>(Arrays.asList(1L, 2L, 3L, 4L, 5L));
 
 	@Test

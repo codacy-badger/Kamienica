@@ -92,7 +92,7 @@ public class ReadingServiceImpl implements ReadingService {
 			if (!meterGas.ifMainExists()) {
 				throw new NoMainCounterException();
 			}
-			idList = meterGas.getIdList();
+			idList = meterGas.getIdListForActiveMeters();
 			List<ReadingGas> gasList = latestEdit(Media.GAS);
 
 			// if this the very first time user creates readings
@@ -116,7 +116,7 @@ public class ReadingServiceImpl implements ReadingService {
 			if (!meterWater.ifMainExists()) {
 				throw new NoMainCounterException();
 			}
-			idList = meterWater.getIdList();
+			idList = meterWater.getIdListForActiveMeters();
 			List<ReadingWater> waterList = latestEdit(Media.WATER);
 			if (waterList.isEmpty()) {
 				for (Long tmpLong : idList) {

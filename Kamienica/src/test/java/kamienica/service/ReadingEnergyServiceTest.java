@@ -33,8 +33,23 @@ public class ReadingEnergyServiceTest extends AbstractServiceTest {
 	@Test
 	public void getLatest() throws NoMainCounterException {
 		List<ReadingEnergy> list2 = service.getLatestNew(Media.ENERGY);
-			
+
 		assertEquals(5, list2.size());
+		for (ReadingEnergy readingEnergy : list2) {
+			assertEquals(LocalDate.parse("2016-09-01"), readingEnergy.getReadingDate());
+		}
+	}
+
+	@Transactional
+	@Test
+	public void getLatestActiveOnly() throws NoMainCounterException {
+		MeterEnergy meter = meterService.getById(3L, Media.ENERGY);
+		meter.setDeactivation(LocalDate.parse("2016-01-01"));
+		meterService.update(meter, Media.ENERGY);
+		
+		List<ReadingEnergy> list2 = service.getLatestNew(Media.ENERGY);
+
+		assertEquals(4, list2.size());
 		for (ReadingEnergy readingEnergy : list2) {
 			assertEquals(LocalDate.parse("2016-09-01"), readingEnergy.getReadingDate());
 		}

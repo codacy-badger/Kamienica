@@ -40,6 +40,23 @@ public class ReadingGasServiceTest extends AbstractServiceTest {
 		}
 	}
 
+	@Transactional
+	@Test
+	public void getLatestActiveOnly() throws NoMainCounterException {
+		MeterGas meter = meterService.getById(3L, Media.GAS);
+		meter.setDeactivation(LocalDate.parse("2016-01-01"));
+		meterService.update(meter, Media.GAS);
+
+		List<ReadingGas> list2 = service.getLatestNew(Media.GAS);
+		for (ReadingGas readingGas : list2) {
+			System.out.println(readingGas.getMeter().getDeactivation());
+		}
+		assertEquals(5, list2.size());
+		for (ReadingGas readingGas : list2) {
+			assertEquals(LocalDate.parse("2016-10-01"), readingGas.getReadingDate());
+		}
+	}
+
 	@Test
 	public void getList() {
 		assertEquals(18, service.getReadingGas().size());
@@ -124,6 +141,5 @@ public class ReadingGasServiceTest extends AbstractServiceTest {
 		assertEquals(24, service.getReadingGas().size());
 		assertEquals(LocalDate.parse("2050-01-01"), service.getLatestNew(Media.GAS).get(0).getReadingDate());
 	}
-
 
 }
