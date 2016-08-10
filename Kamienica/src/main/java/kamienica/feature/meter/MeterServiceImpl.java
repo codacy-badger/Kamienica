@@ -3,6 +3,7 @@ package kamienica.feature.meter;
 import java.util.List;
 import java.util.Set;
 
+import org.hibernate.exception.ConstraintViolationException;
 import org.joda.time.LocalDate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -182,15 +183,35 @@ public class MeterServiceImpl implements MeterService {
 		switch (media) {
 		case ENERGY:
 
-			energy.deleteById(id);
+			try {
+				energy.deleteById(id);
+			} catch (ConstraintViolationException e) {
+				MeterEnergy meter = energy.getById(id);
+				meter.setDeactivation(LocalDate.now());
+				meter.setDescription(meter.getDescription() + " (NIEAKTYWNY)");
+				energy.update(meter);
+			}
+
 			break;
 		case GAS:
-
-			gas.deleteById(id);
+			try {
+				gas.deleteById(id);
+			} catch (ConstraintViolationException e) {
+				MeterGas meter = gas.getById(id);
+				meter.setDeactivation(LocalDate.now());
+				meter.setDescription(meter.getDescription() + " (NIEAKTYWNY)");
+				gas.update(meter);
+			}
 			break;
 		case WATER:
-
-			water.deleteById(id);
+			try {
+				water.deleteById(id);
+			} catch (ConstraintViolationException e) {
+				MeterWater meter = water.getById(id);
+				meter.setDeactivation(LocalDate.now());
+				meter.setDescription(meter.getDescription() + " (NIEAKTYWNY)");
+				water.update(meter);
+			}
 			break;
 		default:
 			break;

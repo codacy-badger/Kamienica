@@ -65,9 +65,10 @@ public class ReadingEnergyServiceTest extends AbstractServiceTest {
 		}
 	}
 
+	@SuppressWarnings("unchecked")
 	@Test
 	public void getByDate() {
-		List<ReadingEnergy> list = service.getByDate(LocalDate.parse("2016-07-01"), Media.ENERGY);
+		List<ReadingEnergy> list = (List<ReadingEnergy>) service.getByDate(LocalDate.parse("2016-07-01"), Media.ENERGY);
 		for (ReadingEnergy readingEnergy : list) {
 			assertEquals(LocalDate.parse("2016-07-01"), readingEnergy.getReadingDate());
 		}

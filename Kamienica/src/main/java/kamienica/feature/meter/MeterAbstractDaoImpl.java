@@ -26,7 +26,7 @@ public class MeterAbstractDaoImpl<T extends MeterAbstract> extends AbstractDao<T
 	@SuppressWarnings("unchecked")
 	public Set<Long> getIdListForActiveMeters() {
 		Criteria criteria = createEntityCriteria().setProjection(Projections.property("id"));
-		criteria.add(Restrictions.ge("deactivation", new LocalDate()));
+		criteria.add(Restrictions.gt("deactivation", new LocalDate()));
 		return new HashSet<Long>(criteria.list());
 		
 	}

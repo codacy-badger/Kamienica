@@ -13,7 +13,7 @@ import kamienica.feature.invoice.InvoiceGas;
 
 public interface ReadingService {
 
-	public<T extends ReadingAbstract> void setDates(Map<String, Object> map, List<T> list);
+	public <T extends ReadingAbstract> void setDates(Map<String, Object> map, List<T> list);
 
 	// public ReadingEnergy getEnergyById(Long id);
 	//
@@ -46,15 +46,15 @@ public interface ReadingService {
 
 	public List<ReadingEnergy> getReadingEnergy();
 
-	public <T extends ReadingAbstract> List<T> getByDate(LocalDate date, Media media);
+	public List<ReadingGas> getReadingGas();
+
+	public List<ReadingWater> getReadingWater();
+
+	public List<? extends ReadingAbstract> getByDate(LocalDate date, Media media);
 
 	// public List<ReadingEnergy> getReadingEnergyByDate(LocalDate date);
 
-	public List<ReadingGas> getReadingGas();
-
 	// public List<ReadingGas> getReadingGasByDate(LocalDate date);
-
-	public List<ReadingWater> getReadingWater();
 
 	// public List<ReadingWater> getReadingWaterByDate(LocalDate date);
 
@@ -62,7 +62,7 @@ public interface ReadingService {
 
 	// public void deleteLatestReadings(Media media);
 
-	public  List<? extends ReadingAbstract> getPreviousReadingEnergy(LocalDate date, Media media);
+	public List<? extends ReadingAbstract> getPreviousReadingEnergy(LocalDate date, Media media);
 
 	public List<ReadingEnergy> getPreviousReadingEnergy(LocalDate date, Set<Long> meterIdList);
 
@@ -70,7 +70,7 @@ public interface ReadingService {
 
 	public List<ReadingWater> getPreviousReadingWater(LocalDate date, Set<Long> meterIdList);
 
-	//public List<ReadingEnergy> energyLatestNew();
+	// public List<ReadingEnergy> energyLatestNew();
 
 	// public List<ReadingGas> gasLatestNew();
 	//

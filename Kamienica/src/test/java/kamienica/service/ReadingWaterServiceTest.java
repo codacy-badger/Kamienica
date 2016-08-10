@@ -64,9 +64,10 @@ public class ReadingWaterServiceTest extends AbstractServiceTest {
 		}
 	}
 
+	@SuppressWarnings("unchecked")
 	@Test
 	public void getByDate() {
-		List<ReadingWater> list = service.getByDate(LocalDate.parse("2016-07-01"), Media.WATER);
+		List<ReadingWater> list = (List<ReadingWater>) service.getByDate(LocalDate.parse("2016-07-01"), Media.WATER);
 		for (ReadingWater readingWater : list) {
 			assertEquals(LocalDate.parse("2016-07-01"), readingWater.getReadingDate());
 		}

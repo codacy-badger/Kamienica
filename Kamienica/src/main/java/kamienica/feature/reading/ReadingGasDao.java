@@ -30,9 +30,9 @@ public interface ReadingGasDao extends DaoInterface<ReadingGas> {
 	
 	public void changeResolvmentState(Invoice invoice, boolean resolved);
 	
-	public void resolveReadings(InvoiceGas invoice);
-
-	public void unresolveReadings(InvoiceGas invoice);
+//	public void resolveReadings(InvoiceGas invoice);
+//
+//	public void unresolveReadings(InvoiceGas invoice);
 
 	public int countDaysFromLastReading();
 

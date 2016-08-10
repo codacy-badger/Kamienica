@@ -32,8 +32,12 @@ public abstract class ReadingAbstractDaoImpl<T extends ReadingAbstract> extends 
 
 	@SuppressWarnings("unchecked")
 	public List<T> getLatestList(LocalDate date) {
-		List<T> list = createEntityCriteria().add(Restrictions.eq("readingDate", date)).list();
-		return list;
+		Criteria readings = createEntityCriteria().add(Restrictions.eq("readingDate", date));
+		Criteria meters = readings.createCriteria("meter");
+		meters.add(Restrictions.gt("deactivation", LocalDate.now()));
+		
+		
+		return readings.list();
 	}
 
 	public List<T> getPrevious(LocalDate readingDate, Set<Long> meterId) {

@@ -65,17 +65,18 @@ public class ReadingServiceImpl implements ReadingService {
 	@Override
 	public <T extends ReadingAbstract> List<T> getLatestNew(Media media) throws NoMainCounterException {
 		Set<Long> idList;
+		LocalDate fakeDate = new LocalDate().minusDays(100);
 		switch (media) {
 		case ENERGY:
 			if (!meterEnergy.ifMainExists()) {
 				throw new NoMainCounterException();
 			}
-			idList = meterEnergy.getIdList();
+			idList = meterEnergy.getIdListForActiveMeters();
 			List<ReadingEnergy> energyList = latestEdit(Media.ENERGY);
 			if (energyList.isEmpty()) {
 				for (Long tmpLong : idList) {
 					energyList
-							.add(new ReadingEnergy(new LocalDate().minusDays(100), 0.0, meterEnergy.getById(tmpLong)));
+							.add(new ReadingEnergy(fakeDate, 0.0, meterEnergy.getById(tmpLong)));
 				}
 			} else {
 				for (ReadingEnergy readingEnergy : energyList) {
@@ -97,7 +98,7 @@ public class ReadingServiceImpl implements ReadingService {
 			// if this the very first time user creates readings
 			if (gasList.isEmpty()) {
 				for (Long tmpLong : idList) {
-					gasList.add(new ReadingGas(new LocalDate().minusDays(100), 0.0, meterGas.getById(tmpLong)));
+					gasList.add(new ReadingGas(fakeDate, 0.0, meterGas.getById(tmpLong)));
 				}
 			} else {
 				// checks if there has been a new meter and adds fake '0'
@@ -119,7 +120,7 @@ public class ReadingServiceImpl implements ReadingService {
 			List<ReadingWater> waterList = latestEdit(Media.WATER);
 			if (waterList.isEmpty()) {
 				for (Long tmpLong : idList) {
-					waterList.add(new ReadingWater(new LocalDate().minusDays(100), 0.0, meterWater.getById(tmpLong)));
+					waterList.add(new ReadingWater(fakeDate, 0.0, meterWater.getById(tmpLong)));
 				}
 			} else {
 				for (ReadingWater readingWater : waterList) {
@@ -279,15 +280,14 @@ public class ReadingServiceImpl implements ReadingService {
 	}
 
 	@Override
-	@SuppressWarnings("unchecked")
-	public <T extends ReadingAbstract> List<T> getByDate(LocalDate date, Media media) {
+	public List<? extends ReadingAbstract>  getByDate(LocalDate date, Media media) {
 		switch (media) {
 		case ENERGY:
-			return (List<T>) energy.getByDate(date);
+			return energy.getByDate(date);
 		case GAS:
-			return (List<T>) gas.getByDate(date);
+			return  gas.getByDate(date);
 		case WATER:
-			return (List<T>) water.getByDate(date);
+			return water.getByDate(date);
 
 		default:
 			return null;

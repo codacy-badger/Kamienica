@@ -32,9 +32,9 @@ public interface ReadingWaterDao extends DaoInterface<ReadingWater> {
 	
 	public void changeResolvmentState(Invoice invoice, boolean resolved);
 
-	public void resolveReadings(InvoiceWater invoice);
-
-	public void unresolveReadings(InvoiceWater invoice);
+//	public void resolveReadings(InvoiceWater invoice);
+//
+//	public void unresolveReadings(InvoiceWater invoice);
 
 	public int countDaysFromLastReading();
 
