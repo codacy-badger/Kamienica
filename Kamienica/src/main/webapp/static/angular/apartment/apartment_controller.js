@@ -15,14 +15,22 @@ Apartment.controller('ApartmentController', [
 			};
 
 			self.createUser = function() {
-				self.apartment.$save(function() {
+				self.apartment.$save(function(response) {
+//					if (response.$resolved == true) {
+//						console.log(self.apartment);
+//						self.apartments.push(self.apartment);
+//					}// self.fetchAllUsers();
+
 					self.fetchAllUsers();
 				});
 			};
 
 			self.updateUser = function() {
-				self.apartment.$update(function() {
-					self.fetchAllUsers();
+				self.apartment.$update(function(response) {
+					if (response.$resolved == true) {
+						self.apartments.splice(self.apartments
+								.indexOf(self.apartment), 1, self.apartment)
+					}// self.fetchAllUsers();
 				});
 
 			};
@@ -30,11 +38,21 @@ Apartment.controller('ApartmentController', [
 			self.deleteUser = function(identity) {
 				var apartment = Apartment.get({
 					id : identity
-				}, function() {
+				}, function(response) {
 					apartment.$delete(function() {
-						console.log('Deleting apartment with id ', identity);
-						self.fetchAllUsers();
-					});
+						if (response.$resolved == true) {
+							console
+									.log('Deleting apartment with id ',
+											identity);
+							self.apartments.splice(self.apartments
+									.indexOf(apartment), 1)
+						}
+						// console.log('11111')
+						// console.log(response.$resolved);
+						// console.log('22222')
+						// self.fetchAllUsers();
+						// self.splice(id, 1);
+					})
 				});
 			};
 
@@ -60,8 +78,8 @@ Apartment.controller('ApartmentController', [
 							.log('Apartment updated with id ',
 									self.apartment.id);
 				}
-				//self.reset();
-				//$scope.toggle = $scope.toggle === false ? true : false;
+				self.reset();
+				$scope.toggle = $scope.toggle === false ? true : false;
 			};
 
 			self.edit = function(id) {

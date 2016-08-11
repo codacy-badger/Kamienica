@@ -29,6 +29,12 @@ public class MainController {
 		return "Login";
 	}
 
+	
+	@RequestMapping(value =   "/test" , method = RequestMethod.GET)
+	public String test() {
+
+		return "index";
+	}
 
 
 	@RequestMapping(value = "/logout")
