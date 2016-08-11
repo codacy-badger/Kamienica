@@ -191,6 +191,8 @@
 								class="fa fa-plus" aria-hidden="true"></i> Nowe</a></li>
 						<li><a href="${path}/Admin/Apartment/apartmentList.html"><i
 								class="fa fa-list" aria-hidden="true"></i> Lista</a></li>
+								<li><a href="${path}/Admin/Apartment/apartmentList2.html"><i
+								class="fa fa-list" aria-hidden="true"></i> REST</a></li>
 					</ul> <!-- /.nav-second-level --></li>
 				<li><a href="#"><i class="fa fa-users" aria-hidden="true"></i>
 						Najemcy<span class="fa arrow"></span></a>

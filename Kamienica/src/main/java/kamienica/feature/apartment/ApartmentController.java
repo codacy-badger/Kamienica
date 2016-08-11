@@ -86,4 +86,11 @@ public class ApartmentController {
 
 	}
 
+	@RequestMapping(value = "/apartmentList2", method = RequestMethod.GET)
+	public ModelAndView apartmentList2() {
+
+		return new ModelAndView("/Admin/Apartment/ApartmentList2");
+
+	}
+
 }
