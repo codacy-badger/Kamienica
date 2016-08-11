@@ -80,6 +80,7 @@ public class ReadingServiceImpl implements ReadingService {
 				}
 			} else {
 				for (ReadingEnergy readingEnergy : energyList) {
+					//consider using LambdaJ
 					idList.remove(readingEnergy.getMeter().getId());
 				}
 				for (Long tmpLong : idList) {
