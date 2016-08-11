@@ -3,10 +3,10 @@ package kamienica.feature.division;
 import org.hibernate.Query;
 import org.springframework.stereotype.Repository;
 
-import kamienica.dao.AbstractDao;
+import kamienica.core.dao.AbstractDao;
 
 @Repository("divisionDao")
-public class DivisionDaoImpl extends AbstractDao<Long, Division> implements DivisionDao {
+public class DivisionDaoImpl extends AbstractDao<Division> implements DivisionDao {
 
 	@Override
 	public void deleteAll() {

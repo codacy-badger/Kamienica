@@ -1,6 +1,5 @@
 package kamienica.feature.division;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -14,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
+import kamienica.core.exception.WrongDivisionInputException;
 import kamienica.feature.apartment.Apartment;
 import kamienica.feature.apartment.ApartmentService;
 import kamienica.feature.tenant.Tenant;
@@ -30,21 +30,24 @@ public class DivisionController {
 	@Autowired
 	private DivisionService divisionService;
 
-
 	@RequestMapping("/divisionRegister")
 	public ModelAndView divisionRegister(@ModelAttribute("divisionForm") DivisionForm divisionForm,
 			BindingResult result) {
 		Map<String, Object> model = new HashMap<String, Object>();
-		ArrayList<Tenant> tenantList = (ArrayList<Tenant>) tenantService.getCurrentTenants();
-		List<Apartment> apartmentList = apartmentService.getList();
-		if (tenantList.isEmpty() || apartmentList.isEmpty()) {
+		try {
+			divisionService.prepareForm(divisionForm);
+		} catch (WrongDivisionInputException e) {
+
 			model.put("error", "Brakuje danych. Upewnij się że dane dotyczące mieszkań i najemców są poprawne");
 			return new ModelAndView("/Admin/Division/DivisionRegister", "model", model);
 		}
+		// divisionForm.setDivisionList(divisionService.prepareDivisionListForRegistration(tenantList,
+		// apartmentList));
 
-		divisionForm.setDivisionList(divisionService.prepareDivisionListForRegistration(tenantList, apartmentList));
-		model.put("apartment", apartmentList);
-		model.put("tenantList", tenantList);
+		// model.put("apartment", apartmentList);
+		// model.put("tenantList", tenantList);
+		// System.out.println("===========================");
+		// System.out.println(divisionForm);
 		return new ModelAndView("/Admin/Division/DivisionRegister", "model", model);
 	}
 
@@ -71,12 +74,13 @@ public class DivisionController {
 	public ModelAndView divisionList() {
 		Map<String, Object> model = new HashMap<String, Object>();
 		DivisionForm divisionForm = new DivisionForm();
-		divisionForm.setDivisionList((ArrayList<Division>) divisionService.getList());
+		divisionForm.setDivisionList(divisionService.getList());
 		List<Tenant> tenants = tenantService.getCurrentTenants();
 		List<Apartment> apartments = apartmentService.getList();
-		if (!DivisionValidator.validateDivision(apartments, divisionForm.getDivisionList(), tenants)) {
-			model.put("error",
-					"Podział jest nieaktualny. <a href='divisionRegister.html' class='alert alert-danger'><b>Zaktualizuj dane.</b></a> ");
+		// if (!DivisionValidator.validateDivision(apartments,
+		// divisionForm.getDivisionList(), tenants))
+		if (!divisionService.isDivisionCorrect()) {
+			model.put("error", "Podział jest nieaktualny. Proszę zaktualizować dane ");
 		}
 		model.put("tenantList", tenants);
 		model.put("apartment", apartments);

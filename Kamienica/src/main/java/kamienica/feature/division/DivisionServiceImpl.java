@@ -10,9 +10,11 @@ import org.joda.time.LocalDate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
+import kamienica.core.exception.InvalidDivisionException;
+import kamienica.core.exception.WrongDivisionInputException;
 import kamienica.feature.apartment.Apartment;
 import kamienica.feature.apartment.ApartmentDao;
+import kamienica.feature.settings.SettingsDao;
 import kamienica.feature.tenant.Tenant;
 import kamienica.feature.tenant.TenantDao;
 
@@ -25,6 +27,8 @@ public class DivisionServiceImpl implements DivisionService {
 	TenantDao tenantDAO;
 	@Autowired
 	ApartmentDao apartmentDAO;
+	@Autowired
+	SettingsDao settingsDao;
 
 	@Override
 	public List<Division> getList() {
@@ -34,35 +38,64 @@ public class DivisionServiceImpl implements DivisionService {
 	@Override
 	public void deleteByID(Long id) {
 		divisionDAO.deleteById(id);
+		settingsDao.changeDivisionState(false);
 
 	}
 
 	@Override
 	public void update(Division division) {
 		divisionDAO.update(division);
+		settingsDao.changeDivisionState(true);
 	}
 
 	@Override
 	public void deleteAll() {
 		divisionDAO.deleteAll();
+		settingsDao.changeDivisionState(false);
 
 	}
 
 	@Override
 	public void saveList(List<Division> division, LocalDate date) {
+
 		divisionDAO.deleteAll();
 		for (Division div : division) {
 			div.setDate(date);
 			divisionDAO.save(div);
 		}
+		settingsDao.changeDivisionState(true);
 
 	}
 
 	@Override
-	public  List<Division> prepareDivisionListForRegistration(List<Tenant> tenantList,
-			List<Apartment> apartmentList) {
-		
-		
+	public void saveList(DivisionForm form) throws InvalidDivisionException {
+		if (DivisionValidator.checksumForDivision(form.getApartments(), form.getDivisionList())) {
+			throw new InvalidDivisionException();
+		}
+
+		saveList(form.getDivisionList(), form.getDate());
+
+	}
+
+	@Override
+	public void prepareForm(DivisionForm form) throws WrongDivisionInputException {
+		List<Tenant> tenantList = tenantDAO.getActiveTenants();
+		List<Apartment> apartmentList = apartmentDAO.getList();
+
+		if (tenantList.isEmpty() || apartmentList.isEmpty()) {
+			throw new WrongDivisionInputException();
+		}
+
+		form.setDivisionList(prepareDivisionListForRegistration(tenantList, apartmentList));
+		form.setDate(new LocalDate());
+		form.setApartments(apartmentList);
+		form.setTenants(tenantList);
+
+	}
+
+	@Override
+	public List<Division> prepareDivisionListForRegistration(List<Tenant> tenantList, List<Apartment> apartmentList) {
+
 		ArrayList<Division> divisionList = new ArrayList<>();
 		for (Tenant ten : tenantList) {
 			for (Apartment ap : apartmentList) {
@@ -88,6 +121,11 @@ public class DivisionServiceImpl implements DivisionService {
 		DecimalFormat df = (DecimalFormat) nf;
 		df.applyPattern("#.00");
 		return Double.parseDouble(df.format(input));
+	}
+
+	@Override
+	public boolean isDivisionCorrect() {
+		return settingsDao.isDivisionCorrect();
 	}
 
 }

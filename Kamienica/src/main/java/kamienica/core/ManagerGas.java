@@ -16,6 +16,9 @@ import kamienica.feature.usagevalue.UsageValue;
 
 public class ManagerGas {
 
+	/**
+	 * This method is designed for shared water heatig system
+	 */
 	public static ArrayList<UsageValue> countConsumption(List<Apartment> aparment, List<ReadingGas> gasOld,
 			List<ReadingGas> gasNew, List<ReadingWater> waterOld, List<ReadingWater> waterNew) {
 		ArrayList<UsageValue> out = new ArrayList<UsageValue>();
@@ -64,15 +67,18 @@ public class ManagerGas {
 
 		double zuzycieCWU = ManagerGas.sumCWU(gasOld, gasNew);
 		if (zuzycieCWU != 0) {
+
 			double sumaZuzyciaCieplejWody = ManagerWater.countWarmWaterUsage(waterOld, waterNew);
 			HashMap<Integer, Double> mapaZuzyciaCieplejWody = ManagerGas.hotWaterUsageMap(waterOld, waterNew);
 			for (int i = 0; i < out.size(); i++) {
 				if (out.get(i).getApartment().getApartmentNumber() != 0) {
 					int nrMieszkania = out.get(i).getApartment().getApartmentNumber();
-					double zuzycieGazuCwuDlaDanegoMieszkania = (mapaZuzyciaCieplejWody.get(nrMieszkania)
-							/ sumaZuzyciaCieplejWody) * zuzycieCWU;
-					double tmp = out.get(i).getUsage() + zuzycieGazuCwuDlaDanegoMieszkania;
-					out.get(i).setUsage(decimalFormat(tmp));
+					if (mapaZuzyciaCieplejWody.containsKey(nrMieszkania)) {
+						double zuzycieGazuCwuDlaDanegoMieszkania = (mapaZuzyciaCieplejWody.get(nrMieszkania)
+								/ sumaZuzyciaCieplejWody) * zuzycieCWU;
+						double tmp = out.get(i).getUsage() + zuzycieGazuCwuDlaDanegoMieszkania;
+						out.get(i).setUsage(decimalFormat(tmp));
+					}
 				}
 			}
 		}
@@ -80,6 +86,61 @@ public class ManagerGas {
 
 	}
 
+	/** Method for individual water heating system */
+	public static ArrayList<UsageValue> countConsumption(List<Apartment> aparment, List<ReadingGas> gasOld,
+			List<ReadingGas> gasNew) {
+		ArrayList<UsageValue> out = new ArrayList<UsageValue>();
+		for (Apartment m : aparment) {
+
+			UsageValue tmp = new UsageValue();
+			tmp.setDescription("Zuzycie calkowite za: " + m.getDescription());
+			double sumPrevious = 0;
+			double sumNew = 0;
+			tmp.setApartment(m);
+			for (int i = 0; i < gasNew.size(); i++) {
+				if (gasNew.get(i).getIsCWU() == false) {
+
+					if (gasNew.get(i).getMeter().getApartment() != null) {
+						if (gasNew.get(i).getMeter().getApartment().getApartmentNumber() == m.getApartmentNumber()) {
+							sumNew = sumNew + gasNew.get(i).getValue();
+						}
+					}
+					if (!gasOld.isEmpty()) {
+						if (gasOld.get(i).getIsCWU() == false) {
+							if (gasOld.get(i).getMeter().getApartment() != null) {
+								if (gasOld.get(i).getMeter().getApartment().getApartmentNumber() == m
+										.getApartmentNumber()) {
+									sumPrevious = sumPrevious + gasOld.get(i).getValue();
+								}
+							}
+						}
+					}
+
+				}
+			}
+			double usage = sumNew - sumPrevious;
+			tmp.setUsage(usage);
+			tmp.setUnit(gasNew.get(0).getUnit());
+			if (!gasOld.isEmpty()) {
+				tmp.setDaysBetweenReadings(
+						Days.daysBetween(gasOld.get(0).getReadingDate(), gasNew.get(0).getReadingDate()).getDays());
+				// tmp.setDaysBetweenReadings(Days.daysBetween(new
+				// DateTime(gasOld.get(0).getReadingDate()),
+				// new DateTime(gasNew.get(0).getReadingDate())).getDays());
+			} else {
+				tmp.setDaysBetweenReadings(0);
+			}
+			out.add(tmp);
+		}
+
+		return out;
+
+	}
+
+	/**
+	 * Counts warm water usage for each apartment
+	 * 
+	 */
 	private static HashMap<Integer, Double> hotWaterUsageMap(List<ReadingWater> oldReading,
 			List<ReadingWater> newReading) {
 		HashMap<Integer, Double> output = new HashMap<>();

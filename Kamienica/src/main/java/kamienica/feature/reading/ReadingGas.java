@@ -56,6 +56,7 @@ public class ReadingGas extends ReadingAbstract implements Serializable {
 		this.meter = meter;
 	}
 
+	@Override
 	public void setUnit(String unit) {
 		this.unit = unit;
 	}

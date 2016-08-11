@@ -5,6 +5,8 @@ import java.text.ParseException;
 import java.util.Arrays;
 import java.util.LinkedList;
 
+import kamienica.feature.reading.ReadingGasDAOImpl;
+
 public class Kamienica {
 
 	public static void main(String[] args) throws IOException, ParseException {
@@ -17,6 +19,9 @@ public class Kamienica {
 			System.out.println("i po zmianach " + i);
 		}
 		System.out.println(test.toString());
+		
+		ReadingGasDAOImpl testowy = new ReadingGasDAOImpl();
+		System.out.println(testowy);
 		
 //		Invoice testr = new InvoiceEnergy();
 //		testr.setBaseReading();

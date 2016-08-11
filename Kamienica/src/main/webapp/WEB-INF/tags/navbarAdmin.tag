@@ -212,7 +212,13 @@
 								<li><a href="${path}/Admin/Division/divisionList.html"><i
 										class="fa fa-list" aria-hidden="true"></i> Lista</a></li>
 							</ul></li>
-						<li><a href="#">Ustawienia Początkowe</a></li>
+						<li><a href=#>Konfiguracja<span class="fa arrow"></span></a>
+							<ul class="nav nav-third-level">
+								<li><a href="${path}/Admin/Settings/edit.html"><i
+										class="fa fa-plus" aria-hidden="true"></i>Zmień</a></li>
+								<li><a href="${path}/Admin/Settings/list.html"><i
+										class="fa fa-list" aria-hidden="true"></i>Sprawdź</a></li>
+							</ul></li>
 					</ul> <!-- /.nav-second-level --></li>
 				<li><a href="#"><i class="fa fa-bar-chart"
 						aria-hidden="true"></i> </i>Odczyty<span class="fa arrow"></span></a>
@@ -221,7 +227,8 @@
 							<ul class="nav nav-third-level">
 								<li><a href="${path}/Admin/Reading/readingGasRegister.html"><i
 										class="fa fa-plus" aria-hidden="true"></i> Nowe</a></li>
-								<li><a href="${path}/Admin/Reading/readingList.html?media=GAS"><i
+								<li><a
+									href="${path}/Admin/Reading/readingList.html?media=GAS"><i
 										class="fa fa-list" aria-hidden="true"></i> Lista</a></li>
 							</ul></li>
 						<li><a href="buttons.html">Woda<span class="fa arrow"></a>
@@ -229,7 +236,8 @@
 								<li><a
 									href="${path}/Admin/Reading/readingWaterRegister.html"><i
 										class="fa fa-plus" aria-hidden="true"></i> Nowe</a></li>
-								<li><a href="${path}/Admin/Reading/readingList.html?media=WATER"><i
+								<li><a
+									href="${path}/Admin/Reading/readingList.html?media=WATER"><i
 										class="fa fa-list" aria-hidden="true"></i> Lista</a></li>
 							</ul></li>
 						<li><a href="notifications.html">Energia<span
@@ -238,13 +246,14 @@
 								<li><a
 									href="${path}/Admin/Reading/readingEnergyRegister.html"><i
 										class="fa fa-plus" aria-hidden="true"></i> Nowe</a></li>
-								<li><a href="${path}/Admin/Reading/readingList.html?media=ENERGY"><i
+								<li><a
+									href="${path}/Admin/Reading/readingList.html?media=ENERGY"><i
 										class="fa fa-list" aria-hidden="true"></i> Lista</a></li>
 							</ul></li>
 
 					</ul> <!-- /.nav-second-level --></li>
-				<li><a href="#"><i class="fa fa-newspaper-o" aria-hidden="true"></i>
-						</i>Faktury<span class="fa arrow"></span></a>
+				<li><a href="#"><i class="fa fa-newspaper-o"
+						aria-hidden="true"></i> </i>Faktury<span class="fa arrow"></span></a>
 					<ul class="nav nav-second-level">
 						<li><a href="panels-wells.html"> Gaz<span
 								class="fa arrow"></span></a>

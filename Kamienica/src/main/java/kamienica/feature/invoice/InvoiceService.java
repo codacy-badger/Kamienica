@@ -1,12 +1,20 @@
 package kamienica.feature.invoice;
 
 import java.util.List;
+import java.util.Map;
 
+import kamienica.core.Media;
+import kamienica.core.exception.InvalidDivisionException;
 import kamienica.feature.payment.PaymentEnergy;
 import kamienica.feature.payment.PaymentGas;
 import kamienica.feature.payment.PaymentWater;
+import kamienica.feature.reading.ReadingAbstract;
 
 public interface InvoiceService {
+
+	public <T extends ReadingAbstract> List<T> prepareForRegistration(Media media) throws InvalidDivisionException;
+
+	public <T extends Invoice> void save(T invoice, Media media);
 
 	public void saveEnergy(InvoiceEnergy invoice, List<PaymentEnergy> payment);
 
@@ -14,17 +22,23 @@ public interface InvoiceService {
 
 	public void saveWater(InvoiceWater invoice, List<PaymentWater> payment);
 
+	public void list(Map<String, Object> model, Media media);
+
 	public List<InvoiceWater> getWaterInvoiceList();
 
 	public List<InvoiceGas> getGasInvoiceList();
 
 	public List<InvoiceEnergy> getEnergyInvoiceList();
 
+	public void delete(Long id, Media media);
+
 	public void deleteGasByID(Long id);
 
 	public void deleteWaterByID(Long id);
 
 	public void deleteEnergyByID(Long id);
+
+	public <T extends Invoice> void update(T invoice, Media media);
 
 	public void updateGas(InvoiceGas invoice, List<PaymentGas> payments);
 

@@ -26,8 +26,10 @@ public class MainController {
 	@RequestMapping(value = { "/", "/index" }, method = RequestMethod.GET)
 	public String index() {
 
-		return "index";
+		return "Login";
 	}
+
+
 
 	@RequestMapping(value = "/logout")
 	public ModelAndView updatePassword(HttpServletRequest req, HttpServletResponse response) {
@@ -47,13 +49,5 @@ public class MainController {
 	public ModelAndView notExsists() {
 		return new ModelAndView("404");
 	}
-
-	@RequestMapping(value = "/test")
-	public ModelAndView test() {
-
-		return new ModelAndView("test");
-	}
-
-
 
 }

@@ -6,7 +6,6 @@ import java.util.Map;
 
 import org.joda.time.LocalDate;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.expression.ParseException;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -16,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import kamienica.core.Media;
+import kamienica.core.exception.NoMainCounterException;
 import kamienica.feature.meter.MeterService;
 
 @Controller
@@ -34,24 +34,31 @@ public class ReadingController {
 	public ModelAndView readingEnergyRegister(@ModelAttribute("readingForm") ReadingEnergyForm readingForm,
 			BindingResult result) {
 
+		// if (!meterService.ifMainExists(Media.ENERGY)) {
+		// model.put("error", NO_MAIN_COUNTER);
+		// return new ModelAndView("/Admin/Reading/ReadingEnergyRegister",
+		// "model", model);
+		// }
 		HashMap<String, Object> model = new HashMap<>();
-		if (!meterService.ifMainExists(Media.ENERGY)) {
-			model.put("error", NO_MAIN_COUNTER);
+		try {
+			List<ReadingEnergy> readings = readingService.getLatestNew(Media.ENERGY);
+			readingForm.setCurrentReadings(readings);
+			readingForm.setNewReadings(readings);
+			readingService.setDates(model, readings);
+//			model.put("date", new LocalDate());
+//			
+//			if (readings.isEmpty()) {
+//				model.put("oldDate", "2000-01-01");
+//			} else {
+//				model.put("oldDate", readings.get(0).getReadingDate().plusDays(1));
+//			}
+
+			return new ModelAndView("/Admin/Reading/ReadingEnergyRegister", "model", model);
+		} catch (NoMainCounterException e) {
+			model.put("error", e.getMessage());
 			return new ModelAndView("/Admin/Reading/ReadingEnergyRegister", "model", model);
 		}
 
-		List<ReadingEnergy> readings = readingService.energyLatestNew(meterService.getIdList(Media.ENERGY));
-
-		model.put("date", new LocalDate());
-		readingForm.setCurrentReadings(readings);
-		readingForm.setNewReadings(readings);
-		if (readings.isEmpty()) {
-			model.put("oldDate", "2000-01-01");
-		} else {
-			model.put("oldDate", readings.get(0).getReadingDate().plusDays(1));
-		}
-
-		return new ModelAndView("/Admin/Reading/ReadingEnergyRegister", "model", model);
 	}
 
 	@RequestMapping("/readingGasRegister")
@@ -59,23 +66,29 @@ public class ReadingController {
 			BindingResult result) {
 
 		HashMap<String, Object> model = new HashMap<>();
-		if (!meterService.ifMainExists(Media.GAS)) {
-			model.put("error", NO_MAIN_COUNTER);
+		// if (!meterService.ifMainExists(Media.GAS)) {
+		//
+		// }
+
+		try {
+			List<ReadingGas> readings = readingService.getLatestNew(Media.GAS);
+			model.put("date", new LocalDate());
+
+			readingForm.setCurrentReadings(readings);
+
+			if (readings.isEmpty()) {
+				model.put("oldDate", "2000-01-01");
+			} else {
+				model.put("oldDate", readings.get(0).getReadingDate().plusDays(1));
+			}
+
+			return new ModelAndView("/Admin/Reading/ReadingGasRegister", "model", model);
+		} catch (NoMainCounterException e) {
+			model.put("error", e.getMessage());
 			model.put("url", "/Admin/Reading/readingEnergySave.html");
 			return new ModelAndView("/Admin/Reading/ReadingEnergyRegister", "model", model);
 		}
-		List<ReadingGas> readings = readingService.gasLatest(meterService.getIdList(Media.GAS));
-		model.put("date", new LocalDate());
 
-		readingForm.setCurrentReadings(readings);
-
-		if (readings.isEmpty()) {
-			model.put("oldDate", "2000-01-01");
-		} else {
-			model.put("oldDate", readings.get(0).getReadingDate().plusDays(1));
-		}
-
-		return new ModelAndView("/Admin/Reading/ReadingGasRegister", "model", model);
 	}
 
 	@RequestMapping("/readingWaterRegister")
@@ -83,22 +96,29 @@ public class ReadingController {
 			BindingResult result) {
 
 		HashMap<String, Object> model = new HashMap<>();
-		if (!meterService.ifMainExists(Media.WATER)) {
-			model.put("error", NO_MAIN_COUNTER);
+		// if (!meterService.ifMainExists(Media.WATER)) {
+		//
+		// }
+		// readings;
+		try {
+			List<ReadingWater> readings = readingService.getLatestNew(Media.WATER);
+			readingWaterForm.setCurrentReadings(readings);
+			
+			model.put("date", new LocalDate());
+
+			
+
+			if (readings.isEmpty()) {
+				model.put("oldDate", "2000-01-01");
+			} else {
+				model.put("oldDate", readings.get(0).getReadingDate().plusDays(1));
+			}
+			return new ModelAndView("/Admin/Reading/ReadingWaterRegister", "model", model);
+		} catch (NoMainCounterException e) {
+			model.put("error", e.getMessage());
 			return new ModelAndView("/Admin/Reading/ReadingEnergyRegister", "model", model);
 		}
-		List<ReadingWater> readings = readingService.waterLatest(meterService.getIdList(Media.WATER));
 
-		model.put("date", new LocalDate());
-
-		readingWaterForm.setCurrentReadings(readings);
-
-		if (readings.isEmpty()) {
-			model.put("oldDate", "2000-01-01");
-		} else {
-			model.put("oldDate", readings.get(0).getReadingDate().plusDays(1));
-		}
-		return new ModelAndView("/Admin/Reading/ReadingWaterRegister", "model", model);
 	}
 	// --------------------------------SAVE-----------------------------------------------------------------
 
@@ -116,8 +136,9 @@ public class ReadingController {
 			return new ModelAndView("/Admin/Reading/ReadingEnergyRegister", "error",
 					"Nowa wartość nie może być mniejsza od poprzedniej");
 		}
-
-		readingService.saveEnergyList(readingForm.getNewReadings(), LocalDate.parse(date));
+		readingService.save(readingForm.getNewReadings(), LocalDate.parse(date), Media.ENERGY);
+		// readingService.saveEnergyList(readingForm.getNewReadings(),
+		// LocalDate.parse(date));
 		return new ModelAndView("redirect:/Admin/Reading/readingList.html?media=ENERGY");
 	}
 
@@ -130,7 +151,9 @@ public class ReadingController {
 			model.put("error", NO_MAIN_COUNTER);
 			return new ModelAndView("/Admin/Reading/ReadingGasRegister", "model", model);
 		}
-		readingService.saveGasList(readingForm.getCurrentReadings(), LocalDate.parse(date));
+		readingService.save(readingForm.getCurrentReadings(), LocalDate.parse(date), Media.GAS);
+		// readingService.saveGasList(readingForm.getCurrentReadings(),
+		// LocalDate.parse(date));
 		return new ModelAndView("redirect:/Admin/Reading/readingList.html?media=GAS");
 	}
 
@@ -142,7 +165,9 @@ public class ReadingController {
 			model.put("error", NO_MAIN_COUNTER);
 			return new ModelAndView("/Admin/Reading/ReadingGasRegister", "model", model);
 		}
-		readingService.saveWaterList(readingWaterForm.getCurrentReadings(), LocalDate.parse(date));
+		readingService.save(readingWaterForm.getCurrentReadings(), LocalDate.parse(date), Media.WATER);
+		// readingService.saveWaterList(readingWaterForm.getCurrentReadings(),
+		// LocalDate.parse(date));
 		return new ModelAndView("redirect:/Admin/Reading/readingList.html?media=WATER");
 	}
 	// -----------------------------LIST-------------------------------------------------------
@@ -201,7 +226,7 @@ public class ReadingController {
 
 	@RequestMapping(value = "/readingGasDelete")
 	public ModelAndView readingGasDelete() {
-	
+
 		readingService.deleteLatestReadings(Media.GAS);
 		return new ModelAndView("redirect:/Admin/Reading/readingList.html?media=GAS");
 	}
@@ -216,9 +241,12 @@ public class ReadingController {
 	@RequestMapping(value = "/readingEnergyEdit")
 	public ModelAndView readingEnergyEdit(@ModelAttribute("readingForm") ReadingEnergyForm readingForm) {
 
-		readingForm.setCurrentReadings(readingService.energyLatestEdit(meterService.getIdList(Media.ENERGY)));
-		readingForm.setPreviousReadings(readingService.getPreviousReadingEnergy(readingForm.getDate().toString(),
-				meterService.getIdList(Media.ENERGY)));
+		readingForm.setCurrentReadings(readingService.energyLatestEdit());
+
+		// readingForm.setPreviousReadings(readingService.getPreviousReadingEnergy(readingForm.getDate(),
+		// Media.ENERGY));
+		readingForm.setPreviousReadings(
+				readingService.getPreviousReadingEnergy(readingForm.getDate(), meterService.getIdList(Media.ENERGY)));
 
 		Map<String, Object> model = new HashMap<String, Object>();
 		model.put("date", readingForm.getCurrentReadings().get(0).getReadingDate());
@@ -233,9 +261,9 @@ public class ReadingController {
 	@RequestMapping(value = "/readingGasEdit")
 	public ModelAndView readingGasEdit(@ModelAttribute("readingForm") ReadingGasForm readingForm) {
 
-		readingForm.setCurrentReadings(readingService.gasLatestEdit(meterService.getIdList(Media.GAS)));
-		readingForm.setPreviousReadings(readingService.getPreviousReadingGas(readingForm.getDate().toString(),
-				meterService.getIdList(Media.GAS)));
+		readingForm.setCurrentReadings(readingService.gasLatestEdit());
+		readingForm.setPreviousReadings(
+				readingService.getPreviousReadingGas(readingForm.getDate(), meterService.getIdList(Media.GAS)));
 
 		Map<String, Object> model = new HashMap<String, Object>();
 		model.put("date", readingForm.getCurrentReadings().get(0).getReadingDate());
@@ -250,9 +278,9 @@ public class ReadingController {
 	@RequestMapping(value = "/readingWaterEdit")
 	public ModelAndView readingWaterEdit(@ModelAttribute("readingForm") ReadingWaterForm readingForm) {
 
-		readingForm.setCurrentReadings(readingService.waterLatestEdit(meterService.getIdList(Media.WATER)));
-		readingForm.setPreviousReadings(readingService.getPreviousReadingWater(readingForm.getDate().toString(),
-				meterService.getIdList(Media.WATER)));
+		readingForm.setCurrentReadings(readingService.waterLatestEdit());
+		readingForm.setPreviousReadings(
+				readingService.getPreviousReadingWater(readingForm.getDate(), meterService.getIdList(Media.WATER)));
 
 		Map<String, Object> model = new HashMap<String, Object>();
 		model.put("date", readingForm.getCurrentReadings().get(0).getReadingDate());
@@ -267,25 +295,25 @@ public class ReadingController {
 	// -------------------------OVERWRITE--------------------------------------------
 	@RequestMapping("/readingEnergyOverwrite")
 	public ModelAndView readingEnergyOverwite(@ModelAttribute("readingForm") ReadingEnergyForm readingForm,
-			BindingResult result, @RequestParam String date) throws ParseException {
+			BindingResult result, @RequestParam LocalDate date) {
 
-		readingService.updateEnergyList(readingForm.getCurrentReadings(), date);
+		readingService.update(readingForm.getCurrentReadings(), date, Media.ENERGY);
 		return new ModelAndView("redirect:/Admin/Reading/readingList.html?media=ENERGY");
 	}
 
 	@RequestMapping("/readingGasOverwrite")
 	public ModelAndView readingGasOverwrite(@ModelAttribute("readingForm") ReadingGasForm readingForm,
-			BindingResult result, @RequestParam String date) throws ParseException {
+			BindingResult result, @RequestParam String date) {
 
-		readingService.updateGasList(readingForm.getCurrentReadings(), date);
+		readingService.update(readingForm.getCurrentReadings(), LocalDate.parse(date), Media.GAS);
 		return new ModelAndView("redirect:/Admin/Reading/readingList.html?media=GAS");
 	}
 
 	@RequestMapping("/readingWaterOverwrite")
 	public ModelAndView readingWaterOverwrite(@ModelAttribute("readingForm") ReadingWaterForm readingForm,
-			BindingResult result, @RequestParam String date) throws ParseException {
+			BindingResult result, @RequestParam String date) {
 
-		readingService.updateWaterList(readingForm.getCurrentReadings(), date);
+		readingService.update(readingForm.getCurrentReadings(), LocalDate.parse(date), Media.WATER);
 		return new ModelAndView("redirect:/Admin/Reading/readingList.html?media=WATER");
 	}
 

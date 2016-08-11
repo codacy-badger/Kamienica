@@ -33,7 +33,7 @@ public class ReadingsRestController {
 			if (date == null) {
 				list = service.getReadingEnergy();
 			} else {
-				list = service.getReadingEnergyByDate(date.toString());
+				list = service.getByDate(date, Media.ENERGY);
 			}
 			if (list.isEmpty()) {
 				return new ResponseEntity<List<? extends ReadingAbstract>>(HttpStatus.NOT_FOUND);
@@ -43,7 +43,7 @@ public class ReadingsRestController {
 			if (date == null) {
 				list = service.getReadingGas();
 			} else {
-				list = service.getReadingGasByDate(date.toString());
+				list = service.getByDate(date, Media.GAS);
 			}
 			if (list.isEmpty()) {
 				return new ResponseEntity<List<? extends ReadingAbstract>>(HttpStatus.NOT_FOUND);
@@ -53,7 +53,7 @@ public class ReadingsRestController {
 			if (date == null) {
 				list = service.getReadingWater();
 			} else {
-				list = service.getReadingWaterByDate(date.toString());
+				list = service.getByDate(date, Media.WATER);
 			}
 			if (list.isEmpty()) {
 				return new ResponseEntity<List<? extends ReadingAbstract>>(HttpStatus.NOT_FOUND);

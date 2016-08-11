@@ -12,9 +12,9 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Component;
 
+import kamienica.core.Status;
 import kamienica.feature.tenant.Tenant;
 import kamienica.feature.tenant.TenantService;
-import kamienica.feature.tenant.UserStatus;
 
 @Component
 public class MyUserDetailsService implements UserDetailsService {
@@ -33,7 +33,7 @@ public class MyUserDetailsService implements UserDetailsService {
 		List<GrantedAuthority> authorities = new ArrayList<GrantedAuthority>();
 		authorities.add(new SimpleGrantedAuthority("ROLE_" + tenant.getRole()));
 		SecurityUser myUser = new SecurityUser(tenant, tenant.getEmail(), tenant.getPassword(), tenant.getApartment(),
-				tenant.getStatus().equals(UserStatus.ACTIVE.getUserStatus()), true, true, true, authorities);
+				tenant.getStatus().equals(Status.ACTIVE.getStatus()), true, true, true, authorities);
 
 		return myUser;
 	}

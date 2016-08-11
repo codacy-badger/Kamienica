@@ -46,7 +46,7 @@
 							<th>Opis</th>
 							<th>Data</th>
 							<th>Wartość</th>
-							<th>Edytuj</th>
+							<!-- th>Edytuj</th -->
 							<th>Usuń</th>
 						</tr>
 						<c:forEach items="${invoice}" var="invoice">
@@ -56,8 +56,8 @@
 								<td><c:out value="${invoice.description}" /></td>
 								<td><c:out value="${invoice.date}" /></td>
 								<td><c:out value="${invoice.totalAmount}" /></td>
-								<td><a href="<c:url value="${editlUrl}${invoice.id}" />"
-									role="button" class="btn-xs btn-warning">Edytuj</a></td>
+								<!-- td><a href="<c:url value="${editlUrl}${invoice.id}" />"
+									role="button" class="btn-xs btn-warning">Edytuj</a></td -->
 								<td><a href="<c:url value="${delUrl }${invoice.id}"  />"
 									onclick="return confirm('Na pewno usunąć?')" role="button"
 									class="btn-xs btn-danger">Usuń</a></td>
