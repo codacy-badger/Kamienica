@@ -33,6 +33,7 @@
 			<div class='row'>
 				<div class="col-lg-12">
 					<h1 class="page-header well">Lista Mieszkań - REST</h1>
+					
 					<button id='mySwitch' ng-click="toggle = !toggle"
 						class="btn btn-default btn-sm">{{text}}</button>
 				</div>
@@ -143,9 +144,9 @@
 		</div>
 	</div>
 	<script
-		src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.4/angular.js"></script>
+		src="<c:url value='/static/js/angular.js' />"></script>
 	<script
-		src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.4/angular-resource.js"></script>
+		src="<c:url value='/static/js/angular-resource.js' />"></script>
 	<script src="<c:url value='/static/angular/app.js' />"></script>
 	<script
 		src="<c:url value='/static/angular/apartment/apartment_service.js' />"></script>

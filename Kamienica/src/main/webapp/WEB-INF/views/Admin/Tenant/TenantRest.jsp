@@ -25,11 +25,11 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Najemcy - REST</title>
 </head>
-<body ng-app="apartment">
+<body ng-app="tenant">
 	<div id="wrapper">
 		<mytags:navbarAdmin />
 
-		<div id="page-wrapper" ng-controller="ApartmentController as ctrl">
+		<div id="page-wrapper" ng-controller="TenantController as ctrl">
 			<div class='row'>
 				<div class="col-lg-12">
 					<h1 class="page-header well">Lista Mieszkań - REST</h1>
@@ -45,11 +45,11 @@
 				<form class="form-horizontal" ng-submit="ctrl.submit()"
 					name="myForm">
 					<input path="id" readonly="true" type='hidden' /> <input
-						type="hidden" ng-model="ctrl.apartment.id" />
+						type="hidden" ng-model="ctrl.tenant.id" />
 					<div class="form-group">
 						<label for="inputEmail3" class="col-sm-3 control-label">Domofon</label>
 						<div class="col-sm-9">
-							<input type="text" ng-model="ctrl.apartment.intercom"
+							<input type="text" ng-model="ctrl.tenant.intercom"
 								class="form-control" name="intercom" path='intercom'
 								ng-pattern="/^[0-9]{1,7}$/" placeholder="Pole wymagane"
 								ng-required='true' ng-minlength="4" ng-maxlength="4" />
@@ -68,14 +68,14 @@
 						<label for="inputEmail3" class="col-sm-3 control-label">Numer
 							Mieszkania</label>
 						<div class="col-sm-9">
-							<input type="text" ng-model="ctrl.apartment.apartmentNumber"
-								class="form-control" path='apartmentNumber'
-								placeholder="Pole wymagane" name="apartmentNumber"
+							<input type="text" ng-model="ctrl.tenant.tenantNumber"
+								class="form-control" path='tenantNumber'
+								placeholder="Pole wymagane" name="tenantNumber"
 								/>
 								
 								<!-- ng-required='true' ng-pattern="/^[0-9]{1,7}$/"  -->
 							<p class="help-block">
-								<span class='error' ng-show="myForm.apartmentNumber.$invalid">Tylko
+								<span class='error' ng-show="myForm.tenantNumber.$invalid">Tylko
 									cyfry</span>
 							</p>
 						</div>
@@ -84,7 +84,7 @@
 					<div class="form-group">
 						<label for="inputEmail3" class="col-sm-3 control-label">Opis</label>
 						<div class="col-sm-9">
-							<input type="text" ng-model="ctrl.apartment.description"
+							<input type="text" ng-model="ctrl.tenant.description"
 								class="form-control"  path='description'
 								placeholder="Pole wymagane" ng-required='true' name="description" />
 							<p class="help-block">
@@ -95,7 +95,7 @@
 					<div class="form-group ">
 
 						<input type="submit"
-							value="{{!ctrl.apartment.id ? 'Dodaj' : 'Nadpisz'}}"
+							value="{{!ctrl.tenant.id ? 'Dodaj' : 'Nadpisz'}}"
 							class="btn btn-default " ng-disabled="myForm.$invalid">
 						<button type="button" ng-click="ctrl.reset()"
 							class="btn btn-default " ng-disabled="myForm.$pristine">Reset
@@ -113,18 +113,18 @@
 					<table class='table table-stripped table-hover'>
 						<thead>
 							<tr>
-								<th>Nr Mieszkania</th>
-								<th>Domofon</th>
-								<th>Opis</th>
+								<th>Imię</th>
+								<th>Nazzwisko</th>
+								
 								<th>Edytuj/Usuń</th>
 
 							</tr>
 						</thead>
 						<tbody>
-							<tr ng-repeat="a in ctrl.apartments">
-								<td><span ng-bind="a.apartmentNumber"></span></td>
-								<td><span ng-bind="a.intercom"></span></td>
-								<td><span ng-bind="a.description"></span></td>
+							<tr ng-repeat="a in ctrl.tenants">
+								<td><span ng-bind="a.firstName"></span></td>
+								<td><span ng-bind="a.lastName"></span></td>
+								
 								<td>
 									<button type="button" ng-click="ctrl.edit(a.id)"
 										class="btn-xs btn-warning">
@@ -148,9 +148,9 @@
 		src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.4/angular-resource.js"></script>
 	<script src="<c:url value='/static/angular/app.js' />"></script>
 	<script
-		src="<c:url value='/static/angular/apartment/apartment_service.js' />"></script>
+		src="<c:url value='/static/angular/tenant/tenant_service.js' />"></script>
 	<script
-		src="<c:url value='/static/angular/apartment/apartment_controller.js' />"></script>
+		src="<c:url value='/static/angular/tenant/tenant_controller.js' />"></script>
 	<!-- jQuery -->
 	<script src="<c:url value='/static/js/jquery.min.js' />"></script>
 	<!-- Bootstrap Core JavaScript -->

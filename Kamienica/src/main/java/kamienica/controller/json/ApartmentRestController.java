@@ -5,7 +5,6 @@ import java.util.List;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
@@ -14,8 +13,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.util.UriComponentsBuilder;
 
+import kamienica.core.Message;
 import kamienica.feature.apartment.Apartment;
 import kamienica.feature.apartment.ApartmentService;
 
@@ -91,14 +90,16 @@ public class ApartmentRestController {
 
 	// delete by id
 	@RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
-	public ResponseEntity<Apartment> deleteUser(@PathVariable("id") Long id) {
-		Apartment apartment = apartmentService.getById(id);
-		if (apartment == null) {
-
-			return new ResponseEntity<Apartment>(HttpStatus.NOT_FOUND);
+	public ResponseEntity<Message> deleteUser(@PathVariable("id") Long id) {
+		Message message = new Message("OK");
+		try {
+			apartmentService.deleteByID(id);
+		} catch (Exception e) {
+			message.setMessage(e.toString());
+			return new ResponseEntity<Message>(message, HttpStatus.BAD_REQUEST);
 		}
-
+	
 		apartmentService.deleteByID(id);
-		return new ResponseEntity<Apartment>(HttpStatus.NO_CONTENT);
+		return new ResponseEntity<Message>(message, HttpStatus.OK);
 	}
 }

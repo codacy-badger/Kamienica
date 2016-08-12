@@ -86,6 +86,15 @@ public class TenantController {
 		}
 		return new ModelAndView("redirect:/Admin/Tenant/tenantList.html");
 	}
+	
+	
+	@RequestMapping(value = "/tenantRest", method = RequestMethod.GET)
+	public ModelAndView apartmentList2() {
+
+		return new ModelAndView("/Admin/Tenants/TenantRest");
+
+	}
+	
 
 	@RequestMapping(value = "/tenantDelete")
 	public ModelAndView deleteTenant(@RequestParam(value = "id") Long id) {

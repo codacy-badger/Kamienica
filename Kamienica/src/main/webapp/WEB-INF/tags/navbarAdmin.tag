@@ -191,7 +191,7 @@
 								class="fa fa-plus" aria-hidden="true"></i> Nowe</a></li>
 						<li><a href="${path}/Admin/Apartment/apartmentList.html"><i
 								class="fa fa-list" aria-hidden="true"></i> Lista</a></li>
-								<li><a href="${path}/Admin/Apartment/apartmentList2.html"><i
+						<li><a href="${path}/Admin/Apartment/apartmentList2.html"><i
 								class="fa fa-list" aria-hidden="true"></i> REST</a></li>
 					</ul> <!-- /.nav-second-level --></li>
 				<li><a href="#"><i class="fa fa-users" aria-hidden="true"></i>
@@ -201,6 +201,8 @@
 								class="fa fa-plus" aria-hidden="true"></i> Nowe</a></li>
 						<li><a href="${path}/Admin/Tenant/tenantList.html"><i
 								class="fa fa-list" aria-hidden="true"></i> Lista</a></li>
+						<li><a href="${path}/Admin/Tenant/tenantRest.html"><i
+								class="fa fa-list" aria-hidden="true"></i> REST</a></li>
 					</ul> <!-- /.nav-second-level --></li>
 				<li><a href="#"><i class="fa fa-wrench fa-fw"></i>
 						Konfiguracja<span class="fa arrow"></span></a>
