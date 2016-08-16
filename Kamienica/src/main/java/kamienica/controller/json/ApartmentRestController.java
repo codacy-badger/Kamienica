@@ -93,13 +93,13 @@ public class ApartmentRestController {
 	public ResponseEntity<Message> deleteUser(@PathVariable("id") Long id) {
 		Message message = new Message("OK");
 		try {
+			System.out.println("------");
 			apartmentService.deleteByID(id);
 		} catch (Exception e) {
 			message.setMessage(e.toString());
 			return new ResponseEntity<Message>(message, HttpStatus.BAD_REQUEST);
 		}
 	
-		apartmentService.deleteByID(id);
 		return new ResponseEntity<Message>(message, HttpStatus.OK);
 	}
 }

@@ -6,14 +6,14 @@ import java.util.List;
 import org.joda.time.Days;
 
 import kamienica.feature.apartment.Apartment;
-import kamienica.feature.reading.ReadingEnergy;
+import kamienica.feature.reading.ReadingAbstract;
 import kamienica.feature.usagevalue.UsageValue;
 
-public class ManagerEnergy {
+public interface ConsumptionCalulator {
 
-	public static ArrayList<UsageValue> countConsupmtion(List<Apartment> apartment, List<ReadingEnergy> oldReadings,
-			List<ReadingEnergy> newReadings) {
-		ArrayList<UsageValue> out = new ArrayList<UsageValue>();
+	public static List<UsageValue> calculateConsumption(List<Apartment> apartment,
+			List<? extends ReadingAbstract> oldReadings, List<? extends ReadingAbstract> newReadings) {
+		ArrayList<UsageValue> usageList = new ArrayList<UsageValue>();
 		for (Apartment m : apartment) {
 
 			UsageValue usageValue = new UsageValue();
@@ -48,15 +48,12 @@ public class ManagerEnergy {
 				usageValue.setDaysBetweenReadings(
 						Days.daysBetween(oldReadings.get(0).getReadingDate(), newReadings.get(0).getReadingDate())
 								.getDays());
-				// tmp.setDaysBetweenReadings(Days.daysBetween(new
-				// DateTime(oldReadings.get(0).getReadingDate()),
-				// new
-				// DateTime(newReadings.get(0).getReadingDate())).getDays());
+
 			}
-			out.add(usageValue);
+			usageList.add(usageValue);
 		}
 
-		return out;
-
+		return usageList;
 	}
+
 }

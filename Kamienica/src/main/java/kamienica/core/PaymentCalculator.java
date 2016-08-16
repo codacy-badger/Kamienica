@@ -19,9 +19,9 @@ import kamienica.feature.payment.PaymentWater;
 import kamienica.feature.tenant.Tenant;
 import kamienica.feature.usagevalue.UsageValue;
 
-public class ManagerPayment {
+public class PaymentCalculator {
 
-	public static ArrayList<PaymentEnergy> createPaymentEnergyList(List<Tenant> tenants, InvoiceEnergy invoice,
+	public static List<PaymentEnergy> createPaymentEnergyList(List<Tenant> tenants, InvoiceEnergy invoice,
 			List<Division> division, List<UsageValue> usage) {
 		double sumOfExpences = invoice.getTotalAmount();
 		ArrayList<PaymentEnergy> listToReturn = new ArrayList<PaymentEnergy>();
@@ -49,7 +49,7 @@ public class ManagerPayment {
 		return listToReturn;
 	}
 
-	public static ArrayList<PaymentGas> createPaymentGasList(List<Tenant> tenants, InvoiceGas invoice,
+	public static List<PaymentGas> createPaymentGasList(List<Tenant> tenants, InvoiceGas invoice,
 			List<Division> division, List<UsageValue> usage) {
 		double sumOfExpences = invoice.getTotalAmount();
 		ArrayList<PaymentGas> listToReturn = new ArrayList<PaymentGas>();
@@ -78,7 +78,7 @@ public class ManagerPayment {
 		return listToReturn;
 	}
 
-	public static ArrayList<PaymentWater> createPaymentWaterList(List<Tenant> tenants, InvoiceWater invoice,
+	public static List<PaymentWater> createPaymentWaterList(List<Tenant> tenants, InvoiceWater invoice,
 			List<Division> podzial, List<UsageValue> usage) {
 		ArrayList<PaymentWater> listToReturn = new ArrayList<PaymentWater>();
 

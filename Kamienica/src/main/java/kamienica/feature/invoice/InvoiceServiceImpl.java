@@ -10,7 +10,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import kamienica.core.ManagerEnergy;
 import kamienica.core.ManagerGas;
-import kamienica.core.ManagerPayment;
+import kamienica.core.PaymentCalculator;
 import kamienica.core.ManagerWater;
 import kamienica.core.Media;
 import kamienica.core.WaterHeatingSystem;
@@ -92,7 +92,7 @@ public class InvoiceServiceImpl implements InvoiceService {
 
 			List<UsageValue> usageEnergy = ManagerEnergy.countConsupmtion(apartments, readingEnergyOld,
 					readingEnergyNew);
-			List<PaymentEnergy> paymentEnergy = ManagerPayment.createPaymentEnergyList(tenants, (InvoiceEnergy) invoice,
+			List<PaymentEnergy> paymentEnergy = PaymentCalculator.createPaymentEnergyList(tenants, (InvoiceEnergy) invoice,
 					division, usageEnergy);
 
 			invoiceEnergyDao.save((InvoiceEnergy) invoice);
@@ -119,7 +119,7 @@ public class InvoiceServiceImpl implements InvoiceService {
 				usageGas = ManagerGas.countConsumption(apartments, readingGasOld, readingGasNew);
 			}
 
-			List<PaymentGas> paymentGas = ManagerPayment.createPaymentGasList(tenants, (InvoiceGas) invoice, division,
+			List<PaymentGas> paymentGas = PaymentCalculator.createPaymentGasList(tenants, (InvoiceGas) invoice, division,
 					usageGas);
 
 			invoiceGasDao.save((InvoiceGas) invoice);
@@ -139,7 +139,7 @@ public class InvoiceServiceImpl implements InvoiceService {
 					Media.WATER);
 
 			List<UsageValue> usageWater = ManagerWater.countConsumption(apartments, readingWaterOld, readingWaterNew);
-			List<PaymentWater> paymentWater = ManagerPayment.createPaymentWaterList(tenants, (InvoiceWater) invoice,
+			List<PaymentWater> paymentWater = PaymentCalculator.createPaymentWaterList(tenants, (InvoiceWater) invoice,
 					division, usageWater);
 
 			invoiceWaterDao.save((InvoiceWater) invoice);

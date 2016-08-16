@@ -34,7 +34,10 @@
 				<div class="col-lg-12">
 					<h1 class="page-header well">Lista Mieszkań - REST</h1>
 					
+					<button id='mySwitch' ng-click="ctrl.switchForm()"
+						class="btn btn-default btn-sm">zabawa</button>
 					<button id='mySwitch' ng-click="toggle = !toggle"
+					
 						class="btn btn-default btn-sm">{{text}}</button>
 				</div>
 			</div>
@@ -71,10 +74,9 @@
 						<div class="col-sm-9">
 							<input type="text" ng-model="ctrl.apartment.apartmentNumber"
 								class="form-control" path='apartmentNumber'
-								placeholder="Pole wymagane" name="apartmentNumber"
-								/>
-								
-								<!-- ng-required='true' ng-pattern="/^[0-9]{1,7}$/"  -->
+								placeholder="Pole wymagane" name="apartmentNumber" />
+
+							<!-- ng-required='true' ng-pattern="/^[0-9]{1,7}$/"  -->
 							<p class="help-block">
 								<span class='error' ng-show="myForm.apartmentNumber.$invalid">Tylko
 									cyfry</span>
@@ -86,10 +88,12 @@
 						<label for="inputEmail3" class="col-sm-3 control-label">Opis</label>
 						<div class="col-sm-9">
 							<input type="text" ng-model="ctrl.apartment.description"
-								class="form-control"  path='description'
-								placeholder="Pole wymagane" ng-required='true' name="description" />
+								class="form-control" path='description'
+								placeholder="Pole wymagane" ng-required='true'
+								name="description" />
 							<p class="help-block">
-								<span class='error' ng-show="myForm.description.$invalid">Pole wymagane</span>
+								<span class='error' ng-show="myForm.description.$invalid">Pole
+									wymagane</span>
 							</p>
 						</div>
 					</div>
@@ -131,7 +135,7 @@
 										class="btn-xs btn-warning">
 										<i class="fa fa-pencil-square-o" aria-hidden="true"></i>
 									</button>
-									<button type="button" ng-click="ctrl.remove(a.id)"
+									<button type="button" ng-click="ctrl.remove(a.id, $index)"
 										class="btn-xs btn-danger ">
 										<i class="fa fa-times" aria-hidden="true"></i>
 									</button>
@@ -143,10 +147,8 @@
 			</div>
 		</div>
 	</div>
-	<script
-		src="<c:url value='/static/js/angular.js' />"></script>
-	<script
-		src="<c:url value='/static/js/angular-resource.js' />"></script>
+	<script src="<c:url value='/static/js/angular.js' />"></script>
+	<script src="<c:url value='/static/js/angular-resource.js' />"></script>
 	<script src="<c:url value='/static/angular/app.js' />"></script>
 	<script
 		src="<c:url value='/static/angular/apartment/apartment_service.js' />"></script>
