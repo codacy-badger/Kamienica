@@ -60,10 +60,17 @@ Apartment.controller('ApartmentController', [
 			};
 
 			self.switchForm = function() {
-				console.log('sdfsfsdfsdfsdfsd');
-				console.log($scope.text);
 				
-			
+				if($scope.text === 'Dodaj mieszkanie') {
+					
+					$scope.text = 'Lista mieszkań';
+					self.reset();
+					$scope.toggle = false;
+				} else {
+					$scope.text = 'Dodaj mieszkanie';
+					$scope.toggle = true;
+				}
+				
 			}
 			
 			

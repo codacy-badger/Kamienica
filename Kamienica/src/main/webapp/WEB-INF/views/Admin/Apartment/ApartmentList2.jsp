@@ -35,10 +35,8 @@
 					<h1 class="page-header well">Lista Mieszkań - REST</h1>
 					
 					<button id='mySwitch' ng-click="ctrl.switchForm()"
-						class="btn btn-default btn-sm">zabawa</button>
-					<button id='mySwitch' ng-click="toggle = !toggle"
-					
 						class="btn btn-default btn-sm">{{text}}</button>
+					
 				</div>
 			</div>
 			<div id='form' class="fadein fadeout showpanel panel row"
