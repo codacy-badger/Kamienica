@@ -33,15 +33,17 @@
 			<div class='row'>
 				<div class="col-lg-12">
 					<h1 class="page-header well">Lista Mieszkań - REST</h1>
-					
+					<div class="alert alert-danger" ng-show="errorField">
+						<strong>BŁĄD: </strong> {{errorMsg}}
+					</div>
 					<button id='mySwitch' ng-click="ctrl.switchForm()"
 						class="btn btn-default btn-sm">{{text}}</button>
-					
+
 				</div>
 			</div>
 			<div id='form' class="fadein fadeout showpanel panel row"
 				ng-show="!toggle">
-
+				
 				<!-- http://www.w3schools.com/angular/tryit.asp?filename=try_ng_validate_show -->
 
 				<form class="form-horizontal" ng-submit="ctrl.submit()"
@@ -77,7 +79,7 @@
 							<!-- ng-required='true' ng-pattern="/^[0-9]{1,7}$/"  -->
 							<p class="help-block">
 								<span class='error' ng-show="myForm.apartmentNumber.$invalid">Tylko
-									cyfry</span>
+									cyfry</span> <span class='error'></span>
 							</p>
 						</div>
 					</div>
@@ -96,13 +98,14 @@
 						</div>
 					</div>
 					<div class="form-group ">
-
-						<input type="submit"
-							value="{{!ctrl.apartment.id ? 'Dodaj' : 'Nadpisz'}}"
-							class="btn btn-default " ng-disabled="myForm.$invalid">
-						<button type="button" ng-click="ctrl.reset()"
-							class="btn btn-default " ng-disabled="myForm.$pristine">Reset
-						</button>
+						<div class="col-lg-12">
+							<input type="submit"
+								value="{{!ctrl.apartment.id ? 'Dodaj' : 'Nadpisz'}}"
+								class="btn btn-default " ng-disabled="myForm.$invalid">
+							<button type="button" ng-click="ctrl.reset()"
+								class="btn btn-default " ng-disabled="myForm.$pristine">Reset
+							</button>
+						</div>
 
 					</div>
 
@@ -145,6 +148,7 @@
 			</div>
 		</div>
 	</div>
+	<script src="<c:url value='/static/js/toastr.min.js' />"></script>
 	<script src="<c:url value='/static/js/angular.js' />"></script>
 	<script src="<c:url value='/static/js/angular-resource.js' />"></script>
 	<script src="<c:url value='/static/angular/app.js' />"></script>
@@ -160,5 +164,6 @@
 	<script src="<c:url value='/static/js/metisMenu.min.js' />"></script>
 	<!-- Custom Theme JavaScript -->
 	<script src="<c:url value='/static/js/sb-admin-2.js' />"></script>
+
 </body>
 </html>
