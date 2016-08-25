@@ -79,7 +79,7 @@
 							<!-- ng-required='true' ng-pattern="/^[0-9]{1,7}$/"  -->
 							<p class="help-block">
 								<span class='error' ng-show="myForm.apartmentNumber.$invalid">Tylko
-									cyfry</span> <span class='error'></span>
+									cyfry</span> <span class='error'>{{errors.apartmentNumber}}</span>
 							</p>
 						</div>
 					</div>

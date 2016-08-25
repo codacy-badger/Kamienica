@@ -1,15 +1,16 @@
 package kamienica.controller.json;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
-import javax.sound.midi.Synthesizer;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.support.ApplicationObjectSupport;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -51,11 +52,8 @@ public class ApartmentRestController {
 
 	// create new
 	@RequestMapping(method = RequestMethod.POST)
-	public ResponseEntity<ApiResponse> createApartment(@Valid @RequestBody Apartment apartment
-	// ,UriComponentsBuilder ucBuilder
-			, BindingResult result
-
-	) {
+	public ResponseEntity<?> createApartment(@Valid @RequestBody Apartment apartment
+			, BindingResult result) {
 		// if (apartmentService.getById(apartment.getId()) != null) {
 		// return new ResponseEntity<Void>(HttpStatus.CONFLICT);
 		// }
@@ -65,6 +63,7 @@ public class ApartmentRestController {
 		if (result.hasErrors()) {
 			ApiResponse message = new ApiResponse();
 			message.setErrors(result.getFieldErrors());
+			System.out.println(result.getFieldErrors());
 			// ApiError err = new ApiError();
 			// for (result iterable_element : iterable) {
 			//
@@ -79,8 +78,13 @@ public class ApartmentRestController {
 			ApiResponse message = new ApiResponse();
 			message.addErrorMessage("apartmentNumber", "Istniej już taki numer w bazie");
 			message.setErrors(result.getFieldErrors());
-
-			return new ResponseEntity<ApiResponse>(message, HttpStatus.CONFLICT);
+			System.out.println(result.getFieldErrors());
+			Map<String, String> test = new HashMap<>();
+			for (FieldError fieldError : result.getFieldErrors()) {
+				test.put(fieldError.getField(), fieldError.getDefaultMessage());
+			}
+			test.put("test", "wartoscTestu");
+			return new ResponseEntity<Map<String, String>>(test, HttpStatus.CONFLICT);
 		}
 
 		// HttpHeaders headers = new HttpHeaders();

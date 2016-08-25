@@ -37,9 +37,10 @@ Apartment.controller('ApartmentController', [
 					self.reset();
 					$scope.toggle = $scope.toggle === false ? true : false;
 				}, function(error) {
+					
+					console.log(error)
 					console.log('blasssd...')
-					console.log(error.data.errors[0]);
-					$scope.errors = error.data.errors;
+					$scope.errors = error.data;
 					$scope.errorField = true;
 					$scope.errorMsg = 'Nie powiódł się zapis do bazy. Popraw dane i spróbuj ponownie';
 					
