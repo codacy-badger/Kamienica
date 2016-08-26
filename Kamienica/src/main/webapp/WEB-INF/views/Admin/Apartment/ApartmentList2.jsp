@@ -43,7 +43,7 @@
 			</div>
 			<div id='form' class="fadein fadeout showpanel panel row"
 				ng-show="!toggle">
-				
+
 				<!-- http://www.w3schools.com/angular/tryit.asp?filename=try_ng_validate_show -->
 
 				<form class="form-horizontal" ng-submit="ctrl.submit()"
@@ -59,7 +59,7 @@
 								ng-required='true' ng-minlength="4" ng-maxlength="4" />
 							<p class="help-block">
 								<span class='error' ng-show="myForm.intercom.$invalid">Domofon
-									musi zawierać 4 cyfry</span>
+									musi zawierać 4 cyfry</span><span class='error'>{{errors.intercom}}</span>
 							</p>
 						</div>
 					</div>
@@ -74,12 +74,13 @@
 						<div class="col-sm-9">
 							<input type="text" ng-model="ctrl.apartment.apartmentNumber"
 								class="form-control" path='apartmentNumber'
-								placeholder="Pole wymagane" name="apartmentNumber" />
+								placeholder="Pole wymagane" name="apartmentNumber"
+								ng-required='true' ng-pattern="/^[0-9]{1,7}$/" ng-min=0 />
 
 							<!-- ng-required='true' ng-pattern="/^[0-9]{1,7}$/"  -->
 							<p class="help-block">
 								<span class='error' ng-show="myForm.apartmentNumber.$invalid">Tylko
-									cyfry</span> <span class='error'>{{errors.apartmentNumber}}</span>
+									liczby nieujemne</span> <span class='error'>{{errors.apartmentNumber}}</span>
 							</p>
 						</div>
 					</div>
@@ -93,7 +94,7 @@
 								name="description" />
 							<p class="help-block">
 								<span class='error' ng-show="myForm.description.$invalid">Pole
-									wymagane</span>
+									wymagane</span> <span class='error'>{{errors.description}}</span>
 							</p>
 						</div>
 					</div>

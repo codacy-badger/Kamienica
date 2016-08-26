@@ -101,9 +101,15 @@ Apartment.controller('ApartmentController', [
 					$scope.text = 'Lista mieszkań';
 					self.reset();
 					$scope.toggle = false;
+					$scope.errors = '';
+					$scope.errorField = false;
+					$scope.errorMsg = '';
 				} else {
 					$scope.text = 'Dodaj mieszkanie';
 					$scope.toggle = true;
+					$scope.errors = '';
+					$scope.errorField = false;
+					$scope.errorMsg = '';
 				}
 
 			}
@@ -162,6 +168,7 @@ Apartment.controller('ApartmentController', [
 			self.reset = function() {
 				self.apartment = new Apartment();
 				$scope.myForm.$setPristine(); // reset Form
+				
 			};
 
 			self.clearError = function() {
