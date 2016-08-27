@@ -91,7 +91,7 @@ public class TenantController {
 	@RequestMapping(value = "/tenantRest", method = RequestMethod.GET)
 	public ModelAndView apartmentList2() {
 
-		return new ModelAndView("/Admin/Tenants/TenantRest");
+		return new ModelAndView("/Admin/Tenant/TenantRest");
 
 	}
 	

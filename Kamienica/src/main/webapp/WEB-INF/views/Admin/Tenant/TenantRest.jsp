@@ -25,14 +25,14 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Najemcy - REST</title>
 </head>
-<body ng-app="tenant">
+<body ng-app="myApp">
 	<div id="wrapper">
 		<mytags:navbarAdmin />
 
 		<div id="page-wrapper" ng-controller="TenantController as ctrl">
 			<div class='row'>
 				<div class="col-lg-12">
-					<h1 class="page-header well">Lista Mieszkań - REST</h1>
+					<h1 class="page-header well">Najemcy - REST</h1>
 					<button id='mySwitch' ng-click="toggle = !toggle"
 						class="btn btn-default btn-sm">{{text}}</button>
 				</div>
@@ -42,68 +42,7 @@
 
 				<!-- http://www.w3schools.com/angular/tryit.asp?filename=try_ng_validate_show -->
 
-				<form class="form-horizontal" ng-submit="ctrl.submit()"
-					name="myForm">
-					<input path="id" readonly="true" type='hidden' /> <input
-						type="hidden" ng-model="ctrl.tenant.id" />
-					<div class="form-group">
-						<label for="inputEmail3" class="col-sm-3 control-label">Domofon</label>
-						<div class="col-sm-9">
-							<input type="text" ng-model="ctrl.tenant.intercom"
-								class="form-control" name="intercom" path='intercom'
-								ng-pattern="/^[0-9]{1,7}$/" placeholder="Pole wymagane"
-								ng-required='true' ng-minlength="4" ng-maxlength="4" />
-							<p class="help-block">
-								<span class='error' ng-show="myForm.intercom.$invalid">Domofon
-									musi zawierać 4 cyfry</span>
-							</p>
-						</div>
-					</div>
-					<!-- <span class="error" ng-show="myForm.intercom.$error.minlength">
-									Musi zawierać 4 cyfry</span> <span
-									ng-show="myForm.intercom.$error.pattern">Tylko cyfry</span> <span
-									ng-show="myForm.intercom.$error.maxlength">Musi zawierać
-									4 cyfry</span> -->
-					<div class="form-group">
-						<label for="inputEmail3" class="col-sm-3 control-label">Numer
-							Mieszkania</label>
-						<div class="col-sm-9">
-							<input type="text" ng-model="ctrl.tenant.tenantNumber"
-								class="form-control" path='tenantNumber'
-								placeholder="Pole wymagane" name="tenantNumber"
-								/>
-								
-								<!-- ng-required='true' ng-pattern="/^[0-9]{1,7}$/"  -->
-							<p class="help-block">
-								<span class='error' ng-show="myForm.tenantNumber.$invalid">Tylko
-									cyfry</span>
-							</p>
-						</div>
-					</div>
-					<!-- https://scotch.io/tutorials/angularjs-form-validation -->
-					<div class="form-group">
-						<label for="inputEmail3" class="col-sm-3 control-label">Opis</label>
-						<div class="col-sm-9">
-							<input type="text" ng-model="ctrl.tenant.description"
-								class="form-control"  path='description'
-								placeholder="Pole wymagane" ng-required='true' name="description" />
-							<p class="help-block">
-								<span class='error' ng-show="myForm.description.$invalid">Pole wymagane</span>
-							</p>
-						</div>
-					</div>
-					<div class="form-group ">
-
-						<input type="submit"
-							value="{{!ctrl.tenant.id ? 'Dodaj' : 'Nadpisz'}}"
-							class="btn btn-default " ng-disabled="myForm.$invalid">
-						<button type="button" ng-click="ctrl.reset()"
-							class="btn btn-default " ng-disabled="myForm.$pristine">Reset
-						</button>
-
-					</div>
-
-				</form>
+				<p>pustka</p>
 			</div>
 
 
@@ -142,10 +81,8 @@
 			</div>
 		</div>
 	</div>
-	<script
-		src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.4/angular.js"></script>
-	<script
-		src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.4/angular-resource.js"></script>
+	<script src="<c:url value='/static/js/angular.js' />"></script>
+	<script src="<c:url value='/static/js/angular-resource.js' />"></script>
 	<script src="<c:url value='/static/angular/app.js' />"></script>
 	<script
 		src="<c:url value='/static/angular/tenant/tenant_service.js' />"></script>

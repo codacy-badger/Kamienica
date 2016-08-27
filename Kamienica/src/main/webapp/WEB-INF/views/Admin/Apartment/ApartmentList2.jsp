@@ -25,7 +25,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Lista Mieszkań - REST</title>
 </head>
-<body ng-app="apartment">
+<body ng-app="myApp">
 	<div id="wrapper">
 		<mytags:navbarAdmin />
 
@@ -149,7 +149,7 @@
 			</div>
 		</div>
 	</div>
-	<script src="<c:url value='/static/js/toastr.min.js' />"></script>
+	
 	<script src="<c:url value='/static/js/angular.js' />"></script>
 	<script src="<c:url value='/static/js/angular-resource.js' />"></script>
 	<script src="<c:url value='/static/angular/app.js' />"></script>
