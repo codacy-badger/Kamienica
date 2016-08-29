@@ -1,4 +1,4 @@
-package kamienica.controller.json;
+package kamienica.controller.api;
 
 import java.util.List;
 
@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import kamienica.core.ApiResponse2;
 import kamienica.feature.tenant.Tenant;
 import kamienica.feature.tenant.TenantService;
 
@@ -21,11 +22,13 @@ public class TenantRestController {
 	TenantService service;
 
 	@RequestMapping(value = "", method = RequestMethod.GET)
-	public ResponseEntity<List<Tenant>> getList() {
+	public ResponseEntity<?> getList() {
 		List<Tenant> list = service.getList();
 		if (list.isEmpty()) {
 			return new ResponseEntity<List<Tenant>>(HttpStatus.NOT_FOUND);
 		}
+		ApiResponse2<Tenant> response = new ApiResponse2<>();
+		response.setObjectList(list);
 		return new ResponseEntity<List<Tenant>>(list, HttpStatus.OK);
 	}
 

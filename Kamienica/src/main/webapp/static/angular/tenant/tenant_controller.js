@@ -19,6 +19,7 @@ App.controller('TenantController', [
 			};
 
 			self.fetchAllUsers = function() {
+				console.log(Tenant.query())
 				self.tenants = Tenant.query();
 			};
 
@@ -38,8 +39,6 @@ App.controller('TenantController', [
 					$scope.toggle = $scope.toggle === false ? true : false;
 				}, function(error) {
 					
-					console.log(error)
-					console.log('blasssd...')
 					$scope.errors = error.data;
 					$scope.errorField = true;
 					$scope.errorMsg = 'Nie powiódł się zapis do bazy. Popraw dane i spróbuj ponownie';
@@ -96,16 +95,16 @@ App.controller('TenantController', [
 
 			self.switchForm = function() {
 
-				if ($scope.text === 'Dodaj mieszkanie') {
+				if ($scope.text === 'Dodaj') {
 
-					$scope.text = 'Lista mieszkań';
+					$scope.text = 'Lista';
 					self.reset();
 					$scope.toggle = false;
 					$scope.errors = '';
 					$scope.errorField = false;
 					$scope.errorMsg = '';
 				} else {
-					$scope.text = 'Dodaj mieszkanie';
+					$scope.text = 'Dodaj';
 					$scope.toggle = true;
 					$scope.errors = '';
 					$scope.errorField = false;
@@ -124,8 +123,8 @@ App.controller('TenantController', [
 			$scope.$watch('toggle', function() {
 				// $scope.toggle ? null : self.reset();
 
-				$scope.text = $scope.toggle ? 'Dodaj mieszkanie'
-						: 'Lista mieszkań';
+				$scope.text = $scope.toggle ? 'Dodaj'
+						: 'Lista';
 			})
 
 			self.submit = function() {
@@ -225,7 +224,7 @@ App.controller('TenantController', [
 // }
 // $scope.$watch('toggle', function() {
 // $scope.text = $scope.toggle ? 'Dodaj mieszkanie'
-// : 'Lista mieszkań';
+// : 'Lista';
 // })
 //
 // self.submit = function() {

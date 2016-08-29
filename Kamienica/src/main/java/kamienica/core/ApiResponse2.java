@@ -1,35 +1,52 @@
 package kamienica.core;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
-import org.springframework.validation.BindingResult;
-import org.springframework.validation.FieldError;
+public class ApiResponse2<T> {
 
-public class ApiResponse2 {
-
-	private Map<String, String> fieldErrors = new HashMap<>();
-
+	List<T> objectList;
+	List<?> nestedElements;
+	int currentPage;
+	int offset;
+	
 	public ApiResponse2() {
-
-	}
-
-	public void addErrorMessage(String element, String msg) {
-		this.fieldErrors.put(element, msg);
-	}
-
-	public ApiResponse2(BindingResult result) {
-		List<FieldError> err = result.getFieldErrors();
-		for (FieldError fieldError : err) {
-			this.fieldErrors.put(fieldError.getField(), fieldError.getDefaultMessage());
-		}
-	}
-
-	@Override
-	public String toString() {
-		return "ApiResonse2 [fieldErrors=" + fieldErrors + "]";
+		super();
 	}
 	
+	public List<?> getNestedElements() {
+		return nestedElements;
+	}
+
+	public void setNestedElements(List<?> nestedElements) {
+		this.nestedElements = nestedElements;
+	}
+
 	
+
+	
+
+	public List<T> getObjectList() {
+		return objectList;
+	}
+
+	public void setObjectList(List<T> objectList) {
+		this.objectList = objectList;
+	}
+
+	public int getCurrentPage() {
+		return currentPage;
+	}
+
+	public void setCurrentPage(int currentPage) {
+		this.currentPage = currentPage;
+	}
+
+	public int getOffset() {
+		return offset;
+	}
+
+	public void setOffset(int offset) {
+		this.offset = offset;
+	}
+
 }

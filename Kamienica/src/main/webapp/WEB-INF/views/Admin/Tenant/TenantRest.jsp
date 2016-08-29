@@ -37,13 +37,7 @@
 						class="btn btn-default btn-sm">{{text}}</button>
 				</div>
 			</div>
-			<div id='form' class="fadein fadeout showpanel panel row"
-				ng-show="!toggle">
 
-				<!-- http://www.w3schools.com/angular/tryit.asp?filename=try_ng_validate_show -->
-
-				<p>pustka</p>
-			</div>
 
 
 			<div id='list' class="row fadein fadeout showpanel panel"
@@ -52,18 +46,31 @@
 					<table class='table table-stripped table-hover'>
 						<thead>
 							<tr>
-								<th>Imię</th>
-								<th>Nazzwisko</th>
-								
+								<th>Najemca</th>
+
+								<th>E-mail</th>
+								<th>Telefon</th>
+								<th>Mieszkanie</th>
+								<th>Data Wprowadzenia</th>
+								<th>Prawa</th>
+								<th>Status</th>
+
 								<th>Edytuj/Usuń</th>
 
 							</tr>
 						</thead>
 						<tbody>
 							<tr ng-repeat="a in ctrl.tenants">
-								<td><span ng-bind="a.firstName"></span></td>
-								<td><span ng-bind="a.lastName"></span></td>
-								
+								<td><span ng-bind="a.firstName"></span> <span
+									ng-bind="a.lastName"></span></td>
+
+								<td><span ng-bind="a.email"></span></td>
+								<td><span ng-bind="a.phone"></span></td>
+								<td><span ng-bind="a.apartment.description"></span></td>
+								<td><span ng-bind="a.movementDate"></span></td>
+								<td><span ng-bind="a.role"></span></td>
+								<td><span ng-bind="a.status"></span></td>
+
 								<td>
 									<button type="button" ng-click="ctrl.edit(a.id)"
 										class="btn-xs btn-warning">
@@ -78,6 +85,122 @@
 					</table>
 				</div>
 
+			</div>
+			<div id='form' class="fadein fadeout showpanel panel row"
+				ng-show="!toggle">
+
+				<form class="form-horizontal" ng-submit="ctrl.submit()"
+					name="myForm">
+					<input path="id" readonly="true" type='hidden' /> <input
+						type="hidden" ng-model="ctrl.apartment.id" />
+					<div class="form-group">
+						<label for="inputEmail3" class="col-sm-3 control-label">Imię</label>
+						<div class="col-sm-9">
+							<input type="text" ng-model="ctrl.apartment.firstName"
+								class="form-control" name="firstName" path='firstName'
+								ng-required='true' ng-minlength="4" />
+							<p class="help-block">
+								<span class='error' ng-show="myForm.firstName.$invalid">Pole
+									wymagane</span><span class='error'>{{errors.firstName}}</span>
+							</p>
+						</div>
+					</div>
+					<div class="form-group">
+						<label for="inputEmail3" class="col-sm-3 control-label">Nazwisko</label>
+						<div class="col-sm-9">
+							<input type="text" ng-model="ctrl.apartment.lastName"
+								class="form-control" name="lastName" path='lastName'
+								ng-required='true' ng-minlength="4" />
+							<p class="help-block">
+								<span class='error' ng-show="myForm.lastName.$invalid">Pole
+									wymagane</span><span class='error'>{{errors.lastName}}</span>
+							</p>
+						</div>
+					</div>
+					<div class="form-group">
+						<label for="inputEmail3" class="col-sm-3 control-label">E-mail</label>
+						<div class="col-sm-9">
+							<input type="email" ng-model="ctrl.apartment.email"
+								class="form-control" name="email" path='email'
+								ng-required='true' />
+							<p class="help-block">
+								<span class='error' ng-show="myForm.email.$invalid">Niepoprawny
+									Format</span><span class='error'>{{errors.email}}</span>
+							</p>
+						</div>
+					</div>
+
+					<div class="form-group">
+						<label for="inputEmail3" class="col-sm-3 control-label">Telefon</label>
+						<div class="col-sm-9">
+							<input type="text" ng-model="ctrl.apartment.apartmentNumber"
+								class="form-control" path='apartmentNumber'
+								placeholder="Pole wymagane" name="apartmentNumber"
+								 ng-pattern="/^[0-9]{1,7}$/" ng-min=0 />
+
+							<!-- ng-required='true' ng-pattern="/^[0-9]{1,7}$/"  -->
+							<p class="help-block">
+								<span class='error' ng-show="myForm.apartmentNumber.$invalid">Tylko
+									liczby</span> <span class='error'>{{errors.apartmentNumber}}</span>
+							</p>
+						</div>
+					</div>
+					<!-- https://scotch.io/tutorials/angularjs-form-validation -->
+					
+					<div class="form-group">
+						<label for="inputEmail3" class="col-sm-3 control-label">Mieszkanie</label>
+						<div class="col-sm-9">
+							<input type="text" ng-model="ctrl.apartment"
+								class="form-control" path='description'
+								placeholder="Pole wymagane" ng-required='true'
+								name="apartment" />
+							<p class="help-block">
+								<span class='error' ng-show="myForm.description.$invalid">Pole
+									wymagane</span> <span class='error'>{{errors.apartment}}</span>
+							</p>
+						</div>
+					</div>
+					
+					<div class="form-group">
+						<label for="inputEmail3" class="col-sm-3 control-label">Data Wprowadzenia</label>
+						<div class="col-sm-9">
+							<input type="text" ng-model="ctrl.apartment"
+								class="form-control" path='description'
+								placeholder="Pole wymagane" ng-required='true'
+								name="apartment" />
+							<p class="help-block">
+								<span class='error' ng-show="myForm.description.$invalid">Pole
+									wymagane</span> <span class='error'>{{errors.apartment}}</span>
+							</p>
+						</div>
+					</div>
+					
+					<div class="form-group">
+						<label for="inputEmail3" class="col-sm-3 control-label">Opis</label>
+						<div class="col-sm-9">
+							<input type="text" ng-model="ctrl.apartment.description"
+								class="form-control" path='description'
+								placeholder="Pole wymagane" ng-required='true'
+								name="description" />
+							<p class="help-block">
+								<span class='error' ng-show="myForm.description.$invalid">Pole
+									wymagane</span> <span class='error'>{{errors.description}}</span>
+							</p>
+						</div>
+					</div>
+					<div class="form-group ">
+						<div class="col-lg-12">
+							<input type="submit"
+								value="{{!ctrl.apartment.id ? 'Dodaj' : 'Nadpisz'}}"
+								class="btn btn-default " ng-disabled="myForm.$invalid">
+							<button type="button" ng-click="ctrl.reset()"
+								class="btn btn-default " ng-disabled="myForm.$pristine">Reset
+							</button>
+						</div>
+
+					</div>
+
+				</form>
 			</div>
 		</div>
 	</div>

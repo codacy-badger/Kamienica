@@ -1,4 +1,4 @@
-package kamienica.controller.json;
+package kamienica.controller.api;
 
 import java.util.ArrayList;
 import java.util.List;
