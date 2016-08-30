@@ -1,30 +1,26 @@
 'use strict';
 
-App.controller('TenantController', [
+App.controller('TenantController2', [
 		'$scope',
-		'Tenant', 'Apartment',
-		function($scope, Tenant, Apartment) {
+		'Tenant2',
+		function($scope, ApiResponse2) {
 
 			$scope.toggle = true;
 			$scope.errorField = false;
 
 			
 			var self = this;
-			self.tenant = new Tenant();
-			self.tenants = [];
+			//self.tenant = new Tenant();
+			self.apiResponse;
 			self.errors = []
 			
-			
-			self.apartments = Apartment.query();
-
 			$scope.data = {
 				show : true
 			};
 
 			self.fetchAllUsers = function() {
-				console.log('999999999999')
-				console.log(self.apartments)
-				self.tenants = Tenant.query();
+				console.log(ApiResponse2.query())
+				//self.apiResponse = ApiResponse2.query();
 			};
 
 			self.createUser = function() {

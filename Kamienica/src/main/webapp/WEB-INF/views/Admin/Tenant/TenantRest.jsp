@@ -19,6 +19,10 @@
 <!-- MetisMenu CSS -->
 <link href="<c:url value='/static/css/metisMenu.min.css' />"
 	rel="stylesheet">
+<link rel="stylesheet"
+	href="http://code.jquery.com/ui/1.12.0/themes/base/jquery-ui.css">
+<link rel="stylesheet" href="http://resources/demos/style.css">
+
 
 
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
@@ -133,59 +137,66 @@
 					<div class="form-group">
 						<label for="inputEmail3" class="col-sm-3 control-label">Telefon</label>
 						<div class="col-sm-9">
-							<input type="text" ng-model="ctrl.apartment.apartmentNumber"
-								class="form-control" path='apartmentNumber'
-								placeholder="Pole wymagane" name="apartmentNumber"
-								 ng-pattern="/^[0-9]{1,7}$/" ng-min=0 />
+							<input type="text" ng-model="ctrl.phone" class="form-control"
+								path='phone' placeholder="Opcjonalne" name="phone"
+								ng-pattern="/^[0-9]{1,7}$/" ng-min=0 />
 
 							<!-- ng-required='true' ng-pattern="/^[0-9]{1,7}$/"  -->
 							<p class="help-block">
-								<span class='error' ng-show="myForm.apartmentNumber.$invalid">Tylko
-									liczby</span> <span class='error'>{{errors.apartmentNumber}}</span>
+								<span class='error' ng-show="myForm.phone.$invalid">Tylko
+									liczby</span> <span class='error'>{{errors.phone}}</span>
 							</p>
 						</div>
 					</div>
 					<!-- https://scotch.io/tutorials/angularjs-form-validation -->
-					
+
 					<div class="form-group">
 						<label for="inputEmail3" class="col-sm-3 control-label">Mieszkanie</label>
 						<div class="col-sm-9">
-							<input type="text" ng-model="ctrl.apartment"
+
+							<select ng-model="ctrl.apartment"
+								ng-options="a.name group by a.subcat for a in animals">
+								<!-- <select name="repeatSelect" id="repeatSelect"
+								ng-model="ctrl.apartment" class="form-control" ng-required='true'>
+								<option ng-repeat="option in ctrl.apartments"
+									value="{{option}}">{{option.description}} test</option>
+							</select> -->
+								<!-- http://stackoverflow.com/questions/37442061/angularjs-ng-options-with-nested-json-based-on-previous-select-option -->
+								<select title="Pesquisar em:"
+								class="form-control select-post-type" ng-model="ctrl.apartment"
+								ng-options="item.apartment as item.label for item in post_types.items"></select>
+								<!-- <input type="text" ng-model="ctrl.apartment"
 								class="form-control" path='description'
-								placeholder="Pole wymagane" ng-required='true'
-								name="apartment" />
+								placeholder="Pole wymagane" ng-required='true' name="apartment"
+								value="ctrl.apartment.description" /> -->
+								<p class="help-block">
+									<span class='error' ng-show="myForm.apartment.$invalid">Pole
+										wymagane</span> <span class='error'>{{errors.apartment}}</span>
+								</p>
+						</div>
+					</div>
+
+					<div class="form-group">
+						<label for="inputEmail3" class="col-sm-3 control-label">Data
+							Wprowadzenia</label>
+						<div class="col-sm-9">
+							<input type="text" ng-model="ctrl.movementDate" id="datepicker"
+								class="form-control" path='movementDate'
+								placeholder="Pole wymagane" name="movementDate" />
 							<p class="help-block">
-								<span class='error' ng-show="myForm.description.$invalid">Pole
-									wymagane</span> <span class='error'>{{errors.apartment}}</span>
+								<span class='error' ng-show="myForm.movementDate.$invalid">Pole
+									wymagane</span> <span class='error'>{{errors.movementDate}}</span>
 							</p>
 						</div>
 					</div>
-					
+
 					<div class="form-group">
-						<label for="inputEmail3" class="col-sm-3 control-label">Data Wprowadzenia</label>
+						<label for="inputEmail3" class="col-sm-3 control-label">Prawa</label>
 						<div class="col-sm-9">
-							<input type="text" ng-model="ctrl.apartment"
-								class="form-control" path='description'
-								placeholder="Pole wymagane" ng-required='true'
-								name="apartment" />
-							<p class="help-block">
-								<span class='error' ng-show="myForm.description.$invalid">Pole
-									wymagane</span> <span class='error'>{{errors.apartment}}</span>
-							</p>
-						</div>
-					</div>
-					
-					<div class="form-group">
-						<label for="inputEmail3" class="col-sm-3 control-label">Opis</label>
-						<div class="col-sm-9">
-							<input type="text" ng-model="ctrl.apartment.description"
-								class="form-control" path='description'
-								placeholder="Pole wymagane" ng-required='true'
-								name="description" />
-							<p class="help-block">
-								<span class='error' ng-show="myForm.description.$invalid">Pole
-									wymagane</span> <span class='error'>{{errors.description}}</span>
-							</p>
+							<input type="radio" ng-model="ctrl.role" value="USER" checked />
+							Najemca <input type="radio" ng-model="ctrl.role" value="ADMIN" />
+							Administrator
+
 						</div>
 					</div>
 					<div class="form-group ">
@@ -208,13 +219,23 @@
 	<script src="<c:url value='/static/js/angular-resource.js' />"></script>
 	<script src="<c:url value='/static/angular/app.js' />"></script>
 	<script
+		src="<c:url value='/static/angular/apartment/apartment_service.js' />"></script>
+	<script
 		src="<c:url value='/static/angular/tenant/tenant_service.js' />"></script>
+
 	<script
 		src="<c:url value='/static/angular/tenant/tenant_controller.js' />"></script>
+
 	<!-- jQuery -->
 	<script src="<c:url value='/static/js/jquery.min.js' />"></script>
 	<!-- Bootstrap Core JavaScript -->
 	<script src="<c:url value='/static/js/bootstrap.min.js' />"></script>
+	<script src="http://code.jquery.com/ui/1.12.0/jquery-ui.js"></script>
+	<script>
+		$(function() {
+			$("#datepicker").datepicker();
+		});
+	</script>
 	<!-- Metis Menu Plugin JavaScript -->
 	<script src="<c:url value='/static/js/metisMenu.min.js' />"></script>
 	<!-- Custom Theme JavaScript -->

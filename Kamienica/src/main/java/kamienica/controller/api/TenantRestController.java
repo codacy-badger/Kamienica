@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import kamienica.core.ApiResponse2;
+import kamienica.feature.apartment.ApartmentService;
 import kamienica.feature.tenant.Tenant;
 import kamienica.feature.tenant.TenantService;
 
@@ -20,6 +21,8 @@ public class TenantRestController {
 
 	@Autowired
 	TenantService service;
+	@Autowired
+	ApartmentService apService;
 
 	@RequestMapping(value = "", method = RequestMethod.GET)
 	public ResponseEntity<?> getList() {
@@ -30,6 +33,18 @@ public class TenantRestController {
 		ApiResponse2<Tenant> response = new ApiResponse2<>();
 		response.setObjectList(list);
 		return new ResponseEntity<List<Tenant>>(list, HttpStatus.OK);
+	}
+	
+	@RequestMapping(value = "/old", method = RequestMethod.GET)
+	public ResponseEntity<?> test() {
+		List<Tenant> list = service.getList();
+		if (list.isEmpty()) {
+			return new ResponseEntity<List<Tenant>>(HttpStatus.NOT_FOUND);
+		}
+		ApiResponse2<Tenant> response = new ApiResponse2<>();
+		response.setObjectList(list);
+		response.setNestedElements(apService.getList());
+		return new ResponseEntity<ApiResponse2<Tenant>>(response, HttpStatus.OK);
 	}
 
 	@RequestMapping(value = "/{id}", method = RequestMethod.GET)
