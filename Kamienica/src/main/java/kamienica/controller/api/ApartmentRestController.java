@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import kamienica.core.ApiResponse;
+import kamienica.core.ApiResponse2;
 import kamienica.core.Message;
 import kamienica.feature.apartment.Apartment;
 import kamienica.feature.apartment.ApartmentService;
@@ -31,13 +32,15 @@ public class ApartmentRestController {
 
 	// --------------multiple_apartments----
 	@RequestMapping(value = "", method = RequestMethod.GET)
-	public ResponseEntity<List<Apartment>> listAllApartments() {
+	public ResponseEntity<?> listAllApartments() {
 		System.out.println("pobieranie listy mieszkań....");
 		List<Apartment> list = apartmentService.getList();
 		if (list.isEmpty()) {
 			return new ResponseEntity<List<Apartment>>(HttpStatus.NOT_FOUND);
 		}
-		return new ResponseEntity<List<Apartment>>(list, HttpStatus.OK);
+		ApiResponse2<Apartment> response = new ApiResponse2<>();
+		response.setObjectList(list);
+		return new ResponseEntity<ApiResponse2<Apartment>>(response, HttpStatus.OK);
 	}
 
 	// --------------single_apartment----

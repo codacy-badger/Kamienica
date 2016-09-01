@@ -22,8 +22,7 @@ App.controller('TenantController', [
 			};
 
 			self.fetchAllUsers = function() {
-				console.log('999999999999')
-				console.log(self.apartments)
+			
 				self.tenants = Tenant.query();
 			};
 

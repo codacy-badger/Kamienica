@@ -96,13 +96,13 @@
 				<form class="form-horizontal" ng-submit="ctrl.submit()"
 					name="myForm">
 					<input path="id" readonly="true" type='hidden' /> <input
-						type="hidden" ng-model="ctrl.apartment.id" />
+						type="hidden" ng-model="ctrl.id" />
 					<div class="form-group">
 						<label for="inputEmail3" class="col-sm-3 control-label">Imię</label>
 						<div class="col-sm-9">
-							<input type="text" ng-model="ctrl.apartment.firstName"
-								class="form-control" name="firstName" path='firstName'
-								ng-required='true' ng-minlength="4" />
+							<input type="text" ng-model="ctrl.tenant.firstName"
+								class="form-control" name="firstName" ng-required='true'
+								ng-minlength="4" />
 							<p class="help-block">
 								<span class='error' ng-show="myForm.firstName.$invalid">Pole
 									wymagane</span><span class='error'>{{errors.firstName}}</span>
@@ -112,7 +112,7 @@
 					<div class="form-group">
 						<label for="inputEmail3" class="col-sm-3 control-label">Nazwisko</label>
 						<div class="col-sm-9">
-							<input type="text" ng-model="ctrl.apartment.lastName"
+							<input type="text" ng-model="ctrl.tenant.lastName"
 								class="form-control" name="lastName" path='lastName'
 								ng-required='true' ng-minlength="4" />
 							<p class="help-block">
@@ -124,7 +124,7 @@
 					<div class="form-group">
 						<label for="inputEmail3" class="col-sm-3 control-label">E-mail</label>
 						<div class="col-sm-9">
-							<input type="email" ng-model="ctrl.apartment.email"
+							<input type="email" ng-model="ctrl.tenant.email"
 								class="form-control" name="email" path='email'
 								ng-required='true' />
 							<p class="help-block">
@@ -137,9 +137,9 @@
 					<div class="form-group">
 						<label for="inputEmail3" class="col-sm-3 control-label">Telefon</label>
 						<div class="col-sm-9">
-							<input type="text" ng-model="ctrl.phone" class="form-control"
-								path='phone' placeholder="Opcjonalne" name="phone"
-								ng-pattern="/^[0-9]{1,7}$/" ng-min=0 />
+							<input type="text" ng-model="ctrl.tenant.phone"
+								class="form-control" path='phone' placeholder="Opcjonalne"
+								name="phone" ng-pattern="/^[0-9]{1,7}$/" ng-min=0 />
 
 							<!-- ng-required='true' ng-pattern="/^[0-9]{1,7}$/"  -->
 							<p class="help-block">
@@ -154,25 +154,25 @@
 						<label for="inputEmail3" class="col-sm-3 control-label">Mieszkanie</label>
 						<div class="col-sm-9">
 
-							<select ng-model="ctrl.apartment"
-								ng-options="a.name group by a.subcat for a in animals">
-								<!-- <select name="repeatSelect" id="repeatSelect"
+							<select name='tenant_apartment' ng-model="ctrl.tenant.apartment"
+								ng-required='true'
+								ng-options="o.description for o in ctrl.apartments"></select>
+
+							<!-- <select name="repeatSelect" id="repeatSelect"
 								ng-model="ctrl.apartment" class="form-control" ng-required='true'>
 								<option ng-repeat="option in ctrl.apartments"
 									value="{{option}}">{{option.description}} test</option>
 							</select> -->
-								<!-- http://stackoverflow.com/questions/37442061/angularjs-ng-options-with-nested-json-based-on-previous-select-option -->
-								<select title="Pesquisar em:"
-								class="form-control select-post-type" ng-model="ctrl.apartment"
-								ng-options="item.apartment as item.label for item in post_types.items"></select>
-								<!-- <input type="text" ng-model="ctrl.apartment"
+							<!-- http://stackoverflow.com/questions/37442061/angularjs-ng-options-with-nested-json-based-on-previous-select-option -->
+
+							<!-- <input type="text" ng-model="ctrl.apartment"
 								class="form-control" path='description'
 								placeholder="Pole wymagane" ng-required='true' name="apartment"
 								value="ctrl.apartment.description" /> -->
-								<p class="help-block">
-									<span class='error' ng-show="myForm.apartment.$invalid">Pole
-										wymagane</span> <span class='error'>{{errors.apartment}}</span>
-								</p>
+							<p class="help-block">
+								<span class='error' ng-show="myForm.tenant_apartment.$invalid">Pole
+									wymagane</span> <span class='error'>{{errors.tenant_apartment}}</span>
+							</p>
 						</div>
 					</div>
 
@@ -180,9 +180,9 @@
 						<label for="inputEmail3" class="col-sm-3 control-label">Data
 							Wprowadzenia</label>
 						<div class="col-sm-9">
-							<input type="text" ng-model="ctrl.movementDate" id="datepicker"
-								class="form-control" path='movementDate'
-								placeholder="Pole wymagane" name="movementDate" />
+							<input type="date" ng-model="ctrl.tenant.movementDate"
+								class="form-control" path='movementDate' 
+								placeholder="Pole wymagane" name="movementDate" ng-required='true' />
 							<p class="help-block">
 								<span class='error' ng-show="myForm.movementDate.$invalid">Pole
 									wymagane</span> <span class='error'>{{errors.movementDate}}</span>
@@ -193,24 +193,27 @@
 					<div class="form-group">
 						<label for="inputEmail3" class="col-sm-3 control-label">Prawa</label>
 						<div class="col-sm-9">
-							<input type="radio" ng-model="ctrl.role" value="USER" checked />
-							Najemca <input type="radio" ng-model="ctrl.role" value="ADMIN" />
+							<input type="radio" ng-model="ctrl.tenant.role" value="USER"
+								required name='role' /> Najemca <input type="radio"
+								ng-model="ctrl.tenant.role" value="ADMIN" required name='role' />
 							Administrator
 
+							<p class="help-block">
+								<span class='error' ng-show="myForm.role.$invalid">Pole
+									wymagane</span> <span class='error'>{{errors.role}}</span>
+							</p>
 						</div>
+
 					</div>
 					<div class="form-group ">
 						<div class="col-lg-12">
 							<input type="submit"
-								value="{{!ctrl.apartment.id ? 'Dodaj' : 'Nadpisz'}}"
+								value="{{!ctrl.tenant.id ? 'Dodaj' : 'Nadpisz'}}"
 								class="btn btn-default " ng-disabled="myForm.$invalid">
 							<button type="button" ng-click="ctrl.reset()"
 								class="btn btn-default " ng-disabled="myForm.$pristine">Reset
 							</button>
 						</div>
-
-					</div>
-
 				</form>
 			</div>
 		</div>
@@ -236,6 +239,7 @@
 			$("#datepicker").datepicker();
 		});
 	</script>
+
 	<!-- Metis Menu Plugin JavaScript -->
 	<script src="<c:url value='/static/js/metisMenu.min.js' />"></script>
 	<!-- Custom Theme JavaScript -->

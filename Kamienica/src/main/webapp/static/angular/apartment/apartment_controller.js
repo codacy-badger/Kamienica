@@ -13,13 +13,20 @@ App.controller('ApartmentController', [
 			self.apartment = new Apartment();
 			self.apartments = [];
 			self.errors = []
+			self.response;
 			
 			$scope.data = {
 				show : true
 			};
 
 			self.fetchAllUsers = function() {
-				self.apartments = Apartment.query();
+				self.response = Apartment.query();
+				console.log('-------------------------');
+				console.log(self.response);
+				console.log(self.response.Object);
+			//	console.log(self.response[objectList]);
+			//	console.log(self.response.$promise);
+				//self.apartments = Apartment.query();
 			};
 
 			self.createUser = function() {
