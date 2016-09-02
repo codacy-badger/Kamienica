@@ -33,6 +33,7 @@
 			<div class='row'>
 				<div class="col-lg-12">
 					<h1 class="page-header well">Lista Mieszkań - REST</h1>
+					
 					<div class="alert alert-danger" ng-show="errorField">
 						<strong>BŁĄD: </strong> {{errorMsg}}
 					</div>
@@ -128,7 +129,7 @@
 							</tr>
 						</thead>
 						<tbody>
-							<tr ng-repeat="a in ctrl.apartments">
+							<tr ng-repeat="a in ctrl.response.objectList">
 								<td><span ng-bind="a.apartmentNumber"></span></td>
 								<td><span ng-bind="a.intercom"></span></td>
 								<td><span ng-bind="a.description"></span></td>

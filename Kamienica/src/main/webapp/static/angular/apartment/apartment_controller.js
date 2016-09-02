@@ -13,7 +13,7 @@ App.controller('ApartmentController', [
 			self.apartment = new Apartment();
 			self.apartments = [];
 			self.errors = []
-			self.response;
+			self.response = new Response();
 			
 			$scope.data = {
 				show : true
@@ -21,12 +21,6 @@ App.controller('ApartmentController', [
 
 			self.fetchAllUsers = function() {
 				self.response = Apartment.query();
-				console.log('-------------------------');
-				console.log(self.response);
-				console.log(self.response.Object);
-			//	console.log(self.response[objectList]);
-			//	console.log(self.response.$promise);
-				//self.apartments = Apartment.query();
 			};
 
 			self.createUser = function() {
@@ -56,16 +50,17 @@ App.controller('ApartmentController', [
 			};
 
 			self.updateUser = function() {
+				console.log('---');
+				console.log(this.arrayIndex);
 				var tmp = self.apartment;
 				var index = self.apartments.indexOf(self.apartment);
-				console.log(self.apartment);
-				console.log(index);
+				console.log(tmp);
+				
 				self.apartment.$update(function(response) {
 					console.log(response);
 					console.log(self.apartment);
 					if (response.$resolved == true) {
-						self.apartments.splice(self.apartments
-								.indexOf(self.apartment), 1, tmp);
+						self.response.apartments.splice(this.arrayIndex, 1, tmp);
 					}// self.fetchAllUsers();
 				});
 
@@ -153,13 +148,23 @@ App.controller('ApartmentController', [
 			self.edit = function(id) {
 				self.clearError();
 				$scope.toggle = $scope.toggle === false ? true : false;
-				for (var i = 0; i < self.apartments.length; i++) {
-					if (self.apartments[i].id === id) {
-						self.apartment = angular.copy(self.apartments[i]);
+				
+				for (var i = 0; i < self.response.objectList.length; i++) {
+					if (self.response.objectList[i].id === id) {
+						self.apartment = angular.copy(self.response.objectList[i]);
 						this.arrayIndex = i;
 						break;
 					}
 				}
+				
+				
+//				for (var i = 0; i < self.apartments.length; i++) {
+//					if (self.apartments[i].id === id) {
+//						self.apartment = angular.copy(self.apartments[i]);
+//						this.arrayIndex = i;
+//						break;
+//					}
+//				}
 			};
 
 			self.remove = function(id, arrayIndex) {

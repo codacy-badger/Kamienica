@@ -39,6 +39,7 @@
 					<h1 class="page-header well">Najemcy - REST</h1>
 					<button id='mySwitch' ng-click="toggle = !toggle"
 						class="btn btn-default btn-sm">{{text}}</button>
+
 				</div>
 			</div>
 
@@ -155,8 +156,8 @@
 						<div class="col-sm-9">
 
 							<select name='tenant_apartment' ng-model="ctrl.tenant.apartment"
-								ng-required='true'
-								ng-options="o.description for o in ctrl.apartments"></select>
+								ng-required='true' class="form-control"
+								ng-options="o.description for o in ctrl.apartments.objectList"></select>
 
 							<!-- <select name="repeatSelect" id="repeatSelect"
 								ng-model="ctrl.apartment" class="form-control" ng-required='true'>
@@ -181,8 +182,9 @@
 							Wprowadzenia</label>
 						<div class="col-sm-9">
 							<input type="date" ng-model="ctrl.tenant.movementDate"
-								class="form-control" path='movementDate' 
-								placeholder="Pole wymagane" name="movementDate" ng-required='true' />
+								class="form-control" path='movementDate'
+								placeholder="YYYY/MM/DD" name="movementDate"
+								ng-required='true' />
 							<p class="help-block">
 								<span class='error' ng-show="myForm.movementDate.$invalid">Pole
 									wymagane</span> <span class='error'>{{errors.movementDate}}</span>

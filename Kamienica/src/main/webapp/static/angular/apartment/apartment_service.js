@@ -8,9 +8,7 @@ App.factory('Apartment', ['$resource', function ($resource) {
     		{id: '@id'},//Handy for update & delete. id will be set with id of instance
     		{
     			'query':  {method:'GET', isArray:false},
-    			update: {
-    			      method: 'PUT' // To send the HTTP Put request when calling this custom update method.
-    			}
+    			'update': {method: 'PUT'}
     			
     		}
     );
