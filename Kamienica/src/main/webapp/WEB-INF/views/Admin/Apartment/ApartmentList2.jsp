@@ -134,7 +134,7 @@
 								<td><span ng-bind="a.intercom"></span></td>
 								<td><span ng-bind="a.description"></span></td>
 								<td>
-									<button type="button" ng-click="ctrl.edit(a.id)"
+									<button type="button" ng-click="ctrl.edit(a.id, $index)"
 										class="btn-xs btn-warning">
 										<i class="fa fa-pencil-square-o" aria-hidden="true"></i>
 									</button>

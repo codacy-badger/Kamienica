@@ -43,6 +43,12 @@ public class TenantRestController {
 		response.setObjectList(list);
 		return new ResponseEntity<List<Tenant>>(list, HttpStatus.OK);
 	}
+	
+	@RequestMapping(value = "/hello", method = RequestMethod.GET)
+	public ResponseEntity<?> hello() {
+		
+		return new ResponseEntity<String>("hello", HttpStatus.OK);
+	}
 
 	@RequestMapping(value = "/old", method = RequestMethod.GET)
 	public ResponseEntity<?> test() {

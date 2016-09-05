@@ -29,26 +29,24 @@ App.controller('ApartmentController', [
 					// self.fetchAllUsers();
 
 				}).then(function(ok) {
-					console.log(ok);
+					console.log("--------START------")
+					console.log(self.apartment);
 					var apr = new Apartment();
 					apr.id = ok.id;
 					$scope.errorField = true;
 					$scope.errorMsg = 'zapisano do bazy';
 					console.log(apr);
+					self.response.objectList.push(se);
 					self.reset();
 					$scope.toggle = $scope.toggle === false ? true : false;
 				}, function(error) {
-					
-					console.log(error)
-					console.log('blasssd...')
 					$scope.errors = error.data;
 					$scope.errorField = true;
 					$scope.errorMsg = 'Nie powiódł się zapis do bazy. Popraw dane i spróbuj ponownie';
-					
-
-				});
+				   });
 			};
-
+			
+			
 			self.updateUser = function() {
 				console.log('---');
 				console.log(this.arrayIndex);
@@ -57,37 +55,29 @@ App.controller('ApartmentController', [
 				console.log(tmp);
 				
 				self.apartment.$update(function(response) {
-					console.log(response);
-					console.log(self.apartment);
-					if (response.$resolved == true) {
-						self.response.apartments.splice(this.arrayIndex, 1, tmp);
-					}// self.fetchAllUsers();
-				});
+					
+				}).then(function(ok) {
+					console.log("--------ok------")
+			
+				}, function(error) {
+					$scope.errors = error.data;
+					$scope.errorField = true;
+					$scope.errorMsg = 'Nie powiódł się zapis do bazy. Popraw dane i spróbuj ponownie';
+				   });;
 
 				self.reset();
 				$scope.toggle = $scope.toggle === false ? true : false;
 			};
 
 			self.deleteUser = function(identity, indexArray) {
-
 				var apartment = Apartment.get({
 					id : identity
 				}, function() {
-
 					apartment.$delete(function() {
-
-						console.log('Deleting apartment with id ', identity);
-						self.apartments.splice(indexArray, 1);
-
-						// console.log('11111')
-						// console.log(response.$resolved);
-						// console.log('22222')
-						// self.fetchAllUsers();
-						// self.splice(id, 1);
 					}).then(function(ok) {
 						console.log("ok");
 						console.log(ok);
-
+						self.response.objectList.splice(indexArray, 1);
 					}, function(error) {
 						$scope.errorField = true;
 						$scope.errorMsg = error.data.message;
@@ -131,33 +121,27 @@ App.controller('ApartmentController', [
 			})
 
 			self.submit = function() {
-				if (self.apartment.id == null) {
-					console.log('Saving New Apartment', self.apartment);
+				if (self.apartment.id == null) {	
 					self.createUser();
-				} else {
-					console.log('Upddating apartment with id ',
-							self.apartment.id);
+				} else {	
 					self.updateUser();
-					console
-							.log('Apartment updated with id ',
-									self.apartment.id);
+				
 				}
 				
 			};
 
-			self.edit = function(id) {
+			self.edit = function(id, indexOfArray) {
 				self.clearError();
 				$scope.toggle = $scope.toggle === false ? true : false;
 				
-				for (var i = 0; i < self.response.objectList.length; i++) {
-					if (self.response.objectList[i].id === id) {
-						self.apartment = angular.copy(self.response.objectList[i]);
-						this.arrayIndex = i;
-						break;
-					}
-				}
-				
-				
+//				for (var i = 0; i < self.response.objectList.length; i++) {
+//					if (self.response.objectList[i].id === id) {
+						self.apartment = angular.copy(self.response.objectList[indexOfArray]);
+						this.arrayIndex = indexOfArray;
+						
+//						break;
+//					}
+//				}				
 //				for (var i = 0; i < self.apartments.length; i++) {
 //					if (self.apartments[i].id === id) {
 //						self.apartment = angular.copy(self.apartments[i]);
