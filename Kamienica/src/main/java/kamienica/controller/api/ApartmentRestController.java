@@ -93,7 +93,7 @@ public class ApartmentRestController {
 		// HttpHeaders headers = new HttpHeaders();
 		// headers.setLocation(ucBuilder.path("/apartments/{id}").buildAndExpand(apartment.getId()).toUri());
 		// return new ResponseEntity<Void>(headers, HttpStatus.CREATED);
-		return new ResponseEntity<ApiResponse>(new ApiResponse(), HttpStatus.CREATED);
+		return new ResponseEntity<Apartment>(apartment, HttpStatus.CREATED);
 	}
 
 	// update

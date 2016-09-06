@@ -7,7 +7,9 @@ App.controller('ApartmentController', [
 
 			$scope.toggle = true;
 			$scope.errorField = false;
-
+			$scope.data = {
+					show : true
+				};
 			
 			var self = this;
 			self.apartment = new Apartment();
@@ -15,28 +17,24 @@ App.controller('ApartmentController', [
 			self.errors = []
 			self.response = new Response();
 			
-			$scope.data = {
-				show : true
-			};
+			
 
 			self.fetchAllUsers = function() {
 				self.response = Apartment.query();
 			};
+			
+			self.fetchAllUsers();
+			
 
 			self.createUser = function() {
 				self.apartment.$save(function() {
-
-					// self.fetchAllUsers();
-
 				}).then(function(ok) {
-					console.log("--------START------")
-					console.log(self.apartment);
 					var apr = new Apartment();
 					apr.id = ok.id;
 					$scope.errorField = true;
 					$scope.errorMsg = 'zapisano do bazy';
 					console.log(apr);
-					self.response.objectList.push(se);
+					self.response.objectList.push(ok);
 					self.reset();
 					$scope.toggle = $scope.toggle === false ? true : false;
 				}, function(error) {
@@ -45,7 +43,6 @@ App.controller('ApartmentController', [
 					$scope.errorMsg = 'Nie powiódł się zapis do bazy. Popraw dane i spróbuj ponownie';
 				   });
 			};
-			
 			
 			self.updateUser = function() {
 				console.log('---');
@@ -57,8 +54,6 @@ App.controller('ApartmentController', [
 				self.apartment.$update(function(response) {
 					
 				}).then(function(ok) {
-					console.log("--------ok------")
-			
 				}, function(error) {
 					$scope.errors = error.data;
 					$scope.errorField = true;
@@ -75,50 +70,13 @@ App.controller('ApartmentController', [
 				}, function() {
 					apartment.$delete(function() {
 					}).then(function(ok) {
-						console.log("ok");
-						console.log(ok);
 						self.response.objectList.splice(indexArray, 1);
 					}, function(error) {
 						$scope.errorField = true;
 						$scope.errorMsg = error.data.message;
-						// toastr.success("Item alterado com sucesso.");
 					})
 				})
 			};
-
-			self.switchForm = function() {
-
-				if ($scope.text === 'Dodaj mieszkanie') {
-
-					$scope.text = 'Lista mieszkań';
-					self.reset();
-					$scope.toggle = false;
-					$scope.errors = '';
-					$scope.errorField = false;
-					$scope.errorMsg = '';
-				} else {
-					$scope.text = 'Dodaj mieszkanie';
-					$scope.toggle = true;
-					$scope.errors = '';
-					$scope.errorField = false;
-					$scope.errorMsg = '';
-				}
-
-			}
-
-			self.fetchAllUsers();
-
-			$scope.toggleFilter = function() {
-
-				$scope.toggle = $scope.toggle === false ? true : false;
-
-			}
-			$scope.$watch('toggle', function() {
-				// $scope.toggle ? null : self.reset();
-
-				$scope.text = $scope.toggle ? 'Dodaj mieszkanie'
-						: 'Lista mieszkań';
-			})
 
 			self.submit = function() {
 				if (self.apartment.id == null) {	
@@ -171,6 +129,40 @@ App.controller('ApartmentController', [
 				$scope.errorField = false;
 				$scope.errorMsg = '';
 			}
+			
+			$scope.toggleFilter = function() {
 
+				$scope.toggle = $scope.toggle === false ? true : false;
+
+			}
+			$scope.$watch('toggle', function() {
+				// $scope.toggle ? null : self.reset();
+
+				$scope.text = $scope.toggle ? 'Dodaj mieszkanie'
+						: 'Lista mieszkań';
+			})
+
+			
+			self.switchForm = function() {
+
+				if ($scope.text === 'Dodaj mieszkanie') {
+
+					$scope.text = 'Lista mieszkań';
+					self.reset();
+					$scope.toggle = false;
+					$scope.errors = '';
+					$scope.errorField = false;
+					$scope.errorMsg = '';
+				} else {
+					$scope.text = 'Dodaj mieszkanie';
+					$scope.toggle = true;
+					$scope.errors = '';
+					$scope.errorField = false;
+					$scope.errorMsg = '';
+				}
+
+			}
+			
+			
 		} ]);
 
