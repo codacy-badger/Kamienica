@@ -5,6 +5,7 @@ import java.util.List;
 public class ApiResponse2<T> {
 
 	List<T> objectList;
+	T object;
 	List<?> nestedElements;
 	int currentPage;
 	int offset;

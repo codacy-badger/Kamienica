@@ -16,7 +16,7 @@ App.controller('ApartmentController', [
 			self.apartments = [];
 			self.errors = []
 			self.response = new Response();
-			
+			var arrayIndex;
 			
 
 			self.fetchAllUsers = function() {
@@ -45,15 +45,21 @@ App.controller('ApartmentController', [
 			};
 			
 			self.updateUser = function() {
-				console.log('---');
-				console.log(this.arrayIndex);
-				var tmp = self.apartment;
-				var index = self.apartments.indexOf(self.apartment);
-				console.log(tmp);
 				
-				self.apartment.$update(function(response) {
-					
+
+//				console.log('---');
+//				console.log(this.arrayIndex);
+				var tmp = self.apartment;
+				self.apartment.$promise= undefined;
+				self.apartment.$resolved= true;
+//				var index = self.apartments.indexOf(self.apartment);
+//				console.log(tmp);
+				console.log('updateUser');
+			    console.log(self.apartment);
+				self.apartment.$update(function() {
 				}).then(function(ok) {
+				console.log('ok');
+				self.response.objectList.splice(arrayIndex, 1, tmp);
 				}, function(error) {
 					$scope.errors = error.data;
 					$scope.errorField = true;
@@ -79,6 +85,7 @@ App.controller('ApartmentController', [
 			};
 
 			self.submit = function() {
+				console.log(self.apartment);
 				if (self.apartment.id == null) {	
 					self.createUser();
 				} else {	
@@ -95,7 +102,7 @@ App.controller('ApartmentController', [
 //				for (var i = 0; i < self.response.objectList.length; i++) {
 //					if (self.response.objectList[i].id === id) {
 						self.apartment = angular.copy(self.response.objectList[indexOfArray]);
-						this.arrayIndex = indexOfArray;
+						arrayIndex = indexOfArray;
 						
 //						break;
 //					}
