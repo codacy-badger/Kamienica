@@ -13,9 +13,10 @@ App.controller('ApartmentController', [
 			
 			var self = this;
 			self.apartment = new Apartment();
+			self.entity;
 			self.apartments = [];
 			self.errors = []
-			self.response = new Response();
+			self.response;
 			var arrayIndex;
 			
 
@@ -29,11 +30,10 @@ App.controller('ApartmentController', [
 			self.createUser = function() {
 				self.apartment.$save(function() {
 				}).then(function(ok) {
-					var apr = new Apartment();
-					apr.id = ok.id;
+					//var apr = new Apartment();
+					//apr.id = ok.id;
 					$scope.errorField = true;
 					$scope.errorMsg = 'zapisano do bazy';
-					console.log(apr);
 					self.response.objectList.push(ok);
 					self.reset();
 					$scope.toggle = $scope.toggle === false ? true : false;
@@ -47,19 +47,19 @@ App.controller('ApartmentController', [
 			self.updateUser = function() {
 				
 
-//				console.log('---');
-//				console.log(this.arrayIndex);
-				var tmp = self.apartment;
-				self.apartment.$promise= undefined;
-				self.apartment.$resolved= true;
+				console.log('-entity--');
+				console.log(self.entity);
+//				var tmp = self.apartment;
+//				self.apartment.$promise= undefined;
+//				self.apartment.$resolved= true;
 //				var index = self.apartments.indexOf(self.apartment);
 //				console.log(tmp);
-				console.log('updateUser');
-			    console.log(self.apartment);
+//				console.log('updateUser');
+//			    console.log(self.apartment);
 				self.apartment.$update(function() {
 				}).then(function(ok) {
 				console.log('ok');
-				self.response.objectList.splice(arrayIndex, 1, tmp);
+				self.response.objectList.splice(arrayIndex, 1, ok);
 				}, function(error) {
 					$scope.errors = error.data;
 					$scope.errorField = true;
@@ -102,6 +102,7 @@ App.controller('ApartmentController', [
 //				for (var i = 0; i < self.response.objectList.length; i++) {
 //					if (self.response.objectList[i].id === id) {
 						self.apartment = angular.copy(self.response.objectList[indexOfArray]);
+						self.entity = angular.copy(self.response.objectList[indexOfArray]);
 						arrayIndex = indexOfArray;
 						
 //						break;
