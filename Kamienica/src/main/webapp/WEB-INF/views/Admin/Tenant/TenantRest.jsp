@@ -140,7 +140,7 @@
 						<div class="col-sm-9">
 							<input type="text" ng-model="ctrl.tenant.phone"
 								class="form-control" path='phone' placeholder="Opcjonalne"
-								name="phone" ng-pattern="/^[0-9]{1,7}$/" ng-min=0 />
+								name="phone" ng-pattern="/^[0-9]{1,12}$/" ng-min=0 />
 
 							<!-- ng-required='true' ng-pattern="/^[0-9]{1,7}$/"  -->
 							<p class="help-block">
@@ -157,7 +157,9 @@
 
 							<select name='tenant_apartment' ng-model="ctrl.tenant.apartment"
 								ng-required='true' class="form-control"
-								ng-options="o.description for o in ctrl.apartments.objectList"></select>
+								ng-options="o.description for o in ctrl.apartments.objectList" 
+								ng-selected="ctrl.tenant.apartment == o">
+								</select>
 
 							<!-- <select name="repeatSelect" id="repeatSelect"
 								ng-model="ctrl.apartment" class="form-control" ng-required='true'>
@@ -181,7 +183,7 @@
 						<label for="inputEmail3" class="col-sm-3 control-label">Data
 							Wprowadzenia</label>
 						<div class="col-sm-9">
-							<input type="date" ng-model="ctrl.tenant.movementDate"
+							<input type="text" datetime="yyyy-MM-dd" ng-model="ctrl.tenant.movementDate"
 								class="form-control" path='movementDate'
 								placeholder="YYYY/MM/DD" name="movementDate"
 								ng-required='true' />
