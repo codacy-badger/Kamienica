@@ -110,6 +110,7 @@
 							</p>
 						</div>
 					</div>
+					
 					<div class="form-group">
 						<label for="inputEmail3" class="col-sm-3 control-label">Nazwisko</label>
 						<div class="col-sm-9">
@@ -154,13 +155,13 @@
 					<div class="form-group">
 						<label for="inputEmail3" class="col-sm-3 control-label">Mieszkanie</label>
 						<div class="col-sm-9">
-<!-- test -->
+							<!-- test -->
 							<!-- select name='tenant_apartment' ng-model="ctrl.tenant.apartment"
 								ng-required='true' class="form-control"
 								ng-options="o.description for o in ctrl.apartments.objectList"
 								ng-selected="ctrl.tenant.apartment.description == o.description">
-							</select--> 
-							
+							</select-->
+
 							<select name='tenant_apartment' ng-model="ctrl.tenant.apartment"
 								ng-required='true' class="form-control">
 								<option ng-repeat="item in ctrl.apartments.objectList"
@@ -205,17 +206,45 @@
 						<label for="inputEmail3" class="col-sm-3 control-label">Prawa</label>
 						<div class="col-sm-9">
 							<input type="radio" ng-model="ctrl.tenant.role" value="USER"
-								required name='role' /> Najemca <input type="radio"
-								ng-model="ctrl.tenant.role" value="ADMIN" required name='role' />
-							Administrator
+								required name='role' />Najemca 
+						    <input type="radio" ng-model="ctrl.tenant.role" value="ADMIN" 
+						    	required name='role' />Administrator
 
 							<p class="help-block">
 								<span class='error' ng-show="myForm.role.$invalid">Pole
 									wymagane</span> <span class='error'>{{errors.role}}</span>
 							</p>
 						</div>
-
 					</div>
+
+					<div class="form-group">
+						<label  class="col-sm-3 control-label">Status</label>
+						<div class="col-sm-9">
+							<input type="radio" ng-model="ctrl.tenant.status" value="Aktwny"
+								required name='status' />Aktywny 
+							<input type="radio" ng-model="ctrl.tenant.status" value="Nieaktywny" 
+								required name='status' /> Nieaktywny
+
+							<p class="help-block">
+								<span class='error' ng-show="myForm.status.$invalid">Pole
+									wymagane</span> <span class='error'>{{errors.status}}</span>
+							</p>
+						</div>
+					</div>					
+					
+					<div class="form-group">
+						<label for="inputEmail3" class="col-sm-3 control-label">Hasło</label>
+						<div class="col-sm-9">
+							<input type="text" ng-model="ctrl.tenant.password"
+								class="form-control" name="password" ng-required='true'
+								ng-minlength="5" value='sdf' />
+							<p class="help-block">
+								<span class='error' ng-show="myForm.password.$invalid">Pole
+									wymagane</span><span class='error'>{{errors.password}}</span>
+							</p>
+						</div>
+					</div>
+
 					<div class="form-group ">
 						<div class="col-lg-12">
 							<input type="submit"
@@ -225,6 +254,7 @@
 								class="btn btn-default " ng-disabled="myForm.$pristine">Reset
 							</button>
 						</div>
+					</div>
 				</form>
 			</div>
 		</div>

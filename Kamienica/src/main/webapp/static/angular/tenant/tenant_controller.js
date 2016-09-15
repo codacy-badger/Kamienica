@@ -155,6 +155,7 @@ App.controller('TenantController', [
 						break;
 					}
 				}
+				console.log(self.tenant);
 			};
 
 			self.remove = function(id, arrayIndex) {
