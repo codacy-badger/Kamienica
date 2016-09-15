@@ -155,12 +155,19 @@
 						<label for="inputEmail3" class="col-sm-3 control-label">Mieszkanie</label>
 						<div class="col-sm-9">
 
-							<select name='tenant_apartment' ng-model="ctrl.tenant.apartment"
+							<!-- select name='tenant_apartment' ng-model="ctrl.tenant.apartment"
 								ng-required='true' class="form-control"
-								ng-options="o.description for o in ctrl.apartments.objectList" 
-								ng-selected="ctrl.tenant.apartment == o">
-								</select>
-
+								ng-options="o.description for o in ctrl.apartments.objectList"
+								ng-selected="ctrl.tenant.apartment.description == o.description">
+							</select--> 
+							
+							<select name='tenant_apartment' ng-model="ctrl.tenant.apartment"
+								ng-required='true' class="form-control">
+								<option ng-repeat="item in ctrl.apartments.objectList"
+									value="{{item}}"
+									ng-selected="ctrl.tenant.apartment.description == item.description">
+									{{item.description}}</option>
+							</select>
 							<!-- <select name="repeatSelect" id="repeatSelect"
 								ng-model="ctrl.apartment" class="form-control" ng-required='true'>
 								<option ng-repeat="option in ctrl.apartments"
@@ -183,9 +190,9 @@
 						<label for="inputEmail3" class="col-sm-3 control-label">Data
 							Wprowadzenia</label>
 						<div class="col-sm-9">
-							<input type="text" datetime="yyyy-MM-dd" ng-model="ctrl.tenant.movementDate"
-								class="form-control" path='movementDate'
-								placeholder="YYYY/MM/DD" name="movementDate"
+							<input type="text" datetime="yyyy-MM-dd"
+								ng-model="ctrl.tenant.movementDate" class="form-control"
+								path='movementDate' placeholder="YYYY/MM/DD" name="movementDate"
 								ng-required='true' />
 							<p class="help-block">
 								<span class='error' ng-show="myForm.movementDate.$invalid">Pole
