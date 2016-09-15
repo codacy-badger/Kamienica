@@ -154,7 +154,7 @@
 					<div class="form-group">
 						<label for="inputEmail3" class="col-sm-3 control-label">Mieszkanie</label>
 						<div class="col-sm-9">
-
+<!-- test -->
 							<!-- select name='tenant_apartment' ng-model="ctrl.tenant.apartment"
 								ng-required='true' class="form-control"
 								ng-options="o.description for o in ctrl.apartments.objectList"
