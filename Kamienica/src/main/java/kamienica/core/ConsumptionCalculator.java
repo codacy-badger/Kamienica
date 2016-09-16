@@ -18,7 +18,7 @@ public class ConsumptionCalculator {
 			List<ReadingAbstract> newReadings) {
 		List<UsageValue> output = new ArrayList<UsageValue>();
 		for (Apartment m : apartment) {
-
+//scasd
 			UsageValue usageValue = new UsageValue();
 			usageValue.setDescription("Zuzycie calkowite za: " + m.getDescription());
 			usageValue.setApartment(m);
