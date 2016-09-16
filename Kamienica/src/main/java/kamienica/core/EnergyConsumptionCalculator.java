@@ -9,7 +9,7 @@ import kamienica.feature.apartment.Apartment;
 import kamienica.feature.reading.ReadingEnergy;
 import kamienica.feature.usagevalue.UsageValue;
 
-public class ManagerEnergy {
+public class EnergyConsumptionCalculator {
 
 	public static ArrayList<UsageValue> countConsupmtion(List<Apartment> apartment, List<ReadingEnergy> oldReadings,
 			List<ReadingEnergy> newReadings) {

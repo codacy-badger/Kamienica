@@ -8,10 +8,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import kamienica.core.ManagerEnergy;
-import kamienica.core.ManagerGas;
+import kamienica.core.EnergyConsumptionCalculator;
+import kamienica.core.GasConsumptionCalculator;
 import kamienica.core.PaymentCalculator;
-import kamienica.core.ManagerWater;
+import kamienica.core.WaterConsumptionCalculator;
 import kamienica.core.Media;
 import kamienica.core.WaterHeatingSystem;
 import kamienica.core.exception.InvalidDivisionException;
@@ -90,7 +90,7 @@ public class InvoiceServiceImpl implements InvoiceService {
 			List<ReadingEnergy> readingEnergyNew = (List<ReadingEnergy>) readingService.getByDate(invoice.getBaseReading().getReadingDate(),
 					Media.ENERGY);
 
-			List<UsageValue> usageEnergy = ManagerEnergy.countConsupmtion(apartments, readingEnergyOld,
+			List<UsageValue> usageEnergy = EnergyConsumptionCalculator.countConsupmtion(apartments, readingEnergyOld,
 					readingEnergyNew);
 			List<PaymentEnergy> paymentEnergy = PaymentCalculator.createPaymentEnergyList(tenants, (InvoiceEnergy) invoice,
 					division, usageEnergy);
@@ -114,9 +114,9 @@ public class InvoiceServiceImpl implements InvoiceService {
 				List<ReadingWater> waterOld = readingWaterDao
 						.getWaterReadingForGasConsumption2(waterNew.get(0).getReadingDate());
 
-				usageGas = ManagerGas.countConsumption(apartments, readingGasOld, readingGasNew, waterOld, waterNew);
+				usageGas = GasConsumptionCalculator.countConsumption(apartments, readingGasOld, readingGasNew, waterOld, waterNew);
 			} else {
-				usageGas = ManagerGas.countConsumption(apartments, readingGasOld, readingGasNew);
+				usageGas = GasConsumptionCalculator.countConsumption(apartments, readingGasOld, readingGasNew);
 			}
 
 			List<PaymentGas> paymentGas = PaymentCalculator.createPaymentGasList(tenants, (InvoiceGas) invoice, division,
@@ -138,7 +138,7 @@ public class InvoiceServiceImpl implements InvoiceService {
 			List<ReadingWater> readingWaterNew = (List<ReadingWater>) readingService.getByDate(invoice.getBaseReading().getReadingDate(),
 					Media.WATER);
 
-			List<UsageValue> usageWater = ManagerWater.countConsumption(apartments, readingWaterOld, readingWaterNew);
+			List<UsageValue> usageWater = WaterConsumptionCalculator.countConsumption(apartments, readingWaterOld, readingWaterNew);
 			List<PaymentWater> paymentWater = PaymentCalculator.createPaymentWaterList(tenants, (InvoiceWater) invoice,
 					division, usageWater);
 

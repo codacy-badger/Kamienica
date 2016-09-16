@@ -14,7 +14,7 @@ import kamienica.feature.reading.ReadingGas;
 import kamienica.feature.reading.ReadingWater;
 import kamienica.feature.usagevalue.UsageValue;
 
-public class ManagerGas {
+public class GasConsumptionCalculator {
 
 	/**
 	 * This method is designed for shared water heatig system
@@ -65,11 +65,11 @@ public class ManagerGas {
 			out.add(tmp);
 		}
 
-		double zuzycieCWU = ManagerGas.sumCWU(gasOld, gasNew);
+		double zuzycieCWU = GasConsumptionCalculator.sumCWU(gasOld, gasNew);
 		if (zuzycieCWU != 0) {
 
-			double sumaZuzyciaCieplejWody = ManagerWater.countWarmWaterUsage(waterOld, waterNew);
-			HashMap<Integer, Double> mapaZuzyciaCieplejWody = ManagerGas.hotWaterUsageMap(waterOld, waterNew);
+			double sumaZuzyciaCieplejWody = WaterConsumptionCalculator.countWarmWaterUsage(waterOld, waterNew);
+			HashMap<Integer, Double> mapaZuzyciaCieplejWody = GasConsumptionCalculator.hotWaterUsageMap(waterOld, waterNew);
 			for (int i = 0; i < out.size(); i++) {
 				if (out.get(i).getApartment().getApartmentNumber() != 0) {
 					int nrMieszkania = out.get(i).getApartment().getApartmentNumber();

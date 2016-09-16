@@ -10,17 +10,17 @@ import kamienica.feature.meter.MeterWater;
 import kamienica.feature.reading.ReadingWater;
 import kamienica.feature.usagevalue.UsageValue;
 
-public class ManagerWater {
+public class WaterConsumptionCalculator {
 
 	public static ArrayList<UsageValue> countConsumption(List<Apartment> apartment, List<ReadingWater> oldReading,
 			List<ReadingWater> newRading) {
 
 		ReadingWater sharedReadingOld;
 		if (!oldReading.isEmpty()) {
-			sharedReadingOld = ManagerWater.generateUsageForAdministrativePart(oldReading, apartment);
+			sharedReadingOld = WaterConsumptionCalculator.generateUsageForAdministrativePart(oldReading, apartment);
 			oldReading.add(sharedReadingOld);
 		}
-		ReadingWater sharedReadingNew = ManagerWater.generateUsageForAdministrativePart(newRading, apartment);
+		ReadingWater sharedReadingNew = WaterConsumptionCalculator.generateUsageForAdministrativePart(newRading, apartment);
 		newRading.add(sharedReadingNew);
 
 		ArrayList<UsageValue> usage = new ArrayList<UsageValue>();
