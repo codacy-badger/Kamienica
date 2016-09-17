@@ -162,13 +162,18 @@
 								ng-selected="ctrl.tenant.apartment.description == o.description">
 							</select-->
 
-							<select name='tenant_apartment' ng-model="ctrl.tenant.apartment"
+							<!-- 
+							
+							<select name='apartment' ng-model="ctrl.tenant.apartment"
 								ng-required='true' class="form-control">
 								<option ng-repeat="item in ctrl.apartments"
 									value="{{item}}"
 									ng-selected="ctrl.tenant.apartment.description == item.description">
 									{{item.description}}</option>
+									<option></option>
 							</select>
+							
+							 -->
 							<!-- <select name="repeatSelect" id="repeatSelect"
 								ng-model="ctrl.apartment" class="form-control" ng-required='true'>
 								<option ng-repeat="option in ctrl.apartments"
