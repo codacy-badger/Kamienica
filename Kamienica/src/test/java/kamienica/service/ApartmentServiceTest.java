@@ -1,6 +1,7 @@
 package kamienica.service;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.fail;
 
 import java.util.List;
 
@@ -21,6 +22,12 @@ public class ApartmentServiceTest extends AbstractServiceTest {
 		List<Apartment> list = service.getList();
 		assertEquals(4, list.size());
 	}
+	
+	@Test
+	public void getPaginatedList() {
+		List<Apartment> list = service.paginatedList(4, 1);
+		assertEquals("[Number 3; I Piętro]", list.toString());
+	}
 
 	@Test
 	public void getById() {
@@ -37,6 +44,7 @@ public class ApartmentServiceTest extends AbstractServiceTest {
 
 	}
 
+	@Transactional
 	@Test
 	public void update() {
 		Apartment ap = service.getById(4L);

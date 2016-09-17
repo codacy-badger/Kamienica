@@ -164,7 +164,7 @@
 
 							<select name='tenant_apartment' ng-model="ctrl.tenant.apartment"
 								ng-required='true' class="form-control">
-								<option ng-repeat="item in ctrl.apartments.objectList"
+								<option ng-repeat="item in ctrl.apartments"
 									value="{{item}}"
 									ng-selected="ctrl.tenant.apartment.description == item.description">
 									{{item.description}}</option>

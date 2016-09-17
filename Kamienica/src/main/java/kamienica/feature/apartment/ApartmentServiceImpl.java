@@ -32,6 +32,11 @@ public class ApartmentServiceImpl implements ApartmentService {
 	}
 
 	@Override
+	public List<Apartment> paginatedList(Integer firstResult, Integer maxResults) {
+		return apartmentDAO.paginatedList(firstResult, maxResults);
+	}
+
+	@Override
 	public void deleteByID(Long id) {
 		apartmentDAO.deleteById(id);
 		settingsDao.changeDivisionState(false);

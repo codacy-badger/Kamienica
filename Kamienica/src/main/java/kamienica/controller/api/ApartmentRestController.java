@@ -7,6 +7,7 @@ import java.util.Map;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
@@ -15,7 +16,9 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.util.UriComponentsBuilder;
 
 import kamienica.core.ApiResponse;
 import kamienica.core.ApiResponse2;
@@ -33,14 +36,25 @@ public class ApartmentRestController {
 	// --------------multiple_apartments----
 	@RequestMapping(value = "", method = RequestMethod.GET)
 	public ResponseEntity<?> listAllApartments() {
-		System.out.println("pobieranie listy mieszkań....");
 		List<Apartment> list = apartmentService.getList();
 		if (list.isEmpty()) {
 			return new ResponseEntity<List<Apartment>>(HttpStatus.NOT_FOUND);
 		}
-		ApiResponse2<Apartment> response = new ApiResponse2<>();
-		response.setObjectList(list);
-		return new ResponseEntity<ApiResponse2<Apartment>>(response, HttpStatus.OK);
+//		ApiResponse2<Apartment> response = new ApiResponse2<>();
+//		response.setObjectList(list);
+		return new ResponseEntity<List<Apartment>>(list, HttpStatus.OK);
+	}
+
+	@RequestMapping(value = "/paginated", params = { "page", "size" }, method = RequestMethod.GET)
+	public ResponseEntity<?> findPaginated(@RequestParam("page") int page, @RequestParam("size") int size,
+			UriComponentsBuilder uriBuilder) {
+
+		List<Apartment> list = apartmentService.paginatedList(page, size);
+
+		HttpHeaders headers = new HttpHeaders();
+		headers.set("page", String.valueOf(page));
+		headers.set("maxResult", String.valueOf(size));
+		return new ResponseEntity<List<Apartment>>(list, headers, HttpStatus.OK);
 	}
 
 	// --------------single_apartment----
@@ -53,25 +67,12 @@ public class ApartmentRestController {
 		return new ResponseEntity<Apartment>(apartment, HttpStatus.OK);
 	}
 
-	// create new
 	@RequestMapping(method = RequestMethod.POST)
-	public ResponseEntity<?> createApartment(@Valid @RequestBody Apartment apartment
-			, BindingResult result) {
-		// if (apartmentService.getById(apartment.getId()) != null) {
-		// return new ResponseEntity<Void>(HttpStatus.CONFLICT);
-		// }
+	public ResponseEntity<?> createApartment(@Valid @RequestBody Apartment apartment, BindingResult result) {
 
-		System.out.println("=========================zapis===================");
-		System.out.println(result.getAllErrors().toString());
 		if (result.hasErrors()) {
 			ApiResponse message = new ApiResponse();
 			message.setErrors(result.getFieldErrors());
-			System.out.println(result.getFieldErrors());
-			// ApiError err = new ApiError();
-			// for (result iterable_element : iterable) {
-			//
-			// }
-			System.out.println("zle!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
 			return new ResponseEntity<ApiResponse>(message, HttpStatus.UNPROCESSABLE_ENTITY);
 		}
 		try {
@@ -91,6 +92,7 @@ public class ApartmentRestController {
 		}
 
 		// HttpHeaders headers = new HttpHeaders();
+		// headers.s
 		// headers.setLocation(ucBuilder.path("/apartments/{id}").buildAndExpand(apartment.getId()).toUri());
 		// return new ResponseEntity<Void>(headers, HttpStatus.CREATED);
 		return new ResponseEntity<Apartment>(apartment, HttpStatus.CREATED);

@@ -129,7 +129,7 @@
 							</tr>
 						</thead>
 						<tbody>
-							<tr ng-repeat="a in ctrl.response.objectList">
+							<tr ng-repeat="a in ctrl.apartments">
 								<td><span ng-bind="a.apartmentNumber"></span></td>
 								<td><span ng-bind="a.intercom"></span></td>
 								<td><span ng-bind="a.description"></span></td>

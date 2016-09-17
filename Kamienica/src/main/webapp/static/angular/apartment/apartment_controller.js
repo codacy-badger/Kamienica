@@ -2,8 +2,8 @@
 
 App.controller('ApartmentController', [
 		'$scope',
-		'Apartment',
-		function($scope, Apartment) {
+		'Apartment','$http',
+		function($scope, Apartment, $http) {
 
 			$scope.toggle = true;
 			$scope.errorField = false;
@@ -16,25 +16,49 @@ App.controller('ApartmentController', [
 			self.entity;
 			self.apartments = [];
 			self.errors = []
-			self.response;
 			var arrayIndex;
 			
 
-			self.fetchAllUsers = function() {
-				self.response = Apartment.query();
+			self.fetchAll = function() {
+				self.apartments = Apartment.query();
 			};
 			
-			self.fetchAllUsers();
+			self.fetchAll();
+			
+			
+			var testVar = $http.get('http://localhost:8080/Kamienica/api/v1/apartments/paginated.json?page=1&size=2').
+			  success(function(data, status, headers, config) {
+				  console.log('status');
+				  console.log(status);
+				  
+				  console.log('headers');
+				  console.log(headers);
+				  
+				  console.log('config');
+				  console.log(config);
+				  
+				  console.log('data');
+				  console.log(data);
+			    // this callback will be called asynchronously
+			    // when the response is available
+				  console.log('myData');
+			    console.log(headers()['maxresult']);
+			    console.log(headers()['page']);
+			  })
+			  .error(function(data, status, headers, config) {
+			    // called asynchronously if an error occurs
+			    // or server returns response with an error status.
+			  });
 			
 
-			self.createUser = function() {
+			self.createItem = function() {
 				self.apartment.$save(function() {
 				}).then(function(ok) {
 					//var apr = new Apartment();
 					//apr.id = ok.id;
 					$scope.errorField = true;
 					$scope.errorMsg = 'zapisano do bazy';
-					self.response.objectList.push(ok);
+					self.apartments.push(ok);
 					self.reset();
 					$scope.toggle = $scope.toggle === false ? true : false;
 				}, function(error) {
@@ -44,22 +68,12 @@ App.controller('ApartmentController', [
 				   });
 			};
 			
-			self.updateUser = function() {
+			self.updateItem = function() {
 				
-
-				console.log('-entity--');
-				console.log(self.entity);
-//				var tmp = self.apartment;
-//				self.apartment.$promise= undefined;
-//				self.apartment.$resolved= true;
-//				var index = self.apartments.indexOf(self.apartment);
-//				console.log(tmp);
-//				console.log('updateUser');
-//			    console.log(self.apartment);
 				self.apartment.$update(function() {
 				}).then(function(ok) {
-				console.log('ok');
-				self.response.objectList.splice(arrayIndex, 1, ok);
+				console.log(ok);
+				self.apartments.splice(arrayIndex, 1, ok);
 				}, function(error) {
 					$scope.errors = error.data;
 					$scope.errorField = true;
@@ -70,13 +84,13 @@ App.controller('ApartmentController', [
 				$scope.toggle = $scope.toggle === false ? true : false;
 			};
 
-			self.deleteUser = function(identity, indexArray) {
+			self.deleteItem = function(identity, indexArray) {
 				var apartment = Apartment.get({
 					id : identity
 				}, function() {
 					apartment.$delete(function() {
 					}).then(function(ok) {
-						self.response.objectList.splice(indexArray, 1);
+						self.apartments.splice(indexArray, 1);
 					}, function(error) {
 						$scope.errorField = true;
 						$scope.errorMsg = error.data.message;
@@ -87,9 +101,9 @@ App.controller('ApartmentController', [
 			self.submit = function() {
 				console.log(self.apartment);
 				if (self.apartment.id == null) {	
-					self.createUser();
+					self.createItem();
 				} else {	
-					self.updateUser();
+					self.updateItem();
 				
 				}
 				
@@ -99,10 +113,10 @@ App.controller('ApartmentController', [
 				self.clearError();
 				$scope.toggle = $scope.toggle === false ? true : false;
 				
-//				for (var i = 0; i < self.response.objectList.length; i++) {
-//					if (self.response.objectList[i].id === id) {
-						self.apartment = angular.copy(self.response.objectList[indexOfArray]);
-						self.entity = angular.copy(self.response.objectList[indexOfArray]);
+//				for (var i = 0; i < self.apartments.length; i++) {
+//					if (self.apartments[i].id === id) {
+						self.apartment = angular.copy(self.apartments[indexOfArray]);
+						self.entity = angular.copy(self.apartments[indexOfArray]);
 						arrayIndex = indexOfArray;
 						
 //						break;
@@ -124,7 +138,7 @@ App.controller('ApartmentController', [
 					self.reset();
 				}
 
-				self.deleteUser(id, arrayIndex);
+				self.deleteItem(id, arrayIndex);
 			};
 
 			self.reset = function() {

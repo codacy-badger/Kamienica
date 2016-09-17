@@ -11,6 +11,8 @@ public interface DaoInterface<T extends Object> {
 	public void save(T object);
 
 	public List<T> getList();
+	
+	public List<T> paginatedList(Integer firstResult, Integer maxResults);
 
 	public void deleteById(Long id);
 
@@ -19,6 +21,8 @@ public interface DaoInterface<T extends Object> {
 	public T getById(Long id);
 
 	public Set<Long> getIdList();
+	
+	
 
 	public List<T> findByCriteria(final int firstResult, final int maxResults, final Order order,
 			final Criterion... criterion);

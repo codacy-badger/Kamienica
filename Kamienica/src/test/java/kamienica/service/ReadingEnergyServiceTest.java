@@ -155,5 +155,7 @@ public class ReadingEnergyServiceTest extends AbstractServiceTest {
 			assertEquals(6767, readingEnergy.getValue(), 0);
 		}
 	}
+	
+	
 
 }
