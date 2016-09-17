@@ -19,7 +19,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import kamienica.core.ApiResponse;
 import kamienica.core.ApiResponse2;
-import kamienica.feature.apartment.Apartment;
 import kamienica.feature.apartment.ApartmentService;
 import kamienica.feature.tenant.Tenant;
 import kamienica.feature.tenant.TenantService;
@@ -33,7 +32,7 @@ public class TenantRestController {
 	@Autowired
 	ApartmentService apService;
 
-	@RequestMapping(value = "", method = RequestMethod.GET)
+	@RequestMapping( method = RequestMethod.GET)
 	public ResponseEntity<?> getList() {
 		List<Tenant> list = service.getList();
 		if (list.isEmpty()) {
@@ -44,23 +43,6 @@ public class TenantRestController {
 		return new ResponseEntity<List<Tenant>>(list, HttpStatus.OK);
 	}
 	
-	@RequestMapping(value = "/hello", method = RequestMethod.GET)
-	public ResponseEntity<?> hello() {
-		
-		return new ResponseEntity<String>("hello", HttpStatus.OK);
-	}
-
-	@RequestMapping(value = "/old", method = RequestMethod.GET)
-	public ResponseEntity<?> test() {
-		List<Tenant> list = service.getList();
-		if (list.isEmpty()) {
-			return new ResponseEntity<List<Tenant>>(HttpStatus.NOT_FOUND);
-		}
-		ApiResponse2<Tenant> response = new ApiResponse2<>();
-		response.setObjectList(list);
-		response.setNestedElements(apService.getList());
-		return new ResponseEntity<ApiResponse2<Tenant>>(response, HttpStatus.OK);
-	}
 
 	@RequestMapping(value = "/{id}", method = RequestMethod.GET)
 	public ResponseEntity<Tenant> getById(@PathVariable Long id) {
@@ -73,35 +55,23 @@ public class TenantRestController {
 
 	@RequestMapping(method = RequestMethod.POST)
 	public ResponseEntity<?> create(@Valid @RequestBody Tenant tenant, BindingResult result) {
-		System.out.println("=============================");
-		System.out.println(tenant);
+		System.out.println("ttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt");
+		if (result.hasErrors()) {
+			ApiResponse message = new ApiResponse();
+			message.setErrors(result.getFieldErrors());
+			return new ResponseEntity<ApiResponse>(message, HttpStatus.UNPROCESSABLE_ENTITY);
+		}
+		try {
+			service.saveTenant(tenant);
+		} catch (Exception e) {
+			result.rejectValue("apartmentNumber", "error.apartment", "Istniej już taki numer w bazie");
 
-		// if (result.hasErrors()) {
-		// ApiResponse message = new ApiResponse();
-		// message.setErrors(result.getFieldErrors());
-		//
-		// return new ResponseEntity<ApiResponse>(message,
-		// HttpStatus.UNPROCESSABLE_ENTITY);
-		// }
-		// try {
-		//
-		// service.saveTenant(tenant);
-		// } catch (Exception e) {
-		// result.rejectValue("email", "error.email", "Istniej już taki email w
-		// bazie");
-		// ApiResponse message = new ApiResponse();
-		// message.addErrorMessage("apartmentNumber", "Istniej już taki email w
-		// bazie");
-		// message.setErrors(result.getFieldErrors());
-		// System.out.println(result.getFieldErrors());
-		// Map<String, String> test = new HashMap<>();
-		// for (FieldError fieldError : result.getFieldErrors()) {
-		// test.put(fieldError.getField(), fieldError.getDefaultMessage());
-		// }
-		// test.put("test", "wartoscTestu");
-		// return new ResponseEntity<Map<String, String>>(test,
-		// HttpStatus.CONFLICT);
-		// }
-		return new ResponseEntity<ApiResponse>(new ApiResponse(), HttpStatus.CREATED);
+			Map<String, String> test = new HashMap<>();
+			for (FieldError fieldError : result.getFieldErrors()) {
+				test.put(fieldError.getField(), fieldError.getDefaultMessage());
+			}
+			return new ResponseEntity<Map<String, String>>(test, HttpStatus.CONFLICT);
+		}
+		return new ResponseEntity<Tenant>(tenant, HttpStatus.CREATED);
 	}
 }

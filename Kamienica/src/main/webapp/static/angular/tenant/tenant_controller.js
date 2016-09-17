@@ -1,184 +1,169 @@
 'use strict';
 
 App.controller('TenantController', [
-		'$scope',
-		'Tenant', 'Apartment',
-		function($scope, Tenant, Apartment) {
+    '$scope',
+    'Tenant', 'Apartment',
+    function($scope, Tenant, Apartment) {
 
-			$scope.toggle = true;
-			$scope.errorField = false;
+        $scope.toggle = true;
+        $scope.errorField = false;
+        $scope.data = {
+            show: true
+        };
 
-			
-			var self = this;
-			self.tenant = new Tenant();
-			self.tenants = [];
-			self.errors = []
-			
-			
-			self.apartments = Apartment.query();
+        var self = this;
+        self.tenant = new Tenant();
+        self.tenants = [];
+        self.errors = []
+        var arrayIndex;
 
-			$scope.data = {
-				show : true
-			};
+        self.apartments = Apartment.query();
 
-			self.fetchAllUsers = function() {
-			
-				self.tenants = Tenant.query();
-			};
+        self.fetchAllUsers = function() {
+            self.tenants = Tenant.query();
+        };
 
-			self.createUser = function() {
-				self.tenant.$save(function() {
+        self.createUser = function() {
+            self.tenant.$save(function() {}).then(function(ok) {
+                $scope.errorField = true;
+                $scope.errorMsg = 'zapisano do bazy';
+                self.reset();
+                $scope.toggle = $scope.toggle === false ? true : false;
+            }, function(error) {
+                $scope.errors = error.data;
+                $scope.errorField = true;
+                $scope.errorMsg = 'Nie powiódł się zapis do bazy. Popraw dane i spróbuj ponownie';
+            });
+        };
 
-					// self.fetchAllUsers();
+        self.updateUser = function() {
+            var tmp = self.tenant;
+            var index = self.tenants.indexOf(self.tenant);
+            console.log(self.tenant);
+            console.log(index);
+            self.tenant.$update(function(response) {
+                console.log(response);
+                console.log(self.tenant);
+                if (response.$resolved == true) {
+                    self.tenants.splice(self.tenants
+                        .indexOf(self.tenant), 1, tmp);
+                } // self.fetchAllUsers();
+            });
 
-				}).then(function(ok) {
-					console.log(ok);
-					var apr = new Tenant();
-					apr.id = ok.id;
-					$scope.errorField = true;
-					$scope.errorMsg = 'zapisano do bazy';
-					console.log(apr);
-					self.reset();
-					$scope.toggle = $scope.toggle === false ? true : false;
-				}, function(error) {
-					
-					$scope.errors = error.data;
-					$scope.errorField = true;
-					$scope.errorMsg = 'Nie powiódł się zapis do bazy. Popraw dane i spróbuj ponownie';
-					
+            self.reset();
+            $scope.toggle = $scope.toggle === false ? true : false;
+        };
 
-				});
-			};
+        self.deleteUser = function(identity, indexArray) {
 
-			self.updateUser = function() {
-				var tmp = self.tenant;
-				var index = self.tenants.indexOf(self.tenant);
-				console.log(self.tenant);
-				console.log(index);
-				self.tenant.$update(function(response) {
-					console.log(response);
-					console.log(self.tenant);
-					if (response.$resolved == true) {
-						self.tenants.splice(self.tenants
-								.indexOf(self.tenant), 1, tmp);
-					}// self.fetchAllUsers();
-				});
+            var tenant = Tenant.get({
+                id: identity
+            }, function() {
 
-				self.reset();
-				$scope.toggle = $scope.toggle === false ? true : false;
-			};
+                tenant.$delete(function() {
 
-			self.deleteUser = function(identity, indexArray) {
+                    console.log('Deleting tenant with id ', identity);
+                    self.tenants.splice(indexArray, 1);
 
-				var tenant = Tenant.get({
-					id : identity
-				}, function() {
+                    // console.log('11111')
+                    // console.log(response.$resolved);
+                    // console.log('22222')
+                    // self.fetchAllUsers();
+                    // self.splice(id, 1);
+                }).then(function(ok) {
+                    console.log("ok");
+                    console.log(ok);
 
-					tenant.$delete(function() {
+                }, function(error) {
+                    $scope.errorField = true;
+                    $scope.errorMsg = error.data.message;
+                    // toastr.success("Item alterado com sucesso.");
+                })
+            })
+        };
 
-						console.log('Deleting tenant with id ', identity);
-						self.tenants.splice(indexArray, 1);
+        self.switchForm = function() {
 
-						// console.log('11111')
-						// console.log(response.$resolved);
-						// console.log('22222')
-						// self.fetchAllUsers();
-						// self.splice(id, 1);
-					}).then(function(ok) {
-						console.log("ok");
-						console.log(ok);
+            if ($scope.text === 'Dodaj') {
 
-					}, function(error) {
-						$scope.errorField = true;
-						$scope.errorMsg = error.data.message;
-						// toastr.success("Item alterado com sucesso.");
-					})
-				})
-			};
+                $scope.text = 'Lista';
+                self.reset();
+                $scope.toggle = false;
+                $scope.errors = '';
+                $scope.errorField = false;
+                $scope.errorMsg = '';
+            } else {
+                $scope.text = 'Dodaj';
+                $scope.toggle = true;
+                $scope.errors = '';
+                $scope.errorField = false;
+                $scope.errorMsg = '';
+            }
 
-			self.switchForm = function() {
+        }
 
-				if ($scope.text === 'Dodaj') {
+        self.fetchAllUsers();
 
-					$scope.text = 'Lista';
-					self.reset();
-					$scope.toggle = false;
-					$scope.errors = '';
-					$scope.errorField = false;
-					$scope.errorMsg = '';
-				} else {
-					$scope.text = 'Dodaj';
-					$scope.toggle = true;
-					$scope.errors = '';
-					$scope.errorField = false;
-					$scope.errorMsg = '';
-				}
+        $scope.toggleFilter = function() {
 
-			}
+            $scope.toggle = $scope.toggle === false ? true : false;
 
-			self.fetchAllUsers();
+        }
+        $scope.$watch('toggle', function() {
+            // $scope.toggle ? null : self.reset();
 
-			$scope.toggleFilter = function() {
+            $scope.text = $scope.toggle ? 'Dodaj' :
+                'Lista';
+        })
 
-				$scope.toggle = $scope.toggle === false ? true : false;
+        self.submit = function() {
+            if (self.tenant.id == null) {
+                console.log('Saving New Tenant', self.tenant);
+                self.createUser();
+            } else {
+                console.log('Upddating tenant with id ',
+                    self.tenant.id);
+                self.updateUser();
+                console
+                    .log('Tenant updated with id ',
+                        self.tenant.id);
+            }
 
-			}
-			$scope.$watch('toggle', function() {
-				// $scope.toggle ? null : self.reset();
+        };
 
-				$scope.text = $scope.toggle ? 'Dodaj'
-						: 'Lista';
-			})
+        self.edit = function(id) {
+            self.clearError();
+            $scope.toggle = $scope.toggle === false ? true : false;
+            for (var i = 0; i < self.tenants.length; i++) {
+                if (self.tenants[i].id === id) {
+                    self.tenant = angular.copy(self.tenants[i]);
+                    this.arrayIndex = i;
+                    break;
+                }
+            }
+            console.log(self.tenant);
+        };
 
-			self.submit = function() {
-				if (self.tenant.id == null) {
-					console.log('Saving New Tenant', self.tenant);
-					self.createUser();
-				} else {
-					console.log('Upddating tenant with id ',
-							self.tenant.id);
-					self.updateUser();
-					console
-							.log('Tenant updated with id ',
-									self.tenant.id);
-				}
-				
-			};
+        self.remove = function(id, arrayIndex) {
+            self.clearError();
+            if (self.tenant.id === id) { // If it is the one shown on
+                // screen, reset screen
+                self.reset();
+            }
 
-			self.edit = function(id) {
-				self.clearError();
-				$scope.toggle = $scope.toggle === false ? true : false;
-				for (var i = 0; i < self.tenants.length; i++) {
-					if (self.tenants[i].id === id) {
-						self.tenant = angular.copy(self.tenants[i]);
-						this.arrayIndex = i;
-						break;
-					}
-				}
-				console.log(self.tenant);
-			};
+            self.deleteUser(id, arrayIndex);
+        };
 
-			self.remove = function(id, arrayIndex) {
-				self.clearError();
-				if (self.tenant.id === id) {// If it is the one shown on
-					// screen, reset screen
-					self.reset();
-				}
+        self.reset = function() {
+            self.tenant = new Tenant();
+            $scope.myForm.$setPristine(); // reset Form
 
-				self.deleteUser(id, arrayIndex);
-			};
+        };
 
-			self.reset = function() {
-				self.tenant = new Tenant();
-				$scope.myForm.$setPristine(); // reset Form
-				
-			};
+        self.clearError = function() {
+            $scope.errorField = false;
+            $scope.errorMsg = '';
+        }
 
-			self.clearError = function() {
-				$scope.errorField = false;
-				$scope.errorMsg = '';
-			}
-
-		} ]);
-
-
+    }
+]);

@@ -28,7 +28,7 @@ import kamienica.feature.apartment.ApartmentService;
 
 @RestController
 @RequestMapping("/api/v1/apartments")
-public class ApartmentRestController {
+public class ApartmentRestController extends AbstractController{
 
 	@Autowired
 	ApartmentService apartmentService;
@@ -78,16 +78,11 @@ public class ApartmentRestController {
 		try {
 			apartmentService.save(apartment);
 		} catch (Exception e) {
-			result.rejectValue("apartmentNumber", "error.apartment", "Istniej już taki numer w bazie");
-			ApiResponse message = new ApiResponse();
-			message.addErrorMessage("apartmentNumber", "Istniej już taki numer w bazie");
-			message.setErrors(result.getFieldErrors());
-			System.out.println(result.getFieldErrors());
+			result.rejectValue("apartmentNumber", "error.apartment", DUPLICATE_VALUE);
 			Map<String, String> test = new HashMap<>();
 			for (FieldError fieldError : result.getFieldErrors()) {
 				test.put(fieldError.getField(), fieldError.getDefaultMessage());
 			}
-			test.put("test", "wartoscTestu");
 			return new ResponseEntity<Map<String, String>>(test, HttpStatus.CONFLICT);
 		}
 
