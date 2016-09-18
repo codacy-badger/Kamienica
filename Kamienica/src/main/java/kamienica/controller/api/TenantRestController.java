@@ -20,6 +20,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 import kamienica.core.util.ApiResponse;
 import kamienica.core.util.ApiResponse2;
+import kamienica.core.util.Message;
+import kamienica.feature.apartment.Apartment;
 import kamienica.feature.apartment.ApartmentService;
 import kamienica.feature.tenant.Tenant;
 import kamienica.feature.tenant.TenantService;
@@ -33,7 +35,7 @@ public class TenantRestController extends AbstractController {
 	@Autowired
 	ApartmentService apService;
 
-	@RequestMapping( method = RequestMethod.GET)
+	@RequestMapping(method = RequestMethod.GET)
 	public ResponseEntity<?> getList() {
 		List<Tenant> list = service.getList();
 		if (list.isEmpty()) {
@@ -43,7 +45,6 @@ public class TenantRestController extends AbstractController {
 		response.setObjectList(list);
 		return new ResponseEntity<List<Tenant>>(list, HttpStatus.OK);
 	}
-	
 
 	@RequestMapping(value = "/{id}", method = RequestMethod.GET)
 	public ResponseEntity<Tenant> getById(@PathVariable Long id) {
@@ -73,5 +74,38 @@ public class TenantRestController extends AbstractController {
 			return new ResponseEntity<Map<String, String>>(test, HttpStatus.CONFLICT);
 		}
 		return new ResponseEntity<Tenant>(tenant, HttpStatus.CREATED);
+	}
+
+	// delete by id
+	@RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
+	public ResponseEntity<Message> deleteUser(@PathVariable("id") Long id) {
+		Message message = new Message("OK", null);
+		try {
+			service.deleteTenant(id);
+		} catch (Exception e) {
+			message.setMessage(CONSTRAINT_VIOLATION);
+			message.setException(e.toString());
+			return new ResponseEntity<Message>(message, HttpStatus.UNPROCESSABLE_ENTITY);
+		}
+		return new ResponseEntity<Message>(message, HttpStatus.OK);
+	}
+
+	// update
+	@RequestMapping(value = "/{id}", method = RequestMethod.PUT)
+	public ResponseEntity<Tenant> updateUser(@PathVariable("id") Long id, @RequestBody Tenant tenant) {
+
+		System.out.println("-----------------------------------------------------");
+		// Apartment currentApartment = apartmentService.getById(id);
+
+		// if (currentApartment == null) {
+		// return new ResponseEntity<Apartment>(HttpStatus.NOT_FOUND);
+		// }
+
+		// currentApartment.setApartmentNumber(apartment.getApartmentNumber());
+		// currentApartment.setDescription(apartment.getDescription());
+		// currentApartment.setIntercom(apartment.getIntercom());
+
+		service.updateTenant(tenant);
+		return new ResponseEntity<Tenant>(tenant, HttpStatus.OK);
 	}
 }

@@ -77,11 +77,11 @@
 								<td><span ng-bind="a.status"></span></td>
 
 								<td>
-									<button type="button" ng-click="ctrl.edit(a.id)"
+									<button type="button" ng-click="ctrl.edit(a.id, $index)"
 										class="btn-xs btn-warning">
 										<i class="fa fa-pencil-square-o" aria-hidden="true"></i>
 									</button>
-									<button type="button" ng-click="ctrl.remove(a.id)"
+									<button type="button" ng-click="ctrl.remove(a.id, $index)"
 										class="btn-xs btn-danger ">
 										<i class="fa fa-times" aria-hidden="true"></i>
 									</button>
@@ -155,15 +155,14 @@
 					<div class="form-group">
 						<label for="inputEmail3" class="col-sm-3 control-label">Mieszkanie</label>
 						<div class="col-sm-9">
-							<!-- test -->
-							<!-- select name='tenant_apartment' ng-model="ctrl.tenant.apartment"
+							<select name='apartment' ng-model="ctrl.tenant.apartment"
 								ng-required='true' class="form-control"
-								ng-options="o.description for o in ctrl.apartments.objectList"
-								ng-selected="ctrl.tenant.apartment.description == o.description">
-							</select-->
+								ng-options="a.description for a in ctrl.apartments"
+								>
+							</select>
 
 							 
-							
+							<!--  
 							<select name='apartment' ng-model="ctrl.tenant.apartment"
 								ng-required='true' class="form-control">
 								<option ng-repeat="item in ctrl.apartments"
@@ -173,7 +172,7 @@
 									<option></option>
 							</select>
 							
-							
+							-->
 							<!-- <select name="repeatSelect" id="repeatSelect"
 								ng-model="ctrl.apartment" class="form-control" ng-required='true'>
 								<option ng-repeat="option in ctrl.apartments"

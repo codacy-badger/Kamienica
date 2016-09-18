@@ -115,14 +115,12 @@ public class ApartmentRestController extends AbstractController{
 	public ResponseEntity<Message> deleteUser(@PathVariable("id") Long id) {
 		Message message = new Message("OK", null);
 		try {
-
 			apartmentService.deleteByID(id);
 		} catch (Exception e) {
-			message.setMessage("Nie można usunać mieszkania, dla których istnieją powiązania w bazie");
+			message.setMessage(CONSTRAINT_VIOLATION);
 			message.setException(e.toString());
 			return new ResponseEntity<Message>(message, HttpStatus.UNPROCESSABLE_ENTITY);
 		}
-
 		return new ResponseEntity<Message>(message, HttpStatus.OK);
 	}
 }

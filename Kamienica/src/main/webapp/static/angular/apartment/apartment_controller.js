@@ -107,23 +107,10 @@ App.controller('ApartmentController', [
         self.edit = function(id, indexOfArray) {
             self.clearError();
             $scope.toggle = $scope.toggle === false ? true : false;
-
-            //				for (var i = 0; i < self.apartments.length; i++) {
-            //					if (self.apartments[i].id === id) {
             self.apartment = angular.copy(self.apartments[indexOfArray]);
             self.entity = angular.copy(self.apartments[indexOfArray]);
             arrayIndex = indexOfArray;
 
-            //						break;
-            //					}
-            //				}				
-            //				for (var i = 0; i < self.apartments.length; i++) {
-            //					if (self.apartments[i].id === id) {
-            //						self.apartment = angular.copy(self.apartments[i]);
-            //						this.arrayIndex = i;
-            //						break;
-            //					}
-            //				}
         };
 
         self.remove = function(id, arrayIndex) {

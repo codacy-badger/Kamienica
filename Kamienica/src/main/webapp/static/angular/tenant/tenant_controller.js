@@ -13,6 +13,7 @@ App.controller('TenantController', [
 
         var self = this;
         self.tenant = new Tenant();
+        self.entity;
         self.tenants = [];
         self.errors = []
         var arrayIndex;
@@ -27,6 +28,7 @@ App.controller('TenantController', [
             self.tenant.$save(function() {}).then(function(ok) {
                 $scope.errorField = true;
                 $scope.errorMsg = 'zapisano do bazy';
+                self.tenants.push(ok);
                 self.reset();
                 $scope.toggle = $scope.toggle === false ? true : false;
             }, function(error) {
@@ -35,51 +37,51 @@ App.controller('TenantController', [
                 $scope.errorMsg = 'Nie powiódł się zapis do bazy. Popraw dane i spróbuj ponownie';
             });
         };
-
+        
+//        self.updateUser = function() {
+//            var tmp = self.tenant;
+//            var index = self.tenants.indexOf(self.tenant);
+//            console.log(self.tenant);
+//            console.log(index);
+//            self.tenant.$update(function(response) {
+//                console.log(response);
+//                console.log(self.tenant);
+//                if (response.$resolved == true) {
+//                    self.tenants.splice(self.tenants
+//                        .indexOf(self.tenant), 1, tmp);
+//                } // self.fetchAllUsers();
+//            });
+//
+//            self.reset();
+//            $scope.toggle = $scope.toggle === false ? true : false;
+//        };
+        
+        
         self.updateUser = function() {
-            var tmp = self.tenant;
-            var index = self.tenants.indexOf(self.tenant);
-            console.log(self.tenant);
-            console.log(index);
-            self.tenant.$update(function(response) {
-                console.log(response);
-                console.log(self.tenant);
-                if (response.$resolved == true) {
-                    self.tenants.splice(self.tenants
-                        .indexOf(self.tenant), 1, tmp);
-                } // self.fetchAllUsers();
-            });
+            self.tenant.$update(function() {}).then(function(ok) {
+                console.log(ok);
+                self.tenants.splice(arrayIndex, 1, ok);
+            }, function(error) {
+                $scope.errors = error.data;
+                $scope.errorField = true;
+                $scope.errorMsg = 'Nie powiódł się zapis do bazy. Popraw dane i spróbuj ponownie';
+            });;
 
             self.reset();
             $scope.toggle = $scope.toggle === false ? true : false;
         };
 
         self.deleteUser = function(identity, indexArray) {
-
-            var tenant = Tenant.get({
-                id: identity
-            }, function() {
-
-                tenant.$delete(function() {
-
-                    console.log('Deleting tenant with id ', identity);
-                    self.tenants.splice(indexArray, 1);
-
-                    // console.log('11111')
-                    // console.log(response.$resolved);
-                    // console.log('22222')
-                    // self.fetchAllUsers();
-                    // self.splice(id, 1);
-                }).then(function(ok) {
-                    console.log("ok");
-                    console.log(ok);
-
-                }, function(error) {
-                    $scope.errorField = true;
-                    $scope.errorMsg = error.data.message;
-                    // toastr.success("Item alterado com sucesso.");
-                })
-            })
+        	 var apartment = Apartment.get({
+                 id: identity
+             }, function() {
+                 apartment.$delete(function() {}).then(function(ok) {
+                     self.apartments.splice(indexArray, 1);
+                 }, function(error) {
+                     $scope.errorField = true;
+                     $scope.errorMsg = error.data.message;
+                 })
+             })
         };
 
         self.switchForm = function() {
@@ -131,17 +133,12 @@ App.controller('TenantController', [
 
         };
 
-        self.edit = function(id) {
+        self.edit = function(id, indexOfArray) {
             self.clearError();
             $scope.toggle = $scope.toggle === false ? true : false;
-            for (var i = 0; i < self.tenants.length; i++) {
-                if (self.tenants[i].id === id) {
-                    self.tenant = angular.copy(self.tenants[i]);
-                    this.arrayIndex = i;
-                    break;
-                }
-            }
-            console.log(self.tenant);
+            self.tenant = angular.copy(self.tenants[indexOfArray]);
+            self.entity = angular.copy(self.tenants[indexOfArray]);
+            arrayIndex = indexOfArray;
         };
 
         self.remove = function(id, arrayIndex) {
