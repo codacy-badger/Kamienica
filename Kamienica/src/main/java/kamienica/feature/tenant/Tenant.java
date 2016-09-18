@@ -18,13 +18,18 @@ import org.joda.time.LocalDate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
 
-import kamienica.core.Status;
+import kamienica.core.util.Status;
 import kamienica.feature.apartment.Apartment;
 
 @Entity
 @Table(name = "tenant")
 public class Tenant implements Serializable {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	
 	@Id
 	@GeneratedValue
 	@Column

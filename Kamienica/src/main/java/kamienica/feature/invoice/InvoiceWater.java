@@ -14,6 +14,10 @@ import kamienica.feature.reading.ReadingWater;
 @Table(name = "invoicewater")
 public class InvoiceWater extends Invoice implements Serializable {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 8938418725115169355L;
 	@OneToOne
 	private ReadingWater baseReading;
 

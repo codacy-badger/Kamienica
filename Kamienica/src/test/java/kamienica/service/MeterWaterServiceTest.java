@@ -9,7 +9,7 @@ import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 
-import kamienica.core.Media;
+import kamienica.core.util.Media;
 import kamienica.feature.meter.MeterService;
 import kamienica.feature.meter.MeterWater;
 

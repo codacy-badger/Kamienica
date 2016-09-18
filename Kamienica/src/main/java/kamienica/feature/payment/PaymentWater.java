@@ -15,6 +15,10 @@ import kamienica.feature.tenant.Tenant;
 @Table(name="paymentwater")
 public class PaymentWater extends PaymentAbstract implements Serializable{
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -7997656192652708867L;
 	@ManyToOne
 	private InvoiceWater invoice;
 

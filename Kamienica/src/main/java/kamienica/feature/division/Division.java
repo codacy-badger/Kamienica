@@ -20,6 +20,11 @@ import kamienica.feature.tenant.Tenant;
 @Entity
 @Table(name = "division")
 public class Division implements Serializable {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -643280853187144912L;
+	
 	@Id
 	@GeneratedValue
 	private Long id;

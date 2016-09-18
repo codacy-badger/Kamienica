@@ -6,6 +6,7 @@ import java.util.Map;
 
 import javax.validation.Valid;
 
+import org.hibernate.exception.ConstraintViolationException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -17,15 +18,15 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import kamienica.core.ApiResponse;
-import kamienica.core.ApiResponse2;
+import kamienica.core.util.ApiResponse;
+import kamienica.core.util.ApiResponse2;
 import kamienica.feature.apartment.ApartmentService;
 import kamienica.feature.tenant.Tenant;
 import kamienica.feature.tenant.TenantService;
 
 @RestController
 @RequestMapping("/api/v1/tenants")
-public class TenantRestController {
+public class TenantRestController extends AbstractController {
 
 	@Autowired
 	TenantService service;
@@ -55,7 +56,6 @@ public class TenantRestController {
 
 	@RequestMapping(method = RequestMethod.POST)
 	public ResponseEntity<?> create(@Valid @RequestBody Tenant tenant, BindingResult result) {
-		System.out.println("ttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt");
 		if (result.hasErrors()) {
 			ApiResponse message = new ApiResponse();
 			message.setErrors(result.getFieldErrors());
@@ -63,8 +63,8 @@ public class TenantRestController {
 		}
 		try {
 			service.saveTenant(tenant);
-		} catch (Exception e) {
-			result.rejectValue("apartmentNumber", "error.apartment", "Istniej już taki numer w bazie");
+		} catch (ConstraintViolationException e) {
+			result.rejectValue("apartmentNumber", "error.apartment", DUPLICATE_VALUE);
 
 			Map<String, String> test = new HashMap<>();
 			for (FieldError fieldError : result.getFieldErrors()) {

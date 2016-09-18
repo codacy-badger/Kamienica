@@ -10,7 +10,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.validation.BindingResult;
 
-import kamienica.core.Media;
+import kamienica.core.util.Media;
 
 @Service
 @Transactional

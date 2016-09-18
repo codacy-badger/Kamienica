@@ -14,8 +14,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
-import kamienica.core.Media;
 import kamienica.core.exception.NoMainCounterException;
+import kamienica.core.util.Media;
 import kamienica.feature.meter.MeterService;
 
 @Controller

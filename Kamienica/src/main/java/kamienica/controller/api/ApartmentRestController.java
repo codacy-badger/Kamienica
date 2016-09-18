@@ -20,9 +20,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.util.UriComponentsBuilder;
 
-import kamienica.core.ApiResponse;
-import kamienica.core.ApiResponse2;
-import kamienica.core.Message;
+import kamienica.core.util.ApiResponse;
+import kamienica.core.util.Message;
 import kamienica.feature.apartment.Apartment;
 import kamienica.feature.apartment.ApartmentService;
 

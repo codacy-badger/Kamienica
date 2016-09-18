@@ -15,6 +15,11 @@ import kamienica.feature.meter.MeterGas;
 @Table(name="readinggas")
 public class ReadingGas extends ReadingAbstract implements Serializable {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	
 	@Column(nullable = false)
 	private String unit;
 	@ManyToOne

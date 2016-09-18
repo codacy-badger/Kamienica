@@ -18,8 +18,9 @@ import org.hibernate.criterion.Projections;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import kamienica.core.Pair;
+import kamienica.core.util.Pair;
 
+@SuppressWarnings("unchecked")
 public abstract class AbstractJpaDao<T extends Object, Id extends Serializable> {
 
 	
@@ -37,6 +38,7 @@ public abstract class AbstractJpaDao<T extends Object, Id extends Serializable> 
 	private Class<T> persistentClass;
 
 
+	
 	public AbstractJpaDao() {
 		try {
 			ParameterizedType parameterizedType = getGenericParameterizedType(getClass());

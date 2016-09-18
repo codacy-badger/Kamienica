@@ -14,6 +14,11 @@ import kamienica.feature.reading.ReadingEnergy;
 @Table(name = "invoiceenergy")
 public class InvoiceEnergy extends Invoice implements Serializable {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	
 	@OneToOne
 	private ReadingEnergy baseReading;
 

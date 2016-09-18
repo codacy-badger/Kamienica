@@ -11,7 +11,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import kamienica.core.Media;
+import kamienica.core.util.Media;
 import kamienica.feature.apartment.Apartment;
 import kamienica.feature.apartment.ApartmentDao;
 import kamienica.feature.invoice.InvoiceAbstractDao;

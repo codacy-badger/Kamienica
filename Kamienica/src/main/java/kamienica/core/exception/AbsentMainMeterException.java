@@ -2,6 +2,11 @@ package kamienica.core.exception;
 
 public class AbsentMainMeterException extends Exception {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -1852521379355997801L;
+
 	public AbsentMainMeterException() {
 		// TODO Auto-generated constructor stub
 	}

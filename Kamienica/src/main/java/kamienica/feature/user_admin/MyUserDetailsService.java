@@ -12,7 +12,7 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Component;
 
-import kamienica.core.Status;
+import kamienica.core.util.Status;
 import kamienica.feature.tenant.Tenant;
 import kamienica.feature.tenant.TenantService;
 

@@ -9,8 +9,8 @@ import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 
-import kamienica.core.Media;
 import kamienica.core.exception.InvalidDivisionException;
+import kamienica.core.util.Media;
 import kamienica.feature.apartment.Apartment;
 import kamienica.feature.apartment.ApartmentService;
 import kamienica.feature.division.DivisionService;

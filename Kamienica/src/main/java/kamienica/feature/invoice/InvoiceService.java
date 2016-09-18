@@ -3,8 +3,8 @@ package kamienica.feature.invoice;
 import java.util.List;
 import java.util.Map;
 
-import kamienica.core.Media;
 import kamienica.core.exception.InvalidDivisionException;
+import kamienica.core.util.Media;
 import kamienica.feature.payment.PaymentEnergy;
 import kamienica.feature.payment.PaymentGas;
 import kamienica.feature.payment.PaymentWater;

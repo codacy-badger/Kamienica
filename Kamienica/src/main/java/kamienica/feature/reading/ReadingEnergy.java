@@ -15,6 +15,11 @@ import kamienica.feature.meter.MeterEnergy;
 @Table(name = "readingenergy")
 public class ReadingEnergy extends ReadingAbstract implements Serializable {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	
 	@Column(nullable = false)
 	private String unit;
 	@ManyToOne

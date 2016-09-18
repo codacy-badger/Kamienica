@@ -6,7 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.convert.converter.Converter;
 import org.springframework.stereotype.Component;
 
-import kamienica.core.Media;
+import kamienica.core.util.Media;
 import kamienica.feature.reading.ReadingEnergy;
 import kamienica.feature.reading.ReadingService;
 

@@ -7,8 +7,8 @@ import java.util.Set;
 
 import org.joda.time.LocalDate;
 
-import kamienica.core.Media;
 import kamienica.core.exception.NoMainCounterException;
+import kamienica.core.util.Media;
 import kamienica.feature.invoice.InvoiceGas;
 
 public interface ReadingService {

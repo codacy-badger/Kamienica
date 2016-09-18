@@ -13,6 +13,11 @@ import kamienica.feature.apartment.Apartment;
 @Table(name="meterenergy")
 public class MeterEnergy extends MeterAbstract implements Serializable {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1767126420777438931L;
+
 	@Autowired
 	public MeterEnergy(String description, String serialNumber, String unit, Apartment apartment) {
 		super(description, serialNumber, unit, apartment);

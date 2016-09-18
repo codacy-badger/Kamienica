@@ -11,8 +11,8 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import kamienica.core.Media;
 import kamienica.core.exception.NoMainCounterException;
+import kamienica.core.util.Media;
 import kamienica.feature.invoice.InvoiceGas;
 import kamienica.feature.meter.MeterDao;
 import kamienica.feature.meter.MeterEnergy;

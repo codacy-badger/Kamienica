@@ -19,6 +19,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 @Table(name = "apartment")
 public class Apartment implements Serializable {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	
 	@Id
 	@GeneratedValue
 	@Column

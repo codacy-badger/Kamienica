@@ -15,6 +15,12 @@ import kamienica.feature.meter.MeterWater;
 @Table(name = "readingwater")
 public class ReadingWater extends ReadingAbstract implements Serializable {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	
+	
 	@Column(nullable = false)
 	private String unit;
 	@ManyToOne

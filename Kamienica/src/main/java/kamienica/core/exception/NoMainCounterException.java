@@ -2,6 +2,11 @@ package kamienica.core.exception;
 
 public class NoMainCounterException extends Exception {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 5675248840929869633L;
+
 	public NoMainCounterException() {
 		super("Brakuje licznika głównego. Wprowadź brakujące liczniki");
 	}

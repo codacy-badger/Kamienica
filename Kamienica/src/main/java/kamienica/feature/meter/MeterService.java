@@ -5,7 +5,7 @@ import java.util.Set;
 
 import org.springframework.validation.BindingResult;
 
-import kamienica.core.Media;
+import kamienica.core.util.Media;
 
 public interface MeterService {
 

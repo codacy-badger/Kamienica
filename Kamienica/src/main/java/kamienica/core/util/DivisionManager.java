@@ -1,3 +1,4 @@
+package kamienica.core.util;
 //package kamienica.core;
 //
 //import java.text.DecimalFormat;
