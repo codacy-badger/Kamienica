@@ -94,7 +94,7 @@ public class Division implements Serializable {
 
 	@Override
 	public String toString() {
-		return "\nPodzial: " + tenant.getFullName() + "->" + apartment.getDescription() + "-> podzial=" + divisionValue
+		return "\nPodzial: " + tenant.fullName() + "->" + apartment.getDescription() + "-> podzial=" + divisionValue
 				+ "]" + " ID " + getId();
 	}
 

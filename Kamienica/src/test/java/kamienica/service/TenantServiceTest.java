@@ -33,7 +33,7 @@ public class TenantServiceTest extends AbstractServiceTest {
 	public void loadByMail() {
 		Tenant tenant = service.loadByMail("folik@wp.pl");
 		assertNotNull(tenant);
-		assertEquals("Maciej Folik", tenant.getFullName());
+		assertEquals("Maciej Folik", tenant.fullName());
 	}
 
 }

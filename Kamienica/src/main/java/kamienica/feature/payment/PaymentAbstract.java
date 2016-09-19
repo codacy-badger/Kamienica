@@ -67,7 +67,7 @@ public abstract class PaymentAbstract {
 
 	@Override
 	public String toString() {
-		return "Opłata dla " + tenant.getFullName() + " z dnia " + paymentDate.toString() + " Wynosi " + paymentAmount;
+		return "Opłata dla " + tenant.fullName() + " z dnia " + paymentDate.toString() + " Wynosi " + paymentAmount;
 	}
 
 	public PaymentAbstract() {

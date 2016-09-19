@@ -101,8 +101,12 @@ public class Tenant implements Serializable {
 		this.password = "witaj";
 	}
 
-	public String getFullName() {
+	public String fullName() {
 		return firstName + " " + lastName;
+	}
+	
+	public String blablaba() {
+		return "dupa";
 	}
 
 	public String getFirstName() {

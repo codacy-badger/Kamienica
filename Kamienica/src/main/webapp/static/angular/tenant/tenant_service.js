@@ -7,9 +7,8 @@ App.factory('Tenant', ['$resource', function ($resource) {
     		'http://localhost:8080/Kamienica/api/v1/tenants/:id.json', 
     		{id: '@id'},//Handy for update & delete. id will be set with id of instance
     		{
-    			update: {
-    			      method: 'PUT' // To send the HTTP Put request when calling this custom update method.
-    			}
+    			query:  {method:'GET', isArray:true},
+    			update: {method: 'PUT'}
     			
     		}
     );
