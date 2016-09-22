@@ -158,32 +158,29 @@
 							<select name='apartment' ng-model="ctrl.tenant.apartment"
 								ng-required='true' class="form-control"
 								ng-options="a.description for a in ctrl.apartments"
-								>
+								><option>{{ctrl.tenant.apartment}}</option>
 							</select>
 
 							 
-							<!--  
-							<select name='apartment' ng-model="ctrl.tenant.apartment"
+						
+							<!--  select name='apartment' ng-model="ctrl.tenant.apartment"
 								ng-required='true' class="form-control">
 								<option ng-repeat="item in ctrl.apartments"
 									value="{{item}}"
 									ng-selected="ctrl.tenant.apartment.description == item.description">
 									{{item.description}}</option>
-									<option></option>
-							</select>
+									
+							</select-->
 							
-							-->
-							<!-- <select name="repeatSelect" id="repeatSelect"
+							
+							 <!--  select name="repeatSelect" id="repeatSelect"
 								ng-model="ctrl.apartment" class="form-control" ng-required='true'>
 								<option ng-repeat="option in ctrl.apartments"
 									value="{{option}}">{{option.description}} test</option>
-							</select> -->
+							</select--> 
 							<!-- http://stackoverflow.com/questions/37442061/angularjs-ng-options-with-nested-json-based-on-previous-select-option -->
 
-							<!-- <input type="text" ng-model="ctrl.apartment"
-								class="form-control" path='description'
-								placeholder="Pole wymagane" ng-required='true' name="apartment"
-								value="ctrl.apartment.description" /> -->
+						
 							<p class="help-block">
 								<span class='error' ng-show="myForm.tenant_apartment.$invalid">Pole
 									wymagane</span> <span class='error'>{{errors.tenant_apartment}}</span>

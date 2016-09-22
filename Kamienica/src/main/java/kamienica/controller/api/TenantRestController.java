@@ -92,19 +92,14 @@ public class TenantRestController extends AbstractController {
 
 	// update
 	@RequestMapping(value = "/{id}", method = RequestMethod.PUT)
-	public ResponseEntity<Tenant> updateUser(@PathVariable("id") Long id, @RequestBody Tenant tenant) {
+	public ResponseEntity<?> updateUser(@Valid @PathVariable("id") Long id, @RequestBody Tenant tenant,
+			BindingResult result) {
 
-		System.out.println("-----------------------------------------------------");
-		// Apartment currentApartment = apartmentService.getById(id);
-
-		// if (currentApartment == null) {
-		// return new ResponseEntity<Apartment>(HttpStatus.NOT_FOUND);
-		// }
-
-		// currentApartment.setApartmentNumber(apartment.getApartmentNumber());
-		// currentApartment.setDescription(apartment.getDescription());
-		// currentApartment.setIntercom(apartment.getIntercom());
-
+		if (result.hasErrors()) {
+			ApiResponse message = new ApiResponse();
+			message.setErrors(result.getFieldErrors());
+			return new ResponseEntity<ApiResponse>(message, HttpStatus.UNPROCESSABLE_ENTITY);
+		}
 		service.updateTenant(tenant);
 		return new ResponseEntity<Tenant>(tenant, HttpStatus.OK);
 	}

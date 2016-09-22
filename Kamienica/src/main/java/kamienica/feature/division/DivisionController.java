@@ -88,4 +88,11 @@ public class DivisionController {
 		return new ModelAndView("/Admin/Division/DivisionList", "model", model);
 
 	}
+	
+	@RequestMapping(value = "/divisionRest", method = RequestMethod.GET)
+	public ModelAndView apartmentList2() {
+
+		return new ModelAndView("/Admin/Division/DivisionRest");
+
+	}
 }

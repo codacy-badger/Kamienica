@@ -213,6 +213,8 @@
 										class="fa fa-plus" aria-hidden="true"></i> Nowe</a></li>
 								<li><a href="${path}/Admin/Division/divisionList.html"><i
 										class="fa fa-list" aria-hidden="true"></i> Lista</a></li>
+								<li><a href="${path}/Admin/Division/divisionRest.html"><i
+										class="fa fa-list" aria-hidden="true"></i> REST</a></li>
 							</ul></li>
 						<li><a href=#>Konfiguracja<span class="fa arrow"></span></a>
 							<ul class="nav nav-third-level">

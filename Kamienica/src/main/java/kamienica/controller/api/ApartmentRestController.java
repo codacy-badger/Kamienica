@@ -94,19 +94,25 @@ public class ApartmentRestController extends AbstractController{
 
 	// update
 	@RequestMapping(value = "/{id}", method = RequestMethod.PUT)
-	public ResponseEntity<Apartment> updateUser(@PathVariable("id") Long id, @RequestBody Apartment apartment) {
+	public ResponseEntity<?> updateUser(@PathVariable("id") Long id, @RequestBody Apartment apartment, BindingResult result) {
 
-		// Apartment currentApartment = apartmentService.getById(id);
+		if (result.hasErrors()) {
+			ApiResponse message = new ApiResponse();
+			message.setErrors(result.getFieldErrors());
+			return new ResponseEntity<ApiResponse>(message, HttpStatus.UNPROCESSABLE_ENTITY);
+		}
+		try {
+			apartmentService.update(apartment);
+		} catch (Exception e) {
+			result.rejectValue("apartmentNumber", "error.apartment", UNEXPECTED_ERROR);
+			Map<String, String> test = new HashMap<>();
+			for (FieldError fieldError : result.getFieldErrors()) {
+				test.put(fieldError.getField(), fieldError.getDefaultMessage());
+			}
+			return new ResponseEntity<Map<String, String>>(test, HttpStatus.CONFLICT);
+		};
 
-		// if (currentApartment == null) {
-		// return new ResponseEntity<Apartment>(HttpStatus.NOT_FOUND);
-		// }
-
-		// currentApartment.setApartmentNumber(apartment.getApartmentNumber());
-		// currentApartment.setDescription(apartment.getDescription());
-		// currentApartment.setIntercom(apartment.getIntercom());
-
-		apartmentService.update(apartment);
+		
 		return new ResponseEntity<Apartment>(apartment, HttpStatus.OK);
 	}
 
