@@ -14,13 +14,13 @@ import kamienica.feature.division.DivisionService;
 
 @RestController
 @RequestMapping("/api/v1/divisions")
-public class DivisionRestController extends AbstractController {
+public class DivisionApi extends AbstractController {
 
 	@Autowired
 	DivisionService service;
 
 	@RequestMapping(method = RequestMethod.GET)
-	public ResponseEntity<List<Division>> getList() {
+	public ResponseEntity<?> getList() {
 		List<Division> list = service.getList();
 		if (list.isEmpty()) {
 			return new ResponseEntity<List<Division>>(HttpStatus.NO_CONTENT);

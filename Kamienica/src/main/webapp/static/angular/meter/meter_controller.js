@@ -1,9 +1,9 @@
 'use strict';
 
-App.controller('DivisionController', [
+App.controller('MeterController', [
     '$scope',
-    'Division','Tenant', 'Apartment', '$http',
-    function($scope, Division,  Tenant, Apartment,$http) {
+    'Meter', '$http',
+    function($scope, Meter, $http) {
 
         $scope.toggle = true;
         $scope.errorField = false;
@@ -12,23 +12,21 @@ App.controller('DivisionController', [
         };
 
         var self = this;
-        self.division = new Division();
+        self.meter = new Meter();
         self.entity;
-        self.divisions = [];
+        self.meters = [];
         self.errors = []
         var arrayIndex;
-       self.tenants = Tenant.query();
-        self.apartments = Apartment.query();
+
 
         self.fetchAll = function() {
-            self.divisions = Division.query();
-           console.log(self.divisions);
+            self.meters = Meter.query();
         };
 
         self.fetchAll();
 
 
-//        var testVar = $http.get('http://localhost:8080/Kamienica/api/v1/divisions/paginated.json?page=1&size=2').
+//        var testVar = $http.get('http://localhost:8080/Kamienica/api/v1/meters/paginated.json?page=1&size=2').
 //        success(function(data, status, headers, config) {
 //                console.log('status');
 //                console.log(status);
@@ -54,10 +52,10 @@ App.controller('DivisionController', [
 
 
         self.createItem = function() {
-            self.division.$save(function() {}).then(function(ok) {
+            self.meter.$save(function() {}).then(function(ok) {
                 $scope.errorField = true;
                 $scope.errorMsg = 'zapisano do bazy';
-                self.divisions.push(ok);
+                self.meters.push(ok);
                 self.reset();
                 $scope.toggle = $scope.toggle === false ? true : false;
             }, function(error) {
@@ -69,9 +67,9 @@ App.controller('DivisionController', [
 
         self.updateItem = function() {
 
-            self.division.$update(function() {}).then(function(ok) {
+            self.meter.$update(function() {}).then(function(ok) {
                 console.log(ok);
-                self.divisions.splice(arrayIndex, 1, ok);
+                self.meters.splice(arrayIndex, 1, ok);
             }, function(error) {
                 $scope.errors = error.data;
                 $scope.errorField = true;
@@ -83,11 +81,11 @@ App.controller('DivisionController', [
         };
 
         self.deleteItem = function(identity, indexArray) {
-            var division = Division.get({
+            var meter = Meter.get({
                 id: identity
             }, function() {
-                division.$delete(function() {}).then(function(ok) {
-                    self.divisions.splice(indexArray, 1);
+                meter.$delete(function() {}).then(function(ok) {
+                    self.meters.splice(indexArray, 1);
                 }, function(error) {
                     $scope.errorField = true;
                     $scope.errorMsg = error.data.message;
@@ -96,8 +94,8 @@ App.controller('DivisionController', [
         };
 
         self.submit = function() {
-            console.log(self.division);
-            if (self.division.id == null) {
+            console.log(self.meter);
+            if (self.meter.id == null) {
                 self.createItem();
             } else {
                 self.updateItem();
@@ -109,15 +107,15 @@ App.controller('DivisionController', [
         self.edit = function(id, indexOfArray) {
             self.clearError();
             $scope.toggle = $scope.toggle === false ? true : false;
-            self.division = angular.copy(self.divisions[indexOfArray]);
-            self.entity = angular.copy(self.divisions[indexOfArray]);
+            self.meter = angular.copy(self.meters[indexOfArray]);
+            self.entity = angular.copy(self.meters[indexOfArray]);
             arrayIndex = indexOfArray;
 
         };
 
         self.remove = function(id, arrayIndex) {
             self.clearError();
-            if (self.division.id === id) { // If it is the one shown on
+            if (self.meter.id === id) { // If it is the one shown on
                 // screen, reset screen
                 self.reset();
             }
@@ -126,7 +124,7 @@ App.controller('DivisionController', [
         };
 
         self.reset = function() {
-            self.division = new Division();
+            self.meter = new Meter();
             $scope.myForm.$setPristine(); // reset Form
 
         };

@@ -28,7 +28,7 @@ import kamienica.feature.tenant.TenantService;
 
 @RestController
 @RequestMapping("/api/v1/tenants")
-public class TenantRestController extends AbstractController {
+public class TenantApi extends AbstractController {
 
 	@Autowired
 	TenantService service;
