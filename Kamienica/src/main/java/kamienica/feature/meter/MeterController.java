@@ -314,6 +314,26 @@ public class MeterController {
 		meterService.delete(id, Media.GAS);
 		return new ModelAndView("redirect:/Admin/Meter/meterGasList.html");
 	}
+	
+
+	@RequestMapping(value = "/Admin/Meter/energyRest")
+	public ModelAndView energyRest() {
+
+		return new ModelAndView("/Admin/Meter/energyMeter");
+	}
+	
+	@RequestMapping(value = "/Admin/Meter/gasRest")
+	public ModelAndView gasRest() {
+
+		return new ModelAndView("/Admin/Meter/gasMeter");
+	}
+	
+	@RequestMapping(value = "/Admin/Meter/waterRest")
+	public ModelAndView waterRest() {
+
+		return new ModelAndView("/Admin/Meter/waterMeter");
+	}
+	
 
 	// ---------------------------------private_metods-----------------------------------------
 

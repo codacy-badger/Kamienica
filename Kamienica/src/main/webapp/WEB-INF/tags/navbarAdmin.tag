@@ -300,6 +300,13 @@
 				<li><a href="#"><i class="fa fa-bars"></i> Liczniki<span
 						class="fa arrow"></span></a>
 					<ul class="nav nav-second-level">
+					<li><a href="${path}/Admin/Meter/energyRest.html"><i
+										class="fa fa-plus" aria-hidden="true"></i> Energia Rest</a></li>
+						<li><a href="${path}/Admin/Meter/gasRest.html"><i
+										class="fa fa-plus" aria-hidden="true"></i> Gaz Rest</a></li>
+											<li><a href="${path}/Admin/Meter/waterRest.html"><i
+										class="fa fa-plus" aria-hidden="true"></i> Woda Rest</a></li>
+					
 						<li><a href="panels-wells.html"> Gaz<span
 								class="fa arrow"></span></a>
 							<ul class="nav nav-third-level">
