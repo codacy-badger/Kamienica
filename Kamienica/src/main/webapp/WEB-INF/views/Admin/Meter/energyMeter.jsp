@@ -45,6 +45,173 @@
 			<div id='form' class="fadein fadeout showpanel panel row"
 				ng-show="!toggle">
 
+				<form class="form-horizontal" ng-submit="ctrl.submit()"
+					name="myForm">
+					<input path="id" readonly="true" type='hidden' /> <input
+						type="hidden" ng-model="ctrl.meterEnergy.id" />
+						
+						
+					<div class="form-group">
+						<label for="inputEmail3" class="col-sm-3 control-label">Opis</label>
+						<div class="col-sm-9">
+							<input type="text" ng-model="ctrl.meterEnergy.description"
+								class="form-control" name="description" ng-required='true'
+								ng-minlength="4" />
+							<p class="help-block">
+								<span class='error' ng-show="myForm.description.$invalid">Pole
+									wymagane</span><span class='error'>{{errors.firstName}}</span>
+							</p>
+						</div>
+					</div>
+					
+					<div class="form-group">
+						<label for="inputEmail3" class="col-sm-3 control-label">Nr.
+								seryjny</label>
+						<div class="col-sm-9">
+							<input type="text" ng-model="ctrl.meterEnergy.serialNumber"
+								class="form-control" name="serialNumber" path='serialNumber'
+								ng-required='true' ng-minlength="1" />
+							<p class="help-block">
+								<span class='error' ng-show="myForm.serialNumber.$invalid">Pole
+									wymagane</span><span class='error'>{{errors.lastName}}</span>
+							</p>
+						</div>
+					</div>
+					<div class="form-group">
+						<label for="inputEmail3" class="col-sm-3 control-label">Jednostka</label>
+						<div class="col-sm-9">
+							<input type="email" ng-model="ctrl.meterEnergy.unit"
+								class="form-control" name="unit" path='unit'
+								ng-required='true' />
+							<p class="help-block">
+								<span class='error' ng-show="myForm.unit.$invalid">Niepoprawny
+									Format</span><span class='error'>{{errors.unit}}</span>
+							</p>
+						</div>
+					</div>
+
+					<div class="form-group">
+						<label for="inputEmail3" class="col-sm-3 control-label">Telefon</label>
+						<div class="col-sm-9">
+							<input type="text" ng-model="ctrl.tenant.phone"
+								class="form-control" path='phone' placeholder="Opcjonalne"
+								name="phone" ng-pattern="/^[0-9]{1,12}$/" ng-min=0 />
+
+							<!-- ng-required='true' ng-pattern="/^[0-9]{1,7}$/"  -->
+							<p class="help-block">
+								<span class='error' ng-show="myForm.phone.$invalid">Tylko
+									liczby</span> <span class='error'>{{errors.phone}}</span>
+							</p>
+						</div>
+					</div>
+					<!-- https://scotch.io/tutorials/angularjs-form-validation -->
+
+					<div class="form-group">
+						<label for="inputEmail3" class="col-sm-3 control-label">Mieszkanie</label>
+						<div class="col-sm-9">
+							<select name='apartment' ng-model="ctrl.tenant.apartment"
+								ng-required='true' class="form-control"
+								ng-options="a.description for a in ctrl.apartments"
+								><option>{{ctrl.tenant.apartment}}</option>
+							</select>
+
+							 
+						
+							<!--  select name='apartment' ng-model="ctrl.tenant.apartment"
+								ng-required='true' class="form-control">
+								<option ng-repeat="item in ctrl.apartments"
+									value="{{item}}"
+									ng-selected="ctrl.tenant.apartment.description == item.description">
+									{{item.description}}</option>
+									
+							</select-->
+							
+							
+							 <!--  select name="repeatSelect" id="repeatSelect"
+								ng-model="ctrl.apartment" class="form-control" ng-required='true'>
+								<option ng-repeat="option in ctrl.apartments"
+									value="{{option}}">{{option.description}} test</option>
+							</select--> 
+							<!-- http://stackoverflow.com/questions/37442061/angularjs-ng-options-with-nested-json-based-on-previous-select-option -->
+
+						
+							<p class="help-block">
+								<span class='error' ng-show="myForm.tenant_apartment.$invalid">Pole
+									wymagane</span> <span class='error'>{{errors.tenant_apartment}}</span>
+							</p>
+						</div>
+					</div>
+
+					<div class="form-group">
+						<label for="inputEmail3" class="col-sm-3 control-label">Data
+							Wprowadzenia</label>
+						<div class="col-sm-9">
+							<input type="text" datetime="yyyy-MM-dd"
+								ng-model="ctrl.tenant.movementDate" class="form-control"
+								path='movementDate' placeholder="YYYY/MM/DD" name="movementDate"
+								ng-required='true' />
+							<p class="help-block">
+								<span class='error' ng-show="myForm.movementDate.$invalid">Pole
+									wymagane</span> <span class='error'>{{errors.movementDate}}</span>
+							</p>
+						</div>
+					</div>
+
+					<div class="form-group">
+						<label for="inputEmail3" class="col-sm-3 control-label">Prawa</label>
+						<div class="col-sm-9">
+							<input type="radio" ng-model="ctrl.tenant.role" value="USER"
+								required name='role' />Najemca 
+						    <input type="radio" ng-model="ctrl.tenant.role" value="ADMIN" 
+						    	required name='role' />Administrator
+
+							<p class="help-block">
+								<span class='error' ng-show="myForm.role.$invalid">Pole
+									wymagane</span> <span class='error'>{{errors.role}}</span>
+							</p>
+						</div>
+					</div>
+
+					<div class="form-group">
+						<label  class="col-sm-3 control-label">Status</label>
+						<div class="col-sm-9">
+							<input type="radio" ng-model="ctrl.tenant.status" value="Aktwny"
+								required name='status' />Aktywny 
+							<input type="radio" ng-model="ctrl.tenant.status" value="Nieaktywny" 
+								required name='status' /> Nieaktywny
+
+							<p class="help-block">
+								<span class='error' ng-show="myForm.status.$invalid">Pole
+									wymagane</span> <span class='error'>{{errors.status}}</span>
+							</p>
+						</div>
+					</div>					
+					
+					<div class="form-group">
+						<label for="inputEmail3" class="col-sm-3 control-label">Hasło</label>
+						<div class="col-sm-9">
+							<input type="text" ng-model="ctrl.tenant.password"
+								class="form-control" name="password" ng-required='true'
+								ng-minlength="5" value='sdf' />
+							<p class="help-block">
+								<span class='error' ng-show="myForm.password.$invalid">Pole
+									wymagane</span><span class='error'>{{errors.password}}</span>
+							</p>
+						</div>
+					</div>
+
+					<div class="form-group ">
+						<div class="col-lg-12">
+							<input type="submit"
+								value="{{!ctrl.meterEnergry.id ? 'Dodaj' : 'Nadpisz'}}"
+								class="btn btn-default " ng-disabled="myForm.$invalid">
+							<button type="button" ng-click="ctrl.reset()"
+								class="btn btn-default " ng-disabled="myForm.$pristine">Reset
+							</button>
+						</div>
+					</div>
+				</form>
+				
 				
 			</div>
 
