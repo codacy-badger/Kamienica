@@ -77,7 +77,7 @@ public class GasConsumptionCalculator {
 						double zuzycieGazuCwuDlaDanegoMieszkania = (mapaZuzyciaCieplejWody.get(nrMieszkania)
 								/ sumaZuzyciaCieplejWody) * zuzycieCWU;
 						double tmp = out.get(i).getUsage() + zuzycieGazuCwuDlaDanegoMieszkania;
-						out.get(i).setUsage(decimalFormat(tmp));
+						out.get(i).setUsage(CommonUtils.decimalFormat(tmp));
 					}
 				}
 			}
@@ -177,10 +177,4 @@ public class GasConsumptionCalculator {
 		return out;
 	}
 
-	private static double decimalFormat(double input) {
-		NumberFormat nf = NumberFormat.getNumberInstance(Locale.ENGLISH);
-		DecimalFormat df = (DecimalFormat) nf;
-		df.applyPattern("#.00");
-		return Double.parseDouble(df.format(input));
-	}
 }

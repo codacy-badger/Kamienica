@@ -8,17 +8,15 @@ import org.joda.time.Days;
 
 import kamienica.feature.apartment.Apartment;
 import kamienica.feature.reading.ReadingAbstract;
+import kamienica.feature.reading.ReadingEnergy;
 import kamienica.feature.usagevalue.UsageValue;
 
 public class ConsumptionCalculator {
 
-	Predicate<Apartment> notNull = p -> p != null;
-
-	public List<UsageValue> countConsupmtion(List<Apartment> apartment, List<ReadingAbstract> oldReadings,
+	public static ArrayList<UsageValue> countConsupmtion(List<Apartment> apartment, List<ReadingAbstract> oldReadings,
 			List<ReadingAbstract> newReadings) {
-		List<UsageValue> output = new ArrayList<UsageValue>();
+		ArrayList<UsageValue> out = new ArrayList<UsageValue>();
 		for (Apartment m : apartment) {
-//scasd
 			UsageValue usageValue = new UsageValue();
 			usageValue.setDescription("Zuzycie calkowite za: " + m.getDescription());
 			usageValue.setApartment(m);
@@ -26,14 +24,24 @@ public class ConsumptionCalculator {
 			double sumCurrent = 0;
 
 			for (int i = 0; i < newReadings.size(); i++) {
-				sumCurrent += extractReadingValue(m, newReadings.get(i));
+				if (newReadings.get(i).getMeter().getApartment() != null) {
+					if (newReadings.get(i).getMeter().getApartment().getApartmentNumber() == m.getApartmentNumber()) {
+						sumCurrent = sumCurrent + newReadings.get(i).getValue();
+					}
+				}
+				if (!oldReadings.isEmpty()) {
+					if (oldReadings.get(i).getMeter().getApartment() != null) {
+						if (oldReadings.get(i).getMeter().getApartment().getApartmentNumber() == m
+								.getApartmentNumber()) {
+							sumPrevious = sumPrevious + oldReadings.get(i).getValue();
+						}
+					}
+				}
 			}
 
-			for (int i = 0; i < oldReadings.size(); i++) {
-				sumPrevious += extractReadingValue(m, oldReadings.get(i));
-			}
+			double usage = sumCurrent - sumPrevious;
 
-			usageValue.setUsage((sumCurrent - sumPrevious));
+			usageValue.setUsage(usage);
 			usageValue.setUnit(newReadings.get(0).getUnit());
 			if (oldReadings.isEmpty()) {
 				usageValue.setDaysBetweenReadings(0);
@@ -41,49 +49,11 @@ public class ConsumptionCalculator {
 				usageValue.setDaysBetweenReadings(
 						Days.daysBetween(oldReadings.get(0).getReadingDate(), newReadings.get(0).getReadingDate())
 								.getDays());
-				// tmp.setDaysBetweenReadings(Days.daysBetween(new
-				// DateTime(oldReadings.get(0).getReadingDate()),
-				// new
-				// DateTime(newReadings.get(0).getReadingDate())).getDays());
 			}
-			output.add(usageValue);
+			out.add(usageValue);
 		}
 
-		return output;
+		return out;
 
-	}
-
-//	private UsageValue createUsageValueForApartment(Apartment m, List<ReadingAbstract> oldReadings,
-//			List<ReadingAbstract> newReadings) {
-//		UsageValue usageValue = new UsageValue();
-//		usageValue.setDescription("Zuzycie calkowite za: " + m.getDescription());
-//		usageValue.setApartment(m);
-//		usageValue.setUsage(calulateUsage());
-//		return usageValue;
-//	}
-//
-//	private double calulateUsage(Apartment m, List<ReadingAbstract> oldReadings) {
-//		double sumPrevious = getReadingValuesForApartment;
-//		double sumCurrent = 0;
-//		return 0;
-//	}
-
-	private double getReadingValuesForApartment(Apartment apartment, List<ReadingAbstract> list) {
-		double output = 0;
-
-		for (int i = 0; i < list.size(); i++) {
-			output += extractReadingValue(apartment, list.get(i));
-		}
-		return output;
-	}
-
-	private double extractReadingValue(Apartment apartment, ReadingAbstract reading) {
-		if (reading.getMeter().getApartment() != null) {
-			if (reading.getMeter().getApartment().getApartmentNumber() == apartment.getApartmentNumber()) {
-				return reading.getValue();
-			}
-		}
-
-		return 0;
 	}
 }
