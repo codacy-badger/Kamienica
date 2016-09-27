@@ -57,14 +57,14 @@ public class ApartmentApi extends AbstractController{
 	}
 
 	// --------------single_apartment----
-	@RequestMapping(value = "/{id}", method = RequestMethod.GET)
-	public ResponseEntity<Apartment> getById(@PathVariable Long id) {
-		Apartment apartment = apartmentService.getById(id);
-		if (apartment == null) {
-			return new ResponseEntity<Apartment>(HttpStatus.NOT_FOUND);
-		}
-		return new ResponseEntity<Apartment>(apartment, HttpStatus.OK);
-	}
+//	@RequestMapping(value = "/{id}", method = RequestMethod.GET)
+//	public ResponseEntity<Apartment> getById(@PathVariable Long id) {
+//		Apartment apartment = apartmentService.getById(id);
+//		if (apartment == null) {
+//			return new ResponseEntity<Apartment>(HttpStatus.NOT_FOUND);
+//		}
+//		return new ResponseEntity<Apartment>(apartment, HttpStatus.OK);
+//	}
 
 	@RequestMapping(method = RequestMethod.POST)
 	public ResponseEntity<?> createApartment(@Valid @RequestBody Apartment apartment, BindingResult result) {

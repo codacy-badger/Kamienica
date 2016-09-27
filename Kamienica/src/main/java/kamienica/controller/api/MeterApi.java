@@ -7,6 +7,7 @@ import java.util.Map;
 import javax.validation.Valid;
 
 import org.hibernate.exception.ConstraintViolationException;
+import org.joda.time.LocalDate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -16,55 +17,46 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import kamienica.core.util.ApiResponse;
-import kamienica.core.util.ApiResponse2;
+import kamienica.core.util.Media;
 import kamienica.core.util.Message;
-import kamienica.feature.apartment.ApartmentService;
+import kamienica.feature.apartment.Apartment;
+import kamienica.feature.meter.MeterAbstract;
+import kamienica.feature.meter.MeterService;
 import kamienica.feature.tenant.Tenant;
-import kamienica.feature.tenant.TenantService;
 
 @RestController
-@RequestMapping("/api/v1/tenants")
-public class TenantApi extends AbstractController {
+@RequestMapping("/api/v1/meters")
+public class MeterApi extends AbstractController {
 
 	@Autowired
-	TenantService service;
-	@Autowired
-	ApartmentService apService;
+	MeterService service;
 
-	@RequestMapping(method = RequestMethod.GET)
-	public ResponseEntity<?> getList() {
-		List<Tenant> list = service.getList();
+	@RequestMapping(value = "/{media}", method = RequestMethod.GET)
+	public ResponseEntity<?> getList(@PathVariable Media media, @RequestParam(required = false) LocalDate date) {
+
+		List<? extends MeterAbstract> list = service.getList(media);
 		if (list.isEmpty()) {
-			return new ResponseEntity<List<Tenant>>(HttpStatus.NOT_FOUND);
+			return new ResponseEntity<List<Apartment>>(HttpStatus.NOT_FOUND);
 		}
-		ApiResponse2<Tenant> response = new ApiResponse2<>();
-		response.setObjectList(list);
-		return new ResponseEntity<List<Tenant>>(list, HttpStatus.OK);
-	}
 
-	@RequestMapping(value = "/{id}", method = RequestMethod.GET)
-	public ResponseEntity<Tenant> getById(@PathVariable Long id) {
-		Tenant tenant = service.getTenantById(id);
-		if (tenant == null) {
-			return new ResponseEntity<Tenant>(HttpStatus.NOT_FOUND);
-		}
-		return new ResponseEntity<Tenant>(tenant, HttpStatus.OK);
+		return new ResponseEntity<List<? extends MeterAbstract>>(list, HttpStatus.OK);
 	}
-
-	@RequestMapping(method = RequestMethod.POST)
-	public ResponseEntity<?> create(@Valid @RequestBody Tenant tenant, BindingResult result) {
+	
+	@RequestMapping(value = "/{media}", method = RequestMethod.POST)
+	public ResponseEntity<?> create(@PathVariable Media media, @Valid @RequestBody MeterAbstract meter, BindingResult result) {
 		if (result.hasErrors()) {
 			ApiResponse message = new ApiResponse();
 			message.setErrors(result.getFieldErrors());
 			return new ResponseEntity<ApiResponse>(message, HttpStatus.UNPROCESSABLE_ENTITY);
 		}
 		try {
-			service.saveTenant(tenant);
+			service.save(meter, media);;
 		} catch (ConstraintViolationException e) {
-			result.rejectValue("apartmentNumber", "error.apartment", DUPLICATE_VALUE);
+			result.rejectValue("serialNumber", "error.serialNumber", DUPLICATE_VALUE);
 
 			Map<String, String> test = new HashMap<>();
 			for (FieldError fieldError : result.getFieldErrors()) {
@@ -72,15 +64,14 @@ public class TenantApi extends AbstractController {
 			}
 			return new ResponseEntity<Map<String, String>>(test, HttpStatus.CONFLICT);
 		}
-		return new ResponseEntity<Tenant>(tenant, HttpStatus.CREATED);
+		return new ResponseEntity<MeterAbstract>(meter, HttpStatus.CREATED);
 	}
-
-	// delete by id
-	@RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
-	public ResponseEntity<Message> deleteUser(@PathVariable("id") Long id) {
+	
+	@RequestMapping(value = "{media}/{id}", method = RequestMethod.DELETE)
+	public ResponseEntity<Message> deleteUser(@PathVariable("media") Media media, @PathVariable("id") Long id) {
 		Message message = new Message("OK", null);
 		try {
-			service.deleteTenant(id);
+			service.delete(id, media);
 		} catch (Exception e) {
 			message.setMessage(CONSTRAINT_VIOLATION);
 			message.setException(e.toString());
@@ -90,8 +81,8 @@ public class TenantApi extends AbstractController {
 	}
 
 	// update
-	@RequestMapping(value = "/{id}", method = RequestMethod.PUT)
-	public ResponseEntity<?> updateUser(@Valid @PathVariable("id") Long id, @RequestBody Tenant tenant,
+	@RequestMapping(value = "{media}/{id}", method = RequestMethod.PUT)
+	public ResponseEntity<?> updateUser(@PathVariable("media") Media media, @Valid @PathVariable("id") Long id, @RequestBody MeterAbstract meter,
 			BindingResult result) {
 
 		if (result.hasErrors()) {
@@ -99,7 +90,7 @@ public class TenantApi extends AbstractController {
 			message.setErrors(result.getFieldErrors());
 			return new ResponseEntity<ApiResponse>(message, HttpStatus.UNPROCESSABLE_ENTITY);
 		}
-		service.updateTenant(tenant);
-		return new ResponseEntity<Tenant>(tenant, HttpStatus.OK);
+		service.update(meter, media);;
+		return new ResponseEntity<MeterAbstract>(meter, HttpStatus.OK);
 	}
 }
