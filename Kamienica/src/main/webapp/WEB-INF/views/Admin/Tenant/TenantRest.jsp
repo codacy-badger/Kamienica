@@ -42,7 +42,9 @@
 
 				</div>
 			</div>
-
+			<div class="alert alert-danger" ng-show="errorField">
+				<strong>BŁĄD: </strong> {{errorMsg}}
+			</div>
 
 
 			<div id='list' class="row fadein fadeout showpanel panel"
@@ -110,7 +112,7 @@
 							</p>
 						</div>
 					</div>
-					
+
 					<div class="form-group">
 						<label for="inputEmail3" class="col-sm-3 control-label">Nazwisko</label>
 						<div class="col-sm-9">
@@ -157,12 +159,11 @@
 						<div class="col-sm-9">
 							<select name='apartment' ng-model="ctrl.tenant.apartment"
 								ng-required='true' class="form-control"
-								ng-options="a.description for a in ctrl.apartments"
-								><option>{{ctrl.tenant.apartment}}</option>
+								ng-options="a.description for a in ctrl.apartments"><option>{{ctrl.tenant.apartment}}</option>
 							</select>
 
-							 
-						
+
+
 							<!--  select name='apartment' ng-model="ctrl.tenant.apartment"
 								ng-required='true' class="form-control">
 								<option ng-repeat="item in ctrl.apartments"
@@ -171,16 +172,16 @@
 									{{item.description}}</option>
 									
 							</select-->
-							
-							
-							 <!--  select name="repeatSelect" id="repeatSelect"
+
+
+							<!--  select name="repeatSelect" id="repeatSelect"
 								ng-model="ctrl.apartment" class="form-control" ng-required='true'>
 								<option ng-repeat="option in ctrl.apartments"
 									value="{{option}}">{{option.description}} test</option>
-							</select--> 
+							</select-->
 							<!-- http://stackoverflow.com/questions/37442061/angularjs-ng-options-with-nested-json-based-on-previous-select-option -->
 
-						
+
 							<p class="help-block">
 								<span class='error' ng-show="myForm.tenant_apartment.$invalid">Pole
 									wymagane</span> <span class='error'>{{errors.tenant_apartment}}</span>
@@ -207,9 +208,8 @@
 						<label for="inputEmail3" class="col-sm-3 control-label">Prawa</label>
 						<div class="col-sm-9">
 							<input type="radio" ng-model="ctrl.tenant.role" value="USER"
-								required name='role' />Najemca 
-						    <input type="radio" ng-model="ctrl.tenant.role" value="ADMIN" 
-						    	required name='role' />Administrator
+								required name='role' />Najemca <input type="radio"
+								ng-model="ctrl.tenant.role" value="ADMIN" required name='role' />Administrator
 
 							<p class="help-block">
 								<span class='error' ng-show="myForm.role.$invalid">Pole
@@ -219,20 +219,20 @@
 					</div>
 
 					<div class="form-group">
-						<label  class="col-sm-3 control-label">Status</label>
+						<label class="col-sm-3 control-label">Status</label>
 						<div class="col-sm-9">
 							<input type="radio" ng-model="ctrl.tenant.status" value="Aktwny"
-								required name='status' />Aktywny 
-							<input type="radio" ng-model="ctrl.tenant.status" value="Nieaktywny" 
-								required name='status' /> Nieaktywny
+								required name='status' />Aktywny <input type="radio"
+								ng-model="ctrl.tenant.status" value="Nieaktywny" required
+								name='status' /> Nieaktywny
 
 							<p class="help-block">
 								<span class='error' ng-show="myForm.status.$invalid">Pole
 									wymagane</span> <span class='error'>{{errors.status}}</span>
 							</p>
 						</div>
-					</div>					
-					
+					</div>
+
 					<div class="form-group">
 						<label for="inputEmail3" class="col-sm-3 control-label">Hasło</label>
 						<div class="col-sm-9">

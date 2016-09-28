@@ -52,19 +52,30 @@ App.controller('TenantController', [
             self.reset();
             $scope.toggle = $scope.toggle === false ? true : false;
         };
-
+        
         self.deleteItem = function(identity, indexArray) {
-            var tenant = Tenant.get({
-                id: identity
-            }, function() {
-                tenant.$delete(function() {}).then(function(ok) {
-                    self.tenants.splice(indexArray, 1);
-                }, function(error) {
-                    $scope.errorField = true;
-                    $scope.errorMsg = error.data.message;
-                })
-            })
-        };
+        	var tenant = self.tenants[indexArray];
+        	
+        	tenant.$delete(function() {}).then(function(ok) {
+                self.tenants.splice(indexArray, 1);
+            }, function(error) {
+                $scope.errorField = true;
+                $scope.errorMsg = error.data.message;
+            });
+        }; 
+
+//        self.deleteItem = function(identity, indexArray) {
+//            var tenant = Tenant.get({
+//                id: identity
+//            }, function() {
+//                tenant.$delete(function() {}).then(function(ok) {
+//                    self.tenants.splice(indexArray, 1);
+//                }, function(error) {
+//                    $scope.errorField = true;
+//                    $scope.errorMsg = error.data.message;
+//                })
+//            })
+//        };
 
         self.submit = function() {
             if (self.tenant.id == null) {

@@ -25,8 +25,10 @@ import kamienica.core.util.Media;
 import kamienica.core.util.Message;
 import kamienica.feature.apartment.Apartment;
 import kamienica.feature.meter.MeterAbstract;
+import kamienica.feature.meter.MeterEnergy;
+import kamienica.feature.meter.MeterGas;
 import kamienica.feature.meter.MeterService;
-import kamienica.feature.tenant.Tenant;
+import kamienica.feature.meter.MeterWater;
 
 @RestController
 @RequestMapping("/api/v1/meters")
@@ -45,19 +47,118 @@ public class MeterApi extends AbstractController {
 
 		return new ResponseEntity<List<? extends MeterAbstract>>(list, HttpStatus.OK);
 	}
-	
-	@RequestMapping(value = "/{media}", method = RequestMethod.POST)
-	public ResponseEntity<?> create(@PathVariable Media media, @Valid @RequestBody MeterAbstract meter, BindingResult result) {
+
+	@RequestMapping(value = "/ENERGY", method = RequestMethod.POST)
+	public ResponseEntity<?> createEnergy(@Valid @RequestBody MeterEnergy meter, BindingResult result) {
 		if (result.hasErrors()) {
 			ApiResponse message = new ApiResponse();
 			message.setErrors(result.getFieldErrors());
 			return new ResponseEntity<ApiResponse>(message, HttpStatus.UNPROCESSABLE_ENTITY);
 		}
 		try {
-			service.save(meter, media);;
+			service.save(meter, Media.ENERGY);
 		} catch (ConstraintViolationException e) {
 			result.rejectValue("serialNumber", "error.serialNumber", DUPLICATE_VALUE);
+			Map<String, String> test = new HashMap<>();
+			for (FieldError fieldError : result.getFieldErrors()) {
+				test.put(fieldError.getField(), fieldError.getDefaultMessage());
+			}
+			return new ResponseEntity<Map<String, String>>(test, HttpStatus.CONFLICT);
+		}
+		return new ResponseEntity<MeterAbstract>(meter, HttpStatus.CREATED);
+	}
+	
+	@RequestMapping(value = "/ENERGY", method = RequestMethod.PUT)
+	public ResponseEntity<?> updateEnergy(@PathVariable("id") Long id, @Valid @RequestBody MeterEnergy meter, BindingResult result) {
+		if (result.hasErrors()) {
+			ApiResponse message = new ApiResponse();
+			message.setErrors(result.getFieldErrors());
+			return new ResponseEntity<ApiResponse>(message, HttpStatus.UNPROCESSABLE_ENTITY);
+		}
+		try {
+			service.update(meter, Media.ENERGY);
+		} catch (ConstraintViolationException e) {
+			result.rejectValue("serialNumber", "error.serialNumber", DUPLICATE_VALUE);
+			Map<String, String> test = new HashMap<>();
+			for (FieldError fieldError : result.getFieldErrors()) {
+				test.put(fieldError.getField(), fieldError.getDefaultMessage());
+			}
+			return new ResponseEntity<Map<String, String>>(test, HttpStatus.CONFLICT);
+		}
+		return new ResponseEntity<MeterAbstract>(meter, HttpStatus.CREATED);
+	}
 
+	@RequestMapping(value = "/GAS", method = RequestMethod.POST)
+	public ResponseEntity<?> createGas(@PathVariable("id") Long id, @Valid @RequestBody MeterGas meter, BindingResult result) {
+		if (result.hasErrors()) {
+			ApiResponse message = new ApiResponse();
+			message.setErrors(result.getFieldErrors());
+			return new ResponseEntity<ApiResponse>(message, HttpStatus.UNPROCESSABLE_ENTITY);
+		}
+		try {
+			service.save(meter, Media.GAS);
+		} catch (ConstraintViolationException e) {
+			result.rejectValue("serialNumber", "error.serialNumber", DUPLICATE_VALUE);
+			Map<String, String> test = new HashMap<>();
+			for (FieldError fieldError : result.getFieldErrors()) {
+				test.put(fieldError.getField(), fieldError.getDefaultMessage());
+			}
+			return new ResponseEntity<Map<String, String>>(test, HttpStatus.CONFLICT);
+		}
+		return new ResponseEntity<MeterAbstract>(meter, HttpStatus.CREATED);
+	}
+	
+	@RequestMapping(value = "/GAS", method = RequestMethod.PUT)
+	public ResponseEntity<?> updateGas(@PathVariable("id") Long id, @Valid @RequestBody MeterGas meter, BindingResult result) {
+		if (result.hasErrors()) {
+			ApiResponse message = new ApiResponse();
+			message.setErrors(result.getFieldErrors());
+			return new ResponseEntity<ApiResponse>(message, HttpStatus.UNPROCESSABLE_ENTITY);
+		}
+		try {
+			service.update(meter, Media.GAS);
+		} catch (ConstraintViolationException e) {
+			result.rejectValue("serialNumber", "error.serialNumber", DUPLICATE_VALUE);
+			Map<String, String> test = new HashMap<>();
+			for (FieldError fieldError : result.getFieldErrors()) {
+				test.put(fieldError.getField(), fieldError.getDefaultMessage());
+			}
+			return new ResponseEntity<Map<String, String>>(test, HttpStatus.CONFLICT);
+		}
+		return new ResponseEntity<MeterAbstract>(meter, HttpStatus.CREATED);
+	}
+
+	@RequestMapping(value = "/WATER", method = RequestMethod.POST)
+	public ResponseEntity<?> createWater(@Valid @RequestBody MeterWater meter, BindingResult result) {
+		if (result.hasErrors()) {
+			ApiResponse message = new ApiResponse();
+			message.setErrors(result.getFieldErrors());
+			return new ResponseEntity<ApiResponse>(message, HttpStatus.UNPROCESSABLE_ENTITY);
+		}
+		try {
+			service.save(meter, Media.WATER);
+		} catch (ConstraintViolationException e) {
+			result.rejectValue("serialNumber", "error.serialNumber", DUPLICATE_VALUE);
+			Map<String, String> test = new HashMap<>();
+			for (FieldError fieldError : result.getFieldErrors()) {
+				test.put(fieldError.getField(), fieldError.getDefaultMessage());
+			}
+			return new ResponseEntity<Map<String, String>>(test, HttpStatus.CONFLICT);
+		}
+		return new ResponseEntity<MeterAbstract>(meter, HttpStatus.CREATED);
+	}
+
+	@RequestMapping(value = "/WATER", method = RequestMethod.PUT)
+	public ResponseEntity<?> updateWater(@Valid @RequestBody MeterWater meter, BindingResult result) {
+		if (result.hasErrors()) {
+			ApiResponse message = new ApiResponse();
+			message.setErrors(result.getFieldErrors());
+			return new ResponseEntity<ApiResponse>(message, HttpStatus.UNPROCESSABLE_ENTITY);
+		}
+		try {
+			service.update(meter, Media.WATER);
+		} catch (ConstraintViolationException e) {
+			result.rejectValue("serialNumber", "error.serialNumber", DUPLICATE_VALUE);
 			Map<String, String> test = new HashMap<>();
 			for (FieldError fieldError : result.getFieldErrors()) {
 				test.put(fieldError.getField(), fieldError.getDefaultMessage());
@@ -80,17 +181,5 @@ public class MeterApi extends AbstractController {
 		return new ResponseEntity<Message>(message, HttpStatus.OK);
 	}
 
-	// update
-	@RequestMapping(value = "{media}/{id}", method = RequestMethod.PUT)
-	public ResponseEntity<?> updateUser(@PathVariable("media") Media media, @Valid @PathVariable("id") Long id, @RequestBody MeterAbstract meter,
-			BindingResult result) {
-
-		if (result.hasErrors()) {
-			ApiResponse message = new ApiResponse();
-			message.setErrors(result.getFieldErrors());
-			return new ResponseEntity<ApiResponse>(message, HttpStatus.UNPROCESSABLE_ENTITY);
-		}
-		service.update(meter, media);;
-		return new ResponseEntity<MeterAbstract>(meter, HttpStatus.OK);
-	}
+	
 }

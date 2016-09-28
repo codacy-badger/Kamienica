@@ -54,16 +54,14 @@ App.controller('MeterGasController', [
         };
 
         self.deleteItem = function(identity, indexArray) {
-            var meterGas = MeterGas.get({
-                id: identity
-            }, function() {
-                meterGas.$delete(function() {}).then(function(ok) {
-                    self.meterGass.splice(indexArray, 1);
-                }, function(error) {
-                    $scope.errorField = true;
-                    $scope.errorMsg = error.data.message;
-                })
-            })
+        	var meterGas = self.meterGass[indexArray];
+        	
+        	meterGas.$delete(function() {}).then(function(ok) {
+                self.meterGass.splice(indexArray, 1);
+            }, function(error) {
+                $scope.errorField = true;
+                $scope.errorMsg = error.data.message;
+            });
         };
 
         self.submit = function() {

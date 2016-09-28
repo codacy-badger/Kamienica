@@ -45,14 +45,14 @@ public class TenantApi extends AbstractController {
 		return new ResponseEntity<List<Tenant>>(list, HttpStatus.OK);
 	}
 
-	@RequestMapping(value = "/{id}", method = RequestMethod.GET)
-	public ResponseEntity<Tenant> getById(@PathVariable Long id) {
-		Tenant tenant = service.getTenantById(id);
-		if (tenant == null) {
-			return new ResponseEntity<Tenant>(HttpStatus.NOT_FOUND);
-		}
-		return new ResponseEntity<Tenant>(tenant, HttpStatus.OK);
-	}
+//	@RequestMapping(value = "/{id}", method = RequestMethod.GET)
+//	public ResponseEntity<Tenant> getById(@PathVariable Long id) {
+//		Tenant tenant = service.getTenantById(id);
+//		if (tenant == null) {
+//			return new ResponseEntity<Tenant>(HttpStatus.NOT_FOUND);
+//		}
+//		return new ResponseEntity<Tenant>(tenant, HttpStatus.OK);
+//	}
 
 	@RequestMapping(method = RequestMethod.POST)
 	public ResponseEntity<?> create(@Valid @RequestBody Tenant tenant, BindingResult result) {

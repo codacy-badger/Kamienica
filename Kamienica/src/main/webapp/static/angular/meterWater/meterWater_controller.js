@@ -54,16 +54,14 @@ App.controller('MeterWaterController', [
         };
 
         self.deleteItem = function(identity, indexArray) {
-            var meterWater = MeterWater.get({
-                id: identity
-            }, function() {
-                meterWater.$delete(function() {}).then(function(ok) {
-                    self.meterWaters.splice(indexArray, 1);
-                }, function(error) {
-                    $scope.errorField = true;
-                    $scope.errorMsg = error.data.message;
-                })
-            })
+        	var meterWater = self.meterWaters[indexArray];
+        	
+        	meterWater.$delete(function() {}).then(function(ok) {
+                self.meterWaters.splice(indexArray, 1);
+            }, function(error) {
+                $scope.errorField = true;
+                $scope.errorMsg = error.data.message;
+            });
         };
 
         self.submit = function() {

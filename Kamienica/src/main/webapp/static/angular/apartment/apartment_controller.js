@@ -80,18 +80,29 @@ App.controller('ApartmentController', [
             $scope.toggle = $scope.toggle === false ? true : false;
         };
 
-        self.deleteItem = function(identity, indexArray) {
-            var apartment = Apartment.get({
-                id: identity
-            }, function() {
-                apartment.$delete(function() {}).then(function(ok) {
-                    self.apartments.splice(indexArray, 1);
-                }, function(error) {
-                    $scope.errorField = true;
-                    $scope.errorMsg = error.data.message;
-                })
-            })
-        };
+        self.deleteItem2 = function(identity, indexArray) {
+        	var apartment = self.apartments[indexArray];
+        	
+        	apartment.$delete(function() {}).then(function(ok) {
+                self.apartments.splice(indexArray, 1);
+            }, function(error) {
+                $scope.errorField = true;
+                $scope.errorMsg = error.data.message;
+            });
+        }; 
+        
+//        self.deleteItem = function(identity, indexArray) {
+//            var apartment = Apartment.get({
+//                id: identity
+//            }, function() {
+//                apartment.$delete(function() {}).then(function(ok) {
+//                    self.apartments.splice(indexArray, 1);
+//                }, function(error) {
+//                    $scope.errorField = true;
+//                    $scope.errorMsg = error.data.message;
+//                })
+//            })
+//        };
 
         self.submit = function() {
             console.log(self.apartment);
@@ -120,7 +131,7 @@ App.controller('ApartmentController', [
                 self.reset();
             }
 
-            self.deleteItem(id, arrayIndex);
+            self.deleteItem2(id, arrayIndex);
         };
 
         self.reset = function() {

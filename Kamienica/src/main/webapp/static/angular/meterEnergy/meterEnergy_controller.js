@@ -54,17 +54,15 @@ App.controller('MeterEnergyController', [
         };
 
         self.deleteItem = function(identity, indexArray) {
-            var meterEnergy = MeterEnergy.get({
-                id: identity
-            }, function() {
-                meterEnergy.$delete(function() {}).then(function(ok) {
-                    self.meterEnergys.splice(indexArray, 1);
-                }, function(error) {
-                    $scope.errorField = true;
-                    $scope.errorMsg = error.data.message;
-                })
-            })
-        };
+        	var meterEnergy = self.meterEnergys[indexArray];
+        	
+        	meterEnergy.$delete(function() {}).then(function(ok) {
+                self.meterEnergys.splice(indexArray, 1);
+            }, function(error) {
+                $scope.errorField = true;
+                $scope.errorMsg = error.data.message;
+            });
+        }; 
 
         self.submit = function() {
             if (self.meterEnergy.id == null) {
