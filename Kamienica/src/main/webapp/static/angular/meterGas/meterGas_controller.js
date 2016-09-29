@@ -47,7 +47,7 @@ App.controller('MeterGasController', [
                 $scope.errors = error.data;
                 $scope.errorField = true;
                 $scope.errorMsg = 'Nie powiódł się zapis do bazy. Popraw dane i spróbuj ponownie';
-            });;
+            });
 
             self.reset();
             $scope.toggle = $scope.toggle === false ? true : false;

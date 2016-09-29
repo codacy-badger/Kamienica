@@ -33,7 +33,7 @@
 			<div class='row'>
 				<div class="col-lg-12">
 					<h1 class="page-header well">Liczniki gazu - REST</h1>
-					
+
 					<div class="alert alert-danger" ng-show="errorField">
 						<strong>BŁĄD: </strong> {{errorMsg}}
 					</div>
@@ -45,7 +45,90 @@
 			<div id='form' class="fadein fadeout showpanel panel row"
 				ng-show="!toggle">
 
-				
+				<form class="form-horizontal" ng-submit="ctrl.submit()"
+					name="myForm">
+					<input path="id" readonly="true" type='hidden' /> <input
+						type="hidden" ng-model="ctrl.meterGas.id" />
+
+
+					<div class="form-group">
+						<label class="col-sm-3 control-label">Opis</label>
+						<div class="col-sm-9">
+							<input type="text" ng-model="ctrl.meterGas.description"
+								class="form-control" name="description" ng-required='true'
+								ng-minlength="4" />
+							<p class="help-block">
+								<span class='error' ng-show="myForm.description.$invalid">Pole
+									wymagane</span><span class='error'>{{errors.firstName}}</span>
+							</p>
+						</div>
+					</div>
+
+					<div class="form-group">
+						<label class="col-sm-3 control-label">Nr. seryjny</label>
+						<div class="col-sm-9">
+							<input type="text" ng-model="ctrl.meterGas.serialNumber"
+								class="form-control" name="serialNumber" path='serialNumber'
+								ng-required='true' ng-minlength="1" />
+							<p class="help-block">
+								<span class='error' ng-show="myForm.serialNumber.$invalid">Pole
+									wymagane</span><span class='error'>{{errors.lastName}}</span>
+							</p>
+						</div>
+					</div>
+					<div class="form-group">
+						<label class="col-sm-3 control-label">Jednostka</label>
+						<div class="col-sm-9">
+							<input type="text" ng-model="ctrl.meterGas.unit"
+								class="form-control" name="unit" path='unit' ng-required='true' />
+							<p class="help-block">
+								<span class='error' ng-show="myForm.unit.$invalid">Niepoprawny
+									Format</span><span class='error'>{{errors.unit}}</span>
+							</p>
+						</div>
+					</div>
+
+
+					<div class="form-group">
+						<label for="inputEmail3" class="col-sm-3 control-label">Mieszkanie</label>
+						<div class="col-sm-9">
+							<select name='apartment' ng-model="ctrl.meterGas.apartment"
+								ng-required='true' class="form-control"
+								ng-options="a.description for a in ctrl.apartments"><option>{{ctrl.tenant.apartment}}</option>
+							</select>
+							<p class="help-block">
+								<span class='error' ng-show="myForm.meterGas.$invalid">Pole
+									wymagane</span> <span class='error'>{{errors.tenant_apartment}}</span>
+							</p>
+						</div>
+					</div>
+
+					<div class="form-group">
+						<label for="cwu" class="col-sm-3 control-label">CWU</label>
+						<div class="col-sm-9">
+							<label><input type="radio" ng-model="ctrl.meterGas.cwu"
+								value="true"> TAK </label> <label> <input type="radio"
+								ng-model="ctrl.meterGas.cwu" ng-value="false">NIE
+							</label>
+							<p class="help-block">
+								<form:errors path="cwu" class="error" />
+							</p>
+						</div>
+					</div>
+
+
+					<div class="form-group ">
+						<div class="col-lg-12">
+							<input type="submit"
+								value="{{!ctrl.meterEnergry.id ? 'Dodaj' : 'Nadpisz'}}"
+								class="btn btn-default " ng-disabled="myForm.$invalid">
+							<button type="button" ng-click="ctrl.reset()"
+								class="btn btn-default " ng-disabled="myForm.$pristine">Reset
+							</button>
+						</div>
+					</div>
+				</form>
+
 			</div>
 
 
@@ -87,12 +170,12 @@
 			</div>
 		</div>
 	</div>
-	
+
 	<script src="<c:url value='/static/js/angular.js' />"></script>
 	<script src="<c:url value='/static/js/angular-resource.js' />"></script>
 	<script src="<c:url value='/static/angular/app.js' />"></script>
-	
-		<script
+
+	<script
 		src="<c:url value='/static/angular/apartment/apartment_service.js' />"></script>
 	<script
 		src="<c:url value='/static/angular/apartment/apartment_controller.js' />"></script>

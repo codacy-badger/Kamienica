@@ -45,6 +45,89 @@
 			<div id='form' class="fadein fadeout showpanel panel row"
 				ng-show="!toggle">
 
+				<form class="form-horizontal" ng-submit="ctrl.submit()"
+					name="myForm">
+					<input path="id" readonly="true" type='hidden' /> <input
+						type="hidden" ng-model="ctrl.meterWater.id" />
+
+
+					<div class="form-group">
+						<label class="col-sm-3 control-label">Opis</label>
+						<div class="col-sm-9">
+							<input type="text" ng-model="ctrl.meterWater.description"
+								class="form-control" name="description" ng-required='true'
+								ng-minlength="4" />
+							<p class="help-block">
+								<span class='error' ng-show="myForm.description.$invalid">Pole
+									wymagane</span><span class='error'>{{errors.firstName}}</span>
+							</p>
+						</div>
+					</div>
+
+					<div class="form-group">
+						<label class="col-sm-3 control-label">Nr. seryjny</label>
+						<div class="col-sm-9">
+							<input type="text" ng-model="ctrl.meterWater.serialNumber"
+								class="form-control" name="serialNumber" path='serialNumber'
+								ng-required='true' ng-minlength="1" />
+							<p class="help-block">
+								<span class='error' ng-show="myForm.serialNumber.$invalid">Pole
+									wymagane</span><span class='error'>{{errors.lastName}}</span>
+							</p>
+						</div>
+					</div>
+					<div class="form-group">
+						<label class="col-sm-3 control-label">Jednostka</label>
+						<div class="col-sm-9">
+							<input type="text" ng-model="ctrl.meterWater.unit"
+								class="form-control" name="unit" path='unit' ng-required='true' />
+							<p class="help-block">
+								<span class='error' ng-show="myForm.unit.$invalid">Niepoprawny
+									Format</span><span class='error'>{{errors.unit}}</span>
+							</p>
+						</div>
+					</div>
+
+
+					<div class="form-group">
+						<label for="inputEmail3" class="col-sm-3 control-label">Mieszkanie</label>
+						<div class="col-sm-9">
+							<select name='apartment' ng-model="ctrl.meterWater.apartment"
+								ng-required='true' class="form-control"
+								ng-options="a.description for a in ctrl.apartments"><option>{{ctrl.tenant.apartment}}</option>
+							</select>
+							<p class="help-block">
+								<span class='error' ng-show="myForm.meterWater.$invalid">Pole
+									wymagane</span> <span class='error'>{{errors.tenant_apartment}}</span>
+							</p>
+						</div>
+					</div>
+
+					<div class="form-group">
+						<label for="cwu" class="col-sm-3 control-label">Ciepła woda</label>
+						<div class="col-sm-9">
+							<label><input type="radio" ng-model="ctrl.meterWater.isWarmWater"
+								value="true"> TAK </label> <label> <input type="radio"
+								ng-model="ctrl.meterWater.isWarmWater" ng-value="false">NIE
+							</label>
+							<p class="help-block">
+								<form:errors path="isWarmWater" class="error" />
+							</p>
+						</div>
+					</div>
+
+
+					<div class="form-group ">
+						<div class="col-lg-12">
+							<input type="submit"
+								value="{{!ctrl.meterEnergry.id ? 'Dodaj' : 'Nadpisz'}}"
+								class="btn btn-default " ng-disabled="myForm.$invalid">
+							<button type="button" ng-click="ctrl.reset()"
+								class="btn btn-default " ng-disabled="myForm.$pristine">Reset
+							</button>
+						</div>
+					</div>
+				</form>
 				
 			</div>
 

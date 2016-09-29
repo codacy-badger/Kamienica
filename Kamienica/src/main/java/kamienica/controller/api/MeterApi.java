@@ -68,7 +68,7 @@ public class MeterApi extends AbstractController {
 		return new ResponseEntity<MeterAbstract>(meter, HttpStatus.CREATED);
 	}
 	
-	@RequestMapping(value = "/ENERGY", method = RequestMethod.PUT)
+	@RequestMapping(value = "/ENERGY/{id}", method = RequestMethod.PUT)
 	public ResponseEntity<?> updateEnergy(@PathVariable("id") Long id, @Valid @RequestBody MeterEnergy meter, BindingResult result) {
 		if (result.hasErrors()) {
 			ApiResponse message = new ApiResponse();
@@ -89,7 +89,7 @@ public class MeterApi extends AbstractController {
 	}
 
 	@RequestMapping(value = "/GAS", method = RequestMethod.POST)
-	public ResponseEntity<?> createGas(@PathVariable("id") Long id, @Valid @RequestBody MeterGas meter, BindingResult result) {
+	public ResponseEntity<?> createGas( @Valid @RequestBody MeterGas meter, BindingResult result) {
 		if (result.hasErrors()) {
 			ApiResponse message = new ApiResponse();
 			message.setErrors(result.getFieldErrors());
@@ -108,7 +108,7 @@ public class MeterApi extends AbstractController {
 		return new ResponseEntity<MeterAbstract>(meter, HttpStatus.CREATED);
 	}
 	
-	@RequestMapping(value = "/GAS", method = RequestMethod.PUT)
+	@RequestMapping(value = "/GAS/{id}", method = RequestMethod.PUT)
 	public ResponseEntity<?> updateGas(@PathVariable("id") Long id, @Valid @RequestBody MeterGas meter, BindingResult result) {
 		if (result.hasErrors()) {
 			ApiResponse message = new ApiResponse();
@@ -148,7 +148,7 @@ public class MeterApi extends AbstractController {
 		return new ResponseEntity<MeterAbstract>(meter, HttpStatus.CREATED);
 	}
 
-	@RequestMapping(value = "/WATER", method = RequestMethod.PUT)
+	@RequestMapping(value = "/WATER/{id}", method = RequestMethod.PUT)
 	public ResponseEntity<?> updateWater(@Valid @RequestBody MeterWater meter, BindingResult result) {
 		if (result.hasErrors()) {
 			ApiResponse message = new ApiResponse();
