@@ -17,7 +17,7 @@ import kamienica.feature.tenant.Tenant;
 
 @MappedSuperclass
 @Inheritance
-public abstract class PaymentAbstract {
+public abstract class Payment {
 
 	@Id
 	@GeneratedValue
@@ -70,10 +70,10 @@ public abstract class PaymentAbstract {
 		return "Opłata dla " + tenant.fullName() + " z dnia " + paymentDate.toString() + " Wynosi " + paymentAmount;
 	}
 
-	public PaymentAbstract() {
+	public Payment() {
 	}
 
-	public PaymentAbstract(Long id, LocalDate paymentDate, double paymentAmount, Tenant tenant) {
+	public Payment(Long id, LocalDate paymentDate, double paymentAmount, Tenant tenant) {
 		this.id = id;
 		this.paymentDate = paymentDate;
 		this.paymentAmount = paymentAmount;

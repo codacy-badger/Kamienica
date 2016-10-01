@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import kamienica.core.util.Media;
 import kamienica.feature.apartment.Apartment;
-import kamienica.feature.payment.PaymentAbstract;
+import kamienica.feature.payment.Payment;
 import kamienica.feature.payment.PaymentService;
 import kamienica.feature.reading.ReadingAbstract;
 import kamienica.feature.tenant.Tenant;
@@ -71,30 +71,15 @@ public class AdminUserRestController {
 	}
 
 	@RequestMapping(value = "/user/{media}/payments", method = RequestMethod.GET)
-	public ResponseEntity<List<? extends PaymentAbstract>> userPayment(@PathVariable(value = "media") String media) {
+	public ResponseEntity<List<? extends Payment>> userPayment(@PathVariable(value = "media") Media media) {
 		Tenant tenant = userDetailsService.getCurrentUser().getTenant();
-		List<? extends PaymentAbstract> list = new ArrayList<>();
-		switch (media) {
-
-		case "energy":
-			list = paymentService.getPaymentEnergyForTenant(tenant);
-			break;
-
-		case "gas":
-			list = paymentService.getPaymentGasForTenant(tenant);
-			break;
-
-		case "water":
-			list = paymentService.getPaymentWaterForTenant(tenant);
-			break;
-		default:
-			break;
-		}
+		List<? extends Payment> list = new ArrayList<>();
+		list = paymentService.getPaymentForTenant(tenant, media);
 
 		if (list.isEmpty()) {
-			return new ResponseEntity<List<? extends PaymentAbstract>>(HttpStatus.NOT_FOUND);
+			return new ResponseEntity<List<? extends Payment>>(HttpStatus.NOT_FOUND);
 		}
-		return new ResponseEntity<List<? extends PaymentAbstract>>(list, HttpStatus.OK);
+		return new ResponseEntity<List<? extends Payment>>(list, HttpStatus.OK);
 	}
 
 	// @RequestMapping("/User/userPassword")

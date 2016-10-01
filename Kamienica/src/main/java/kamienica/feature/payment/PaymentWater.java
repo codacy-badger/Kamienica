@@ -13,7 +13,7 @@ import kamienica.feature.tenant.Tenant;
 
 @Entity
 @Table(name="paymentwater")
-public class PaymentWater extends PaymentAbstract implements Serializable{
+public class PaymentWater extends Payment implements Serializable{
 
 	/**
 	 * 

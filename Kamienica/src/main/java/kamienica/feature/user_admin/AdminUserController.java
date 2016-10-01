@@ -76,9 +76,9 @@ public class AdminUserController {
 		Map<String, Object> model = new HashMap<String, Object>();
 		Tenant tenant = userDetailsService.getCurrentUser().getTenant();
 
-		model.put("energy", paymentService.getPaymentEnergyForTenant(tenant));
-		model.put("water", paymentService.getPaymentWaterForTenant(tenant));
-		model.put("gas", paymentService.getPaymentGasForTenant(tenant));
+		model.put("energy", paymentService.getPaymentForTenant(tenant, Media.ENERGY));
+		model.put("water", paymentService.getPaymentForTenant(tenant, Media.GAS));
+		model.put("gas", paymentService.getPaymentForTenant(tenant, Media.WATER));
 
 		return new ModelAndView("/User/UserPayment", "model", model);
 	}

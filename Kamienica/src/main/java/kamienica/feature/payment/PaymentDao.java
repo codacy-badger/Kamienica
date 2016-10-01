@@ -7,7 +7,7 @@ import kamienica.feature.invoice.Invoice;
 import kamienica.feature.reading.ReadingAbstract;
 import kamienica.feature.tenant.Tenant;
 
-public interface PaymentDao<P extends PaymentAbstract> extends DaoInterface<P> {
+public interface PaymentDao<P extends Payment> extends DaoInterface<P> {
 
 	public void deleteByDate(String date);
 

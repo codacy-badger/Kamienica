@@ -12,7 +12,7 @@ import kamienica.feature.invoice.Invoice;
 import kamienica.feature.reading.ReadingAbstract;
 import kamienica.feature.tenant.Tenant;
 
-public class PaymentAbstractDaoImpl<P extends PaymentAbstract> extends AbstractDao<P> {
+public class PaymentAbstractDaoImpl<P extends Payment> extends AbstractDao<P> {
 
 	@SuppressWarnings("unchecked")
 	public List<P> getByInvoice(Invoice invoice) {

@@ -17,6 +17,7 @@ import kamienica.feature.division.DivisionService;
 import kamienica.feature.invoice.InvoiceWater;
 import kamienica.feature.invoice.InvoiceService;
 import kamienica.feature.payment.PaymentWater;
+import kamienica.feature.payment.Payment;
 import kamienica.feature.payment.PaymentService;
 import kamienica.feature.reading.ReadingWater;
 import kamienica.feature.reading.ReadingService;
@@ -50,7 +51,7 @@ public class InvoiceWaterServiceTest extends AbstractServiceTest {
 
 		invoiceService.save(invoice, Media.WATER);
 		assertEquals(2, invoiceService.getWaterInvoiceList().size());
-		List<PaymentWater> paymentList = paymentService.getPaymentWaterList();
+		List<? extends Payment> paymentList = paymentService.getPaymentList(Media.WATER);
 
 		assertEquals(6, paymentList.size());
 
@@ -74,7 +75,7 @@ public class InvoiceWaterServiceTest extends AbstractServiceTest {
 
 		invoiceService.save(invoice, Media.WATER);
 		assertEquals(2, invoiceService.getWaterInvoiceList().size());
-		List<PaymentWater> paymentList = paymentService.getPaymentWaterList();
+		List<? extends Payment> paymentList = paymentService.getPaymentList(Media.WATER);
 		
 		assertEquals(6, paymentList.size());
 
@@ -103,12 +104,12 @@ public class InvoiceWaterServiceTest extends AbstractServiceTest {
 		InvoiceWater invoice = new InvoiceWater("23423423", "test", new LocalDate(), 400,
 				(ReadingWater) readingService.getById(6L, Media.WATER));
 		invoice.setId(1L);
-		List<PaymentWater> oldList = paymentService.getPaymentWaterByInvoice(invoice);
+		List<? extends Payment> oldList = paymentService.getPaymentByInvoice(invoice, Media.WATER);
 
 		invoice.setTotalAmount(400.0);
 		invoiceService.update(invoice, Media.WATER);
 
-		List<PaymentWater> newList = paymentService.getPaymentWaterByInvoice(invoice);
+		List<? extends Payment> newList = paymentService.getPaymentByInvoice(invoice, Media.WATER);
 
 		for (int i = 0; i < newList.size(); i++) {
 			double test = newList.get(i).getPaymentAmount() / oldList.get(i).getPaymentAmount();

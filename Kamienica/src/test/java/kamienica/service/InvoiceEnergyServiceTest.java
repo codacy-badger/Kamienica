@@ -16,6 +16,7 @@ import kamienica.feature.apartment.ApartmentService;
 import kamienica.feature.division.DivisionService;
 import kamienica.feature.invoice.InvoiceEnergy;
 import kamienica.feature.invoice.InvoiceService;
+import kamienica.feature.payment.Payment;
 import kamienica.feature.payment.PaymentEnergy;
 import kamienica.feature.payment.PaymentService;
 import kamienica.feature.reading.ReadingAbstract;
@@ -41,7 +42,6 @@ public class InvoiceEnergyServiceTest extends AbstractServiceTest {
 
 	}
 
-
 	@Transactional
 	@Test
 	public void add() {
@@ -52,7 +52,7 @@ public class InvoiceEnergyServiceTest extends AbstractServiceTest {
 
 		invoiceService.save(invoice, Media.ENERGY);
 		assertEquals(2, invoiceService.getEnergyInvoiceList().size());
-		List<PaymentEnergy> paymentList = paymentService.getPaymentEnergyList();
+		List<? extends Payment> paymentList = paymentService.getPaymentList(Media.ENERGY);
 
 		assertEquals(6, paymentList.size());
 		assertEquals(30.30, paymentList.get(3).getPaymentAmount(), DELTA);
@@ -73,7 +73,7 @@ public class InvoiceEnergyServiceTest extends AbstractServiceTest {
 		InvoiceEnergy invoice = new InvoiceEnergy("112233", "test", new LocalDate(), 200, list.get(0));
 		invoiceService.save(invoice, Media.ENERGY);
 		assertEquals(2, invoiceService.getEnergyInvoiceList().size());
-		List<PaymentEnergy> paymentList = paymentService.getPaymentEnergyList();
+		List<? extends Payment> paymentList = paymentService.getPaymentList(Media.ENERGY);
 
 		assertEquals(6, paymentList.size());
 
@@ -102,12 +102,13 @@ public class InvoiceEnergyServiceTest extends AbstractServiceTest {
 		InvoiceEnergy invoice = new InvoiceEnergy("23423423", "test", new LocalDate(), 400,
 				(ReadingEnergy) readingService.getById(6L, Media.ENERGY));
 		invoice.setId(1L);
-		List<PaymentEnergy> oldList = paymentService.getEnergyByInvoice(invoice);
+
+		List<? extends Payment> oldList = paymentService.getPaymentList(Media.ENERGY);
 
 		invoice.setTotalAmount(400.0);
 		invoiceService.update(invoice, Media.ENERGY);
 
-		List<PaymentEnergy> newList = paymentService.getEnergyByInvoice(invoice);
+		List<? extends Payment> newList = paymentService.getPaymentList(Media.ENERGY);
 
 		for (int i = 0; i < newList.size(); i++) {
 			double test = newList.get(i).getPaymentAmount() / oldList.get(i).getPaymentAmount();
@@ -116,7 +117,6 @@ public class InvoiceEnergyServiceTest extends AbstractServiceTest {
 
 	}
 
-	
 	@Transactional
 	@Test(expected = InvalidDivisionException.class)
 	public void prepareForRegistrationWithException() throws InvalidDivisionException {

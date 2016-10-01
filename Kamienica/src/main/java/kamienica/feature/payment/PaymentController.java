@@ -8,6 +8,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
+import kamienica.core.util.Media;
+
 @Controller
 public class PaymentController {
 
@@ -20,7 +22,7 @@ public class PaymentController {
 		Map<String, Object> model = new HashMap<String, Object>();
 		model.put("media", "Energia");
 		model.put("url", "Energy");
-		model.put("payment", paymentService.getPaymentEnergyList());
+		model.put("payment", paymentService.getPaymentList(Media.ENERGY));
 		return new ModelAndView("/Admin/Payment/PaymentList", model);
 
 	}
@@ -30,7 +32,7 @@ public class PaymentController {
 		Map<String, Object> model = new HashMap<String, Object>();
 		model.put("media", "Gaz");
 		model.put("url", "Gas");
-		model.put("payment", paymentService.getPaymentGasList());
+		model.put("payment", paymentService.getPaymentList(Media.GAS));
 		return new ModelAndView("/Admin/Payment/PaymentList", model);
 
 	}
@@ -40,7 +42,7 @@ public class PaymentController {
 		Map<String, Object> model = new HashMap<String, Object>();
 		model.put("media", "Woda");
 		model.put("url", "Water");
-		model.put("payment", paymentService.getPaymentWaterList());
+		model.put("payment", paymentService.getPaymentList(Media.WATER));
 		return new ModelAndView("/Admin/Payment/PaymentList", model);
 
 	}
