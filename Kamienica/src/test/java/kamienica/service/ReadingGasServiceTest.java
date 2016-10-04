@@ -18,6 +18,7 @@ import kamienica.core.exception.NoMainCounterException;
 import kamienica.core.util.Media;
 import kamienica.feature.meter.MeterGas;
 import kamienica.feature.meter.MeterService;
+import kamienica.feature.reading.Reading;
 import kamienica.feature.reading.ReadingGas;
 import kamienica.feature.reading.ReadingService;
 
@@ -59,16 +60,16 @@ public class ReadingGasServiceTest extends AbstractServiceTest {
 
 	@Test
 	public void getList() {
-		assertEquals(18, service.getReadingGas().size());
+		assertEquals(18, service.getList(Media.GAS).size());
 	}
 
 	@Test
 	@Transactional
 	public void shouldDeleteLatestList() {
 		service.deleteLatestReadings(Media.GAS);
-		List<ReadingGas> list = service.getReadingGas();
+		List<? extends Reading> list = service.getList(Media.GAS);
 		assertEquals(12, list.size());
-		for (ReadingGas readingGas : list) {
+		for (Reading readingGas : list) {
 			assertNotEquals(LocalDate.parse("2016-10-01"), readingGas.getReadingDate());
 		}
 	}
@@ -138,7 +139,7 @@ public class ReadingGasServiceTest extends AbstractServiceTest {
 			toSave.add(reading);
 		}
 		service.save(toSave, LocalDate.parse("2050-01-01"), Media.GAS);
-		assertEquals(24, service.getReadingGas().size());
+		assertEquals(24, service.getList(Media.GAS).size());
 		assertEquals(LocalDate.parse("2050-01-01"), service.getLatestNew(Media.GAS).get(0).getReadingDate());
 	}
 

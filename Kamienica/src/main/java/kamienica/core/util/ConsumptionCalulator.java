@@ -6,13 +6,13 @@ import java.util.List;
 import org.joda.time.Days;
 
 import kamienica.feature.apartment.Apartment;
-import kamienica.feature.reading.ReadingAbstract;
+import kamienica.feature.reading.Reading;
 import kamienica.feature.usagevalue.UsageValue;
 
 public interface ConsumptionCalulator {
 
 	public static List<UsageValue> calculateConsumption(List<Apartment> apartment,
-			List<? extends ReadingAbstract> oldReadings, List<? extends ReadingAbstract> newReadings) {
+			List<? extends Reading> oldReadings, List<? extends Reading> newReadings) {
 		ArrayList<UsageValue> usageList = new ArrayList<UsageValue>();
 		for (Apartment m : apartment) {
 

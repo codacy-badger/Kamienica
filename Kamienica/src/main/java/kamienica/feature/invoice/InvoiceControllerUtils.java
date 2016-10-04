@@ -2,14 +2,14 @@ package kamienica.feature.invoice;
 
 import java.util.HashMap;
 import java.util.List;
-import kamienica.feature.reading.ReadingAbstract;
+import kamienica.feature.reading.Reading;
 
 public class InvoiceControllerUtils {
 
 	public InvoiceControllerUtils() {
 	}
 
-	public <T extends ReadingAbstract> void checkIfListIsEmpty(HashMap<String, Object> model, List<T> readings) {
+	public <T extends Reading> void checkIfListIsEmpty(HashMap<String, Object> model, List<T> readings) {
 		if (readings.isEmpty()) {
 			model.put("error", "Brakuje odczytów dla nowej faktury");
 		} else {

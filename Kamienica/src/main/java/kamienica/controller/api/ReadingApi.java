@@ -11,24 +11,24 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import kamienica.core.util.Media;
-import kamienica.feature.invoice.Invoice;
-import kamienica.feature.invoice.InvoiceService;
+import kamienica.feature.reading.Reading;
+import kamienica.feature.reading.ReadingService;
 
 @RestController
-@RequestMapping("/api/v1/invoices")
-public class InvoiceRestController {
+@RequestMapping("/api/v1/readings")
+public class ReadingApi {
 
 	@Autowired
-	InvoiceService service;
+	ReadingService service;
 
 	@RequestMapping(value = "/{media}", method = RequestMethod.GET)
 	public ResponseEntity<?> getList(@PathVariable Media media) {
 
-		List<? extends Invoice> list = service.getList(media);
-		if (list.isEmpty()) {
-			return new ResponseEntity<List<? extends Invoice>>(HttpStatus.NO_CONTENT);
-		}
-		return new ResponseEntity<List<? extends Invoice>>(list, HttpStatus.OK);
+		List<? extends Reading> list = service.getList(media);
+			if (list.isEmpty()) {
+				return new ResponseEntity<Void>(HttpStatus.NOT_FOUND);
+			}
+			return new ResponseEntity<List<? extends Reading>>(list, HttpStatus.OK);
 	}
 
 }

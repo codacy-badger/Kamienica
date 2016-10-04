@@ -15,7 +15,7 @@ import kamienica.core.util.Media;
 import kamienica.feature.apartment.Apartment;
 import kamienica.feature.payment.Payment;
 import kamienica.feature.payment.PaymentService;
-import kamienica.feature.reading.ReadingAbstract;
+import kamienica.feature.reading.Reading;
 import kamienica.feature.tenant.Tenant;
 import kamienica.feature.user_admin.AdminUserService;
 import kamienica.feature.user_admin.MyUserDetailsService;
@@ -43,9 +43,11 @@ public class AdminUserRestController {
 	}
 
 	@RequestMapping(value = "/user/{media}/readings", method = RequestMethod.GET)
-	public ResponseEntity<List<? extends ReadingAbstract>> getReadings(@PathVariable(value = "media") String media) {
-		List<? extends ReadingAbstract> readings = null;
+	public ResponseEntity<List<? extends Reading>> getReadings(@PathVariable(value = "media") String media) {
+	
+		List<? extends Reading> readings = null;
 		Apartment ap = userDetailsService.getCurrentUser().getApartment();
+		
 		switch (media) {
 
 		case "energy":
@@ -64,10 +66,10 @@ public class AdminUserRestController {
 		}
 
 		if (readings.isEmpty()) {
-			return new ResponseEntity<List<? extends ReadingAbstract>>(HttpStatus.NOT_FOUND);
+			return new ResponseEntity<List<? extends Reading>>(HttpStatus.NOT_FOUND);
 		}
 
-		return new ResponseEntity<List<? extends ReadingAbstract>>(readings, HttpStatus.OK);
+		return new ResponseEntity<List<? extends Reading>>(readings, HttpStatus.OK);
 	}
 
 	@RequestMapping(value = "/user/{media}/payments", method = RequestMethod.GET)
@@ -82,31 +84,5 @@ public class AdminUserRestController {
 		return new ResponseEntity<List<? extends Payment>>(list, HttpStatus.OK);
 	}
 
-	// @RequestMapping("/User/userPassword")
-	// public ModelAndView changePassword() {
-	// return new ModelAndView("/User/UserPassword");
-	// }
-	//
-	// @RequestMapping("/User/userUpdatePassword")
-	// public ModelAndView updatePassword(@RequestParam String email,
-	// @RequestParam String oldPassword,
-	// @RequestParam String newPassword, @RequestParam String newPassword2) {
-	// HashMap<String, Object> model = new HashMap<>();
-	// if (!newPassword.equals(newPassword2) || newPassword == "" ||
-	// newPassword2 == "") {
-	// model.put("error", "Wpisz poprawnie nowe hasło");
-	// return new ModelAndView("/User/UserPassword", "model", model);
-	// }
-	//
-	// try {
-	// userDetailsService.changePassword(email, oldPassword, newPassword);
-	// } catch (UsernameNotFoundException e) {
-	// model.put("error", "Niepoprawny login lub hasło");
-	// return new ModelAndView("/User/UserPassword", "model", model);
-	// }
-	// model.put("class", "alert-success");
-	// model.put("msg", "Hasło zostało zmienione");
-	// model.put("user", userDetailsService.getCurrentUser().getTenant());
-	// return new ModelAndView("/User/UserHome", "model", model);
-	// }
+
 }

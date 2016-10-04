@@ -18,7 +18,7 @@ import kamienica.feature.invoice.InvoiceAbstractDao;
 import kamienica.feature.invoice.InvoiceEnergy;
 import kamienica.feature.invoice.InvoiceGas;
 import kamienica.feature.invoice.InvoiceWater;
-import kamienica.feature.reading.ReadingAbstract;
+import kamienica.feature.reading.Reading;
 import kamienica.feature.reading.ReadingEnergy;
 import kamienica.feature.reading.ReadingEnergyDao;
 import kamienica.feature.reading.ReadingGas;
@@ -125,7 +125,7 @@ public class AdminUserServiceImp implements AdminUserService {
 	}
 
 	@Override
-	public List<? extends ReadingAbstract> getReadingsForTenant(Apartment apartment, Media media) {
+	public List<? extends Reading> getReadingsForTenant(Apartment apartment, Media media) {
 
 		switch (media) {
 		case ENERGY:

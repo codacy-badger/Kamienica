@@ -27,7 +27,7 @@ import kamienica.feature.apartment.ApartmentService;
 
 @RestController
 @RequestMapping("/api/v1/apartments")
-public class ApartmentApi extends AbstractController{
+public class ApartmentApi extends AbstractApi{
 
 	@Autowired
 	ApartmentService apartmentService;

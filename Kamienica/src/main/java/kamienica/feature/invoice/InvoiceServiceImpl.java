@@ -24,7 +24,7 @@ import kamienica.feature.payment.PaymentDao;
 import kamienica.feature.payment.PaymentEnergy;
 import kamienica.feature.payment.PaymentGas;
 import kamienica.feature.payment.PaymentWater;
-import kamienica.feature.reading.ReadingAbstract;
+import kamienica.feature.reading.Reading;
 import kamienica.feature.reading.ReadingEnergy;
 import kamienica.feature.reading.ReadingEnergyDao;
 import kamienica.feature.reading.ReadingGas;
@@ -248,10 +248,10 @@ public class InvoiceServiceImpl implements InvoiceService {
 		return invoiceEnergyDao.getById(id);
 	}
 
-	@Override
-	public List<InvoiceEnergy> getEnergyInvoiceList() {
-		return invoiceEnergyDao.getList();
-	}
+//	@Override
+//	public List<InvoiceEnergy> getEnergyInvoiceList() {
+//		return invoiceEnergyDao.getList();
+//	}
 
 	@Override
 	public <T extends Invoice> void update(T invoice, Media media) {
@@ -357,14 +357,28 @@ public class InvoiceServiceImpl implements InvoiceService {
 	// }
 
 	@Override
-	public List<InvoiceWater> getWaterInvoiceList() {
-		return invoiceWaterDao.getList();
+	public List<? extends Invoice> getList(Media media) {
+		switch (media) {
+		case ENERGY:
+			return invoiceEnergyDao.getList();
+		case GAS:
+			return invoiceGasDao.getList();
+		case WATER:
+			return invoiceWaterDao.getList();
+		default:
+			return null;
+		}
 	}
-
-	@Override
-	public List<InvoiceGas> getGasInvoiceList() {
-		return invoiceGasDao.getList();
-	}
+	
+//	@Override
+//	public List<InvoiceWater> getWaterInvoiceList() {
+//		return invoiceWaterDao.getList();
+//	}
+//
+//	@Override
+//	public List<InvoiceGas> getGasInvoiceList() {
+//		return invoiceGasDao.getList();
+//	}
 
 	@Override
 	public List<InvoiceEnergy> getUnpaidInvoiceEnergy() {
@@ -400,7 +414,7 @@ public class InvoiceServiceImpl implements InvoiceService {
 
 	@SuppressWarnings("unchecked")
 	@Override
-	public <T extends ReadingAbstract> List<T> prepareForRegistration(Media media) throws InvalidDivisionException {
+	public <T extends Reading> List<T> prepareForRegistration(Media media) throws InvalidDivisionException {
 
 		// if (!DivisionValidator.validateDivision(apartmentDao.getList(),
 		// divisionDao.getList(),

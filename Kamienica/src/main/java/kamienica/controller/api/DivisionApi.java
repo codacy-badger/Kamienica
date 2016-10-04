@@ -14,7 +14,7 @@ import kamienica.feature.division.DivisionService;
 
 @RestController
 @RequestMapping("/api/v1/divisions")
-public class DivisionApi extends AbstractController {
+public class DivisionApi extends AbstractApi {
 
 	@Autowired
 	DivisionService service;

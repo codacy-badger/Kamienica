@@ -15,7 +15,7 @@ import kamienica.feature.meter.MeterAbstract;
 
 @MappedSuperclass
 @Inheritance
-public abstract class ReadingAbstract {
+public abstract class Reading {
 
 	@Id
 	@GeneratedValue
@@ -39,12 +39,12 @@ public abstract class ReadingAbstract {
 	}
 
 	@Autowired
-	public ReadingAbstract(LocalDate readingDate, double value) {
+	public Reading(LocalDate readingDate, double value) {
 		this.readingDate = readingDate;
 		this.value = value;
 	}
 
-	public ReadingAbstract() {
+	public Reading() {
 	}
 
 	@Override

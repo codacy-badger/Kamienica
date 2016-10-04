@@ -4,7 +4,7 @@ import java.util.List;
 
 import kamienica.core.dao.DaoInterface;
 import kamienica.feature.invoice.Invoice;
-import kamienica.feature.reading.ReadingAbstract;
+import kamienica.feature.reading.Reading;
 import kamienica.feature.tenant.Tenant;
 
 public interface PaymentDao<P extends Payment> extends DaoInterface<P> {
@@ -15,7 +15,7 @@ public interface PaymentDao<P extends Payment> extends DaoInterface<P> {
 
 	public List<P> getByInvoice(Invoice invoice);
 
-	public List<P> getByReading(ReadingAbstract reading);
+	public List<P> getByReading(Reading reading);
 
 	public List<P> getPaymentForTenant(Tenant tenant);
 

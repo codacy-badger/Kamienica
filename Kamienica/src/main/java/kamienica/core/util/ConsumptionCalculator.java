@@ -7,14 +7,14 @@ import java.util.function.Predicate;
 import org.joda.time.Days;
 
 import kamienica.feature.apartment.Apartment;
-import kamienica.feature.reading.ReadingAbstract;
+import kamienica.feature.reading.Reading;
 import kamienica.feature.reading.ReadingEnergy;
 import kamienica.feature.usagevalue.UsageValue;
 
 public class ConsumptionCalculator {
 
-	public static ArrayList<UsageValue> countConsupmtion(List<Apartment> apartment, List<ReadingAbstract> oldReadings,
-			List<ReadingAbstract> newReadings) {
+	public static ArrayList<UsageValue> countConsupmtion(List<Apartment> apartment, List<Reading> oldReadings,
+			List<Reading> newReadings) {
 		ArrayList<UsageValue> out = new ArrayList<UsageValue>();
 		for (Apartment m : apartment) {
 			UsageValue usageValue = new UsageValue();

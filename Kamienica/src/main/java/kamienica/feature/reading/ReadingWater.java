@@ -13,7 +13,7 @@ import kamienica.feature.meter.MeterWater;
 
 @Entity
 @Table(name = "readingwater")
-public class ReadingWater extends ReadingAbstract implements Serializable {
+public class ReadingWater extends Reading implements Serializable {
 
 	/**
 	 * 

@@ -19,6 +19,7 @@ import kamienica.core.util.Media;
 import kamienica.feature.meter.MeterWater;
 import kamienica.feature.meter.MeterService;
 import kamienica.feature.reading.ReadingWater;
+import kamienica.feature.reading.Reading;
 import kamienica.feature.reading.ReadingService;
 
 public class ReadingWaterServiceTest extends AbstractServiceTest {
@@ -57,16 +58,16 @@ public class ReadingWaterServiceTest extends AbstractServiceTest {
 
 	@Test
 	public void getList() {
-		assertEquals(21, service.getReadingWater().size());
+		assertEquals(21, service.getList(Media.WATER).size());
 	}
 
 	@Test
 	@Transactional
 	public void shouldDeleteLatestList() {
 		service.deleteLatestReadings(Media.WATER);
-		List<ReadingWater> list = service.getReadingWater();
+		List<? extends Reading> list = service.getList(Media.WATER);
 		assertEquals(14, list.size());
-		for (ReadingWater readingWater : list) {
+		for (Reading readingWater : list) {
 			assertNotEquals(LocalDate.parse("2016-09-01"), readingWater.getReadingDate());
 		}
 	}
@@ -135,7 +136,7 @@ public class ReadingWaterServiceTest extends AbstractServiceTest {
 			toSave.add(reading);
 		}
 		service.save(toSave, LocalDate.parse("2050-01-01"), Media.WATER);
-		assertEquals(28, service.getReadingWater().size());
+		assertEquals(28, service.getList(Media.WATER).size());
 		assertEquals(LocalDate.parse("2050-01-01"), service.getLatestNew(Media.WATER).get(0).getReadingDate());
 	}
 

@@ -38,19 +38,33 @@ public class ReadingServiceImpl implements ReadingService {
 	MeterDao<MeterWater> meterWater;
 
 	@Override
-	public List<ReadingEnergy> getReadingEnergy() {
-		return energy.getList();
+	public List<? extends Reading> getList(Media media) {
+		switch (media) {
+		case ENERGY:
+			return energy.getList();
+		case GAS:
+			return gas.getList();
+		case WATER:
+			return water.getList();
+		default:
+			return null;
+		}
 	}
 
-	@Override
-	public List<ReadingGas> getReadingGas() {
-		return gas.getList();
-	}
-
-	@Override
-	public List<ReadingWater> getReadingWater() {
-		return water.getList();
-	}
+//	@Override
+//	public List<ReadingEnergy> getReadingEnergy() {
+//		return energy.getList();
+//	}
+//
+//	@Override
+//	public List<ReadingGas> getReadingGas() {
+//		return gas.getList();
+//	}
+//
+//	@Override
+//	public List<ReadingWater> getReadingWater() {
+//		return water.getList();
+//	}
 
 	/**
 	 * 
@@ -63,7 +77,7 @@ public class ReadingServiceImpl implements ReadingService {
 	 */
 	@SuppressWarnings("unchecked")
 	@Override
-	public <T extends ReadingAbstract> List<T> getLatestNew(Media media) throws NoMainCounterException {
+	public <T extends Reading> List<T> getLatestNew(Media media) throws NoMainCounterException {
 		Set<Long> idList;
 		LocalDate fakeDate = new LocalDate().minusDays(100);
 		switch (media) {
@@ -75,12 +89,11 @@ public class ReadingServiceImpl implements ReadingService {
 			List<ReadingEnergy> energyList = latestEdit(Media.ENERGY);
 			if (energyList.isEmpty()) {
 				for (Long tmpLong : idList) {
-					energyList
-							.add(new ReadingEnergy(fakeDate, 0.0, meterEnergy.getById(tmpLong)));
+					energyList.add(new ReadingEnergy(fakeDate, 0.0, meterEnergy.getById(tmpLong)));
 				}
 			} else {
 				for (ReadingEnergy readingEnergy : energyList) {
-					//consider using LambdaJ
+					// consider using LambdaJ
 					idList.remove(readingEnergy.getMeter().getId());
 				}
 				for (Long tmpLong : idList) {
@@ -211,7 +224,7 @@ public class ReadingServiceImpl implements ReadingService {
 	// }
 	@SuppressWarnings("unchecked")
 	@Override
-	public <T extends ReadingAbstract> List<T> latestEdit(Media media) {
+	public <T extends Reading> List<T> latestEdit(Media media) {
 		switch (media) {
 		case ENERGY:
 
@@ -245,19 +258,18 @@ public class ReadingServiceImpl implements ReadingService {
 		return water.getLatestList(water.getLatestDate());
 	}
 
-	
 	@Override
-	public List <? extends ReadingAbstract> getPreviousReadingEnergy(LocalDate date, Media media) {
+	public List<? extends Reading> getPreviousReadingEnergy(LocalDate date, Media media) {
 		switch (media) {
 		case ENERGY:
 			return energy.getPrevious(date, meterEnergy.getIdList());
 
 		case GAS:
 
-			return  gas.getPrevious(date, meterGas.getIdList());
+			return gas.getPrevious(date, meterGas.getIdList());
 		case WATER:
 
-			return  water.getPrevious(date, meterWater.getIdList());
+			return water.getPrevious(date, meterWater.getIdList());
 
 		default:
 			break;
@@ -281,12 +293,12 @@ public class ReadingServiceImpl implements ReadingService {
 	}
 
 	@Override
-	public List<? extends ReadingAbstract>  getByDate(LocalDate date, Media media) {
+	public List<? extends Reading> getByDate(LocalDate date, Media media) {
 		switch (media) {
 		case ENERGY:
 			return energy.getByDate(date);
 		case GAS:
-			return  gas.getByDate(date);
+			return gas.getByDate(date);
 		case WATER:
 			return water.getByDate(date);
 
@@ -313,7 +325,7 @@ public class ReadingServiceImpl implements ReadingService {
 	// }
 
 	@Override
-	public <T extends ReadingAbstract> void save(List<T> reading, LocalDate localDate, Media media) {
+	public <T extends Reading> void save(List<T> reading, LocalDate localDate, Media media) {
 		switch (media) {
 		case ENERGY:
 			for (T t : reading) {
@@ -376,7 +388,7 @@ public class ReadingServiceImpl implements ReadingService {
 
 	@SuppressWarnings("unchecked")
 	@Override
-	public <T extends ReadingAbstract> T getById(Long id, Media media) {
+	public <T extends Reading> T getById(Long id, Media media) {
 		switch (media) {
 		case ENERGY:
 
@@ -429,20 +441,20 @@ public class ReadingServiceImpl implements ReadingService {
 	}
 
 	@Override
-	public void deleteList(List<? extends ReadingAbstract> list, Media media) {
+	public void deleteList(List<? extends Reading> list, Media media) {
 		switch (media) {
 		case ENERGY:
-			for (ReadingAbstract reading : list) {
+			for (Reading reading : list) {
 				energy.deleteById(reading.getId());
 			}
 			break;
 		case GAS:
-			for (ReadingAbstract reading : list) {
+			for (Reading reading : list) {
 				gas.deleteById(reading.getId());
 			}
 			break;
 		case WATER:
-			for (ReadingAbstract reading : list) {
+			for (Reading reading : list) {
 				water.deleteById(reading.getId());
 			}
 			break;
@@ -491,7 +503,7 @@ public class ReadingServiceImpl implements ReadingService {
 	// }
 	// }
 	@Override
-	public <T extends ReadingAbstract> void update(List<T> readings, LocalDate date, Media media) {
+	public <T extends Reading> void update(List<T> readings, LocalDate date, Media media) {
 		switch (media) {
 		case ENERGY:
 			for (T readingEnergy : readings) {
@@ -593,7 +605,7 @@ public class ReadingServiceImpl implements ReadingService {
 	}
 
 	@Override
-	public <T extends ReadingAbstract> void setDates(Map<String, Object> model, List<T> list) {
+	public <T extends Reading> void setDates(Map<String, Object> model, List<T> list) {
 		model.put("date", new LocalDate());
 
 		if (list.isEmpty()) {

@@ -13,7 +13,7 @@ import kamienica.feature.meter.MeterGas;
 
 @Entity
 @Table(name="readinggas")
-public class ReadingGas extends ReadingAbstract implements Serializable {
+public class ReadingGas extends Reading implements Serializable {
 
 	/**
 	 * 

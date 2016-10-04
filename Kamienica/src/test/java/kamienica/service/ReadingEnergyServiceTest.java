@@ -18,6 +18,7 @@ import kamienica.core.exception.NoMainCounterException;
 import kamienica.core.util.Media;
 import kamienica.feature.meter.MeterEnergy;
 import kamienica.feature.meter.MeterService;
+import kamienica.feature.reading.Reading;
 import kamienica.feature.reading.ReadingEnergy;
 import kamienica.feature.reading.ReadingService;
 
@@ -57,16 +58,16 @@ public class ReadingEnergyServiceTest extends AbstractServiceTest {
 
 	@Test
 	public void getList() {
-		assertEquals(15, service.getReadingEnergy().size());
+		assertEquals(15, service.getList(Media.ENERGY).size());
 	}
 
 	@Test
 	@Transactional
 	public void shouldDeleteLatestList() {
 		service.deleteLatestReadings(Media.ENERGY);
-		List<ReadingEnergy> list = service.getReadingEnergy();
+		List<? extends Reading> list = service.getList(Media.ENERGY);
 		assertEquals(10, list.size());
-		for (ReadingEnergy readingEnergy : list) {
+		for (Reading readingEnergy : list) {
 			assertNotEquals(LocalDate.parse("2016-09-01"), readingEnergy.getReadingDate());
 		}
 	}
@@ -136,7 +137,7 @@ public class ReadingEnergyServiceTest extends AbstractServiceTest {
 			toSave.add(reading);
 		}
 		service.save(toSave, LocalDate.parse("2050-01-01"), Media.ENERGY);
-		assertEquals(20, service.getReadingEnergy().size());
+		assertEquals(20, service.getList(Media.ENERGY).size());
 		assertEquals(LocalDate.parse("2050-01-01"), service.getLatestNew(Media.ENERGY).get(0).getReadingDate());
 	}
 

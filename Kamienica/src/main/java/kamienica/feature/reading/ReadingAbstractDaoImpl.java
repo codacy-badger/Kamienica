@@ -13,7 +13,7 @@ import org.joda.time.LocalDate;
 import kamienica.core.dao.AbstractDao;
 import kamienica.feature.invoice.Invoice;
 
-public abstract class ReadingAbstractDaoImpl<T extends ReadingAbstract> extends AbstractDao<T> {
+public abstract class ReadingAbstractDaoImpl<T extends Reading> extends AbstractDao<T> {
 
 	@Override
 	public List<T> getList() {

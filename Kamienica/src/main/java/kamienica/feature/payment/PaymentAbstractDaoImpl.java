@@ -9,7 +9,7 @@ import org.hibernate.criterion.Restrictions;
 
 import kamienica.core.dao.AbstractDao;
 import kamienica.feature.invoice.Invoice;
-import kamienica.feature.reading.ReadingAbstract;
+import kamienica.feature.reading.Reading;
 import kamienica.feature.tenant.Tenant;
 
 public class PaymentAbstractDaoImpl<P extends Payment> extends AbstractDao<P> {
@@ -22,7 +22,7 @@ public class PaymentAbstractDaoImpl<P extends Payment> extends AbstractDao<P> {
 	}
 
 	@SuppressWarnings("unchecked")
-	public List<P> getByReading(ReadingAbstract reading) {
+	public List<P> getByReading(Reading reading) {
 		// QUERY QUERY = GETSESSION().CREATESQLQUERY("SELECT * FROM
 		// PAYMENTENERGY WHERE READINGDATE =:DATE")
 		// .ADDENTITY(persistentClass).SETPARAMETER("DATE",

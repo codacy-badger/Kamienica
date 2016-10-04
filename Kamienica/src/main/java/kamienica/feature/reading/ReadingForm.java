@@ -4,7 +4,7 @@ import java.util.List;
 
 import org.joda.time.LocalDate;
 
-public abstract class ReadingForm<T extends ReadingAbstract> {
+public abstract class ReadingForm<T extends Reading> {
 
 	LocalDate oldDate;
 	LocalDate newDate;

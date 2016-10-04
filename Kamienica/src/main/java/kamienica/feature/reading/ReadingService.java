@@ -13,25 +13,27 @@ import kamienica.feature.invoice.InvoiceGas;
 
 public interface ReadingService {
 
-	public <T extends ReadingAbstract> void setDates(Map<String, Object> map, List<T> list);
+	public <T extends Reading> void setDates(Map<String, Object> map, List<T> list);
 
-	public <T extends ReadingAbstract> T getById(Long id, Media media);
+	public <T extends Reading> T getById(Long id, Media media);
 
-	public <T extends ReadingAbstract> void save(List<T> reading, LocalDate localDate, Media media);
+	public <T extends Reading> void save(List<T> reading, LocalDate localDate, Media media);
 
-	public <T extends ReadingAbstract> void update(List<T> readings, LocalDate date, Media media);
+	public <T extends Reading> void update(List<T> readings, LocalDate date, Media media);
+	
+	public List<? extends Reading> getList(Media media);
 
-	public List<ReadingEnergy> getReadingEnergy();
+//	public List<ReadingEnergy> getReadingEnergy();
+//
+//	public List<ReadingGas> getReadingGas();
+//
+//	public List<ReadingWater> getReadingWater();
 
-	public List<ReadingGas> getReadingGas();
+	public List<? extends Reading> getByDate(LocalDate date, Media media);
 
-	public List<ReadingWater> getReadingWater();
+	public void deleteList(List<? extends Reading> list, Media media);
 
-	public List<? extends ReadingAbstract> getByDate(LocalDate date, Media media);
-
-	public void deleteList(List<? extends ReadingAbstract> list, Media media);
-
-	public List<? extends ReadingAbstract> getPreviousReadingEnergy(LocalDate date, Media media);
+	public List<? extends Reading> getPreviousReadingEnergy(LocalDate date, Media media);
 
 	public List<ReadingEnergy> getPreviousReadingEnergy(LocalDate date, Set<Long> meterIdList);
 
@@ -39,9 +41,9 @@ public interface ReadingService {
 
 	public List<ReadingWater> getPreviousReadingWater(LocalDate date, Set<Long> meterIdList);
 
-	public <T extends ReadingAbstract> List<T> getLatestNew(Media media) throws NoMainCounterException;
+	public <T extends Reading> List<T> getLatestNew(Media media) throws NoMainCounterException;
 
-	public <T extends ReadingAbstract> List<T> latestEdit(Media media);
+	public <T extends Reading> List<T> latestEdit(Media media);
 
 	public List<ReadingEnergy> energyLatestEdit();
 

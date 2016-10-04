@@ -37,7 +37,7 @@ public class InvoiceWaterServiceTest extends AbstractServiceTest {
 
 	@Test
 	public void getList() {
-		assertEquals(1, invoiceService.getWaterInvoiceList().size());
+		assertEquals(1, invoiceService.getList(Media.WATER).size());
 
 	}
 
@@ -50,7 +50,7 @@ public class InvoiceWaterServiceTest extends AbstractServiceTest {
 		InvoiceWater invoice = new InvoiceWater("112233", "test", new LocalDate(), 200, list.get(1));
 
 		invoiceService.save(invoice, Media.WATER);
-		assertEquals(2, invoiceService.getWaterInvoiceList().size());
+		assertEquals(2, invoiceService.getList(Media.WATER).size());
 		List<? extends Payment> paymentList = paymentService.getPaymentList(Media.WATER);
 
 		assertEquals(6, paymentList.size());
@@ -74,7 +74,7 @@ public class InvoiceWaterServiceTest extends AbstractServiceTest {
 		InvoiceWater invoice = new InvoiceWater("112233", "test", new LocalDate(), 200, list.get(0));
 
 		invoiceService.save(invoice, Media.WATER);
-		assertEquals(2, invoiceService.getWaterInvoiceList().size());
+		assertEquals(2, invoiceService.getList(Media.WATER).size());
 		List<? extends Payment> paymentList = paymentService.getPaymentList(Media.WATER);
 		
 		assertEquals(6, paymentList.size());

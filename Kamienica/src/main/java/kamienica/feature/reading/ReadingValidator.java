@@ -4,8 +4,8 @@ import java.util.List;
 
 public class ReadingValidator {
 
-	public static boolean validateMeterReadings(List<? extends ReadingAbstract> currentReadings,
-			List<? extends ReadingAbstract> newReadings) {
+	public static boolean validateMeterReadings(List<? extends Reading> currentReadings,
+			List<? extends Reading> newReadings) {
 //		double primaryReading = 0;
 //		double sumOfReadings = 0;
 		/*

@@ -21,7 +21,7 @@ import kamienica.feature.invoice.InvoiceService;
 import kamienica.feature.payment.Payment;
 import kamienica.feature.payment.PaymentGas;
 import kamienica.feature.payment.PaymentService;
-import kamienica.feature.reading.ReadingAbstract;
+import kamienica.feature.reading.Reading;
 import kamienica.feature.reading.ReadingGas;
 import kamienica.feature.reading.ReadingService;
 import kamienica.feature.settings.Settings;
@@ -44,7 +44,7 @@ public class InvoiceGasServiceTest extends AbstractServiceTest {
 
 	@Test
 	public void getList() {
-		assertEquals(1, invoiceService.getGasInvoiceList().size());
+		assertEquals(1, invoiceService.getList(Media.GAS).size());
 
 	}
 
@@ -56,7 +56,7 @@ public class InvoiceGasServiceTest extends AbstractServiceTest {
 		InvoiceGas invoice = new InvoiceGas("112233", "test", new LocalDate(), 200, list.get(1));
 
 		invoiceService.save(invoice, Media.GAS);
-		assertEquals(2, invoiceService.getGasInvoiceList().size());
+		assertEquals(2, invoiceService.getList(Media.GAS).size());
 		List<? extends Payment> paymentList = paymentService.getPaymentList(Media.GAS);
 
 		assertEquals(6, paymentList.size());
@@ -78,7 +78,7 @@ public class InvoiceGasServiceTest extends AbstractServiceTest {
 		InvoiceGas invoice = new InvoiceGas("112233", "test", new LocalDate(), 200, list.get(0));
 
 		invoiceService.save(invoice, Media.GAS);
-		assertEquals(2, invoiceService.getGasInvoiceList().size());
+		assertEquals(2, invoiceService.getList(Media.GAS).size());
 		List<? extends Payment> paymentList = paymentService.getPaymentList(Media.GAS);
 
 		assertEquals(6, paymentList.size());
@@ -104,7 +104,7 @@ public class InvoiceGasServiceTest extends AbstractServiceTest {
 		InvoiceGas invoice = new InvoiceGas("112233", "test", new LocalDate(), 200, list.get(0));
 
 		invoiceService.save(invoice, Media.GAS);
-		assertEquals(2, invoiceService.getGasInvoiceList().size());
+		assertEquals(2, invoiceService.getList(Media.GAS).size());
 		List<? extends Payment> paymentList = paymentService.getPaymentList(Media.GAS);
 
 		assertEquals(6, paymentList.size());
@@ -153,7 +153,7 @@ public class InvoiceGasServiceTest extends AbstractServiceTest {
 	public void prepareForRegistrationWithException() throws InvalidDivisionException {
 		Apartment ap = new Apartment(78, "1234", "dummy");
 		apService.save(ap);
-		List<ReadingAbstract> list = invoiceService.prepareForRegistration(Media.GAS);
+		List<Reading> list = invoiceService.prepareForRegistration(Media.GAS);
 		assertEquals(2, list.size());
 		assertEquals(11, list.get(0).getValue(), 0);
 		assertEquals(31, list.get(1).getValue(), 0);
@@ -163,7 +163,7 @@ public class InvoiceGasServiceTest extends AbstractServiceTest {
 	@Test
 	public void prepareForRegistration() throws InvalidDivisionException {
 		// apService.deleteByID(5L);
-		List<ReadingAbstract> list = invoiceService.prepareForRegistration(Media.GAS);
+		List<Reading> list = invoiceService.prepareForRegistration(Media.GAS);
 		assertEquals(2, list.size());
 		assertEquals(114, list.get(0).getValue(), 0);
 		assertEquals(196, list.get(1).getValue(), 0);
@@ -175,7 +175,7 @@ public class InvoiceGasServiceTest extends AbstractServiceTest {
 	public void shouldThrowInvalidDivisionExceptionWhilePreparing() throws InvalidDivisionException {
 		divisionService.deleteAll();
 
-		List<ReadingAbstract> list = invoiceService.prepareForRegistration(Media.GAS);
+		List<Reading> list = invoiceService.prepareForRegistration(Media.GAS);
 		assertEquals(0, list.size());
 	}
 

@@ -32,7 +32,7 @@ import kamienica.feature.meter.MeterWater;
 
 @RestController
 @RequestMapping("/api/v1/meters")
-public class MeterApi extends AbstractController {
+public class MeterApi extends AbstractApi {
 
 	@Autowired
 	MeterService service;
