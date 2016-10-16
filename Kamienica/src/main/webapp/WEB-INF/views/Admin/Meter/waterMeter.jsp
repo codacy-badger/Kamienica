@@ -93,7 +93,7 @@
 						<label for="inputEmail3" class="col-sm-3 control-label">Mieszkanie</label>
 						<div class="col-sm-9">
 							<select name='apartment' ng-model="ctrl.meterWater.apartment"
-								ng-required='true' class="form-control"
+								 class="form-control"
 								ng-options="a.description for a in ctrl.apartments"><option>{{ctrl.tenant.apartment}}</option>
 							</select>
 							<p class="help-block">

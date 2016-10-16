@@ -4,8 +4,7 @@ public enum Media {
 	GAS, ENERGY, WATER;
 
 	public Media getFromString(String string) {
-		string = string.toUpperCase();
-		switch (string) {
+		switch (string.toUpperCase()) {
 		case "ENERGY":
 			return ENERGY;
 		case "GAS":

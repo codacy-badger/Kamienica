@@ -242,7 +242,7 @@ public class InvoiceController {
 
 	@RequestMapping("/Admin/Invoice/invoiceEnergyList")
 	public ModelAndView invoiceEnergyList() {
-		Map<String, Object> model = new HashMap<String, Object>();
+		Map<String, Object> model = new HashMap<>();
 		invoiceService.list(model, Media.ENERGY);
 		// model.put("invoice", invoiceService.getEnergyInvoiceList());
 		// model.put("editlUrl", "/Admin/Invoice/invoiceEnergyEdit.html?id=");
@@ -254,7 +254,7 @@ public class InvoiceController {
 
 	@RequestMapping("/Admin/Invoice/invoiceGasList")
 	public ModelAndView invoiceGasList() {
-		Map<String, Object> model = new HashMap<String, Object>();
+		Map<String, Object> model = new HashMap<>();
 		invoiceService.list(model, Media.GAS);
 		// model.put("invoice", invoiceService.getGasInvoiceList());
 		// model.put("editlUrl", "/Admin/Invoice/invoiceGasEdit.html?id=");
@@ -266,7 +266,7 @@ public class InvoiceController {
 
 	@RequestMapping("/Admin/Invoice/invoiceWaterList")
 	public ModelAndView invoiceWaterList() {
-		Map<String, Object> model = new HashMap<String, Object>();
+		Map<String, Object> model = new HashMap<>();
 		invoiceService.list(model, Media.WATER);
 		// model.put("invoice", invoiceService.getWaterInvoiceList());
 		// model.put("editlUrl", "/Admin/Invoice/invoiceWaterEdit.html?id=");

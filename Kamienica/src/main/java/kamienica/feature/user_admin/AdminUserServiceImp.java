@@ -1,8 +1,15 @@
 package kamienica.feature.user_admin;
 
-import java.util.HashMap;
-import java.util.List;
-
+import kamienica.core.util.Media;
+import kamienica.feature.apartment.Apartment;
+import kamienica.feature.apartment.ApartmentDao;
+import kamienica.feature.invoice.InvoiceAbstractDao;
+import kamienica.feature.invoice.InvoiceEnergy;
+import kamienica.feature.invoice.InvoiceGas;
+import kamienica.feature.invoice.InvoiceWater;
+import kamienica.feature.reading.*;
+import kamienica.feature.settings.Settings;
+import kamienica.feature.settings.SettingsDao;
 import org.joda.time.Days;
 import org.joda.time.LocalDate;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,29 +18,15 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import kamienica.core.util.Media;
-import kamienica.feature.apartment.Apartment;
-import kamienica.feature.apartment.ApartmentDao;
-import kamienica.feature.invoice.InvoiceAbstractDao;
-import kamienica.feature.invoice.InvoiceEnergy;
-import kamienica.feature.invoice.InvoiceGas;
-import kamienica.feature.invoice.InvoiceWater;
-import kamienica.feature.reading.Reading;
-import kamienica.feature.reading.ReadingEnergy;
-import kamienica.feature.reading.ReadingEnergyDao;
-import kamienica.feature.reading.ReadingGas;
-import kamienica.feature.reading.ReadingGasDao;
-import kamienica.feature.reading.ReadingWater;
-import kamienica.feature.reading.ReadingWaterDao;
-import kamienica.feature.settings.Settings;
-import kamienica.feature.settings.SettingsDao;
+import java.util.HashMap;
+import java.util.List;
 
 @Service
 @Transactional
 public class AdminUserServiceImp implements AdminUserService {
 
 	@Autowired
-	SettingsDao settingsDao;
+	private SettingsDao settingsDao;
 	@Autowired
 	private ApartmentDao apartmentDao;
 	@Autowired
@@ -159,8 +152,7 @@ public class AdminUserServiceImp implements AdminUserService {
 	// }
 
 	public SecurityUser getCurrentUser() {
-		SecurityUser user = (SecurityUser) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-		return user;
+		return  (SecurityUser) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 	}
 
 	private int countDays(LocalDate date) {

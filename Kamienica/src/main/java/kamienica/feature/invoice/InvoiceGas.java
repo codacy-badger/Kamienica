@@ -35,7 +35,6 @@ public class InvoiceGas extends Invoice implements Serializable{
 	}
 
 	public InvoiceGas() {
-		super();
 		super.setDescription("Faktura Za Gaz");
 	}
 

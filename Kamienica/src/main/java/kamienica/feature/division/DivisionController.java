@@ -33,7 +33,7 @@ public class DivisionController {
 	@RequestMapping("/divisionRegister")
 	public ModelAndView divisionRegister(@ModelAttribute("divisionForm") DivisionForm divisionForm,
 			BindingResult result) {
-		Map<String, Object> model = new HashMap<String, Object>();
+		Map<String, Object> model = new HashMap<>();
 		try {
 			divisionService.prepareForm(divisionForm);
 		} catch (WrongDivisionInputException e) {
@@ -61,7 +61,7 @@ public class DivisionController {
 			divisionService.saveList(divisionList, date);
 			return new ModelAndView("redirect:/Admin/Division/divisionList.html");
 		} else {
-			Map<String, Object> model = new HashMap<String, Object>();
+			Map<String, Object> model = new HashMap<>();
 			String error = "Błąd. Sprawdź poprawność danych";
 			model.put("error", error);
 			model.put("apartment", apartmentList);
@@ -72,7 +72,7 @@ public class DivisionController {
 
 	@RequestMapping("/divisionList")
 	public ModelAndView divisionList() {
-		Map<String, Object> model = new HashMap<String, Object>();
+		Map<String, Object> model = new HashMap<>();
 		DivisionForm divisionForm = new DivisionForm();
 		divisionForm.setDivisionList(divisionService.getList());
 		List<Tenant> tenants = tenantService.getCurrentTenants();

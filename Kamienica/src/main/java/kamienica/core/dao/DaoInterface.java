@@ -6,24 +6,24 @@ import java.util.Set;
 import org.hibernate.criterion.Criterion;
 import org.hibernate.criterion.Order;
 
-public interface DaoInterface<T extends Object> {
+public interface DaoInterface<T> {
 
-	public void save(T object);
+	void save(T object);
 
-	public List<T> getList();
+	List<T> getList();
 	
-	public List<T> paginatedList(Integer firstResult, Integer maxResults);
+	List<T> paginatedList(Integer firstResult, Integer maxResults);
 
-	public void deleteById(Long id);
+	void deleteById(Long id);
 
-	public void update(T object);
+	void update(T object);
 
-	public T getById(Long id);
+	T getById(Long id);
 
-	public Set<Long> getIdList();
+	Set<Long> getIdList();
 	
 	
 
-	public List<T> findByCriteria(final int firstResult, final int maxResults, final Order order,
-			final Criterion... criterion);
+	List<T> findByCriteria(final int firstResult, final int maxResults, final Order order,
+                           final Criterion... criterion);
 }

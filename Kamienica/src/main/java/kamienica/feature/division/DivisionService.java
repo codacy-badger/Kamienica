@@ -12,23 +12,23 @@ import kamienica.feature.tenant.Tenant;
 
 public interface DivisionService {
 
-	public void saveList(List<Division> division, LocalDate date);
+	void saveList(List<Division> division, LocalDate date);
 
-	public void saveList(DivisionForm form) throws InvalidDivisionException;
+	void saveList(DivisionForm form) throws InvalidDivisionException;
 
-	public List<Division> getList();
+	List<Division> getList();
 	
-	public Map<Tenant, List<Division>> getMappedList();
+	Map<Tenant, List<Division>> getMappedList();
 
-	public void deleteByID(Long id);
+	void deleteByID(Long id);
 
-	public void update(Division division);
+	void update(Division division);
 
-	public void deleteAll();
+	void deleteAll();
 
-	public void prepareForm(DivisionForm form) throws WrongDivisionInputException;
+	void prepareForm(DivisionForm form) throws WrongDivisionInputException;
 
 	List<Division> prepareDivisionListForRegistration(List<Tenant> tenantList, List<Apartment> apartmentList);
 
-	public boolean isDivisionCorrect();
+	boolean isDivisionCorrect();
 }

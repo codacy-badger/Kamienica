@@ -7,11 +7,11 @@ import kamienica.feature.apartment.Apartment;
 
 public interface TenantDao extends DaoInterface<Tenant> {
 
-	public Tenant getTenantForApartment(Apartment apartment);
+	Tenant getTenantForApartment(Apartment apartment);
 
-	public void deactivateByApparmentId(Long id);
+	void deactivateByApparmentId(Long id);
 
-	public List<Tenant> getActiveTenants();
+	List<Tenant> getActiveTenants();
 
-	public Tenant loadByMail(String mail);
+	Tenant loadByMail(String mail);
 }

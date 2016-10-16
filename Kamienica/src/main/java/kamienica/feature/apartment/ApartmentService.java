@@ -4,16 +4,16 @@ import java.util.List;
 
 public interface ApartmentService {
 
-	public void save(Apartment apartment);
+	void save(Apartment apartment);
 
-	public List<Apartment> getList();
+	List<Apartment> getList();
 
-	public List<Apartment> paginatedList(Integer firstResult, Integer maxResults);
+	List<Apartment> paginatedList(Integer firstResult, Integer maxResults);
 
-	public void deleteByID(Long id);
+	void deleteByID(Long id);
 
-	public void update(Apartment apartment);
+	void update(Apartment apartment);
 
-	public Apartment getById(Long id);
+	Apartment getById(Long id);
 
 }

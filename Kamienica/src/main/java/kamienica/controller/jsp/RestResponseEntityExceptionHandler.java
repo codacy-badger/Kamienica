@@ -20,8 +20,6 @@ public class RestResponseEntityExceptionHandler extends ResponseEntityExceptionH
 
 	@ExceptionHandler(value = { Exception.class, })
 	protected ResponseEntity<Object> handleOtherConflict(RuntimeException ex, WebRequest request) {
-		System.out.println("--------");
-		System.out.println(ex);
 		String bodyOfResponse = "Bląd generalny";
 		return handleExceptionInternal(ex, bodyOfResponse, new HttpHeaders(), HttpStatus.CONFLICT, request);
 	}

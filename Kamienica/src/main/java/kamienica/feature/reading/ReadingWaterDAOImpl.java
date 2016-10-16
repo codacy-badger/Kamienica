@@ -123,7 +123,7 @@ public class ReadingWaterDAOImpl extends ReadingAbstractDaoImpl<ReadingWater> im
 		// "SELECT * FROM readingwater where readingdate = (select readingdate
 		// from readingwater where readingdate < :date GROUP BY readingdate
 		// ORDER BY readingdate desc limit 1)"
-		HashMap<String, List<ReadingWater>> out = new HashMap<String, List<ReadingWater>>();
+		HashMap<String, List<ReadingWater>> out = new HashMap<>();
 		List<ReadingWater> oldReadings = new ArrayList<>();
 		Query query = getSession().createSQLQuery(queryString).addEntity(ReadingWater.class).setDate("date",
 				invoice.getBaseReading().getReadingDate().toDate());

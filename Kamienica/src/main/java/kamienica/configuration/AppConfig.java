@@ -1,8 +1,14 @@
 package kamienica.configuration;
 
-import java.util.ArrayList;
-import java.util.List;
-
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.datatype.joda.JodaModule;
+import kamienica.conventer.*;
+import kamienica.feature.invoice.InvoiceEnergyConverter;
+import kamienica.feature.invoice.InvoiceGasConverter;
+import kamienica.feature.invoice.InvoiceWaterConverter;
+import kamienica.feature.meter.MeterEnergyConverter;
+import kamienica.feature.meter.MeterGasConverter;
+import kamienica.feature.meter.MeterWaterConverter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
 import org.springframework.context.annotation.Bean;
@@ -26,20 +32,8 @@ import org.springframework.web.servlet.view.ContentNegotiatingViewResolver;
 import org.springframework.web.servlet.view.InternalResourceViewResolver;
 import org.springframework.web.servlet.view.JstlView;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.datatype.joda.JodaModule;
-
-import kamienica.conventer.ApartmentConverter;
-import kamienica.conventer.ReadingEnergyConverter;
-import kamienica.conventer.ReadingGasConverter;
-import kamienica.conventer.ReadingWaterConverter;
-import kamienica.conventer.TenantConverter;
-import kamienica.feature.invoice.InvoiceEnergyConverter;
-import kamienica.feature.invoice.InvoiceGasConverter;
-import kamienica.feature.invoice.InvoiceWaterConverter;
-import kamienica.feature.meter.MeterEnergyConverter;
-import kamienica.feature.meter.MeterGasConverter;
-import kamienica.feature.meter.MeterWaterConverter;
+import java.util.ArrayList;
+import java.util.List;
 
 @Configuration
 @EnableWebMvc
@@ -47,28 +41,28 @@ import kamienica.feature.meter.MeterWaterConverter;
 public class AppConfig extends WebMvcConfigurerAdapter {
 
 	@Autowired
-	ReadingEnergyConverter readingEnergyConverter;
+	private ReadingEnergyConverter readingEnergyConverter;
 	@Autowired
-	ReadingGasConverter readingGasConverter;
+	private ReadingGasConverter readingGasConverter;
 	@Autowired
-	ReadingWaterConverter readingWaterConverter;
+	private ReadingWaterConverter readingWaterConverter;
 	@Autowired
-	InvoiceGasConverter invoiceGasConverter;
+	private InvoiceGasConverter invoiceGasConverter;
 	@Autowired
-	InvoiceWaterConverter invoiceWaterConverter;
+	private InvoiceWaterConverter invoiceWaterConverter;
 	@Autowired
-	InvoiceEnergyConverter invoiceEnergyConverter;
+	private InvoiceEnergyConverter invoiceEnergyConverter;
 	// start nowych
 	@Autowired
-	ApartmentConverter apartmentConverter;
+	private ApartmentConverter apartmentConverter;
 	@Autowired
-	MeterGasConverter meterGasConverter;
+	private MeterGasConverter meterGasConverter;
 	@Autowired
-	MeterEnergyConverter meterEnergyConverter;
+	private MeterEnergyConverter meterEnergyConverter;
 	@Autowired
-	MeterWaterConverter meterWaterConverter;
+	private MeterWaterConverter meterWaterConverter;
 	@Autowired
-	TenantConverter tenantConverter;
+	private TenantConverter tenantConverter;
 
 	@Override
 	public void configureContentNegotiation(ContentNegotiationConfigurer configurer) {
@@ -83,7 +77,7 @@ public class AppConfig extends WebMvcConfigurerAdapter {
 		ContentNegotiatingViewResolver resolver = new ContentNegotiatingViewResolver();
 		resolver.setContentNegotiationManager(manager);
 		// Define all possible view resolvers
-		List<ViewResolver> resolvers = new ArrayList<ViewResolver>();
+		List<ViewResolver> resolvers = new ArrayList<>();
 		resolvers.add(jsonViewResolver());
 		resolvers.add(viewResolver());
 		resolver.setViewResolvers(resolvers);

@@ -23,7 +23,7 @@ public class WaterConsumptionCalculator {
 		ReadingWater sharedReadingNew = WaterConsumptionCalculator.generateUsageForAdministrativePart(newRading, apartment);
 		newRading.add(sharedReadingNew);
 
-		ArrayList<UsageValue> usage = new ArrayList<UsageValue>();
+		ArrayList<UsageValue> usage = new ArrayList<>();
 		for (Apartment m : apartment) {
 			UsageValue tmpUsage = new UsageValue();
 			tmpUsage.setDescription("Zuzycie calkowite za: " + m.getDescription());
@@ -99,8 +99,7 @@ public class WaterConsumptionCalculator {
 			}
 		}
 		double sharedPart = main - sumOfOthers;
-		ReadingWater tmp = new ReadingWater(readings.get(0).getReadingDate(), sharedPart, temporaryWaterMeter);
-		return tmp;
+		return new ReadingWater(readings.get(0).getReadingDate(), sharedPart, temporaryWaterMeter);
 	}
 
 	// metoda dla managera gazu
@@ -108,12 +107,12 @@ public class WaterConsumptionCalculator {
 		double output = 0;
 
 		for (ReadingWater o : newReadings) {
-			if (o.getMeter().getIsWarmWater() == true)
+			if (o.getMeter().getIsWarmWater())
 				output += o.getValue();
 		}
 
 		for (ReadingWater o : oldReadings) {
-			if (o.getMeter().getIsWarmWater() == true)
+			if (o.getMeter().getIsWarmWater())
 				output = output - o.getValue();
 		}
 

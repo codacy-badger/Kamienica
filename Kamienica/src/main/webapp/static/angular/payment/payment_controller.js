@@ -4,39 +4,34 @@ App.controller('PaymentController', [
     '$scope',
     'Payment', '$http',
     function($scope, Payment, $http) {
-
-        $scope.data = {
-            show: true
-        };
-        var testVar = $http.get('http://localhost:8080/Kamienica/api/v1/payments.json').
-        success(function(data) {
-              
-
-                console.log('data');
-                console.log(data);
-                self.list = data;
-                
-                console.log('self.listasasda');
-           	 console.log(self.list);
-           	 return data;
-           
-            })
-            .error(function(data, status, headers, config) {
-                // called asynchronously if an error occurs
-                // or server returns response with an error status.
-            });
+    	var self = this;
+    	self.list = [];
+    	self.energy = [];
+    	self.gas = [];
+    	self.water = [];
+    	
+//        $scope.data = {
+//            show: true
+//        };
+//        var testVar = $http.get('http://localhost:8080/Kamienica/api/v1/payments.json').
+//        success(function(data) {
+//        	
+//        	self.list = data[0];
+//           	 return data;
+//            })
+//            .error(function(data, status, headers, config) {
+//            });
         $scope.media = 'Energia';
-
-        var self = this;
+        
         self.payment = new Payment();
         self.entity;
-        self.list = [];
-        self.payments = [];
-        self.errors = []
-        var arrayIndex;
-
-
-      
+        self.list = Payment.getEnergy();
+        
+        self.energy = self.list[0];
+    	self.gas = self.list[1];
+    	self.water = self.list[2];
+        
+        console.log(self.list);
         
 
         self.switchForm = function(media) {
@@ -57,12 +52,12 @@ App.controller('PaymentController', [
             
         }
 
-        self.fetchAll = function() {
-        	self.payments = Payment.query();
-        	console.log('testvatr');
-        	 console.log(testVar);
-        };
+//        self.fetchAll = function() {
+//        	self.payments = Payment.query();
+//        	console.log('testvatr');
+//        	 console.log(testVar);
+//        };
 
-        self.fetchAll();
+//        self.fetchAll();
     }
 ]);

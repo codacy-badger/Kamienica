@@ -1,9 +1,8 @@
 package kamienica.core.util;
 
-import java.util.ArrayList;
 import java.util.List;
 
-import org.joda.time.Days;
+import kamienica.core.exception.NegativeConsumptionValue;
 
 import kamienica.feature.apartment.Apartment;
 import kamienica.feature.reading.Reading;
@@ -11,49 +10,8 @@ import kamienica.feature.usagevalue.UsageValue;
 
 public interface ConsumptionCalulator {
 
-	public static List<UsageValue> calculateConsumption(List<Apartment> apartment,
-			List<? extends Reading> oldReadings, List<? extends Reading> newReadings) {
-		ArrayList<UsageValue> usageList = new ArrayList<UsageValue>();
-		for (Apartment m : apartment) {
+    List<UsageValue> calculateConsumption(List<Apartment> apartment,
+                                          List<Reading> oldReadings, List<Reading> newReadings) throws NegativeConsumptionValue;
 
-			UsageValue usageValue = new UsageValue();
-			usageValue.setDescription("Zuzycie calkowite za: " + m.getDescription());
-			usageValue.setApartment(m);
-			double sumPrevious = 0;
-			double sumCurrent = 0;
-
-			for (int i = 0; i < newReadings.size(); i++) {
-				if (newReadings.get(i).getMeter().getApartment() != null) {
-					if (newReadings.get(i).getMeter().getApartment().getApartmentNumber() == m.getApartmentNumber()) {
-						sumCurrent = sumCurrent + newReadings.get(i).getValue();
-					}
-				}
-				if (!oldReadings.isEmpty()) {
-					if (oldReadings.get(i).getMeter().getApartment() != null) {
-						if (oldReadings.get(i).getMeter().getApartment().getApartmentNumber() == m
-								.getApartmentNumber()) {
-							sumPrevious = sumPrevious + oldReadings.get(i).getValue();
-						}
-					}
-				}
-			}
-
-			double usage = sumCurrent - sumPrevious;
-
-			usageValue.setUsage(usage);
-			usageValue.setUnit(newReadings.get(0).getUnit());
-			if (oldReadings.isEmpty()) {
-				usageValue.setDaysBetweenReadings(0);
-			} else {
-				usageValue.setDaysBetweenReadings(
-						Days.daysBetween(oldReadings.get(0).getReadingDate(), newReadings.get(0).getReadingDate())
-								.getDays());
-
-			}
-			usageList.add(usageValue);
-		}
-
-		return usageList;
-	}
 
 }

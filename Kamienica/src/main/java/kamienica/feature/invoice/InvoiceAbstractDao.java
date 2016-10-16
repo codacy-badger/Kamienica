@@ -12,15 +12,15 @@ public interface InvoiceAbstractDao<I extends Invoice> extends DaoInterface<I> {
 
 //	public List<I> getInvoicesForCalulation(Invoice invoice);
 
-	public List<I> getUnpaidInvoices();
+	List<I> getUnpaidInvoices();
 
-	public I getLastResolved();
+	I getLastResolved();
 	
-	public void setResolvement(I invoice, PaymentStatus status);
+	void setResolvement(I invoice, PaymentStatus status);
 //
 //	public void resolveInvoice(I invoice);
 //
 //	public void unresolveInvoice(int id);
 	
-	public int getDaysOfLastInvoice();
+	int getDaysOfLastInvoice();
 }

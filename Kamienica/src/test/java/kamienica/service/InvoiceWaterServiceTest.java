@@ -16,7 +16,6 @@ import kamienica.feature.apartment.ApartmentService;
 import kamienica.feature.division.DivisionService;
 import kamienica.feature.invoice.InvoiceWater;
 import kamienica.feature.invoice.InvoiceService;
-import kamienica.feature.payment.PaymentWater;
 import kamienica.feature.payment.Payment;
 import kamienica.feature.payment.PaymentService;
 import kamienica.feature.reading.ReadingWater;
@@ -102,7 +101,7 @@ public class InvoiceWaterServiceTest extends AbstractServiceTest {
 	@Ignore
 	public void update() {
 		InvoiceWater invoice = new InvoiceWater("23423423", "test", new LocalDate(), 400,
-				(ReadingWater) readingService.getById(6L, Media.WATER));
+                readingService.getById(6L, Media.WATER));
 		invoice.setId(1L);
 		List<? extends Payment> oldList = paymentService.getPaymentByInvoice(invoice, Media.WATER);
 

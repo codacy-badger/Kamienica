@@ -21,7 +21,7 @@ import org.slf4j.LoggerFactory;
 import kamienica.core.util.Pair;
 
 @SuppressWarnings("unchecked")
-public abstract class AbstractJpaDao<T extends Object, Id extends Serializable> {
+public abstract class AbstractJpaDao<T, Id extends Serializable> {
 
 	
 	private static final Logger LOG = LoggerFactory.getLogger(AbstractJpaDao.class);

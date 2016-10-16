@@ -1,11 +1,8 @@
 package kamienica.core.util;
 
-import java.text.DecimalFormat;
-import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Locale;
 
 import org.joda.time.Days;
 
@@ -21,7 +18,7 @@ public class GasConsumptionCalculator {
 	 */
 	public static ArrayList<UsageValue> countConsumption(List<Apartment> aparment, List<ReadingGas> gasOld,
 			List<ReadingGas> gasNew, List<ReadingWater> waterOld, List<ReadingWater> waterNew) {
-		ArrayList<UsageValue> out = new ArrayList<UsageValue>();
+		ArrayList<UsageValue> out = new ArrayList<>();
 		for (Apartment m : aparment) {
 
 			UsageValue tmp = new UsageValue();
@@ -30,7 +27,7 @@ public class GasConsumptionCalculator {
 			double sumNew = 0;
 			tmp.setApartment(m);
 			for (int i = 0; i < gasNew.size(); i++) {
-				if (gasNew.get(i).getIsCWU() == false) {
+				if (!gasNew.get(i).getIsCWU()) {
 
 					if (gasNew.get(i).getMeter().getApartment() != null) {
 						if (gasNew.get(i).getMeter().getApartment().getApartmentNumber() == m.getApartmentNumber()) {
@@ -38,7 +35,7 @@ public class GasConsumptionCalculator {
 						}
 					}
 					if (!gasOld.isEmpty()) {
-						if (gasOld.get(i).getIsCWU() == false) {
+						if (!gasOld.get(i).getIsCWU()) {
 							if (gasOld.get(i).getMeter().getApartment() != null) {
 								if (gasOld.get(i).getMeter().getApartment().getApartmentNumber() == m
 										.getApartmentNumber()) {
@@ -89,7 +86,7 @@ public class GasConsumptionCalculator {
 	/** Method for individual water heating system */
 	public static ArrayList<UsageValue> countConsumption(List<Apartment> aparment, List<ReadingGas> gasOld,
 			List<ReadingGas> gasNew) {
-		ArrayList<UsageValue> out = new ArrayList<UsageValue>();
+		ArrayList<UsageValue> out = new ArrayList<>();
 		for (Apartment m : aparment) {
 
 			UsageValue tmp = new UsageValue();
@@ -98,7 +95,7 @@ public class GasConsumptionCalculator {
 			double sumNew = 0;
 			tmp.setApartment(m);
 			for (int i = 0; i < gasNew.size(); i++) {
-				if (gasNew.get(i).getIsCWU() == false) {
+				if (!gasNew.get(i).getIsCWU()) {
 
 					if (gasNew.get(i).getMeter().getApartment() != null) {
 						if (gasNew.get(i).getMeter().getApartment().getApartmentNumber() == m.getApartmentNumber()) {
@@ -106,7 +103,7 @@ public class GasConsumptionCalculator {
 						}
 					}
 					if (!gasOld.isEmpty()) {
-						if (gasOld.get(i).getIsCWU() == false) {
+						if (!gasOld.get(i).getIsCWU()) {
 							if (gasOld.get(i).getMeter().getApartment() != null) {
 								if (gasOld.get(i).getMeter().getApartment().getApartmentNumber() == m
 										.getApartmentNumber()) {
@@ -146,14 +143,14 @@ public class GasConsumptionCalculator {
 		HashMap<Integer, Double> output = new HashMap<>();
 		for (ReadingWater o : newReading) {
 			if (o.getMeter().getApartment() != null && o.getMeter().getApartment().getApartmentNumber() != 0) {
-				if (o.getMeter().getIsWarmWater() == true) {
+				if (o.getMeter().getIsWarmWater()) {
 					output.put(o.getMeter().getApartment().getApartmentNumber(), o.getValue());
 				}
 			}
 		}
 		for (ReadingWater o : oldReading) {
 			if (o.getMeter().getApartment() != null && o.getMeter().getApartment().getApartmentNumber() != 0) {
-				if (o.getMeter().getIsWarmWater() == true) {
+				if (o.getMeter().getIsWarmWater()) {
 					double consumption = output.get(o.getMeter().getApartment().getApartmentNumber());
 					consumption = consumption - o.getValue();
 					output.put(o.getMeter().getApartment().getApartmentNumber(), consumption);
@@ -166,12 +163,12 @@ public class GasConsumptionCalculator {
 	private static double sumCWU(List<ReadingGas> gasOld, List<ReadingGas> gasNew) {
 		double out = 0;
 		for (ReadingGas w : gasNew) {
-			if (w.getIsCWU() == true)
+			if (w.getIsCWU())
 				out += w.getValue();
 		}
 
 		for (ReadingGas w : gasOld) {
-			if (w.getIsCWU() == true)
+			if (w.getIsCWU())
 				out -= w.getValue();
 		}
 		return out;

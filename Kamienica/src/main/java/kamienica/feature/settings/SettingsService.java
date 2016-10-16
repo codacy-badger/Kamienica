@@ -2,13 +2,13 @@ package kamienica.feature.settings;
 
 public interface SettingsService {
 
-	public Settings getSettings();
+	Settings getSettings();
 
-	public void delete();
+	void delete();
 
-	public void save(Settings settings);
+	void save(Settings settings);
 
-	public boolean isDivisionCorrect();
+	boolean isDivisionCorrect();
 
-	public void changeDivisionState(boolean state);
+	void changeDivisionState(boolean state);
 }

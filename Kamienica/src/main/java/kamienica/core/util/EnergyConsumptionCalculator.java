@@ -13,12 +13,10 @@ public class EnergyConsumptionCalculator {
 
 	public static ArrayList<UsageValue> countConsupmtion(List<Apartment> apartment, List<ReadingEnergy> oldReadings,
 			List<ReadingEnergy> newReadings) {
-		ArrayList<UsageValue> out = new ArrayList<UsageValue>();
+		ArrayList<UsageValue> out = new ArrayList<>();
 		for (Apartment m : apartment) {
 
-			UsageValue usageValue = new UsageValue();
-			usageValue.setDescription("Zuzycie calkowite za: " + m.getDescription());
-			usageValue.setApartment(m);
+			UsageValue usageValue = createNewUsageValue(m);
 			double sumPrevious = 0;
 			double sumCurrent = 0;
 
@@ -54,5 +52,12 @@ public class EnergyConsumptionCalculator {
 
 		return out;
 
+	}
+
+	private static UsageValue createNewUsageValue(Apartment m) {
+		UsageValue usageValue = new UsageValue();
+		usageValue.setDescription("Zuzycie calkowite za: " + m.getDescription());
+		usageValue.setApartment(m);
+		return usageValue;
 	}
 }

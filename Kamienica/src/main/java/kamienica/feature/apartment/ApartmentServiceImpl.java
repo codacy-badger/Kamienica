@@ -50,8 +50,7 @@ public class ApartmentServiceImpl implements ApartmentService {
 
 	@Override
 	public Apartment getById(Long id) {
-		Apartment apartment = apartmentDAO.getById(id);
-		return apartment;
+		return apartmentDAO.getById(id);
 
 	}
 

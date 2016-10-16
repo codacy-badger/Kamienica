@@ -1,15 +1,5 @@
 package kamienica.service;
 
-import static org.junit.Assert.assertEquals;
-
-import java.util.List;
-
-import org.joda.time.LocalDate;
-import org.junit.Ignore;
-import org.junit.Test;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.transaction.annotation.Transactional;
-
 import kamienica.core.exception.InvalidDivisionException;
 import kamienica.core.util.Media;
 import kamienica.core.util.WaterHeatingSystem;
@@ -19,13 +9,21 @@ import kamienica.feature.division.DivisionService;
 import kamienica.feature.invoice.InvoiceGas;
 import kamienica.feature.invoice.InvoiceService;
 import kamienica.feature.payment.Payment;
-import kamienica.feature.payment.PaymentGas;
 import kamienica.feature.payment.PaymentService;
 import kamienica.feature.reading.Reading;
 import kamienica.feature.reading.ReadingGas;
 import kamienica.feature.reading.ReadingService;
 import kamienica.feature.settings.Settings;
 import kamienica.feature.settings.SettingsService;
+import org.joda.time.LocalDate;
+import org.junit.Ignore;
+import org.junit.Test;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
+
+import static org.junit.Assert.assertEquals;
 
 public class InvoiceGasServiceTest extends AbstractServiceTest {
 
@@ -132,7 +130,7 @@ public class InvoiceGasServiceTest extends AbstractServiceTest {
 	@Test
 	public void update() {
 		InvoiceGas invoice = new InvoiceGas("23423423", "test", new LocalDate(), 400,
-				(ReadingGas) readingService.getById(6L, Media.GAS));
+                readingService.getById(6L, Media.GAS));
 		invoice.setId(1L);
 		List<? extends Payment> oldList = paymentService.getPaymentList(Media.GAS);
 

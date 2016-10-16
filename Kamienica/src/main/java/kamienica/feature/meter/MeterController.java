@@ -92,7 +92,7 @@ public class MeterController {
 
 	@RequestMapping(value = "/Admin/Meter/meterWaterSave", method = RequestMethod.POST)
 	public ModelAndView meterWaterSave(@Valid @ModelAttribute("meter") MeterWater meter, BindingResult result) {
-		if (meter.getApartment() == null && meter.getIsWarmWater() == true) {
+		if (meter.getApartment() == null && meter.getIsWarmWater()) {
 			result.rejectValue("isWarmWater", "error.meter", WARM_CWU);
 		}
 
@@ -126,7 +126,7 @@ public class MeterController {
 	@RequestMapping(value = "/Admin/Meter/meterGasSave", method = RequestMethod.POST)
 	public ModelAndView meterGasSave(@Valid @ModelAttribute("meter") MeterGas meter, BindingResult result) {
 
-		if (meter.getApartment() == null && meter.isCwu() == true) {
+		if (meter.getApartment() == null && meter.isCwu()) {
 			result.rejectValue("cwu", "error.meter", WARM_CWU);
 		}
 		if (meter.main && meterService.ifMainExists(Media.GAS)) {
@@ -160,7 +160,7 @@ public class MeterController {
 
 	@RequestMapping("/Admin/Meter/meterEnergyList")
 	public ModelAndView meterEnergyList() {
-		Map<String, Object> model = new HashMap<String, Object>();
+		Map<String, Object> model = new HashMap<>();
 
 		model.put("meter", meterService.getList(Media.ENERGY));
 		return new ModelAndView("/Admin/Meter/MeterEnergyList", model);
@@ -169,7 +169,7 @@ public class MeterController {
 
 	@RequestMapping("/Admin/Meter/meterWaterList")
 	public ModelAndView meterWaterList() {
-		Map<String, Object> model = new HashMap<String, Object>();
+		Map<String, Object> model = new HashMap<>();
 		model.put("meter", meterService.getList(Media.WATER));
 		return new ModelAndView("/Admin/Meter/MeterWaterList", model);
 
@@ -177,7 +177,7 @@ public class MeterController {
 
 	@RequestMapping("/Admin/Meter/meterGasList")
 	public ModelAndView meterGasList() {
-		Map<String, Object> model = new HashMap<String, Object>();
+		Map<String, Object> model = new HashMap<>();
 		model.put("meter", meterService.getList(Media.GAS));
 		return new ModelAndView("/Admin/Meter/MeterGasList", model);
 
@@ -241,7 +241,7 @@ public class MeterController {
 	@RequestMapping(value = "/Admin/Meter/meterWaterOverwrite", method = RequestMethod.POST)
 	public ModelAndView meterWaterOverwrite(@Valid @ModelAttribute("meter") MeterWater meter, BindingResult result) {
 
-		if (meter.getApartment() == null && meter.getIsWarmWater() == true) {
+		if (meter.getApartment() == null && meter.getIsWarmWater()) {
 			result.rejectValue("isWarmWater", "error.meter", WARM_CWU);
 		}
 
@@ -268,7 +268,7 @@ public class MeterController {
 
 	@RequestMapping(value = "/Admin/Meter/meterGasOverwrite", method = RequestMethod.POST)
 	public ModelAndView meterGasOverwrite(@Valid @ModelAttribute("meter") MeterGas meter, BindingResult result) {
-		if (meter.getApartment() == null && meter.isCwu() == true) {
+		if (meter.getApartment() == null && meter.isCwu()) {
 			result.rejectValue("cwu", "error.meter", WARM_CWU);
 		}
 		if (result.hasErrors()) {
@@ -338,7 +338,7 @@ public class MeterController {
 	// ---------------------------------private_metods-----------------------------------------
 
 	private Map<String, Object> prepareModel() {
-		Map<String, Object> model = new HashMap<String, Object>();
+		Map<String, Object> model = new HashMap<>();
 		List<Apartment> apartment = (apartmentService.getList());
 		if (apartment.isEmpty()) {
 			model.put("error", "Wprowadź przynajmniej jedno mieszkanie do bazy danych");
@@ -347,7 +347,7 @@ public class MeterController {
 			apartment.add(m);
 
 		}
-		ArrayList<Boolean> tf = new ArrayList<Boolean>();
+		ArrayList<Boolean> tf = new ArrayList<>();
 		tf.add(true);
 		tf.add(false);
 		model.put("tf", tf);

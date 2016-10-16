@@ -19,7 +19,7 @@ public class PaymentController {
 	// ------------------------------PAYMENTLIST--------------------------------------------------
 	@RequestMapping("/Admin/Payment/paymentEnergyList")
 	public ModelAndView paymentEnergyList() {
-		Map<String, Object> model = new HashMap<String, Object>();
+		Map<String, Object> model = new HashMap<>();
 		model.put("media", "Energia");
 		model.put("url", "Energy");
 		model.put("payment", paymentService.getPaymentList(Media.ENERGY));
@@ -29,7 +29,7 @@ public class PaymentController {
 
 	@RequestMapping("/Admin/Payment/paymentGasList")
 	public ModelAndView paymentGasList() {
-		Map<String, Object> model = new HashMap<String, Object>();
+		Map<String, Object> model = new HashMap<>();
 		model.put("media", "Gaz");
 		model.put("url", "Gas");
 		model.put("payment", paymentService.getPaymentList(Media.GAS));
@@ -39,7 +39,7 @@ public class PaymentController {
 
 	@RequestMapping("/Admin/Payment/paymentWaterList")
 	public ModelAndView paymentWaterList() {
-		Map<String, Object> model = new HashMap<String, Object>();
+		Map<String, Object> model = new HashMap<>();
 		model.put("media", "Woda");
 		model.put("url", "Water");
 		model.put("payment", paymentService.getPaymentList(Media.WATER));

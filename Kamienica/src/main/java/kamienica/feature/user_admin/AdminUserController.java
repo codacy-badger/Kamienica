@@ -2,6 +2,7 @@ package kamienica.feature.user_admin;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -35,7 +36,7 @@ public class AdminUserController {
 	// =====================USER===========================================
 	@RequestMapping("/User/userHome")
 	public ModelAndView userHome() {
-		Map<String, Object> model = new HashMap<String, Object>();
+		Map<String, Object> model = new HashMap<>();
 		SecurityUser myUser = userDetailsService.getCurrentUser();
 		if (myUser != null) {
 			model.put("user", myUser);
@@ -73,7 +74,7 @@ public class AdminUserController {
 
 	@RequestMapping("/User/userPayment")
 	public ModelAndView userPayment() {
-		Map<String, Object> model = new HashMap<String, Object>();
+		Map<String, Object> model = new HashMap<>();
 		Tenant tenant = userDetailsService.getCurrentUser().getTenant();
 
 		model.put("energy", paymentService.getPaymentForTenant(tenant, Media.ENERGY));
@@ -92,7 +93,7 @@ public class AdminUserController {
 	public ModelAndView updatePassword(@RequestParam String email, @RequestParam String oldPassword,
 			@RequestParam String newPassword, @RequestParam String newPassword2) {
 		HashMap<String, Object> model = new HashMap<>();
-		if (!newPassword.equals(newPassword2) || newPassword == "" || newPassword2 == "") {
+		if (!newPassword.equals(newPassword2) || Objects.equals(newPassword, "") || Objects.equals(newPassword2, "")) {
 			model.put("error", "Wpisz poprawnie nowe hasło");
 			return new ModelAndView("/User/UserPassword", "model", model);
 		}

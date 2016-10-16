@@ -174,7 +174,7 @@ public class ReadingController {
 
 	@RequestMapping("/readingList")
 	public ModelAndView readingList(@RequestParam("media") Media media) {
-		Map<String, Object> model = new HashMap<String, Object>();
+		Map<String, Object> model = new HashMap<>();
 		switch (media) {
 		case ENERGY:
 			List<? extends Reading> energy = readingService.getList(media);
@@ -248,7 +248,7 @@ public class ReadingController {
 		readingForm.setPreviousReadings(
 				readingService.getPreviousReadingEnergy(readingForm.getDate(), meterService.getIdList(Media.ENERGY)));
 
-		Map<String, Object> model = new HashMap<String, Object>();
+		Map<String, Object> model = new HashMap<>();
 		model.put("date", readingForm.getCurrentReadings().get(0).getReadingDate());
 		model.put("oldDate", readingForm.getPreviousDate());
 		model.put("readingForm", readingForm);
@@ -265,7 +265,7 @@ public class ReadingController {
 		readingForm.setPreviousReadings(
 				readingService.getPreviousReadingGas(readingForm.getDate(), meterService.getIdList(Media.GAS)));
 
-		Map<String, Object> model = new HashMap<String, Object>();
+		Map<String, Object> model = new HashMap<>();
 		model.put("date", readingForm.getCurrentReadings().get(0).getReadingDate());
 		model.put("oldDate", readingForm.getPreviousDate());
 		model.put("readingForm", readingForm);
@@ -282,7 +282,7 @@ public class ReadingController {
 		readingForm.setPreviousReadings(
 				readingService.getPreviousReadingWater(readingForm.getDate(), meterService.getIdList(Media.WATER)));
 
-		Map<String, Object> model = new HashMap<String, Object>();
+		Map<String, Object> model = new HashMap<>();
 		model.put("date", readingForm.getCurrentReadings().get(0).getReadingDate());
 		model.put("oldDate", readingForm.getPreviousDate());
 		model.put("readingForm", readingForm);

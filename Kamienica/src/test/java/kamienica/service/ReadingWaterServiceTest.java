@@ -29,7 +29,7 @@ public class ReadingWaterServiceTest extends AbstractServiceTest {
 	@Autowired
 	MeterService meterService;
 
-	private Set<Long> meterIdList = new HashSet<>(Arrays.asList(1L, 2L, 3L, 4L, 5L, 6L, 7l));
+	private Set<Long> meterIdList = new HashSet<>(Arrays.asList(1L, 2L, 3L, 4L, 5L, 6L, 7L));
 
 	@Test
 	public void getLatest() throws NoMainCounterException {

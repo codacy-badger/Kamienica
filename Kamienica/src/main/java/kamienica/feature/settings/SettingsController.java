@@ -28,7 +28,7 @@ public class SettingsController {
 
 	@RequestMapping(value = "/list", method = RequestMethod.GET)
 	public ModelAndView list(@ModelAttribute("settings") Settings settings, BindingResult result) {
-		Map<String, Object> model = new HashMap<String, Object>();
+		Map<String, Object> model = new HashMap<>();
 		System.out.println(service.getSettings());
 		model.put("settings", service.getSettings());
 		return new ModelAndView("/Admin/Settings/SettingsList", "model", model);
@@ -47,7 +47,7 @@ public class SettingsController {
 
 	@RequestMapping(value = "/edit", method = RequestMethod.GET)
 	public ModelAndView editOrNew(@ModelAttribute("settings") Settings settings, BindingResult result) {
-		Map<String, Object> model = new HashMap<String, Object>();
+		Map<String, Object> model = new HashMap<>();
 		model.put("item", service.getSettings());
 		model.put("values", values);
 		model.put("labels", labels);

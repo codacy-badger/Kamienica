@@ -51,11 +51,7 @@ public class MeterServiceImpl implements MeterService {
 
 	@Override
 	public <T extends MeterAbstract> void update(T meter, Media media) {
-		if (meter.getApartment() == null) {
-			meter.main = true;
-		} else {
-			meter.main = false;
-		}
+        meter.main = meter.getApartment() == null;
 		switch (media) {
 		case ENERGY:
 
@@ -318,7 +314,7 @@ public class MeterServiceImpl implements MeterService {
 			if (meter.isMain() && ifMainExists(Media.GAS)) {
 				result.rejectValue("apartment", "error.meter", MAIN_EXISTS);
 			}
-			if (meter.getApartment() == null && ((MeterGas) meter).isCwu() == true) {
+			if (meter.getApartment() == null && ((MeterGas) meter).isCwu()) {
 				result.rejectValue("cwu", "error.meter", WARM_CWU);
 			}
 			break;
@@ -326,7 +322,7 @@ public class MeterServiceImpl implements MeterService {
 			if (meter.isMain() && ifMainExists(Media.WATER)) {
 				result.rejectValue("apartment", "error.meter", MAIN_EXISTS);
 			}
-			if (meter.getApartment() == null && ((MeterWater) meter).getIsWarmWater() == true) {
+			if (meter.getApartment() == null && ((MeterWater) meter).getIsWarmWater()) {
 				result.rejectValue("isWarmWater", "error.meter", WARM_CWU);
 			}
 			break;

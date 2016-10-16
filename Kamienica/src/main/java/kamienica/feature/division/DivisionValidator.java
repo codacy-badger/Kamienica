@@ -1,6 +1,7 @@
 package kamienica.feature.division;
 
 import java.util.List;
+import java.util.Objects;
 
 import kamienica.feature.apartment.Apartment;
 import kamienica.feature.tenant.Tenant;
@@ -15,12 +16,12 @@ public class DivisionValidator {
 		for (Tenant tenant : currentTenants) {
 			boolean stop = true;
 			for (Division p : divisionTocheck) {
-				if (p.getTenant().getId() == tenant.getId()) {
+				if (Objects.equals(p.getTenant().getId(), tenant.getId())) {
 					stop = false;
 					break;
 				}
 			}
-			if (stop == true) {
+			if (stop) {
 
 				return false;
 			}
@@ -56,7 +57,7 @@ public class DivisionValidator {
 		for (int i = 0; i < apartmentList.size(); i++) {
 			double validator = 0;
 			for (Division p : divisionList) {
-				if (p.getApartment().getId() == apartmentList.get(i).getId()) {
+				if (Objects.equals(p.getApartment().getId(), apartmentList.get(i).getId())) {
 					double tmp = 0;
 					if (p.getDivisionValue() == 0.33) {
 						tmp = (double) 1 / 3;
@@ -78,9 +79,9 @@ public class DivisionValidator {
 			}
 		}
 
-		for (int i = 0; i < checklist.length; i++) {
+		for (double aChecklist : checklist) {
 
-			if (checklist[i] != 1) {
+			if (aChecklist != 1) {
 				toReturn = false;
 
 				break;

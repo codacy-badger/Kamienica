@@ -5,7 +5,7 @@ import kamienica.core.dao.DaoInterface;
 
 public interface SettingsDao extends DaoInterface<Settings> {
 
-	public boolean isDivisionCorrect();
+	boolean isDivisionCorrect();
 
-	public void changeDivisionState(boolean state);
+	void changeDivisionState(boolean state);
 }

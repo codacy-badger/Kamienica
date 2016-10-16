@@ -9,16 +9,16 @@ import kamienica.feature.tenant.Tenant;
 
 public interface PaymentDao<P extends Payment> extends DaoInterface<P> {
 
-	public void deleteByDate(String date);
+	void deleteByDate(String date);
 
-	public void deleteForInvoice(Invoice invoice);
+	void deleteForInvoice(Invoice invoice);
 
-	public List<P> getByInvoice(Invoice invoice);
+	List<P> getByInvoice(Invoice invoice);
 
-	public List<P> getByReading(Reading reading);
+	List<P> getByReading(Reading reading);
 
-	public List<P> getPaymentForTenant(Tenant tenant);
+	List<P> getPaymentForTenant(Tenant tenant);
 
-	public P getLatestPayment();
+	P getLatestPayment();
 
 }

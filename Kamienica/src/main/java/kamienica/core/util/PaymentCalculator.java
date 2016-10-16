@@ -1,14 +1,5 @@
 package kamienica.core.util;
 
-import java.text.DecimalFormat;
-import java.text.NumberFormat;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Locale;
-
-import org.joda.time.LocalDate;
-
 import kamienica.feature.division.Division;
 import kamienica.feature.invoice.InvoiceEnergy;
 import kamienica.feature.invoice.InvoiceGas;
@@ -18,118 +9,117 @@ import kamienica.feature.payment.PaymentGas;
 import kamienica.feature.payment.PaymentWater;
 import kamienica.feature.tenant.Tenant;
 import kamienica.feature.usagevalue.UsageValue;
+import org.joda.time.LocalDate;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 
 public class PaymentCalculator {
 
-	public static List<PaymentEnergy> createPaymentEnergyList(List<Tenant> tenants, InvoiceEnergy invoice,
-			List<Division> division, List<UsageValue> usage) {
-		double sumOfExpences = invoice.getTotalAmount();
-		ArrayList<PaymentEnergy> listToReturn = new ArrayList<PaymentEnergy>();
 
-		double usageSum = sumUsage(usage);
+    public static List<PaymentEnergy> createPaymentEnergyList(List<Tenant> tenants, InvoiceEnergy invoice,
+                                                              List<Division> division, List<UsageValue> usage) {
+        double sumOfExpences = invoice.getTotalAmount();
+        List<PaymentEnergy> listToReturn = new ArrayList<>();
 
-		for (Tenant tenant : tenants) {
-			HashMap<Integer, Double> divisionForTenant = setTenantDivision(division, tenant);
-			double payment = 0;
+        double usageSum = sumUsage(usage);
 
-			for (UsageValue w : usage) {
-				double factor = w.getUsage() / usageSum;
-				payment += sumOfExpences * factor * divisionForTenant.get(w.getApartment().getApartmentNumber());
-			}
+        for (Tenant tenant : tenants) {
+            HashMap<Integer, Double> divisionForTenant = setTenantDivision(division, tenant);
+            double payment = 0;
 
-			payment = decimalFormat(payment);
-			PaymentEnergy forList = new PaymentEnergy();
-			forList.setInvoice(invoice);
-			forList.setTenant(tenant);
-			forList.setPaymentAmount(payment);
-			forList.setPaymentDate(new LocalDate());
-			listToReturn.add(forList);
-		}
+            for (UsageValue w : usage) {
+                double factor = w.getUsage() / usageSum;
+                payment += sumOfExpences * factor * divisionForTenant.get(w.getApartment().getApartmentNumber());
+            }
 
-		return listToReturn;
-	}
+            payment = CommonUtils.decimalFormat(payment);
+            PaymentEnergy forList = new PaymentEnergy();
+            forList.setInvoice(invoice);
+            forList.setTenant(tenant);
+            forList.setPaymentAmount(payment);
+            forList.setPaymentDate(new LocalDate());
+            listToReturn.add(forList);
+        }
 
-	public static List<PaymentGas> createPaymentGasList(List<Tenant> tenants, InvoiceGas invoice,
-			List<Division> division, List<UsageValue> usage) {
-		double sumOfExpences = invoice.getTotalAmount();
-		ArrayList<PaymentGas> listToReturn = new ArrayList<PaymentGas>();
+        return listToReturn;
+    }
 
-		double usageSum = sumUsage(usage);
+    public static List<PaymentGas> createPaymentGasList(List<Tenant> tenants, InvoiceGas invoice,
+                                                        List<Division> division, List<UsageValue> usage) {
+        double sumOfExpences = invoice.getTotalAmount();
+        List<PaymentGas> listToReturn = new ArrayList<>();
 
-		for (Tenant tenant : tenants) {
-			HashMap<Integer, Double> divisionForTenant = setTenantDivision(division, tenant);
-			double payment = 0;
+        double usageSum = sumUsage(usage);
 
-			for (UsageValue w : usage) {
-				double factor = w.getUsage() / usageSum;
-				payment += sumOfExpences * factor * divisionForTenant.get(w.getApartment().getApartmentNumber());
-			}
+        for (Tenant tenant : tenants) {
+            HashMap<Integer, Double> divisionForTenant = setTenantDivision(division, tenant);
+            double payment = 0;
 
-			payment = decimalFormat(payment);
-			PaymentGas forList = new PaymentGas();
-			forList.setInvoice(invoice);
-			forList.setTenant(tenant);
-			forList.setPaymentAmount(payment);
-			forList.setPaymentDate(new LocalDate());
+            for (UsageValue w : usage) {
+                double factor = w.getUsage() / usageSum;
+                payment += sumOfExpences * factor * divisionForTenant.get(w.getApartment().getApartmentNumber());
+            }
 
-			listToReturn.add(forList);
-		}
+            payment = CommonUtils.decimalFormat(payment);
+            PaymentGas forList = new PaymentGas();
+            forList.setInvoice(invoice);
+            forList.setTenant(tenant);
+            forList.setPaymentAmount(payment);
+            forList.setPaymentDate(new LocalDate());
 
-		return listToReturn;
-	}
+            listToReturn.add(forList);
+        }
 
-	public static List<PaymentWater> createPaymentWaterList(List<Tenant> tenants, InvoiceWater invoice,
-			List<Division> podzial, List<UsageValue> usage) {
-		ArrayList<PaymentWater> listToReturn = new ArrayList<PaymentWater>();
+        return listToReturn;
+    }
 
-		double sumOfExpences = invoice.getTotalAmount();
-		double usageSum = sumUsage(usage);
+    public static List<PaymentWater> createPaymentWaterList(List<Tenant> tenants, InvoiceWater invoice,
+                                                            List<Division> podzial, List<UsageValue> usage) {
+        List<PaymentWater> listToReturn = new ArrayList<>();
 
-		for (Tenant tenant : tenants) {
-			HashMap<Integer, Double> divForTenants = setTenantDivision(podzial, tenant);
-			double payment = 0;
-			for (UsageValue w : usage) {
-				double factor = w.getUsage() / usageSum;
+        double sumOfExpences = invoice.getTotalAmount();
+        double usageSum = sumUsage(usage);
 
-				payment += sumOfExpences * factor * divForTenants.get(w.getApartment().getApartmentNumber());
-			}
+        for (Tenant tenant : tenants) {
+            HashMap<Integer, Double> divForTenants = setTenantDivision(podzial, tenant);
+            double payment = 0;
+            for (UsageValue w : usage) {
+                double factor = w.getUsage() / usageSum;
 
-			payment = decimalFormat(payment);
-			PaymentWater forList = new PaymentWater();
-			forList.setInvoice(invoice);
-			forList.setTenant(tenant);
-			forList.setPaymentAmount(payment);
-			forList.setPaymentDate(new LocalDate());
-			listToReturn.add(forList);
-		}
-		return listToReturn;
-	}
+                payment += sumOfExpences * factor * divForTenants.get(w.getApartment().getApartmentNumber());
+            }
 
-	private static double sumUsage(List<UsageValue> listaZuzycia) {
-		double suma = 0;
-		for (UsageValue i : listaZuzycia) {
-			suma += i.getUsage();
-		}
+            payment = CommonUtils.decimalFormat(payment);
+            PaymentWater forList = new PaymentWater();
+            forList.setInvoice(invoice);
+            forList.setTenant(tenant);
+            forList.setPaymentAmount(payment);
+            forList.setPaymentDate(new LocalDate());
+            listToReturn.add(forList);
+        }
+        return listToReturn;
+    }
 
-		return suma;
-	}
+    private static double sumUsage(List<UsageValue> listaZuzycia) {
+        double suma = 0;
+        for (UsageValue i : listaZuzycia) {
+            suma += i.getUsage();
+        }
 
-	private static HashMap<Integer, Double> setTenantDivision(List<Division> division, Tenant tenant) {
-		HashMap<Integer, Double> output = new HashMap<>();
-		for (Division p : division) {
-			if (tenant.getId() == p.getTenant().getId()) {
-				output.put(p.getApartment().getApartmentNumber(), p.getDivisionValue());
-			}
+        return suma;
+    }
 
-		}
-		return output;
-	}
+    private static HashMap<Integer, Double> setTenantDivision(List<Division> division, Tenant tenant) {
+        HashMap<Integer, Double> output = new HashMap<>();
+        for (Division p : division) {
+            if (tenant.getId().equals(p.getTenant().getId())) {
+                output.put(p.getApartment().getApartmentNumber(), p.getDivisionValue());
+            }
 
-	private static double decimalFormat(double input) {
-		NumberFormat nf = NumberFormat.getNumberInstance(Locale.ENGLISH);
-		DecimalFormat df = (DecimalFormat) nf;
-		df.applyPattern("#.00");
-		return Double.parseDouble(df.format(input));
-	}
+        }
+        return output;
+    }
 
 }

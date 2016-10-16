@@ -7,14 +7,7 @@ import org.springframework.stereotype.Repository;
 
 import kamienica.feature.apartment.Apartment;
 
-/**
- * @author kdeveloper
- *
- */
-/**
- * @author kdeveloper
- *
- */
+
 @Repository("readingEnergyDao")
 public class ReadingEnergyDAOImpl extends ReadingAbstractDaoImpl<ReadingEnergy>
 		implements ReadingEnergyDao {

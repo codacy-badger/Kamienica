@@ -6,7 +6,7 @@ import kamienica.core.dao.DaoInterface;
 
 public interface MeterDao<M extends MeterAbstract> extends DaoInterface<M> {
 
-	public boolean ifMainExists();
+	boolean ifMainExists();
 	
-	public Set<Long> getIdListForActiveMeters();
+	Set<Long> getIdListForActiveMeters();
 }

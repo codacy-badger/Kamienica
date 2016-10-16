@@ -1,7 +1,9 @@
 'use strict';
 
 
-App.factory('Tenant', ['$resource', function ($resource) {
+App
+
+.factory('Tenant', ['$resource', function ($resource) {
 	//$resource() function returns an object of resource class
     return $resource(
     		'http://localhost:8080/Kamienica/api/v1/tenants/:id.json', 
@@ -12,4 +14,9 @@ App.factory('Tenant', ['$resource', function ($resource) {
     			
     		}
     );
-}]);
+}])
+
+
+
+
+;

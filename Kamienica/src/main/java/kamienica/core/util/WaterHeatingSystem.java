@@ -24,8 +24,7 @@ public enum WaterHeatingSystem {
 	}
 
 	public static List<String> getValues() {
-		List<String> list = new ArrayList<String>(Arrays.asList(WaterHeatingSystem.ELECTRIC.getSystem(),
+		return new ArrayList<String>(Arrays.asList(WaterHeatingSystem.ELECTRIC.getSystem(),
 				WaterHeatingSystem.INDIVIDUAL_GAS.getSystem(), WaterHeatingSystem.SHARED_GAS.getSystem()));
-		return list;
 	}
 }

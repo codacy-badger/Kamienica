@@ -30,12 +30,11 @@ public class MyUserDetailsService implements UserDetailsService {
 			throw new UsernameNotFoundException("Username not found");
 		}
 
-		List<GrantedAuthority> authorities = new ArrayList<GrantedAuthority>();
+		List<GrantedAuthority> authorities = new ArrayList<>();
 		authorities.add(new SimpleGrantedAuthority("ROLE_" + tenant.getRole()));
-		SecurityUser myUser = new SecurityUser(tenant, tenant.getEmail(), tenant.getPassword(), tenant.getApartment(),
-				tenant.getStatus().equals(Status.ACTIVE.getStatus()), true, true, true, authorities);
 
-		return myUser;
+		return new SecurityUser(tenant, tenant.getEmail(), tenant.getPassword(), tenant.getApartment(),
+				tenant.getStatus().equals(Status.ACTIVE.getStatus()), true, true, true, authorities);
 	}
 
 	public void changePassword(String mail, String oldPassowrd, String newPwassword) throws UsernameNotFoundException {
@@ -50,8 +49,7 @@ public class MyUserDetailsService implements UserDetailsService {
 	}
 
 	public SecurityUser getCurrentUser() {
-		SecurityUser user = (SecurityUser) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-		return user;
+		return (SecurityUser) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 	}
 
 }

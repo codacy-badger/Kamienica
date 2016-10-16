@@ -8,9 +8,9 @@ import kamienica.feature.tenant.Tenant;
 
 public interface PaymentService {
 
-	public List<? extends Payment> getPaymentForTenant(Tenant tenant, Media media);
+	List<? extends Payment> getPaymentForTenant(Tenant tenant, Media media);
 
-	public List<? extends Payment> getPaymentByInvoice(Invoice invoice, Media media);
+	List<? extends Payment> getPaymentByInvoice(Invoice invoice, Media media);
 
 	List<? extends Payment> getPaymentList(Media media);
 

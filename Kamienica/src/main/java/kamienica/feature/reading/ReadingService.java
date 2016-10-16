@@ -13,15 +13,15 @@ import kamienica.feature.invoice.InvoiceGas;
 
 public interface ReadingService {
 
-	public <T extends Reading> void setDates(Map<String, Object> map, List<T> list);
+	<T extends Reading> void setDates(Map<String, Object> map, List<T> list);
 
-	public <T extends Reading> T getById(Long id, Media media);
+	<T extends Reading> T getById(Long id, Media media);
 
-	public <T extends Reading> void save(List<T> reading, LocalDate localDate, Media media);
+	<T extends Reading> void save(List<T> reading, LocalDate localDate, Media media);
 
-	public <T extends Reading> void update(List<T> readings, LocalDate date, Media media);
+	<T extends Reading> void update(List<T> readings, LocalDate date, Media media);
 	
-	public List<? extends Reading> getList(Media media);
+	List<? extends Reading> getList(Media media);
 
 //	public List<ReadingEnergy> getReadingEnergy();
 //
@@ -29,36 +29,36 @@ public interface ReadingService {
 //
 //	public List<ReadingWater> getReadingWater();
 
-	public List<? extends Reading> getByDate(LocalDate date, Media media);
+	List<? extends Reading> getByDate(LocalDate date, Media media);
 
-	public void deleteList(List<? extends Reading> list, Media media);
+	void deleteList(List<? extends Reading> list, Media media);
 
-	public List<? extends Reading> getPreviousReadingEnergy(LocalDate date, Media media);
+	List<? extends Reading> getPreviousReadingEnergy(LocalDate date, Media media);
 
-	public List<ReadingEnergy> getPreviousReadingEnergy(LocalDate date, Set<Long> meterIdList);
+	List<ReadingEnergy> getPreviousReadingEnergy(LocalDate date, Set<Long> meterIdList);
 
-	public List<ReadingGas> getPreviousReadingGas(LocalDate date, Set<Long> meterIdList);
+	List<ReadingGas> getPreviousReadingGas(LocalDate date, Set<Long> meterIdList);
 
-	public List<ReadingWater> getPreviousReadingWater(LocalDate date, Set<Long> meterIdList);
+	List<ReadingWater> getPreviousReadingWater(LocalDate date, Set<Long> meterIdList);
 
-	public <T extends Reading> List<T> getLatestNew(Media media) throws NoMainCounterException;
+	<T extends Reading> List<T> getLatestNew(Media media) throws NoMainCounterException;
 
-	public <T extends Reading> List<T> latestEdit(Media media);
+	<T extends Reading> List<T> latestEdit(Media media);
 
-	public List<ReadingEnergy> energyLatestEdit();
+	List<ReadingEnergy> energyLatestEdit();
 
-	public List<ReadingGas> gasLatestEdit();
+	List<ReadingGas> gasLatestEdit();
 
-	public List<ReadingWater> waterLatestEdit();
+	List<ReadingWater> waterLatestEdit();
 
-	public HashMap<String, List<ReadingWater>> getWaterReadingsForGasConsumption(InvoiceGas invoice);
+	HashMap<String, List<ReadingWater>> getWaterReadingsForGasConsumption(InvoiceGas invoice);
 
-	public List<ReadingEnergy> getUnresolvedReadingsEnergy();
+	List<ReadingEnergy> getUnresolvedReadingsEnergy();
 
-	public List<ReadingGas> getUnresolvedReadingsGas();
+	List<ReadingGas> getUnresolvedReadingsGas();
 
-	public List<ReadingWater> getUnresolvedReadingsWater();
+	List<ReadingWater> getUnresolvedReadingsWater();
 
-	public void deleteLatestReadings(Media media);
+	void deleteLatestReadings(Media media);
 
 }

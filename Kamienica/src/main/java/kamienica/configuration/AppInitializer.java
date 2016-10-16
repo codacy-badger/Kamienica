@@ -24,8 +24,7 @@ public class AppInitializer extends AbstractAnnotationConfigDispatcherServletIni
 	//added for REST
 	@Override
     protected Filter[] getServletFilters() {
-        Filter [] singleton = { new CORSFilter()};
-        return singleton;
+		return new Filter[]{ new CORSFilter()};
     }
 	
 	@Override

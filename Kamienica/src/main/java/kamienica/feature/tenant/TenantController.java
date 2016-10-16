@@ -52,7 +52,7 @@ public class TenantController {
 
 	@RequestMapping("/tenantList")
 	public ModelAndView tenantList() {
-		Map<String, Object> model = new HashMap<String, Object>();
+		Map<String, Object> model = new HashMap<>();
 		model.put("tenant", tenantService.getList());
 		return new ModelAndView("/Admin/Tenant/TenantList", model);
 
@@ -104,7 +104,7 @@ public class TenantController {
 
 	@RequestMapping("/tenantCurrent")
 	public ModelAndView currentLTenants() {
-		Map<String, Object> model = new HashMap<String, Object>();
+		Map<String, Object> model = new HashMap<>();
 		model.put("tenant", tenantService.getCurrentTenants());
 		return new ModelAndView("/Admin/Tenant/TenantList", model);
 	}
@@ -122,7 +122,7 @@ public class TenantController {
 				break;
 			}
 		}
-		Map<String, Object> output = new HashMap<String, Object>();
+		Map<String, Object> output = new HashMap<>();
 		if (apartment.isEmpty()) {
 			output.put("error", "Wprowadź przynajmniej jedno mieszkanie do bazy danych");
 		}

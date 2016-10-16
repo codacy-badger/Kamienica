@@ -81,7 +81,6 @@ public class Division implements Serializable {
 
 	@Autowired
 	public Division(Long id, LocalDate LocalDate, Tenant tenant, Apartment apartment, double divisionValue) {
-		super();
 		this.id = id;
 		this.date = LocalDate;
 		this.tenant = tenant;

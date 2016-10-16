@@ -22,7 +22,6 @@ public class Message {
 	}
 
 	public Message(String message, String exception) {
-		super();
 		this.message = message;
 		this.exception = exception;
 	}

@@ -19,7 +19,7 @@ public class MeterAbstractDaoImpl<T extends MeterAbstract> extends AbstractDao<T
 		crit.setProjection(Projections.rowCount());
 
 		Long count = (Long) crit.uniqueResult();
-		return (count >= 1) ? true : false;
+		return (count >= 1);
 	}
 
 
