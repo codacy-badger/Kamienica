@@ -23,7 +23,7 @@
 
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Lista Mieszkań - REST</title>
+<title>Liczniki Energii</title>
 </head>
 <body ng-app="myApp">
 	<div id="wrapper">
@@ -32,7 +32,7 @@
 		<div id="page-wrapper" ng-controller="MeterEnergyController as ctrl">
 			<div class='row'>
 				<div class="col-lg-12">
-					<h1 class="page-header well">Liczniki energii - REST</h1>
+					<h1 class="page-header well">Liczniki Energii</h1>
 
 					<div class="alert alert-danger" ng-show="errorField">
 						<strong>BŁĄD: </strong> {{errorMsg}}

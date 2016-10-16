@@ -23,17 +23,17 @@
 
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Liczniki gazu - REST</title>
+<title>Mieszkania</title>
 </head>
 <body ng-app="myApp">
 	<div id="wrapper">
 		<mytags:navbarAdmin />
 
-		<div id="page-wrapper" ng-controller="MeterGasController as ctrl">
+		<div id="page-wrapper" ng-controller="ApartmentController as ctrl">
 			<div class='row'>
 				<div class="col-lg-12">
-					<h1 class="page-header well">Liczniki gazu - REST</h1>
-
+					<h1 class="page-header well">Mieszkania</h1>
+					
 					<div class="alert alert-danger" ng-show="errorField">
 						<strong>BŁĄD: </strong> {{errorMsg}}
 					</div>
@@ -45,90 +45,73 @@
 			<div id='form' class="fadein fadeout showpanel panel row"
 				ng-show="!toggle">
 
+				<!-- http://www.w3schools.com/angular/tryit.asp?filename=try_ng_validate_show -->
+
 				<form class="form-horizontal" ng-submit="ctrl.submit()"
 					name="myForm">
 					<input path="id" readonly="true" type='hidden' /> <input
-						type="hidden" ng-model="ctrl.meterGas.id" />
-
-
+						type="hidden" ng-model="ctrl.apartment.id" />
 					<div class="form-group">
-						<label class="col-sm-3 control-label">Opis</label>
+						<label for="inputEmail3" class="col-sm-3 control-label">Domofon</label>
 						<div class="col-sm-9">
-							<input type="text" ng-model="ctrl.meterGas.description"
-								class="form-control" name="description" ng-required='true'
-								ng-minlength="4" />
+							<input type="text" ng-model="ctrl.apartment.intercom"
+								class="form-control" name="intercom" path='intercom'
+								ng-pattern="/^[0-9]{1,7}$/" placeholder="Pole wymagane"
+								ng-required='true' ng-minlength="4" ng-maxlength="4" />
+							<p class="help-block">
+								<span class='error' ng-show="myForm.intercom.$invalid">Domofon
+									musi zawierać 4 cyfry</span><span class='error'>{{errors.intercom}}</span>
+							</p>
+						</div>
+					</div>
+					<!-- <span class="error" ng-show="myForm.intercom.$error.minlength">
+									Musi zawierać 4 cyfry</span> <span
+									ng-show="myForm.intercom.$error.pattern">Tylko cyfry</span> <span
+									ng-show="myForm.intercom.$error.maxlength">Musi zawierać
+									4 cyfry</span> -->
+					<div class="form-group">
+						<label for="inputEmail3" class="col-sm-3 control-label">Numer
+							Mieszkania</label>
+						<div class="col-sm-9">
+							<input type="text" ng-model="ctrl.apartment.apartmentNumber"
+								class="form-control" path='apartmentNumber'
+								placeholder="Pole wymagane" name="apartmentNumber"
+								ng-required='true' ng-pattern="/^[0-9]{1,7}$/" ng-min=0 />
+
+							<!-- ng-required='true' ng-pattern="/^[0-9]{1,7}$/"  -->
+							<p class="help-block">
+								<span class='error' ng-show="myForm.apartmentNumber.$invalid">Tylko
+									liczby nieujemne</span> <span class='error'>{{errors.apartmentNumber}}</span>
+							</p>
+						</div>
+					</div>
+					<!-- https://scotch.io/tutorials/angularjs-form-validation -->
+					<div class="form-group">
+						<label for="inputEmail3" class="col-sm-3 control-label">Opis</label>
+						<div class="col-sm-9">
+							<input type="text" ng-model="ctrl.apartment.description"
+								class="form-control" path='description'
+								placeholder="Pole wymagane" ng-required='true'
+								name="description" />
 							<p class="help-block">
 								<span class='error' ng-show="myForm.description.$invalid">Pole
-									wymagane</span><span class='error'>{{errors.firstName}}</span>
+									wymagane</span> <span class='error'>{{errors.description}}</span>
 							</p>
 						</div>
 					</div>
-
-					<div class="form-group">
-						<label class="col-sm-3 control-label">Nr. seryjny</label>
-						<div class="col-sm-9">
-							<input type="text" ng-model="ctrl.meterGas.serialNumber"
-								class="form-control" name="serialNumber" path='serialNumber'
-								ng-required='true' ng-minlength="1" />
-							<p class="help-block">
-								<span class='error' ng-show="myForm.serialNumber.$invalid">Pole
-									wymagane</span><span class='error'>{{errors.lastName}}</span>
-							</p>
-						</div>
-					</div>
-					<div class="form-group">
-						<label class="col-sm-3 control-label">Jednostka</label>
-						<div class="col-sm-9">
-							<input type="text" ng-model="ctrl.meterGas.unit"
-								class="form-control" name="unit" path='unit' ng-required='true' />
-							<p class="help-block">
-								<span class='error' ng-show="myForm.unit.$invalid">Niepoprawny
-									Format</span><span class='error'>{{errors.unit}}</span>
-							</p>
-						</div>
-					</div>
-
-
-					<div class="form-group">
-						<label for="inputEmail3" class="col-sm-3 control-label">Mieszkanie</label>
-						<div class="col-sm-9">
-							<select name='apartment' ng-model="ctrl.meterGas.apartment"
-								 class="form-control"
-								ng-options="a.description for a in ctrl.apartments"><option>{{ctrl.tenant.apartment}}</option>
-							</select>
-							<p class="help-block">
-								<span class='error' ng-show="myForm.meterGas.$invalid">Pole
-									wymagane</span> <span class='error'>{{errors.tenant_apartment}}</span>
-							</p>
-						</div>
-					</div>
-
-					<div class="form-group">
-						<label for="cwu" class="col-sm-3 control-label">CWU</label>
-						<div class="col-sm-9">
-							<label><input type="radio" ng-model="ctrl.meterGas.cwu"
-								value="true"> TAK </label> <label> <input type="radio"
-								ng-model="ctrl.meterGas.cwu" ng-value="false">NIE
-							</label>
-							<p class="help-block">
-								<form:errors path="cwu" class="error" />
-							</p>
-						</div>
-					</div>
-
-
 					<div class="form-group ">
 						<div class="col-lg-12">
 							<input type="submit"
-								value="{{!ctrl.meterEnergry.id ? 'Dodaj' : 'Nadpisz'}}"
+								value="{{!ctrl.apartment.id ? 'Dodaj' : 'Nadpisz'}}"
 								class="btn btn-default " ng-disabled="myForm.$invalid">
 							<button type="button" ng-click="ctrl.reset()"
 								class="btn btn-default " ng-disabled="myForm.$pristine">Reset
 							</button>
 						</div>
-					</div>
-				</form>
 
+					</div>
+
+				</form>
 			</div>
 
 
@@ -138,21 +121,18 @@
 					<table class='table table-stripped table-hover'>
 						<thead>
 							<tr>
-								<th>Numer Seryjny</th>
+								<th>Nr Mieszkania</th>
+								<th>Domofon</th>
 								<th>Opis</th>
-								<th>Jednostka</th>
-								<th>Mieszkanie</th>
-								<th>CWU</th>
 								<th>Edytuj/Usuń</th>
+
 							</tr>
 						</thead>
 						<tbody>
-							<tr ng-repeat="a in ctrl.meterGass">
-								<td><span ng-bind="a.serialNumber"></span></td>
+							<tr ng-repeat="a in ctrl.apartments">
+								<td><span ng-bind="a.apartmentNumber"></span></td>
+								<td><span ng-bind="a.intercom"></span></td>
 								<td><span ng-bind="a.description"></span></td>
-								<td><span ng-bind="a.unit"></span></td>
-								<td><span ng-bind="a.apartment.description"></span></td>
-								<td><span ng-bind="a.cwu"></span></td>
 								<td>
 									<button type="button" ng-click="ctrl.edit(a.id, $index)"
 										class="btn-xs btn-warning">
@@ -170,19 +150,14 @@
 			</div>
 		</div>
 	</div>
-
+	
 	<script src="<c:url value='/static/js/angular.js' />"></script>
 	<script src="<c:url value='/static/js/angular-resource.js' />"></script>
 	<script src="<c:url value='/static/angular/app.js' />"></script>
-
 	<script
 		src="<c:url value='/static/angular/apartment/apartment_service.js' />"></script>
 	<script
 		src="<c:url value='/static/angular/apartment/apartment_controller.js' />"></script>
-	<script
-		src="<c:url value='/static/angular/meterGas/meterGas_service.js' />"></script>
-	<script
-		src="<c:url value='/static/angular/meterGas/meterGas_controller.js' />"></script>
 	<!-- jQuery -->
 	<script src="<c:url value='/static/js/jquery.min.js' />"></script>
 	<!-- Bootstrap Core JavaScript -->

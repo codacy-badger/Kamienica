@@ -13,23 +13,19 @@ public class NoMainCounterException extends Exception {
 
 	public NoMainCounterException(String message) {
 		super(message);
-		// TODO Auto-generated constructor stub
 	}
 
 	public NoMainCounterException(Throwable cause) {
 		super(cause);
-		// TODO Auto-generated constructor stub
 	}
 
 	public NoMainCounterException(String message, Throwable cause) {
 		super(message, cause);
-		// TODO Auto-generated constructor stub
 	}
 
 	public NoMainCounterException(String message, Throwable cause, boolean enableSuppression,
 			boolean writableStackTrace) {
 		super(message, cause, enableSuppression, writableStackTrace);
-		// TODO Auto-generated constructor stub
 	}
 
 }

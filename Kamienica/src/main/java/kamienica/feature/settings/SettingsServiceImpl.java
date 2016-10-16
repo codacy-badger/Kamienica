@@ -24,7 +24,6 @@ public class SettingsServiceImpl implements SettingsService {
 
 	@Override
 	public void delete() {
-		// TODO Auto-generated method stub
 
 	}
 

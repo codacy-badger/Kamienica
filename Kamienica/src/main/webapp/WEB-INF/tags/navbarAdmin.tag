@@ -12,7 +12,7 @@
 			<span class="sr-only">Toggle navigation</span> <span class="icon-bar"></span>
 			<span class="icon-bar"></span> <span class="icon-bar"></span>
 		</button>
-		<a class="navbar-brand" href="${path}/Admin/home">Strona Główna</a>
+		<a class="navbar-brand" href="${path}/Admin/home">Kamienica</a>
 	</div>
 	<!-- /.navbar-header -->
 
@@ -184,26 +184,12 @@
 			<ul class="nav" id="side-menu">
 
 
-				<li><a href="#"><i class="fa fa-home" aria-hidden="true"></i>
-						Mieszkania<span class="fa arrow"></span></a>
-					<ul class="nav nav-second-level">
-						<li><a href="${path}/Admin/Apartment/apartmentRegister.html"><i
-								class="fa fa-plus" aria-hidden="true"></i> Nowe</a></li>
-						<li><a href="${path}/Admin/Apartment/apartmentList.html"><i
-								class="fa fa-list" aria-hidden="true"></i> Lista</a></li>
-						<li><a href="${path}/Admin/Apartment/apartmentList2.html"><i
-								class="fa fa-list" aria-hidden="true"></i> REST</a></li>
-					</ul> <!-- /.nav-second-level --></li>
-				<li><a href="#"><i class="fa fa-users" aria-hidden="true"></i>
-						Najemcy<span class="fa arrow"></span></a>
-					<ul class="nav nav-second-level">
-						<li><a href="${path}/Admin/Tenant/tenantRegister.html"><i
-								class="fa fa-plus" aria-hidden="true"></i> Nowe</a></li>
-						<li><a href="${path}/Admin/Tenant/tenantList.html"><i
-								class="fa fa-list" aria-hidden="true"></i> Lista</a></li>
-						<li><a href="${path}/Admin/Tenant/tenantRest.html"><i
-								class="fa fa-list" aria-hidden="true"></i> REST</a></li>
-					</ul> <!-- /.nav-second-level --></li>
+				<li><a href="${path}/Admin/Apartment/apartment.html"><i
+						class="fa fa-home" aria-hidden="true"></i> Mieszkania<span
+						class="fa arrow"></span></a>
+				<li><a href="${path}/Admin/Tenant/tenant.html"><i
+						class="fa fa-users" aria-hidden="true"></i> Najemcy<span
+						class="fa arrow"></span></a>
 				<li><a href="#"><i class="fa fa-wrench fa-fw"></i>
 						Konfiguracja<span class="fa arrow"></span></a>
 					<ul class="nav nav-second-level">
@@ -300,41 +286,15 @@
 				<li><a href="#"><i class="fa fa-bars"></i> Liczniki<span
 						class="fa arrow"></span></a>
 					<ul class="nav nav-second-level">
-					<li><a href="${path}/Admin/Meter/energyRest.html"><i
-										class="fa fa-plus" aria-hidden="true"></i> Energia Rest</a></li>
-						<li><a href="${path}/Admin/Meter/gasRest.html"><i
-										class="fa fa-plus" aria-hidden="true"></i> Gaz Rest</a></li>
-											<li><a href="${path}/Admin/Meter/waterRest.html"><i
-										class="fa fa-plus" aria-hidden="true"></i> Woda Rest</a></li>
-					
-						<li><a href="panels-wells.html"> Gaz<span
-								class="fa arrow"></span></a>
-							<ul class="nav nav-third-level">
-								<li><a href="${path}/Admin/Meter/meterGasRegister.html"><i
-										class="fa fa-plus" aria-hidden="true"></i> Nowe</a></li>
-								<li><a href="${path}/Admin/Meter/meterGasList.html"><i
-										class="fa fa-list" aria-hidden="true"></i> Lista</a></li>
-							</ul></li>
-						<li><a href="buttons.html">Woda<span class="fa arrow"></a>
-							<ul class="nav nav-third-level">
-								<li><a href="${path}/Admin/Meter/meterWaterRegister.html"><i
-										class="fa fa-plus" aria-hidden="true"></i> Nowe</a></li>
-								<li><a href="${path}/Admin/Meter/meterWaterList.html"><i
-										class="fa fa-list" aria-hidden="true"></i> Lista</a></li>
-							</ul></li>
-						<li><a href="notifications.html">Energia<span
-								class="fa arrow"></a>
-							<ul class="nav nav-third-level">
-								<li><a href="${path}/Admin/Meter/meterEnergyRegister.html"><i
-										class="fa fa-plus" aria-hidden="true"></i> Nowe</a></li>
-								<li><a href="${path}/Admin/Meter/meterEnergyList.html"><i
-										class="fa fa-list" aria-hidden="true"></i> Lista</a></li>
-							</ul></li>
+						<li><a href="${path}/Admin/Meter/energy.html"><i
+								class="fa fa-plus" aria-hidden="true"></i> Energia</a></li>
+						<li><a href="${path}/Admin/Meter/gas.html"><i
+								class="fa fa-plus" aria-hidden="true"></i> Gaz</a></li>
+						<li><a href="${path}/Admin/Meter/water.html"><i
+								class="fa fa-plus" aria-hidden="true"></i> Woda</a></li>
+
 
 					</ul> <!-- /.nav-second-level --></li>
-				<!-- /.nav-second-level -->
-				</li>
-
 			</ul>
 		</div>
 		<!-- /.sidebar-collapse -->

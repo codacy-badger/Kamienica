@@ -8,7 +8,9 @@ import kamienica.feature.apartment.Apartment;
 public class NegativeConsumptionValue extends Throwable {
 
 
-    public NegativeConsumptionValue(double total, Apartment m) {
+	private static final long serialVersionUID = 1L;
+
+	public NegativeConsumptionValue(double total, Apartment m) {
         super("Total usage value for " + m.getDescription() + " has a negative value: " + total);
     }
 }

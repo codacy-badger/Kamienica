@@ -23,17 +23,17 @@
 
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Liczniki wody - REST</title>
+<title>Liczniki Gazu</title>
 </head>
 <body ng-app="myApp">
 	<div id="wrapper">
 		<mytags:navbarAdmin />
 
-		<div id="page-wrapper" ng-controller="MeterWaterController as ctrl">
+		<div id="page-wrapper" ng-controller="MeterGasController as ctrl">
 			<div class='row'>
 				<div class="col-lg-12">
-					<h1 class="page-header well">Liczniki Wody - REST</h1>
-					
+					<h1 class="page-header well">Liczniki Gazu</h1>
+
 					<div class="alert alert-danger" ng-show="errorField">
 						<strong>BŁĄD: </strong> {{errorMsg}}
 					</div>
@@ -48,13 +48,13 @@
 				<form class="form-horizontal" ng-submit="ctrl.submit()"
 					name="myForm">
 					<input path="id" readonly="true" type='hidden' /> <input
-						type="hidden" ng-model="ctrl.meterWater.id" />
+						type="hidden" ng-model="ctrl.meterGas.id" />
 
 
 					<div class="form-group">
 						<label class="col-sm-3 control-label">Opis</label>
 						<div class="col-sm-9">
-							<input type="text" ng-model="ctrl.meterWater.description"
+							<input type="text" ng-model="ctrl.meterGas.description"
 								class="form-control" name="description" ng-required='true'
 								ng-minlength="4" />
 							<p class="help-block">
@@ -67,7 +67,7 @@
 					<div class="form-group">
 						<label class="col-sm-3 control-label">Nr. seryjny</label>
 						<div class="col-sm-9">
-							<input type="text" ng-model="ctrl.meterWater.serialNumber"
+							<input type="text" ng-model="ctrl.meterGas.serialNumber"
 								class="form-control" name="serialNumber" path='serialNumber'
 								ng-required='true' ng-minlength="1" />
 							<p class="help-block">
@@ -79,7 +79,7 @@
 					<div class="form-group">
 						<label class="col-sm-3 control-label">Jednostka</label>
 						<div class="col-sm-9">
-							<input type="text" ng-model="ctrl.meterWater.unit"
+							<input type="text" ng-model="ctrl.meterGas.unit"
 								class="form-control" name="unit" path='unit' ng-required='true' />
 							<p class="help-block">
 								<span class='error' ng-show="myForm.unit.$invalid">Niepoprawny
@@ -92,26 +92,26 @@
 					<div class="form-group">
 						<label for="inputEmail3" class="col-sm-3 control-label">Mieszkanie</label>
 						<div class="col-sm-9">
-							<select name='apartment' ng-model="ctrl.meterWater.apartment"
+							<select name='apartment' ng-model="ctrl.meterGas.apartment"
 								 class="form-control"
 								ng-options="a.description for a in ctrl.apartments"><option>{{ctrl.tenant.apartment}}</option>
 							</select>
 							<p class="help-block">
-								<span class='error' ng-show="myForm.meterWater.$invalid">Pole
+								<span class='error' ng-show="myForm.meterGas.$invalid">Pole
 									wymagane</span> <span class='error'>{{errors.tenant_apartment}}</span>
 							</p>
 						</div>
 					</div>
 
 					<div class="form-group">
-						<label for="cwu" class="col-sm-3 control-label">Ciepła woda</label>
+						<label for="cwu" class="col-sm-3 control-label">CWU</label>
 						<div class="col-sm-9">
-							<label><input type="radio" ng-model="ctrl.meterWater.isWarmWater"
+							<label><input type="radio" ng-model="ctrl.meterGas.cwu"
 								value="true"> TAK </label> <label> <input type="radio"
-								ng-model="ctrl.meterWater.isWarmWater" ng-value="false">NIE
+								ng-model="ctrl.meterGas.cwu" ng-value="false">NIE
 							</label>
 							<p class="help-block">
-								<form:errors path="isWarmWater" class="error" />
+								<form:errors path="cwu" class="error" />
 							</p>
 						</div>
 					</div>
@@ -128,7 +128,7 @@
 						</div>
 					</div>
 				</form>
-				
+
 			</div>
 
 
@@ -147,12 +147,12 @@
 							</tr>
 						</thead>
 						<tbody>
-							<tr ng-repeat="a in ctrl.meterWaters">
+							<tr ng-repeat="a in ctrl.meterGass">
 								<td><span ng-bind="a.serialNumber"></span></td>
 								<td><span ng-bind="a.description"></span></td>
 								<td><span ng-bind="a.unit"></span></td>
 								<td><span ng-bind="a.apartment.description"></span></td>
-								<td><span ng-bind="a.isWarmWater"></span></td>
+								<td><span ng-bind="a.cwu"></span></td>
 								<td>
 									<button type="button" ng-click="ctrl.edit(a.id, $index)"
 										class="btn-xs btn-warning">
@@ -170,19 +170,19 @@
 			</div>
 		</div>
 	</div>
-	
+
 	<script src="<c:url value='/static/js/angular.js' />"></script>
 	<script src="<c:url value='/static/js/angular-resource.js' />"></script>
 	<script src="<c:url value='/static/angular/app.js' />"></script>
-	
-		<script
+
+	<script
 		src="<c:url value='/static/angular/apartment/apartment_service.js' />"></script>
 	<script
 		src="<c:url value='/static/angular/apartment/apartment_controller.js' />"></script>
 	<script
-		src="<c:url value='/static/angular/meterWater/meterWater_service.js' />"></script>
+		src="<c:url value='/static/angular/meterGas/meterGas_service.js' />"></script>
 	<script
-		src="<c:url value='/static/angular/meterWater/meterWater_controller.js' />"></script>
+		src="<c:url value='/static/angular/meterGas/meterGas_controller.js' />"></script>
 	<!-- jQuery -->
 	<script src="<c:url value='/static/js/jquery.min.js' />"></script>
 	<!-- Bootstrap Core JavaScript -->

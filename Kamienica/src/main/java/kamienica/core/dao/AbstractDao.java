@@ -30,7 +30,6 @@ public abstract class AbstractDao<T> {
 	}
 	// @SuppressWarnings("unchecked")
 	// public AbstractDao() {
-	// // TODO Auto-generated constructor stub
 	//
 	// this.persistentClass = (Class<T>) this.getClass();
 	// }

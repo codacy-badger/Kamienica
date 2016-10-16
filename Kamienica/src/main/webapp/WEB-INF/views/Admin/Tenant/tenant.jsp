@@ -27,7 +27,7 @@
 
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Najemcy - REST</title>
+<title>Najemcy</title>
 </head>
 <body ng-app="myApp">
 	<div id="wrapper">
@@ -36,7 +36,7 @@
 		<div id="page-wrapper" ng-controller="TenantController as ctrl">
 			<div class='row'>
 				<div class="col-lg-12">
-					<h1 class="page-header well">Najemcy - REST</h1>
+					<h1 class="page-header well">Najemcy</h1>
 					<button id='mySwitch' ng-click="toggle = !toggle"
 						class="btn btn-default btn-sm">{{text}}</button>
 
