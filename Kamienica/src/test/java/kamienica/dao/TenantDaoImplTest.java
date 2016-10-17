@@ -9,7 +9,7 @@
 //import org.springframework.beans.factory.annotation.Autowired;
 //import org.springframework.test.annotation.Rollback;
 //import org.testng.Assert;
-//import org.testng.annotations.Test;
+//import org.testng.annotations.Testing;
 //
 //import kamienica.feature.apartment.Apartment;
 //import kamienica.feature.apartment.ApartmentDao;
@@ -24,7 +24,7 @@
 //	@Autowired
 //	ApartmentDao apDao;
 //
-//	@Test(expectedExceptions = javax.validation.ConstraintViolationException.class)
+//	@Testing(expectedExceptions = javax.validation.ConstraintViolationException.class)
 //	public void saveNull() {
 //		
 //		dao.save(new Tenant());
@@ -34,7 +34,7 @@
 //
 //	}
 //
-//	@Test
+//	@Testing
 //	public void loadByMail() {
 //		Tenant tenant = dao.loadByMail("a@wp");
 //		Assert.assertNotNull(tenant);
@@ -42,7 +42,7 @@
 //
 //	}
 //
-//	@Test
+//	@Testing
 //	@Rollback
 //	public void deactivateTenant() {
 //		Tenant tenant = dao.getById(1L);
@@ -53,7 +53,7 @@
 //		Assert.assertEquals(dao.getById(1L).getStatus(), Status.INACTIVE.getUserStatus());
 //	}
 //
-//	@Test
+//	@Testing
 //	public void getIdList() {
 //		Set<Long> tested = dao.getIdList();
 //		Set<Long> expected = new HashSet<>();
@@ -62,7 +62,7 @@
 //		Assert.assertEquals(tested, expected);
 //	}
 //
-//	@Test
+//	@Testing
 //	public void getCurrentTenant() {
 //		Apartment ap = apDao.getById(2L);
 //		Tenant ten = dao.getTenantForApartment(ap);
@@ -70,7 +70,7 @@
 //	}
 //
 //	@Rollback
-//	@Test(expectedExceptions = javax.validation.ConstraintViolationException.class)
+//	@Testing(expectedExceptions = javax.validation.ConstraintViolationException.class)
 //	public void saveWithWrongEmail() {
 //		Tenant tenant = getSample();
 //		tenant.setEmail("dfg");
@@ -78,7 +78,7 @@
 //	}
 //
 //	@Rollback
-//	@Test
+//	@Testing
 //	public void updateTenant() {
 //		Tenant ten = dao.getById(1L);
 //		Assert.assertEquals(ten.getFirstName(), "Maciej");
@@ -87,47 +87,47 @@
 //		Assert.assertEquals(dao.getById(1l).getFirstName(), "Karol");
 //	}
 //
-//	@Test
+//	@Testing
 //	public void findById() {
 //		Assert.assertNotNull(dao.getById(1L));
 //		Assert.assertNull(dao.getById(5L));
 //	}
 //
 //	@Rollback
-//	@Test(dependsOnMethods = { "findAll" })
+//	@Testing(dependsOnMethods = { "findAll" })
 //	public void saveTenant() {
 //		dao.save(getSample());
 //		Assert.assertEquals(dao.getList().size(), 5);
 //	}
 //
 //	@Rollback
-//	@Test(dependsOnMethods = { "findAll" })
+//	@Testing(dependsOnMethods = { "findAll" })
 //	public void deleteById() {
 //		Assert.assertEquals(dao.getList().size(), 4);
 //		dao.deleteById(1L);
 //		Assert.assertEquals(dao.getList().size(), 3);
 //	}
 //
-//	@Test(dependsOnMethods = { "findAll" })
+//	@Testing(dependsOnMethods = { "findAll" })
 //	public void deleteInvalidId() {
 //		Assert.assertEquals(dao.getList().size(), 4);
 //		dao.deleteById(8L);
 //		Assert.assertEquals(dao.getList().size(), 4);
 //	}
 //
-//	@Test
+//	@Testing
 //	public void findAll() {
 //		List<Tenant> list = dao.getList();
 //		System.out.println(list);
 //		Assert.assertEquals(list.size(), 4);
 //	}
 //
-//	@Test(dependsOnMethods = { "findAll" })
+//	@Testing(dependsOnMethods = { "findAll" })
 //	public void getActiveList() {
 //		Assert.assertEquals(dao.getActiveTenants().size(), 2);
 //	}
 //
-//	@Test(expectedExceptions = org.hibernate.exception.ConstraintViolationException.class)
+//	@Testing(expectedExceptions = org.hibernate.exception.ConstraintViolationException.class)
 //	public void saveDuplicateEmail() {
 //		dao.save(getDuplcate());
 //		Assert.assertEquals(dao.getList().size(), 4);

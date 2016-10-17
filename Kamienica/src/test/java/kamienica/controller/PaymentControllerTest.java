@@ -14,7 +14,7 @@
 //import org.springframework.validation.BindingResult;
 //import org.testng.Assert;
 //import org.testng.annotations.BeforeClass;
-//import org.testng.annotations.Test;
+//import org.testng.annotations.Testing;
 //
 //import kamienica.feature.apartment.Apartment;
 //import kamienica.feature.apartment.ApartmentService;
@@ -113,7 +113,7 @@
 //	// divisionService.getList();
 //	// ArrayList<Apartment> apartments = (ArrayList<Apartment>)
 //	// apartmentService.getList();
-//	@Test
+//	@Testing
 //	public void ValidateDivision() {
 //		when(tenantService.getCurrentTenants()).thenReturn(tenants);
 //		when(divisionService.getList()).thenReturn(division);
@@ -122,14 +122,14 @@
 //				true);	
 //	}
 //	
-//	@Test
+//	@Testing
 //	public void prepareList() {
 //		when(tenantService.getCurrentTenants()).thenReturn(tenants);
 //		when(divisionService.getList()).thenReturn(division);
 //		when(apartmentService.getList()).thenReturn(apartments);
 //	
 //	}
-//	// @Test
+//	// @Testing
 //	// public void paymentRegister() {
 //	// when(apartmentService.getList()).thenReturn(apartments);
 //	// when(tenantService.getList()).thenReturn(tenants);

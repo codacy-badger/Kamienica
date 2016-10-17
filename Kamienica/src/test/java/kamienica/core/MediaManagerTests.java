@@ -8,7 +8,7 @@
 //import org.mockito.Spy;
 //import org.testng.Assert;
 //import org.testng.annotations.BeforeClass;
-//import org.testng.annotations.Test;
+//import org.testng.annotations.Testing;
 //
 //import kamienica.feature.apartment.Apartment;
 //import kamienica.feature.division.Division;
@@ -82,13 +82,13 @@
 //		invoiceWater = SetupMethods.getInvoiceWater(readingsWaterNew);
 //	}
 //
-//	@Test
+//	@Testing
 //	public void ValidateDivision() {
 //
 //		Assert.assertEquals(DivisionValidator.validateDivision(apartments, division, tenants), true);
 //	}
 //
-//	@Test
+//	@Testing
 //	public void consuptionEnergy() {
 //		ArrayList<Integer> expectedUsageUsage = new ArrayList<>();
 //		ArrayList<UsageValue> usage = ManagerEnergy.countConsupmtion(apartments, readingsEnergyOld, readingsEnergyNew);
@@ -100,7 +100,7 @@
 //		Assert.assertEquals(realUsage, expectedUsageUsage);
 //	}
 //
-//	@Test
+//	@Testing
 //	public void paymentEnergy() {
 //		ArrayList<UsageValue> usage = SetupMethods.usageEnergy(apartments);
 //		ArrayList<Double> expectedPayment = new ArrayList<>();
@@ -116,7 +116,7 @@
 //		Assert.assertEquals(realPayment, expectedPayment);
 //	}
 //
-//	@Test
+//	@Testing
 //	public void consuptionWater() {
 //		ArrayList<Integer> expectedUsage = new ArrayList<>();
 //		ArrayList<UsageValue> usage = ManagerWater.countConsumption(apartments, readingsWaterOld, readingsWaterNew);
@@ -130,7 +130,7 @@
 //		Assert.assertEquals(realUsage, expectedUsage);
 //	}
 //
-//	@Test
+//	@Testing
 //	public void paymentWater() {
 //		ArrayList<UsageValue> usage = SetupMethods.usageWater(apartments);
 //
@@ -146,7 +146,7 @@
 //		Assert.assertEquals(realPayment, expectedPayment);
 //	}
 //
-//	@Test
+//	@Testing
 //	public void consuptionGas() {
 //		ArrayList<Double> expectedUsage = new ArrayList<>();
 //		ArrayList<UsageValue> usage = ManagerGas.countConsumption(apartments, readingsGasOld, readingsGasNew,
@@ -162,7 +162,7 @@
 //
 //	}
 //
-//	@Test
+//	@Testing
 //	public void paymentGas() {
 //		ArrayList<UsageValue> usage = SetupMethods.usageGas(apartments);
 //

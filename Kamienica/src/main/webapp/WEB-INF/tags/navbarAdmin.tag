@@ -275,11 +275,11 @@
 				<li><a href="#"><i class="fa fa-money" aria-hidden="true"></i>
 						Opłaty<span class="fa arrow"></span></a>
 					<ul class="nav nav-second-level">
-						<li><a href="${path}/Admin/Payment/paymentEnergyList"><i
+						<li><a href="${path}/Admin/Payment/payment?media=ENERGY"><i
 								class="fa fa-list" aria-hidden="true"></i> Energia</a></li>
-						<li><a href="${path}/Admin/Payment/paymentWaterList"><i
+						<li><a href="${path}/Admin/Payment/payment?media=GAS"><i
 								class="fa fa-list" aria-hidden="true"></i> Woda</a></li>
-						<li><a href="${path}/Admin/Payment/paymentGasList"><i
+						<li><a href="${path}/Admin/Payment/payment?media=WATER"><i
 								class="fa fa-list" aria-hidden="true"></i> Gaz</a></li>
 					</ul> <!-- /.nav-second-level --></li>
 

@@ -3,7 +3,7 @@
 //import org.springframework.beans.factory.annotation.Autowired;
 //import org.springframework.test.annotation.Rollback;
 //import org.testng.Assert;
-//import org.testng.annotations.Test;
+//import org.testng.annotations.Testing;
 //
 //import kamienica.feature.apartment.Apartment;
 //import kamienica.feature.apartment.ApartmentDao;
@@ -13,7 +13,7 @@
 //	@Autowired
 //	ApartmentDao apartemtnDao;
 //
-//	@Test
+//	@Testing
 //	public void findById() {
 //		Apartment ap = apartemtnDao.getById(1L);
 //		Assert.assertNotNull(ap);
@@ -21,7 +21,7 @@
 //		Assert.assertNull(apartemtnDao.getById(8L));
 //	}
 //
-//	@Test(dependsOnMethods = { "findAllApartments" })
+//	@Testing(dependsOnMethods = { "findAllApartments" })
 //	@Rollback
 //	public void save() {
 //		Assert.assertEquals(apartemtnDao.getList().size(), 5);
@@ -29,13 +29,13 @@
 //		Assert.assertEquals(apartemtnDao.getList().size(), 6);
 //	}
 //
-//	@Test(dependsOnMethods = { "findAllApartments" })
+//	@Testing(dependsOnMethods = { "findAllApartments" })
 //	public void deleteApartmentByInvalidId() {
 //		apartemtnDao.deleteById(85L);
 //		Assert.assertEquals(apartemtnDao.getList().size(), 5);
 //	}
 //
-//	@Test
+//	@Testing
 //	@Rollback
 //	public void deleteApartment() {
 //		Assert.assertEquals(apartemtnDao.getList().size(), 5);
@@ -43,24 +43,24 @@
 //		Assert.assertEquals(apartemtnDao.getList().size(), 4);
 //	}
 //
-//	@Test
+//	@Testing
 //	public void findAllApartments() {
 //		Assert.assertEquals(apartemtnDao.getList().size(), 5);
 //	}
 //
-//	@Test(expectedExceptions = org.hibernate.exception.ConstraintViolationException.class)
+//	@Testing(expectedExceptions = org.hibernate.exception.ConstraintViolationException.class)
 //	public void saveDuplicateAppNuber() {
 //		apartemtnDao.save(getDuplcateNubmerApartment());
 //		Assert.assertEquals(apartemtnDao.getList().size(), 3);
 //	}
 //
 //	@Rollback
-//	@Test(expectedExceptions = org.hibernate.exception.ConstraintViolationException.class)
+//	@Testing(expectedExceptions = org.hibernate.exception.ConstraintViolationException.class)
 //	public void deleteApartmentWhereThereIsMeterOrTenant() {
 //		apartemtnDao.deleteById(2L);
 //	}
 //
-//	@Test(expectedExceptions = javax.validation.ConstraintViolationException.class)
+//	@Testing(expectedExceptions = javax.validation.ConstraintViolationException.class)
 //	public void saveApartmentWithWrongData() {
 //		Apartment ap = new Apartment();
 //		ap.setIntercom("234a");

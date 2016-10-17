@@ -17,7 +17,7 @@
 //import org.springframework.web.servlet.ModelAndView;
 //import org.testng.Assert;
 //import org.testng.annotations.BeforeClass;
-//import org.testng.annotations.Test;
+//import org.testng.annotations.Testing;
 //
 //import kamienica.feature.apartment.Apartment;
 //import kamienica.feature.apartment.ApartmentController;
@@ -51,7 +51,7 @@
 //		mvc = prepareMyModel();
 //	}
 //
-//	@Test
+//	@Testing
 //	public void listApartments() {
 //		when(service.getList()).thenReturn(apartments);
 //		Assert.assertEquals(controller.apartmentList().getModel().get("apartment"), apartments);
@@ -60,13 +60,13 @@
 //
 //	}
 ////
-////	@Test
+////	@Testing
 ////	public void register() {
 ////		Assert.assertEquals(controller.ApartmentRegister().getModel(),
 ////				new ModelAndView("/Admin/Apartment/ApartmentRegister"));
 ////	}
 //
-//	//// @Test
+//	//// @Testing
 //	//// public void register(){
 //	//// Assert.assertEquals(controller.save(apartment, result),
 //	//// "registration");
@@ -75,7 +75,7 @@
 //	//// Assert.assertEquals(((Apartment)myModel.get("employee")).getId(), 0);
 //	////
 //	//
-//	//// @Test
+//	//// @Testing
 //	//// public void register(){
 //	//// Assert.assertEquals(controller.newEmployee(model), "registration");
 //	//// Assert.assertNotNull(model.get("employee"));
@@ -84,7 +84,7 @@
 //	//// }
 //	////
 //	////
-//	//// @Test
+//	//// @Testing
 //	//// public void saveEmployeeWithValidationError(){
 //	//// when(result.hasErrors()).thenReturn(true);
 //	//// doNothing().when(service).saveEmployee(any(Employee.class));
@@ -92,7 +92,7 @@
 //	//// model), "registration");
 //	//// }
 //	////
-//	//// @Test
+//	//// @Testing
 //	//// public void saveEmployeeWithValidationErrorNonUniqueSSN(){
 //	//// when(result.hasErrors()).thenReturn(false);
 //	//// when(service.isEmployeeSsnUnique(anyInt(),
@@ -102,7 +102,7 @@
 //	//// }
 //	////
 //	////
-//	//// @Test
+//	//// @Testing
 //	//// public void saveEmployeeWithSuccess(){
 //	//// when(result.hasErrors()).thenReturn(false);
 //	//// when(service.isEmployeeSsnUnique(anyInt(),
@@ -114,7 +114,7 @@
 //	//// successfully");
 //	//// }
 //	////
-//	//// @Test
+//	//// @Testing
 //	//// public void editEmployee(){
 //	//// Employee emp = apartments.get(0);
 //	//// when(service.findEmployeeBySsn(anyString())).thenReturn(emp);
@@ -125,7 +125,7 @@
 //	//// Assert.assertEquals(((Employee)model.get("employee")).getId(), 1);
 //	//// }
 //	////
-//	//// @Test
+//	//// @Testing
 //	//// public void updateEmployeeWithValidationError(){
 //	//// when(result.hasErrors()).thenReturn(true);
 //	//// doNothing().when(service).updateEmployee(any(Employee.class));
@@ -133,7 +133,7 @@
 //	//// result, model,""), "registration");
 //	//// }
 //	////
-//	//// @Test
+//	//// @Testing
 //	//// public void updateEmployeeWithValidationErrorNonUniqueSSN(){
 //	//// when(result.hasErrors()).thenReturn(false);
 //	//// when(service.isEmployeeSsnUnique(anyInt(),
@@ -142,7 +142,7 @@
 //	//// result, model,""), "registration");
 //	//// }
 //	////
-//	//// @Test
+//	//// @Testing
 //	//// public void updateEmployeeWithSuccess(){
 //	//// when(result.hasErrors()).thenReturn(false);
 //	//// when(service.isEmployeeSsnUnique(anyInt(),
@@ -155,7 +155,7 @@
 //	//// }
 //	////
 //	////
-//	//// @Test
+//	//// @Testing
 //	//// public void deleteEmployee(){
 //	//// doNothing().when(service).deleteEmployeeBySsn(anyString());
 //	//// Assert.assertEquals(controller.deleteEmployee("123"),

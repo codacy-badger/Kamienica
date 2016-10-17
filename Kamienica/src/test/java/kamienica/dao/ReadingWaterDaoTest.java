@@ -5,7 +5,7 @@
 //import org.joda.time.LocalDate;
 //import org.springframework.beans.factory.annotation.Autowired;
 //import org.testng.Assert;
-//import org.testng.annotations.Test;
+//import org.testng.annotations.Testing;
 //
 //import kamienica.feature.apartment.Apartment;
 //import kamienica.feature.meter.MeterWater;
@@ -19,7 +19,7 @@
 //	@Autowired
 //	DaoInterface<MeterWater> meterDAO;
 //
-//	@Test
+//	@Testing
 //	public void getUnresolvedReadings() {
 //		List<ReadingWater> list = dao.getList();
 //		for (ReadingWater readingWater : list) {
@@ -33,7 +33,7 @@
 //		Assert.assertEquals(dao.getUnresolvedReadings().size(), 2);
 //	}
 //
-//	@Test
+//	@Testing
 //	public void getByDate() {
 //		ReadingWater reading = dao.getById(1L);
 //		List<ReadingWater> list = dao.getByDate(reading.getReadingDate().toString());
@@ -44,7 +44,7 @@
 //
 //	}
 //
-//	@Test
+//	@Testing
 //	public void getPrevious() {
 //		List<ReadingWater> list = dao.getPrevious("2010-03-01");
 //		Assert.assertEquals(list.size(), 5);
@@ -53,7 +53,7 @@
 //		}
 //	}
 //
-//	@Test
+//	@Testing
 //	public void getLatestList() {
 //		List<ReadingWater> list = dao.getLatestList();
 //		Assert.assertEquals(list.size(), 5);
@@ -62,7 +62,7 @@
 //		}
 //	}
 //
-//	@Test
+//	@Testing
 //	public void listForTenant() {
 //
 //		List<ReadingWater> list = dao.getListForTenant(getAp());
@@ -75,14 +75,14 @@
 //
 //	}
 ////
-////	@Test
+////	@Testing
 ////	public void getLatestMap() {
 ////		HashMap<Integer, ReadingWater> list = dao.getLatestReadingsMap();
 ////		Assert.assertEquals(list.get(1).getValue(), 145.0);
 ////
 ////	}
 //
-//	@Test
+//	@Testing
 //	public void addAndRemove() {
 //		MeterWater test = meterDAO.getById(1L);
 //		ReadingWater reading = new ReadingWater(new LocalDate(), 300, test);

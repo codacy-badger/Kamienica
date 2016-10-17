@@ -7,7 +7,7 @@
 //import org.springframework.beans.factory.annotation.Autowired;
 //import org.springframework.test.annotation.Rollback;
 //import org.testng.Assert;
-//import org.testng.annotations.Test;
+//import org.testng.annotations.Testing;
 //
 //import kamienica.feature.apartment.Apartment;
 //import kamienica.feature.invoice.InvoiceEnergy;
@@ -24,14 +24,14 @@
 //
 //	
 //
-//	@Test
+//	@Testing
 //	public void getUnresolvedReadings() {
 //		List<ReadingEnergy> list = dao.getUnresolvedReadings();
 //		System.out.println(list);
 //		Assert.assertEquals(list.size(), 2);
 //	}
 //
-//	@Test
+//	@Testing
 //	public void getByDate() {
 //
 //		List<ReadingEnergy> list = dao.getByDate(new LocalDate(2010, 01, 01).toString());
@@ -46,7 +46,7 @@
 //
 //	}
 //
-//	@Test
+//	@Testing
 //	public void countDaysFromLastReading() {
 //		LocalDate start = LocalDate.parse("2010-04-01");
 //		System.out.println(start.getMonthOfYear());
@@ -56,7 +56,7 @@
 //	}
 //
 //	@Rollback
-//	@Test
+//	@Testing
 //	public void resolveReadings() {
 //		ReadingEnergy reading = dao.getById(13L);
 //		InvoiceEnergy invoice = new InvoiceEnergy("sdf", "test", LocalDate.now(), 120, reading);
@@ -71,7 +71,7 @@
 //
 //	}
 //
-//	// @Test
+//	// @Testing
 //	// public void getPrevious() {
 //	// List<ReadingEnergy> list = dao.getPrevious("2010-03-01");
 //	// Assert.assertEquals(list.size(), 4);
@@ -80,7 +80,7 @@
 //	// }
 //	// }
 //	//
-//	// @Test
+//	// @Testing
 //	// public void getLatestList() {
 //	// List<ReadingEnergy> list = dao.getLatestList();
 //	// Assert.assertEquals(list.size(), 4);
@@ -89,7 +89,7 @@
 //	// }
 //	// }
 //
-//	@Test
+//	@Testing
 //	public void listForTenant() {
 //
 //		List<ReadingEnergy> list = dao.getListForTenant(getAp());
@@ -102,14 +102,14 @@
 //
 //	}
 //
-//	// @Test
+//	// @Testing
 //	// public void getLatestMap() {
 //	// HashMap<Integer, ReadingEnergy> list = dao.getLatestReadingsMap();
 //	// Assert.assertEquals(list.get(1).getValue(), 145.0);
 //	//
 //	// }
 //	@Rollback
-//	@Test
+//	@Testing
 //	public void add() {
 //		MeterEnergy test = meterDAO.getById(1L);
 //		ReadingEnergy reading = new ReadingEnergy(new LocalDate(), 300, test);
@@ -118,7 +118,7 @@
 //	}
 //
 //	@Rollback
-//	@Test
+//	@Testing
 //	public void remove() {
 //		dao.deleteById(13L);
 //		Assert.assertEquals(dao.getList().size(), 20);
