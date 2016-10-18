@@ -32,17 +32,12 @@
 		<div id="page-wrapper" ng-controller="PaymentController as ctrl">
 			<div class='row'>
 				<div class="col-lg-12">
-					<h1 class="page-header well">Lista Opłat - REST</h1>
+					<h1 class="page-header well">Lista Opłat Gazu</h1>
 
 					<div class="alert alert-danger" ng-show="errorField">
 						<strong>BŁĄD: </strong> {{errorMsg}}
 					</div>
-					<button id='mySwitch' ng-click="ctrl.switchForm(energy)"
-						class="btn btn-default btn-sm">ENERGIA</button>
-					<button id='mySwitch' ng-click="ctrl.switchForm(water)"
-						class="btn btn-default btn-sm">WODA</button>
-					<button id='mySwitch' ng-click="ctrl.switchForm(gas)"
-						class="btn btn-default btn-sm">GAZ</button>
+
 				</div>
 			</div>
 
@@ -66,7 +61,8 @@
 
 							<tr ng-repeat="a in ctrl.payments">
 								<td><span ng-bind="a.paymentDate"></span></td>
-								<td><span ng-bind="a.firstName"></span></td>
+								<td><span ng-bind="a.paymentAmount"></span></td>
+								<td><span ng-bind="a.tenant.firstName + ' '+ a.tenant.lastName"></span></td>
 								<td><span ng-bind="a.invoice.date"></span></td>
 								<td><span ng-bind="a.invoice.serialNumber"></span></td>
 
@@ -83,9 +79,9 @@
 	<script src="<c:url value='/static/js/angular-resource.js' />"></script>
 	<script src="<c:url value='/static/angular/app.js' />"></script>
 	<script
-		src="<c:url value='/static/angular/payment/payment_service.js' />"></script>
+		src="<c:url value='/static/angular/payment/gasService.js' />"></script>
 	<script
-		src="<c:url value='/static/angular/payment/payment_controller.js' />"></script>
+		src="<c:url value='/static/angular/payment/gasCtrl.js' />"></script>
 	<!-- jQuery -->
 	<script src="<c:url value='/static/js/jquery.min.js' />"></script>
 	<!-- Bootstrap Core JavaScript -->
