@@ -185,11 +185,9 @@
 
 
 				<li><a href="${path}/Admin/Apartment/apartment.html"><i
-						class="fa fa-home" aria-hidden="true"></i> Mieszkania<span
-						class="fa arrow"></span></a>
+						class="fa fa-home" aria-hidden="true"></i> Mieszkania</a>
 				<li><a href="${path}/Admin/Tenant/tenant.html"><i
-						class="fa fa-users" aria-hidden="true"></i> Najemcy<span
-						class="fa arrow"></span></a>
+						class="fa fa-users" aria-hidden="true"></i> Najemcy</a>
 				<li><a href="#"><i class="fa fa-wrench fa-fw"></i>
 						Konfiguracja<span class="fa arrow"></span></a>
 					<ul class="nav nav-second-level">
@@ -239,6 +237,9 @@
 								<li><a
 									href="${path}/Admin/Reading/readingList.html?media=ENERGY"><i
 										class="fa fa-list" aria-hidden="true"></i> Lista</a></li>
+										<li><a
+									href="${path}/Admin/Reading/energyRest.html"><i
+										class="fa fa-plus" aria-hidden="true"></i> Rest</a></li>
 							</ul></li>
 
 					</ul> <!-- /.nav-second-level --></li>
@@ -269,29 +270,24 @@
 										class="fa fa-plus" aria-hidden="true"></i> Nowe</a></li>
 								<li><a href="${path}/Admin/Invoice/invoiceEnergyList.html"><i
 										class="fa fa-list" aria-hidden="true"></i> Lista</a></li>
+								
 							</ul></li>
 
 					</ul>
 				<li><a href="#"><i class="fa fa-money" aria-hidden="true"></i>
 						Opłaty<span class="fa arrow"></span></a>
 					<ul class="nav nav-second-level">
-						<li><a href="${path}/Admin/Payment/payment?media=ENERGY"><i
-								class="fa fa-list" aria-hidden="true"></i> Energia</a></li>
-						<li><a href="${path}/Admin/Payment/payment?media=GAS"><i
-								class="fa fa-list" aria-hidden="true"></i> Woda</a></li>
-						<li><a href="${path}/Admin/Payment/payment?media=WATER"><i
-								class="fa fa-list" aria-hidden="true"></i> Gaz</a></li>
+						<li><a href="${path}/Admin/Payment/payment?media=ENERGY">Energia</a></li>
+						<li><a href="${path}/Admin/Payment/payment?media=GAS">Woda</a></li>
+						<li><a href="${path}/Admin/Payment/payment?media=WATER">Gaz</a></li>
 					</ul> <!-- /.nav-second-level --></li>
 
 				<li><a href="#"><i class="fa fa-bars"></i> Liczniki<span
 						class="fa arrow"></span></a>
 					<ul class="nav nav-second-level">
-						<li><a href="${path}/Admin/Meter/energy.html"><i
-								class="fa fa-plus" aria-hidden="true"></i> Energia</a></li>
-						<li><a href="${path}/Admin/Meter/gas.html"><i
-								class="fa fa-plus" aria-hidden="true"></i> Gaz</a></li>
-						<li><a href="${path}/Admin/Meter/water.html"><i
-								class="fa fa-plus" aria-hidden="true"></i> Woda</a></li>
+						<li><a href="${path}/Admin/Meter/energy.html">Energia</a></li>
+						<li><a href="${path}/Admin/Meter/gas.html">Gaz</a></li>
+						<li><a href="${path}/Admin/Meter/water.html">Woda</a></li>
 
 
 					</ul> <!-- /.nav-second-level --></li>

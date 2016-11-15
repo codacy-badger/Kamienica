@@ -32,7 +32,7 @@
 		<div id="page-wrapper" ng-controller="ApartmentController as ctrl">
 			<div class='row'>
 				<div class="col-lg-12">
-					<h1 class="page-header well">Lista Mieszkań - REST</h1>
+					<h1 class="page-header well">Odczyty Energii - REST</h1>
 					
 					<div class="alert alert-danger" ng-show="errorField">
 						<strong>BŁĄD: </strong> {{errorMsg}}
