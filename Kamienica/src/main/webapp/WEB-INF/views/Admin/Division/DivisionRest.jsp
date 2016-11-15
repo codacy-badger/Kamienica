@@ -65,7 +65,7 @@
 						<tbody>
 							<tr ng-repeat="t in ctrl.tenants">
 								<th><span ng-bind="t.firstName + ' ' +  t.lastName"></span></th>
-								
+								<td ng-repeat="d in ctrl.divisions"><span  ng-if="d.tenant.id = t.id" ng-bind="d.divisionValue"></span> </td>
 							</tr>
 						</tbody>
 

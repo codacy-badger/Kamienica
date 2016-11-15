@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import kamienica.core.util.ApiResponse;
@@ -35,8 +36,14 @@ public class TenantApi extends AbstractApi {
 	ApartmentService apService;
 
 	@RequestMapping(method = RequestMethod.GET)
-	public ResponseEntity<?> getList() {
-		List<Tenant> list = service.getList();
+	public ResponseEntity<?> getList(@RequestParam(value = "deactivated", required = false) boolean deactivated) {
+		List<Tenant> list;
+		if(deactivated) {
+			list = service.getList();
+		} else {
+			list = service.getCurrentTenants();
+		}
+		
 		if (list.isEmpty()) {
 			return new ResponseEntity<List<Tenant>>(HttpStatus.NOT_FOUND);
 		}
@@ -45,14 +52,14 @@ public class TenantApi extends AbstractApi {
 		return new ResponseEntity<List<Tenant>>(list, HttpStatus.OK);
 	}
 
-//	@RequestMapping(value = "/{id}", method = RequestMethod.GET)
-//	public ResponseEntity<Tenant> getById(@PathVariable Long id) {
-//		Tenant tenant = service.getTenantById(id);
-//		if (tenant == null) {
-//			return new ResponseEntity<Tenant>(HttpStatus.NOT_FOUND);
-//		}
-//		return new ResponseEntity<Tenant>(tenant, HttpStatus.OK);
-//	}
+	// @RequestMapping(value = "/{id}", method = RequestMethod.GET)
+	// public ResponseEntity<Tenant> getById(@PathVariable Long id) {
+	// Tenant tenant = service.getTenantById(id);
+	// if (tenant == null) {
+	// return new ResponseEntity<Tenant>(HttpStatus.NOT_FOUND);
+	// }
+	// return new ResponseEntity<Tenant>(tenant, HttpStatus.OK);
+	// }
 
 	@RequestMapping(method = RequestMethod.POST)
 	public ResponseEntity<?> create(@Valid @RequestBody Tenant tenant, BindingResult result) {

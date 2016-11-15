@@ -11,7 +11,7 @@ import kamienica.feature.usagevalue.UsageValue;
 
 public class EnergyConsumptionCalculator {
 
-	public static ArrayList<UsageValue> countConsupmtion(List<Apartment> apartment, List<ReadingEnergy> oldReadings,
+	public static List<UsageValue> countConsupmtion(List<Apartment> apartment, List<ReadingEnergy> oldReadings,
 			List<ReadingEnergy> newReadings) {
 		ArrayList<UsageValue> out = new ArrayList<>();
 		for (Apartment m : apartment) {

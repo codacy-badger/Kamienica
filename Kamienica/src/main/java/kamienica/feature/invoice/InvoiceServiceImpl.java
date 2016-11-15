@@ -1,6 +1,5 @@
 package kamienica.feature.invoice;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -106,7 +105,7 @@ public class InvoiceServiceImpl implements InvoiceService {
 			List<ReadingGas> readingGasOld = readingService.getPreviousReadingGas(invoice.getReadingDate(),
 					meterService.getIdList(Media.GAS));
 			List<ReadingGas> readingGasNew = (List<ReadingGas>) readingService.getByDate(invoice.getReadingDate(), Media.GAS);
-			ArrayList<UsageValue> usageGas;
+			List<UsageValue> usageGas;
 			if (settinggs.getWaterHeatingSystem().equals(WaterHeatingSystem.SHARED_GAS)) {
 				List<ReadingWater> waterNew = readingWaterDao
 						.getWaterReadingForGasConsumption2(invoice.getReadingDate());

@@ -127,7 +127,7 @@ App.controller('DivisionController', [
 
         self.reset = function() {
             self.division = new Division();
-            $scope.myForm.$setPristine(); // reset Form
+           // $scope.myForm.$setPristine(); // reset Form
 
         };
 

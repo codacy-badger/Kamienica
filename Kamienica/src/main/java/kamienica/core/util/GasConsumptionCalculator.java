@@ -16,7 +16,7 @@ public class GasConsumptionCalculator {
 	/**
 	 * This method is designed for shared water heatig system
 	 */
-	public static ArrayList<UsageValue> countConsumption(List<Apartment> aparment, List<ReadingGas> gasOld,
+	public static List<UsageValue> countConsumption(List<Apartment> aparment, List<ReadingGas> gasOld,
 			List<ReadingGas> gasNew, List<ReadingWater> waterOld, List<ReadingWater> waterNew) {
 		ArrayList<UsageValue> out = new ArrayList<>();
 		for (Apartment m : aparment) {
