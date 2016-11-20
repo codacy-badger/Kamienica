@@ -317,4 +317,23 @@ public class ReadingController {
 		return new ModelAndView("redirect:/Admin/Reading/readingList.html?media=WATER");
 	}
 
+	// -------------------------REST--------------------------------------------
+		@RequestMapping("/energyRest")
+		public ModelAndView energyRest() {
+
+			return new ModelAndView("/Admin/Reading/energyRest");
+		}
+
+		@RequestMapping("/gasRest")
+		public ModelAndView gasRest() {
+
+			return new ModelAndView("/Admin/Reading/gasRest");
+		}
+
+		@RequestMapping("/waterRest")
+		public ModelAndView waterRest() {
+
+			return new ModelAndView("/Admin/Reading/waterRest");
+		}
+	
 }
