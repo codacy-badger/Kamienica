@@ -1,62 +1,73 @@
 package kamienica.feature.user_admin;
 
-import java.util.HashMap;
-import java.util.List;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-
-import kamienica.core.Media;
+import kamienica.core.util.Media;
 import kamienica.feature.apartment.Apartment;
 import kamienica.feature.apartment.ApartmentDao;
-import kamienica.feature.invoice.InvoiceDao;
+import kamienica.feature.invoice.InvoiceAbstractDao;
 import kamienica.feature.invoice.InvoiceEnergy;
 import kamienica.feature.invoice.InvoiceGas;
 import kamienica.feature.invoice.InvoiceWater;
-import kamienica.feature.reading.ReadingAbstract;
-import kamienica.feature.reading.ReadingDao;
-import kamienica.feature.reading.ReadingEnergy;
-import kamienica.feature.reading.ReadingGas;
-import kamienica.feature.reading.ReadingWater;
-import kamienica.feature.reading.ReadingWaterDAO;
+import kamienica.feature.reading.*;
+import kamienica.feature.settings.Settings;
+import kamienica.feature.settings.SettingsDao;
+import org.joda.time.Days;
+import org.joda.time.LocalDate;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import java.util.HashMap;
+import java.util.List;
 
 @Service
 @Transactional
 public class AdminUserServiceImp implements AdminUserService {
 
 	@Autowired
+	private SettingsDao settingsDao;
+	@Autowired
 	private ApartmentDao apartmentDao;
 	@Autowired
-	private ReadingDao<ReadingEnergy, InvoiceEnergy> energyDao;
+	private ReadingEnergyDao energyDao;
 	@Autowired
-	private ReadingWaterDAO waterDao;
+	private ReadingWaterDao waterDao;
 	@Autowired
-	private ReadingDao<ReadingGas, InvoiceGas> gasDao;
+	private ReadingGasDao gasDao;
 	@Autowired
 	@Qualifier("invoiceEnergy")
-	private InvoiceDao<InvoiceEnergy> invoiceEnergyDao;
+	private InvoiceAbstractDao<InvoiceEnergy> invoiceEnergyDao;
 	@Autowired
 	@Qualifier("invoiceWater")
-	private InvoiceDao<InvoiceWater> invoiceWaterDao;
+	private InvoiceAbstractDao<InvoiceWater> invoiceWaterDao;
 	@Autowired
 	@Qualifier("invoiceGas")
-	private InvoiceDao<InvoiceGas> invoiceGasDao;
+	private InvoiceAbstractDao<InvoiceGas> invoiceGasDao;
 
 	@Override
 	public HashMap<String, Object> getMainData() {
 		HashMap<String, Object> model = new HashMap<>();
 		model.put("emptyApartments", apartmentDao.getNumOfEmptyApartment());
 		addLatestReadings(model);
+		checkConfig(model);
 		return model;
+	}
+
+	private void checkConfig(HashMap<String, Object> model) {
+		List<Settings> list = settingsDao.getList();
+		if (list.isEmpty()) {
+			model.put("settings", "BRAK USTAWIEŃ");
+		} else if (!list.get(0).isCorrectDivision()) {
+			model.put("settings", "Podział niekatualny");
+		}
 	}
 
 	public void addLatestReadings(HashMap<String, Object> model) {
 
-		int energy = energyDao.countDaysFromLastReading();
-		int gas = gasDao.countDaysFromLastReading();
-		int water = waterDao.countDaysFromLastReading();
+		int energy =  countDays(energyDao.getLatestDate());
+		int gas = countDays(gasDao.getLatestDate());
+		int water = countDays(waterDao.getLatestDate());
 		String media;
 		int days;
 		if (energy > gas && energy > water) {
@@ -107,19 +118,16 @@ public class AdminUserServiceImp implements AdminUserService {
 	}
 
 	@Override
-	public List<? extends ReadingAbstract> getReadingsForTenant(Apartment apartment, Media media) {
+	public List<? extends Reading> getReadingsForTenant(Apartment apartment, Media media) {
 
 		switch (media) {
 		case ENERGY:
-			System.out.println("getReadingsForTenant - energia");
 			return energyDao.getListForTenant(apartment);
 
 		case GAS:
-			System.out.println("getReadingsForTenant - gas");
 			return gasDao.getListForTenant(apartment);
 
 		case WATER:
-			System.out.println("getReadingsForTenant - woda");
 			return waterDao.getListForTenant(apartment);
 
 		default:
@@ -128,4 +136,27 @@ public class AdminUserServiceImp implements AdminUserService {
 
 	}
 
+	// @Override
+	// public List<PaymentEnergy> getPaymentEnergyForTenant() {
+	// return energy.getPaymentForTenant(tenant);
+	// }
+	//
+	// @Override
+	// public List<PaymentGas> getPaymentGasForTenant() {
+	// return gas.getPaymentForTenant(tenant);
+	// }
+	//
+	// @Override
+	// public List<PaymentWater> getPaymentWaterForTenant() {
+	// return water.getPaymentForTenant(tenant);
+	// }
+
+	public SecurityUser getCurrentUser() {
+		return  (SecurityUser) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+	}
+
+	private int countDays(LocalDate date) {
+		LocalDate now = LocalDate.now();
+		return Days.daysBetween(date, now).getDays();
+	}
 }

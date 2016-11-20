@@ -1,8 +1,12 @@
 package kamienica.feature.meter;
 
-import kamienica.dao.DaoInterface;
+import java.util.Set;
+
+import kamienica.core.dao.DaoInterface;
 
 public interface MeterDao<M extends MeterAbstract> extends DaoInterface<M> {
 
-	public boolean ifMainExists();
+	boolean ifMainExists();
+	
+	Set<Long> getIdListForActiveMeters();
 }

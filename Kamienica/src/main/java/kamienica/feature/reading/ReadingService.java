@@ -2,83 +2,63 @@ package kamienica.feature.reading;
 
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 import org.joda.time.LocalDate;
 
-import kamienica.core.Media;
+import kamienica.core.exception.NoMainCounterException;
+import kamienica.core.util.Media;
 import kamienica.feature.invoice.InvoiceGas;
 
 public interface ReadingService {
 
-	public ReadingEnergy getEnergyById(Long id);
+	<T extends Reading> void setDates(Map<String, Object> map, List<T> list);
 
-	public ReadingGas getGasById(Long id);
+	<T extends Reading> T getById(Long id, Media media);
 
-	public ReadingWater getWaterById(Long id);
+	<T extends Reading> void save(List<T> reading, LocalDate localDate, Media media);
 
-	public void saveGasList(List<ReadingGas> reading, LocalDate localDate);
+	<T extends Reading> void update(List<T> readings, LocalDate date, Media media);
+	
+	List<? extends Reading> getList(Media media);
 
-	public void saveWaterList(List<ReadingWater> reading, LocalDate localDate);
+//	public List<ReadingEnergy> getReadingEnergy();
+//
+//	public List<ReadingGas> getReadingGas();
+//
+//	public List<ReadingWater> getReadingWater();
 
-	public void saveEnergyList(List<ReadingEnergy> reading, LocalDate localDate);
+	List<? extends Reading> getByDate(LocalDate date, Media media);
 
-	public void updateEnergyList(List<ReadingEnergy> readings, String date);
+	void deleteList(List<? extends Reading> list, Media media);
 
-	public void updateGasList(List<ReadingGas> readings, String date);
+	List<? extends Reading> getPreviousReadingEnergy(LocalDate date, Media media);
 
-	public void updateWaterList(List<ReadingWater> readings, String date);
+	List<ReadingEnergy> getPreviousReadingEnergy(LocalDate date, Set<Long> meterIdList);
 
-	public List<ReadingEnergy> getReadingEnergy();
+	List<ReadingGas> getPreviousReadingGas(LocalDate date, Set<Long> meterIdList);
 
-	public List<ReadingEnergy> getReadingEnergyByDate(String date);
+	List<ReadingWater> getPreviousReadingWater(LocalDate date, Set<Long> meterIdList);
 
-	public List<ReadingGas> getReadingGas();
+	<T extends Reading> List<T> getLatestNew(Media media) throws NoMainCounterException;
 
-	public List<ReadingGas> getReadingGasByDate(String date);
+	<T extends Reading> List<T> latestEdit(Media media);
 
-	public List<ReadingWater> getReadingWater();
+	List<ReadingEnergy> energyLatestEdit();
 
-	public List<ReadingWater> getReadingWaterByDate(String date);
+	List<ReadingGas> gasLatestEdit();
 
-	public void deleteList(List<? extends ReadingAbstract> list, Media media);
+	List<ReadingWater> waterLatestEdit();
 
-	// public void deleteLatestReadings(Media media);
+	HashMap<String, List<ReadingWater>> getWaterReadingsForGasConsumption(InvoiceGas invoice);
 
-	public List<ReadingEnergy> getPreviousReadingEnergy(String date, Set<Long> meterIdList);
+	List<ReadingEnergy> getUnresolvedReadingsEnergy();
 
-	public List<ReadingGas> getPreviousReadingGas(String date, Set<Long> meterIdList);
+	List<ReadingGas> getUnresolvedReadingsGas();
 
-	public List<ReadingWater> getPreviousReadingWater(String date, Set<Long> meterIdList);
+	List<ReadingWater> getUnresolvedReadingsWater();
 
-	public List<ReadingEnergy> energyLatestNew(Set<Long> meterIdList);
+	void deleteLatestReadings(Media media);
 
-	public List<ReadingEnergy> energyLatestEdit(Set<Long> meterIdList);
-
-	public List<ReadingGas> gasLatestEdit(Set<Long> meterIdList);
-
-	public List<ReadingWater> waterLatestEdit(Set<Long> meterIdList);
-
-	public List<ReadingGas> gasLatest(Set<Long> meterIdList);
-
-	public List<ReadingWater> waterLatest(Set<Long> meterIdList);
-
-	public HashMap<String, List<ReadingWater>> getWaterReadingsForGasConsumption(InvoiceGas invoice);
-
-	public List<ReadingEnergy> getUnresolvedReadingsEnergy();
-
-	public List<ReadingGas> getUnresolvedReadingsGas();
-
-	public List<ReadingWater> getUnresolvedReadingsWater();
-
-	public void deleteLatestReadings(Media media);
-
-
-	// public Set<Long> getEnergyIdList();
-
-	// public List<ReadingAbstract> getReadingsForTenant2(Apartment apartment,
-	// Media media);
-
-	// public <T extends ReadingAbstract> List<T> getReadingsForTenant(Apartment
-	// apartment, Media media);
 }

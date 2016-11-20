@@ -14,9 +14,14 @@ import kamienica.feature.reading.ReadingGas;
 @Table(name="invoicegas")
 public class InvoiceGas extends Invoice implements Serializable{
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1048539735580240509L;
 	@OneToOne
 	private ReadingGas baseReading;
 
+	@Override
 	public ReadingGas getBaseReading() {
 		return baseReading;
 	}
@@ -30,7 +35,6 @@ public class InvoiceGas extends Invoice implements Serializable{
 	}
 
 	public InvoiceGas() {
-		super();
 		super.setDescription("Faktura Za Gaz");
 	}
 
@@ -42,6 +46,11 @@ public class InvoiceGas extends Invoice implements Serializable{
 	@Override
 	public String toString() {
 		return super.toString();
+	}
+	
+	@Override
+	public LocalDate getReadingDate() {
+		return baseReading.getReadingDate();
 	}
 
 }

@@ -5,7 +5,7 @@ public enum PaymentStatus {
 
 	String paymentStatus;
 
-	private PaymentStatus(String paymentStatus) {
+	PaymentStatus(String paymentStatus) {
 		this.paymentStatus = paymentStatus;
 	}
 

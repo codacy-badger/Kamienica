@@ -20,6 +20,11 @@ import kamienica.feature.tenant.Tenant;
 @Entity
 @Table(name = "division")
 public class Division implements Serializable {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -643280853187144912L;
+	
 	@Id
 	@GeneratedValue
 	private Long id;
@@ -76,7 +81,6 @@ public class Division implements Serializable {
 
 	@Autowired
 	public Division(Long id, LocalDate LocalDate, Tenant tenant, Apartment apartment, double divisionValue) {
-		super();
 		this.id = id;
 		this.date = LocalDate;
 		this.tenant = tenant;
@@ -89,7 +93,7 @@ public class Division implements Serializable {
 
 	@Override
 	public String toString() {
-		return "\nPodzial: " + tenant.getFullName() + "->" + apartment.getDescription() + "-> podzial=" + divisionValue
+		return "\nPodzial: " + tenant.fullName() + "->" + apartment.getDescription() + "-> podzial=" + divisionValue
 				+ "]" + " ID " + getId();
 	}
 

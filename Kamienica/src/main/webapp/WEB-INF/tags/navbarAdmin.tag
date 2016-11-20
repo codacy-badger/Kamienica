@@ -12,7 +12,7 @@
 			<span class="sr-only">Toggle navigation</span> <span class="icon-bar"></span>
 			<span class="icon-bar"></span> <span class="icon-bar"></span>
 		</button>
-		<a class="navbar-brand" href="${path}/Admin/home">Strona Główna</a>
+		<a class="navbar-brand" href="${path}/Admin/home">Kamienica</a>
 	</div>
 	<!-- /.navbar-header -->
 
@@ -184,22 +184,12 @@
 			<ul class="nav" id="side-menu">
 
 
-				<li><a href="#"><i class="fa fa-home" aria-hidden="true"></i>
-						Mieszkania<span class="fa arrow"></span></a>
-					<ul class="nav nav-second-level">
-						<li><a href="${path}/Admin/Apartment/apartmentRegister.html"><i
-								class="fa fa-plus" aria-hidden="true"></i> Nowe</a></li>
-						<li><a href="${path}/Admin/Apartment/apartmentList.html"><i
-								class="fa fa-list" aria-hidden="true"></i> Lista</a></li>
-					</ul> <!-- /.nav-second-level --></li>
-				<li><a href="#"><i class="fa fa-users" aria-hidden="true"></i>
-						Najemcy<span class="fa arrow"></span></a>
-					<ul class="nav nav-second-level">
-						<li><a href="${path}/Admin/Tenant/tenantRegister.html"><i
-								class="fa fa-plus" aria-hidden="true"></i> Nowe</a></li>
-						<li><a href="${path}/Admin/Tenant/tenantList.html"><i
-								class="fa fa-list" aria-hidden="true"></i> Lista</a></li>
-					</ul> <!-- /.nav-second-level --></li>
+				<li><a href="${path}/Admin/Apartment/apartment.html"><i
+						class="fa fa-home" aria-hidden="true"></i> Mieszkania<span
+						class="fa arrow"></span></a>
+				<li><a href="${path}/Admin/Tenant/tenant.html"><i
+						class="fa fa-users" aria-hidden="true"></i> Najemcy<span
+						class="fa arrow"></span></a>
 				<li><a href="#"><i class="fa fa-wrench fa-fw"></i>
 						Konfiguracja<span class="fa arrow"></span></a>
 					<ul class="nav nav-second-level">
@@ -209,8 +199,16 @@
 										class="fa fa-plus" aria-hidden="true"></i> Nowe</a></li>
 								<li><a href="${path}/Admin/Division/divisionList.html"><i
 										class="fa fa-list" aria-hidden="true"></i> Lista</a></li>
+								<li><a href="${path}/Admin/Division/divisionRest.html"><i
+										class="fa fa-list" aria-hidden="true"></i> REST</a></li>
 							</ul></li>
-						<li><a href="#">Ustawienia Początkowe</a></li>
+						<li><a href=#>Konfiguracja<span class="fa arrow"></span></a>
+							<ul class="nav nav-third-level">
+								<li><a href="${path}/Admin/Settings/edit.html"><i
+										class="fa fa-plus" aria-hidden="true"></i>Zmień</a></li>
+								<li><a href="${path}/Admin/Settings/list.html"><i
+										class="fa fa-list" aria-hidden="true"></i>Sprawdź</a></li>
+							</ul></li>
 					</ul> <!-- /.nav-second-level --></li>
 				<li><a href="#"><i class="fa fa-bar-chart"
 						aria-hidden="true"></i> </i>Odczyty<span class="fa arrow"></span></a>
@@ -219,7 +217,8 @@
 							<ul class="nav nav-third-level">
 								<li><a href="${path}/Admin/Reading/readingGasRegister.html"><i
 										class="fa fa-plus" aria-hidden="true"></i> Nowe</a></li>
-								<li><a href="${path}/Admin/Reading/readingList.html?media=GAS"><i
+								<li><a
+									href="${path}/Admin/Reading/readingList.html?media=GAS"><i
 										class="fa fa-list" aria-hidden="true"></i> Lista</a></li>
 							</ul></li>
 						<li><a href="buttons.html">Woda<span class="fa arrow"></a>
@@ -227,7 +226,8 @@
 								<li><a
 									href="${path}/Admin/Reading/readingWaterRegister.html"><i
 										class="fa fa-plus" aria-hidden="true"></i> Nowe</a></li>
-								<li><a href="${path}/Admin/Reading/readingList.html?media=WATER"><i
+								<li><a
+									href="${path}/Admin/Reading/readingList.html?media=WATER"><i
 										class="fa fa-list" aria-hidden="true"></i> Lista</a></li>
 							</ul></li>
 						<li><a href="notifications.html">Energia<span
@@ -236,13 +236,14 @@
 								<li><a
 									href="${path}/Admin/Reading/readingEnergyRegister.html"><i
 										class="fa fa-plus" aria-hidden="true"></i> Nowe</a></li>
-								<li><a href="${path}/Admin/Reading/readingList.html?media=ENERGY"><i
+								<li><a
+									href="${path}/Admin/Reading/readingList.html?media=ENERGY"><i
 										class="fa fa-list" aria-hidden="true"></i> Lista</a></li>
 							</ul></li>
 
 					</ul> <!-- /.nav-second-level --></li>
-				<li><a href="#"><i class="fa fa-newspaper-o" aria-hidden="true"></i>
-						</i>Faktury<span class="fa arrow"></span></a>
+				<li><a href="#"><i class="fa fa-newspaper-o"
+						aria-hidden="true"></i> </i>Faktury<span class="fa arrow"></span></a>
 					<ul class="nav nav-second-level">
 						<li><a href="panels-wells.html"> Gaz<span
 								class="fa arrow"></span></a>
@@ -274,45 +275,26 @@
 				<li><a href="#"><i class="fa fa-money" aria-hidden="true"></i>
 						Opłaty<span class="fa arrow"></span></a>
 					<ul class="nav nav-second-level">
-						<li><a href="${path}/Admin/Payment/paymentEnergyList"><i
+						<li><a href="${path}/Admin/Payment/payment?media=ENERGY"><i
 								class="fa fa-list" aria-hidden="true"></i> Energia</a></li>
-						<li><a href="${path}/Admin/Payment/paymentWaterList"><i
+						<li><a href="${path}/Admin/Payment/payment?media=GAS"><i
 								class="fa fa-list" aria-hidden="true"></i> Woda</a></li>
-						<li><a href="${path}/Admin/Payment/paymentGasList"><i
+						<li><a href="${path}/Admin/Payment/payment?media=WATER"><i
 								class="fa fa-list" aria-hidden="true"></i> Gaz</a></li>
 					</ul> <!-- /.nav-second-level --></li>
 
 				<li><a href="#"><i class="fa fa-bars"></i> Liczniki<span
 						class="fa arrow"></span></a>
 					<ul class="nav nav-second-level">
-						<li><a href="panels-wells.html"> Gaz<span
-								class="fa arrow"></span></a>
-							<ul class="nav nav-third-level">
-								<li><a href="${path}/Admin/Meter/meterGasRegister.html"><i
-										class="fa fa-plus" aria-hidden="true"></i> Nowe</a></li>
-								<li><a href="${path}/Admin/Meter/meterGasList.html"><i
-										class="fa fa-list" aria-hidden="true"></i> Lista</a></li>
-							</ul></li>
-						<li><a href="buttons.html">Woda<span class="fa arrow"></a>
-							<ul class="nav nav-third-level">
-								<li><a href="${path}/Admin/Meter/meterWaterRegister.html"><i
-										class="fa fa-plus" aria-hidden="true"></i> Nowe</a></li>
-								<li><a href="${path}/Admin/Meter/meterWaterList.html"><i
-										class="fa fa-list" aria-hidden="true"></i> Lista</a></li>
-							</ul></li>
-						<li><a href="notifications.html">Energia<span
-								class="fa arrow"></a>
-							<ul class="nav nav-third-level">
-								<li><a href="${path}/Admin/Meter/meterEnergyRegister.html"><i
-										class="fa fa-plus" aria-hidden="true"></i> Nowe</a></li>
-								<li><a href="${path}/Admin/Meter/meterEnergyList.html"><i
-										class="fa fa-list" aria-hidden="true"></i> Lista</a></li>
-							</ul></li>
+						<li><a href="${path}/Admin/Meter/energy.html"><i
+								class="fa fa-plus" aria-hidden="true"></i> Energia</a></li>
+						<li><a href="${path}/Admin/Meter/gas.html"><i
+								class="fa fa-plus" aria-hidden="true"></i> Gaz</a></li>
+						<li><a href="${path}/Admin/Meter/water.html"><i
+								class="fa fa-plus" aria-hidden="true"></i> Woda</a></li>
+
 
 					</ul> <!-- /.nav-second-level --></li>
-				<!-- /.nav-second-level -->
-				</li>
-
 			</ul>
 		</div>
 		<!-- /.sidebar-collapse -->

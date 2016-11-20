@@ -1,19 +1,34 @@
 package kamienica.feature.division;
 
 import java.util.List;
+import java.util.Map;
 
 import org.joda.time.LocalDate;
 
+import kamienica.core.exception.InvalidDivisionException;
+import kamienica.core.exception.WrongDivisionInputException;
+import kamienica.feature.apartment.Apartment;
+import kamienica.feature.tenant.Tenant;
+
 public interface DivisionService {
 
+	void saveList(List<Division> division, LocalDate date);
 
-	public void saveList(List<Division> division, LocalDate date);
+	void saveList(DivisionForm form) throws InvalidDivisionException;
+
+	List<Division> getList();
 	
-	public List<Division> getList();
+	Map<Tenant, List<Division>> getMappedList();
 
-	public void deleteByID(Long id);
+	void deleteByID(Long id);
 
-	public void update(Division division);
+	void update(Division division);
 
-	public void deleteAll();
+	void deleteAll();
+
+	void prepareForm(DivisionForm form) throws WrongDivisionInputException;
+
+	List<Division> prepareDivisionListForRegistration(List<Tenant> tenantList, List<Apartment> apartmentList);
+
+	boolean isDivisionCorrect();
 }

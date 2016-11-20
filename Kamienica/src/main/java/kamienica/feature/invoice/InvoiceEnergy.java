@@ -11,22 +11,26 @@ import org.joda.time.LocalDate;
 import kamienica.feature.reading.ReadingEnergy;
 
 @Entity
-@Table(name="invoiceenergy")
+@Table(name = "invoiceenergy")
 public class InvoiceEnergy extends Invoice implements Serializable {
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	
 	@OneToOne
 	private ReadingEnergy baseReading;
 
-	
-
+	@Override
 	public ReadingEnergy getBaseReading() {
 		return baseReading;
 	}
 
 	public void setBaseReading(ReadingEnergy baseReading) throws Exception {
-		if(baseReading.getMeter().getApartment() != null ) {
+		if (baseReading.getMeter().getApartment() != null) {
 			throw new Exception();
-			
+
 		}
 		this.baseReading = baseReading;
 	}
@@ -36,11 +40,15 @@ public class InvoiceEnergy extends Invoice implements Serializable {
 		super.setDescription("Faktura Za Energię");
 	}
 
-	public InvoiceEnergy(String serialNumber, String description, LocalDate date, double totalAmount, ReadingEnergy reading) {
+	public InvoiceEnergy(String serialNumber, String description, LocalDate date, double totalAmount,
+			ReadingEnergy reading) {
 		super(serialNumber, description, date, totalAmount);
-
+		this.baseReading = reading;
 	}
 
-	
+	@Override
+	public LocalDate getReadingDate() {
+		return baseReading.getReadingDate();
+	}
 
 }

@@ -43,7 +43,6 @@ public class UsageValue {
 	}
 
 	public UsageValue(String description, double usage, String unit, int daysBetweenReadings, Apartment apartment) {
-		super();
 		this.description = description;
 		this.usage = usage;
 		this.unit = unit;

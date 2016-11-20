@@ -4,17 +4,17 @@ import java.util.List;
 
 public interface TenantService {
 
-	public void saveTenant(Tenant tenant);
+	void saveTenant(Tenant tenant);
 
-	public List<Tenant> getList();
+	List<Tenant> getList();
 
-	public void deleteTenant(Long id);
+	void deleteTenant(Long id);
 
-	public void updateTenant(Tenant tenant);
+	void updateTenant(Tenant tenant);
 
-	public Tenant getTenantById(Long id);
+	Tenant getTenantById(Long id);
 	
-	public List<Tenant> getCurrentTenants();
+	List<Tenant> getCurrentTenants();
 
-	public Tenant loadByMail(String mail);
+	Tenant loadByMail(String mail);
 }

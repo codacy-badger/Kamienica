@@ -18,12 +18,18 @@ import org.joda.time.LocalDate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
 
+import kamienica.core.util.Status;
 import kamienica.feature.apartment.Apartment;
 
 @Entity
 @Table(name = "tenant")
 public class Tenant implements Serializable {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	
 	@Id
 	@GeneratedValue
 	@Column
@@ -46,7 +52,7 @@ public class Tenant implements Serializable {
 	@Column(nullable = false)
 	private String role = UserRole.USER.getUserRole();
 	@Column(nullable = false)
-	private String status = UserStatus.ACTIVE.getUserStatus();
+	private String status = Status.ACTIVE.getStatus();
 	@Column(nullable = false)
 	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	@Type(type = "org.jadira.usertype.dateandtime.joda.PersistentLocalDate")
@@ -54,7 +60,7 @@ public class Tenant implements Serializable {
 	@Length(min = 5, message = "Hasło musi mieć minimum 5 znaków")
 	@Column(nullable = false)
 	@NotEmpty(message = "Wprowadź hasło")
-	private String password;
+	private String password = "witaj";
 
 	@Autowired
 	public Tenant(String firstName, String lastName, String email, String phone, Apartment apartment) {
@@ -67,13 +73,19 @@ public class Tenant implements Serializable {
 
 	}
 
+	
+
 	public String getStatus() {
 		return status;
 	}
 
+
+
 	public void setStatus(String status) {
 		this.status = status;
 	}
+
+
 
 	public String getRole() {
 		return role;
@@ -89,8 +101,12 @@ public class Tenant implements Serializable {
 		this.password = "witaj";
 	}
 
-	public String getFullName() {
+	public String fullName() {
 		return firstName + " " + lastName;
+	}
+	
+	public String blablaba() {
+		return "dupa";
 	}
 
 	public String getFirstName() {

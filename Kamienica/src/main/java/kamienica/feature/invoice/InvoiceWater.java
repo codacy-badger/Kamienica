@@ -11,12 +11,17 @@ import org.joda.time.LocalDate;
 import kamienica.feature.reading.ReadingWater;
 
 @Entity
-@Table(name="invoicewater")
+@Table(name = "invoicewater")
 public class InvoiceWater extends Invoice implements Serializable {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 8938418725115169355L;
 	@OneToOne
 	private ReadingWater baseReading;
 
+	@Override
 	public ReadingWater getBaseReading() {
 		return baseReading;
 	}
@@ -34,7 +39,8 @@ public class InvoiceWater extends Invoice implements Serializable {
 		super.setDescription("Faktura Za Wodę");
 	}
 
-	public InvoiceWater(String serialNumber, String description, LocalDate date, double totalAmount, ReadingWater reading) {
+	public InvoiceWater(String serialNumber, String description, LocalDate date, double totalAmount,
+			ReadingWater reading) {
 		super(serialNumber, description, date, totalAmount);
 		this.baseReading = reading;
 	}
@@ -44,4 +50,8 @@ public class InvoiceWater extends Invoice implements Serializable {
 		return super.toString();
 	}
 
+	@Override
+	public LocalDate getReadingDate() {
+		return baseReading.getReadingDate();
+	}
 }

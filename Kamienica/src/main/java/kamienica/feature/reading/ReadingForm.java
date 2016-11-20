@@ -1,51 +1,48 @@
 package kamienica.feature.reading;
 
-public class ReadingForm {
+import java.util.List;
 
-	private Long meterId;
-	private String desciption;
-	private double previousReading;
-	private double currentReading;
+import org.joda.time.LocalDate;
+
+public abstract class ReadingForm<T extends Reading> {
+
+	LocalDate oldDate;
+	LocalDate newDate;
+
+	public ReadingForm(LocalDate oldDate, LocalDate newDate) {
+		this.oldDate = oldDate;
+		this.newDate = newDate;
+	}
 
 	public ReadingForm() {
 	}
 
-	public Long getMeterId() {
-		return meterId;
+	public LocalDate getOldDate() {
+		return oldDate;
 	}
 
-	public void setMeterId(Long meterId) {
-		this.meterId = meterId;
+	public void setOldDate(LocalDate oldDate) {
+		this.oldDate = oldDate;
 	}
 
-	public double getPreviousReading() {
-		return previousReading;
+	public LocalDate getNewDate() {
+		return newDate;
 	}
 
-	public void setPreviousReading(double previousReading) throws IllegalArgumentException {
-		if (previousReading < 0) {
-			throw new IllegalArgumentException();
-		}
-		this.previousReading = previousReading;
+	public void setNewDate(LocalDate newDate) {
+		this.newDate = newDate;
 	}
 
-	public double getCurrentReading() {
-		return currentReading;
-	}
+	public abstract List<ReadingEnergy> getPreviousReadings();
 
-	public void setCurrentReading(double currentReading) throws IllegalArgumentException {
-		if (currentReading < previousReading) {
-			throw new IllegalArgumentException();
-		}
-		this.currentReading = currentReading;
-	}
+	public abstract void setPreviousReadings(List<T> previousReadings);
 
-	public String getDesciption() {
-		return desciption;
-	}
+	public abstract List<ReadingEnergy> getCurrentReadings();
 
-	public void setDesciption(String desciption) {
-		this.desciption = desciption;
-	}
+	public abstract void setCurrentReadings(List<T> currentReadings);
+
+	public abstract List<ReadingEnergy> getNewReadings();
+
+	public abstract void setNewReadings(List<T> newReadings);
 
 }

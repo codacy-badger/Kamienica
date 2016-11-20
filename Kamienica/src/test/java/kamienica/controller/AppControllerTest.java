@@ -23,7 +23,7 @@
 //import org.springframework.validation.BindingResult;
 //import org.testng.Assert;
 //import org.testng.annotations.BeforeClass;
-//import org.testng.annotations.Test;
+//import org.testng.annotations.Testing;
 //
 //import kamienica.controller.view.AppController;
 //import kamienica.model.Employee;
@@ -55,7 +55,7 @@
 //		employees = getEmployeeList();
 //	}
 //	
-//	@Test
+//	@Testing
 //	public void listEmployees(){
 //		when(service.findAllEmployees()).thenReturn(employees);
 //		Assert.assertEquals(appController.listEmployees(model), "allemployees");
@@ -63,7 +63,7 @@
 //		verify(service, atLeastOnce()).findAllEmployees();
 //	}
 //	
-//	@Test
+//	@Testing
 //	public void newEmployee(){
 //		Assert.assertEquals(appController.newEmployee(model), "registration");
 //		Assert.assertNotNull(model.get("employee"));
@@ -72,14 +72,14 @@
 //	}
 //
 //
-//	@Test
+//	@Testing
 //	public void saveEmployeeWithValidationError(){
 //		when(result.hasErrors()).thenReturn(true);
 //		doNothing().when(service).saveEmployee(any(Employee.class));
 //		Assert.assertEquals(appController.saveEmployee(employees.get(0), result, model), "registration");
 //	}
 //
-//	@Test
+//	@Testing
 //	public void saveEmployeeWithValidationErrorNonUniqueSSN(){
 //		when(result.hasErrors()).thenReturn(false);
 //		when(service.isEmployeeSsnUnique(anyInt(), anyString())).thenReturn(false);
@@ -87,7 +87,7 @@
 //	}
 //
 //	
-//	@Test
+//	@Testing
 //	public void saveEmployeeWithSuccess(){
 //		when(result.hasErrors()).thenReturn(false);
 //		when(service.isEmployeeSsnUnique(anyInt(), anyString())).thenReturn(true);
@@ -96,7 +96,7 @@
 //		Assert.assertEquals(model.get("success"), "Employee Axel registered successfully");
 //	}
 //
-//	@Test
+//	@Testing
 //	public void editEmployee(){
 //		Employee emp = employees.get(0);
 //		when(service.findEmployeeBySsn(anyString())).thenReturn(emp);
@@ -106,21 +106,21 @@
 //		Assert.assertEquals(((Employee)model.get("employee")).getId(), 1);
 //	}
 //
-//	@Test
+//	@Testing
 //	public void updateEmployeeWithValidationError(){
 //		when(result.hasErrors()).thenReturn(true);
 //		doNothing().when(service).updateEmployee(any(Employee.class));
 //		Assert.assertEquals(appController.updateEmployee(employees.get(0), result, model,""), "registration");
 //	}
 //
-//	@Test
+//	@Testing
 //	public void updateEmployeeWithValidationErrorNonUniqueSSN(){
 //		when(result.hasErrors()).thenReturn(false);
 //		when(service.isEmployeeSsnUnique(anyInt(), anyString())).thenReturn(false);
 //		Assert.assertEquals(appController.updateEmployee(employees.get(0), result, model,""), "registration");
 //	}
 //
-//	@Test
+//	@Testing
 //	public void updateEmployeeWithSuccess(){
 //		when(result.hasErrors()).thenReturn(false);
 //		when(service.isEmployeeSsnUnique(anyInt(), anyString())).thenReturn(true);
@@ -130,7 +130,7 @@
 //	}
 //	
 //	
-//	@Test
+//	@Testing
 //	public void deleteEmployee(){
 //		doNothing().when(service).deleteEmployeeBySsn(anyString());
 //		Assert.assertEquals(appController.deleteEmployee("123"), "redirect:/list");

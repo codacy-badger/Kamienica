@@ -1,53 +1,69 @@
 package kamienica.feature.invoice;
 
 import java.util.List;
+import java.util.Map;
 
+import kamienica.core.exception.InvalidDivisionException;
+import kamienica.core.util.Media;
 import kamienica.feature.payment.PaymentEnergy;
 import kamienica.feature.payment.PaymentGas;
 import kamienica.feature.payment.PaymentWater;
+import kamienica.feature.reading.Reading;
 
 public interface InvoiceService {
 
-	public void saveEnergy(InvoiceEnergy invoice, List<PaymentEnergy> payment);
+	<T extends Reading> List<T> prepareForRegistration(Media media) throws InvalidDivisionException;
 
-	public void saveGas(InvoiceGas invoice, List<PaymentGas> payment);
+	<T extends Invoice> void save(T invoice, Media media);
 
-	public void saveWater(InvoiceWater invoice, List<PaymentWater> payment);
+	void saveEnergy(InvoiceEnergy invoice, List<PaymentEnergy> payment);
 
-	public List<InvoiceWater> getWaterInvoiceList();
+	void saveGas(InvoiceGas invoice, List<PaymentGas> payment);
 
-	public List<InvoiceGas> getGasInvoiceList();
+	void saveWater(InvoiceWater invoice, List<PaymentWater> payment);
 
-	public List<InvoiceEnergy> getEnergyInvoiceList();
+	void list(Map<String, Object> model, Media media);
+	
+	List<? extends Invoice> getList(Media media);
 
-	public void deleteGasByID(Long id);
+//	public List<InvoiceWater> getWaterInvoiceList();
+//
+//	public List<InvoiceGas> getGasInvoiceList();
+//
+//	public List<InvoiceEnergy> getEnergyInvoiceList();
 
-	public void deleteWaterByID(Long id);
+	void delete(Long id, Media media);
 
-	public void deleteEnergyByID(Long id);
+	void deleteGasByID(Long id);
 
-	public void updateGas(InvoiceGas invoice, List<PaymentGas> payments);
+	void deleteWaterByID(Long id);
 
-	public void updateWater(InvoiceWater invoice, List<PaymentWater> payments);
+	void deleteEnergyByID(Long id);
 
-	public void updateEnergy(InvoiceEnergy invoice, List<PaymentEnergy> payments);
+	<T extends Invoice> void update(T invoice, Media media);
 
-	public InvoiceGas getGasByID(Long id);
+	void updateGas(InvoiceGas invoice, List<PaymentGas> payments);
 
-	public InvoiceWater getWaterByID(Long id);
+	void updateWater(InvoiceWater invoice, List<PaymentWater> payments);
 
-	public InvoiceEnergy getEnergyByID(Long id);
+	void updateEnergy(InvoiceEnergy invoice, List<PaymentEnergy> payments);
 
-	public List<InvoiceEnergy> getUnpaidInvoiceEnergy();
+	InvoiceGas getGasByID(Long id);
 
-	public List<InvoiceGas> getUnpaidInvoiceGas();
+	InvoiceWater getWaterByID(Long id);
 
-	public List<InvoiceWater> getUnpaidInvoiceWater();
+	InvoiceEnergy getEnergyByID(Long id);
 
-	public InvoiceEnergy getLatestPaidEnergy();
+	List<InvoiceEnergy> getUnpaidInvoiceEnergy();
 
-	public InvoiceWater getLatestPaidWater();
+	List<InvoiceGas> getUnpaidInvoiceGas();
 
-	public InvoiceGas getLatestPaidGas();
+	List<InvoiceWater> getUnpaidInvoiceWater();
+
+	InvoiceEnergy getLatestPaidEnergy();
+
+	InvoiceWater getLatestPaidWater();
+
+	InvoiceGas getLatestPaidGas();
 
 }

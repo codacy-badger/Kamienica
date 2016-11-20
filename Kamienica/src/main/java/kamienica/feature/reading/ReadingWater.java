@@ -13,8 +13,14 @@ import kamienica.feature.meter.MeterWater;
 
 @Entity
 @Table(name = "readingwater")
-public class ReadingWater extends ReadingAbstract implements Serializable {
+public class ReadingWater extends Reading implements Serializable {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	
+	
 	@Column(nullable = false)
 	private String unit;
 	@ManyToOne
@@ -52,6 +58,7 @@ public class ReadingWater extends ReadingAbstract implements Serializable {
 		this.meter = meter;
 	}
 
+	@Override
 	public void setUnit(String unit) {
 		this.unit = unit;
 	}

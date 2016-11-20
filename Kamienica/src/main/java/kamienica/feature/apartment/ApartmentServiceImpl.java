@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import kamienica.feature.settings.SettingsDao;
 import kamienica.feature.tenant.TenantDao;
 
 @Service
@@ -16,11 +17,13 @@ public class ApartmentServiceImpl implements ApartmentService {
 	ApartmentDao apartmentDAO;
 	@Autowired
 	TenantDao tenantDAO;
+	@Autowired
+	SettingsDao settingsDao;
 
 	@Override
 	public void save(Apartment apartment) {
 		apartmentDAO.save(apartment);
-
+		settingsDao.changeDivisionState(false);
 	}
 
 	@Override
@@ -29,8 +32,14 @@ public class ApartmentServiceImpl implements ApartmentService {
 	}
 
 	@Override
+	public List<Apartment> paginatedList(Integer firstResult, Integer maxResults) {
+		return apartmentDAO.paginatedList(firstResult, maxResults);
+	}
+
+	@Override
 	public void deleteByID(Long id) {
 		apartmentDAO.deleteById(id);
+		settingsDao.changeDivisionState(false);
 
 	}
 
@@ -41,8 +50,7 @@ public class ApartmentServiceImpl implements ApartmentService {
 
 	@Override
 	public Apartment getById(Long id) {
-		Apartment apartment = apartmentDAO.getById(id);
-		return apartment;
+		return apartmentDAO.getById(id);
 
 	}
 

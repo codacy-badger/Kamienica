@@ -4,6 +4,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.convert.converter.Converter;
 import org.springframework.stereotype.Component;
 
+import kamienica.core.util.Media;
+
 /**
  * 
  * @author macfol
@@ -21,7 +23,7 @@ public class MeterWaterConverter implements Converter<Object, MeterWater> {
 	@Override
 	public MeterWater convert(Object element) {
 		Long id = Long.parseLong((String) element);
-		return service.getWaterByID(id);
+		return service.getById(id, Media.WATER);
 	}
 
 }

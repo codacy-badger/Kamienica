@@ -23,6 +23,8 @@ public class GlobalExceptionHandler {
 		return "404";
 	}
 
+	
+	
 //	@ResponseStatus(value = HttpStatus.NOT_FOUND, reason = "IOException occured")
 //	@ExceptionHandler(NoHandlerFoundException.class)
 //	 public ModelAndView handleError404(HttpServletRequest request, Exception e)   {

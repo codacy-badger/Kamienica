@@ -12,9 +12,9 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Component;
 
+import kamienica.core.util.Status;
 import kamienica.feature.tenant.Tenant;
 import kamienica.feature.tenant.TenantService;
-import kamienica.feature.tenant.UserStatus;
 
 @Component
 public class MyUserDetailsService implements UserDetailsService {
@@ -30,12 +30,11 @@ public class MyUserDetailsService implements UserDetailsService {
 			throw new UsernameNotFoundException("Username not found");
 		}
 
-		List<GrantedAuthority> authorities = new ArrayList<GrantedAuthority>();
+		List<GrantedAuthority> authorities = new ArrayList<>();
 		authorities.add(new SimpleGrantedAuthority("ROLE_" + tenant.getRole()));
-		SecurityUser myUser = new SecurityUser(tenant, tenant.getEmail(), tenant.getPassword(), tenant.getApartment(),
-				tenant.getStatus().equals(UserStatus.ACTIVE.getUserStatus()), true, true, true, authorities);
 
-		return myUser;
+		return new SecurityUser(tenant, tenant.getEmail(), tenant.getPassword(), tenant.getApartment(),
+				tenant.getStatus().equals(Status.ACTIVE.getStatus()), true, true, true, authorities);
 	}
 
 	public void changePassword(String mail, String oldPassowrd, String newPwassword) throws UsernameNotFoundException {
@@ -49,9 +48,8 @@ public class MyUserDetailsService implements UserDetailsService {
 
 	}
 
-	protected SecurityUser getCurrentUser() {
-		SecurityUser user = (SecurityUser) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-		return user;
+	public SecurityUser getCurrentUser() {
+		return (SecurityUser) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 	}
 
 }

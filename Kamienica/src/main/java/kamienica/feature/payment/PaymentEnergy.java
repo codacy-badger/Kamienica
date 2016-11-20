@@ -13,8 +13,12 @@ import kamienica.feature.tenant.Tenant;
 
 @Entity
 @Table(name = "paymentenergy")
-public class PaymentEnergy extends PaymentAbstract implements Serializable {
+public class PaymentEnergy extends Payment implements Serializable {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -742907043105280124L;
 	@ManyToOne
 	private InvoiceEnergy invoice;
 

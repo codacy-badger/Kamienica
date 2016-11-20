@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.convert.converter.Converter;
 import org.springframework.stereotype.Component;
 
+import kamienica.core.util.Media;
 import kamienica.feature.reading.ReadingEnergy;
 import kamienica.feature.reading.ReadingService;
 
@@ -26,7 +27,7 @@ public class ReadingEnergyConverter implements Converter<Object, ReadingEnergy>{
 	@Override
 	public ReadingEnergy convert(Object element) {
 		Long id = Long.parseLong((String) element);
-		return readingService.getEnergyById(id);
+		return readingService.getById(id, Media.ENERGY);
 	}
 
 }

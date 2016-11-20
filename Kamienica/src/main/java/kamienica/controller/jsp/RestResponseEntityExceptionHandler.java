@@ -1,5 +1,6 @@
 package kamienica.controller.jsp;
 
+import org.hibernate.exception.ConstraintViolationException;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -19,8 +20,15 @@ public class RestResponseEntityExceptionHandler extends ResponseEntityExceptionH
 
 	@ExceptionHandler(value = { Exception.class, })
 	protected ResponseEntity<Object> handleOtherConflict(RuntimeException ex, WebRequest request) {
-		String bodyOfResponse = "This should be application specific";
+		String bodyOfResponse = "Bląd generalny";
 		return handleExceptionInternal(ex, bodyOfResponse, new HttpHeaders(), HttpStatus.CONFLICT, request);
+	}
+
+	@ExceptionHandler(value = { ConstraintViolationException.class, })
+	protected ResponseEntity<Object> handleConstraint(RuntimeException ex, WebRequest request) {
+
+		return handleExceptionInternal(ex, "Constaint Violation Error", new HttpHeaders(), HttpStatus.CONFLICT,
+				request);
 	}
 
 }

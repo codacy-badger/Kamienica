@@ -41,31 +41,34 @@
 				</c:if>
 			</div>
 
-			<div class='row'>
-				<table class='table table-stripped table-hover' style="width: 100%">
-					<thead>
-						<tr>
-							<th></th>
-							<c:forEach items="${model.apartment}" var="m">
-								<th><c:out value="${m.description}" /></th>
-							</c:forEach>
-						</tr>
-					</thead>
-					<c:forEach items="${model.tenantList}" var="tenantList">
-						<tr>
-							<th><c:out
-									value="${tenantList.firstName} ${tenantList.lastName}" /></th>
-							<c:forEach items="${model.divisionForm.divisionList}"
-								varStatus="i" var="l">
-								<c:if test="${tenantList.id.equals(l.tenant.id)}">
-									<td><c:out value="${l.divisionValue}" /></td>
-								</c:if>
-							</c:forEach>
-						</tr>
 
-					</c:forEach>
-				</table>
-			</div>
+			<c:if test="${empty model.error}">
+				<div class='row'>
+					<table class='table table-stripped table-hover' style="width: 100%">
+						<thead>
+							<tr>
+								<th></th>
+								<c:forEach items="${model.apartment}" var="m">
+									<th><c:out value="${m.description}" /></th>
+								</c:forEach>
+							</tr>
+						</thead>
+						<c:forEach items="${model.tenantList}" var="tenantList">
+							<tr>
+								<th><c:out
+										value="${tenantList.firstName} ${tenantList.lastName}" /></th>
+								<c:forEach items="${model.divisionForm.divisionList}"
+									varStatus="i" var="l">
+									<c:if test="${tenantList.id.equals(l.tenant.id)}">
+										<td><c:out value="${l.divisionValue}" /></td>
+									</c:if>
+								</c:forEach>
+							</tr>
+
+						</c:forEach>
+					</table>
+				</div>
+			</c:if>
 		</div>
 	</div>
 	<!-- jQuery -->

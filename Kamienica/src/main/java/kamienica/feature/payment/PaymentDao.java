@@ -2,21 +2,23 @@ package kamienica.feature.payment;
 
 import java.util.List;
 
-import kamienica.dao.DaoInterface;
+import kamienica.core.dao.DaoInterface;
 import kamienica.feature.invoice.Invoice;
-import kamienica.feature.reading.ReadingAbstract;
+import kamienica.feature.reading.Reading;
 import kamienica.feature.tenant.Tenant;
 
-public interface PaymentDao<P extends PaymentAbstract, R extends ReadingAbstract> extends DaoInterface<P> {
+public interface PaymentDao<P extends Payment> extends DaoInterface<P> {
 
-	public void deleteByDate(String date);
+	void deleteByDate(String date);
 
-	public List<P> getByInvoice(Invoice invoice);
+	void deleteForInvoice(Invoice invoice);
 
-	public List<P> getByReading(R reading);
+	List<P> getByInvoice(Invoice invoice);
 
-	public List<P> getPaymentForTenant(Tenant tenant);
+	List<P> getByReading(Reading reading);
 
-	public P getLatestPayment();
- 
+	List<P> getPaymentForTenant(Tenant tenant);
+
+	P getLatestPayment();
+
 }

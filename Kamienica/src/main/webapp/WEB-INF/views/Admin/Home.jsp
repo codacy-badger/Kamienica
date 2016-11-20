@@ -58,13 +58,13 @@
 						<div class="panel-heading">
 							<div class="row">
 								<div class="col-xs-3">
-									<i class="fa fa-cog fa-5x" aria-hidden="true"></i>
+									<i class="fa fa-cog fa-4x" aria-hidden="true"></i>
 								</div>
 								<div class="col-xs-9 text-right">
 									<div>
-										<h2>26</h2>
+										<h3>Konfiguracja</h3>
 									</div>
-									<div>Konfiguracja??</div>
+									<div id='settingsMsg'>${model.settings }</div>
 								</div>
 							</div>
 						</div>
@@ -82,11 +82,11 @@
 						<div class="panel-heading">
 							<div class="row">
 								<div class="col-xs-3">
-									<i class="fa  fa-calendar-o fa-5x"></i>
+									<i class="fa  fa-calendar-o fa-4x"></i>
 								</div>
 								<div class="col-xs-9 text-right">
 									<div>
-										<h2 id='invoiceDays'>${model.invoiceDays } dni</h2>
+										<h3 id='invoiceDays'>${model.invoiceDays }dni</h3>
 									</div>
 									<div>Najstarsza opłata: ${model.invoiceMedia }</div>
 								</div>
@@ -106,11 +106,11 @@
 						<div class="panel-heading">
 							<div class="row">
 								<div class="col-xs-3">
-									<i class="fa fa-calendar-o fa-5x"></i>
+									<i class="fa fa-calendar-o fa-4x"></i>
 								</div>
 								<div class="col-xs-9 text-right">
 									<div class="huge">
-										<h2 id='readingDays'>${model.radingDays } dni</h2>
+										<h3 id='readingDays'>${model.radingDays }dni</h3>
 									</div>
 									<div>Najstarszy odczyt: ${model.readingMedia }</div>
 								</div>
@@ -130,11 +130,11 @@
 						<div class="panel-heading">
 							<div class="row">
 								<div class="col-xs-3">
-									<i class="fa fa-home fa-5x"></i>
+									<i class="fa fa-home fa-4x"></i>
 								</div>
 								<div class="col-xs-9 text-right">
 									<div>
-										<h2 id='apartmentNumber'>${model.emptyApartments }</h2>
+										<h3 id='apartmentNumber'>${model.emptyApartments }</h3>
 									</div>
 									<div>Liczba Pustych Mieszkań</div>
 								</div>

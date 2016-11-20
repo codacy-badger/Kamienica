@@ -53,6 +53,14 @@ public abstract class MeterAbstract {
 	public MeterAbstract() {
 	}
 
+	public LocalDate getDeactivation() {
+		return deactivation;
+	}
+
+	public void setDeactivation(LocalDate deactivation) {
+		this.deactivation = deactivation;
+	}
+
 	public String getDescription() {
 		return description;
 	}
