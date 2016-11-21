@@ -11,7 +11,7 @@ import java.util.stream.Stream;
 public interface ConsumptionCalulator {
 
     List<UsageValue> calculateConsumption(List<Apartment> apartment,
-                                          Stream<Reading> readings) throws NegativeConsumptionValue;
+                                          List<Reading> readings) throws NegativeConsumptionValue;
 
 
 }

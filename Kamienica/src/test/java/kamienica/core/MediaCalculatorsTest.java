@@ -6,16 +6,18 @@ import java.util.List;
 import org.junit.Test;
 
 import kamienica.core.exception.NegativeConsumptionValue;
-import kamienica.core.util.ConsumptionCalcImpl;
+import kamienica.core.util.StandardUsageCalculator;
 import kamienica.core.util.EnergyConsumptionCalculator;
 import kamienica.core.util.WaterConsumptionCalculator;
 import kamienica.feature.reading.Reading;
 import kamienica.feature.usagevalue.UsageValue;
 
+import static org.junit.Assert.assertTrue;
+
 public class MediaCalculatorsTest {
 
-	
-	private final ConsumptionCalcImpl consumptionCalc = new ConsumptionCalcImpl();
+
+	private final StandardUsageCalculator consumptionCalc = new StandardUsageCalculator();
 	private final WaterConsumptionCalculator waterCalc = new WaterConsumptionCalculator();
 	private final EnergyConsumptionCalculator energyCalc = new EnergyConsumptionCalculator();
 	
@@ -37,5 +39,7 @@ public class MediaCalculatorsTest {
 		for (UsageValue usageValue : result2) {
 			System.out.println(usageValue);
 		}
+
+		//assertTrue(result1.equals(result2));
 	}
 }
