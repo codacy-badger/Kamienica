@@ -10,7 +10,7 @@ import org.joda.time.LocalDate;
 
 import kamienica.core.dao.AbstractDao;
 
-public class MeterAbstractDaoImpl<T extends MeterAbstract> extends AbstractDao<T> {
+public class MeterAbstractDaoImpl<T extends Meter> extends AbstractDao<T> {
 
 	public boolean ifMainExists() {
 

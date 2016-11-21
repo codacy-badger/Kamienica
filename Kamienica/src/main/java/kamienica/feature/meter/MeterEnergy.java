@@ -11,7 +11,7 @@ import kamienica.feature.apartment.Apartment;
 
 @Entity
 @Table(name="meterenergy")
-public class MeterEnergy extends MeterAbstract implements Serializable {
+public class MeterEnergy extends Meter implements Serializable {
 
 	/**
 	 * 

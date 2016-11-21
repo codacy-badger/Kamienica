@@ -26,7 +26,7 @@ public class MeterServiceImpl implements MeterService {
 	MeterDao<MeterWater> water;
 
 	@Override
-	public <T extends MeterAbstract> void save(T meter, Media media) {
+	public <T extends Meter> void save(T meter, Media media) {
 		if (meter.getApartment() == null) {
 			meter.main = true;
 		}
@@ -50,7 +50,7 @@ public class MeterServiceImpl implements MeterService {
 	}
 
 	@Override
-	public <T extends MeterAbstract> void update(T meter, Media media) {
+	public <T extends Meter> void update(T meter, Media media) {
         meter.main = meter.getApartment() == null;
 		switch (media) {
 		case ENERGY:
@@ -118,7 +118,7 @@ public class MeterServiceImpl implements MeterService {
 
 	@SuppressWarnings("unchecked")
 	@Override
-	public <T extends MeterAbstract> List<T> getList(Media media) {
+	public <T extends Meter> List<T> getList(Media media) {
 		switch (media) {
 		case ENERGY:
 
@@ -139,7 +139,7 @@ public class MeterServiceImpl implements MeterService {
 
 	@SuppressWarnings("unchecked")
 	@Override
-	public <T extends MeterAbstract> T getById(Long id, Media media) {
+	public <T extends Meter> T getById(Long id, Media media) {
 		switch (media) {
 		case ENERGY:
 
@@ -299,7 +299,7 @@ public class MeterServiceImpl implements MeterService {
 	}
 
 	@Override
-	public <T extends MeterAbstract> void validateMeter(BindingResult result, Media media, T meter) {
+	public <T extends Meter> void validateMeter(BindingResult result, Media media, T meter) {
 		final String WARM_CWU = "Licznik Główny nie może być licznikiem CWU bądź Ciepłej Wody";
 		final String MAIN_EXISTS = "Istnieje już w bazie licznik główny";
 
@@ -333,7 +333,7 @@ public class MeterServiceImpl implements MeterService {
 	}
 
 	@Override
-	public <T extends MeterAbstract> void deactivateMeter(T meter, Media media) {
+	public <T extends Meter> void deactivateMeter(T meter, Media media) {
 		meter.setDeactivation(LocalDate.now());
 
 		switch (media) {

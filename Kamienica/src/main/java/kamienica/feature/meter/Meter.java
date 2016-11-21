@@ -10,14 +10,13 @@ import javax.persistence.MappedSuperclass;
 import org.hibernate.annotations.Type;
 import org.hibernate.validator.constraints.NotEmpty;
 import org.joda.time.LocalDate;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import kamienica.feature.apartment.Apartment;
 
 @MappedSuperclass
 @Inheritance
-public abstract class MeterAbstract {
+public abstract class Meter {
 
 	@Id
 	@GeneratedValue
@@ -40,17 +39,14 @@ public abstract class MeterAbstract {
 	@Type(type = "org.jadira.usertype.dateandtime.joda.PersistentLocalDate")
 	protected LocalDate deactivation = LocalDate.parse("2600-01-01");
 
-	@Autowired
-	public MeterAbstract(String description, String serialNumber, String unit, Apartment apartment) {
-		super();
+	public Meter(String description, String serialNumber, String unit, Apartment apartment) {
 		this.description = description;
 		this.serialNumber = serialNumber;
 		this.unit = unit;
 		this.apartment = apartment;
-
 	}
 
-	public MeterAbstract() {
+	public Meter() {
 	}
 
 	public LocalDate getDeactivation() {

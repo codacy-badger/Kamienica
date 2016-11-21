@@ -10,7 +10,7 @@ import kamienica.feature.apartment.Apartment;
 
 @Entity
 @Table(name="meterwater")
-public class MeterWater extends MeterAbstract implements Serializable {
+public class MeterWater extends Meter implements Serializable {
 	
 	
 	

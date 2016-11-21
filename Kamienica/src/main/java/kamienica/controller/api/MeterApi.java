@@ -24,7 +24,7 @@ import kamienica.core.util.ApiResponse;
 import kamienica.core.util.Media;
 import kamienica.core.util.Message;
 import kamienica.feature.apartment.Apartment;
-import kamienica.feature.meter.MeterAbstract;
+import kamienica.feature.meter.Meter;
 import kamienica.feature.meter.MeterEnergy;
 import kamienica.feature.meter.MeterGas;
 import kamienica.feature.meter.MeterService;
@@ -40,12 +40,12 @@ public class MeterApi extends AbstractApi {
 	@RequestMapping(value = "/{media}", method = RequestMethod.GET)
 	public ResponseEntity<?> getList(@PathVariable Media media, @RequestParam(required = false) LocalDate date) {
 
-		List<? extends MeterAbstract> list = service.getList(media);
+		List<? extends Meter> list = service.getList(media);
 		if (list.isEmpty()) {
 			return new ResponseEntity<List<Apartment>>(HttpStatus.NOT_FOUND);
 		}
 
-		return new ResponseEntity<List<? extends MeterAbstract>>(list, HttpStatus.OK);
+		return new ResponseEntity<List<? extends Meter>>(list, HttpStatus.OK);
 	}
 
 	@RequestMapping(value = "/ENERGY", method = RequestMethod.POST)
@@ -65,7 +65,7 @@ public class MeterApi extends AbstractApi {
 			}
 			return new ResponseEntity<Map<String, String>>(test, HttpStatus.CONFLICT);
 		}
-		return new ResponseEntity<MeterAbstract>(meter, HttpStatus.CREATED);
+		return new ResponseEntity<Meter>(meter, HttpStatus.CREATED);
 	}
 	
 	@RequestMapping(value = "/ENERGY/{id}", method = RequestMethod.PUT)
@@ -85,7 +85,7 @@ public class MeterApi extends AbstractApi {
 			}
 			return new ResponseEntity<Map<String, String>>(test, HttpStatus.CONFLICT);
 		}
-		return new ResponseEntity<MeterAbstract>(meter, HttpStatus.CREATED);
+		return new ResponseEntity<Meter>(meter, HttpStatus.CREATED);
 	}
 
 	@RequestMapping(value = "/GAS", method = RequestMethod.POST)
@@ -105,7 +105,7 @@ public class MeterApi extends AbstractApi {
 			}
 			return new ResponseEntity<Map<String, String>>(test, HttpStatus.CONFLICT);
 		}
-		return new ResponseEntity<MeterAbstract>(meter, HttpStatus.CREATED);
+		return new ResponseEntity<Meter>(meter, HttpStatus.CREATED);
 	}
 	
 	@RequestMapping(value = "/GAS/{id}", method = RequestMethod.PUT)
@@ -125,7 +125,7 @@ public class MeterApi extends AbstractApi {
 			}
 			return new ResponseEntity<Map<String, String>>(test, HttpStatus.CONFLICT);
 		}
-		return new ResponseEntity<MeterAbstract>(meter, HttpStatus.CREATED);
+		return new ResponseEntity<Meter>(meter, HttpStatus.CREATED);
 	}
 
 	@RequestMapping(value = "/WATER", method = RequestMethod.POST)
@@ -145,7 +145,7 @@ public class MeterApi extends AbstractApi {
 			}
 			return new ResponseEntity<Map<String, String>>(test, HttpStatus.CONFLICT);
 		}
-		return new ResponseEntity<MeterAbstract>(meter, HttpStatus.CREATED);
+		return new ResponseEntity<Meter>(meter, HttpStatus.CREATED);
 	}
 
 	@RequestMapping(value = "/WATER/{id}", method = RequestMethod.PUT)
@@ -165,7 +165,7 @@ public class MeterApi extends AbstractApi {
 			}
 			return new ResponseEntity<Map<String, String>>(test, HttpStatus.CONFLICT);
 		}
-		return new ResponseEntity<MeterAbstract>(meter, HttpStatus.CREATED);
+		return new ResponseEntity<Meter>(meter, HttpStatus.CREATED);
 	}
 	
 	@RequestMapping(value = "{media}/{id}", method = RequestMethod.DELETE)

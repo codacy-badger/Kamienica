@@ -16,47 +16,49 @@ import javax.validation.constraints.NotNull;
 
 public class ConsumptionCalcImpl implements StreamConsumptionCalc {
 
-    @Override
-    public List<UsageValue> calculateConsumption(@NotNull List<Apartment> apartment, @NotNull List<Reading> readings) throws NegativeConsumptionValue {
+	private LocalDate latestDate;
+	private LocalDate previousDate;
+	private Predicate<Reading> noNullApartment = s -> s.getMeter().getApartment() != null;
+	private Predicate<Reading> maxDate = s -> s.getReadingDate().equals(latestDate);
+	private Predicate<Reading> minDate = s -> s.getReadingDate().equals(previousDate);
 
-        List<UsageValue> result = new ArrayList<>();
+	@Override
+	public List<UsageValue> calculateConsumption(@NotNull final List<Apartment> apartment,
+			@NotNull final List<Reading> readings) throws NegativeConsumptionValue {
 
-        LocalDate latestDate = readings.stream().map(u -> u.getReadingDate()).max(LocalDate::compareTo).get();
-        LocalDate previousDate = readings.stream().map(u -> u.getReadingDate()).min(LocalDate::compareTo).get();
+		List<UsageValue> result = new ArrayList<>();
 
-        for (Apartment ap : apartment) {
-            double consumption = countUsage(ap, readings);
-            UsageValue value = createDummyUsageValue(ap, latestDate, previousDate, consumption);
-            result.add(value);
-        }
+		latestDate = readings.stream().map(u -> u.getReadingDate()).max(LocalDate::compareTo).get();
+		previousDate = readings.stream().map(u -> u.getReadingDate()).min(LocalDate::compareTo).get();
 
-        return result;
-    }
+		for (Apartment ap : apartment) {
+			double consumption = countUsage(ap, readings);
+			UsageValue value = createDummyUsageValue(ap, consumption);
+			result.add(value);
+		}
 
-    private UsageValue createDummyUsageValue(Apartment ap, LocalDate max, LocalDate min, double consumption) {
-        int daysBetween = Days.daysBetween(max, min).getDays();
-        return new UsageValue("Użycie za " + ap.getDescription(), consumption, "unit", daysBetween, ap);
-    }
+		return result;
+	}
 
-    private double countUsage(Apartment ap, List<Reading> readings) throws NegativeConsumptionValue {
+	private UsageValue createDummyUsageValue(final Apartment ap, final double consumption) {
+		int daysBetween = Days.daysBetween(previousDate, latestDate).getDays();
+		return new UsageValue("Użycie za " + ap.getDescription(), consumption, "unit", daysBetween, ap);
+	}
 
-        LocalDate latestDate = readings.stream().map(u -> u.getReadingDate()).max(LocalDate::compareTo).get();
-        LocalDate previousDate = readings.stream().map(u -> u.getReadingDate()).min(LocalDate::compareTo).get();
+	private double countUsage(final Apartment ap, final List<Reading> readings) throws NegativeConsumptionValue {
 
-        Predicate<Reading> apartmentPredicate = s -> s.getMeter().getApartment().getId().equals(ap.getId());
-        Predicate<Reading> maxDate = s -> s.getReadingDate().equals(latestDate);
-        Predicate<Reading> minDate = s -> s.getReadingDate().equals(previousDate);
+		final Predicate<Reading> apartmentPredicate = s -> s.getMeter().getApartment().getId().equals(ap.getId());
 
-        double consumption;
-        consumption = -readings.stream().filter(apartmentPredicate).filter(minDate).mapToDouble(o -> o.getValue())
-                .sum();
-        consumption = +readings.stream().filter(apartmentPredicate).filter(maxDate).mapToDouble(o -> o.getValue())
-                .sum();
+		double consumptionOld = readings.stream().filter(noNullApartment).filter(apartmentPredicate).filter(minDate)
+				.mapToDouble(o -> o.getValue()).sum();
+		double consumptionNew = readings.stream().filter(noNullApartment).filter(apartmentPredicate).filter(maxDate)
+				.mapToDouble(o -> o.getValue()).sum();
+		final double consumption = consumptionNew - consumptionOld;
 
-        if (consumption < 0) {
-            throw new NegativeConsumptionValue(consumption, ap);
-        }
-        return consumption;
-    }
+		if (consumption < 0) {
+			throw new NegativeConsumptionValue(consumption, ap);
+		}
+		return consumption;
+	}
 
 }

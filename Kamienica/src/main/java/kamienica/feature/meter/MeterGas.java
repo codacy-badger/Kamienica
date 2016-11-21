@@ -12,7 +12,7 @@ import kamienica.feature.apartment.Apartment;
 
 @Entity
 @Table(name="metergas")
-public class MeterGas extends MeterAbstract implements Serializable {
+public class MeterGas extends Meter implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 	@Column(nullable=false)

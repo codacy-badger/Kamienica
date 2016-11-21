@@ -11,7 +11,7 @@ import org.joda.time.LocalDate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
 
-import kamienica.feature.meter.MeterAbstract;
+import kamienica.feature.meter.Meter;
 
 @MappedSuperclass
 @Inheritance
@@ -81,5 +81,5 @@ public abstract class Reading {
 	
 	public abstract void setUnit(String unit);
 	
-	public abstract MeterAbstract getMeter();
+	public abstract Meter getMeter();
 }

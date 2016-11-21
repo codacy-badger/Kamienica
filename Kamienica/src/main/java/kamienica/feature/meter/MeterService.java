@@ -15,9 +15,9 @@ public interface MeterService {
 	//
 	// public void saveEnergy(MeterEnergy meter);
 
-	<T extends MeterAbstract> void save(T meter, Media media);
+	<T extends Meter> void save(T meter, Media media);
 
-	<T extends MeterAbstract> void update(T meter, Media media);
+	<T extends Meter> void update(T meter, Media media);
 
 	void delete(Long id, Media media);
 
@@ -33,7 +33,7 @@ public interface MeterService {
 	//
 	// public List<MeterWater> getWaterList();
 
-	<T extends MeterAbstract> List<T> getList(Media media);
+	<T extends Meter> List<T> getList(Media media);
 
 	// public void deleteEnergyByID(Long id);
 	//
@@ -41,7 +41,7 @@ public interface MeterService {
 	//
 	// public void deleteWaterByID(Long id);
 
-	<T extends MeterAbstract> T getById(Long id, Media media);
+	<T extends Meter> T getById(Long id, Media media);
 
 	// public MeterEnergy getEnergyByID(Long id);
 	//
@@ -49,7 +49,7 @@ public interface MeterService {
 	//
 	// public MeterWater getWaterByID(Long id);
 	
-	<T extends MeterAbstract> void deactivateMeter(T meter, Media media);
+	<T extends Meter> void deactivateMeter(T meter, Media media);
 
 	Set<Long> getIdList(Media media);
 
@@ -57,6 +57,6 @@ public interface MeterService {
 
 	boolean ifMainExists(Media media);
 
-	<T extends MeterAbstract> void validateMeter(BindingResult result, Media media, T meter);
+	<T extends Meter> void validateMeter(BindingResult result, Media media, T meter);
 
 }
