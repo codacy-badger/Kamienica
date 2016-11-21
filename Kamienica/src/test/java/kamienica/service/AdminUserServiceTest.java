@@ -40,6 +40,7 @@ public class AdminUserServiceTest extends AbstractServiceTest {
 		assertEquals(days, map.get("radingDays"));
 	}
 
+	
 	@Test
 	public void getListsForTenants() {
 		Apartment aparmtent = apService.getById(2L);

@@ -23,17 +23,17 @@
 
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Lista Mieszkań - REST</title>
+<title>Mieszkania</title>
 </head>
 <body ng-app="myApp">
 	<div id="wrapper">
 		<mytags:navbarAdmin />
 
-		<div id="page-wrapper" ng-controller="ReadingEnergyController as ctrl">
+		<div id="page-wrapper" ng-controller="ReadingGasController as ctrl">
 			<div class='row'>
 				<div class="col-lg-12">
-					<h1 class="page-header well">Odczyty Energii - REST</h1>
-
+					<h1 class="page-header well">Odczyty gazu - rest</h1>
+					
 					<div class="alert alert-danger" ng-show="errorField">
 						<strong>BŁĄD: </strong> {{errorMsg}}
 					</div>
@@ -42,7 +42,7 @@
 
 				</div>
 			</div>
-			
+
 
 
 			<div id='list' class="row fadein fadeout showpanel panel"
@@ -52,24 +52,25 @@
 						<thead>
 							<tr>
 								<th>Data</th>
-								<th>Wartość Odczytu</th>
-								<th>Jednostka</th>
-								<th>Licznik</th>
+                                <th>Wartość Odczytu</th>
+                                <th>Jednostka</th>
+                                <th>Licznik</th>
 								<th>Edytuj/Usuń</th>
 
 							</tr>
 						</thead>
 						<tbody>
-							<tr ng-repeat="r in readingEnergys">
-								<td><span ng-bind="r.readingDate"></span></td>
-								<td><span ng-bind="r.value"></span></td>
-								<td><span ng-bind="r.unit"></span></td>
+							<tr ng-repeat="a in ctrl.readingGases">
+								<td><span ng-bind="a.readingDate"></span></td>
+								<td><span ng-bind="a.value"></span></td>
+								<td><span ng-bind="a.unit"></span></td>
+								<td></td>
 								<td>
-									<button type="button" ng-click="ctrl.edit(r.id, $index)"
+									<button type="button" ng-click="ctrl.edit(a.id, $index)"
 										class="btn-xs btn-warning">
 										<i class="fa fa-pencil-square-o" aria-hidden="true"></i>
 									</button>
-									<button type="button" ng-click="ctrl.remove(r.id, $index)"
+									<button type="button" ng-click="ctrl.remove(a.id, $index)"
 										class="btn-xs btn-danger ">
 										<i class="fa fa-times" aria-hidden="true"></i>
 									</button>
@@ -81,14 +82,14 @@
 			</div>
 		</div>
 	</div>
-
+	
 	<script src="<c:url value='/static/js/angular.js' />"></script>
 	<script src="<c:url value='/static/js/angular-resource.js' />"></script>
 	<script src="<c:url value='/static/angular/app.js' />"></script>
 	<script
-		src="<c:url value='/static/angular/reading/energy/reading_service.js' />"></script>
+		src="<c:url value='/static/angular/reading/gas/gas_service.js' />"></script>
 	<script
-		src="<c:url value='/static/angular/reading/energy/reading_controller.js' />"></script>
+		src="<c:url value='/static/angular/reading/gas/gas_controller.js' />"></script>
 	<!-- jQuery -->
 	<script src="<c:url value='/static/js/jquery.min.js' />"></script>
 	<!-- Bootstrap Core JavaScript -->

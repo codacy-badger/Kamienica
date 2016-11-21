@@ -218,6 +218,8 @@
 								<li><a
 									href="${path}/Admin/Reading/readingList.html?media=GAS"><i
 										class="fa fa-list" aria-hidden="true"></i> Lista</a></li>
+								<li><a href="${path}/Admin/Reading/gasRest.html"><i
+                                        class="fa fa-plus" aria-hidden="true"></i> Rest</a></li>
 							</ul></li>
 						<li><a href="buttons.html">Woda<span class="fa arrow"></a>
 							<ul class="nav nav-third-level">
@@ -227,6 +229,9 @@
 								<li><a
 									href="${path}/Admin/Reading/readingList.html?media=WATER"><i
 										class="fa fa-list" aria-hidden="true"></i> Lista</a></li>
+										<li><a
+                                        href="${path}/Admin/Reading/waterRest.html"><i
+                                            class="fa fa-plus" aria-hidden="true"></i> Rest</a></li>
 							</ul></li>
 						<li><a href="notifications.html">Energia<span
 								class="fa arrow"></a>
