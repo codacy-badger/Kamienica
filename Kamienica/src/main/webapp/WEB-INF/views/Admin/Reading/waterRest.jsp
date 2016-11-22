@@ -32,7 +32,7 @@
 		<div id="page-wrapper" ng-controller="ReadingController as ctrl">
 			<div class='row'>
 				<div class="col-lg-12">
-					<h1 class="page-header well">Gaz - Rest</h1>
+					<h1 class="page-header well">Woda - Rest</h1>
 					
 					<div class="alert alert-danger" ng-show="errorField">
 						<strong>BŁĄD: </strong> {{errorMsg}}
@@ -156,9 +156,9 @@
 	<script src="<c:url value='/static/js/angular-resource.js' />"></script>
 	<script src="<c:url value='/static/angular/app.js' />"></script>
 	<script
-		src="<c:url value='/static/angular/reading/gas/reading_service.js' />"></script>
+		src="<c:url value='/static/angular/reading/water/reading_service.js' />"></script>
 	<script
-		src="<c:url value='/static/angular/reading/gas/reading_controller.js' />"></script>
+		src="<c:url value='/static/angular/reading/water/reading_controller.js' />"></script>
 	<!-- jQuery -->
 	<script src="<c:url value='/static/js/jquery.min.js' />"></script>
 	<!-- Bootstrap Core JavaScript -->

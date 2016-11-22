@@ -1,9 +1,9 @@
 'use strict';
 
-App.controller('ReadingGasController', [
+App.controller('ReadingController', [
     '$scope',
-    'ReadingGas', '$http',
-    function($scope, ReadingGas, $http) {
+    'Reading', '$http',
+    function($scope, Reading, $http) {
 
         $scope.toggle = true;
         $scope.errorField = false;
@@ -12,25 +12,24 @@ App.controller('ReadingGasController', [
         };
 
         var self = this;
-        self.readingGas = new ReadingGas();
+        self.reading = new Reading();
         self.entity;
-        self.readingGases = [];
+        self.readings = [];
         self.errors = []
         var arrayIndex;
 
 
         self.fetchAll = function() {
-            self.readingGases = ReadingGas.query();
+            self.readings = Reading.query();
         };
 
         self.fetchAll();
 
-
         self.createItem = function() {
-            self.readingGas.$save(function() {}).then(function(ok) {
+            self.reading.$save(function() {}).then(function(ok) {
                 $scope.errorField = true;
                 $scope.errorMsg = 'zapisano do bazy';
-                self.readingGases.push(ok);
+                self.readings.push(ok);
                 self.reset();
                 $scope.toggle = $scope.toggle === false ? true : false;
             }, function(error) {
@@ -42,9 +41,9 @@ App.controller('ReadingGasController', [
 
         self.updateItem = function() {
 
-            self.readingGas.$update(function() {}).then(function(ok) {
+            self.reading.$update(function() {}).then(function(ok) {
                 console.log(ok);
-                self.readingGases.splice(arrayIndex, 1, ok);
+                self.readings.splice(arrayIndex, 1, ok);
             }, function(error) {
                 $scope.errors = error.data;
                 $scope.errorField = true;
@@ -56,20 +55,19 @@ App.controller('ReadingGasController', [
         };
 
         self.deleteItem2 = function(identity, indexArray) {
-        	var readingGas = self.readingGases[indexArray];
+        	var reading = self.readings[indexArray];
         	
-        	readingGas.$delete(function() {}).then(function(ok) {
-                self.readingGases.splice(indexArray, 1);
+        	reading.$delete(function() {}).then(function(ok) {
+                self.readings.splice(indexArray, 1);
             }, function(error) {
                 $scope.errorField = true;
                 $scope.errorMsg = error.data.message;
             });
         }; 
         
-
         self.submit = function() {
-            console.log(self.readingGas);
-            if (self.readingGas.id == null) {
+            console.log(self.reading);
+            if (self.reading.id == null) {
                 self.createItem();
             } else {
                 self.updateItem();
@@ -81,15 +79,15 @@ App.controller('ReadingGasController', [
         self.edit = function(id, indexOfArray) {
             self.clearError();
             $scope.toggle = $scope.toggle === false ? true : false;
-            self.readingGas = angular.copy(self.readingGases[indexOfArray]);
-            self.entity = angular.copy(self.readingGases[indexOfArray]);
+            self.reading = angular.copy(self.readings[indexOfArray]);
+            self.entity = angular.copy(self.readings[indexOfArray]);
             arrayIndex = indexOfArray;
 
         };
 
         self.remove = function(id, arrayIndex) {
             self.clearError();
-            if (self.readingGas.id === id) { // If it is the one shown on
+            if (self.reading.id === id) { // If it is the one shown on
                 // screen, reset screen
                 self.reset();
             }
@@ -98,7 +96,7 @@ App.controller('ReadingGasController', [
         };
 
         self.reset = function() {
-            self.readingGas = new ReadingGas();
+            self.reading = new Reading();
             $scope.myForm.$setPristine(); // reset Form
 
         };
@@ -114,6 +112,8 @@ App.controller('ReadingGasController', [
 
         }
         $scope.$watch('toggle', function() {
+            // $scope.toggle ? null : self.reset();
+
             $scope.text = $scope.toggle ? 'Dodaj' :
                 'Lista';
         })

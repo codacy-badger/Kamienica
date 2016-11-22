@@ -2,8 +2,8 @@
 
 App.controller('ReadingController', [
     '$scope',
-    'Reading', 
-    function($scope, Reading) {
+    'Reading', '$http',
+    function($scope, Reading, $http) {
 
         $scope.toggle = true;
         $scope.errorField = false;
@@ -19,12 +19,11 @@ App.controller('ReadingController', [
         var arrayIndex;
 
 
-        self.fetchAllUsers = function() {
+        self.fetchAll = function() {
             self.readings = Reading.query();
-            console.log(self.readings);
         };
-        
-        self.fetchAllUsers();
+
+        self.fetchAll();
 
         self.createItem = function() {
             self.reading.$save(function() {}).then(function(ok) {
@@ -41,7 +40,9 @@ App.controller('ReadingController', [
         };
 
         self.updateItem = function() {
-            	self.reading.$update(function() {}).then(function(ok) {
+
+            self.reading.$update(function() {}).then(function(ok) {
+                console.log(ok);
                 self.readings.splice(arrayIndex, 1, ok);
             }, function(error) {
                 $scope.errors = error.data;
@@ -52,8 +53,8 @@ App.controller('ReadingController', [
             self.reset();
             $scope.toggle = $scope.toggle === false ? true : false;
         };
-        
-        self.deleteItem = function(identity, indexArray) {
+
+        self.deleteItem2 = function(identity, indexArray) {
         	var reading = self.readings[indexArray];
         	
         	reading.$delete(function() {}).then(function(ok) {
@@ -63,21 +64,9 @@ App.controller('ReadingController', [
                 $scope.errorMsg = error.data.message;
             });
         }; 
-
-//        self.deleteItem = function(identity, indexArray) {
-//            var reading = Reading.get({
-//                id: identity
-//            }, function() {
-//                reading.$delete(function() {}).then(function(ok) {
-//                    self.readings.splice(indexArray, 1);
-//                }, function(error) {
-//                    $scope.errorField = true;
-//                    $scope.errorMsg = error.data.message;
-//                })
-//            })
-//        };
-
+        
         self.submit = function() {
+            console.log(self.reading);
             if (self.reading.id == null) {
                 self.createItem();
             } else {
@@ -103,7 +92,7 @@ App.controller('ReadingController', [
                 self.reset();
             }
 
-            self.deleteItem(id, arrayIndex);
+            self.deleteItem2(id, arrayIndex);
         };
 
         self.reset = function() {
