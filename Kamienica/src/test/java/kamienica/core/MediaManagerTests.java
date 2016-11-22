@@ -91,7 +91,7 @@
 //	@Testing
 //	public void consuptionEnergy() {
 //		ArrayList<Integer> expectedUsageUsage = new ArrayList<>();
-//		ArrayList<UsageValue> usage = ManagerEnergy.countConsupmtion(apartments, readingsEnergyOld, readingsEnergyNew);
+//		ArrayList<UsageValue> usage = ManagerEnergy.countConsumption(apartments, readingsEnergyOld, readingsEnergyNew);
 //		expectedUsageUsage.addAll(Arrays.asList(10, 5, 15, 5));
 //		ArrayList<Integer> realUsage = new ArrayList<>();
 //		for (UsageValue u : usage) {

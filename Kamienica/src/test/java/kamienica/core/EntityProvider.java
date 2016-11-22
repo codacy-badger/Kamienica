@@ -34,6 +34,8 @@ public class EntityProvider {
 
     public static final List<ReadingEnergy> ENERGY_OLD = getReadingsEnergyOld();
     public static final List<ReadingEnergy> ENERGY_NEW = getReadingsEnergyNew();
+    public static final List<ReadingEnergy> ENERGY_NEW_MINUS = getReadingsEnergyNewForMinusResult();
+
     public static final List<ReadingGas> GAS_OLD = getReadingsGasOld();
     public static final List<ReadingGas> GAS_NEW = getReadingsGasNew();
     public static final List<ReadingWater> WATER_OLD = getReadingsWaterOld();
@@ -87,15 +89,7 @@ public class EntityProvider {
 
 
     // ------------------------------LICZNIKI--------------------------------------------------------------------
-    public static List<MeterEnergy> getMetersEnergy() {
-        List<MeterEnergy> metersEnergy = new ArrayList<>();
-        metersEnergy.add(new MeterEnergy("Glowny Licznik energii", "354", "kWh", null));
-        metersEnergy.add(new MeterEnergy("Licznik czesci administracyjnej", "89/0", "kWh", APARTMENTS.get(0)));
-        metersEnergy.add(new MeterEnergy("Licznik Energii M1", "89/0", "kWh", APARTMENTS.get(1)));
-        metersEnergy.add(new MeterEnergy("Licznik Energii M2", "89/0", "kWh", APARTMENTS.get(2)));
-        metersEnergy.add(new MeterEnergy("Licznik Energii M3", "89/0", "kWh", APARTMENTS.get(3)));
-        return metersEnergy;
-    }
+
 
     public static List<MeterGas> getMeterGas() {
         List<MeterGas> metersGas = new ArrayList<>();
@@ -121,30 +115,16 @@ public class EntityProvider {
         return metersWater;
     }
 
+    //------------------------------ENERGY-------------------
 
-    //
-    public static List<ReadingWater> getReadingsWaterOld() {
-        List<ReadingWater> readings = new ArrayList<>();
-        readings.add(new ReadingWater(FEBRUARY, 80, METERS_WATER.get(6)));
-        readings.add(new ReadingWater(FEBRUARY, 10, METERS_WATER.get(0)));
-        readings.add(new ReadingWater(FEBRUARY, 10, METERS_WATER.get(1)));
-        readings.add(new ReadingWater(FEBRUARY, 15, METERS_WATER.get(2)));
-        readings.add(new ReadingWater(FEBRUARY, 15, METERS_WATER.get(3)));
-        readings.add(new ReadingWater(FEBRUARY, 12, METERS_WATER.get(4)));
-        readings.add(new ReadingWater(FEBRUARY, 12, METERS_WATER.get(5)));
-        return readings;
-    }
-
-    public static List<ReadingWater> getReadingsWaterNew() {
-        List<ReadingWater> readings = new ArrayList<>();
-        readings.add(new ReadingWater(MARCH, 100, METERS_WATER.get(6)));
-        readings.add(new ReadingWater(MARCH, 11, METERS_WATER.get(0)));
-        readings.add(new ReadingWater(MARCH, 11, METERS_WATER.get(1)));
-        readings.add(new ReadingWater(MARCH, 20, METERS_WATER.get(2)));
-        readings.add(new ReadingWater(MARCH, 20, METERS_WATER.get(3)));
-        readings.add(new ReadingWater(MARCH, 15, METERS_WATER.get(4)));
-        readings.add(new ReadingWater(MARCH, 15, METERS_WATER.get(5)));
-        return readings;
+    public static List<MeterEnergy> getMetersEnergy() {
+        List<MeterEnergy> metersEnergy = new ArrayList<>();
+        metersEnergy.add(new MeterEnergy("Glowny Licznik energii", "354", "kWh", null));
+        metersEnergy.add(new MeterEnergy("Licznik czesci administracyjnej", "89/0", "kWh", APARTMENTS.get(0)));
+        metersEnergy.add(new MeterEnergy("Licznik Energii M1", "89/0", "kWh", APARTMENTS.get(1)));
+        metersEnergy.add(new MeterEnergy("Licznik Energii M2", "89/0", "kWh", APARTMENTS.get(2)));
+        metersEnergy.add(new MeterEnergy("Licznik Energii M3", "89/0", "kWh", APARTMENTS.get(3)));
+        return metersEnergy;
     }
 
     public static List<ReadingEnergy> getReadingsEnergyOld() {
@@ -167,6 +147,15 @@ public class EntityProvider {
         return readingsEnergyNew;
     }
 
+    public static List<ReadingEnergy> getReadingsEnergyNewForMinusResult() {
+        List<ReadingEnergy> readingsEnergyNew = new ArrayList<>();
+        readingsEnergyNew.add(new ReadingEnergy(MARCH, 1, METERS_ENERGY.get(0)));
+        readingsEnergyNew.add(new ReadingEnergy(MARCH, 1, METERS_ENERGY.get(1)));
+        readingsEnergyNew.add(new ReadingEnergy(MARCH, 2, METERS_ENERGY.get(2)));
+        readingsEnergyNew.add(new ReadingEnergy(MARCH, 2, METERS_ENERGY.get(3)));
+        readingsEnergyNew.add(new ReadingEnergy(MARCH, 7, METERS_ENERGY.get(4)));
+        return readingsEnergyNew;
+    }
 
     public static List<ReadingGas> getReadingsGasOld() {
         List<ReadingGas> readingsGasOld = new ArrayList<>();
@@ -190,6 +179,30 @@ public class EntityProvider {
         readingsGasNew.add(new ReadingGas(MARCH, 15, METERS_GAS.get(5)));
         readingsGasNew.add(new ReadingGas(MARCH, 15, METERS_GAS.get(6)));
         return readingsGasNew;
+    }
+
+    public static List<ReadingWater> getReadingsWaterOld() {
+        List<ReadingWater> readings = new ArrayList<>();
+        readings.add(new ReadingWater(FEBRUARY, 80, METERS_WATER.get(6)));
+        readings.add(new ReadingWater(FEBRUARY, 10, METERS_WATER.get(0)));
+        readings.add(new ReadingWater(FEBRUARY, 10, METERS_WATER.get(1)));
+        readings.add(new ReadingWater(FEBRUARY, 15, METERS_WATER.get(2)));
+        readings.add(new ReadingWater(FEBRUARY, 15, METERS_WATER.get(3)));
+        readings.add(new ReadingWater(FEBRUARY, 12, METERS_WATER.get(4)));
+        readings.add(new ReadingWater(FEBRUARY, 12, METERS_WATER.get(5)));
+        return readings;
+    }
+
+    public static List<ReadingWater> getReadingsWaterNew() {
+        List<ReadingWater> readings = new ArrayList<>();
+        readings.add(new ReadingWater(MARCH, 100, METERS_WATER.get(6)));
+        readings.add(new ReadingWater(MARCH, 11, METERS_WATER.get(0)));
+        readings.add(new ReadingWater(MARCH, 11, METERS_WATER.get(1)));
+        readings.add(new ReadingWater(MARCH, 20, METERS_WATER.get(2)));
+        readings.add(new ReadingWater(MARCH, 20, METERS_WATER.get(3)));
+        readings.add(new ReadingWater(MARCH, 15, METERS_WATER.get(4)));
+        readings.add(new ReadingWater(MARCH, 15, METERS_WATER.get(5)));
+        return readings;
     }
 
     public static InvoiceEnergy getInvoiceEnergy(List<ReadingEnergy> newReadings) {

@@ -89,7 +89,7 @@ public class InvoiceServiceImpl implements InvoiceService {
 			List<ReadingEnergy> readingEnergyNew = (List<ReadingEnergy>) readingService.getByDate(invoice.getBaseReading().getReadingDate(),
 					Media.ENERGY);
 
-			List<UsageValue> usageEnergy = EnergyConsumptionCalculator.countConsupmtion(apartments, readingEnergyOld,
+			List<UsageValue> usageEnergy = EnergyConsumptionCalculator.countConsumption(apartments, readingEnergyOld,
 					readingEnergyNew);
 			List<PaymentEnergy> paymentEnergy = PaymentCalculator.createPaymentEnergyList(tenants, (InvoiceEnergy) invoice,
 					division, usageEnergy);

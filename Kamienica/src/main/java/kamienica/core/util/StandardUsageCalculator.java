@@ -1,5 +1,6 @@
 package kamienica.core.util;
 
+import kamienica.core.exception.IncompatibleReadingType;
 import kamienica.core.exception.NegativeConsumptionValue;
 import kamienica.feature.apartment.Apartment;
 import kamienica.feature.reading.Reading;
@@ -24,8 +25,9 @@ public class StandardUsageCalculator implements StreamConsumptionCalc {
 
     @Override
     public List<UsageValue> calculateConsumption(@NotNull final List<Apartment> apartment,
-                                                 @NotNull final List<Reading> readings) throws NegativeConsumptionValue {
+                                                 @NotNull final List<Reading> readings) throws NegativeConsumptionValue, IncompatibleReadingType {
 
+        validateReadingType(readings);
         List<UsageValue> result = new ArrayList<>();
         latestDate = findNewestDate(readings);
         previousDate = findLatestDate(readings);
@@ -46,13 +48,10 @@ public class StandardUsageCalculator implements StreamConsumptionCalc {
     }
 
     private double countUsage(final Apartment ap, final List<Reading> readings) throws NegativeConsumptionValue {
-
         final Predicate<Reading> apartmentPredicate = s -> s.getMeter().getApartment().getId().equals(ap.getId());
 
-        final double consumptionOld = readings.stream().filter(noNullApartment).filter(apartmentPredicate).filter(minDate)
-                .mapToDouble(o -> o.getValue()).sum();
-        final double consumptionNew = readings.stream().filter(noNullApartment).filter(apartmentPredicate).filter(maxDate)
-                .mapToDouble(o -> o.getValue()).sum();
+        final double consumptionOld = sumUsageByDate(readings, apartmentPredicate, minDate);
+        final double consumptionNew = sumUsageByDate(readings, apartmentPredicate, maxDate);
         final double consumption = consumptionNew - consumptionOld;
 
         if (consumption < 0) {
@@ -61,11 +60,27 @@ public class StandardUsageCalculator implements StreamConsumptionCalc {
         return consumption;
     }
 
+    private double sumUsageByDate(List<Reading> readings, Predicate<Reading> apartmentPredicate, Predicate<Reading> pred) {
+        return readings.stream().filter(noNullApartment).filter(apartmentPredicate).filter(pred)
+                .mapToDouble(o -> o.getValue()).sum();
+    }
+
     private LocalDate findLatestDate(@NotNull List<Reading> readings) {
-        return readings.stream().map(u -> u.getReadingDate()).min(LocalDate::compareTo).get();
+        return readings.stream().map(Reading::getReadingDate).min(LocalDate::compareTo).get();
     }
 
     private LocalDate findNewestDate(@NotNull List<Reading> readings) {
-        return readings.stream().map(u -> u.getReadingDate()).max(LocalDate::compareTo).get();
+        return readings.stream().map(Reading::getReadingDate).max(LocalDate::compareTo).get();
+    }
+
+    private void validateReadingType(List<Reading> readings) throws IncompatibleReadingType {
+        for (int i = 0; i < readings.size() - 1; i++) {
+            Class clazz1 = readings.get(i).getClass();
+            Class clazz2 = readings.get(i + 1).getClass();
+            if (!clazz1.equals(clazz2)) {
+                throw new IncompatibleReadingType("List contains readings of different type: " + clazz1.getSimpleName() + " vs. " + clazz2.getSimpleName());
+            }
+        }
+
     }
 }
