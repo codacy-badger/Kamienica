@@ -6,11 +6,11 @@ import java.util.List;
 import org.joda.time.LocalDate;
 
 import kamienica.core.enums.Status;
-import kamienica.feature.apartment.Apartment;
-import kamienica.feature.division.Division;
-import kamienica.feature.invoice.InvoiceEnergy;
-import kamienica.feature.invoice.InvoiceGas;
-import kamienica.feature.invoice.InvoiceWater;
+import kamienica.model.Apartment;
+import kamienica.model.Division;
+import kamienica.model.InvoiceEnergy;
+import kamienica.model.InvoiceGas;
+import kamienica.model.InvoiceWater;
 import kamienica.feature.meter.MeterEnergy;
 import kamienica.feature.meter.MeterGas;
 import kamienica.feature.meter.MeterWater;
@@ -18,7 +18,7 @@ import kamienica.feature.reading.ReadingEnergy;
 import kamienica.feature.reading.ReadingGas;
 import kamienica.feature.reading.ReadingWater;
 import kamienica.feature.tenant.Tenant;
-import kamienica.feature.tenant.UserRole;
+import kamienica.core.enums.UserRole;
 
 public class EntityProvider {
 
@@ -42,13 +42,13 @@ public class EntityProvider {
     public static final List<ReadingWater> WATER_NEW = getReadingsWaterNew();
 
     // --------------------------------------SETUP--------------------------------------------------------------
-    public static List<Apartment> getApartmentList() {
+    private static List<Apartment> getApartmentList() {
         Apartment apartment0 = new Apartment(1L, 0, "0000", "Czesc Wspolna");
         Apartment apartment1 = new Apartment(2L, 1, "1111", "Piwnica");
         Apartment apartment2 = new Apartment(3L, 2, "2222", "Parter");
         Apartment apartment3 = new Apartment(4L, 3, "3333", "1 pietro");
 
-        List<Apartment> apartments = new ArrayList<Apartment>();
+        List<Apartment> apartments = new ArrayList<>();
         apartments.add(apartment0);
         apartments.add(apartment1);
         apartments.add(apartment2);
@@ -56,14 +56,14 @@ public class EntityProvider {
         return apartments;
     }
 
-    public static List<Tenant> getTenantList() {
+    private static List<Tenant> getTenantList() {
         final List<Tenant> tenants = new ArrayList<>();
         Tenant tenant2 = new Tenant("Maciej (Admin)", "Fol", "kowalski@wp.pl", "222222", APARTMENTS.get(1));
-        tenant2.setStatus(Status.ACTIVE.getStatus());
+        tenant2.setStatus(Status.ACTIVE);
         tenant2.setId(1L);
-        tenant2.setRole(UserRole.ADMIN.getUserRole());
+        tenant2.setRole(UserRole.ADMIN);
         Tenant tenant3 = new Tenant("Adam", "Nowak", "nowak@wp.pl", "111111", APARTMENTS.get(2));
-        tenant3.setStatus(Status.ACTIVE.getStatus());
+        tenant3.setStatus(Status.ACTIVE);
         tenant3.setId(2L);
 
 
@@ -72,7 +72,7 @@ public class EntityProvider {
         return tenants;
     }
 
-    public static List<Division> getDivisionList() {
+    private static List<Division> getDivisionList() {
         ArrayList<Division> division = new ArrayList<>();
         division.add(new Division(1L, new LocalDate(), TENANTS.get(0), APARTMENTS.get(0), 0.5));
         division.add(new Division(2L, new LocalDate(), TENANTS.get(0), APARTMENTS.get(1), 1));
@@ -91,7 +91,7 @@ public class EntityProvider {
     // ------------------------------LICZNIKI--------------------------------------------------------------------
 
 
-    public static List<MeterGas> getMeterGas() {
+    private static List<MeterGas> getMeterGas() {
         List<MeterGas> metersGas = new ArrayList<>();
         metersGas.add(new MeterGas("Glowny Licznik gazu", "rt", "kWh", null, false));
         metersGas.add(new MeterGas("Licznik gaz czesc wspolna- podloga", "4566", "kWh", APARTMENTS.get(0), false));
@@ -103,7 +103,7 @@ public class EntityProvider {
         return metersGas;
     }
 
-    public static List<MeterWater> getMeterWater() {
+    private static List<MeterWater> getMeterWater() {
         List<MeterWater> metersWater = new ArrayList<>();
         metersWater.add(new MeterWater("Licznik woda glowny", "55", "m3", null, false));
         metersWater.add(new MeterWater("woda zimna m1", "434", "metry3", APARTMENTS.get(1), false));
@@ -117,7 +117,7 @@ public class EntityProvider {
 
     //------------------------------ENERGY-------------------
 
-    public static List<MeterEnergy> getMetersEnergy() {
+    private static List<MeterEnergy> getMetersEnergy() {
         List<MeterEnergy> metersEnergy = new ArrayList<>();
         metersEnergy.add(new MeterEnergy("Glowny Licznik energii", "354", "kWh", null));
         metersEnergy.add(new MeterEnergy("Licznik czesci administracyjnej", "89/0", "kWh", APARTMENTS.get(0)));
@@ -127,7 +127,7 @@ public class EntityProvider {
         return metersEnergy;
     }
 
-    public static List<ReadingEnergy> getReadingsEnergyOld() {
+    private static List<ReadingEnergy> getReadingsEnergyOld() {
         List<ReadingEnergy> readingsEnergyOld = new ArrayList<>();
         readingsEnergyOld.add(new ReadingEnergy(FEBRUARY, 5, METERS_ENERGY.get(0)));
         readingsEnergyOld.add(new ReadingEnergy(FEBRUARY, 5, METERS_ENERGY.get(1)));
@@ -137,7 +137,7 @@ public class EntityProvider {
         return readingsEnergyOld;
     }
 
-    public static List<ReadingEnergy> getReadingsEnergyNew() {
+    private static List<ReadingEnergy> getReadingsEnergyNew() {
         List<ReadingEnergy> readingsEnergyNew = new ArrayList<>();
         readingsEnergyNew.add(new ReadingEnergy(MARCH, 15, METERS_ENERGY.get(0)));
         readingsEnergyNew.add(new ReadingEnergy(MARCH, 10, METERS_ENERGY.get(1)));
@@ -147,7 +147,7 @@ public class EntityProvider {
         return readingsEnergyNew;
     }
 
-    public static List<ReadingEnergy> getReadingsEnergyNewForMinusResult() {
+    private static List<ReadingEnergy> getReadingsEnergyNewForMinusResult() {
         List<ReadingEnergy> readingsEnergyNew = new ArrayList<>();
         readingsEnergyNew.add(new ReadingEnergy(MARCH, 1, METERS_ENERGY.get(0)));
         readingsEnergyNew.add(new ReadingEnergy(MARCH, 1, METERS_ENERGY.get(1)));
@@ -157,7 +157,7 @@ public class EntityProvider {
         return readingsEnergyNew;
     }
 
-    public static List<ReadingGas> getReadingsGasOld() {
+    private static List<ReadingGas> getReadingsGasOld() {
         List<ReadingGas> readingsGasOld = new ArrayList<>();
         readingsGasOld.add(new ReadingGas(FEBRUARY, 73, METERS_GAS.get(0)));
         readingsGasOld.add(new ReadingGas(FEBRUARY, 10, METERS_GAS.get(1)));
@@ -169,7 +169,7 @@ public class EntityProvider {
         return readingsGasOld;
     }
 
-    public static List<ReadingGas> getReadingsGasNew() {
+    private static List<ReadingGas> getReadingsGasNew() {
         List<ReadingGas> readingsGasNew = new ArrayList<>();
         readingsGasNew.add(new ReadingGas(MARCH, 100, METERS_GAS.get(0)));
         readingsGasNew.add(new ReadingGas(MARCH, 15, METERS_GAS.get(1)));
@@ -181,7 +181,7 @@ public class EntityProvider {
         return readingsGasNew;
     }
 
-    public static List<ReadingWater> getReadingsWaterOld() {
+    private static List<ReadingWater> getReadingsWaterOld() {
         List<ReadingWater> readings = new ArrayList<>();
         readings.add(new ReadingWater(FEBRUARY, 80, METERS_WATER.get(6)));
         readings.add(new ReadingWater(FEBRUARY, 10, METERS_WATER.get(0)));
@@ -193,7 +193,7 @@ public class EntityProvider {
         return readings;
     }
 
-    public static List<ReadingWater> getReadingsWaterNew() {
+    private static List<ReadingWater> getReadingsWaterNew() {
         List<ReadingWater> readings = new ArrayList<>();
         readings.add(new ReadingWater(MARCH, 100, METERS_WATER.get(6)));
         readings.add(new ReadingWater(MARCH, 11, METERS_WATER.get(0)));
@@ -205,15 +205,15 @@ public class EntityProvider {
         return readings;
     }
 
-    public static InvoiceEnergy getInvoiceEnergy(List<ReadingEnergy> newReadings) {
+    private static InvoiceEnergy getInvoiceEnergy(List<ReadingEnergy> newReadings) {
         return new InvoiceEnergy("23424", "energia", new LocalDate(), 150, newReadings.get(0));
     }
 
-    public static InvoiceWater getInvoiceWater(List<ReadingWater> newReadings) {
+    private static InvoiceWater getInvoiceWater(List<ReadingWater> newReadings) {
         return new InvoiceWater("23424", "energia", new LocalDate(), 200, newReadings.get(0));
     }
 
-    public static InvoiceGas getInvoiceGas(List<ReadingGas> newReadings) {
+    private static InvoiceGas getInvoiceGas(List<ReadingGas> newReadings) {
         return new InvoiceGas("23424", "energia", new LocalDate(), 300, newReadings.get(0));
     }
 }

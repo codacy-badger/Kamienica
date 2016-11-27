@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import kamienica.core.enums.Media;
-import kamienica.feature.invoice.Invoice;
+import kamienica.model.Invoice;
 import kamienica.feature.invoice.InvoiceService;
 
 @RestController

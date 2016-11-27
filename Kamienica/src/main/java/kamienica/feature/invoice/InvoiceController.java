@@ -6,6 +6,9 @@ import java.util.Map;
 
 import javax.validation.Valid;
 
+import kamienica.model.InvoiceEnergy;
+import kamienica.model.InvoiceGas;
+import kamienica.model.InvoiceWater;
 import org.hibernate.exception.ConstraintViolationException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;

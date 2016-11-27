@@ -3,8 +3,9 @@ package kamienica.feature.division;
 import java.util.List;
 import java.util.Objects;
 
-import kamienica.feature.apartment.Apartment;
+import kamienica.model.Apartment;
 import kamienica.feature.tenant.Tenant;
+import kamienica.model.Division;
 
 public class DivisionValidator {
 

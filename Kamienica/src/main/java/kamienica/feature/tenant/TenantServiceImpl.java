@@ -24,7 +24,7 @@ public class TenantServiceImpl implements TenantService {
 		if (currentTenant == null) {
 			tenantDao.save(newTenant);
 		} else if (currentTenant.getMovementDate().isAfter(newTenant.getMovementDate())) {
-			newTenant.setStatus(Status.INACTIVE.getStatus());
+			newTenant.setStatus(Status.INACTIVE);
 			tenantDao.save(newTenant);
 		} else {
 			tenantDao.deactivateByApparmentId(newTenant.getApartment().getId());

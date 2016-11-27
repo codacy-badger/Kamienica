@@ -8,7 +8,7 @@ import javax.persistence.Table;
 
 import org.joda.time.LocalDate;
 
-import kamienica.feature.invoice.InvoiceWater;
+import kamienica.model.InvoiceWater;
 import kamienica.feature.tenant.Tenant;
 
 @Entity

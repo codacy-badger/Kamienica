@@ -11,10 +11,10 @@ import org.springframework.transaction.annotation.Transactional;
 
 import kamienica.core.exception.InvalidDivisionException;
 import kamienica.core.enums.Media;
-import kamienica.feature.apartment.Apartment;
+import kamienica.model.Apartment;
 import kamienica.feature.apartment.ApartmentService;
 import kamienica.feature.division.DivisionService;
-import kamienica.feature.invoice.InvoiceWater;
+import kamienica.model.InvoiceWater;
 import kamienica.feature.invoice.InvoiceService;
 import kamienica.feature.payment.Payment;
 import kamienica.feature.payment.PaymentService;

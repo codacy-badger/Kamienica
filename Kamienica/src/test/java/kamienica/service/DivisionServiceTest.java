@@ -7,7 +7,7 @@ import java.util.List;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import kamienica.feature.division.Division;
+import kamienica.model.Division;
 import kamienica.feature.division.DivisionService;
 
 public class DivisionServiceTest extends AbstractServiceTest {

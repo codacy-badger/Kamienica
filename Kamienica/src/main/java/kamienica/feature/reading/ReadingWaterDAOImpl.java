@@ -7,8 +7,8 @@ import org.hibernate.Query;
 import org.joda.time.LocalDate;
 import org.springframework.stereotype.Repository;
 
-import kamienica.feature.apartment.Apartment;
-import kamienica.feature.invoice.InvoiceGas;
+import kamienica.model.Apartment;
+import kamienica.model.InvoiceGas;
 
 @Repository("readingWaterDao")
 public class ReadingWaterDAOImpl extends ReadingAbstractDaoImpl<ReadingWater> implements ReadingWaterDao {

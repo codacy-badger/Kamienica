@@ -23,12 +23,10 @@ import org.springframework.web.bind.annotation.RestController;
 
 import kamienica.core.enums.Media;
 import kamienica.core.message.Message;
-import kamienica.feature.apartment.Apartment;
+import kamienica.model.Apartment;
 import kamienica.feature.meter.Meter;
 import kamienica.feature.meter.MeterEnergy;
-import kamienica.feature.meter.MeterGas;
 import kamienica.feature.meter.MeterService;
-import kamienica.feature.meter.MeterWater;
 
 @RestController
 @RequestMapping("/api/v1/meters")

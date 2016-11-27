@@ -7,7 +7,7 @@ import java.util.List;
 import kamienica.core.util.CommonUtils;
 import org.joda.time.Days;
 
-import kamienica.feature.apartment.Apartment;
+import kamienica.model.Apartment;
 import kamienica.feature.reading.ReadingGas;
 import kamienica.feature.reading.ReadingWater;
 import kamienica.feature.usagevalue.UsageValue;

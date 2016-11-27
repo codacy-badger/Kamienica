@@ -3,7 +3,7 @@ package kamienica.feature.payment;
 import java.util.List;
 
 import kamienica.core.dao.DaoInterface;
-import kamienica.feature.invoice.Invoice;
+import kamienica.model.Invoice;
 import kamienica.feature.reading.Reading;
 import kamienica.feature.tenant.Tenant;
 

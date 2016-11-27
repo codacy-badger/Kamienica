@@ -4,7 +4,7 @@ import java.util.HashMap;
 import java.util.List;
 
 import kamienica.core.enums.Media;
-import kamienica.feature.apartment.Apartment;
+import kamienica.model.Apartment;
 import kamienica.feature.reading.Reading;
 import kamienica.feature.reading.ReadingEnergy;
 import kamienica.feature.reading.ReadingGas;

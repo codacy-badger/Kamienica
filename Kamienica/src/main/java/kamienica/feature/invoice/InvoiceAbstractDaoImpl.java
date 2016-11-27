@@ -2,6 +2,7 @@ package kamienica.feature.invoice;
 
 import java.util.List;
 
+import kamienica.model.Invoice;
 import org.hibernate.Criteria;
 import org.hibernate.Query;
 import org.hibernate.criterion.Projections;

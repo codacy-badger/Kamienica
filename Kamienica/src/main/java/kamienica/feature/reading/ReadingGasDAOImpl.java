@@ -5,7 +5,7 @@ import java.util.List;
 import org.hibernate.Query;
 import org.springframework.stereotype.Repository;
 
-import kamienica.feature.apartment.Apartment;
+import kamienica.model.Apartment;
 
 @Repository("readingGasDao")
 public class ReadingGasDAOImpl extends ReadingAbstractDaoImpl<ReadingGas> implements ReadingGasDao {

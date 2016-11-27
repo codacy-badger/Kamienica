@@ -12,7 +12,7 @@ import org.hibernate.validator.constraints.NotEmpty;
 import org.joda.time.LocalDate;
 import org.springframework.format.annotation.DateTimeFormat;
 
-import kamienica.feature.apartment.Apartment;
+import kamienica.model.Apartment;
 
 @MappedSuperclass
 @Inheritance

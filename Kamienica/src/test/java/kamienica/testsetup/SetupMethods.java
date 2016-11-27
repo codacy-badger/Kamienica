@@ -8,11 +8,11 @@
 //
 //import org.joda.time.LocalDate;
 //
-//import kamienica.feature.apartment.Apartment;
-//import kamienica.feature.division.Division;
-//import kamienica.feature.invoice.InvoiceEnergy;
-//import kamienica.feature.invoice.InvoiceGas;
-//import kamienica.feature.invoice.InvoiceWater;
+//import kamienica.model.Apartment;
+//import kamienica.model.Division;
+//import kamienica.model.InvoiceEnergy;
+//import kamienica.model.InvoiceGas;
+//import kamienica.model.InvoiceWater;
 //import kamienica.feature.meter.MeterEnergy;
 //import kamienica.feature.meter.MeterGas;
 //import kamienica.feature.meter.MeterWater;

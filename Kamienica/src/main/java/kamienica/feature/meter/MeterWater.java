@@ -1,22 +1,16 @@
 package kamienica.feature.meter;
 
-import java.io.Serializable;
+import kamienica.model.Apartment;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Table;
-
-import kamienica.feature.apartment.Apartment;
+import java.io.Serializable;
 
 @Entity
 @Table(name="meterwater")
 public class MeterWater extends Meter implements Serializable {
-	
-	
-	
-	/**
-	 * 
-	 */
+
 	private static final long serialVersionUID = -5312190237102116095L;
 
 	@Column(nullable = false)
@@ -24,7 +18,6 @@ public class MeterWater extends Meter implements Serializable {
 
 	public MeterWater(String description, String serialNumber, String unit, Apartment apartment, boolean isWarmWater) {
 		super(description, serialNumber, unit, apartment);
-
 		this.isWarmWater = isWarmWater;
 	}
 

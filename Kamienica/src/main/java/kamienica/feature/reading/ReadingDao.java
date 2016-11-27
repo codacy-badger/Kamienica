@@ -6,8 +6,8 @@
 //import org.joda.time.LocalDate;
 //
 //import kamienica.dao.DaoInterface;
-//import kamienica.feature.apartment.Apartment;
-//import kamienica.feature.invoice.Invoice;
+//import kamienica.model.Apartment;
+//import kamienica.model.Invoice;
 //
 ///**
 // * @author kdeveloper

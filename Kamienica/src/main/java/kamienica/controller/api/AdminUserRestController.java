@@ -1,6 +1,5 @@
 package kamienica.controller.api;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,7 +11,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import kamienica.core.enums.Media;
-import kamienica.feature.apartment.Apartment;
+import kamienica.model.Apartment;
 import kamienica.feature.payment.Payment;
 import kamienica.feature.payment.PaymentService;
 import kamienica.feature.reading.Reading;

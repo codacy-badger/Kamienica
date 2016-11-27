@@ -8,35 +8,32 @@ import javax.persistence.Table;
 
 import org.joda.time.LocalDate;
 
-import kamienica.feature.invoice.InvoiceEnergy;
+import kamienica.model.InvoiceEnergy;
 import kamienica.feature.tenant.Tenant;
 
 @Entity
 @Table(name = "paymentenergy")
 public class PaymentEnergy extends Payment implements Serializable {
 
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = -742907043105280124L;
-	@ManyToOne
-	private InvoiceEnergy invoice;
+    private static final long serialVersionUID = -742907043105280124L;
+    @ManyToOne
+    private InvoiceEnergy invoice;
 
-	public PaymentEnergy() {
+    public PaymentEnergy() {
 
-	}
+    }
 
-	public PaymentEnergy(Long id, LocalDate paymentDate, double paymentAmount, Tenant tenant, InvoiceEnergy invoice) {
-		super(id, paymentDate, paymentAmount, tenant);
-		this.invoice = invoice;
-	}
+    public PaymentEnergy(Long id, LocalDate paymentDate, double paymentAmount, Tenant tenant, InvoiceEnergy invoice) {
+        super(id, paymentDate, paymentAmount, tenant);
+        this.invoice = invoice;
+    }
 
-	public InvoiceEnergy getInvoice() {
-		return invoice;
-	}
+    public InvoiceEnergy getInvoice() {
+        return invoice;
+    }
 
-	public void setInvoice(InvoiceEnergy invoice) {
-		this.invoice = invoice;
-	}
+    public void setInvoice(InvoiceEnergy invoice) {
+        this.invoice = invoice;
+    }
 
 }

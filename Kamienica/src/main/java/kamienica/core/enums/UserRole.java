@@ -1,4 +1,4 @@
-package kamienica.feature.tenant;
+package kamienica.core.enums;
 
 public enum UserRole {
 	USER("USER"), ADMIN("ADMIN");

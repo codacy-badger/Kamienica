@@ -3,11 +3,12 @@ package kamienica.feature.division;
 import java.util.List;
 import java.util.Map;
 
+import kamienica.model.Division;
 import org.joda.time.LocalDate;
 
 import kamienica.core.exception.InvalidDivisionException;
 import kamienica.core.exception.WrongDivisionInputException;
-import kamienica.feature.apartment.Apartment;
+import kamienica.model.Apartment;
 import kamienica.feature.tenant.Tenant;
 
 public interface DivisionService {

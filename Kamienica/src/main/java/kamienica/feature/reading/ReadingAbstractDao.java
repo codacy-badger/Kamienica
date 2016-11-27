@@ -11,7 +11,7 @@
 //import org.joda.time.LocalDate;
 //
 //import kamienica.dao.AbstractDao;
-//import kamienica.feature.invoice.Invoice;
+//import kamienica.model.Invoice;
 //
 //public abstract class ReadingAbstractDao<T extends ReadingAbstract> extends AbstractDao<Long, T> {
 //

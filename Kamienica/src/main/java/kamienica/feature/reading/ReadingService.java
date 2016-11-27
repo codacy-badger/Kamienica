@@ -9,7 +9,7 @@ import org.joda.time.LocalDate;
 
 import kamienica.core.exception.NoMainCounterException;
 import kamienica.core.enums.Media;
-import kamienica.feature.invoice.InvoiceGas;
+import kamienica.model.InvoiceGas;
 
 public interface ReadingService {
 

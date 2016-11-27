@@ -1,5 +1,7 @@
 package kamienica.feature.apartment;
 
+import kamienica.model.Apartment;
+
 import java.util.List;
 
 public interface ApartmentService {

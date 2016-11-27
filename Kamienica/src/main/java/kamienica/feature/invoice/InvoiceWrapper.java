@@ -1,5 +1,9 @@
 package kamienica.feature.invoice;
 
+import kamienica.model.InvoiceEnergy;
+import kamienica.model.InvoiceGas;
+import kamienica.model.InvoiceWater;
+
 public class InvoiceWrapper {
 
 	private InvoiceGas gas;

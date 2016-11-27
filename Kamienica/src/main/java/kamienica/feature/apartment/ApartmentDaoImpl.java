@@ -1,5 +1,6 @@
 package kamienica.feature.apartment;
 
+import kamienica.model.Apartment;
 import org.hibernate.Query;
 import org.springframework.stereotype.Repository;
 

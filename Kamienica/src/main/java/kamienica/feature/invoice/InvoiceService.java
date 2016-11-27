@@ -9,6 +9,10 @@ import kamienica.feature.payment.PaymentEnergy;
 import kamienica.feature.payment.PaymentGas;
 import kamienica.feature.payment.PaymentWater;
 import kamienica.feature.reading.Reading;
+import kamienica.model.Invoice;
+import kamienica.model.InvoiceEnergy;
+import kamienica.model.InvoiceGas;
+import kamienica.model.InvoiceWater;
 
 public interface InvoiceService {
 

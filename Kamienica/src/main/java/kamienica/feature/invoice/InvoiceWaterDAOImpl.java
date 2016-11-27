@@ -1,5 +1,6 @@
 package kamienica.feature.invoice;
 
+import kamienica.model.InvoiceWater;
 import org.springframework.stereotype.Repository;
 
 @Repository("invoiceWater")

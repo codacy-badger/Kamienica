@@ -1,4 +1,4 @@
-package kamienica.feature.invoice;
+package kamienica.model;
 
 import java.io.Serializable;
 
@@ -6,6 +6,7 @@ import javax.persistence.Entity;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
+import kamienica.model.Invoice;
 import org.joda.time.LocalDate;
 
 import kamienica.feature.reading.ReadingGas;

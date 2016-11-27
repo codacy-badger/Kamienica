@@ -1,4 +1,4 @@
-package kamienica.feature.invoice;
+package kamienica.model;
 
 import javax.persistence.Column;
 import javax.persistence.GeneratedValue;

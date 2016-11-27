@@ -9,7 +9,7 @@ import org.springframework.stereotype.Repository;
 
 import kamienica.core.dao.AbstractDao;
 import kamienica.core.enums.Status;
-import kamienica.feature.apartment.Apartment;
+import kamienica.model.Apartment;
 
 @Repository("tenantDao")
 public class TenantDaoImpl extends AbstractDao<Tenant> implements TenantDao {
@@ -18,7 +18,7 @@ public class TenantDaoImpl extends AbstractDao<Tenant> implements TenantDao {
 	@SuppressWarnings("unchecked")
 	public List<Tenant> getActiveTenants() {
 		Criteria criteria = createEntityCriteria();
-		criteria.add(Restrictions.eq("status", Status.ACTIVE.getStatus()));
+		criteria.add(Restrictions.eq("status", Status.ACTIVE));
 		return criteria.list();
 	}
 

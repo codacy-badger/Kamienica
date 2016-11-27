@@ -11,7 +11,7 @@ import org.hibernate.criterion.Restrictions;
 import org.joda.time.LocalDate;
 
 import kamienica.core.dao.AbstractDao;
-import kamienica.feature.invoice.Invoice;
+import kamienica.model.Invoice;
 
 public abstract class ReadingAbstractDaoImpl<T extends Reading> extends AbstractDao<T> {
 

@@ -11,7 +11,7 @@
 //import org.testng.annotations.Testing;
 //
 //import kamienica.feature.apartment.Apartment;
-//import kamienica.feature.division.Division;
+//import kamienica.model.Division;
 //import kamienica.feature.division.DivisionValidator;
 //import kamienica.feature.invoice.InvoiceEnergy;
 //import kamienica.feature.invoice.InvoiceGas;

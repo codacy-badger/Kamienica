@@ -1,10 +1,10 @@
 package kamienica.core.calculator;
 
 import kamienica.core.util.CommonUtils;
-import kamienica.feature.division.Division;
-import kamienica.feature.invoice.InvoiceEnergy;
-import kamienica.feature.invoice.InvoiceGas;
-import kamienica.feature.invoice.InvoiceWater;
+import kamienica.model.Division;
+import kamienica.model.InvoiceEnergy;
+import kamienica.model.InvoiceGas;
+import kamienica.model.InvoiceWater;
 import kamienica.feature.payment.PaymentEnergy;
 import kamienica.feature.payment.PaymentGas;
 import kamienica.feature.payment.PaymentWater;

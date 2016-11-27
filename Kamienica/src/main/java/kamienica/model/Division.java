@@ -1,4 +1,4 @@
-package kamienica.feature.division;
+package kamienica.model;
 
 import java.io.Serializable;
 
@@ -14,7 +14,7 @@ import org.joda.time.LocalDate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
 
-import kamienica.feature.apartment.Apartment;
+import kamienica.model.Apartment;
 import kamienica.feature.tenant.Tenant;
 
 @Entity

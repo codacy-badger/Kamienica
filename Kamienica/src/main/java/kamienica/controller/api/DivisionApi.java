@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import kamienica.feature.division.Division;
+import kamienica.model.Division;
 import kamienica.feature.division.DivisionService;
 
 @RestController

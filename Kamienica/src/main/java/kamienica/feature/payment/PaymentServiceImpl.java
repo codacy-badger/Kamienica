@@ -7,7 +7,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import kamienica.core.enums.Media;
-import kamienica.feature.invoice.Invoice;
+import kamienica.model.Invoice;
 import kamienica.feature.tenant.Tenant;
 
 @Service

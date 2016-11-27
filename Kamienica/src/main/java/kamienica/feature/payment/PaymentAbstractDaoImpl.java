@@ -8,7 +8,7 @@ import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Restrictions;
 
 import kamienica.core.dao.AbstractDao;
-import kamienica.feature.invoice.Invoice;
+import kamienica.model.Invoice;
 import kamienica.feature.reading.Reading;
 import kamienica.feature.tenant.Tenant;
 

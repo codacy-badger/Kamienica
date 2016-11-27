@@ -3,6 +3,7 @@ package kamienica.feature.invoice;
 import java.util.List;
 import java.util.Map;
 
+import kamienica.model.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -14,9 +15,7 @@ import kamienica.core.enums.Media;
 import kamienica.core.calculator.PaymentCalculator;
 import kamienica.core.calculator.WaterConsumptionCalculator;
 import kamienica.core.enums.WaterHeatingSystem;
-import kamienica.feature.apartment.Apartment;
 import kamienica.feature.apartment.ApartmentDao;
-import kamienica.feature.division.Division;
 import kamienica.feature.division.DivisionDao;
 import kamienica.feature.meter.MeterService;
 import kamienica.feature.payment.PaymentDao;

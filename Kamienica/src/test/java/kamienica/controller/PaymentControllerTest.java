@@ -18,7 +18,7 @@
 //
 //import kamienica.feature.apartment.Apartment;
 //import kamienica.feature.apartment.ApartmentService;
-//import kamienica.feature.division.Division;
+//import kamienica.model.Division;
 //import kamienica.feature.division.DivisionService;
 //import kamienica.feature.division.DivisionValidator;
 //import kamienica.feature.invoice.InvoiceEnergy;

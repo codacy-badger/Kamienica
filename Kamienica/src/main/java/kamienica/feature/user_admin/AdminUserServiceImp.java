@@ -1,12 +1,12 @@
 package kamienica.feature.user_admin;
 
 import kamienica.core.enums.Media;
-import kamienica.feature.apartment.Apartment;
+import kamienica.model.Apartment;
 import kamienica.feature.apartment.ApartmentDao;
 import kamienica.feature.invoice.InvoiceAbstractDao;
-import kamienica.feature.invoice.InvoiceEnergy;
-import kamienica.feature.invoice.InvoiceGas;
-import kamienica.feature.invoice.InvoiceWater;
+import kamienica.model.InvoiceEnergy;
+import kamienica.model.InvoiceGas;
+import kamienica.model.InvoiceWater;
 import kamienica.feature.reading.*;
 import kamienica.feature.settings.Settings;
 import kamienica.feature.settings.SettingsDao;

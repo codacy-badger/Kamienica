@@ -1,5 +1,6 @@
 package kamienica.feature.division;
 
+import kamienica.model.Division;
 import org.hibernate.Query;
 import org.springframework.stereotype.Repository;
 

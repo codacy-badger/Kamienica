@@ -10,7 +10,7 @@ import org.mockito.Mockito;
 import org.mockito.junit.MockitoJUnit;
 import org.mockito.junit.MockitoRule;
 
-import kamienica.feature.apartment.Apartment;
+import kamienica.model.Apartment;
 
 /**
  * Created by macfol on 10/17/16.
