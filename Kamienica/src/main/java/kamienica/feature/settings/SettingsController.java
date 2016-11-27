@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
-import kamienica.core.util.WaterHeatingSystem;
+import kamienica.core.enums.WaterHeatingSystem;
 
 @Controller
 @RequestMapping("/Admin/Settings")

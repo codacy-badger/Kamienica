@@ -3,7 +3,7 @@ package kamienica.feature.user_admin;
 import java.util.HashMap;
 import java.util.List;
 
-import kamienica.core.util.Media;
+import kamienica.core.enums.Media;
 import kamienica.feature.apartment.Apartment;
 import kamienica.feature.reading.Reading;
 import kamienica.feature.reading.ReadingEnergy;

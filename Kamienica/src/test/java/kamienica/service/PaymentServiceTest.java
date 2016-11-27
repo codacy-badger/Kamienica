@@ -5,7 +5,7 @@ import static org.junit.Assert.assertEquals;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import kamienica.core.util.Media;
+import kamienica.core.enums.Media;
 import kamienica.feature.payment.PaymentService;
 
 public class PaymentServiceTest extends AbstractServiceTest {

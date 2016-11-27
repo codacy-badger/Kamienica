@@ -1,4 +1,4 @@
-package kamienica.core.util;
+package kamienica.core.message;
 
 import java.util.HashMap;
 import java.util.List;
@@ -6,13 +6,13 @@ import java.util.Map;
 
 import org.springframework.validation.FieldError;
 
-public class ApiResponse {
+public class ApiErrorResponse {
 
 	private String message;
 	private List<FieldError> errors;
 	private Map<String, String> fieldErrors = new HashMap<>();
 
-	public ApiResponse() {
+	public ApiErrorResponse() {
 
 	}
 
@@ -46,7 +46,7 @@ public class ApiResponse {
 
 	@Override
 	public String toString() {
-		return "ApiResponse [message=" + message + ", errors=" + errors + "]";
+		return "ApiErrorResponse [message=" + message + ", errors=" + errors + "]";
 	}
 
 }

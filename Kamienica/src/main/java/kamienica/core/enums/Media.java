@@ -1,4 +1,4 @@
-package kamienica.core.util;
+package kamienica.core.enums;
 
 public enum Media {
 	GAS, ENERGY, WATER;

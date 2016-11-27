@@ -15,7 +15,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 
 import kamienica.core.exception.NoMainCounterException;
-import kamienica.core.util.Media;
+import kamienica.core.enums.Media;
 import kamienica.feature.meter.MeterWater;
 import kamienica.feature.meter.MeterService;
 import kamienica.feature.reading.ReadingWater;

@@ -1,9 +1,10 @@
-package kamienica.core.util;
+package kamienica.core.calculator;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+import kamienica.core.util.CommonUtils;
 import org.joda.time.Days;
 
 import kamienica.feature.apartment.Apartment;

@@ -10,7 +10,7 @@ import org.springframework.web.servlet.ModelAndView;
 public class ApartmentController {
 
 	@RequestMapping(value = "/apartment", method = RequestMethod.GET)
-	public ModelAndView apartmentList2() {
+	public ModelAndView apartmentList() {
 
 		return new ModelAndView("/Admin/Apartment/apartment");
 

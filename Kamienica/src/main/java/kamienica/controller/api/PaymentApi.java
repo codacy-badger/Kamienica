@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import kamienica.core.util.Media;
+import kamienica.core.enums.Media;
 import kamienica.feature.payment.Payment;
 import kamienica.feature.payment.PaymentService;
 
@@ -21,26 +21,7 @@ public class PaymentApi {
 	@Autowired
 	PaymentService service;
 
-//	@RequestMapping(method = RequestMethod.GET)
-//	public ResponseEntity<?> getList() {
-//
-//		List<? extends Payment> energy = service.getPaymentList(Media.ENERGY);
-//		List<? extends Payment> gas = service.getPaymentList(Media.GAS);
-//		List<? extends Payment> water = service.getPaymentList(Media.WATER);
-////		Map<String, List<? extends Payment>> map = new HashMap<>();
-////		map.put("energy", energy);
-////		map.put("water", water);
-////		map.put("gas", gas);
-//		List<List<? extends Payment>> list = Arrays.asList(energy, gas, water);
-//
-//		if (list.isEmpty()) {
-//			return new ResponseEntity<Void>(HttpStatus.NO_CONTENT);
-//		}
-//		return new ResponseEntity<List<List<? extends Payment>>>(list, HttpStatus.OK);
-//
-//	}
 
-	
 	@RequestMapping(method = RequestMethod.GET)
 	public ResponseEntity<?> getList2(@RequestParam("media") Media media) {
 

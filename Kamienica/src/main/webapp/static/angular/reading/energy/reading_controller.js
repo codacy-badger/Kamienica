@@ -2,8 +2,8 @@
 
 App.controller('ReadingController', [
     '$scope',
-    'Reading', 
-    function($scope, Reading) {
+    'Reading', 'MeterEnergy',
+    function($scope, Reading, MeterEnergy) {
 
         $scope.toggle = true;
         $scope.errorField = false;
@@ -15,13 +15,14 @@ App.controller('ReadingController', [
         self.reading = new Reading();
         self.entity;
         self.readings = [];
+        self.meters = MeterEnergy.query();
         self.errors = []
         var arrayIndex;
 
 
         self.fetchAllUsers = function() {
             self.readings = Reading.query();
-            console.log(self.readings);
+            console.log(self.meters );
         };
         
         self.fetchAllUsers();

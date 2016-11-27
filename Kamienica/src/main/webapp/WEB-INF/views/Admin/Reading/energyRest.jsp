@@ -33,7 +33,7 @@
 			<div class='row'>
 				<div class="col-lg-12">
 					<h1 class="page-header well">Energia - Rest</h1>
-					
+
 					<div class="alert alert-danger" ng-show="errorField">
 						<strong>BŁĄD: </strong> {{errorMsg}}
 					</div>
@@ -49,6 +49,63 @@
 
 				<form class="form-horizontal" ng-submit="ctrl.submit()"
 					name="myForm">
+
+
+					<div class="form-group">
+						<label for="inputEmail3" class="col-sm-3 control-label">Data</label>
+						<div class="col-sm-9">
+							<input type="date" class="form-control" name="date"
+								ng-pattern="/^[0-9]{1,7}$/" placeholder="YYYY-MM-DD"
+								ng-required='true' />
+							<p class="help-block">
+								<span class='error' ng-show="myForm.date.$invalid">Pole
+									wymagane</span><span class='error'>{{errors.date}}</span>
+							</p>
+						</div>
+					</div>
+					<div class="form-group" ng-repeat="a in ctrl.meters">
+					<p>hellooo</p>
+					</div>
+
+					<div class="form-group">
+						<label for="inputEmail3" class="col-sm-3 control-label">Data</label>
+						<div class="col-sm-9">
+							<input type="date" class="form-control" name="date" path='date'
+								placeholder="Pole wymagane" value="${model.date}"
+								min="${model.oldDate}" />
+
+						</div>
+					</div>
+
+					<div class="row">
+						<label class="col-sm-3 text-right">Opis Licznika </label><label
+							class="col-sm-3 ">Wartość Odczytu</label>
+
+					</div>
+
+					<c:forEach items="${readingForm.currentReadings}" varStatus="i"
+						var="reading">
+						<div class="form-group">
+							<label path="currentReadings[${i.index}].value"
+								class="col-sm-3 control-label">${reading.meter.description}</label>
+							<div class="col-sm-9">
+								<input name="currentReadings[${i.index}].meter"
+									value="${reading.meter.id}" type="hidden" /> <input
+									class='form-control bfh-number' type="hidden" step="any"
+									min="${reading.value}" name="currentReadings[${i.index}].value"
+									value="${reading.value}" /> <input
+									name="newReadings[${i.index}].meter"
+									value="${reading.meter.id}" type="hidden" /> <input
+									class='form-control bfh-number' type="number" step="any"
+									min="${reading.value}" name="newReadings[${i.index}].value"
+									value="${reading.value}" />
+							</div>
+						</div>
+					</c:forEach>
+
+
+
+
 					<input path="id" readonly="true" type='hidden' /> <input
 						type="hidden" ng-model="ctrl.reading.id" />
 					<div class="form-group">
@@ -151,7 +208,7 @@
 			</div>
 		</div>
 	</div>
-	
+
 	<script src="<c:url value='/static/js/angular.js' />"></script>
 	<script src="<c:url value='/static/js/angular-resource.js' />"></script>
 	<script src="<c:url value='/static/angular/app.js' />"></script>
@@ -159,6 +216,11 @@
 		src="<c:url value='/static/angular/reading/energy/reading_service.js' />"></script>
 	<script
 		src="<c:url value='/static/angular/reading/energy/reading_controller.js' />"></script>
+
+	<script
+		src="<c:url value='/static/angular/meterEnergy/meterEnergy_service.js' />"></script>
+	<script
+		src="<c:url value='/static/angular/meterEnergy/meterEnergy__controller.js' />"></script>
 	<!-- jQuery -->
 	<script src="<c:url value='/static/js/jquery.min.js' />"></script>
 	<!-- Bootstrap Core JavaScript -->

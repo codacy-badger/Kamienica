@@ -2,7 +2,7 @@ package kamienica.feature.payment;
 
 import java.util.List;
 
-import kamienica.core.util.Media;
+import kamienica.core.enums.Media;
 import kamienica.feature.invoice.Invoice;
 import kamienica.feature.tenant.Tenant;
 

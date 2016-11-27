@@ -18,7 +18,7 @@ import org.joda.time.LocalDate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
 
-import kamienica.core.util.Status;
+import kamienica.core.enums.Status;
 import kamienica.feature.apartment.Apartment;
 
 @Entity

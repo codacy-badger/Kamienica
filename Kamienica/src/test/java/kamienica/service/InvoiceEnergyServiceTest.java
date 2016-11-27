@@ -1,7 +1,7 @@
 package kamienica.service;
 
 import kamienica.core.exception.InvalidDivisionException;
-import kamienica.core.util.Media;
+import kamienica.core.enums.Media;
 import kamienica.feature.apartment.Apartment;
 import kamienica.feature.apartment.ApartmentService;
 import kamienica.feature.division.DivisionService;

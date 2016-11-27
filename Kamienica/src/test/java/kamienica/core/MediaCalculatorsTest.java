@@ -4,13 +4,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 import kamienica.core.exception.IncompatibleReadingType;
-import kamienica.core.util.GasConsumptionCalculator;
 import org.junit.Test;
 
 import kamienica.core.exception.NegativeConsumptionValue;
-import kamienica.core.util.StandardUsageCalculator;
-import kamienica.core.util.EnergyConsumptionCalculator;
-import kamienica.core.util.WaterConsumptionCalculator;
+import kamienica.core.calculator.StandardUsageCalculator;
+import kamienica.core.calculator.EnergyConsumptionCalculator;
+import kamienica.core.calculator.WaterConsumptionCalculator;
 import kamienica.feature.reading.Reading;
 import kamienica.feature.usagevalue.UsageValue;
 

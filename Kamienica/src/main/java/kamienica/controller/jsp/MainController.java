@@ -25,17 +25,8 @@ public class MainController {
 
 	@RequestMapping(value = { "/", "/index" }, method = RequestMethod.GET)
 	public String index() {
-
 		return "Login";
 	}
-
-	
-	@RequestMapping(value =   "/test" , method = RequestMethod.GET)
-	public String test() {
-
-		return "index";
-	}
-
 
 	@RequestMapping(value = "/logout")
 	public ModelAndView updatePassword(HttpServletRequest req, HttpServletResponse response) {

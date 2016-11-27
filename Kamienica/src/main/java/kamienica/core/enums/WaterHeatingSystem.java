@@ -1,4 +1,4 @@
-package kamienica.core.util;
+package kamienica.core.enums;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -24,7 +24,7 @@ public enum WaterHeatingSystem {
 	}
 
 	public static List<String> getValues() {
-		return new ArrayList<String>(Arrays.asList(WaterHeatingSystem.ELECTRIC.getSystem(),
+		return new ArrayList<>(Arrays.asList(WaterHeatingSystem.ELECTRIC.getSystem(),
 				WaterHeatingSystem.INDIVIDUAL_GAS.getSystem(), WaterHeatingSystem.SHARED_GAS.getSystem()));
 	}
 }

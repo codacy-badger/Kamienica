@@ -1,5 +1,6 @@
-package kamienica.core.util;
+package kamienica.core.calculator;
 
+import kamienica.core.util.CommonUtils;
 import kamienica.feature.division.Division;
 import kamienica.feature.invoice.InvoiceEnergy;
 import kamienica.feature.invoice.InvoiceGas;

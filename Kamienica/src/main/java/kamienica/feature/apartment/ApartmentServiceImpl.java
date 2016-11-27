@@ -18,8 +18,6 @@ public class ApartmentServiceImpl implements ApartmentService {
     @Autowired
     ApartmentDao apartmentDAO;
     @Autowired
-    TenantDao tenantDAO;
-    @Autowired
     SettingsDao settingsDao;
 
     @Override

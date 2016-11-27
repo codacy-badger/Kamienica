@@ -12,7 +12,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import kamienica.core.exception.NoMainCounterException;
-import kamienica.core.util.Media;
+import kamienica.core.enums.Media;
 import kamienica.feature.invoice.InvoiceGas;
 import kamienica.feature.meter.MeterDao;
 import kamienica.feature.meter.MeterEnergy;

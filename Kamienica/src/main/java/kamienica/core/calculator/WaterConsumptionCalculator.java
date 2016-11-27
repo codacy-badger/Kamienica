@@ -1,4 +1,4 @@
-package kamienica.core.util;
+package kamienica.core.calculator;
 
 import java.util.ArrayList;
 import java.util.List;

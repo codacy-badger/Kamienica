@@ -5,7 +5,7 @@ import java.util.List;
 
 import org.joda.time.LocalDate;
 
-import kamienica.core.util.Status;
+import kamienica.core.enums.Status;
 import kamienica.feature.apartment.Apartment;
 import kamienica.feature.division.Division;
 import kamienica.feature.invoice.InvoiceEnergy;

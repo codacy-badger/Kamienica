@@ -1,4 +1,4 @@
-package kamienica.core.util;
+package kamienica.core.calculator;
 
 import kamienica.core.exception.IncompatibleReadingType;
 import kamienica.core.exception.NegativeConsumptionValue;
@@ -15,7 +15,7 @@ import org.joda.time.LocalDate;
 
 import javax.validation.constraints.NotNull;
 
-public class StandardUsageCalculator implements StreamConsumptionCalc {
+public class StandardUsageCalculator implements ConsumptionCalculator {
 
     private LocalDate latestDate;
     private LocalDate previousDate;
@@ -33,8 +33,8 @@ public class StandardUsageCalculator implements StreamConsumptionCalc {
         previousDate = findLatestDate(readings);
 
         for (Apartment ap : apartment) {
-            double consumption = countUsage(ap, readings);
-            UsageValue value = createDummyUsageValue(ap, consumption);
+            double consumptionForElement = countUsage(ap, readings);
+            UsageValue value = createDummyUsageValue(ap, consumptionForElement);
             result.add(value);
         }
 

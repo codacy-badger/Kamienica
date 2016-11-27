@@ -1,11 +1,13 @@
-package kamienica.conventer;
+package kamienica.core.conventer;
+
+
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.convert.converter.Converter;
 import org.springframework.stereotype.Component;
 
-import kamienica.core.util.Media;
-import kamienica.feature.reading.ReadingGas;
+import kamienica.core.enums.Media;
+import kamienica.feature.reading.ReadingEnergy;
 import kamienica.feature.reading.ReadingService;
 
 /**
@@ -17,15 +19,15 @@ import kamienica.feature.reading.ReadingService;
  *
  */
 @Component
-public class ReadingGasConverter implements Converter<Object, ReadingGas> {
+public class ReadingEnergyConverter implements Converter<Object, ReadingEnergy>{
 
 	@Autowired
 	ReadingService readingService;
-
+	
 	@Override
-	public ReadingGas convert(Object element) {
+	public ReadingEnergy convert(Object element) {
 		Long id = Long.parseLong((String) element);
-		return readingService.getById(id, Media.GAS);
+		return readingService.getById(id, Media.ENERGY);
 	}
 
 }

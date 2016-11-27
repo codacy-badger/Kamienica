@@ -17,16 +17,16 @@ import kamienica.feature.division.DivisionService;
 public class DivisionApi extends AbstractApi {
 
 	@Autowired
-	DivisionService service;
+	private DivisionService service;
 
 	@RequestMapping(method = RequestMethod.GET)
 	public ResponseEntity<?> getList() {
-		List<Division> list = service.getList();
+		final List<Division> list = service.getList();
 		if (list.isEmpty()) {
-			return new ResponseEntity<List<Division>>(HttpStatus.NO_CONTENT);
+			return new ResponseEntity<>(HttpStatus.NO_CONTENT);
 		}
 
-		return new ResponseEntity<List<Division>>(list, HttpStatus.OK);
+		return new ResponseEntity<>(list, HttpStatus.OK);
 	}
 
 }

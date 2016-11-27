@@ -7,7 +7,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
-import kamienica.core.util.WaterHeatingSystem;
+import kamienica.core.enums.WaterHeatingSystem;
 
 @Entity
 @Table(name = "settings")

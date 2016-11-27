@@ -6,7 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import kamienica.core.util.Status;
+import kamienica.core.enums.Status;
 import kamienica.feature.settings.SettingsDao;
 
 @Service

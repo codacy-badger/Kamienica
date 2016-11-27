@@ -6,6 +6,7 @@ import java.util.Map;
 
 import javax.validation.Valid;
 
+import kamienica.core.message.ApiErrorResponse;
 import org.hibernate.exception.ConstraintViolationException;
 import org.joda.time.LocalDate;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,9 +21,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import kamienica.core.util.ApiResponse;
-import kamienica.core.util.Media;
-import kamienica.core.util.Message;
+import kamienica.core.enums.Media;
+import kamienica.core.message.Message;
 import kamienica.feature.apartment.Apartment;
 import kamienica.feature.meter.Meter;
 import kamienica.feature.meter.MeterEnergy;
@@ -34,152 +34,74 @@ import kamienica.feature.meter.MeterWater;
 @RequestMapping("/api/v1/meters")
 public class MeterApi extends AbstractApi {
 
-	@Autowired
-	MeterService service;
+    @Autowired
+    private MeterService service;
 
-	@RequestMapping(value = "/{media}", method = RequestMethod.GET)
-	public ResponseEntity<?> getList(@PathVariable Media media, @RequestParam(required = false) LocalDate date) {
+    @RequestMapping(value = "/{media}", method = RequestMethod.GET)
+    public ResponseEntity<?> getList(@PathVariable Media media, @RequestParam(required = false) final LocalDate date) {
 
-		List<? extends Meter> list = service.getList(media);
-		if (list.isEmpty()) {
-			return new ResponseEntity<List<Apartment>>(HttpStatus.NOT_FOUND);
-		}
+        final List<? extends Meter> list = service.getList(media);
+        if (list.isEmpty()) {
+            return new ResponseEntity<List<Apartment>>(HttpStatus.NOT_FOUND);
+        }
 
-		return new ResponseEntity<List<? extends Meter>>(list, HttpStatus.OK);
-	}
+        return new ResponseEntity<List<? extends Meter>>(list, HttpStatus.OK);
+    }
 
-	@RequestMapping(value = "/ENERGY", method = RequestMethod.POST)
-	public ResponseEntity<?> createEnergy(@Valid @RequestBody MeterEnergy meter, BindingResult result) {
-		if (result.hasErrors()) {
-			ApiResponse message = new ApiResponse();
-			message.setErrors(result.getFieldErrors());
-			return new ResponseEntity<ApiResponse>(message, HttpStatus.UNPROCESSABLE_ENTITY);
-		}
-		try {
-			service.save(meter, Media.ENERGY);
-		} catch (ConstraintViolationException e) {
-			result.rejectValue("serialNumber", "error.serialNumber", DUPLICATE_VALUE);
-			Map<String, String> test = new HashMap<>();
-			for (FieldError fieldError : result.getFieldErrors()) {
-				test.put(fieldError.getField(), fieldError.getDefaultMessage());
-			}
-			return new ResponseEntity<Map<String, String>>(test, HttpStatus.CONFLICT);
-		}
-		return new ResponseEntity<Meter>(meter, HttpStatus.CREATED);
-	}
-	
-	@RequestMapping(value = "/ENERGY/{id}", method = RequestMethod.PUT)
-	public ResponseEntity<?> updateEnergy(@PathVariable("id") Long id, @Valid @RequestBody MeterEnergy meter, BindingResult result) {
-		if (result.hasErrors()) {
-			ApiResponse message = new ApiResponse();
-			message.setErrors(result.getFieldErrors());
-			return new ResponseEntity<ApiResponse>(message, HttpStatus.UNPROCESSABLE_ENTITY);
-		}
-		try {
-			service.update(meter, Media.ENERGY);
-		} catch (ConstraintViolationException e) {
-			result.rejectValue("serialNumber", "error.serialNumber", DUPLICATE_VALUE);
-			Map<String, String> test = new HashMap<>();
-			for (FieldError fieldError : result.getFieldErrors()) {
-				test.put(fieldError.getField(), fieldError.getDefaultMessage());
-			}
-			return new ResponseEntity<Map<String, String>>(test, HttpStatus.CONFLICT);
-		}
-		return new ResponseEntity<Meter>(meter, HttpStatus.CREATED);
-	}
 
-	@RequestMapping(value = "/GAS", method = RequestMethod.POST)
-	public ResponseEntity<?> createGas( @Valid @RequestBody MeterGas meter, BindingResult result) {
-		if (result.hasErrors()) {
-			ApiResponse message = new ApiResponse();
-			message.setErrors(result.getFieldErrors());
-			return new ResponseEntity<ApiResponse>(message, HttpStatus.UNPROCESSABLE_ENTITY);
-		}
-		try {
-			service.save(meter, Media.GAS);
-		} catch (ConstraintViolationException e) {
-			result.rejectValue("serialNumber", "error.serialNumber", DUPLICATE_VALUE);
-			Map<String, String> test = new HashMap<>();
-			for (FieldError fieldError : result.getFieldErrors()) {
-				test.put(fieldError.getField(), fieldError.getDefaultMessage());
-			}
-			return new ResponseEntity<Map<String, String>>(test, HttpStatus.CONFLICT);
-		}
-		return new ResponseEntity<Meter>(meter, HttpStatus.CREATED);
-	}
-	
-	@RequestMapping(value = "/GAS/{id}", method = RequestMethod.PUT)
-	public ResponseEntity<?> updateGas(@PathVariable("id") Long id, @Valid @RequestBody MeterGas meter, BindingResult result) {
-		if (result.hasErrors()) {
-			ApiResponse message = new ApiResponse();
-			message.setErrors(result.getFieldErrors());
-			return new ResponseEntity<ApiResponse>(message, HttpStatus.UNPROCESSABLE_ENTITY);
-		}
-		try {
-			service.update(meter, Media.GAS);
-		} catch (ConstraintViolationException e) {
-			result.rejectValue("serialNumber", "error.serialNumber", DUPLICATE_VALUE);
-			Map<String, String> test = new HashMap<>();
-			for (FieldError fieldError : result.getFieldErrors()) {
-				test.put(fieldError.getField(), fieldError.getDefaultMessage());
-			}
-			return new ResponseEntity<Map<String, String>>(test, HttpStatus.CONFLICT);
-		}
-		return new ResponseEntity<Meter>(meter, HttpStatus.CREATED);
-	}
+    @RequestMapping(value = "/{media}", method = RequestMethod.POST)
+    public ResponseEntity<?> create(@PathVariable final Media media, @Valid @RequestBody final MeterEnergy meter, final BindingResult result) {
+        if (result.hasErrors()) {
+            final ApiErrorResponse message = new ApiErrorResponse();
+            message.setErrors(result.getFieldErrors());
+            return new ResponseEntity<>(message, HttpStatus.UNPROCESSABLE_ENTITY);
+        }
+        try {
+            service.save(meter, media);
+        } catch (ConstraintViolationException e) {
+            result.rejectValue("serialNumber", "error.serialNumber", DUPLICATE_VALUE);
+            final Map<String, String> test = new HashMap<>();
+            for (FieldError fieldError : result.getFieldErrors()) {
+                test.put(fieldError.getField(), fieldError.getDefaultMessage());
+            }
+            return new ResponseEntity<>(test, HttpStatus.CONFLICT);
+        }
+        return new ResponseEntity<>(meter, HttpStatus.CREATED);
+    }
 
-	@RequestMapping(value = "/WATER", method = RequestMethod.POST)
-	public ResponseEntity<?> createWater(@Valid @RequestBody MeterWater meter, BindingResult result) {
-		if (result.hasErrors()) {
-			ApiResponse message = new ApiResponse();
-			message.setErrors(result.getFieldErrors());
-			return new ResponseEntity<ApiResponse>(message, HttpStatus.UNPROCESSABLE_ENTITY);
-		}
-		try {
-			service.save(meter, Media.WATER);
-		} catch (ConstraintViolationException e) {
-			result.rejectValue("serialNumber", "error.serialNumber", DUPLICATE_VALUE);
-			Map<String, String> test = new HashMap<>();
-			for (FieldError fieldError : result.getFieldErrors()) {
-				test.put(fieldError.getField(), fieldError.getDefaultMessage());
-			}
-			return new ResponseEntity<Map<String, String>>(test, HttpStatus.CONFLICT);
-		}
-		return new ResponseEntity<Meter>(meter, HttpStatus.CREATED);
-	}
 
-	@RequestMapping(value = "/WATER/{id}", method = RequestMethod.PUT)
-	public ResponseEntity<?> updateWater(@Valid @RequestBody MeterWater meter, BindingResult result) {
-		if (result.hasErrors()) {
-			ApiResponse message = new ApiResponse();
-			message.setErrors(result.getFieldErrors());
-			return new ResponseEntity<ApiResponse>(message, HttpStatus.UNPROCESSABLE_ENTITY);
-		}
-		try {
-			service.update(meter, Media.WATER);
-		} catch (ConstraintViolationException e) {
-			result.rejectValue("serialNumber", "error.serialNumber", DUPLICATE_VALUE);
-			Map<String, String> test = new HashMap<>();
-			for (FieldError fieldError : result.getFieldErrors()) {
-				test.put(fieldError.getField(), fieldError.getDefaultMessage());
-			}
-			return new ResponseEntity<Map<String, String>>(test, HttpStatus.CONFLICT);
-		}
-		return new ResponseEntity<Meter>(meter, HttpStatus.CREATED);
-	}
-	
-	@RequestMapping(value = "{media}/{id}", method = RequestMethod.DELETE)
-	public ResponseEntity<Message> deleteUser(@PathVariable("media") Media media, @PathVariable("id") Long id) {
-		Message message = new Message("OK", null);
-		try {
-			service.delete(id, media);
-		} catch (Exception e) {
-			message.setMessage(CONSTRAINT_VIOLATION);
-			message.setException(e.toString());
-			return new ResponseEntity<Message>(message, HttpStatus.UNPROCESSABLE_ENTITY);
-		}
-		return new ResponseEntity<Message>(message, HttpStatus.OK);
-	}
+    @RequestMapping(value = "/{media}/{id}", method = RequestMethod.PUT)
+    public ResponseEntity<?> update(@PathVariable final Media media, @Valid @RequestBody final MeterEnergy meter, final BindingResult result) {
+        if (result.hasErrors()) {
+            final ApiErrorResponse message = new ApiErrorResponse();
+            message.setErrors(result.getFieldErrors());
+            return new ResponseEntity<>(message, HttpStatus.UNPROCESSABLE_ENTITY);
+        }
+        try {
+            service.update(meter, media);
+        } catch (ConstraintViolationException e) {
+            result.rejectValue("serialNumber", "error.serialNumber", DUPLICATE_VALUE);
+            final Map<String, String> test = new HashMap<>();
+            for (FieldError fieldError : result.getFieldErrors()) {
+                test.put(fieldError.getField(), fieldError.getDefaultMessage());
+            }
+            return new ResponseEntity<>(test, HttpStatus.CONFLICT);
+        }
+        return new ResponseEntity<Meter>(meter, HttpStatus.CREATED);
+    }
 
-	
+    @RequestMapping(value = "{media}/{id}", method = RequestMethod.DELETE)
+    public ResponseEntity<Message> delete(@PathVariable("media") final Media media, @PathVariable("id") final Long id) {
+        final Message message = new Message("OK", null);
+        try {
+            service.delete(id, media);
+        } catch (Exception e) {
+            message.setMessage(CONSTRAINT_VIOLATION);
+            message.setException(e.toString());
+            return new ResponseEntity<>(message, HttpStatus.UNPROCESSABLE_ENTITY);
+        }
+        return new ResponseEntity<>(message, HttpStatus.OK);
+    }
+
+
 }

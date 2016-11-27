@@ -1,4 +1,4 @@
-package kamienica.core.util;
+package kamienica.core.message;
 
 public class Message {
 

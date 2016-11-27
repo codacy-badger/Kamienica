@@ -4,7 +4,7 @@ import java.util.List;
 import java.util.Map;
 
 import kamienica.core.exception.InvalidDivisionException;
-import kamienica.core.util.Media;
+import kamienica.core.enums.Media;
 import kamienica.feature.payment.PaymentEnergy;
 import kamienica.feature.payment.PaymentGas;
 import kamienica.feature.payment.PaymentWater;

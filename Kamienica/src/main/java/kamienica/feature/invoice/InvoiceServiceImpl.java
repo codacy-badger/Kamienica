@@ -8,12 +8,12 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import kamienica.core.exception.InvalidDivisionException;
-import kamienica.core.util.EnergyConsumptionCalculator;
-import kamienica.core.util.GasConsumptionCalculator;
-import kamienica.core.util.Media;
-import kamienica.core.util.PaymentCalculator;
-import kamienica.core.util.WaterConsumptionCalculator;
-import kamienica.core.util.WaterHeatingSystem;
+import kamienica.core.calculator.EnergyConsumptionCalculator;
+import kamienica.core.calculator.GasConsumptionCalculator;
+import kamienica.core.enums.Media;
+import kamienica.core.calculator.PaymentCalculator;
+import kamienica.core.calculator.WaterConsumptionCalculator;
+import kamienica.core.enums.WaterHeatingSystem;
 import kamienica.feature.apartment.Apartment;
 import kamienica.feature.apartment.ApartmentDao;
 import kamienica.feature.division.Division;

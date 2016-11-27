@@ -1,12 +1,11 @@
-package kamienica.conventer;
+package kamienica.core.conventer;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.convert.converter.Converter;
 import org.springframework.stereotype.Component;
 
-import kamienica.core.util.Media;
-import kamienica.feature.reading.ReadingService;
-import kamienica.feature.reading.ReadingWater;
+import kamienica.feature.apartment.Apartment;
+import kamienica.feature.apartment.ApartmentService;
 
 /**
  * 
@@ -17,15 +16,15 @@ import kamienica.feature.reading.ReadingWater;
  *
  */
 @Component
-public class ReadingWaterConverter implements Converter<Object, ReadingWater> {
+public class ApartmentConverter implements Converter<Object, Apartment> {
 
 	@Autowired
-	ReadingService readingService;
+	private ApartmentService service;
 
 	@Override
-	public ReadingWater convert(Object element) {
+	public Apartment convert(Object element) {
 		Long id = Long.parseLong((String) element);
-		return readingService.getById(id, Media.WATER);
+		return service.getById(id);
 	}
 
 }
