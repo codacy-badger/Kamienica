@@ -34,7 +34,7 @@ public class MyUserDetailsService implements UserDetailsService {
 		authorities.add(new SimpleGrantedAuthority("ROLE_" + tenant.getRole()));
 
 		return new SecurityUser(tenant, tenant.getEmail(), tenant.getPassword(), tenant.getApartment(),
-				tenant.getStatus().equals(Status.ACTIVE.getStatus()), true, true, true, authorities);
+				tenant.getStatus().equals(Status.ACTIVE), true, true, true, authorities);
 	}
 
 	public void changePassword(String mail, String oldPassowrd, String newPwassword) throws UsernameNotFoundException {

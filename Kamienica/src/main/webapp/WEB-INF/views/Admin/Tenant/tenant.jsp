@@ -221,9 +221,9 @@
 					<div class="form-group">
 						<label class="col-sm-3 control-label">Status</label>
 						<div class="col-sm-9">
-							<input type="radio" ng-model="ctrl.tenant.status" value="Aktwny"
+							<input type="radio" ng-model="ctrl.tenant.status" value="ACTIVE"
 								required name='status' />Aktywny <input type="radio"
-								ng-model="ctrl.tenant.status" value="Nieaktywny" required
+								ng-model="ctrl.tenant.status" value="INACTIVE" required
 								name='status' /> Nieaktywny
 
 							<p class="help-block">

@@ -39,7 +39,7 @@ public class TenantDaoImpl extends AbstractDao<Tenant> implements TenantDao {
 //				.setLong("id", id).setString("status", UserStatus.INACTIVE.getUserStatus());
 //
 		Query query = getSession().createSQLQuery("update tenant set status =:status where apartment_id =:id")
-				.setLong("id", id).setString("status", Status.INACTIVE.getStatus());
+				.setLong("id", id).setParameter("status", Status.INACTIVE);
 		query.executeUpdate();
 
 	}
@@ -48,7 +48,7 @@ public class TenantDaoImpl extends AbstractDao<Tenant> implements TenantDao {
 	public Tenant getTenantForApartment(Apartment ap) {
 		Criteria criteria = createEntityCriteria();
 		criteria.add(Restrictions.eq("apartment", ap))
-				.add(Restrictions.eq("status", Status.ACTIVE.getStatus()));
+				.add(Restrictions.eq("status", Status.ACTIVE));
 
 		return (Tenant) criteria.uniqueResult();
 	}

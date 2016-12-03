@@ -538,7 +538,7 @@ CREATE TABLE `tenant` (
 
 LOCK TABLES `tenant` WRITE;
 /*!40000 ALTER TABLE `tenant` DISABLE KEYS */;
-INSERT INTO `tenant` VALUES (1,'folik@wp.pl','Maciej','Folik','2016-07-25','witaj','530081187','ADMIN','Aktywny',2),(2,'kow@wp.pl','Andrzej','Kowalski','2014-07-01','witaj','4456','USER','Nieaktywny',3),(3,'par@wp.pl','Kasia','Para','2015-07-26','witaj','23636','USER','Aktywny',4),(4,'kasia@wp.pl','Kasia','Kowalska','2016-07-29','witaj','3456775','USER','Aktywny',3),(5,'klej@wp.pl','Piotr','Kulej','2010-07-29','witaj','23526564','USER','Nieaktywny',2);
+INSERT INTO `tenant` VALUES (1,'folik@wp.pl','Maciej','Folik','2016-07-25','witaj','530081187','ADMIN','ACTIVE',2),(2,'kow@wp.pl','Andrzej','Kowalski','2014-07-01','witaj','4456','USER','INACTIVE',3),(3,'par@wp.pl','Kasia','Para','2015-07-26','witaj','23636','USER','ACTIVE',4),(4,'kasia@wp.pl','Kasia','Kowalska','2016-07-29','witaj','3456775','USER','ACTIVE',3),(5,'klej@wp.pl','Piotr','Kulej','2010-07-29','witaj','23526564','USER','INACTIVE',2);
 /*!40000 ALTER TABLE `tenant` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
