@@ -17,7 +17,7 @@ import kamienica.feature.payment.PaymentService;
 import kamienica.feature.reading.Reading;
 import kamienica.feature.tenant.Tenant;
 import kamienica.feature.user_admin.AdminUserService;
-import kamienica.feature.user_admin.MyUserDetailsService;
+import kamienica.feature.user_admin.SecurityService;
 import kamienica.feature.user_admin.SecurityUser;
 
 @RestController
@@ -27,7 +27,7 @@ public class AdminUserRestController {
 	@Autowired
 	private PaymentService paymentService;
 	@Autowired
-	private MyUserDetailsService userDetailsService;
+	private SecurityService userDetailsService;
 	@Autowired
 	private AdminUserService adminUserService;
 

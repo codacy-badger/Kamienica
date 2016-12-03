@@ -22,7 +22,7 @@ public class AdminUserController {
 	@Autowired
 	private PaymentService paymentService;
 	@Autowired
-	private MyUserDetailsService userDetailsService;
+	private SecurityService userDetailsService;
 	@Autowired
 	private AdminUserService adminUserService;
 

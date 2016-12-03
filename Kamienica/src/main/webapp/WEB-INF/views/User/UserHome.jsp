@@ -38,7 +38,7 @@
 			<div class="well">
 				<h1>Kamienica - Strona użytkownika</h1>
 				<p>
-					<strong>Użytkownik:</strong> ${model.user.tenant.getFullName() }
+					<strong>Użytkownik:</strong> ${model.user.tenant.fullName() }
 				</p>
 				<p>
 					<b>Mieszkanie: </b> ${model.user.apartment.apartmentNumber}

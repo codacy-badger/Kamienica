@@ -52,7 +52,6 @@ public class AppConfig extends WebMvcConfigurerAdapter {
 	private InvoiceWaterConverter invoiceWaterConverter;
 	@Autowired
 	private InvoiceEnergyConverter invoiceEnergyConverter;
-	// start nowych
 	@Autowired
 	private ApartmentConverter apartmentConverter;
 	@Autowired
