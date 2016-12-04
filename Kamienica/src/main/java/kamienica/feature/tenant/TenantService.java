@@ -14,7 +14,7 @@ public interface TenantService {
 
 	Tenant getTenantById(Long id);
 	
-	List<Tenant> getCurrentTenants();
+	List<Tenant> getActiveTenants();
 
 	Tenant loadByMail(String mail);
 }

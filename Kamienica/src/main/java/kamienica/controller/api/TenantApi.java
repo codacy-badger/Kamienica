@@ -31,7 +31,7 @@ public class TenantApi extends AbstractApi {
         if (deactivated) {
             list = service.getList();
         } else {
-            list = service.getCurrentTenants();
+            list = service.getActiveTenants();
         }
 
         if (list.isEmpty()) {

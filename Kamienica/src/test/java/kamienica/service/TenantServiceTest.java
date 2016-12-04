@@ -4,36 +4,81 @@ import static org.junit.Assert.*;
 
 import java.util.List;
 
+import kamienica.core.enums.Status;
+import kamienica.core.enums.UserRole;
+import kamienica.feature.apartment.ApartmentService;
+import kamienica.model.Apartment;
+import org.joda.time.LocalDate;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import kamienica.feature.tenant.Tenant;
 import kamienica.feature.tenant.TenantService;
+import org.springframework.transaction.annotation.Transactional;
 
 public class TenantServiceTest extends AbstractServiceTest {
 
-	@Autowired
-	TenantService service;
+    @Autowired
+    private TenantService tenantService;
+    @Autowired
+    private ApartmentService apartmentService;
 
-	@Test
-	public void getList() {
-		List<Tenant> list = service.getList();
+    private final String dummyMail = "dummy@dummy";
+    private final String tenantMail = "folik@wp.pl";
 
-		assertEquals(5, list.size());
-	}
+    @Test
+    public void getList() {
+        List<Tenant> list = tenantService.getList();
+        assertEquals(5, list.size());
+    }
 
-	@Test
-	public void getActiveTenants() {
+    @Test
+    public void getActiveTenants() {
+        List<Tenant> list = tenantService.getActiveTenants();
+        assertEquals(3, list.size());
+    }
 
-		List<Tenant> list = service.getCurrentTenants();
-		assertEquals(3, list.size());
-	}
+    @Test
+    public void loadByMail() {
+        Tenant tenant = tenantService.loadByMail(tenantMail);
+        assertNotNull(tenant);
+        assertEquals("Maciej Folik", tenant.fullName());
+    }
 
-	@Test
-	public void loadByMail() {
-		Tenant tenant = service.loadByMail("folik@wp.pl");
-		assertNotNull(tenant);
-		assertEquals("Maciej Folik", tenant.fullName());
-	}
+    @Transactional
+    @Test
+    public void shouldDeactivateOldTenantWhenNewIsInserted() {
+        final Tenant newOwner = createTenant(LocalDate.parse("2018-01-01"));
+        tenantService.saveTenant(newOwner);
+        Tenant previousOwner = tenantService.loadByMail(tenantMail);
+        assertEquals(Status.INACTIVE, previousOwner.getStatus());
+    }
 
+    @Transactional
+    @Test
+    public void shouldDeactivateNewTenantWhenMovementDateIsOlderThanCurrentTenant() {
+        final Tenant newOwner = createTenant(LocalDate.parse("2015-01-01"));
+        assertEquals(Status.ACTIVE,  newOwner.getStatus());
+        tenantService.saveTenant(newOwner);
+        Tenant previousOwner = tenantService.loadByMail(tenantMail);
+        assertEquals(Status.ACTIVE, previousOwner.getStatus());
+        assertEquals(Status.INACTIVE,  newOwner.getStatus());
+    }
+
+    private Tenant createTenant(LocalDate localDate) {
+        final Apartment apartment = apartmentService.getById(2L);
+
+        tenantService.loadByMail(tenantMail);
+        Tenant tenant = new Tenant();
+        tenant.setApartment(apartment);
+        tenant.setEmail(dummyMail);
+        tenant.setFirstName("dummy");
+        tenant.setLastName("dumy");
+        tenant.setMovementDate(localDate);
+        tenant.setPassword("dummy");
+        tenant.setRole(UserRole.USER);
+        tenant.setStatus(Status.ACTIVE);
+
+        return tenant;
+    }
 }

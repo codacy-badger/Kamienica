@@ -108,14 +108,14 @@
 //	}
 //
 //	// ArrayList<Tenant> tenants = (ArrayList<Tenant>)
-//	// tenantService.getCurrentTenants();
+//	// tenantService.getActiveTenants();
 //	// ArrayList<Division> division = (ArrayList<Division>)
 //	// divisionService.getList();
 //	// ArrayList<Apartment> apartments = (ArrayList<Apartment>)
 //	// apartmentService.getList();
 //	@Testing
 //	public void ValidateDivision() {
-//		when(tenantService.getCurrentTenants()).thenReturn(tenants);
+//		when(tenantService.getActiveTenants()).thenReturn(tenants);
 //		when(divisionService.getList()).thenReturn(division);
 //		when(apartmentService.getList()).thenReturn(apartments);
 //		Assert.assertEquals(DivisionValidator.validateDivision(apartments, division, tenants),
@@ -124,7 +124,7 @@
 //	
 //	@Testing
 //	public void prepareList() {
-//		when(tenantService.getCurrentTenants()).thenReturn(tenants);
+//		when(tenantService.getActiveTenants()).thenReturn(tenants);
 //		when(divisionService.getList()).thenReturn(division);
 //		when(apartmentService.getList()).thenReturn(apartments);
 //	

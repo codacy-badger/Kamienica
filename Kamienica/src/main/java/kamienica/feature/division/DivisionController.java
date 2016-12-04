@@ -60,7 +60,7 @@ public class DivisionController {
 			String error = "Błąd. Sprawdź poprawność danych";
 			model.put("error", error);
 			model.put("apartment", apartmentList);
-			model.put("tenantList", tenantService.getCurrentTenants());
+			model.put("tenantList", tenantService.getActiveTenants());
 			return new ModelAndView("/Admin/Division/DivisionRegister", "model", model);
 		}
 	}
@@ -70,7 +70,7 @@ public class DivisionController {
 		Map<String, Object> model = new HashMap<>();
 		DivisionForm divisionForm = new DivisionForm();
 		divisionForm.setDivisionList(divisionService.getList());
-		List<Tenant> tenants = tenantService.getCurrentTenants();
+		List<Tenant> tenants = tenantService.getActiveTenants();
 		List<Apartment> apartments = apartmentService.getList();
 		if (!divisionService.isDivisionCorrect()) {
 			model.put("error", "Podział jest nieaktualny. Proszę zaktualizować dane ");

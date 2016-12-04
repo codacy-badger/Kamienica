@@ -78,7 +78,7 @@ public class InvoiceController {
 		model.put("saveUrl", "/Admin/Invoice/invoiceWaterSave");
 		model.put("media", "Woda");
 		// ArrayList<Tenant> tenants = (ArrayList<Tenant>)
-		// tenantService.getCurrentTenants();
+		// tenantService.getActiveTenants();
 		// ArrayList<Division> division = (ArrayList<Division>)
 		// divisionService.getList();
 		// ArrayList<Apartment> apartments = (ArrayList<Apartment>)
@@ -146,7 +146,7 @@ public class InvoiceController {
 		//
 		// List<ReadingGas> readingGasOld = new ArrayList<>();
 		// ArrayList<Tenant> tenants = (ArrayList<Tenant>)
-		// tenantService.getCurrentTenants();
+		// tenantService.getActiveTenants();
 		// ArrayList<Division> division = (ArrayList<Division>)
 		// divisionService.getList();
 		// ArrayList<Apartment> apartments = (ArrayList<Apartment>)
@@ -202,7 +202,7 @@ public class InvoiceController {
 
 		// List<ReadingWater> readingWaterOld = new ArrayList<>();
 		// ArrayList<Tenant> tenants = (ArrayList<Tenant>)
-		// tenantService.getCurrentTenants();
+		// tenantService.getActiveTenants();
 		// ArrayList<Division> division = (ArrayList<Division>)
 		// divisionService.getList();
 		// ArrayList<Apartment> apartments = (ArrayList<Apartment>)

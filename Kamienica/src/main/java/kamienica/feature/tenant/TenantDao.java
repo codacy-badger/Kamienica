@@ -1,15 +1,13 @@
 package kamienica.feature.tenant;
 
-import java.util.List;
-
 import kamienica.core.dao.DaoInterface;
 import kamienica.model.Apartment;
+
+import java.util.List;
 
 public interface TenantDao extends DaoInterface<Tenant> {
 
 	Tenant getTenantForApartment(Apartment apartment);
-
-	void deactivateByApparmentId(Long id);
 
 	List<Tenant> getActiveTenants();
 
