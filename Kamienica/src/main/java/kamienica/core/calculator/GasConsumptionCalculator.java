@@ -5,24 +5,25 @@ import java.util.HashMap;
 import java.util.List;
 
 import kamienica.core.util.CommonUtils;
+import kamienica.model.MediaUsage;
 import org.joda.time.Days;
 
 import kamienica.model.Apartment;
 import kamienica.feature.reading.ReadingGas;
 import kamienica.feature.reading.ReadingWater;
-import kamienica.feature.usagevalue.UsageValue;
 
+@Deprecated
 public class GasConsumptionCalculator {
 
 	/**
 	 * This method is designed for shared water heatig system
 	 */
-	public static List<UsageValue> countConsumption(List<Apartment> aparment, List<ReadingGas> gasOld,
-			List<ReadingGas> gasNew, List<ReadingWater> waterOld, List<ReadingWater> waterNew) {
-		ArrayList<UsageValue> out = new ArrayList<>();
+	public static List<MediaUsage> countConsumption(List<Apartment> aparment, List<ReadingGas> gasOld,
+													List<ReadingGas> gasNew, List<ReadingWater> waterOld, List<ReadingWater> waterNew) {
+		ArrayList<MediaUsage> out = new ArrayList<>();
 		for (Apartment m : aparment) {
 
-			UsageValue tmp = new UsageValue();
+			MediaUsage tmp = new MediaUsage();
 			tmp.setDescription("Zuzycie calkowite za: " + m.getDescription());
 			double sumPrevious = 0;
 			double sumNew = 0;
@@ -85,12 +86,12 @@ public class GasConsumptionCalculator {
 	}
 
 	/** Method for individual water heating system */
-	public static ArrayList<UsageValue> countConsumption(List<Apartment> aparment, List<ReadingGas> gasOld,
-			List<ReadingGas> gasNew) {
-		ArrayList<UsageValue> out = new ArrayList<>();
+	public static ArrayList<MediaUsage> countConsumption(List<Apartment> aparment, List<ReadingGas> gasOld,
+														 List<ReadingGas> gasNew) {
+		ArrayList<MediaUsage> out = new ArrayList<>();
 		for (Apartment m : aparment) {
 
-			UsageValue tmp = new UsageValue();
+			MediaUsage tmp = new MediaUsage();
 			tmp.setDescription("Zuzycie calkowite za: " + m.getDescription());
 			double sumPrevious = 0;
 			double sumNew = 0;

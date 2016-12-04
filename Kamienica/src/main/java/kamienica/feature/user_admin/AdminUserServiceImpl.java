@@ -23,7 +23,7 @@ import java.util.List;
 
 @Service
 @Transactional
-public class AdminUserServiceImp implements AdminUserService {
+public class AdminUserServiceImpl implements AdminUserService {
 
     @Autowired
     private SettingsDao settingsDao;
@@ -81,7 +81,7 @@ public class AdminUserServiceImp implements AdminUserService {
             media = "Gaz";
         }
         model.put("readingMedia", media);
-        model.put("radingDays", days);
+        model.put("readingDays", days);
 
         energy = invoiceEnergyDao.getDaysOfLastInvoice();
         gas = invoiceGasDao.getDaysOfLastInvoice();
@@ -135,21 +135,6 @@ public class AdminUserServiceImp implements AdminUserService {
         }
 
     }
-
-    // @Override
-    // public List<PaymentEnergy> getPaymentEnergyForTenant() {
-    // return energy.getPaymentForTenant(tenant);
-    // }
-    //
-    // @Override
-    // public List<PaymentGas> getPaymentGasForTenant() {
-    // return gas.getPaymentForTenant(tenant);
-    // }
-    //
-    // @Override
-    // public List<PaymentWater> getPaymentWaterForTenant() {
-    // return water.getPaymentForTenant(tenant);
-    // }
 
     public SecurityUser getCurrentUser() {
         return (SecurityUser) SecurityContextHolder.getContext().getAuthentication().getPrincipal();

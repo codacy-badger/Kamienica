@@ -9,7 +9,7 @@ import org.joda.time.LocalDate;
 import kamienica.core.exception.InvalidDivisionException;
 import kamienica.core.exception.WrongDivisionInputException;
 import kamienica.model.Apartment;
-import kamienica.feature.tenant.Tenant;
+import kamienica.model.Tenant;
 
 public interface DivisionService {
 

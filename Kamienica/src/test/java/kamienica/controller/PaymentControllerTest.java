@@ -37,7 +37,7 @@
 //import kamienica.feature.reading.ReadingWater;
 //import kamienica.feature.tenant.Tenant;
 //import kamienica.feature.tenant.TenantService;
-//import kamienica.testsetup.SetupMethods;
+//import kamienica.testutils.SetupMethods;
 //
 //public class PaymentControllerTest {
 //

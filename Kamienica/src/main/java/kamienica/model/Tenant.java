@@ -1,4 +1,4 @@
-package kamienica.feature.tenant;
+package kamienica.model;
 
 import java.io.Serializable;
 

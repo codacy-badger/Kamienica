@@ -4,7 +4,7 @@ import java.util.List;
 
 import kamienica.core.enums.Media;
 import kamienica.model.Invoice;
-import kamienica.feature.tenant.Tenant;
+import kamienica.model.Tenant;
 
 public interface PaymentService {
 

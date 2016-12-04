@@ -8,7 +8,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import kamienica.core.enums.Media;
 import kamienica.model.Invoice;
-import kamienica.feature.tenant.Tenant;
+import kamienica.model.Tenant;
 
 @Service
 @Transactional

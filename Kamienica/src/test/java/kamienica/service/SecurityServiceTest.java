@@ -1,6 +1,6 @@
 package kamienica.service;
 
-import kamienica.feature.tenant.Tenant;
+import kamienica.model.Tenant;
 import kamienica.feature.tenant.TenantDao;
 import kamienica.feature.user_admin.SecurityService;
 import org.junit.Test;
@@ -12,7 +12,6 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Collection;
-import java.util.List;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;

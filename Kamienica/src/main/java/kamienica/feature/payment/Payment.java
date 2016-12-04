@@ -13,7 +13,7 @@ import org.hibernate.annotations.Type;
 import org.joda.time.LocalDate;
 import org.springframework.format.annotation.DateTimeFormat;
 
-import kamienica.feature.tenant.Tenant;
+import kamienica.model.Tenant;
 
 @MappedSuperclass
 @Inheritance

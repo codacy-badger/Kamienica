@@ -12,7 +12,7 @@ import org.joda.time.LocalDate;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import kamienica.feature.tenant.Tenant;
+import kamienica.model.Tenant;
 import kamienica.feature.tenant.TenantService;
 import org.springframework.transaction.annotation.Transactional;
 

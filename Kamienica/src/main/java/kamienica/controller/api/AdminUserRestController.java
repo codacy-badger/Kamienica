@@ -15,7 +15,7 @@ import kamienica.model.Apartment;
 import kamienica.feature.payment.Payment;
 import kamienica.feature.payment.PaymentService;
 import kamienica.feature.reading.Reading;
-import kamienica.feature.tenant.Tenant;
+import kamienica.model.Tenant;
 import kamienica.feature.user_admin.AdminUserService;
 import kamienica.feature.user_admin.SecurityService;
 import kamienica.feature.user_admin.SecurityUser;

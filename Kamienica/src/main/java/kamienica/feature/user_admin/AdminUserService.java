@@ -12,20 +12,14 @@ import kamienica.feature.reading.ReadingWater;
 
 public interface AdminUserService {
 
-	HashMap<String, Object> getMainData();
+    HashMap<String, Object> getMainData();
 
-	List<? extends Reading> getReadingsForTenant(Apartment apartment, Media media);
+    List<? extends Reading> getReadingsForTenant(Apartment apartment, Media media);
 
-	List<ReadingEnergy> getReadingEnergyForTenant(Apartment apartment);
+    List<ReadingEnergy> getReadingEnergyForTenant(Apartment apartment);
 
-	List<ReadingWater> getReadingWaterForTenant(Apartment apartment);
+    List<ReadingWater> getReadingWaterForTenant(Apartment apartment);
 
-	List<ReadingGas> getReadingGasForTenant(Apartment apartment);
+    List<ReadingGas> getReadingGasForTenant(Apartment apartment);
 
-//	public List<PaymentEnergy> getPaymentEnergyForTenant(Tenant tenant);
-//
-//	public List<PaymentGas> getPaymentGasForTenant(Tenant tenant);
-//
-//	public List<PaymentWater> getPaymentWaterForTenant(Tenant tenant);
-	
 }

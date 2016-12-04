@@ -22,6 +22,8 @@ public interface DaoInterface<T> {
 
 	Set<Long> getIdList();
 
+	long countByCriteria(final Criterion... criterion);
+
 	List<T> findByCriteria(final Criterion... criterion);
 
 	List<T> getBySQLQuery(final String queryString);

@@ -17,7 +17,7 @@ import org.springframework.web.servlet.ModelAndView;
 import kamienica.core.exception.WrongDivisionInputException;
 import kamienica.model.Apartment;
 import kamienica.feature.apartment.ApartmentService;
-import kamienica.feature.tenant.Tenant;
+import kamienica.model.Tenant;
 import kamienica.feature.tenant.TenantService;
 
 @Controller

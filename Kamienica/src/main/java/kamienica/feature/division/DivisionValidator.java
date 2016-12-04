@@ -4,7 +4,7 @@ import java.util.List;
 import java.util.Objects;
 
 import kamienica.model.Apartment;
-import kamienica.feature.tenant.Tenant;
+import kamienica.model.Tenant;
 import kamienica.model.Division;
 
 public class DivisionValidator {

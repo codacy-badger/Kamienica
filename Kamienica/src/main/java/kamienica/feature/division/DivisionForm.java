@@ -6,7 +6,7 @@ import kamienica.model.Division;
 import org.joda.time.LocalDate;
 
 import kamienica.model.Apartment;
-import kamienica.feature.tenant.Tenant;
+import kamienica.model.Tenant;
 
 public class DivisionForm {
 

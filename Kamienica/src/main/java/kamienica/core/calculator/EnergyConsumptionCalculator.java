@@ -1,22 +1,21 @@
 package kamienica.core.calculator;
 
-import java.util.ArrayList;
-import java.util.List;
-
+import kamienica.feature.reading.ReadingEnergy;
+import kamienica.model.MediaUsage;
+import kamienica.model.Apartment;
 import org.joda.time.Days;
 
-import kamienica.model.Apartment;
-import kamienica.feature.reading.ReadingEnergy;
-import kamienica.feature.usagevalue.UsageValue;
-
+import java.util.ArrayList;
+import java.util.List;
+@Deprecated
 public class EnergyConsumptionCalculator {
 
-	public static List<UsageValue> countConsumption(List<Apartment> apartment, List<ReadingEnergy> oldReadings,
+	public static List<MediaUsage> countConsumption(List<Apartment> apartment, List<ReadingEnergy> oldReadings,
 													List<ReadingEnergy> newReadings) {
-		ArrayList<UsageValue> out = new ArrayList<>();
+		ArrayList<MediaUsage> out = new ArrayList<>();
 		for (Apartment m : apartment) {
 
-			UsageValue usageValue = createNewUsageValue(m);
+			MediaUsage mediaUsage = createNewUsageValue(m);
 			double sumPrevious = 0;
 			double sumCurrent = 0;
 
@@ -38,26 +37,26 @@ public class EnergyConsumptionCalculator {
 
 			double usage = sumCurrent - sumPrevious;
 
-			usageValue.setUsage(usage);
-			usageValue.setUnit(newReadings.get(0).getUnit());
+			mediaUsage.setUsage(usage);
+			mediaUsage.setUnit(newReadings.get(0).getUnit());
 			if (oldReadings.isEmpty()) {
-				usageValue.setDaysBetweenReadings(0);
+				mediaUsage.setDaysBetweenReadings(0);
 			} else {
-				usageValue.setDaysBetweenReadings(
+				mediaUsage.setDaysBetweenReadings(
 						Days.daysBetween(oldReadings.get(0).getReadingDate(), newReadings.get(0).getReadingDate())
 								.getDays());
 			}
-			out.add(usageValue);
+			out.add(mediaUsage);
 		}
 
 		return out;
 
 	}
 
-	private static UsageValue createNewUsageValue(Apartment m) {
-		UsageValue usageValue = new UsageValue();
-		usageValue.setDescription("Zuzycie calkowite za: " + m.getDescription());
-		usageValue.setApartment(m);
-		return usageValue;
+	private static MediaUsage createNewUsageValue(Apartment m) {
+		MediaUsage mediaUsage = new MediaUsage();
+		mediaUsage.setDescription("Zuzycie calkowite za: " + m.getDescription());
+		mediaUsage.setApartment(m);
+		return mediaUsage;
 	}
 }

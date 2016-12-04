@@ -1,6 +1,7 @@
 package kamienica.core.calculator;
 
 import kamienica.core.util.CommonUtils;
+import kamienica.model.MediaUsage;
 import kamienica.model.Division;
 import kamienica.model.InvoiceEnergy;
 import kamienica.model.InvoiceGas;
@@ -8,8 +9,7 @@ import kamienica.model.InvoiceWater;
 import kamienica.feature.payment.PaymentEnergy;
 import kamienica.feature.payment.PaymentGas;
 import kamienica.feature.payment.PaymentWater;
-import kamienica.feature.tenant.Tenant;
-import kamienica.feature.usagevalue.UsageValue;
+import kamienica.model.Tenant;
 import org.joda.time.LocalDate;
 
 import java.util.ArrayList;
@@ -20,7 +20,7 @@ public class PaymentCalculator {
 
 
     public static List<PaymentEnergy> createPaymentEnergyList(List<Tenant> tenants, InvoiceEnergy invoice,
-                                                              List<Division> division, List<UsageValue> usage) {
+                                                              List<Division> division, List<MediaUsage> usage) {
         double sumOfExpences = invoice.getTotalAmount();
         List<PaymentEnergy> listToReturn = new ArrayList<>();
 
@@ -30,7 +30,7 @@ public class PaymentCalculator {
             HashMap<Integer, Double> divisionForTenant = setTenantDivision(division, tenant);
             double payment = 0;
 
-            for (UsageValue w : usage) {
+            for (MediaUsage w : usage) {
                 double factor = w.getUsage() / usageSum;
                 payment += sumOfExpences * factor * divisionForTenant.get(w.getApartment().getApartmentNumber());
             }
@@ -48,7 +48,7 @@ public class PaymentCalculator {
     }
 
     public static List<PaymentGas> createPaymentGasList(List<Tenant> tenants, InvoiceGas invoice,
-                                                        List<Division> division, List<UsageValue> usage) {
+                                                        List<Division> division, List<MediaUsage> usage) {
         double sumOfExpences = invoice.getTotalAmount();
         List<PaymentGas> listToReturn = new ArrayList<>();
 
@@ -58,7 +58,7 @@ public class PaymentCalculator {
             HashMap<Integer, Double> divisionForTenant = setTenantDivision(division, tenant);
             double payment = 0;
 
-            for (UsageValue w : usage) {
+            for (MediaUsage w : usage) {
                 double factor = w.getUsage() / usageSum;
                 payment += sumOfExpences * factor * divisionForTenant.get(w.getApartment().getApartmentNumber());
             }
@@ -77,7 +77,7 @@ public class PaymentCalculator {
     }
 
     public static List<PaymentWater> createPaymentWaterList(List<Tenant> tenants, InvoiceWater invoice,
-                                                            List<Division> podzial, List<UsageValue> usage) {
+                                                            List<Division> podzial, List<MediaUsage> usage) {
         List<PaymentWater> listToReturn = new ArrayList<>();
 
         double sumOfExpences = invoice.getTotalAmount();
@@ -86,7 +86,7 @@ public class PaymentCalculator {
         for (Tenant tenant : tenants) {
             HashMap<Integer, Double> divForTenants = setTenantDivision(podzial, tenant);
             double payment = 0;
-            for (UsageValue w : usage) {
+            for (MediaUsage w : usage) {
                 double factor = w.getUsage() / usageSum;
 
                 payment += sumOfExpences * factor * divForTenants.get(w.getApartment().getApartmentNumber());
@@ -103,9 +103,9 @@ public class PaymentCalculator {
         return listToReturn;
     }
 
-    private static double sumUsage(List<UsageValue> listaZuzycia) {
+    private static double sumUsage(List<MediaUsage> listaZuzycia) {
         double suma = 0;
-        for (UsageValue i : listaZuzycia) {
+        for (MediaUsage i : listaZuzycia) {
             suma += i.getUsage();
         }
 

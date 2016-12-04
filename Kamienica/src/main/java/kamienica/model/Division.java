@@ -14,9 +14,6 @@ import org.joda.time.LocalDate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
 
-import kamienica.model.Apartment;
-import kamienica.feature.tenant.Tenant;
-
 @Entity
 @Table(name = "division")
 public class Division implements Serializable {

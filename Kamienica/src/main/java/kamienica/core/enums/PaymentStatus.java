@@ -1,4 +1,4 @@
-package kamienica.feature.payment;
+package kamienica.core.enums;
 
 public enum PaymentStatus {
 	PAID("Opłacono"), UNPAID("Nie opłacono");

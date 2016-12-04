@@ -10,7 +10,7 @@ import org.hibernate.criterion.Restrictions;
 import kamienica.core.dao.AbstractDao;
 import kamienica.model.Invoice;
 import kamienica.feature.reading.Reading;
-import kamienica.feature.tenant.Tenant;
+import kamienica.model.Tenant;
 
 public class PaymentAbstractDaoImpl<P extends Payment> extends AbstractDao<P> {
 

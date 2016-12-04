@@ -9,7 +9,7 @@ import javax.persistence.Table;
 import org.joda.time.LocalDate;
 
 import kamienica.model.InvoiceEnergy;
-import kamienica.feature.tenant.Tenant;
+import kamienica.model.Tenant;
 
 @Entity
 @Table(name = "paymentenergy")

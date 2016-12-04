@@ -18,7 +18,7 @@
 //import org.testng.annotations.BeforeClass;
 //
 //import kamienica.configuration.HibernateTestConfiguration;
-//import kamienica.testsetup.MySQLDataTypeFactory;
+//import kamienica.testutils.MySQLDataTypeFactory;
 //
 //@ContextConfiguration(classes = { HibernateTestConfiguration.class })
 //public abstract class EntityDaoImplTest extends AbstractTransactionalTestNGSpringContextTests {

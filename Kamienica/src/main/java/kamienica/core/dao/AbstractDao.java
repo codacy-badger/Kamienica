@@ -45,9 +45,7 @@ public abstract class AbstractDao<T> {
         return sessionFactory.getCurrentSession();
     }
 
-    // common methods shared by all entities
-    // getByID
-    // getById
+
     @SuppressWarnings("unchecked")
     public T getById(Long id) {
         return (T) getSession().get(persistentClass, id);
@@ -94,6 +92,16 @@ public abstract class AbstractDao<T> {
         Criteria criteria = createEntityCriteria().setProjection(Projections.property("id"));
         return new HashSet<Long>(criteria.list());
 
+    }
+
+    public long countByCriteria(final Criterion... criterion) {
+        Criteria criteria = createEntityCriteria();
+        criteria.setProjection(Projections.rowCount());
+
+        for (final Criterion c : criterion) {
+            criteria.add(c);
+        }
+        return (Long) criteria.list().get(0);
     }
 
     public List<T> findByCriteria(final Criterion... criterion) {

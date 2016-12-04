@@ -2,6 +2,7 @@ package kamienica.feature.tenant;
 
 import kamienica.core.enums.Status;
 import kamienica.feature.settings.SettingsDao;
+import kamienica.model.Tenant;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;

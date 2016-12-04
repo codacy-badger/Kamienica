@@ -16,7 +16,7 @@ import kamienica.core.util.CommonUtils;
 import kamienica.model.Apartment;
 import kamienica.feature.apartment.ApartmentDao;
 import kamienica.feature.settings.SettingsDao;
-import kamienica.feature.tenant.Tenant;
+import kamienica.model.Tenant;
 import kamienica.feature.tenant.TenantDao;
 
 @Service

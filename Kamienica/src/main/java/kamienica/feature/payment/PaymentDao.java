@@ -5,7 +5,7 @@ import java.util.List;
 import kamienica.core.dao.DaoInterface;
 import kamienica.model.Invoice;
 import kamienica.feature.reading.Reading;
-import kamienica.feature.tenant.Tenant;
+import kamienica.model.Tenant;
 
 public interface PaymentDao<P extends Payment> extends DaoInterface<P> {
 

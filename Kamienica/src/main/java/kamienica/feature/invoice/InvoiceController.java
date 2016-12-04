@@ -173,7 +173,7 @@ public class InvoiceController {
 		// readingService.getByDate(invoice.getBaseReading().getReadingDate(),
 		// Media.GAS);
 		//
-		// ArrayList<UsageValue> usageGas =
+		// ArrayList<MediaUsage> usageGas =
 		// ManagerGas.countConsumption(apartments, readingGasOld, readingGasNew,
 		// waterForGas.get("old"), waterForGas.get("new"));
 		// List<PaymentGas> paymentGas =
@@ -216,7 +216,7 @@ public class InvoiceController {
 		// readingService.getByDate(invoice.getBaseReading().getReadingDate(),
 		// Media.WATER);
 		//
-		// ArrayList<UsageValue> usageWater =
+		// ArrayList<MediaUsage> usageWater =
 		// ManagerWater.countConsumption(apartments, readingWaterOld,
 		// readingWaterNew);
 		// List<PaymentWater> paymentWater =

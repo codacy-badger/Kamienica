@@ -3,6 +3,7 @@ package kamienica.feature.invoice;
 import java.util.List;
 import java.util.Map;
 
+import kamienica.model.MediaUsage;
 import kamienica.model.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -32,9 +33,8 @@ import kamienica.feature.reading.ReadingWater;
 import kamienica.feature.reading.ReadingWaterDao;
 import kamienica.feature.settings.Settings;
 import kamienica.feature.settings.SettingsDao;
-import kamienica.feature.tenant.Tenant;
+import kamienica.model.Tenant;
 import kamienica.feature.tenant.TenantDao;
-import kamienica.feature.usagevalue.UsageValue;
 
 @Service
 @Transactional
@@ -88,7 +88,7 @@ public class InvoiceServiceImpl implements InvoiceService {
 			List<ReadingEnergy> readingEnergyNew = (List<ReadingEnergy>) readingService.getByDate(invoice.getBaseReading().getReadingDate(),
 					Media.ENERGY);
 
-			List<UsageValue> usageEnergy = EnergyConsumptionCalculator.countConsumption(apartments, readingEnergyOld,
+			List<MediaUsage> usageEnergy = EnergyConsumptionCalculator.countConsumption(apartments, readingEnergyOld,
 					readingEnergyNew);
 			List<PaymentEnergy> paymentEnergy = PaymentCalculator.createPaymentEnergyList(tenants, (InvoiceEnergy) invoice,
 					division, usageEnergy);
@@ -104,7 +104,7 @@ public class InvoiceServiceImpl implements InvoiceService {
 			List<ReadingGas> readingGasOld = readingService.getPreviousReadingGas(invoice.getReadingDate(),
 					meterService.getIdList(Media.GAS));
 			List<ReadingGas> readingGasNew = (List<ReadingGas>) readingService.getByDate(invoice.getReadingDate(), Media.GAS);
-			List<UsageValue> usageGas;
+			List<MediaUsage> usageGas;
 			if (settinggs.getWaterHeatingSystem().equals(WaterHeatingSystem.SHARED_GAS)) {
 				List<ReadingWater> waterNew = readingWaterDao
 						.getWaterReadingForGasConsumption2(invoice.getReadingDate());
@@ -136,7 +136,7 @@ public class InvoiceServiceImpl implements InvoiceService {
 			List<ReadingWater> readingWaterNew = (List<ReadingWater>) readingService.getByDate(invoice.getBaseReading().getReadingDate(),
 					Media.WATER);
 
-			List<UsageValue> usageWater = WaterConsumptionCalculator.countConsumption(apartments, readingWaterOld, readingWaterNew);
+			List<MediaUsage> usageWater = WaterConsumptionCalculator.countConsumption(apartments, readingWaterOld, readingWaterNew);
 			List<PaymentWater> paymentWater = PaymentCalculator.createPaymentWaterList(tenants, (InvoiceWater) invoice,
 					division, usageWater);
 

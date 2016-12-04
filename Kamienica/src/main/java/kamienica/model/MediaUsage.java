@@ -1,8 +1,8 @@
-package kamienica.feature.usagevalue;
+package kamienica.model;
 
 import kamienica.model.Apartment;
 
-public class UsageValue {
+public class MediaUsage {
 
 	private String description;
 	private double usage;
@@ -42,7 +42,7 @@ public class UsageValue {
 		this.daysBetweenReadings = daysBetweenReadings;
 	}
 
-	public UsageValue(String description, double usage, String unit, int daysBetweenReadings, Apartment apartment) {
+	public MediaUsage(String description, double usage, String unit, int daysBetweenReadings, Apartment apartment) {
 		this.description = description;
 		this.usage = usage;
 		this.unit = unit;
@@ -50,7 +50,7 @@ public class UsageValue {
 		this.apartment = apartment;
 	}
 
-	public UsageValue() {
+	public MediaUsage() {
 	}
 
 	@Override

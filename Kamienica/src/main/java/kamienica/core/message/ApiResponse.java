@@ -1,7 +1,5 @@
 package kamienica.core.message;
 
-import kamienica.feature.tenant.Tenant;
-
 import java.util.List;
 
 /**

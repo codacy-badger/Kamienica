@@ -1,4 +1,4 @@
-package kamienica.core;
+package kamienica.testutils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -17,7 +17,7 @@ import kamienica.feature.meter.MeterWater;
 import kamienica.feature.reading.ReadingEnergy;
 import kamienica.feature.reading.ReadingGas;
 import kamienica.feature.reading.ReadingWater;
-import kamienica.feature.tenant.Tenant;
+import kamienica.model.Tenant;
 import kamienica.core.enums.UserRole;
 
 public class EntityProvider {
@@ -103,17 +103,7 @@ public class EntityProvider {
         return metersGas;
     }
 
-    private static List<MeterWater> getMeterWater() {
-        List<MeterWater> metersWater = new ArrayList<>();
-        metersWater.add(new MeterWater("Licznik woda glowny", "55", "m3", null, false));
-        metersWater.add(new MeterWater("woda zimna m1", "434", "metry3", APARTMENTS.get(1), false));
-        metersWater.add(new MeterWater("woda ciepla m1", "3455", "metry3", APARTMENTS.get(1), true));
-        metersWater.add(new MeterWater("woda zimna m2", "434", "metry3", APARTMENTS.get(2), false));
-        metersWater.add(new MeterWater("woda ciepla m2", "3455", "metry3", APARTMENTS.get(2), true));
-        metersWater.add(new MeterWater("woda zimna m3", "434", "metry3", APARTMENTS.get(3), false));
-        metersWater.add(new MeterWater("woda ciepla m3", "3455", "metry3", APARTMENTS.get(3), true));
-        return metersWater;
-    }
+
 
     //------------------------------ENERGY-------------------
 
@@ -181,27 +171,40 @@ public class EntityProvider {
         return readingsGasNew;
     }
 
+//--------------------------------------WATER--------------------------
+    private static List<MeterWater> getMeterWater() {
+        List<MeterWater> metersWater = new ArrayList<>();
+        metersWater.add(new MeterWater("Licznik woda glowny", "55", "m3", null, false));
+        metersWater.add(new MeterWater("woda zimna m1", "434", "metry3", APARTMENTS.get(1), false));
+        metersWater.add(new MeterWater("woda ciepla m1", "3455", "metry3", APARTMENTS.get(1), true));
+        metersWater.add(new MeterWater("woda zimna m2", "434", "metry3", APARTMENTS.get(2), false));
+        metersWater.add(new MeterWater("woda ciepla m2", "3455", "metry3", APARTMENTS.get(2), true));
+        metersWater.add(new MeterWater("woda zimna m3", "434", "metry3", APARTMENTS.get(3), false));
+        metersWater.add(new MeterWater("woda ciepla m3", "3455", "metry3", APARTMENTS.get(3), true));
+        return metersWater;
+    }
+
     private static List<ReadingWater> getReadingsWaterOld() {
         List<ReadingWater> readings = new ArrayList<>();
-        readings.add(new ReadingWater(FEBRUARY, 80, METERS_WATER.get(6)));
-        readings.add(new ReadingWater(FEBRUARY, 10, METERS_WATER.get(0)));
+        readings.add(new ReadingWater(FEBRUARY, 80, METERS_WATER.get(0)));
         readings.add(new ReadingWater(FEBRUARY, 10, METERS_WATER.get(1)));
-        readings.add(new ReadingWater(FEBRUARY, 15, METERS_WATER.get(2)));
+        readings.add(new ReadingWater(FEBRUARY, 10, METERS_WATER.get(2)));
         readings.add(new ReadingWater(FEBRUARY, 15, METERS_WATER.get(3)));
-        readings.add(new ReadingWater(FEBRUARY, 12, METERS_WATER.get(4)));
+        readings.add(new ReadingWater(FEBRUARY, 15, METERS_WATER.get(4)));
         readings.add(new ReadingWater(FEBRUARY, 12, METERS_WATER.get(5)));
+        readings.add(new ReadingWater(FEBRUARY, 12, METERS_WATER.get(6)));
         return readings;
     }
 
     private static List<ReadingWater> getReadingsWaterNew() {
         List<ReadingWater> readings = new ArrayList<>();
-        readings.add(new ReadingWater(MARCH, 100, METERS_WATER.get(6)));
-        readings.add(new ReadingWater(MARCH, 11, METERS_WATER.get(0)));
+        readings.add(new ReadingWater(MARCH, 100, METERS_WATER.get(0)));
         readings.add(new ReadingWater(MARCH, 11, METERS_WATER.get(1)));
-        readings.add(new ReadingWater(MARCH, 20, METERS_WATER.get(2)));
+        readings.add(new ReadingWater(MARCH, 11, METERS_WATER.get(2)));
         readings.add(new ReadingWater(MARCH, 20, METERS_WATER.get(3)));
-        readings.add(new ReadingWater(MARCH, 15, METERS_WATER.get(4)));
+        readings.add(new ReadingWater(MARCH, 20, METERS_WATER.get(4)));
         readings.add(new ReadingWater(MARCH, 15, METERS_WATER.get(5)));
+        readings.add(new ReadingWater(MARCH, 15, METERS_WATER.get(6)));
         return readings;
     }
 

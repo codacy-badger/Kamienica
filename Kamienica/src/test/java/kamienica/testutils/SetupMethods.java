@@ -19,10 +19,10 @@
 //import kamienica.feature.reading.ReadingEnergy;
 //import kamienica.feature.reading.ReadingGas;
 //import kamienica.feature.reading.ReadingWater;
-//import kamienica.feature.tenant.Tenant;
+//import kamienica.model.Tenant;
 //import kamienica.feature.tenant.UserRole;
 //import kamienica.feature.tenant.Status;
-//import kamienica.feature.usagevalue.UsageValue;
+//import kamienica.model.MediaUsage;
 //
 //public class SetupMethods {
 //
@@ -213,30 +213,30 @@
 //		return new InvoiceGas("23424", "energia", new LocalDate(), 300, newReadings.get(0));
 //	}
 //
-//	public static ArrayList<UsageValue> usageEnergy(List<Apartment> apartments) {
-//		ArrayList<UsageValue> out = new ArrayList<>();
-//		out.add(new UsageValue("czesc wspolna", 10, "kWh", 28, apartments.get(0)));
-//		out.add(new UsageValue("piwnica", 5, "kWh", 28, apartments.get(1)));
-//		out.add(new UsageValue("parter", 15, "kWh", 28, apartments.get(2)));
-//		out.add(new UsageValue("1 pieteo", 5, "kWh", 28, apartments.get(3)));
+//	public static ArrayList<MediaUsage> usageEnergy(List<Apartment> apartments) {
+//		ArrayList<MediaUsage> out = new ArrayList<>();
+//		out.add(new MediaUsage("czesc wspolna", 10, "kWh", 28, apartments.get(0)));
+//		out.add(new MediaUsage("piwnica", 5, "kWh", 28, apartments.get(1)));
+//		out.add(new MediaUsage("parter", 15, "kWh", 28, apartments.get(2)));
+//		out.add(new MediaUsage("1 pieteo", 5, "kWh", 28, apartments.get(3)));
 //		return out;
 //	}
 //
-//	public static ArrayList<UsageValue> usageWater(List<Apartment> apartments) {
-//		ArrayList<UsageValue> out = new ArrayList<>();
-//		out.add(new UsageValue("czesc wspolna", 2, "kWh", 28, apartments.get(0)));
-//		out.add(new UsageValue("piwnica", 2, "kWh", 28, apartments.get(1)));
-//		out.add(new UsageValue("parter", 10, "kWh", 28, apartments.get(2)));
-//		out.add(new UsageValue("1 pieteo", 6, "kWh", 28, apartments.get(3)));
+//	public static ArrayList<MediaUsage> usageWater(List<Apartment> apartments) {
+//		ArrayList<MediaUsage> out = new ArrayList<>();
+//		out.add(new MediaUsage("czesc wspolna", 2, "kWh", 28, apartments.get(0)));
+//		out.add(new MediaUsage("piwnica", 2, "kWh", 28, apartments.get(1)));
+//		out.add(new MediaUsage("parter", 10, "kWh", 28, apartments.get(2)));
+//		out.add(new MediaUsage("1 pieteo", 6, "kWh", 28, apartments.get(3)));
 //		return out;
 //	}
 //
-//	public static ArrayList<UsageValue> usageGas(List<Apartment> apartments) {
-//		ArrayList<UsageValue> out = new ArrayList<>();
-//		out.add(new UsageValue("czesc wspolna", 8, "kWh", 28, apartments.get(0)));
-//		out.add(new UsageValue("piwnica", 10.33, "kWh", 28, apartments.get(1)));
-//		out.add(new UsageValue("parter", 3.67, "kWh", 28, apartments.get(2)));
-//		out.add(new UsageValue("1 pieteo", 5, "kWh", 28, apartments.get(3)));
+//	public static ArrayList<MediaUsage> usageGas(List<Apartment> apartments) {
+//		ArrayList<MediaUsage> out = new ArrayList<>();
+//		out.add(new MediaUsage("czesc wspolna", 8, "kWh", 28, apartments.get(0)));
+//		out.add(new MediaUsage("piwnica", 10.33, "kWh", 28, apartments.get(1)));
+//		out.add(new MediaUsage("parter", 3.67, "kWh", 28, apartments.get(2)));
+//		out.add(new MediaUsage("1 pieteo", 5, "kWh", 28, apartments.get(3)));
 //		return out;
 //	}
 //

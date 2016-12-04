@@ -22,7 +22,7 @@
 //import kamienica.model.Apartment;
 //import kamienica.feature.apartment.ApartmentController;
 //import kamienica.feature.apartment.ApartmentService;
-//import kamienica.testsetup.SetupMethods;
+//import kamienica.testutils.SetupMethods;
 //
 //public class ApartmentControllerTest {
 //	@Mock

@@ -3,17 +3,18 @@ package kamienica.core.calculator;
 import java.util.ArrayList;
 import java.util.List;
 
+import kamienica.model.MediaUsage;
 import org.joda.time.Days;
 
 import kamienica.model.Apartment;
 import kamienica.feature.meter.MeterWater;
 import kamienica.feature.reading.ReadingWater;
-import kamienica.feature.usagevalue.UsageValue;
 
+@Deprecated
 public class WaterConsumptionCalculator {
 
-	public static ArrayList<UsageValue> countConsumption(List<Apartment> apartment, List<ReadingWater> oldReading,
-			List<ReadingWater> newRading) {
+	public static ArrayList<MediaUsage> countConsumption(List<Apartment> apartment, List<ReadingWater> oldReading,
+                                                         List<ReadingWater> newRading) {
 
 		ReadingWater sharedReadingOld;
 		if (!oldReading.isEmpty()) {
@@ -23,9 +24,9 @@ public class WaterConsumptionCalculator {
 		ReadingWater sharedReadingNew = WaterConsumptionCalculator.generateUsageForAdministrativePart(newRading, apartment);
 		newRading.add(sharedReadingNew);
 
-		ArrayList<UsageValue> usage = new ArrayList<>();
+		ArrayList<MediaUsage> usage = new ArrayList<>();
 		for (Apartment m : apartment) {
-			UsageValue tmpUsage = new UsageValue();
+			MediaUsage tmpUsage = new MediaUsage();
 			tmpUsage.setDescription("Zuzycie calkowite za: " + m.getDescription());
 			tmpUsage.setApartment(m);
 			double sumPrevious = 0;

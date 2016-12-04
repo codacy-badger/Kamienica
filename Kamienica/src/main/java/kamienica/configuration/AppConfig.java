@@ -40,6 +40,7 @@ import java.util.List;
 @ComponentScan(basePackages = "kamienica.*")
 public class AppConfig extends WebMvcConfigurerAdapter {
 
+	public static final String VERSION = "1.0";
 	@Autowired
 	private ReadingEnergyConverter readingEnergyConverter;
 	@Autowired
@@ -52,16 +53,16 @@ public class AppConfig extends WebMvcConfigurerAdapter {
 	private InvoiceWaterConverter invoiceWaterConverter;
 	@Autowired
 	private InvoiceEnergyConverter invoiceEnergyConverter;
-	@Autowired
-	private ApartmentConverter apartmentConverter;
+//	@Autowired
+//	private ApartmentConverter apartmentConverter;
 	@Autowired
 	private MeterGasConverter meterGasConverter;
 	@Autowired
 	private MeterEnergyConverter meterEnergyConverter;
 	@Autowired
 	private MeterWaterConverter meterWaterConverter;
-	@Autowired
-	private TenantConverter tenantConverter;
+//	@Autowired
+//	private TenantConverter tenantConverter;
 
 	@Override
 	public void configureContentNegotiation(ContentNegotiationConfigurer configurer) {
@@ -133,11 +134,11 @@ public class AppConfig extends WebMvcConfigurerAdapter {
 		registry.addConverter(invoiceGasConverter);
 		registry.addConverter(invoiceWaterConverter);
 
-		registry.addConverter(apartmentConverter);
+//		registry.addConverter(apartmentConverter);
 		registry.addConverter(meterGasConverter);
 		registry.addConverter(meterEnergyConverter);
 		registry.addConverter(meterWaterConverter);
-		registry.addConverter(tenantConverter);
+//		registry.addConverter(tenantConverter);
 
 	}
 

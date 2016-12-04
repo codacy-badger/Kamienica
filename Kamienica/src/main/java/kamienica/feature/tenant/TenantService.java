@@ -1,5 +1,7 @@
 package kamienica.feature.tenant;
 
+import kamienica.model.Tenant;
+
 import java.util.List;
 
 public interface TenantService {

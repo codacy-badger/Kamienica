@@ -3,7 +3,7 @@ package kamienica.controller.api;
 import kamienica.core.message.ApiErrorResponse;
 import kamienica.core.message.ApiResponse;
 import kamienica.core.message.Message;
-import kamienica.feature.tenant.Tenant;
+import kamienica.model.Tenant;
 import kamienica.feature.tenant.TenantService;
 import org.hibernate.exception.ConstraintViolationException;
 import org.springframework.beans.factory.annotation.Autowired;
