@@ -12,6 +12,7 @@ import java.util.List;
 import java.util.function.Predicate;
 
 import org.joda.time.LocalDate;
+import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
 import javax.validation.constraints.NotNull;
@@ -19,13 +20,12 @@ import javax.validation.constraints.NotNull;
 /**
  * Standard calculation method
  */
-@Service(value = "standard")
+@Component
 public class StandardUsageCalculator implements ConsumptionCalculator {
 
     private LocalDate latestDate;
     private LocalDate previousDate;
     private Predicate<Reading> noNullApartment = s -> s.getMeter().getApartment() != null;
-    private Predicate<Reading> nullApartment = s -> s.getMeter().getApartment() == null;
     private Predicate<Reading> maxDate = s -> s.getReadingDate().equals(latestDate);
     private Predicate<Reading> minDate = s -> s.getReadingDate().equals(previousDate);
     private double totalUsageCounted = 0;

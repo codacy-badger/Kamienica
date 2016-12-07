@@ -1,6 +1,7 @@
 package kamienica.feature.user_admin;
 
 import kamienica.core.enums.Media;
+import kamienica.core.util.CommonUtils;
 import kamienica.feature.apartment.ApartmentDao;
 import kamienica.feature.invoice.InvoiceAbstractDao;
 import kamienica.feature.reading.*;
@@ -64,10 +65,11 @@ public class AdminUserServiceImpl implements AdminUserService {
     }
 
     private void addLatestReadings(HashMap<String, Object> model) {
+        final LocalDate now = new LocalDate();
 
-        int energy = countDays(energyDao.getLatestDate());
-        int gas = countDays(gasDao.getLatestDate());
-        int water = countDays(waterDao.getLatestDate());
+        int energy = CommonUtils.countDaysBetween(energyDao.getLatestDate(), now);
+        int gas = CommonUtils.countDaysBetween(gasDao.getLatestDate(), now);
+        int water = CommonUtils.countDaysBetween(waterDao.getLatestDate(), now);
         String media;
         int days;
         if (energy > gas && energy > water) {
@@ -140,8 +142,4 @@ public class AdminUserServiceImpl implements AdminUserService {
         return (SecurityUser) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
     }
 
-    private int countDays(LocalDate date) {
-        LocalDate now = LocalDate.now();
-        return Days.daysBetween(date, now).getDays();
-    }
 }

@@ -1,5 +1,6 @@
 package kamienica.service;
 
+import kamienica.core.util.CommonUtils;
 import kamienica.feature.user_admin.AdminUserService;
 import org.joda.time.Days;
 import org.joda.time.LocalDate;
@@ -32,13 +33,11 @@ public class AdminUserServiceImplTest extends AbstractServiceTest {
         assertEquals(0 , emptyApartments);
         assertEquals("Woda" , readingMedia);
         assertEquals("Gaz" , invoiceMedia);
-        assertEquals(countDateDifference() , readingDays);
+
+        final int dayCount = CommonUtils.countDaysBetween(oldestReading, new LocalDate());
+        assertEquals(dayCount , readingDays);
         assertEquals(9999, invoiceDays);
         System.out.println(result);
-    }
-
-    private int countDateDifference() {
-        return Days.daysBetween(oldestReading, new LocalDate()).getDays();
     }
 
     @Test

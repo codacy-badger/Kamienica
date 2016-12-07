@@ -90,7 +90,7 @@ public abstract class AbstractDao<T> {
     @SuppressWarnings("unchecked")
     public Set<Long> getIdList() {
         Criteria criteria = createEntityCriteria().setProjection(Projections.property("id"));
-        return new HashSet<Long>(criteria.list());
+        return new HashSet<>(criteria.list());
 
     }
 
