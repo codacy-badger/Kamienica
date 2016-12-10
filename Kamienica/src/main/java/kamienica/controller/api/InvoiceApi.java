@@ -16,7 +16,7 @@ import kamienica.feature.invoice.InvoiceService;
 
 @RestController
 @RequestMapping("/api/v1/invoices")
-public class InvoiceRestController {
+public class InvoiceApi {
 
     @Autowired
     private InvoiceService service;

@@ -132,6 +132,8 @@
 										class="fa fa-plus" aria-hidden="true"></i> Nowe</a></li>
 								<li><a href="${path}/Admin/Invoice/invoiceEnergyList.html"><i
 										class="fa fa-list" aria-hidden="true"></i> Lista</a></li>
+										<li><a href="${path}/Admin/Invoice/energy.html"><i
+										class="fa fa-list" aria-hidden="true"></i> REST</a></li>
 								
 							</ul></li>
 

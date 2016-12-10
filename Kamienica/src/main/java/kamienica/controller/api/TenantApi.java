@@ -26,7 +26,7 @@ public class TenantApi extends AbstractApi {
     private TenantService service;
 
     @RequestMapping(method = RequestMethod.GET)
-    public ResponseEntity<?> ist(@RequestParam(value = "deactivated", required = false) final boolean deactivated) {
+    public ResponseEntity<?> list(@RequestParam(value = "deactivated", required = false) final boolean deactivated) {
         final List<Tenant> list;
         if (deactivated) {
             list = service.getList();

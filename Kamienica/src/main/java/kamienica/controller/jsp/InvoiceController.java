@@ -1,4 +1,4 @@
-package kamienica.feature.invoice;
+package kamienica.controller.jsp;
 
 import java.util.HashMap;
 import java.util.List;
@@ -6,9 +6,6 @@ import java.util.Map;
 
 import javax.validation.Valid;
 
-import kamienica.model.InvoiceEnergy;
-import kamienica.model.InvoiceGas;
-import kamienica.model.InvoiceWater;
 import org.hibernate.exception.ConstraintViolationException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -19,11 +16,16 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
-import kamienica.core.exception.InvalidDivisionException;
 import kamienica.core.enums.Media;
+import kamienica.core.exception.InvalidDivisionException;
+import kamienica.feature.invoice.InvoiceControllerUtils;
+import kamienica.feature.invoice.InvoiceService;
 import kamienica.feature.reading.ReadingEnergy;
 import kamienica.feature.reading.ReadingGas;
 import kamienica.feature.reading.ReadingWater;
+import kamienica.model.InvoiceEnergy;
+import kamienica.model.InvoiceGas;
+import kamienica.model.InvoiceWater;
 
 @Controller
 public class InvoiceController {
@@ -77,29 +79,6 @@ public class InvoiceController {
 		HashMap<String, Object> model = new HashMap<>();
 		model.put("saveUrl", "/Admin/Invoice/invoiceWaterSave");
 		model.put("media", "Woda");
-		// ArrayList<Tenant> tenants = (ArrayList<Tenant>)
-		// tenantService.getActiveTenants();
-		// ArrayList<Division> division = (ArrayList<Division>)
-		// divisionService.getList();
-		// ArrayList<Apartment> apartments = (ArrayList<Apartment>)
-		// apartmentService.getList();
-		//
-		// if (!DivisionValidator.validateDivision(apartments, division,
-		// tenants)) {
-		// String message = "Lista aktualnych najemców i mieszkań się nie
-		// zgadza. Sprawdź algorytm podziału";
-		// model.put("error", message);
-		// return new ModelAndView("/Admin/Invoice/InvoiceRegister", "model",
-		// model);
-		// }
-		//
-		// List<ReadingWater> readings =
-		// readingService.getUnresolvedReadingsWater();
-		// if (readings.isEmpty()) {
-		// model.put("error", "Brakuje odczytów dla nowej faktury");
-		// } else {
-		// model.put("readings", readings);
-		// }
 		List<ReadingWater> readings;
 		try {
 			readings = invoiceService.prepareForRegistration(Media.WATER);
@@ -143,45 +122,9 @@ public class InvoiceController {
 			utils.setUrlForGas(model);
 			return new ModelAndView("/Admin/Invoice/InvoiceRegister", "model", model);
 		}
-		//
-		// List<ReadingGas> readingGasOld = new ArrayList<>();
-		// ArrayList<Tenant> tenants = (ArrayList<Tenant>)
-		// tenantService.getActiveTenants();
-		// ArrayList<Division> division = (ArrayList<Division>)
-		// divisionService.getList();
-		// ArrayList<Apartment> apartments = (ArrayList<Apartment>)
-		// apartmentService.getList();
-
-		// readingGasOld =
-		// readingService.getPreviousReadingGas(invoice.getBaseReading().getReadingDate(),
-		// meterService.getIdList(Media.GAS));
-
-		// HashMap<String, List<ReadingWater>> waterForGas =
-		// readingService.getWaterReadingsForGasConsumption(invoice);
-		// if (waterForGas.isEmpty()) {
-		// HashMap<String, Object> model = new HashMap<>();
-		// String message = "Brakuje odczytów wody. Bez nich niemożliwe jest
-		// obliczenie zużycia gazu dla pieca CWU";
-		// model.put("error", message);
-		// model.put("saveUrl", "/Admin/Invoice/invoiceGasSave");
-		// model.put("media", "Gaz");
-		// return new ModelAndView("/Admin/Invoice/InvoiceRegister", "model",
-		// model);
-		// }
-
-		// List<ReadingGas> readingGasNew =
-		// readingService.getByDate(invoice.getBaseReading().getReadingDate(),
-		// Media.GAS);
-		//
-		// ArrayList<MediaUsage> usageGas =
-		// ManagerGas.countConsumption(apartments, readingGasOld, readingGasNew,
-		// waterForGas.get("old"), waterForGas.get("new"));
-		// List<PaymentGas> paymentGas =
-		// ManagerPayment.createPaymentGasList(tenants, invoice, division,
-		// usageGas);
+		
 
 		try {
-			// invoiceService.saveGas(invoice, paymentGas);
 			invoiceService.save(invoice, Media.GAS);
 		} catch (ConstraintViolationException e) {
 			result.rejectValue("serialNumber", "error.invoice", "Podany numer już istnieje");
@@ -200,36 +143,6 @@ public class InvoiceController {
 			return new ModelAndView("/Admin/Invoice/InvoiceRegister", "model", model);
 		}
 
-		// List<ReadingWater> readingWaterOld = new ArrayList<>();
-		// ArrayList<Tenant> tenants = (ArrayList<Tenant>)
-		// tenantService.getActiveTenants();
-		// ArrayList<Division> division = (ArrayList<Division>)
-		// divisionService.getList();
-		// ArrayList<Apartment> apartments = (ArrayList<Apartment>)
-		// apartmentService.getList();
-		//
-		// readingWaterOld =
-		// readingService.getPreviousReadingWater(invoice.getBaseReading().getReadingDate(),
-		// meterService.getIdList(Media.WATER));
-		//
-		// List<ReadingWater> readingWaterNew =
-		// readingService.getByDate(invoice.getBaseReading().getReadingDate(),
-		// Media.WATER);
-		//
-		// ArrayList<MediaUsage> usageWater =
-		// ManagerWater.countConsumption(apartments, readingWaterOld,
-		// readingWaterNew);
-		// List<PaymentWater> paymentWater =
-		// ManagerPayment.createPaymentWaterList(tenants, invoice, division,
-		// usageWater);
-		//
-		// try {
-		// invoiceService.saveWater(invoice, paymentWater);
-		// } catch (ConstraintViolationException e) {
-		// result.rejectValue("serialNumber", "error.invoice", "Podany numerjuż
-		// istnieje");
-		// return new ModelAndView("/Admin/Invoice/InvoiceWaterRegister");
-		// }
 
 		try {
 			invoiceService.save(invoice, Media.WATER);
@@ -247,10 +160,6 @@ public class InvoiceController {
 	public ModelAndView invoiceEnergyList() {
 		Map<String, Object> model = new HashMap<>();
 		invoiceService.list(model, Media.ENERGY);
-		// model.put("invoice", invoiceService.getEnergyInvoiceList());
-		// model.put("editlUrl", "/Admin/Invoice/invoiceEnergyEdit.html?id=");
-		// model.put("delUrl", "/Admin/Invoice/invoiceEnergyDelete.html?id=");
-		// model.put("media", "Energia");
 		return new ModelAndView("/Admin/Invoice/InvoiceList", model);
 
 	}
@@ -259,10 +168,6 @@ public class InvoiceController {
 	public ModelAndView invoiceGasList() {
 		Map<String, Object> model = new HashMap<>();
 		invoiceService.list(model, Media.GAS);
-		// model.put("invoice", invoiceService.getGasInvoiceList());
-		// model.put("editlUrl", "/Admin/Invoice/invoiceGasEdit.html?id=");
-		// model.put("delUrl", "/Admin/Invoice/invoiceGasDelete.html?id=");
-		// model.put("media", "Gaz");
 		return new ModelAndView("/Admin/Invoice/InvoiceList", model);
 
 	}
@@ -271,10 +176,6 @@ public class InvoiceController {
 	public ModelAndView invoiceWaterList() {
 		Map<String, Object> model = new HashMap<>();
 		invoiceService.list(model, Media.WATER);
-		// model.put("invoice", invoiceService.getWaterInvoiceList());
-		// model.put("editlUrl", "/Admin/Invoice/invoiceWaterEdit.html?id=");
-		// model.put("delUrl", "/Admin/Invoice/invoiceWaterDelete.html?id=");
-		// model.put("media", "Woda");
 		return new ModelAndView("/Admin/Invoice/InvoiceList", model);
 
 	}
@@ -447,5 +348,20 @@ public class InvoiceController {
 		invoiceService.deleteEnergyByID(id);
 		return new ModelAndView("redirect:/Admin/Invoice/invoiceEnergyList.html");
 	}
-
+	
+	
+	@RequestMapping(value = "/Admin/Invoice/energy")
+	public ModelAndView energyRest() {
+		return new ModelAndView("/Admin/Invoice/energy");
+	}
+	
+	@RequestMapping(value = "/Admin/Invoice/gas")
+	public ModelAndView gasRest() {
+		return new ModelAndView("/Admin/Invoice/gas");
+	}
+	
+	@RequestMapping(value = "/Admin/Invoice/water")
+	public ModelAndView waterRest() {
+		return new ModelAndView("/Admin/Invoice/water");
+	}
 }
