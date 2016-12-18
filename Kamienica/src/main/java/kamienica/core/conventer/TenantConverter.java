@@ -1,11 +1,10 @@
 package kamienica.core.conventer;
 
+import kamienica.feature.tenant.TenantService;
+import kamienica.model.Tenant;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.convert.converter.Converter;
 import org.springframework.stereotype.Component;
-
-import kamienica.model.Tenant;
-import kamienica.feature.tenant.TenantService;
 /**
  * 
  * @author macfol

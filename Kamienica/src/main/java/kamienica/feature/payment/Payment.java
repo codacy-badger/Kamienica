@@ -1,19 +1,11 @@
 package kamienica.feature.payment;
 
-import javax.persistence.Column;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.Inheritance;
-import javax.persistence.ManyToOne;
-import javax.persistence.MappedSuperclass;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
-
+import kamienica.model.Tenant;
 import org.hibernate.annotations.Type;
 import org.joda.time.LocalDate;
 import org.springframework.format.annotation.DateTimeFormat;
 
-import kamienica.model.Tenant;
+import javax.persistence.*;
 
 @MappedSuperclass
 @Inheritance

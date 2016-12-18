@@ -13,7 +13,7 @@ import java.util.List;
  */
 public class CentralGasWaterHeatingCalulator implements ConsumptionCalculator {
     @Override
-    public List<MediaUsage> calculateConsumption(List<Apartment> apartments, List<Reading> readings) throws NegativeConsumptionValue, UsageCalculationException {
+    public List<MediaUsage> calculateConsumption(final List<Apartment> apartments, final List<Reading> readings) throws NegativeConsumptionValue, UsageCalculationException {
         return null;
     }
 }

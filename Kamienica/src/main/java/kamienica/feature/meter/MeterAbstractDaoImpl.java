@@ -1,14 +1,13 @@
 package kamienica.feature.meter;
 
-import java.util.HashSet;
-import java.util.Set;
-
+import kamienica.core.dao.AbstractDao;
 import org.hibernate.Criteria;
 import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
 import org.joda.time.LocalDate;
 
-import kamienica.core.dao.AbstractDao;
+import java.util.HashSet;
+import java.util.Set;
 
 public class MeterAbstractDaoImpl<T extends Meter> extends AbstractDao<T> {
 

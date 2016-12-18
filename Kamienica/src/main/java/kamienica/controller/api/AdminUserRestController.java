@@ -1,7 +1,14 @@
 package kamienica.controller.api;
 
-import java.util.List;
-
+import kamienica.core.enums.Media;
+import kamienica.feature.payment.Payment;
+import kamienica.feature.payment.PaymentService;
+import kamienica.feature.reading.Reading;
+import kamienica.feature.user_admin.AdminUserService;
+import kamienica.feature.user_admin.SecurityService;
+import kamienica.feature.user_admin.SecurityUser;
+import kamienica.model.Apartment;
+import kamienica.model.Tenant;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -10,15 +17,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import kamienica.core.enums.Media;
-import kamienica.model.Apartment;
-import kamienica.feature.payment.Payment;
-import kamienica.feature.payment.PaymentService;
-import kamienica.feature.reading.Reading;
-import kamienica.model.Tenant;
-import kamienica.feature.user_admin.AdminUserService;
-import kamienica.feature.user_admin.SecurityService;
-import kamienica.feature.user_admin.SecurityUser;
+import java.util.List;
 
 @RestController
 @RequestMapping("/api/v1/home")

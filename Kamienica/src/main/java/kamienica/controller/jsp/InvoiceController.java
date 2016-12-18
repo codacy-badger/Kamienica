@@ -1,21 +1,5 @@
 package kamienica.controller.jsp;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
-import javax.validation.Valid;
-
-import org.hibernate.exception.ConstraintViolationException;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
-import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.servlet.ModelAndView;
-
 import kamienica.core.enums.Media;
 import kamienica.core.exception.InvalidDivisionException;
 import kamienica.feature.invoice.InvoiceControllerUtils;
@@ -26,6 +10,20 @@ import kamienica.feature.reading.ReadingWater;
 import kamienica.model.InvoiceEnergy;
 import kamienica.model.InvoiceGas;
 import kamienica.model.InvoiceWater;
+import org.hibernate.exception.ConstraintViolationException;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.ModelAndView;
+
+import javax.validation.Valid;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 @Controller
 public class InvoiceController {
@@ -44,7 +42,7 @@ public class InvoiceController {
 
 		List<ReadingEnergy> readings;
 		try {
-			readings = invoiceService.prepareForRegistration(Media.ENERGY);
+			readings = invoiceService.getUnpaidReadingForNewIncvoice(Media.ENERGY);
 		} catch (InvalidDivisionException e) {
 			String message = e.getMessage();
 			model.put("error", message);
@@ -63,7 +61,7 @@ public class InvoiceController {
 		utils.setUrlForGas(model);
 		List<ReadingGas> readings;
 		try {
-			readings = invoiceService.prepareForRegistration(Media.GAS);
+			readings = invoiceService.getUnpaidReadingForNewIncvoice(Media.GAS);
 		} catch (InvalidDivisionException e) {
 			model.put("error", e.getMessage());
 			return new ModelAndView("/Admin/Invoice/InvoiceRegister", "model", model);
@@ -81,7 +79,7 @@ public class InvoiceController {
 		model.put("media", "Woda");
 		List<ReadingWater> readings;
 		try {
-			readings = invoiceService.prepareForRegistration(Media.WATER);
+			readings = invoiceService.getUnpaidReadingForNewIncvoice(Media.WATER);
 		} catch (InvalidDivisionException e) {
 			model.put("error", e.getMessage());
 			return new ModelAndView("/Admin/Invoice/InvoiceRegister", "model", model);
@@ -93,66 +91,66 @@ public class InvoiceController {
 
 	// -------------------SAVE----------------------------------------------
 
-	@RequestMapping(value = "/Admin/Invoice/invoiceEnergySave", method = RequestMethod.POST)
-	public ModelAndView invoiceEnergySave(@Valid @ModelAttribute("invoice") InvoiceEnergy invoice,
-			BindingResult result) {
+//	@RequestMapping(value = "/Admin/Invoice/invoiceEnergySave", method = RequestMethod.POST)
+//	public ModelAndView invoiceEnergySave(@Valid @ModelAttribute("invoice") InvoiceEnergy invoice,
+//			BindingResult result) {
+//
+//		if (result.hasErrors()) {
+//			HashMap<String, Object> model = new HashMap<>();
+//			model.put("saveUrl", "/Admin/Invoice/invoiceEnergySave");
+//			model.put("media", "Energia");
+//			return new ModelAndView("/Admin/Invoice/InvoiceRegister", "model", model);
+//		}
+//
+//		try {
+//			invoiceService.save(invoice, Media.ENERGY);
+//		} catch (ConstraintViolationException e) {
+//			result.rejectValue("serialNumber", "error.invoice", "Podany numerjuż istnieje");
+//			return new ModelAndView("/Admin/Invoice/InvoiceEnergyRegister");
+//		}
+//		return new ModelAndView("redirect:/Admin/Invoice/invoiceEnergyList.html");
+//
+//	}
 
-		if (result.hasErrors()) {
-			HashMap<String, Object> model = new HashMap<>();
-			model.put("saveUrl", "/Admin/Invoice/invoiceEnergySave");
-			model.put("media", "Energia");
-			return new ModelAndView("/Admin/Invoice/InvoiceRegister", "model", model);
-		}
-
-		try {
-			invoiceService.save(invoice, Media.ENERGY);
-		} catch (ConstraintViolationException e) {
-			result.rejectValue("serialNumber", "error.invoice", "Podany numerjuż istnieje");
-			return new ModelAndView("/Admin/Invoice/InvoiceEnergyRegister");
-		}
-		return new ModelAndView("redirect:/Admin/Invoice/invoiceEnergyList.html");
-
-	}
-
-	@RequestMapping(value = "/Admin/Invoice/invoiceGasSave", method = RequestMethod.POST)
-	public ModelAndView invoiceGasSave(@Valid @ModelAttribute("invoice") InvoiceGas invoice, BindingResult result) {
-
-		if (result.hasErrors()) {
-			HashMap<String, Object> model = new HashMap<>();
-			utils.setUrlForGas(model);
-			return new ModelAndView("/Admin/Invoice/InvoiceRegister", "model", model);
-		}
-		
-
-		try {
-			invoiceService.save(invoice, Media.GAS);
-		} catch (ConstraintViolationException e) {
-			result.rejectValue("serialNumber", "error.invoice", "Podany numer już istnieje");
-			return new ModelAndView("/Admin/Invoice/InvoiceGasRegister");
-		}
-		return new ModelAndView("redirect:/Admin/Invoice/invoiceGasList.html");
-	}
-
-	@RequestMapping(value = "/Admin/Invoice/invoiceWaterSave", method = RequestMethod.POST)
-	public ModelAndView invoiceWaterSave(@Valid @ModelAttribute("invoice") InvoiceWater invoice, BindingResult result) {
-
-		if (result.hasErrors()) {
-			HashMap<String, Object> model = new HashMap<>();
-			model.put("saveUrl", "/Admin/Invoice/invoiceWaterSave");
-			model.put("media", "Woda");
-			return new ModelAndView("/Admin/Invoice/InvoiceRegister", "model", model);
-		}
-
-
-		try {
-			invoiceService.save(invoice, Media.WATER);
-		} catch (ConstraintViolationException e) {
-			result.rejectValue("serialNumber", "error.invoice", "Podany numerjuż istnieje");
-			return new ModelAndView("/Admin/Invoice/InvoiceEnergyRegister");
-		}
-
-		return new ModelAndView("redirect:/Admin/Invoice/invoiceWaterList.html");
-	}
+//	@RequestMapping(value = "/Admin/Invoice/invoiceGasSave", method = RequestMethod.POST)
+//	public ModelAndView invoiceGasSave(@Valid @ModelAttribute("invoice") InvoiceGas invoice, BindingResult result) {
+//
+//		if (result.hasErrors()) {
+//			HashMap<String, Object> model = new HashMap<>();
+//			utils.setUrlForGas(model);
+//			return new ModelAndView("/Admin/Invoice/InvoiceRegister", "model", model);
+//		}
+//		
+//
+//		try {
+//			invoiceService.save(invoice, Media.GAS);
+//		} catch (ConstraintViolationException e) {
+//			result.rejectValue("serialNumber", "error.invoice", "Podany numer już istnieje");
+//			return new ModelAndView("/Admin/Invoice/InvoiceGasRegister");
+//		}
+//		return new ModelAndView("redirect:/Admin/Invoice/invoiceGasList.html");
+//	}
+//
+//	@RequestMapping(value = "/Admin/Invoice/invoiceWaterSave", method = RequestMethod.POST)
+//	public ModelAndView invoiceWaterSave(@Valid @ModelAttribute("invoice") InvoiceWater invoice, BindingResult result) {
+//
+//		if (result.hasErrors()) {
+//			HashMap<String, Object> model = new HashMap<>();
+//			model.put("saveUrl", "/Admin/Invoice/invoiceWaterSave");
+//			model.put("media", "Woda");
+//			return new ModelAndView("/Admin/Invoice/InvoiceRegister", "model", model);
+//		}
+//
+//
+//		try {
+//			invoiceService.save(invoice, Media.WATER);
+//		} catch (ConstraintViolationException e) {
+//			result.rejectValue("serialNumber", "error.invoice", "Podany numerjuż istnieje");
+//			return new ModelAndView("/Admin/Invoice/InvoiceEnergyRegister");
+//		}
+//
+//		return new ModelAndView("redirect:/Admin/Invoice/invoiceWaterList.html");
+//	}
 
 	// -------------------LIST----------------------------------------------
 

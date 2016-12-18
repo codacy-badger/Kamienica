@@ -1,5 +1,7 @@
 package kamienica.feature.settings;
 
+import kamienica.model.Settings;
+
 public interface SettingsService {
 
 	Settings getSettings();

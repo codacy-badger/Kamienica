@@ -49,7 +49,91 @@
 
 				<form class="form-horizontal" ng-submit="ctrl.submit()"
 					name="myForm">
+
+					<input path="id" readonly="true" type='hidden' /> 
+					<input type="hidden" ng-model="ctrl.invoice.id" />
+
+					<div class="form-group">
+						<label for="serialNumber" class="col-sm-3 control-label">Numer
+							Faktury</label>
+						<div class="col-sm-9">
+							<input type="text" ng-model="ctrl.invoice.serialNumber"
+								class="form-control" path='serialNumber'
+								placeholder="Pole wymagane" ng-required='true'
+								name="serialNumber" />
+							<p class="help-block">
+								<span class='error' ng-show="myForm.serialNumber.$invalid">Pole
+									wymagane</span> <span class='error'>{{errors.serialNumber}}</span>
+							</p>
+						</div>
+					</div>
 					
+					<div class="form-group">
+						<label for="inputEmail3" class="col-sm-3 control-label">Opis
+								Faktury</label>
+						<div class="col-sm-9">
+							<input type="text" ng-model="ctrl.invoice.description"
+								class="form-control" path='description'
+								placeholder="Pole wymagane" ng-required='true'
+								name="description" />
+							<p class="help-block">
+								<span class='error' ng-show="myForm.description.$invalid">Pole
+									wymagane</span> <span class='error'>{{errors.description}}</span>
+							</p>
+						</div>
+					</div>
+
+					<div class="form-group">
+						<label for="date" class="col-sm-3 control-label">Data
+							Wystawienia</label>
+						<div class="col-sm-9">
+							<input type="text" datetime="yyyy-MM-dd"
+								ng-model="ctrl.invoice.date" class="form-control"
+								path='date' placeholder="YYYY/MM/DD" name="date"
+								ng-required='true' />
+							<p class="help-block">
+								<span class='error' ng-show="myForm.date.$invalid">Pole
+									wymagane</span> <span class='error'>{{errors.date}}</span>
+							</p>
+						</div>
+					</div>
+					
+					<div class="form-group">
+						<label for="totalAmount" class="col-sm-3 control-label">Wartość Faktury</label>
+						<div class="col-sm-9">
+							<input type="text" ng-model="ctrl.invoice.totalAmount"
+								class="form-control" path='totalAmount'
+								name="totalAmount" ng-pattern="/^[0-9]{1,12}$/" ng-min=0 ng-required='true'/>
+							<p class="help-block">
+								<span class='error' ng-show="myForm.totalAmount.$invalid">Tylko
+									liczby</span> <span class='error'>{{errors.totalAmount}}</span>
+							</p>
+						</div>
+						
+					</div>
+					<div class="form-group">
+						<label for="inputEmail3" class="col-sm-3 control-label">Odczyty</label>
+						<div class="col-sm-9">
+							<select name='apartment' ng-model="ctrl.invoice.baseReading"
+								ng-required='true' class="form-control"
+								ng-options="a.readingDate for a in ctrl.readings"><option>{{ctrl.inovice.readings}}</option>
+							</select>
+							<p class="help-block">
+								<span class='error' ng-show="myForm.baseReading.$invalid">Pole
+									wymagane</span> <span class='error'>{{errors.baseReading}}</span>
+							</p>
+						</div>
+					</div>
+					
+					
+					
+				
+					
+
+					<div class="form-group">
+						<button type="submit" class="btn btn-default">Zapisz</button>
+						<button class="btn btn-default" type="reset">Resetuj</button>
+					</div>
 
 				</form>
 			</div>
@@ -71,14 +155,14 @@
 							</tr>
 						</thead>
 						<tbody>
-						
+
 							<tr ng-repeat="a in ctrl.invoices">
 								<td><span ng-bind="a.serialNumber"></span></td>
 								<td><span ng-bind="a.description"></span></td>
 								<td><span ng-bind="a.date"></span></td>
 								<td><span ng-bind="a.totalAmount"></span></td>
 								<td>
-									
+
 									<button type="button" ng-click="ctrl.remove(a.id, $index)"
 										class="btn-xs btn-danger ">
 										<i class="fa fa-times" aria-hidden="true"></i>
@@ -96,7 +180,7 @@
 	<script src="<c:url value='/static/js/angular-resource.js' />"></script>
 	<script src="<c:url value='/static/angular/app.js' />"></script>
 	<script
-		src="<c:url value='/static/angular/reading/energy/reading_service.js' />"></script>
+		src="<c:url value='/static/angular/invoice/energy/baseReading_service.js' />"></script>
 	<script
 		src="<c:url value='/static/angular/invoice/energy/invoice_service.js' />"></script>
 	<script

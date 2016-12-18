@@ -1,15 +1,11 @@
 package kamienica.core.calculator;
 
+import kamienica.core.exception.InvalidDivisionException;
 import kamienica.core.util.CommonUtils;
-import kamienica.model.MediaUsage;
-import kamienica.model.Division;
-import kamienica.model.InvoiceEnergy;
-import kamienica.model.InvoiceGas;
-import kamienica.model.InvoiceWater;
 import kamienica.feature.payment.PaymentEnergy;
 import kamienica.feature.payment.PaymentGas;
 import kamienica.feature.payment.PaymentWater;
-import kamienica.model.Tenant;
+import kamienica.model.*;
 import org.joda.time.LocalDate;
 
 import java.util.ArrayList;
@@ -19,8 +15,9 @@ import java.util.List;
 public class PaymentCalculator {
 
 
-    public static List<PaymentEnergy> createPaymentEnergyList(List<Tenant> tenants, InvoiceEnergy invoice,
-                                                              List<Division> division, List<MediaUsage> usage) {
+    public static List<PaymentEnergy> createPaymentEnergyList(final List<Tenant> tenants, final InvoiceEnergy invoice,
+                                                              final List<Division> division, final List<MediaUsage> usage) throws InvalidDivisionException {
+        validateDivision(division);
         double sumOfExpences = invoice.getTotalAmount();
         List<PaymentEnergy> listToReturn = new ArrayList<>();
 
@@ -47,12 +44,18 @@ public class PaymentCalculator {
         return listToReturn;
     }
 
-    public static List<PaymentGas> createPaymentGasList(List<Tenant> tenants, InvoiceGas invoice,
-                                                        List<Division> division, List<MediaUsage> usage) {
+    private static void validateDivision(List<Division> division) throws InvalidDivisionException {
+        if (division == null || division.size() == 0) {
+            throw new InvalidDivisionException();
+        }
+    }
+
+    public static List<PaymentGas> createPaymentGasList(final List<Tenant> tenants, final InvoiceGas invoice,
+                                                        final List<Division> division, final List<MediaUsage> usage) {
         double sumOfExpences = invoice.getTotalAmount();
         List<PaymentGas> listToReturn = new ArrayList<>();
 
-        double usageSum = sumUsage(usage);
+        final double usageSum = sumUsage(usage);
 
         for (Tenant tenant : tenants) {
             HashMap<Integer, Double> divisionForTenant = setTenantDivision(division, tenant);
@@ -76,8 +79,8 @@ public class PaymentCalculator {
         return listToReturn;
     }
 
-    public static List<PaymentWater> createPaymentWaterList(List<Tenant> tenants, InvoiceWater invoice,
-                                                            List<Division> podzial, List<MediaUsage> usage) {
+    public static List<PaymentWater> createPaymentWaterList(final List<Tenant> tenants, final InvoiceWater invoice,
+                                                            final List<Division> podzial, final List<MediaUsage> usage) {
         List<PaymentWater> listToReturn = new ArrayList<>();
 
         double sumOfExpences = invoice.getTotalAmount();
@@ -114,12 +117,9 @@ public class PaymentCalculator {
 
     private static HashMap<Integer, Double> setTenantDivision(List<Division> division, Tenant tenant) {
         HashMap<Integer, Double> output = new HashMap<>();
-        for (Division p : division) {
-            if (tenant.getId().equals(p.getTenant().getId())) {
-                output.put(p.getApartment().getApartmentNumber(), p.getDivisionValue());
-            }
-
-        }
+        division.stream().filter(p -> tenant.getId().equals(p.getTenant().getId())).forEachOrdered(p -> {
+            output.put(p.getApartment().getApartmentNumber(), p.getDivisionValue());
+        });
         return output;
     }
 

@@ -1,10 +1,6 @@
 package kamienica.model;
 
-import java.io.Serializable;
-
-import javax.persistence.*;
-import javax.validation.constraints.Digits;
-
+import kamienica.core.enums.Status;
 import kamienica.core.enums.UserRole;
 import org.hibernate.annotations.Type;
 import org.hibernate.validator.constraints.Email;
@@ -14,8 +10,9 @@ import org.joda.time.LocalDate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
 
-import kamienica.core.enums.Status;
-import kamienica.model.Apartment;
+import javax.persistence.*;
+import javax.validation.constraints.Digits;
+import java.io.Serializable;
 
 @Entity
 @Table(name = "tenant")

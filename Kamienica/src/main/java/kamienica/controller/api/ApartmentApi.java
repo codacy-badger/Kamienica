@@ -2,8 +2,8 @@ package kamienica.controller.api;
 
 import kamienica.core.message.ApiErrorResponse;
 import kamienica.core.message.Message;
-import kamienica.model.Apartment;
 import kamienica.feature.apartment.ApartmentService;
+import kamienica.model.Apartment;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;

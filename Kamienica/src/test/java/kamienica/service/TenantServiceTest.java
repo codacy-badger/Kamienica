@@ -1,20 +1,20 @@
 package kamienica.service;
 
-import static org.junit.Assert.*;
-
-import java.util.List;
-
 import kamienica.core.enums.Status;
 import kamienica.core.enums.UserRole;
 import kamienica.feature.apartment.ApartmentService;
+import kamienica.feature.tenant.TenantService;
 import kamienica.model.Apartment;
+import kamienica.model.Tenant;
 import org.joda.time.LocalDate;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-
-import kamienica.model.Tenant;
-import kamienica.feature.tenant.TenantService;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
+
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
 
 public class TenantServiceTest extends AbstractServiceTest {
 

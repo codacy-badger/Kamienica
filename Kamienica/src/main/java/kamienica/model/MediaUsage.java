@@ -1,7 +1,5 @@
 package kamienica.model;
 
-import kamienica.model.Apartment;
-
 public class MediaUsage {
 
 	private String description;

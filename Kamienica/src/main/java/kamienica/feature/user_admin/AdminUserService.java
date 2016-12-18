@@ -1,14 +1,14 @@
 package kamienica.feature.user_admin;
 
-import java.util.HashMap;
-import java.util.List;
-
 import kamienica.core.enums.Media;
-import kamienica.model.Apartment;
 import kamienica.feature.reading.Reading;
 import kamienica.feature.reading.ReadingEnergy;
 import kamienica.feature.reading.ReadingGas;
 import kamienica.feature.reading.ReadingWater;
+import kamienica.model.Apartment;
+
+import java.util.HashMap;
+import java.util.List;
 
 public interface AdminUserService {
 

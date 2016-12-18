@@ -1,9 +1,9 @@
 package kamienica.feature.reading;
 
+import org.joda.time.LocalDate;
+
 import java.util.LinkedList;
 import java.util.List;
-
-import org.joda.time.LocalDate;
 
 public class ReadingEnergyForm extends ReadingForm<ReadingEnergy> {
 

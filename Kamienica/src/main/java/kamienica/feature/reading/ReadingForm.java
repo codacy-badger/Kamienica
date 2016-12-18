@@ -1,8 +1,8 @@
 package kamienica.feature.reading;
 
-import java.util.List;
-
 import org.joda.time.LocalDate;
+
+import java.util.List;
 
 public abstract class ReadingForm<T extends Reading> {
 

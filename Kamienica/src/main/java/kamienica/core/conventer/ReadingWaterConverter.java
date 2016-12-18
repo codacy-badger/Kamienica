@@ -1,12 +1,11 @@
 package kamienica.core.conventer;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.core.convert.converter.Converter;
-import org.springframework.stereotype.Component;
-
 import kamienica.core.enums.Media;
 import kamienica.feature.reading.ReadingService;
 import kamienica.feature.reading.ReadingWater;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.convert.converter.Converter;
+import org.springframework.stereotype.Component;
 
 /**
  * 

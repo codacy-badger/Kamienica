@@ -1,15 +1,13 @@
 package kamienica.feature.apartment;
 
-import java.util.List;
-
+import kamienica.feature.settings.SettingsDao;
 import kamienica.model.Apartment;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import kamienica.feature.settings.SettingsDao;
-
 import javax.validation.constraints.NotNull;
+import java.util.List;
 
 @Service
 @Transactional

@@ -1,21 +1,18 @@
 package kamienica.core.calculator;
 
-import kamienica.core.exception.UsageCalculationException;
 import kamienica.core.exception.NegativeConsumptionValue;
+import kamienica.core.exception.UsageCalculationException;
 import kamienica.core.util.CommonUtils;
-import kamienica.model.MediaUsage;
-import kamienica.model.Apartment;
 import kamienica.feature.reading.Reading;
+import kamienica.model.Apartment;
+import kamienica.model.MediaUsage;
+import org.joda.time.LocalDate;
+import org.springframework.stereotype.Component;
 
+import javax.validation.constraints.NotNull;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Predicate;
-
-import org.joda.time.LocalDate;
-import org.springframework.stereotype.Component;
-import org.springframework.stereotype.Service;
-
-import javax.validation.constraints.NotNull;
 
 /**
  * Standard calculation method

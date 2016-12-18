@@ -1,8 +1,8 @@
 package kamienica.service;
 
-import kamienica.model.Tenant;
 import kamienica.feature.tenant.TenantDao;
 import kamienica.feature.user_admin.SecurityService;
+import kamienica.model.Tenant;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;

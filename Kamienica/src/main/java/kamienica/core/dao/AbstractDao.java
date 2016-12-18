@@ -1,10 +1,5 @@
 package kamienica.core.dao;
 
-import java.lang.reflect.ParameterizedType;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
-
 import org.hibernate.Criteria;
 import org.hibernate.Query;
 import org.hibernate.Session;
@@ -13,6 +8,11 @@ import org.hibernate.criterion.Criterion;
 import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Projections;
 import org.springframework.beans.factory.annotation.Autowired;
+
+import java.lang.reflect.ParameterizedType;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
 public abstract class AbstractDao<T> {
 

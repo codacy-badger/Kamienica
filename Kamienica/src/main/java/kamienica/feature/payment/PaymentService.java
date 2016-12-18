@@ -1,10 +1,10 @@
 package kamienica.feature.payment;
 
-import java.util.List;
-
 import kamienica.core.enums.Media;
 import kamienica.model.Invoice;
 import kamienica.model.Tenant;
+
+import java.util.List;
 
 public interface PaymentService {
 

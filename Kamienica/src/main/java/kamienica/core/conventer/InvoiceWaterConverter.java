@@ -1,5 +1,6 @@
-package kamienica.feature.invoice;
+package kamienica.core.conventer;
 
+import kamienica.feature.invoice.InvoiceService;
 import kamienica.model.InvoiceWater;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.convert.converter.Converter;

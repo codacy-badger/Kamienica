@@ -1,7 +1,7 @@
 package kamienica.feature.payment;
 
-import kamienica.model.Tenant;
 import kamienica.model.InvoiceGas;
+import kamienica.model.Tenant;
 import org.joda.time.LocalDate;
 
 import javax.persistence.Entity;

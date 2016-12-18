@@ -1,24 +1,18 @@
 package kamienica.testutils;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import org.joda.time.LocalDate;
-
 import kamienica.core.enums.Status;
-import kamienica.model.Apartment;
-import kamienica.model.Division;
-import kamienica.model.InvoiceEnergy;
-import kamienica.model.InvoiceGas;
-import kamienica.model.InvoiceWater;
+import kamienica.core.enums.UserRole;
 import kamienica.feature.meter.MeterEnergy;
 import kamienica.feature.meter.MeterGas;
 import kamienica.feature.meter.MeterWater;
 import kamienica.feature.reading.ReadingEnergy;
 import kamienica.feature.reading.ReadingGas;
 import kamienica.feature.reading.ReadingWater;
-import kamienica.model.Tenant;
-import kamienica.core.enums.UserRole;
+import kamienica.model.*;
+import org.joda.time.LocalDate;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class EntityProvider {
 
@@ -40,6 +34,9 @@ public class EntityProvider {
     public static final List<ReadingGas> GAS_NEW = getReadingsGasNew();
     public static final List<ReadingWater> WATER_OLD = getReadingsWaterOld();
     public static final List<ReadingWater> WATER_NEW = getReadingsWaterNew();
+    public static final List<Division> DIVISION = getDivisionList();
+    public static final List<Division> DIVISION_WRONG = getWrongDivisionList();
+
 
     // --------------------------------------SETUP--------------------------------------------------------------
     private static List<Apartment> getApartmentList() {
@@ -87,6 +84,11 @@ public class EntityProvider {
         return division;
     }
 
+    private static List<Division> getWrongDivisionList() {
+        List<Division> division = getDivisionList();
+        division.get(3).setDivisionValue(4.0);
+        return division;
+    }
 
     // ------------------------------LICZNIKI--------------------------------------------------------------------
 
@@ -102,7 +104,6 @@ public class EntityProvider {
         metersGas.add(new MeterGas("Licznik CWU", "4555", "kWh", null, true));
         return metersGas;
     }
-
 
 
     //------------------------------ENERGY-------------------
@@ -171,7 +172,7 @@ public class EntityProvider {
         return readingsGasNew;
     }
 
-//--------------------------------------WATER--------------------------
+    //--------------------------------------WATER--------------------------
     private static List<MeterWater> getMeterWater() {
         List<MeterWater> metersWater = new ArrayList<>();
         metersWater.add(new MeterWater("Licznik woda glowny", "55", "m3", null, false));

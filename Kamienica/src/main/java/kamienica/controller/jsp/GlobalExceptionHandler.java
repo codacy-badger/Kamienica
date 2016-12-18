@@ -1,12 +1,11 @@
 package kamienica.controller.jsp;
 
-import java.sql.SQLException;
-
-import javax.servlet.http.HttpServletRequest;
-
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.servlet.NoHandlerFoundException;
+
+import javax.servlet.http.HttpServletRequest;
+import java.sql.SQLException;
 
 @ControllerAdvice
 public class GlobalExceptionHandler {

@@ -1,8 +1,8 @@
 package kamienica.feature.user_admin;
 
-import java.util.ArrayList;
-import java.util.List;
-
+import kamienica.core.enums.Status;
+import kamienica.feature.tenant.TenantService;
+import kamienica.model.Tenant;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -12,9 +12,8 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Component;
 
-import kamienica.core.enums.Status;
-import kamienica.model.Tenant;
-import kamienica.feature.tenant.TenantService;
+import java.util.ArrayList;
+import java.util.List;
 
 @Component
 public class SecurityService implements UserDetailsService {

@@ -1,7 +1,7 @@
 package kamienica.feature.user_admin;
 
-import kamienica.model.Tenant;
 import kamienica.model.Apartment;
+import kamienica.model.Tenant;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.User;
 

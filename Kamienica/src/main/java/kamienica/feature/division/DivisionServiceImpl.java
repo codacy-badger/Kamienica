@@ -1,23 +1,22 @@
 package kamienica.feature.division;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-
+import kamienica.core.exception.InvalidDivisionException;
+import kamienica.core.exception.WrongDivisionInputException;
+import kamienica.core.util.CommonUtils;
+import kamienica.feature.apartment.ApartmentDao;
+import kamienica.feature.settings.SettingsDao;
+import kamienica.feature.tenant.TenantDao;
+import kamienica.model.Apartment;
 import kamienica.model.Division;
+import kamienica.model.Tenant;
 import org.joda.time.LocalDate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import kamienica.core.exception.InvalidDivisionException;
-import kamienica.core.exception.WrongDivisionInputException;
-import kamienica.core.util.CommonUtils;
-import kamienica.model.Apartment;
-import kamienica.feature.apartment.ApartmentDao;
-import kamienica.feature.settings.SettingsDao;
-import kamienica.model.Tenant;
-import kamienica.feature.tenant.TenantDao;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
 
 @Service
 @Transactional
@@ -37,18 +36,6 @@ public class DivisionServiceImpl implements DivisionService {
         return divisionDAO.getList();
     }
 
-    @Override
-    public void deleteByID(Long id) {
-        divisionDAO.deleteById(id);
-        settingsDao.changeDivisionState(false);
-
-    }
-
-    @Override
-    public void update(Division division) {
-        divisionDAO.update(division);
-        settingsDao.changeDivisionState(true);
-    }
 
     @Override
     public void deleteAll() {
@@ -71,7 +58,7 @@ public class DivisionServiceImpl implements DivisionService {
 
     @Override
     public void saveList(DivisionForm form) throws InvalidDivisionException {
-        if (DivisionValidator.checksumForDivision(form.getApartments(), form.getDivisionList())) {
+        if (DivisionValidator.checkIfDivisionIsCorrect(form.getApartments(), form.getDivisionList())) {
             throw new InvalidDivisionException();
         }
 

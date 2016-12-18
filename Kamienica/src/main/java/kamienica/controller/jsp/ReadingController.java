@@ -1,9 +1,8 @@
 package kamienica.controller.jsp;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
+import kamienica.core.enums.Media;
+import kamienica.core.exception.NoMainCounterException;
+import kamienica.feature.meter.MeterService;
 import kamienica.feature.reading.*;
 import org.joda.time.LocalDate;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,9 +14,9 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
-import kamienica.core.exception.NoMainCounterException;
-import kamienica.core.enums.Media;
-import kamienica.feature.meter.MeterService;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 @Controller
 @RequestMapping("/Admin/Reading")

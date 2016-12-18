@@ -1,12 +1,11 @@
 package kamienica.feature.division;
 
-import java.util.List;
-
+import kamienica.model.Apartment;
 import kamienica.model.Division;
+import kamienica.model.Tenant;
 import org.joda.time.LocalDate;
 
-import kamienica.model.Apartment;
-import kamienica.model.Tenant;
+import java.util.List;
 
 public class DivisionForm {
 

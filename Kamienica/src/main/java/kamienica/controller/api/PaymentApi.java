@@ -1,7 +1,8 @@
 package kamienica.controller.api;
 
-import java.util.List;
-
+import kamienica.core.enums.Media;
+import kamienica.feature.payment.Payment;
+import kamienica.feature.payment.PaymentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -10,9 +11,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import kamienica.core.enums.Media;
-import kamienica.feature.payment.Payment;
-import kamienica.feature.payment.PaymentService;
+import java.util.List;
 
 @RestController
 @RequestMapping("api/v1/payments")

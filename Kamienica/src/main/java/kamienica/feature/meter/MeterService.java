@@ -1,11 +1,10 @@
 package kamienica.feature.meter;
 
-import java.util.List;
-import java.util.Set;
-
+import kamienica.core.enums.Media;
 import org.springframework.validation.BindingResult;
 
-import kamienica.core.enums.Media;
+import java.util.List;
+import java.util.Set;
 
 public interface MeterService {
 

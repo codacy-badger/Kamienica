@@ -1,15 +1,14 @@
 package kamienica.feature.invoice;
 
-import java.util.List;
-
+import kamienica.core.dao.AbstractDao;
+import kamienica.core.enums.PaymentStatus;
 import kamienica.model.Invoice;
 import org.hibernate.Criteria;
 import org.hibernate.Query;
 import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
 
-import kamienica.core.dao.AbstractDao;
-import kamienica.core.enums.PaymentStatus;
+import java.util.List;
 
 public class InvoiceAbstractDaoImpl<I extends Invoice> extends AbstractDao<I> {
 

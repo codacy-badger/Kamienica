@@ -2,9 +2,8 @@ package kamienica.core.calculator;
 
 import kamienica.core.util.CommonUtils;
 import kamienica.feature.reading.ReadingEnergy;
-import kamienica.model.MediaUsage;
 import kamienica.model.Apartment;
-import org.joda.time.Days;
+import kamienica.model.MediaUsage;
 
 import java.util.ArrayList;
 import java.util.List;

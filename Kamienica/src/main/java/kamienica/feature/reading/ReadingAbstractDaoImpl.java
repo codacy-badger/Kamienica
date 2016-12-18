@@ -1,8 +1,7 @@
 package kamienica.feature.reading;
 
-import java.util.List;
-import java.util.Set;
-
+import kamienica.core.dao.AbstractDao;
+import kamienica.model.Invoice;
 import org.hibernate.Criteria;
 import org.hibernate.Query;
 import org.hibernate.criterion.Order;
@@ -10,10 +9,15 @@ import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
 import org.joda.time.LocalDate;
 
-import kamienica.core.dao.AbstractDao;
-import kamienica.model.Invoice;
+import java.util.List;
+import java.util.Set;
 
 public abstract class ReadingAbstractDaoImpl<T extends Reading> extends AbstractDao<T> {
+
+	public static final String GET_PREVIOUS = "SELECT * FROM %1$s where readingDate=(SELECT max(readingDate) FROM %1$s WHERE readingDate < :date )  AND meter_id IN(:list)";
+	public static final String COUNT_LAST_READING_DAYS = "SELECT DATEDIFF(CURDATE() , readingDate) FROM %s order by readingDate desc limit 1;";
+	public static final String DELETE_LATEST = "delete from  %s where readingDate=:date and resolved=:res";
+	public static final String CHANGE_RESOLVEMENT = "update %s set resolved= :res where readingDate = :paramdate";
 
 	@Override
 	public List<T> getList() {
@@ -41,8 +45,7 @@ public abstract class ReadingAbstractDaoImpl<T extends Reading> extends Abstract
 	}
 
 	public List<T> getPrevious(LocalDate readingDate, Set<Long> meterId) {
-		String queryString = String.format("SELECT * FROM %1$s where readingDate=(SELECT max(readingDate) "
-				+ "FROM %1$s WHERE readingDate < :date )  AND meter_id IN(:list)", getTabName());
+		String queryString = String.format(GET_PREVIOUS, getTabName());
 		Query query = getSession().createSQLQuery(queryString).addEntity(this.persistentClass)
 				.setDate("date", readingDate.toDate()).setParameterList("list", meterId);
 		@SuppressWarnings("unchecked")
@@ -60,8 +63,8 @@ public abstract class ReadingAbstractDaoImpl<T extends Reading> extends Abstract
 
 	}
 
-	public void changeResolvmentState(Invoice invoice, boolean resolved) {
-		String sql = String.format("update %s set resolved= :res where readingDate = :paramdate", getTabName());
+	public void changeResolvementState(Invoice invoice, boolean resolved) {
+		String sql = String.format(CHANGE_RESOLVEMENT, getTabName());
 		Query query = getSession().createSQLQuery(sql)
 				.setDate("paramdate", invoice.getBaseReading().getReadingDate().toDate()).setParameter("res", resolved);
 		query.executeUpdate();
@@ -69,7 +72,7 @@ public abstract class ReadingAbstractDaoImpl<T extends Reading> extends Abstract
 	}
 
 	public int countDaysFromLastReading() {
-		String sql = String.format("SELECT DATEDIFF(CURDATE() , readingDate) FROM %s order by readingDate desc limit 1",
+		String sql = String.format(COUNT_LAST_READING_DAYS,
 				getTabName());
 		try {
 			Query query = getSession().createSQLQuery(sql);
@@ -80,7 +83,7 @@ public abstract class ReadingAbstractDaoImpl<T extends Reading> extends Abstract
 	}
 
 	public void deleteLatestReadings(LocalDate date) {
-		String sql = String.format("delete from  %s where readingDate=:date and resolved=:res", getTabName());
+		String sql = String.format(DELETE_LATEST, getTabName());
 		Query query = getSession().createSQLQuery(sql);
 		query.setParameter("date", date.toString()).setParameter("res", false);
 		query.executeUpdate();

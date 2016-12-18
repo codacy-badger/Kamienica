@@ -1,14 +1,12 @@
 package kamienica.feature.meter;
 
-import java.io.Serializable;
+import kamienica.model.Apartment;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Table;
-
-import org.springframework.beans.factory.annotation.Autowired;
-
-import kamienica.model.Apartment;
+import java.io.Serializable;
 
 @Entity
 @Table(name = "metergas")

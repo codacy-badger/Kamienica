@@ -1,14 +1,13 @@
 package kamienica.core.calculator;
 
-import java.util.ArrayList;
-import java.util.List;
-
+import kamienica.feature.meter.MeterWater;
+import kamienica.feature.reading.ReadingWater;
+import kamienica.model.Apartment;
 import kamienica.model.MediaUsage;
 import org.joda.time.Days;
 
-import kamienica.model.Apartment;
-import kamienica.feature.meter.MeterWater;
-import kamienica.feature.reading.ReadingWater;
+import java.util.ArrayList;
+import java.util.List;
 
 @Deprecated
 public class WaterConsumptionCalculator {

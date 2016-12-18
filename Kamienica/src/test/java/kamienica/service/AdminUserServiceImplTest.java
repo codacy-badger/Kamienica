@@ -2,14 +2,13 @@ package kamienica.service;
 
 import kamienica.core.util.CommonUtils;
 import kamienica.feature.user_admin.AdminUserService;
-import org.joda.time.Days;
 import org.joda.time.LocalDate;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.Map;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 
 /**
  * Created by macfol on 12/4/16.

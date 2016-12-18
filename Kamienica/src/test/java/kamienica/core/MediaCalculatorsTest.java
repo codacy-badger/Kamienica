@@ -1,24 +1,22 @@
 package kamienica.core;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import kamienica.core.calculator.ConsumptionCalculator;
-import kamienica.testutils.EntityProvider;
-import kamienica.core.exception.UsageCalculationException;
-import org.junit.Test;
-
-import kamienica.core.exception.NegativeConsumptionValue;
 import kamienica.core.calculator.StandardUsageCalculator;
+import kamienica.core.exception.NegativeConsumptionValue;
+import kamienica.core.exception.UsageCalculationException;
 import kamienica.feature.reading.Reading;
 import kamienica.model.MediaUsage;
+import kamienica.testutils.EntityProvider;
+import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(classes = StandardUsageCalculator.class)

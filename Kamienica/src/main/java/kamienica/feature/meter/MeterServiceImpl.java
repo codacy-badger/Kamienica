@@ -1,8 +1,6 @@
 package kamienica.feature.meter;
 
-import java.util.List;
-import java.util.Set;
-
+import kamienica.core.enums.Media;
 import org.hibernate.exception.ConstraintViolationException;
 import org.joda.time.LocalDate;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,7 +8,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.validation.BindingResult;
 
-import kamienica.core.enums.Media;
+import java.util.List;
+import java.util.Set;
 
 @Service
 @Transactional

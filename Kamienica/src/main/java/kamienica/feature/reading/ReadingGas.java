@@ -1,15 +1,13 @@
 package kamienica.feature.reading;
 
-import java.io.Serializable;
+import kamienica.feature.meter.MeterGas;
+import org.joda.time.LocalDate;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
-
-import org.joda.time.LocalDate;
-
-import kamienica.feature.meter.MeterGas;
+import java.io.Serializable;
 
 @Entity
 @Table(name="readinggas")
@@ -24,16 +22,6 @@ public class ReadingGas extends Reading implements Serializable {
 	private String unit;
 	@ManyToOne
 	MeterGas meter;
-//	@OneToOne
-//	ReadingGas nextReading;
-//	
-//	public ReadingGas getNextReading() {
-//		return nextReading;
-//	}
-//
-//	public void setNextReading(ReadingGas nextReading) {
-//		this.nextReading = nextReading;
-//	}
 
 	public String getUnit() {
 		return this.unit;

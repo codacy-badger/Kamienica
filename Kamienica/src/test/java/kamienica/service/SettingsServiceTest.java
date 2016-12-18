@@ -1,11 +1,10 @@
 package kamienica.service;
 
-import static org.junit.Assert.assertNotNull;
-
+import kamienica.feature.settings.SettingsService;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import kamienica.feature.settings.SettingsService;
+import static org.junit.Assert.assertNotNull;
 
 public class SettingsServiceTest extends AbstractServiceTest {
 

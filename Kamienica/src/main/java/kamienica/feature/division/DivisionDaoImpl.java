@@ -1,10 +1,9 @@
 package kamienica.feature.division;
 
+import kamienica.core.dao.AbstractDao;
 import kamienica.model.Division;
 import org.hibernate.Query;
 import org.springframework.stereotype.Repository;
-
-import kamienica.core.dao.AbstractDao;
 
 @Repository("divisionDao")
 public class DivisionDaoImpl extends AbstractDao<Division> implements DivisionDao {

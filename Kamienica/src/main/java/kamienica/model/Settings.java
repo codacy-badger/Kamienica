@@ -1,13 +1,8 @@
-package kamienica.feature.settings;
-
-import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.Table;
+package kamienica.model;
 
 import kamienica.core.enums.WaterHeatingSystem;
+
+import javax.persistence.*;
 
 @Entity
 @Table(name = "settings")

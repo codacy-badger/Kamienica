@@ -1,10 +1,11 @@
 package kamienica.feature.division;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
+import kamienica.core.exception.WrongDivisionInputException;
+import kamienica.feature.apartment.ApartmentService;
+import kamienica.feature.tenant.TenantService;
+import kamienica.model.Apartment;
 import kamienica.model.Division;
+import kamienica.model.Tenant;
 import org.joda.time.LocalDate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -14,11 +15,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
-import kamienica.core.exception.WrongDivisionInputException;
-import kamienica.model.Apartment;
-import kamienica.feature.apartment.ApartmentService;
-import kamienica.model.Tenant;
-import kamienica.feature.tenant.TenantService;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 @Controller
 @RequestMapping("/Admin/Division")
@@ -32,7 +31,7 @@ public class DivisionController {
 	private DivisionService divisionService;
 
 	@RequestMapping("/divisionRegister")
-	public ModelAndView divisionRegister(@ModelAttribute("divisionForm") final DivisionForm divisionForm,
+	public ModelAndView divisionRegister(@ModelAttribute("divisionForm") DivisionForm divisionForm,
 			BindingResult result) {
 		Map<String, Object> model = new HashMap<>();
 		try {
@@ -47,12 +46,12 @@ public class DivisionController {
 	}
 
 	@RequestMapping(value = "/divisionSave", method = RequestMethod.POST)
-	public ModelAndView divisionSave(@ModelAttribute("divisionForm") final DivisionForm divisionForm, final BindingResult result) {
+	public ModelAndView divisionSave(@ModelAttribute("divisionForm") DivisionForm divisionForm, final BindingResult result) {
 		LocalDate date = divisionForm.getDate();
 		List<Division> divisionList = divisionForm.getDivisionList();
 		List<Apartment> apartmentList = apartmentService.getList();
 
-		if (DivisionValidator.checksumForDivision(apartmentList, divisionList)) {
+		if (DivisionValidator.checkIfDivisionIsCorrect(apartmentList, divisionList)) {
 			divisionService.saveList(divisionList, date);
 			return new ModelAndView("redirect:/Admin/Division/divisionList.html");
 		} else {

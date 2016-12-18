@@ -1,17 +1,17 @@
 package kamienica.service;
 
-import kamienica.core.exception.InvalidDivisionException;
 import kamienica.core.enums.Media;
-import kamienica.model.Apartment;
+import kamienica.core.exception.InvalidDivisionException;
 import kamienica.feature.apartment.ApartmentService;
 import kamienica.feature.division.DivisionService;
-import kamienica.model.InvoiceEnergy;
 import kamienica.feature.invoice.InvoiceService;
 import kamienica.feature.payment.Payment;
 import kamienica.feature.payment.PaymentService;
 import kamienica.feature.reading.Reading;
 import kamienica.feature.reading.ReadingEnergy;
 import kamienica.feature.reading.ReadingService;
+import kamienica.model.Apartment;
+import kamienica.model.InvoiceEnergy;
 import org.joda.time.LocalDate;
 import org.junit.Ignore;
 import org.junit.Test;
@@ -43,7 +43,7 @@ public class InvoiceEnergyServiceTest extends AbstractServiceTest {
 
 	@Transactional
 	@Test
-	public void add() {
+	public void add() throws InvalidDivisionException {
 		List<ReadingEnergy> list = readingService.getUnresolvedReadingsEnergy();
 		assertEquals(true, divisionService.isDivisionCorrect());
 		assertEquals(31, list.get(1).getValue(), 0);
@@ -65,7 +65,7 @@ public class InvoiceEnergyServiceTest extends AbstractServiceTest {
 
 	@Transactional
 	@Test
-	public void addForFirstReading() {
+	public void addForFirstReading() throws InvalidDivisionException {
 		List<ReadingEnergy> list = readingService.getUnresolvedReadingsEnergy();
 		assertEquals(11, list.get(0).getValue(), 0);
 
@@ -121,7 +121,7 @@ public class InvoiceEnergyServiceTest extends AbstractServiceTest {
 	public void prepareForRegistrationWithException() throws InvalidDivisionException {
 		Apartment ap = new Apartment(78, "1234", "dummy");
 		apService.save(ap);
-		List<Reading> list = invoiceService.prepareForRegistration(Media.ENERGY);
+		List<Reading> list = invoiceService.getUnpaidReadingForNewIncvoice(Media.ENERGY);
 		assertEquals(2, list.size());
 		assertEquals(11, list.get(0).getValue(), 0);
 		assertEquals(31, list.get(1).getValue(), 0);
@@ -130,7 +130,7 @@ public class InvoiceEnergyServiceTest extends AbstractServiceTest {
 	@Test
 	public void prepareForRegistration() throws InvalidDivisionException {
 		// apService.deleteByID(5L);
-		List<Reading> list = invoiceService.prepareForRegistration(Media.ENERGY);
+		List<Reading> list = invoiceService.getUnpaidReadingForNewIncvoice(Media.ENERGY);
 		assertEquals(2, list.size());
 		assertEquals(11, list.get(0).getValue(), 0);
 		assertEquals(31, list.get(1).getValue(), 0);
@@ -140,7 +140,7 @@ public class InvoiceEnergyServiceTest extends AbstractServiceTest {
 	@Test(expected = InvalidDivisionException.class)
 	public void shouldThrowInvalidDivisionExceptionWhilePreparing() throws InvalidDivisionException {
 		divisionService.deleteAll();
-		List<Reading> list = invoiceService.prepareForRegistration(Media.ENERGY);
+		List<Reading> list = invoiceService.getUnpaidReadingForNewIncvoice(Media.ENERGY);
 		assertEquals(0, list.size());
 	}
 

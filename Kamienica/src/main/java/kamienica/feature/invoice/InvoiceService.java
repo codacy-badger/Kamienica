@@ -1,10 +1,7 @@
 package kamienica.feature.invoice;
 
-import java.util.List;
-import java.util.Map;
-
-import kamienica.core.exception.InvalidDivisionException;
 import kamienica.core.enums.Media;
+import kamienica.core.exception.InvalidDivisionException;
 import kamienica.feature.payment.PaymentEnergy;
 import kamienica.feature.payment.PaymentGas;
 import kamienica.feature.payment.PaymentWater;
@@ -14,11 +11,14 @@ import kamienica.model.InvoiceEnergy;
 import kamienica.model.InvoiceGas;
 import kamienica.model.InvoiceWater;
 
+import java.util.List;
+import java.util.Map;
+
 public interface InvoiceService {
 
-	<T extends Reading> List<T> prepareForRegistration(Media media) throws InvalidDivisionException;
+	<T extends Reading> List<T> getUnpaidReadingForNewIncvoice(Media media) throws InvalidDivisionException;
 
-	<T extends Invoice> void save(T invoice, Media media);
+	<T extends Invoice> void save(T invoice, Media media) throws InvalidDivisionException;
 
 	void saveEnergy(InvoiceEnergy invoice, List<PaymentEnergy> payment);
 

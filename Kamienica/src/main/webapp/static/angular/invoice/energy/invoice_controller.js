@@ -2,8 +2,8 @@
 
 App.controller('InvoiceController', [
     '$scope',
-    'Invoice', 'Reading',
-    function($scope, Invoice, Reading) {
+    'Invoice', 'BaseReading',
+    function($scope, Invoice, BaseReading) {
 
         $scope.toggle = true;
         $scope.errorField = false;
@@ -15,14 +15,20 @@ App.controller('InvoiceController', [
         self.invoice = new Invoice();
         self.entity;
         self.invoices = [];
-        self.readings = Reading.query();
+        self.readings = BaseReading.query();
         self.errors = []
+       // $scope.baseReadingtoggle = true;
         var arrayIndex;
 
+//        self.checkBaseReadings = function() {
+//        	if (self.readings.length > 0) {
+//        		return true;
+//        	}
+//        	return false;
+//        }
 
         self.fetchAllUsers = function() {
             self.invoices = Invoice.query();
-            console.log(self.readings );
         };
         
         self.fetchAllUsers();
@@ -65,18 +71,6 @@ App.controller('InvoiceController', [
             });
         }; 
 
-//        self.deleteItem = function(identity, indexArray) {
-//            var invoice = Invoice.get({
-//                id: identity
-//            }, function() {
-//                invoice.$delete(function() {}).then(function(ok) {
-//                    self.invoices.splice(indexArray, 1);
-//                }, function(error) {
-//                    $scope.errorField = true;
-//                    $scope.errorMsg = error.data.message;
-//                })
-//            })
-//        };
 
         self.submit = function() {
             if (self.invoice.id == null) {
