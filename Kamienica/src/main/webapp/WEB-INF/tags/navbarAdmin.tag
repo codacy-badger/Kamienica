@@ -17,9 +17,9 @@
 	<!-- /.navbar-header -->
 
 	<ul class="nav navbar-top-links navbar-right">
-		
+
 		<!-- tu wkleic kawalekKoduNabar -->
-		
+
 		<li class="dropdown"><a class="dropdown-toggle"
 			data-toggle="dropdown" href="#"> <i class="fa fa-user fa-fw"></i>
 				<i class="fa fa-caret-down"></i>
@@ -76,7 +76,7 @@
 									href="${path}/Admin/Reading/readingList.html?media=GAS"><i
 										class="fa fa-list" aria-hidden="true"></i> Lista</a></li>
 								<li><a href="${path}/Admin/Reading/gasRest.html"><i
-                                        class="fa fa-plus" aria-hidden="true"></i> Rest</a></li>
+										class="fa fa-plus" aria-hidden="true"></i> Rest</a></li>
 							</ul></li>
 						<li><a href="buttons.html">Woda<span class="fa arrow"></a>
 							<ul class="nav nav-third-level">
@@ -86,9 +86,8 @@
 								<li><a
 									href="${path}/Admin/Reading/readingList.html?media=WATER"><i
 										class="fa fa-list" aria-hidden="true"></i> Lista</a></li>
-										<li><a
-                                        href="${path}/Admin/Reading/waterRest.html"><i
-                                            class="fa fa-plus" aria-hidden="true"></i> Rest</a></li>
+								<li><a href="${path}/Admin/Reading/waterRest.html"><i
+										class="fa fa-plus" aria-hidden="true"></i> Rest</a></li>
 							</ul></li>
 						<li><a href="notifications.html">Energia<span
 								class="fa arrow"></a>
@@ -99,8 +98,7 @@
 								<li><a
 									href="${path}/Admin/Reading/readingList.html?media=ENERGY"><i
 										class="fa fa-list" aria-hidden="true"></i> Lista</a></li>
-										<li><a
-									href="${path}/Admin/Reading/energyRest.html"><i
+								<li><a href="${path}/Admin/Reading/energyRest.html"><i
 										class="fa fa-plus" aria-hidden="true"></i> Rest</a></li>
 							</ul></li>
 
@@ -108,6 +106,12 @@
 				<li><a href="#"><i class="fa fa-newspaper-o"
 						aria-hidden="true"></i> </i>Faktury<span class="fa arrow"></span></a>
 					<ul class="nav nav-second-level">
+						<li><a href="${path}/Admin/Invoice/energy.html"><i
+								aria-hidden="true"></i>Energia</a></li>
+						<li><a href="${path}/Admin/Invoice/gas.html"><i
+								aria-hidden="true"></i>Gaz</a></li>
+						<li><a href="${path}/Admin/Invoice/water.html"><i
+								aria-hidden="true"></i>Woda</a></li>
 						<li><a href="panels-wells.html"> Gaz<span
 								class="fa arrow"></span></a>
 							<ul class="nav nav-third-level">
@@ -132,9 +136,8 @@
 										class="fa fa-plus" aria-hidden="true"></i> Nowe</a></li>
 								<li><a href="${path}/Admin/Invoice/invoiceEnergyList.html"><i
 										class="fa fa-list" aria-hidden="true"></i> Lista</a></li>
-										<li><a href="${path}/Admin/Invoice/energy.html"><i
-										class="fa fa-list" aria-hidden="true"></i> REST</a></li>
-								
+
+
 							</ul></li>
 
 					</ul>

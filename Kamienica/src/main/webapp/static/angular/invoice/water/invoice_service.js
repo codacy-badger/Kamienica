@@ -2,9 +2,9 @@
 
 
 
-App.factory('Reading', ['$resource', function ($resource) {
+App.factory('Invoice', ['$resource', function ($resource) {
     return $resource(
-    		'http://localhost:8080/Kamienica/api/v1/readings/WATER.json', 
+    		'http://localhost:8080/Kamienica/api/v1/invoices/WATER.json', 
     		{id: '@id'},//Handy for update & delete. id will be set with id of instance
     		{
     			query:  {method:'GET', isArray:true},

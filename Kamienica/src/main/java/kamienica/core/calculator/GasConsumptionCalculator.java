@@ -28,7 +28,7 @@ public class GasConsumptionCalculator {
 			double sumNew = 0;
 			tmp.setApartment(m);
 			for (int i = 0; i < gasNew.size(); i++) {
-				if (!gasNew.get(i).getIsCWU()) {
+				if (!gasNew.get(i).belongsToCWUMeter()) {
 
 					if (gasNew.get(i).getMeter().getApartment() != null) {
 						if (gasNew.get(i).getMeter().getApartment().getApartmentNumber() == m.getApartmentNumber()) {
@@ -36,7 +36,7 @@ public class GasConsumptionCalculator {
 						}
 					}
 					if (!gasOld.isEmpty()) {
-						if (!gasOld.get(i).getIsCWU()) {
+						if (!gasOld.get(i).belongsToCWUMeter()) {
 							if (gasOld.get(i).getMeter().getApartment() != null) {
 								if (gasOld.get(i).getMeter().getApartment().getApartmentNumber() == m
 										.getApartmentNumber()) {
@@ -96,7 +96,7 @@ public class GasConsumptionCalculator {
 			double sumNew = 0;
 			tmp.setApartment(m);
 			for (int i = 0; i < gasNew.size(); i++) {
-				if (!gasNew.get(i).getIsCWU()) {
+				if (!gasNew.get(i).belongsToCWUMeter()) {
 
 					if (gasNew.get(i).getMeter().getApartment() != null) {
 						if (gasNew.get(i).getMeter().getApartment().getApartmentNumber() == m.getApartmentNumber()) {
@@ -104,7 +104,7 @@ public class GasConsumptionCalculator {
 						}
 					}
 					if (!gasOld.isEmpty()) {
-						if (!gasOld.get(i).getIsCWU()) {
+						if (!gasOld.get(i).belongsToCWUMeter()) {
 							if (gasOld.get(i).getMeter().getApartment() != null) {
 								if (gasOld.get(i).getMeter().getApartment().getApartmentNumber() == m
 										.getApartmentNumber()) {
@@ -164,12 +164,12 @@ public class GasConsumptionCalculator {
 	private static double sumCWU(List<ReadingGas> gasOld, List<ReadingGas> gasNew) {
 		double out = 0;
 		for (ReadingGas w : gasNew) {
-			if (w.getIsCWU())
+			if (w.belongsToCWUMeter())
 				out += w.getValue();
 		}
 
 		for (ReadingGas w : gasOld) {
-			if (w.getIsCWU())
+			if (w.belongsToCWUMeter())
 				out -= w.getValue();
 		}
 		return out;

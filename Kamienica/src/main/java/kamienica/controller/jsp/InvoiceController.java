@@ -1,5 +1,17 @@
 package kamienica.controller.jsp;
 
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.ModelAndView;
+
 import kamienica.core.enums.Media;
 import kamienica.core.exception.InvalidDivisionException;
 import kamienica.feature.invoice.InvoiceControllerUtils;
@@ -10,20 +22,6 @@ import kamienica.feature.reading.ReadingWater;
 import kamienica.model.InvoiceEnergy;
 import kamienica.model.InvoiceGas;
 import kamienica.model.InvoiceWater;
-import org.hibernate.exception.ConstraintViolationException;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
-import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.servlet.ModelAndView;
-
-import javax.validation.Valid;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 
 @Controller
 public class InvoiceController {
@@ -89,68 +87,6 @@ public class InvoiceController {
 		return new ModelAndView("/Admin/Invoice/InvoiceRegister", "model", model);
 	}
 
-	// -------------------SAVE----------------------------------------------
-
-//	@RequestMapping(value = "/Admin/Invoice/invoiceEnergySave", method = RequestMethod.POST)
-//	public ModelAndView invoiceEnergySave(@Valid @ModelAttribute("invoice") InvoiceEnergy invoice,
-//			BindingResult result) {
-//
-//		if (result.hasErrors()) {
-//			HashMap<String, Object> model = new HashMap<>();
-//			model.put("saveUrl", "/Admin/Invoice/invoiceEnergySave");
-//			model.put("media", "Energia");
-//			return new ModelAndView("/Admin/Invoice/InvoiceRegister", "model", model);
-//		}
-//
-//		try {
-//			invoiceService.save(invoice, Media.ENERGY);
-//		} catch (ConstraintViolationException e) {
-//			result.rejectValue("serialNumber", "error.invoice", "Podany numerjuż istnieje");
-//			return new ModelAndView("/Admin/Invoice/InvoiceEnergyRegister");
-//		}
-//		return new ModelAndView("redirect:/Admin/Invoice/invoiceEnergyList.html");
-//
-//	}
-
-//	@RequestMapping(value = "/Admin/Invoice/invoiceGasSave", method = RequestMethod.POST)
-//	public ModelAndView invoiceGasSave(@Valid @ModelAttribute("invoice") InvoiceGas invoice, BindingResult result) {
-//
-//		if (result.hasErrors()) {
-//			HashMap<String, Object> model = new HashMap<>();
-//			utils.setUrlForGas(model);
-//			return new ModelAndView("/Admin/Invoice/InvoiceRegister", "model", model);
-//		}
-//		
-//
-//		try {
-//			invoiceService.save(invoice, Media.GAS);
-//		} catch (ConstraintViolationException e) {
-//			result.rejectValue("serialNumber", "error.invoice", "Podany numer już istnieje");
-//			return new ModelAndView("/Admin/Invoice/InvoiceGasRegister");
-//		}
-//		return new ModelAndView("redirect:/Admin/Invoice/invoiceGasList.html");
-//	}
-//
-//	@RequestMapping(value = "/Admin/Invoice/invoiceWaterSave", method = RequestMethod.POST)
-//	public ModelAndView invoiceWaterSave(@Valid @ModelAttribute("invoice") InvoiceWater invoice, BindingResult result) {
-//
-//		if (result.hasErrors()) {
-//			HashMap<String, Object> model = new HashMap<>();
-//			model.put("saveUrl", "/Admin/Invoice/invoiceWaterSave");
-//			model.put("media", "Woda");
-//			return new ModelAndView("/Admin/Invoice/InvoiceRegister", "model", model);
-//		}
-//
-//
-//		try {
-//			invoiceService.save(invoice, Media.WATER);
-//		} catch (ConstraintViolationException e) {
-//			result.rejectValue("serialNumber", "error.invoice", "Podany numerjuż istnieje");
-//			return new ModelAndView("/Admin/Invoice/InvoiceEnergyRegister");
-//		}
-//
-//		return new ModelAndView("redirect:/Admin/Invoice/invoiceWaterList.html");
-//	}
 
 	// -------------------LIST----------------------------------------------
 
@@ -178,150 +114,6 @@ public class InvoiceController {
 
 	}
 
-	// -------------------EDYCJA----------------------------------------------
-
-	// @RequestMapping(value = "/Admin/Invoice/invoiceEnergyEdit")
-	// public ModelAndView edytujFakture(@RequestParam(value = "id") Long id) {
-	// HashMap<String, Object> model = new HashMap<>();
-	// model.put("saveUrl", "/Admin/Invoice/invoiceEnergyOverwrite.html");
-	// model.put("media", "Energia");
-	// return new ModelAndView("/Admin/Invoice/InvoiceEdit", "model",
-	// model).addObject("invoice",
-	// invoiceService.getEnergyByID(id));
-	// }
-	//
-	// @RequestMapping(value = "/Admin/Invoice/invoiceGasEdit")
-	// public ModelAndView invoiceGasEdit(@RequestParam(value = "id") Long id) {
-	// HashMap<String, Object> model = new HashMap<>();
-	// model.put("saveUrl", "/Admin/Invoice/invoiceGasOverwrite.html");
-	// model.put("media", "Gaz");
-	// return new ModelAndView("/Admin/Invoice/InvoiceRegister", "model",
-	// model).addObject("invoice",
-	// invoiceService.getGasByID(id));
-	// }
-	//
-	// @RequestMapping(value = "/Admin/Invoice/invoiceWaterEdit")
-	// public ModelAndView edytujFakturaWoda(@RequestParam(value = "id") Long
-	// id) {
-	// HashMap<String, Object> model = new HashMap<>();
-	// model.put("saveUrl", "/Admin/Invoice/invoiceWaterOverwrite.html");
-	// model.put("media", "Woda");
-	// return new ModelAndView("/Admin/Invoice/InvoiceRegister", "model",
-	// model).addObject("invoice",
-	// invoiceService.getWaterByID(id));
-	// }
-	//
-	//
-	//
-	// //
-	// --------------------------OVERWRITE-------------------------------------------------
-	//
-	// @RequestMapping(value = "/Admin/Invoice/invoiceEnergyOverwrite", method =
-	// RequestMethod.POST)
-	// public ModelAndView invoiceEnergy(@Valid @ModelAttribute("invoice")
-	// InvoiceEnergy invoice, BindingResult result) {
-	//
-	// if (result.hasErrors()) {
-	// HashMap<String, Object> model = new HashMap<>();
-	// model.put("saveUrl", "/Admin/Invoice/invoiceEnergyOverwrite.html");
-	// model.put("media", "Energia");
-	// return new ModelAndView("/Admin/Invoice/InvoiceEdit", "model", model);
-	// }
-	// // InvoiceEnergy oldInv = invoiceService.getEnergyByID(invoice.getId());
-	// // double invFactor = (invoice.getTotalAmount() /
-	// // oldInv.getTotalAmount());
-	// // List<PaymentEnergy> oldPayments =
-	// // paymentService.getEnergyByInvoice(invoice);
-	// // for (int i = 0; i < oldPayments.size(); i++) {
-	// //
-	// oldPayments.get(i).setPaymentAmount(oldPayments.get(i).getPaymentAmount()
-	// // * invFactor);
-	// // }
-	//
-	// try {
-	// invoiceService.update(invoice, Media.ENERGY);
-	// // invoiceService.updateEnergy(invoice, oldPayments);
-	// } catch (org.springframework.dao.DataIntegrityViolationException e) {
-	// result.rejectValue("serialNumber", "error.invoice", "Podany numerjuż
-	// istnieje");
-	// HashMap<String, Object> model = new HashMap<>();
-	// model.put("saveUrl", "/Admin/Invoice/invoiceEnergyOverwrite.html");
-	// model.put("media", "Energia");
-	// return new ModelAndView("/Admin/Invoice/InvoiceEdit", "model", model);
-	// }
-	// return new
-	// ModelAndView("redirect:/Admin/Invoice/invoiceEnergyList.html");
-	// }
-	//
-	// @RequestMapping(value = "/Admin/Invoice/invoiceGasOverwrite", method =
-	// RequestMethod.POST)
-	// public ModelAndView invoiceGas(@Valid @ModelAttribute("invoice")
-	// InvoiceGas invoice, BindingResult result) {
-	//
-	// if (result.hasErrors()) {
-	// HashMap<String, Object> model = new HashMap<>();
-	// model.put("saveUrl", "/Admin/Invoice/invoiceGasOverwrite.html");
-	// model.put("media", "Gaz");
-	// return new ModelAndView("/Admin/Invoice/InvoiceRegister");
-	// }
-	//
-	// InvoiceGas oldInv = invoiceService.getGasByID(invoice.getId());
-	// double invFactor = (invoice.getTotalAmount() / oldInv.getTotalAmount());
-	// List<PaymentGas> oldPayments =
-	// paymentService.getPaymentGasByInvoice(invoice);
-	// for (int i = 0; i < oldPayments.size(); i++) {
-	// oldPayments.get(i).setPaymentAmount(oldPayments.get(i).getPaymentAmount()
-	// * invFactor);
-	// }
-	//
-	// try {
-	// invoiceService.updateGas(invoice, oldPayments);
-	// } catch (org.springframework.dao.DataIntegrityViolationException e) {
-	// result.rejectValue("serialNumber", "error.invoice", "Podany numerjuż
-	// istnieje");
-	// HashMap<String, Object> model = new HashMap<>();
-	// model.put("saveUrl", "/Admin/Invoice/invoiceGasOverwrite.html");
-	// model.put("media", "Gaz");
-	// return new ModelAndView("/Admin/Invoice/InvoiceRegister");
-	// }
-	// return new ModelAndView("redirect:/Admin/Invoice/invoiceGasList.html");
-	// }
-	//
-	// @RequestMapping(value = "/Admin/Invoice/invoiceWaterOverwrite", method =
-	// RequestMethod.POST)
-	// public ModelAndView invoiceWater(@Valid @ModelAttribute("invoice")
-	// InvoiceWater invoice, BindingResult result) {
-	//
-	// if (result.hasErrors()) {
-	// HashMap<String, Object> model = new HashMap<>();
-	// model.put("saveUrl", "/Admin/Invoice/invoiceWaterOverwrite.html");
-	// model.put("media", "Woda");
-	// return new ModelAndView("/Admin/Invoice/InvoiceRegister", "model",
-	// model);
-	// }
-	// InvoiceWater oldInv = invoiceService.getWaterByID(invoice.getId());
-	// double invFactor = (invoice.getTotalAmount() / oldInv.getTotalAmount());
-	// List<PaymentWater> oldPayments =
-	// paymentService.getPaymentWaterByInvoice(invoice);
-	// for (int i = 0; i < oldPayments.size(); i++) {
-	// oldPayments.get(i).setPaymentAmount(oldPayments.get(i).getPaymentAmount()
-	// * invFactor);
-	// }
-	//
-	// try {
-	//
-	// invoiceService.updateWater(invoice, oldPayments);
-	// } catch (org.springframework.dao.DataIntegrityViolationException e) {
-	// result.rejectValue("serialNumber", "error.invoice", "Podany numerjuż
-	// istnieje");
-	// HashMap<String, Object> model = new HashMap<>();
-	// model.put("saveUrl", "/Admin/Invoice/invoiceWaterOverwrite.html");
-	// model.put("media", "Woda");
-	// return new ModelAndView("/Admin/Invoice/InvoiceRegister", "model",
-	// model);
-	// }
-	// return new ModelAndView("redirect:/Admin/Invoice/invoiceWaterList.html");
-	// }
 
 	// -----------------------------DELETE------------------------------------------------
 
@@ -346,18 +138,19 @@ public class InvoiceController {
 		invoiceService.deleteEnergyByID(id);
 		return new ModelAndView("redirect:/Admin/Invoice/invoiceEnergyList.html");
 	}
-	
-	
+
+	/// rest pages----------------------------------------------------
+
 	@RequestMapping(value = "/Admin/Invoice/energy")
 	public ModelAndView energyRest() {
 		return new ModelAndView("/Admin/Invoice/energy");
 	}
-	
+
 	@RequestMapping(value = "/Admin/Invoice/gas")
 	public ModelAndView gasRest() {
 		return new ModelAndView("/Admin/Invoice/gas");
 	}
-	
+
 	@RequestMapping(value = "/Admin/Invoice/water")
 	public ModelAndView waterRest() {
 		return new ModelAndView("/Admin/Invoice/water");

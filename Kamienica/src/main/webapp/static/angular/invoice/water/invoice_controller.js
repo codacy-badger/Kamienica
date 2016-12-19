@@ -1,9 +1,9 @@
 'use strict';
 
-App.controller('ReadingController', [
+App.controller('InvoiceController', [
     '$scope',
-    'Reading', '$http',
-    function($scope, Reading, $http) {
+    'Invoice', 'BaseReading',
+    function($scope, Invoice, BaseReading) {
 
         $scope.toggle = true;
         $scope.errorField = false;
@@ -12,24 +12,32 @@ App.controller('ReadingController', [
         };
 
         var self = this;
-        self.reading = new Reading();
+        self.invoice = new Invoice();
         self.entity;
+        self.invoices = [];
         self.readings = [];
         self.errors = []
+       // $scope.baseReadingtoggle = true;
         var arrayIndex;
 
+//        self.checkBaseReadings = function() {
+//        	if (self.readings.length > 0) {
+//        		return true;
+//        	}
+//        	return false;
+//        }
 
-        self.fetchAll = function() {
-            self.readings = Reading.query();
+        self.fetchAllUsers = function() {
+            self.invoices = Invoice.query();
         };
-
-        self.fetchAll();
+        
+        self.fetchAllUsers();
 
         self.createItem = function() {
-            self.reading.$save(function() {}).then(function(ok) {
+            self.invoice.$save(function() {}).then(function(ok) {
                 $scope.errorField = true;
                 $scope.errorMsg = 'zapisano do bazy';
-                self.readings.push(ok);
+                self.invoices.push(ok);
                 self.reset();
                 $scope.toggle = $scope.toggle === false ? true : false;
             }, function(error) {
@@ -40,10 +48,8 @@ App.controller('ReadingController', [
         };
 
         self.updateItem = function() {
-
-            self.reading.$update(function() {}).then(function(ok) {
-                console.log(ok);
-                self.readings.splice(arrayIndex, 1, ok);
+            	self.invoice.$update(function() {}).then(function(ok) {
+                self.invoices.splice(arrayIndex, 1, ok);
             }, function(error) {
                 $scope.errors = error.data;
                 $scope.errorField = true;
@@ -53,21 +59,21 @@ App.controller('ReadingController', [
             self.reset();
             $scope.toggle = $scope.toggle === false ? true : false;
         };
-
-        self.deleteItem2 = function(identity, indexArray) {
-        	var reading = self.readings[indexArray];
+        
+        self.deleteItem = function(identity, indexArray) {
+        	var invoice = self.invoices[indexArray];
         	
-        	reading.$delete(function() {}).then(function(ok) {
-                self.readings.splice(indexArray, 1);
+        	invoice.$delete(function() {}).then(function(ok) {
+                self.invoices.splice(indexArray, 1);
             }, function(error) {
                 $scope.errorField = true;
                 $scope.errorMsg = error.data.message;
             });
         }; 
-        
+
+
         self.submit = function() {
-            console.log(self.reading);
-            if (self.reading.id == null) {
+            if (self.invoice.id == null) {
                 self.createItem();
             } else {
                 self.updateItem();
@@ -79,24 +85,24 @@ App.controller('ReadingController', [
         self.edit = function(id, indexOfArray) {
             self.clearError();
             $scope.toggle = $scope.toggle === false ? true : false;
-            self.reading = angular.copy(self.readings[indexOfArray]);
-            self.entity = angular.copy(self.readings[indexOfArray]);
+            self.invoice = angular.copy(self.invoices[indexOfArray]);
+            self.entity = angular.copy(self.invoices[indexOfArray]);
             arrayIndex = indexOfArray;
 
         };
 
         self.remove = function(id, arrayIndex) {
             self.clearError();
-            if (self.reading.id === id) { // If it is the one shown on
+            if (self.invoice.id === id) { // If it is the one shown on
                 // screen, reset screen
                 self.reset();
             }
 
-            self.deleteItem2(id, arrayIndex);
+            self.deleteItem(id, arrayIndex);
         };
 
         self.reset = function() {
-            self.reading = new Reading();
+            self.invoice = new Invoice();
             $scope.myForm.$setPristine(); // reset Form
 
         };
@@ -129,6 +135,7 @@ App.controller('ReadingController', [
                 $scope.errors = '';
                 $scope.errorField = false;
                 $scope.errorMsg = '';
+                self.readings = BaseReading.query();
             } else {
                 $scope.text = 'Dodaj';
                 $scope.toggle = true;

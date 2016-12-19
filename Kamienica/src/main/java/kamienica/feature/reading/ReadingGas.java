@@ -27,7 +27,7 @@ public class ReadingGas extends Reading implements Serializable {
 		return this.unit;
 	}
 
-	public boolean getIsCWU() {
+	public boolean belongsToCWUMeter() {
 		return this.meter.isCwu();
 	}
 

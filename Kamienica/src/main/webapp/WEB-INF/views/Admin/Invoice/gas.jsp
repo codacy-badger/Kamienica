@@ -23,7 +23,7 @@
 
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Faktury - Energia</title>
+<title>Faktury - Gaz</title>
 </head>
 <body ng-app="myApp">
 	<div id="wrapper">
@@ -32,7 +32,7 @@
 		<div id="page-wrapper" ng-controller="InvoiceController as ctrl">
 			<div class='row'>
 				<div class="col-lg-12">
-					<h1 class="page-header well">Faktury za Energię</h1>
+					<h1 class="page-header well">Faktury za Gaz</h1>
 
 					<div class="alert alert-danger" ng-show="errorField">
 						<strong>BŁĄD: </strong> {{errorMsg}}
@@ -50,8 +50,8 @@
 				<form class="form-horizontal" ng-submit="ctrl.submit()"
 					name="myForm">
 
-					<input path="id" readonly="true" type='hidden' /> <input
-						type="hidden" ng-model="ctrl.invoice.id" />
+					<input path="id" readonly="true" type='hidden' /> 
+					<input type="hidden" ng-model="ctrl.invoice.id" />
 
 					<div class="form-group">
 						<label for="serialNumber" class="col-sm-3 control-label">Numer
@@ -67,10 +67,10 @@
 							</p>
 						</div>
 					</div>
-
+					
 					<div class="form-group">
 						<label for="inputEmail3" class="col-sm-3 control-label">Opis
-							Faktury</label>
+								Faktury</label>
 						<div class="col-sm-9">
 							<input type="text" ng-model="ctrl.invoice.description"
 								class="form-control" path='description'
@@ -88,33 +88,33 @@
 							Wystawienia</label>
 						<div class="col-sm-9">
 							<input type="text" datetime="yyyy-MM-dd"
-								ng-model="ctrl.invoice.date" class="form-control" path='date'
-								placeholder="YYYY/MM/DD" name="date" ng-required='true' />
+								ng-model="ctrl.invoice.date" class="form-control"
+								path='date' placeholder="YYYY/MM/DD" name="date"
+								ng-required='true' />
 							<p class="help-block">
 								<span class='error' ng-show="myForm.date.$invalid">Pole
 									wymagane</span> <span class='error'>{{errors.date}}</span>
 							</p>
 						</div>
 					</div>
-
+					
 					<div class="form-group">
-						<label for="totalAmount" class="col-sm-3 control-label">Wartość
-							Faktury</label>
+						<label for="totalAmount" class="col-sm-3 control-label">Wartość Faktury</label>
 						<div class="col-sm-9">
 							<input type="text" ng-model="ctrl.invoice.totalAmount"
-								class="form-control" path='totalAmount' name="totalAmount"
-								ng-pattern="/^[0-9]{1,12}$/" ng-min=0 ng-required='true' />
+								class="form-control" path='totalAmount'
+								name="totalAmount" ng-pattern="/^[0-9]{1,12}$/" ng-min=0 ng-required='true'/>
 							<p class="help-block">
 								<span class='error' ng-show="myForm.totalAmount.$invalid">Tylko
 									liczby</span> <span class='error'>{{errors.totalAmount}}</span>
 							</p>
 						</div>
-
+						
 					</div>
 					<div class="form-group">
 						<label for="inputEmail3" class="col-sm-3 control-label">Odczyty</label>
 						<div class="col-sm-9">
-							<select name='baseReading' ng-model="ctrl.invoice.baseReading"
+							<select name='apartment' ng-model="ctrl.invoice.baseReading"
 								ng-required='true' class="form-control"
 								ng-options="a.readingDate for a in ctrl.readings"><option>{{ctrl.inovice.readings}}</option>
 							</select>
@@ -124,9 +124,7 @@
 							</p>
 						</div>
 					</div>
-
-
-
+					
 					<div class="form-group ">
 						<div class="col-lg-12">
 							<input type="submit"
@@ -183,11 +181,11 @@
 	<script src="<c:url value='/static/js/angular-resource.js' />"></script>
 	<script src="<c:url value='/static/angular/app.js' />"></script>
 	<script
-		src="<c:url value='/static/angular/invoice/energy/baseReading_service.js' />"></script>
+		src="<c:url value='/static/angular/invoice/gas/baseReading_service.js' />"></script>
 	<script
-		src="<c:url value='/static/angular/invoice/energy/invoice_service.js' />"></script>
+		src="<c:url value='/static/angular/invoice/gas/invoice_service.js' />"></script>
 	<script
-		src="<c:url value='/static/angular/invoice/energy/invoice_controller.js' />"></script>
+		src="<c:url value='/static/angular/invoice/gas/invoice_controller.js' />"></script>
 	<!-- jQuery -->
 	<script src="<c:url value='/static/js/jquery.min.js' />"></script>
 	<!-- Bootstrap Core JavaScript -->

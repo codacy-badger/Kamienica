@@ -15,7 +15,7 @@ App.controller('InvoiceController', [
         self.invoice = new Invoice();
         self.entity;
         self.invoices = [];
-        self.readings = BaseReading.query();
+        self.readings = [];
         self.errors = []
        // $scope.baseReadingtoggle = true;
         var arrayIndex;
@@ -37,6 +37,9 @@ App.controller('InvoiceController', [
             self.invoice.$save(function() {}).then(function(ok) {
                 $scope.errorField = true;
                 $scope.errorMsg = 'zapisano do bazy';
+                console.log('------------------------------------------');
+                console.log(ok);
+                console.log('------------------------------------------');
                 self.invoices.push(ok);
                 self.reset();
                 $scope.toggle = $scope.toggle === false ? true : false;
@@ -131,6 +134,7 @@ App.controller('InvoiceController', [
 
                 $scope.text = 'Lista';
                 self.reset();
+                self.readings = BaseReading.query();
                 $scope.toggle = false;
                 $scope.errors = '';
                 $scope.errorField = false;

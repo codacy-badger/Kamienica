@@ -56,27 +56,37 @@ public class InvoiceApi {
 		} catch (InvalidDivisionException e) {
 			return new ResponseEntity<>(WRONG_DIVISION, HttpStatus.UNPROCESSABLE_ENTITY);
 		}
-		return new ResponseEntity<String>("OK", HttpStatus.OK);
+		return new ResponseEntity<>(invoice, HttpStatus.OK);
 	}
 
 	@RequestMapping(value = "/GAS", method = RequestMethod.POST)
 	public ResponseEntity<?> saveGas(@Valid @RequestBody final InvoiceGas invoice, final BindingResult result) {
+		if (result.hasErrors()) {
+			final ApiErrorResponse message = new ApiErrorResponse();
+			message.setErrors(result.getFieldErrors());
+			return new ResponseEntity<>(message, HttpStatus.UNPROCESSABLE_ENTITY);
+		}
 		try {
 			service.save(invoice, Media.GAS);
 		} catch (InvalidDivisionException e) {
 			return new ResponseEntity<>(WRONG_DIVISION, HttpStatus.UNPROCESSABLE_ENTITY);
 		}
-		return new ResponseEntity<String>("OK", HttpStatus.OK);
+		return new ResponseEntity<>(invoice, HttpStatus.OK);
 	}
 
 	@RequestMapping(value = "/WATER", method = RequestMethod.POST)
 	public ResponseEntity<?> saveWater(@Valid @RequestBody final InvoiceWater invoice, final BindingResult result) {
+		if (result.hasErrors()) {
+			final ApiErrorResponse message = new ApiErrorResponse();
+			message.setErrors(result.getFieldErrors());
+			return new ResponseEntity<>(message, HttpStatus.UNPROCESSABLE_ENTITY);
+		}
 		try {
 			service.save(invoice, Media.WATER);
 		} catch (InvalidDivisionException e) {
 			return new ResponseEntity<>(WRONG_DIVISION, HttpStatus.UNPROCESSABLE_ENTITY);
 		}
-		return new ResponseEntity<String>("OK", HttpStatus.OK);
+		return new ResponseEntity<>(invoice, HttpStatus.OK);
 	}
 
 	@RequestMapping(value = "/{media}", method = RequestMethod.DELETE)
