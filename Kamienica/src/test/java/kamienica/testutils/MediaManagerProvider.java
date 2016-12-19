@@ -10,7 +10,7 @@
 //import org.testng.annotations.BeforeClass;
 //import org.testng.annotations.Testing;
 //
-//import kamienica.feature.apartment.Apartment;
+//import kamienica.model.Apartment;
 //import kamienica.model.Division;
 //import kamienica.feature.division.DivisionValidator;
 //import kamienica.feature.invoice.InvoiceEnergy;

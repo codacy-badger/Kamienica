@@ -2,10 +2,8 @@ package kamienica.feature.division;
 
 import kamienica.model.Apartment;
 import kamienica.model.Division;
-import kamienica.model.Tenant;
 
 import java.util.List;
-import java.util.Objects;
 
 public class DivisionValidator {
 
@@ -13,14 +11,14 @@ public class DivisionValidator {
 
         for (Apartment anApartmentList : apartmentList) {
             double sumForElement = 0;
+
             for (Division division : divisionList) {
                 if (isDivisionForApartmentInScope(anApartmentList, division)) {
                     sumForElement += division.getDivisionValue();
                 }
-                sumForElement = roundUp(sumForElement);
-
             }
 
+            sumForElement = roundUp(sumForElement);
             if (sumForElement != 1) {
                 return false;
             }

@@ -139,13 +139,6 @@ public class Tenant implements Serializable {
         this.movementDate = movementDate;
     }
 
-    @Override
-    public String toString() {
-        return "Tenant [id=" + id + ", firstName=" + firstName + ", lastName=" + lastName + ", email=" + email
-                + ", phone=" + phone + ", apartment=" + apartment + ", role=" + role + ", status=" + status
-                + ", movementDate=" + movementDate.toString() + ", password=" + password + "]";
-    }
-
     public Apartment getApartment() {
         return apartment;
     }
@@ -161,5 +154,88 @@ public class Tenant implements Serializable {
     public void setPassword(String password) {
         this.password = password;
     }
+
+
+	@Override
+	public String toString() {
+		return "Tenant [id=" + id + ", firstName=" + firstName + ", lastName=" + lastName + ", email=" + email
+				+ ", phone=" + phone + ", apartment=" + apartment + ", role=" + role + ", status=" + status
+				+ ", movementDate=" + movementDate + ", password=" + password + "]";
+	}
+
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((apartment == null) ? 0 : apartment.hashCode());
+		result = prime * result + ((email == null) ? 0 : email.hashCode());
+		result = prime * result + ((firstName == null) ? 0 : firstName.hashCode());
+		result = prime * result + ((id == null) ? 0 : id.hashCode());
+		result = prime * result + ((lastName == null) ? 0 : lastName.hashCode());
+		result = prime * result + ((movementDate == null) ? 0 : movementDate.hashCode());
+		result = prime * result + ((password == null) ? 0 : password.hashCode());
+		result = prime * result + ((phone == null) ? 0 : phone.hashCode());
+		result = prime * result + ((role == null) ? 0 : role.hashCode());
+		result = prime * result + ((status == null) ? 0 : status.hashCode());
+		return result;
+	}
+
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Tenant other = (Tenant) obj;
+		if (apartment == null) {
+			if (other.apartment != null)
+				return false;
+		} else if (!apartment.equals(other.apartment))
+			return false;
+		if (email == null) {
+			if (other.email != null)
+				return false;
+		} else if (!email.equals(other.email))
+			return false;
+		if (firstName == null) {
+			if (other.firstName != null)
+				return false;
+		} else if (!firstName.equals(other.firstName))
+			return false;
+		if (id == null) {
+			if (other.id != null)
+				return false;
+		} else if (!id.equals(other.id))
+			return false;
+		if (lastName == null) {
+			if (other.lastName != null)
+				return false;
+		} else if (!lastName.equals(other.lastName))
+			return false;
+		if (movementDate == null) {
+			if (other.movementDate != null)
+				return false;
+		} else if (!movementDate.equals(other.movementDate))
+			return false;
+		if (password == null) {
+			if (other.password != null)
+				return false;
+		} else if (!password.equals(other.password))
+			return false;
+		if (phone == null) {
+			if (other.phone != null)
+				return false;
+		} else if (!phone.equals(other.phone))
+			return false;
+		if (role != other.role)
+			return false;
+		if (status != other.status)
+			return false;
+		return true;
+	}
 
 }

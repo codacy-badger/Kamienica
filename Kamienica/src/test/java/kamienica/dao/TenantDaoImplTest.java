@@ -11,9 +11,9 @@
 //import org.testng.Assert;
 //import org.testng.annotations.Testing;
 //
-//import kamienica.feature.apartment.Apartment;
+//import kamienica.model.Apartment;
 //import kamienica.feature.apartment.ApartmentDao;
-//import kamienica.feature.tenant.Tenant;
+//import kamienica.model.Tenant;
 //import kamienica.feature.tenant.TenantDao;
 //import kamienica.feature.tenant.Status;
 //

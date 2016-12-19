@@ -1,8 +1,8 @@
 package kamienica.feature.division;
 
 import kamienica.model.Apartment;
-import kamienica.model.Division;
 import kamienica.model.Tenant;
+import kamienica.model.Division;
 import org.joda.time.LocalDate;
 
 import java.util.List;

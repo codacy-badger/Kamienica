@@ -16,7 +16,7 @@
 //import org.testng.annotations.BeforeClass;
 //import org.testng.annotations.Testing;
 //
-//import kamienica.feature.apartment.Apartment;
+//import kamienica.model.Apartment;
 //import kamienica.feature.apartment.ApartmentService;
 //import kamienica.model.Division;
 //import kamienica.feature.division.DivisionService;
@@ -35,7 +35,7 @@
 //import kamienica.feature.reading.ReadingGas;
 //import kamienica.feature.reading.ReadingService;
 //import kamienica.feature.reading.ReadingWater;
-//import kamienica.feature.tenant.Tenant;
+//import kamienica.model.Tenant;
 //import kamienica.feature.tenant.TenantService;
 //import kamienica.testutils.SetupMethods;
 //

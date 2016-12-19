@@ -87,5 +87,59 @@ public class Division implements Serializable {
     public Division() {
     }
 
+	@Override
+	public String toString() {
+		return "Division [id=" + id + ", date=" + date + ", tenant=" + tenant + ", apartment=" + apartment
+				+ ", divisionValue=" + divisionValue + "]";
+	}
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((apartment == null) ? 0 : apartment.hashCode());
+		result = prime * result + ((date == null) ? 0 : date.hashCode());
+		long temp;
+		temp = Double.doubleToLongBits(divisionValue);
+		result = prime * result + (int) (temp ^ (temp >>> 32));
+		result = prime * result + ((id == null) ? 0 : id.hashCode());
+		result = prime * result + ((tenant == null) ? 0 : tenant.hashCode());
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Division other = (Division) obj;
+		if (apartment == null) {
+			if (other.apartment != null)
+				return false;
+		} else if (!apartment.equals(other.apartment))
+			return false;
+		if (date == null) {
+			if (other.date != null)
+				return false;
+		} else if (!date.equals(other.date))
+			return false;
+		if (Double.doubleToLongBits(divisionValue) != Double.doubleToLongBits(other.divisionValue))
+			return false;
+		if (id == null) {
+			if (other.id != null)
+				return false;
+		} else if (!id.equals(other.id))
+			return false;
+		if (tenant == null) {
+			if (other.tenant != null)
+				return false;
+		} else if (!tenant.equals(other.tenant))
+			return false;
+		return true;
+	}
+
 
 }

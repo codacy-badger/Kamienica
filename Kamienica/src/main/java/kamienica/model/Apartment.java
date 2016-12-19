@@ -55,9 +55,10 @@ public class Apartment implements Serializable {
     }
 
     @Override
-    public String toString() {
-        return "Number " + apartmentNumber + "; " + description;
-    }
+	public String toString() {
+		return "Apartment [id=" + id + ", apartmentNumber=" + apartmentNumber + ", intercom=" + intercom
+				+ ", description=" + description + "]";
+	}
 
     public int getApartmentNumber() {
         return apartmentNumber;
@@ -90,5 +91,45 @@ public class Apartment implements Serializable {
     public void setId(Long id) {
         this.id = id;
     }
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + apartmentNumber;
+		result = prime * result + ((description == null) ? 0 : description.hashCode());
+		result = prime * result + ((id == null) ? 0 : id.hashCode());
+		result = prime * result + ((intercom == null) ? 0 : intercom.hashCode());
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Apartment other = (Apartment) obj;
+		if (apartmentNumber != other.apartmentNumber)
+			return false;
+		if (description == null) {
+			if (other.description != null)
+				return false;
+		} else if (!description.equals(other.description))
+			return false;
+		if (id == null) {
+			if (other.id != null)
+				return false;
+		} else if (!id.equals(other.id))
+			return false;
+		if (intercom == null) {
+			if (other.intercom != null)
+				return false;
+		} else if (!intercom.equals(other.intercom))
+			return false;
+		return true;
+	}
 
 }
