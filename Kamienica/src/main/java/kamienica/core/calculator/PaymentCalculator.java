@@ -2,11 +2,9 @@ package kamienica.core.calculator;
 
 import kamienica.core.exception.InvalidDivisionException;
 import kamienica.core.util.CommonUtils;
-import kamienica.model.Division;
 import kamienica.feature.payment.PaymentEnergy;
 import kamienica.feature.payment.PaymentGas;
 import kamienica.feature.payment.PaymentWater;
-import kamienica.model.Tenant;
 import kamienica.model.*;
 import org.joda.time.LocalDate;
 

@@ -2,20 +2,14 @@ package kamienica.service;
 
 import kamienica.core.enums.Media;
 import kamienica.core.exception.InvalidDivisionException;
-import kamienica.feature.apartment.ApartmentService;
-import kamienica.feature.division.DivisionService;
-import kamienica.feature.invoice.InvoiceService;
 import kamienica.feature.payment.Payment;
-import kamienica.feature.payment.PaymentService;
 import kamienica.feature.reading.Reading;
 import kamienica.feature.reading.ReadingEnergy;
-import kamienica.feature.reading.ReadingService;
 import kamienica.model.Apartment;
 import kamienica.model.InvoiceEnergy;
 import org.joda.time.LocalDate;
 import org.junit.Ignore;
 import org.junit.Test;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
@@ -23,17 +17,6 @@ import java.util.List;
 import static org.junit.Assert.assertEquals;
 
 public class InvoiceEnergyServiceTest extends AbstractServiceTest {
-
-	@Autowired
-	PaymentService paymentService;
-	@Autowired
-	InvoiceService invoiceService;
-	@Autowired
-	ReadingService readingService;
-	@Autowired
-	DivisionService divisionService;
-	@Autowired
-	ApartmentService apService;
 
 	@Test
 	public void getList() {
@@ -120,7 +103,7 @@ public class InvoiceEnergyServiceTest extends AbstractServiceTest {
 	@Test(expected = InvalidDivisionException.class)
 	public void prepareForRegistrationWithException() throws InvalidDivisionException {
 		Apartment ap = new Apartment(78, "1234", "dummy");
-		apService.save(ap);
+		apartmentService.save(ap);
 		List<Reading> list = invoiceService.getUnpaidReadingForNewIncvoice(Media.ENERGY);
 		assertEquals(2, list.size());
 		assertEquals(11, list.get(0).getValue(), 0);

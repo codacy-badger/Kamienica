@@ -25,10 +25,6 @@ public class ReadingValidator {
 		 * Checking discrepancies between main meter's reading and sum of the rest (should be close match)
 		 * disabled due to no-shared-part problem solution
 		 */
-//		System.out.println("-----------walidacja----------------");
-//		System.out.println(primaryReading);
-//		System.out.println(sumOfReadings);
-//		System.out.println(sumOfReadings / primaryReading);
 //		if (Math.abs((sumOfReadings - sumOfReadings)) / primaryReading > 0.03) {
 //			return true;
 //		}

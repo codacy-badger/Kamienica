@@ -1,8 +1,13 @@
 package kamienica.configuration;
 
-import java.util.ArrayList;
-import java.util.List;
-
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.datatype.joda.JodaModule;
+import kamienica.core.conventer.*;
+import kamienica.feature.invoice.InvoiceEnergyConverter;
+import kamienica.feature.invoice.InvoiceGasConverter;
+import kamienica.feature.meter.MeterEnergyConverter;
+import kamienica.feature.meter.MeterGasConverter;
+import kamienica.feature.meter.MeterWaterConverter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
 import org.springframework.context.annotation.Bean;
@@ -26,20 +31,8 @@ import org.springframework.web.servlet.view.ContentNegotiatingViewResolver;
 import org.springframework.web.servlet.view.InternalResourceViewResolver;
 import org.springframework.web.servlet.view.JstlView;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.datatype.joda.JodaModule;
-
-import kamienica.core.conventer.ApartmentConverter;
-import kamienica.core.conventer.InvoiceWaterConverter;
-import kamienica.core.conventer.ReadingEnergyConverter;
-import kamienica.core.conventer.ReadingGasConverter;
-import kamienica.core.conventer.ReadingWaterConverter;
-import kamienica.core.conventer.TenantConverter;
-import kamienica.feature.invoice.InvoiceEnergyConverter;
-import kamienica.feature.invoice.InvoiceGasConverter;
-import kamienica.feature.meter.MeterEnergyConverter;
-import kamienica.feature.meter.MeterGasConverter;
-import kamienica.feature.meter.MeterWaterConverter;
+import java.util.ArrayList;
+import java.util.List;
 
 @Configuration
 @EnableWebMvc

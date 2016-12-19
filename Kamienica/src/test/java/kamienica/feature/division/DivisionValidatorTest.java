@@ -1,14 +1,15 @@
 package kamienica.feature.division;
 
 import kamienica.model.Apartment;
-import kamienica.model.Tenant;
 import kamienica.model.Division;
+import kamienica.model.Tenant;
 import kamienica.testutils.EntityProvider;
 import org.junit.Test;
 
 import java.util.List;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 
 /**
  * Created by macfol on 12/18/16.

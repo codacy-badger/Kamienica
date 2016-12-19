@@ -2,16 +2,11 @@ package kamienica.service;
 
 import kamienica.core.exception.InvalidDivisionException;
 import kamienica.core.exception.WrongDivisionInputException;
-import kamienica.feature.apartment.ApartmentService;
-import kamienica.feature.division.DivisionService;
-import kamienica.feature.settings.SettingsDao;
-import kamienica.feature.tenant.TenantService;
 import kamienica.model.Division;
 import kamienica.testutils.EntityProvider;
 import org.joda.time.LocalDate;
 import org.junit.Ignore;
 import org.junit.Test;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
@@ -20,15 +15,7 @@ import static org.junit.Assert.assertEquals;
 
 public class DivisionServiceTest extends AbstractServiceTest {
 
-    @Autowired
-    private DivisionService divisionService;
-    @Autowired
-    private SettingsDao settingsDao;
 
-    @Autowired
-    private ApartmentService apartmentService;
-    @Autowired
-    private TenantService tenantService;
     final LocalDate date = new LocalDate();
 
     @Test
@@ -44,7 +31,7 @@ public class DivisionServiceTest extends AbstractServiceTest {
         divisionService.deleteAll();
         final List<Division> result = divisionService.getList();
         assertEquals(0, result.size());
-        assertEquals(false, settingsDao.isDivisionCorrect());
+        assertEquals(false, settingsService.isDivisionCorrect());
     }
 
     @Transactional
@@ -74,6 +61,7 @@ public class DivisionServiceTest extends AbstractServiceTest {
     }
 
     @Test
+    @Ignore
     public void prepareDivisionListForRegistration() {
 
     }

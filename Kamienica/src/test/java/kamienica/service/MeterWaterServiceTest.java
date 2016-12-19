@@ -1,11 +1,9 @@
 package kamienica.service;
 
 import kamienica.core.enums.Media;
-import kamienica.feature.meter.MeterService;
 import kamienica.feature.meter.MeterWater;
 import org.joda.time.LocalDate;
 import org.junit.Test;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
@@ -14,12 +12,9 @@ import static org.junit.Assert.assertEquals;
 
 public class MeterWaterServiceTest extends AbstractServiceTest {
 
-	@Autowired
-	MeterService service;
-
 	@Test
 	public void getList() {
-		List<MeterWater> list = service.getList(Media.WATER);
+		List<MeterWater> list = meterService.getList(Media.WATER);
 		
 		assertEquals(7, list.size());
 
@@ -29,12 +24,12 @@ public class MeterWaterServiceTest extends AbstractServiceTest {
 	@Transactional
 	@Test
 	public void getActiveMeters() {
-		assertEquals(7, service.getIdListForActiveMeters(Media.WATER).size());
-		MeterWater meter = service.getById(4L, Media.WATER);
+		assertEquals(7, meterService.getIdListForActiveMeters(Media.WATER).size());
+		MeterWater meter = meterService.getById(4L, Media.WATER);
 		meter.setDeactivation(LocalDate.now().minusDays(1));
-		service.update(meter, Media.WATER);
+		meterService.update(meter, Media.WATER);
 
-		assertEquals(6, service.getIdListForActiveMeters(Media.WATER).size());
+		assertEquals(6, meterService.getIdListForActiveMeters(Media.WATER).size());
 
 	}
 }

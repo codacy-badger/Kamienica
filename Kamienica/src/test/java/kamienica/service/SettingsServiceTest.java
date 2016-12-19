@@ -1,20 +1,35 @@
 package kamienica.service;
 
-import kamienica.feature.settings.SettingsService;
+import kamienica.model.Settings;
 import org.junit.Test;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.transaction.annotation.Transactional;
 
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 
 public class SettingsServiceTest extends AbstractServiceTest {
 
-	@Autowired
-	SettingsService service;
+    @Test
+    public void getList() {
+        Settings settings = settingsService.getSettings();
 
-	@Test
-	public void getById() {
-		assertNotNull(service.getSettings());
+        assertEquals(true, settings.isCorrectDivision());
 
-	}
+    }
+
+    @Test
+    public void getById() {
+        assertNotNull(settingsService.getSettings());
+
+    }
+
+    @Test
+    @Transactional
+    public void changeResolvementState() {
+        settingsService.changeDivisionState(false);
+        assertEquals(false, settingsService.isDivisionCorrect());
+        settingsService.changeDivisionState(true);
+        assertEquals(true, settingsService.isDivisionCorrect());
+    }
 
 }
