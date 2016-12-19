@@ -1,15 +1,14 @@
 package kamienica.service;
 
-import static org.junit.Assert.assertEquals;
-
+import kamienica.core.enums.Media;
+import kamienica.feature.meter.MeterGas;
+import kamienica.feature.meter.MeterService;
 import org.joda.time.LocalDate;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 
-import kamienica.core.util.Media;
-import kamienica.feature.meter.MeterGas;
-import kamienica.feature.meter.MeterService;
+import static org.junit.Assert.assertEquals;
 
 public class MeterGasServiceTest extends AbstractServiceTest {
 

@@ -1,25 +1,21 @@
 package kamienica.service;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertTrue;
-
-import java.util.List;
-import java.util.Map;
-
+import kamienica.feature.apartment.ApartmentService;
+import kamienica.feature.reading.ReadingEnergy;
+import kamienica.feature.reading.ReadingGas;
+import kamienica.feature.reading.ReadingWater;
+import kamienica.feature.user_admin.AdminUserService;
+import kamienica.model.Apartment;
 import org.joda.time.Days;
 import org.joda.time.LocalDate;
 import org.junit.Ignore;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import kamienica.feature.apartment.Apartment;
-import kamienica.feature.apartment.ApartmentService;
-import kamienica.feature.reading.ReadingEnergy;
-import kamienica.feature.reading.ReadingGas;
-import kamienica.feature.reading.ReadingWater;
-import kamienica.feature.user_admin.AdminUserService;
+import java.util.List;
+import java.util.Map;
+
+import static org.junit.Assert.*;
 
 public class AdminUserServiceTest extends AbstractServiceTest {
 
@@ -40,23 +36,24 @@ public class AdminUserServiceTest extends AbstractServiceTest {
 		assertEquals(days, map.get("radingDays"));
 	}
 
+	
 	@Test
 	public void getListsForTenants() {
-		Apartment aparmtent = apService.getById(2L);
-		List<ReadingEnergy> energy = service.getReadingEnergyForTenant(aparmtent);
+		Apartment apartment = apService.getById(2L);
+		List<ReadingEnergy> energy = service.getReadingEnergyForTenant(apartment);
 		assertEquals(6, energy.size());
 		for (ReadingEnergy readingEnergy : energy) {
 			int apNum = readingEnergy.getMeter().getApartment().getApartmentNumber();
 			assertTrue(apNum == 0 || apNum == 1);
 		}
 
-		List<ReadingGas> gas = service.getReadingGasForTenant(aparmtent);
+		List<ReadingGas> gas = service.getReadingGasForTenant(apartment);
 		for (ReadingGas readingGas : gas) {
 			int apNum = readingGas.getMeter().getApartment().getApartmentNumber();
 			assertTrue(apNum == 0 || apNum == 1);
 		}
 
-		List<ReadingWater> water = service.getReadingWaterForTenant(aparmtent);
+		List<ReadingWater> water = service.getReadingWaterForTenant(apartment);
 		for (ReadingWater readingWater : water) {
 			int apNum = readingWater.getMeter().getApartment().getApartmentNumber();
 			assertTrue(apNum == 0 || apNum == 1);

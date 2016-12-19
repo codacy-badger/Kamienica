@@ -1,29 +1,33 @@
 package kamienica.core.dao;
 
-import java.util.List;
-import java.util.Set;
-
 import org.hibernate.criterion.Criterion;
 import org.hibernate.criterion.Order;
 
+import java.util.List;
+import java.util.Set;
+
 public interface DaoInterface<T> {
 
-	void save(T object);
+	void save(final T object);
 
 	List<T> getList();
-	
-	List<T> paginatedList(Integer firstResult, Integer maxResults);
 
-	void deleteById(Long id);
+	List<T> paginatedList(final Integer firstResult, final Integer maxResults);
 
-	void update(T object);
+	void deleteById(final Long id);
 
-	T getById(Long id);
+	void update(final T object);
+
+	T getById(final Long id);
 
 	Set<Long> getIdList();
-	
-	
+
+	long countByCriteria(final Criterion... criterion);
+
+	List<T> findByCriteria(final Criterion... criterion);
+
+	List<T> getBySQLQuery(final String queryString);
 
 	List<T> findByCriteria(final int firstResult, final int maxResults, final Order order,
-                           final Criterion... criterion);
+			final Criterion... criterion);
 }

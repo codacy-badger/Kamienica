@@ -1,26 +1,21 @@
 package kamienica.service;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotEquals;
-
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
-
-import org.joda.time.LocalDate;
-import org.junit.Test;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.transaction.annotation.Transactional;
-
+import kamienica.core.enums.Media;
 import kamienica.core.exception.NoMainCounterException;
-import kamienica.core.util.Media;
 import kamienica.feature.meter.MeterGas;
 import kamienica.feature.meter.MeterService;
 import kamienica.feature.reading.Reading;
 import kamienica.feature.reading.ReadingGas;
 import kamienica.feature.reading.ReadingService;
+import org.joda.time.LocalDate;
+import org.junit.Test;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.transaction.annotation.Transactional;
+
+import java.util.*;
+
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotEquals;
 
 public class ReadingGasServiceTest extends AbstractServiceTest {
 

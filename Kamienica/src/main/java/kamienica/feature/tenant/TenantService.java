@@ -1,5 +1,7 @@
 package kamienica.feature.tenant;
 
+import kamienica.model.Tenant;
+
 import java.util.List;
 
 public interface TenantService {
@@ -14,7 +16,7 @@ public interface TenantService {
 
 	Tenant getTenantById(Long id);
 	
-	List<Tenant> getCurrentTenants();
+	List<Tenant> getActiveTenants();
 
 	Tenant loadByMail(String mail);
 }

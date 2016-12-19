@@ -1,20 +1,20 @@
 package kamienica.service;
 
+import kamienica.core.enums.Media;
+import kamienica.core.enums.WaterHeatingSystem;
 import kamienica.core.exception.InvalidDivisionException;
-import kamienica.core.util.Media;
-import kamienica.core.util.WaterHeatingSystem;
-import kamienica.feature.apartment.Apartment;
 import kamienica.feature.apartment.ApartmentService;
 import kamienica.feature.division.DivisionService;
-import kamienica.feature.invoice.InvoiceGas;
 import kamienica.feature.invoice.InvoiceService;
 import kamienica.feature.payment.Payment;
 import kamienica.feature.payment.PaymentService;
 import kamienica.feature.reading.Reading;
 import kamienica.feature.reading.ReadingGas;
 import kamienica.feature.reading.ReadingService;
-import kamienica.feature.settings.Settings;
 import kamienica.feature.settings.SettingsService;
+import kamienica.model.Apartment;
+import kamienica.model.InvoiceGas;
+import kamienica.model.Settings;
 import org.joda.time.LocalDate;
 import org.junit.Ignore;
 import org.junit.Test;
@@ -48,7 +48,7 @@ public class InvoiceGasServiceTest extends AbstractServiceTest {
 
 	@Test
 	@Transactional
-	public void add() {
+	public void add() throws InvalidDivisionException {
 		List<ReadingGas> list = readingService.getUnresolvedReadingsGas();
 		assertEquals(196, list.get(1).getValue(), 0);
 		InvoiceGas invoice = new InvoiceGas("112233", "test", new LocalDate(), 200, list.get(1));
@@ -70,7 +70,7 @@ public class InvoiceGasServiceTest extends AbstractServiceTest {
 
 	@Test
 	@Transactional
-	public void addForFirstReadingWithSharedWaterHeating() {
+	public void addForFirstReadingWithSharedWaterHeating() throws InvalidDivisionException {
 		List<ReadingGas> list = readingService.getUnresolvedReadingsGas();
 		assertEquals(114, list.get(0).getValue(), 0);
 		InvoiceGas invoice = new InvoiceGas("112233", "test", new LocalDate(), 200, list.get(0));
@@ -93,7 +93,7 @@ public class InvoiceGasServiceTest extends AbstractServiceTest {
 
 	@Test
 	@Transactional
-	public void addForFirstReadingWithSeparateWaterHeating() {
+	public void addForFirstReadingWithSeparateWaterHeating() throws InvalidDivisionException {
 		List<ReadingGas> list = readingService.getUnresolvedReadingsGas();
 		Settings setings = settingsService.getSettings();
 		setings.setWaterHeatingSystem(WaterHeatingSystem.INDIVIDUAL_GAS);
@@ -151,7 +151,7 @@ public class InvoiceGasServiceTest extends AbstractServiceTest {
 	public void prepareForRegistrationWithException() throws InvalidDivisionException {
 		Apartment ap = new Apartment(78, "1234", "dummy");
 		apService.save(ap);
-		List<Reading> list = invoiceService.prepareForRegistration(Media.GAS);
+		List<Reading> list = invoiceService.getUnpaidReadingForNewIncvoice(Media.GAS);
 		assertEquals(2, list.size());
 		assertEquals(11, list.get(0).getValue(), 0);
 		assertEquals(31, list.get(1).getValue(), 0);
@@ -161,7 +161,7 @@ public class InvoiceGasServiceTest extends AbstractServiceTest {
 	@Test
 	public void prepareForRegistration() throws InvalidDivisionException {
 		// apService.deleteByID(5L);
-		List<Reading> list = invoiceService.prepareForRegistration(Media.GAS);
+		List<Reading> list = invoiceService.getUnpaidReadingForNewIncvoice(Media.GAS);
 		assertEquals(2, list.size());
 		assertEquals(114, list.get(0).getValue(), 0);
 		assertEquals(196, list.get(1).getValue(), 0);
@@ -173,7 +173,7 @@ public class InvoiceGasServiceTest extends AbstractServiceTest {
 	public void shouldThrowInvalidDivisionExceptionWhilePreparing() throws InvalidDivisionException {
 		divisionService.deleteAll();
 
-		List<Reading> list = invoiceService.prepareForRegistration(Media.GAS);
+		List<Reading> list = invoiceService.getUnpaidReadingForNewIncvoice(Media.GAS);
 		assertEquals(0, list.size());
 	}
 

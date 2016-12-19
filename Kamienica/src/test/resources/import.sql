@@ -5,11 +5,11 @@ insert into apartment(id, apartmentNumber, description, intercom) values(3, 2, '
 insert into apartment(id, apartmentNumber, description, intercom) values(4, 3, 'I Piętro','6666');
 --insert into apartment(id, apartmentNumber, description, intercom) values(5, 4, 'II Piętro- Mozna kasować','6666');
 
-INSERT INTO  tenant  ( id , email , firstName , lastName , movementDate , password , phone , role , status , apartment_id ) VALUES (1,'folik@wp.pl','Maciej','Folik','2016-07-25','witaj','530081187','ADMIN','Aktywny',2);
-INSERT INTO  tenant  ( id , email , firstName , lastName , movementDate , password , phone , role , status , apartment_id ) VALUES (2,'kow@wp.pl','Andrzej','Kowalski','2014-07-01','witaj','4456','USER','Nieaktywny',3);
-INSERT INTO  tenant  ( id , email , firstName , lastName , movementDate , password , phone , role , status , apartment_id ) VALUES (3,'par@wp.pl','Kasia','Para','2015-07-26','witaj','23636','USER','Aktywny',4);
-INSERT INTO  tenant  ( id , email , firstName , lastName , movementDate , password , phone , role , status , apartment_id ) VALUES (4,'kasia@wp.pl','Kasia','Kowalska','2016-07-29','witaj','3456775','USER','Aktywny',3);
-INSERT INTO  tenant  ( id , email , firstName , lastName , movementDate , password , phone , role , status , apartment_id ) VALUES (5,'klej@wp.pl','Piotr','Kulej','2010-07-29','witaj','23526564','USER','Nieaktywny',2);
+INSERT INTO  tenant  ( id , email , firstName , lastName , movementDate , password , phone , role , status , apartment_id ) VALUES (1,'folik@wp.pl','Maciej','Folik','2016-07-25','witaj','530081187','ADMIN','ACTIVE',2);
+INSERT INTO  tenant  ( id , email , firstName , lastName , movementDate , password , phone , role , status , apartment_id ) VALUES (2,'kow@wp.pl','Andrzej','Kowalski','2014-07-01','witaj','4456','USER','INACTIVE',3);
+INSERT INTO  tenant  ( id , email , firstName , lastName , movementDate , password , phone , role , status , apartment_id ) VALUES (3,'par@wp.pl','Kasia','Para','2015-07-26','witaj','23636','USER','ACTIVE',4);
+INSERT INTO  tenant  ( id , email , firstName , lastName , movementDate , password , phone , role , status , apartment_id ) VALUES (4,'kasia@wp.pl','Kasia','Kowalska','2016-07-29','witaj','3456775','USER','ACTIVE',3);
+INSERT INTO  tenant  ( id , email , firstName , lastName , movementDate , password , phone , role , status , apartment_id ) VALUES (5,'klej@wp.pl','Piotr','Kulej','2010-07-29','witaj','23526564','USER','INACTIVE',2);
 
 INSERT INTO  division  ( id , date , divisionValue , apartment_id , tenant_id ) VALUES (1,'2016-07-01',0.33,1,1);
 INSERT INTO  division  ( id , date , divisionValue , apartment_id , tenant_id ) VALUES (2,'2016-07-01',1,2,1);

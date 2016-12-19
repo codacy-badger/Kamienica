@@ -1,7 +1,8 @@
 package kamienica.controller.api;
 
-import java.util.List;
-
+import kamienica.core.enums.Media;
+import kamienica.feature.reading.Reading;
+import kamienica.feature.reading.ReadingService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -10,9 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import kamienica.core.util.Media;
-import kamienica.feature.reading.Reading;
-import kamienica.feature.reading.ReadingService;
+import java.util.List;
 
 @RestController
 @RequestMapping("/api/v1/readings")
@@ -29,6 +28,19 @@ public class ReadingApi {
 				return new ResponseEntity<Void>(HttpStatus.NOT_FOUND);
 			}
 			return new ResponseEntity<List<? extends Reading>>(list, HttpStatus.OK);
+	}
+	
+	@RequestMapping(value = "/unresolved/{media}", method = RequestMethod.GET)
+	public ResponseEntity<?> getListForInvoice(@PathVariable Media media) {
+
+		List<?> list = service.getUnresolvedReadings(media);
+				
+				
+				service.getList(media);
+			if (list.isEmpty()) {
+				return new ResponseEntity<Void>(HttpStatus.NOT_FOUND);
+			}
+			return new ResponseEntity<>(list, HttpStatus.OK);
 	}
 
 }

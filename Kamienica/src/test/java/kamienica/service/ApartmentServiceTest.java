@@ -1,15 +1,14 @@
 package kamienica.service;
 
-import static org.junit.Assert.assertEquals;
-
-import java.util.List;
-
+import kamienica.feature.apartment.ApartmentService;
+import kamienica.model.Apartment;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 
-import kamienica.feature.apartment.Apartment;
-import kamienica.feature.apartment.ApartmentService;
+import java.util.List;
+
+import static org.junit.Assert.assertEquals;
 
 public class ApartmentServiceTest extends AbstractServiceTest {
 

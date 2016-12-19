@@ -1,7 +1,7 @@
 package kamienica.controller.api;
 
-import java.util.List;
-
+import kamienica.feature.division.DivisionService;
+import kamienica.model.Division;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -9,24 +9,23 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import kamienica.feature.division.Division;
-import kamienica.feature.division.DivisionService;
+import java.util.List;
 
 @RestController
 @RequestMapping("/api/v1/divisions")
 public class DivisionApi extends AbstractApi {
 
 	@Autowired
-	DivisionService service;
+	private DivisionService service;
 
 	@RequestMapping(method = RequestMethod.GET)
 	public ResponseEntity<?> getList() {
-		List<Division> list = service.getList();
+		final List<Division> list = service.getList();
 		if (list.isEmpty()) {
-			return new ResponseEntity<List<Division>>(HttpStatus.NO_CONTENT);
+			return new ResponseEntity<>(HttpStatus.NO_CONTENT);
 		}
 
-		return new ResponseEntity<List<Division>>(list, HttpStatus.OK);
+		return new ResponseEntity<>(list, HttpStatus.OK);
 	}
 
 }

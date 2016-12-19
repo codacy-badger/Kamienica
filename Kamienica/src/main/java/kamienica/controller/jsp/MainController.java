@@ -1,8 +1,6 @@
 package kamienica.controller.jsp;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
+import kamienica.model.Tenant;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;
@@ -13,7 +11,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
-import kamienica.feature.tenant.Tenant;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 @Controller
 public class MainController {
@@ -25,17 +24,8 @@ public class MainController {
 
 	@RequestMapping(value = { "/", "/index" }, method = RequestMethod.GET)
 	public String index() {
-
 		return "Login";
 	}
-
-	
-	@RequestMapping(value =   "/test" , method = RequestMethod.GET)
-	public String test() {
-
-		return "index";
-	}
-
 
 	@RequestMapping(value = "/logout")
 	public ModelAndView updatePassword(HttpServletRequest req, HttpServletResponse response) {

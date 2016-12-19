@@ -1,6 +1,6 @@
 package kamienica.core.exception;
 
-import kamienica.feature.apartment.Apartment;
+import kamienica.model.Apartment;
 
 /**
  * Created by macfol on 10/15/16.

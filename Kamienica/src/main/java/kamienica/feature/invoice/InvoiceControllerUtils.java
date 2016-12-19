@@ -1,8 +1,9 @@
 package kamienica.feature.invoice;
 
+import kamienica.feature.reading.Reading;
+
 import java.util.HashMap;
 import java.util.List;
-import kamienica.feature.reading.Reading;
 
 public class InvoiceControllerUtils {
 

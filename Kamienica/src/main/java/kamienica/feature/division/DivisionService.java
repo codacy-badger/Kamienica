@@ -1,14 +1,14 @@
 package kamienica.feature.division;
 
-import java.util.List;
-import java.util.Map;
-
-import org.joda.time.LocalDate;
-
 import kamienica.core.exception.InvalidDivisionException;
 import kamienica.core.exception.WrongDivisionInputException;
-import kamienica.feature.apartment.Apartment;
-import kamienica.feature.tenant.Tenant;
+import kamienica.model.Apartment;
+import kamienica.model.Tenant;
+import kamienica.model.Division;
+import org.joda.time.LocalDate;
+
+import java.util.List;
+import java.util.Map;
 
 public interface DivisionService {
 
@@ -20,9 +20,7 @@ public interface DivisionService {
 	
 	Map<Tenant, List<Division>> getMappedList();
 
-	void deleteByID(Long id);
-
-	void update(Division division);
+//	void update(Division division);
 
 	void deleteAll();
 

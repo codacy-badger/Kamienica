@@ -23,7 +23,7 @@
 
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Lista Mieszkań - REST</title>
+<title>Opłaty Energii</title>
 </head>
 <body ng-app="myApp">
 	<div id="wrapper">
@@ -74,7 +74,6 @@
 			</div>
 		</div>
 	</div>
-
 	<script src="<c:url value='/static/js/angular.js' />"></script>
 	<script src="<c:url value='/static/js/angular-resource.js' />"></script>
 	<script src="<c:url value='/static/angular/app.js' />"></script>

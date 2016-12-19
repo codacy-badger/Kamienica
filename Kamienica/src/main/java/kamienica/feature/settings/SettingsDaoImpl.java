@@ -1,11 +1,11 @@
 package kamienica.feature.settings;
 
+import kamienica.core.dao.AbstractDao;
+import kamienica.model.Settings;
 import org.hibernate.Criteria;
 import org.hibernate.Query;
 import org.hibernate.criterion.Projections;
 import org.springframework.stereotype.Repository;
-
-import kamienica.core.dao.AbstractDao;
 
 @Repository("settingsDao")
 public class SettingsDaoImpl extends AbstractDao<Settings> implements SettingsDao {

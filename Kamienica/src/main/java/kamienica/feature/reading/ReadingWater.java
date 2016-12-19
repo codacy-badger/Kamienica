@@ -1,15 +1,13 @@
 package kamienica.feature.reading;
 
-import java.io.Serializable;
+import kamienica.feature.meter.MeterWater;
+import org.joda.time.LocalDate;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
-
-import org.joda.time.LocalDate;
-
-import kamienica.feature.meter.MeterWater;
+import java.io.Serializable;
 
 @Entity
 @Table(name = "readingwater")

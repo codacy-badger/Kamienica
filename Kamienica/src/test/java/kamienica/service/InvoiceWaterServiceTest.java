@@ -1,25 +1,25 @@
 package kamienica.service;
 
-import static org.junit.Assert.assertEquals;
-import java.util.List;
-
+import kamienica.core.enums.Media;
+import kamienica.core.exception.InvalidDivisionException;
+import kamienica.feature.apartment.ApartmentService;
+import kamienica.feature.division.DivisionService;
+import kamienica.feature.invoice.InvoiceService;
+import kamienica.feature.payment.Payment;
+import kamienica.feature.payment.PaymentService;
+import kamienica.feature.reading.ReadingService;
+import kamienica.feature.reading.ReadingWater;
+import kamienica.model.Apartment;
+import kamienica.model.InvoiceWater;
 import org.joda.time.LocalDate;
 import org.junit.Ignore;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 
-import kamienica.core.exception.InvalidDivisionException;
-import kamienica.core.util.Media;
-import kamienica.feature.apartment.Apartment;
-import kamienica.feature.apartment.ApartmentService;
-import kamienica.feature.division.DivisionService;
-import kamienica.feature.invoice.InvoiceWater;
-import kamienica.feature.invoice.InvoiceService;
-import kamienica.feature.payment.Payment;
-import kamienica.feature.payment.PaymentService;
-import kamienica.feature.reading.ReadingWater;
-import kamienica.feature.reading.ReadingService;
+import java.util.List;
+
+import static org.junit.Assert.assertEquals;
 
 public class InvoiceWaterServiceTest extends AbstractServiceTest {
 
@@ -43,7 +43,7 @@ public class InvoiceWaterServiceTest extends AbstractServiceTest {
 	
 	@Test
 	@Transactional
-	public void add() {
+	public void add() throws InvalidDivisionException {
 		List<ReadingWater> list = readingService.getUnresolvedReadingsWater();
 		assertEquals(60, list.get(1).getValue(), 0);
 		InvoiceWater invoice = new InvoiceWater("112233", "test", new LocalDate(), 200, list.get(1));
@@ -65,7 +65,7 @@ public class InvoiceWaterServiceTest extends AbstractServiceTest {
 
 	@Test
 	@Transactional
-	public void addForFirstReading() {
+	public void addForFirstReading() throws InvalidDivisionException {
 		List<ReadingWater> list = readingService.getUnresolvedReadingsWater();
 
 		assertEquals(33, list.get(0).getValue(), 0);
@@ -123,7 +123,7 @@ public class InvoiceWaterServiceTest extends AbstractServiceTest {
 	public void prepareForRegistrationWithException() throws InvalidDivisionException {
 		Apartment ap = new Apartment(78, "1234", "dummy");
 		apService.save(ap);
-		List<ReadingWater> list = invoiceService.prepareForRegistration(Media.WATER);
+		List<ReadingWater> list = invoiceService.getUnpaidReadingForNewIncvoice(Media.WATER);
 		assertEquals(2, list.size());
 		assertEquals(33, list.get(0).getValue(), 0);
 		assertEquals(56, list.get(1).getValue(), 0);
@@ -132,7 +132,7 @@ public class InvoiceWaterServiceTest extends AbstractServiceTest {
 	@Test
 	public void prepareForRegistration() throws InvalidDivisionException {
 		// apService.deleteByID(5L);
-		List<ReadingWater> list = invoiceService.prepareForRegistration(Media.WATER);
+		List<ReadingWater> list = invoiceService.getUnpaidReadingForNewIncvoice(Media.WATER);
 
 		assertEquals(2, list.size());
 		assertEquals(33, list.get(0).getValue(), 0);
@@ -145,7 +145,7 @@ public class InvoiceWaterServiceTest extends AbstractServiceTest {
 		System.out.println(divisionService.isDivisionCorrect());
 		divisionService.deleteAll();
 		System.out.println(divisionService.isDivisionCorrect());
-		List<ReadingWater> list = invoiceService.prepareForRegistration(Media.WATER);
+		List<ReadingWater> list = invoiceService.getUnpaidReadingForNewIncvoice(Media.WATER);
 		assertEquals(0, list.size());
 	}
 

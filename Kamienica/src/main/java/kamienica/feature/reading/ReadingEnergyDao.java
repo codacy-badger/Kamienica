@@ -1,13 +1,12 @@
 package kamienica.feature.reading;
 
-import java.util.List;
-import java.util.Set;
-
+import kamienica.core.dao.DaoInterface;
+import kamienica.model.Apartment;
+import kamienica.model.Invoice;
 import org.joda.time.LocalDate;
 
-import kamienica.core.dao.DaoInterface;
-import kamienica.feature.apartment.Apartment;
-import kamienica.feature.invoice.Invoice;
+import java.util.List;
+import java.util.Set;
 
 public interface ReadingEnergyDao extends DaoInterface<ReadingEnergy> {
 
@@ -17,7 +16,6 @@ public interface ReadingEnergyDao extends DaoInterface<ReadingEnergy> {
 
 	List<ReadingEnergy> getLatestList(LocalDate date);
 	
-	//public List<ReadingEnergy> getLatestList(Set<Long> meterId, LocalDate date);
 
 	List<ReadingEnergy> getListForTenant(Apartment apartment);
 
@@ -29,11 +27,7 @@ public interface ReadingEnergyDao extends DaoInterface<ReadingEnergy> {
 	 */
     List<ReadingEnergy> getUnresolvedReadings();
 	
-	void changeResolvmentState(Invoice invoice, boolean resolved);
-
-//	public void resolveReadings(InvoiceEnergy invoice);
-//
-//	public void unresolveReadings(InvoiceEnergy invoice);
+	void changeResolvementState(Invoice invoice, boolean resolved);
 
 	int countDaysFromLastReading();
 

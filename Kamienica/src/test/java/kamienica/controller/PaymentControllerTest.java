@@ -16,9 +16,9 @@
 //import org.testng.annotations.BeforeClass;
 //import org.testng.annotations.Testing;
 //
-//import kamienica.feature.apartment.Apartment;
+//import kamienica.model.Apartment;
 //import kamienica.feature.apartment.ApartmentService;
-//import kamienica.feature.division.Division;
+//import kamienica.model.Division;
 //import kamienica.feature.division.DivisionService;
 //import kamienica.feature.division.DivisionValidator;
 //import kamienica.feature.invoice.InvoiceEnergy;
@@ -35,9 +35,9 @@
 //import kamienica.feature.reading.ReadingGas;
 //import kamienica.feature.reading.ReadingService;
 //import kamienica.feature.reading.ReadingWater;
-//import kamienica.feature.tenant.Tenant;
+//import kamienica.model.Tenant;
 //import kamienica.feature.tenant.TenantService;
-//import kamienica.testsetup.SetupMethods;
+//import kamienica.testutils.SetupMethods;
 //
 //public class PaymentControllerTest {
 //
@@ -108,14 +108,14 @@
 //	}
 //
 //	// ArrayList<Tenant> tenants = (ArrayList<Tenant>)
-//	// tenantService.getCurrentTenants();
+//	// tenantService.getActiveTenants();
 //	// ArrayList<Division> division = (ArrayList<Division>)
 //	// divisionService.getList();
 //	// ArrayList<Apartment> apartments = (ArrayList<Apartment>)
 //	// apartmentService.getList();
 //	@Testing
 //	public void ValidateDivision() {
-//		when(tenantService.getCurrentTenants()).thenReturn(tenants);
+//		when(tenantService.getActiveTenants()).thenReturn(tenants);
 //		when(divisionService.getList()).thenReturn(division);
 //		when(apartmentService.getList()).thenReturn(apartments);
 //		Assert.assertEquals(DivisionValidator.validateDivision(apartments, division, tenants),
@@ -124,7 +124,7 @@
 //	
 //	@Testing
 //	public void prepareList() {
-//		when(tenantService.getCurrentTenants()).thenReturn(tenants);
+//		when(tenantService.getActiveTenants()).thenReturn(tenants);
 //		when(divisionService.getList()).thenReturn(division);
 //		when(apartmentService.getList()).thenReturn(apartments);
 //	

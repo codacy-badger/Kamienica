@@ -1,17 +1,12 @@
 package kamienica.feature.reading;
 
-import javax.persistence.Column;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.Inheritance;
-import javax.persistence.MappedSuperclass;
-
+import kamienica.feature.meter.Meter;
 import org.hibernate.annotations.Type;
 import org.joda.time.LocalDate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
 
-import kamienica.feature.meter.MeterAbstract;
+import javax.persistence.*;
 
 @MappedSuperclass
 @Inheritance
@@ -81,5 +76,5 @@ public abstract class Reading {
 	
 	public abstract void setUnit(String unit);
 	
-	public abstract MeterAbstract getMeter();
+	public abstract Meter getMeter();
 }

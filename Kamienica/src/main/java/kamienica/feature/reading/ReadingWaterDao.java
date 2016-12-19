@@ -1,15 +1,14 @@
 package kamienica.feature.reading;
 
+import kamienica.core.dao.DaoInterface;
+import kamienica.model.Apartment;
+import kamienica.model.Invoice;
+import kamienica.model.InvoiceGas;
+import org.joda.time.LocalDate;
+
 import java.util.HashMap;
 import java.util.List;
 import java.util.Set;
-
-import org.joda.time.LocalDate;
-
-import kamienica.core.dao.DaoInterface;
-import kamienica.feature.apartment.Apartment;
-import kamienica.feature.invoice.Invoice;
-import kamienica.feature.invoice.InvoiceGas;
 
 public interface ReadingWaterDao extends DaoInterface<ReadingWater> {
 
@@ -29,11 +28,7 @@ public interface ReadingWaterDao extends DaoInterface<ReadingWater> {
 	 */
     List<ReadingWater> getUnresolvedReadings();
 	
-	void changeResolvmentState(Invoice invoice, boolean resolved);
-
-//	public void resolveReadings(InvoiceWater invoice);
-//
-//	public void unresolveReadings(InvoiceWater invoice);
+	void changeResolvementState(Invoice invoice, boolean resolved);
 
 	int countDaysFromLastReading();
 

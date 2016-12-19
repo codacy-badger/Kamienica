@@ -19,10 +19,10 @@
 //import org.testng.annotations.BeforeClass;
 //import org.testng.annotations.Testing;
 //
-//import kamienica.feature.apartment.Apartment;
+//import kamienica.model.Apartment;
 //import kamienica.feature.apartment.ApartmentController;
 //import kamienica.feature.apartment.ApartmentService;
-//import kamienica.testsetup.SetupMethods;
+//import kamienica.testutils.SetupMethods;
 //
 //public class ApartmentControllerTest {
 //	@Mock

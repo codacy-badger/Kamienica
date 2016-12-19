@@ -1,12 +1,11 @@
 package kamienica.service;
 
-import static org.junit.Assert.assertEquals;
-
+import kamienica.core.enums.Media;
+import kamienica.feature.payment.PaymentService;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import kamienica.core.util.Media;
-import kamienica.feature.payment.PaymentService;
+import static org.junit.Assert.assertEquals;
 
 public class PaymentServiceTest extends AbstractServiceTest {
 

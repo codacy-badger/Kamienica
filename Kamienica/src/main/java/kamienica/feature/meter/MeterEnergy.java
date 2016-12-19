@@ -1,21 +1,16 @@
 package kamienica.feature.meter;
 
-import java.io.Serializable;
+import kamienica.model.Apartment;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import javax.persistence.Entity;
 import javax.persistence.Table;
-
-import org.springframework.beans.factory.annotation.Autowired;
-
-import kamienica.feature.apartment.Apartment;
+import java.io.Serializable;
 
 @Entity
 @Table(name="meterenergy")
-public class MeterEnergy extends MeterAbstract implements Serializable {
+public class MeterEnergy extends Meter implements Serializable {
 
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 1767126420777438931L;
 
 	@Autowired

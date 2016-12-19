@@ -1,9 +1,9 @@
 package kamienica.feature.user_admin;
 
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Objects;
-
+import kamienica.core.enums.Media;
+import kamienica.feature.payment.PaymentService;
+import kamienica.model.Apartment;
+import kamienica.model.Tenant;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Controller;
@@ -11,10 +11,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
-import kamienica.core.util.Media;
-import kamienica.feature.apartment.Apartment;
-import kamienica.feature.payment.PaymentService;
-import kamienica.feature.tenant.Tenant;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Objects;
 
 @Controller
 public class AdminUserController {
@@ -22,7 +21,7 @@ public class AdminUserController {
 	@Autowired
 	private PaymentService paymentService;
 	@Autowired
-	private MyUserDetailsService userDetailsService;
+	private SecurityService userDetailsService;
 	@Autowired
 	private AdminUserService adminUserService;
 

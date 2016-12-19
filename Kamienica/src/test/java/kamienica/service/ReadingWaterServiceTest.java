@@ -1,26 +1,21 @@
 package kamienica.service;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotEquals;
-
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
-
+import kamienica.core.enums.Media;
+import kamienica.core.exception.NoMainCounterException;
+import kamienica.feature.meter.MeterService;
+import kamienica.feature.meter.MeterWater;
+import kamienica.feature.reading.Reading;
+import kamienica.feature.reading.ReadingService;
+import kamienica.feature.reading.ReadingWater;
 import org.joda.time.LocalDate;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 
-import kamienica.core.exception.NoMainCounterException;
-import kamienica.core.util.Media;
-import kamienica.feature.meter.MeterWater;
-import kamienica.feature.meter.MeterService;
-import kamienica.feature.reading.ReadingWater;
-import kamienica.feature.reading.Reading;
-import kamienica.feature.reading.ReadingService;
+import java.util.*;
+
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotEquals;
 
 public class ReadingWaterServiceTest extends AbstractServiceTest {
 
