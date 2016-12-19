@@ -1,16 +1,8 @@
 package kamienica.configuration;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.datatype.joda.JodaModule;
-import kamienica.core.conventer.InvoiceWaterConverter;
-import kamienica.core.conventer.ReadingEnergyConverter;
-import kamienica.core.conventer.ReadingGasConverter;
-import kamienica.core.conventer.ReadingWaterConverter;
-import kamienica.feature.invoice.InvoiceEnergyConverter;
-import kamienica.feature.invoice.InvoiceGasConverter;
-import kamienica.feature.meter.MeterEnergyConverter;
-import kamienica.feature.meter.MeterGasConverter;
-import kamienica.feature.meter.MeterWaterConverter;
+import java.util.ArrayList;
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
 import org.springframework.context.annotation.Bean;
@@ -34,8 +26,20 @@ import org.springframework.web.servlet.view.ContentNegotiatingViewResolver;
 import org.springframework.web.servlet.view.InternalResourceViewResolver;
 import org.springframework.web.servlet.view.JstlView;
 
-import java.util.ArrayList;
-import java.util.List;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.datatype.joda.JodaModule;
+
+import kamienica.core.conventer.ApartmentConverter;
+import kamienica.core.conventer.InvoiceWaterConverter;
+import kamienica.core.conventer.ReadingEnergyConverter;
+import kamienica.core.conventer.ReadingGasConverter;
+import kamienica.core.conventer.ReadingWaterConverter;
+import kamienica.core.conventer.TenantConverter;
+import kamienica.feature.invoice.InvoiceEnergyConverter;
+import kamienica.feature.invoice.InvoiceGasConverter;
+import kamienica.feature.meter.MeterEnergyConverter;
+import kamienica.feature.meter.MeterGasConverter;
+import kamienica.feature.meter.MeterWaterConverter;
 
 @Configuration
 @EnableWebMvc
@@ -55,16 +59,16 @@ public class AppConfig extends WebMvcConfigurerAdapter {
 	private InvoiceWaterConverter invoiceWaterConverter;
 	@Autowired
 	private InvoiceEnergyConverter invoiceEnergyConverter;
-//	@Autowired
-//	private ApartmentConverter apartmentConverter;
+	@Autowired
+	private ApartmentConverter apartmentConverter;
 	@Autowired
 	private MeterGasConverter meterGasConverter;
 	@Autowired
 	private MeterEnergyConverter meterEnergyConverter;
 	@Autowired
 	private MeterWaterConverter meterWaterConverter;
-//	@Autowired
-//	private TenantConverter tenantConverter;
+	@Autowired
+	private TenantConverter tenantConverter;
 
 	@Override
 	public void configureContentNegotiation(ContentNegotiationConfigurer configurer) {
@@ -135,12 +139,11 @@ public class AppConfig extends WebMvcConfigurerAdapter {
 		registry.addConverter(invoiceEnergyConverter);
 		registry.addConverter(invoiceGasConverter);
 		registry.addConverter(invoiceWaterConverter);
-
-//		registry.addConverter(apartmentConverter);
+		registry.addConverter(apartmentConverter);
 		registry.addConverter(meterGasConverter);
 		registry.addConverter(meterEnergyConverter);
 		registry.addConverter(meterWaterConverter);
-//		registry.addConverter(tenantConverter);
+		registry.addConverter(tenantConverter);
 
 	}
 
