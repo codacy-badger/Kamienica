@@ -2,6 +2,10 @@
 	text-align: right;
 }
 
+.homeLabel {
+	height: 100px;
+}
+
 .inputAndError {
 	text-align: left;
 }

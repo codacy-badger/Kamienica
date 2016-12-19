@@ -3,8 +3,8 @@ package kamienica.feature.division;
 import kamienica.core.exception.InvalidDivisionException;
 import kamienica.core.exception.WrongDivisionInputException;
 import kamienica.model.Apartment;
-import kamienica.model.Tenant;
 import kamienica.model.Division;
+import kamienica.model.Tenant;
 import org.joda.time.LocalDate;
 
 import java.util.List;

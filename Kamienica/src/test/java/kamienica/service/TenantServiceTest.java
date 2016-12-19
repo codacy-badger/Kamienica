@@ -2,13 +2,10 @@ package kamienica.service;
 
 import kamienica.core.enums.Status;
 import kamienica.core.enums.UserRole;
-import kamienica.feature.apartment.ApartmentService;
-import kamienica.feature.tenant.TenantService;
 import kamienica.model.Apartment;
 import kamienica.model.Tenant;
 import org.joda.time.LocalDate;
 import org.junit.Test;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
@@ -17,11 +14,6 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 
 public class TenantServiceTest extends AbstractServiceTest {
-
-    @Autowired
-    private TenantService tenantService;
-    @Autowired
-    private ApartmentService apartmentService;
 
     private final String dummyMail = "dummy@dummy";
     private final String tenantMail = "folik@wp.pl";

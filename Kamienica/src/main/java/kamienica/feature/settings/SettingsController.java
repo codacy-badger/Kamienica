@@ -28,7 +28,6 @@ public class SettingsController {
 	@RequestMapping(value = "/list", method = RequestMethod.GET)
 	public ModelAndView list(@ModelAttribute("settings") Settings settings, BindingResult result) {
 		Map<String, Object> model = new HashMap<>();
-		System.out.println(service.getSettings());
 		model.put("settings", service.getSettings());
 		return new ModelAndView("/Admin/Settings/SettingsList", "model", model);
 
@@ -72,8 +71,6 @@ public class SettingsController {
 		if (result.hasErrors()) {
 			return new ModelAndView("/Admin/Settings/SettingsRegister");
 		}
-		System.out.println("===============");
-		System.out.println(settings);
 		service.save(settings);
 		return new ModelAndView("redirect:/Admin/Settings/list.html");
 	}

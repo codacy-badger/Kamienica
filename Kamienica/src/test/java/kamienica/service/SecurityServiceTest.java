@@ -1,10 +1,7 @@
 package kamienica.service;
 
-import kamienica.feature.tenant.TenantDao;
-import kamienica.feature.user_admin.SecurityService;
 import kamienica.model.Tenant;
 import org.junit.Test;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -25,10 +22,7 @@ public class SecurityServiceTest extends AbstractServiceTest {
     private static final String USER_PASSWD = "witaj";
     private static final SimpleGrantedAuthority ADMIN =  new SimpleGrantedAuthority("ROLE_ADMIN" );
 
-    @Autowired
-    private SecurityService securityService;
-    @Autowired
-    private TenantDao tenantDao;
+
 
     @Test
     public void loginWithCorrectCredentials() {
@@ -54,14 +48,14 @@ public class SecurityServiceTest extends AbstractServiceTest {
     @Test
     public void changePassword(){
         securityService.changePassword(USER_LOGIN, "witaj", "nowe");
-        final Tenant tenant = tenantDao.loadByMail(USER_LOGIN);
+        final Tenant tenant = tenantService.loadByMail(USER_LOGIN);
         assertEquals("nowe", tenant.getPassword());
     }
 
     @Test(expected = UsernameNotFoundException.class)
     public void changePasswordWithIncorrectCredentials(){
         securityService.changePassword(USER_LOGIN, "dummy", "nowe");
-        final Tenant tenant = tenantDao.loadByMail(USER_LOGIN);
+        final Tenant tenant = tenantService.loadByMail(USER_LOGIN);
         assertEquals("nowe", tenant.getPassword());
     }
 }

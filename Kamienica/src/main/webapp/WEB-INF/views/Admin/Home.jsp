@@ -56,7 +56,7 @@
 				<div class="col-lg-3 col-md-6">
 					<div class="panel panel-primary" id='config'>
 						<div class="panel-heading">
-							<div class="row">
+							<div class="row homeLabel" >
 								<div class="col-xs-3">
 									<i class="fa fa-cog fa-4x" aria-hidden="true"></i>
 								</div>
@@ -80,13 +80,13 @@
 				<div class="col-lg-3 col-md-6">
 					<div class="panel " id='invoice'>
 						<div class="panel-heading">
-							<div class="row">
+							<div class="row homeLabel">
 								<div class="col-xs-3">
 									<i class="fa  fa-calendar-o fa-4x"></i>
 								</div>
 								<div class="col-xs-9 text-right">
 									<div>
-										<h3 id='invoiceDays'>${model.invoiceDays }dni</h3>
+										<h3 style="height: 20px" id='invoiceDays'>${model.invoiceDays } dni</h3>
 									</div>
 									<div>Najstarsza opłata: ${model.invoiceMedia }</div>
 								</div>
@@ -104,13 +104,13 @@
 				<div class="col-lg-3 col-md-6">
 					<div class="panel" id='reading'>
 						<div class="panel-heading">
-							<div class="row">
+							<div class="row homeLabel">
 								<div class="col-xs-3">
 									<i class="fa fa-calendar-o fa-4x"></i>
 								</div>
 								<div class="col-xs-9 text-right">
 									<div class="huge">
-										<h3 id='readingDays'>${model.radingDays }dni</h3>
+										<h3 style="height: 20px" id='readingDays'>${model.readingDays } dni</h3>
 									</div>
 									<div>Najstarszy odczyt: ${model.readingMedia }</div>
 								</div>
@@ -128,13 +128,13 @@
 				<div class="col-lg-3 col-md-6">
 					<div class="panel " id='apartment'>
 						<div class="panel-heading">
-							<div class="row">
+							<div class="row homeLabel">
 								<div class="col-xs-3">
 									<i class="fa fa-home fa-4x"></i>
 								</div>
 								<div class="col-xs-9 text-right">
 									<div>
-										<h3 id='apartmentNumber'>${model.emptyApartments }</h3>
+										<h3 style="height: 20px" id='apartmentNumber'>${model.emptyApartments }</h3>
 									</div>
 									<div>Liczba Pustych Mieszkań</div>
 								</div>
@@ -153,7 +153,7 @@
 
 			<!-- /.row -->
 			<div class="row">
-				<div class="col-lg-8">
+				<div class="col-lg-8" hidden=true>
 
 					<!-- /.panel -->
 					<div class="panel panel-default">
@@ -258,7 +258,7 @@
 
 				</div>
 				<!-- /.col-lg-8 -->
-				<div class="col-lg-4">
+				<div class="col-lg-4" hidden=true>
 
 					<div class="panel panel-default">
 						<div class="panel-heading">

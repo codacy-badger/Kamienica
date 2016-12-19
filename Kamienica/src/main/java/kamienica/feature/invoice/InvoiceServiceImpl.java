@@ -7,9 +7,7 @@ import kamienica.core.calculator.WaterConsumptionCalculator;
 import kamienica.core.enums.Media;
 import kamienica.core.enums.WaterHeatingSystem;
 import kamienica.core.exception.InvalidDivisionException;
-import kamienica.model.Apartment;
 import kamienica.feature.apartment.ApartmentDao;
-import kamienica.model.Division;
 import kamienica.feature.division.DivisionDao;
 import kamienica.feature.meter.MeterService;
 import kamienica.feature.payment.PaymentDao;
@@ -18,7 +16,6 @@ import kamienica.feature.payment.PaymentGas;
 import kamienica.feature.payment.PaymentWater;
 import kamienica.feature.reading.*;
 import kamienica.feature.settings.SettingsDao;
-import kamienica.model.Tenant;
 import kamienica.feature.tenant.TenantDao;
 import kamienica.model.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -253,7 +250,6 @@ public class InvoiceServiceImpl implements InvoiceService {
 		Long id = invoice.getId();
 		switch (media) {
 		case ENERGY:
-			System.out.println(invoiceEnergyDao.getList());
 			oldInv = invoiceEnergyDao.getById(id);
 
 			invFactor = (invoice.getTotalAmount() / oldInv.getTotalAmount());

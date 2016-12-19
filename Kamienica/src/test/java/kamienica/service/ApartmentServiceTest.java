@@ -24,7 +24,8 @@ public class ApartmentServiceTest extends AbstractServiceTest {
 	@Test
 	public void getPaginatedList() {
 		List<Apartment> list = service.paginatedList(4, 1);
-		assertEquals("[Number 3; I Piętro]", list.toString());
+		final long apartmentId = list.get(0).getId();
+		assertEquals(4L, apartmentId);
 	}
 
 	@Test
