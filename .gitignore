@@ -1,3 +1,11 @@
-/.project
-/.idea
+/target/
+/test-output/
+/Users/
+/bin/
+/.settings/
+.project
+.classpath
 *.iml
+*.idea
+/.idea/
+
