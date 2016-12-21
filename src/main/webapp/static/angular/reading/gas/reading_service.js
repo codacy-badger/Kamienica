@@ -4,7 +4,7 @@
 
 App.factory('Reading', ['$resource', function ($resource) {
     return $resource(
-    		'/Kamienica/api/v1/readings/GAS.json',
+    		'/api/v1/readings/GAS.json',
     		{id: '@id'},//Handy for update & delete. id will be set with id of instance
     		{
     			query:  {method:'GET', isArray:true},

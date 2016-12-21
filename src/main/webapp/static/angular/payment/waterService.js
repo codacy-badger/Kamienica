@@ -4,7 +4,7 @@
 
 App.factory('PaymentWater', ['$resource', function ($resource) {
     return $resource(
-    		'/Kamienica/api/v1/payments.json?media=WATER',
+    		'/api/v1/payments.json?media=WATER',
     		{
     			
     			query:  {method:'GET', isArray:true}
