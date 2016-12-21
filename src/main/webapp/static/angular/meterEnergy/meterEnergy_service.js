@@ -2,9 +2,14 @@
 
 
 App.factory('MeterEnergy', ['$resource', function ($resource) {
-	//$resource() function returns an object of resource class
+	//TODO ugly fix to run locally and on heroku. Needs better solution
+	 var path = location.origin
+    if ( path.includes('localhost')) {
+   	 path = path + '/Kamienica'
+   	 
+    };
     return $resource(
-    		'/api/v1/meters/ENERGY/:id.json',
+    		path+'/api/v1/meters/ENERGY/:id.json',
     		{id: '@id'},//Handy for update & delete. id will be set with id of instance
     		{
     			query:  {method:'GET', isArray:true},
