@@ -19,11 +19,6 @@
 <!-- MetisMenu CSS -->
 <link href="<c:url value='/static/css/metisMenu.min.css' />"
 	rel="stylesheet">
-<link rel="stylesheet"
-	href="http://code.jquery.com/ui/1.12.0/themes/base/jquery-ui.css">
-<link rel="stylesheet" href="http://resources/demos/style.css">
-
-
 
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -275,13 +270,6 @@
 	<script src="<c:url value='/static/js/jquery.min.js' />"></script>
 	<!-- Bootstrap Core JavaScript -->
 	<script src="<c:url value='/static/js/bootstrap.min.js' />"></script>
-	<script src="http://code.jquery.com/ui/1.12.0/jquery-ui.js"></script>
-	<script>
-		$(function() {
-			$("#datepicker").datepicker();
-		});
-	</script>
-
 	<!-- Metis Menu Plugin JavaScript -->
 	<script src="<c:url value='/static/js/metisMenu.min.js' />"></script>
 	<!-- Custom Theme JavaScript -->
