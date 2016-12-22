@@ -1,8 +1,17 @@
 'use strict';
 
 App.factory('Invoice', ['$resource', function ($resource) {
+	
+	//TODO ugly fix to run locally and on heroku. Needs better solution
+	 var path = location.origin
+    if ( path.includes('localhost')) {
+   	 path = path + '/Kamienica'
+   	 
+    };
+    
+    
     return $resource(
-    		'http://localhost:8080/Kamienica/api/v1/invoices/GAS.json', 
+    		path+'/api/v1/invoices/GAS.json',
     		{id: '@id'},
     		{
     			query:  {method:'GET', isArray:true},
