@@ -1,5 +1,6 @@
 package kamienica.controller.api;
 
+import kamienica.controller.ControllerMessages;
 import kamienica.core.message.ApiErrorResponse;
 import kamienica.core.message.Message;
 import kamienica.feature.apartment.ApartmentService;
@@ -11,7 +12,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.util.UriComponentsBuilder;
 
 import javax.validation.Valid;
 import java.util.HashMap;
@@ -20,12 +20,12 @@ import java.util.Map;
 
 @RestController
 @RequestMapping("/api/v1/apartments")
-public class ApartmentApi extends AbstractApi {
+public class ApartmentApi  {
 
     @Autowired
     private ApartmentService apartmentService;
 
-    @RequestMapping(value = "", method = RequestMethod.GET)
+    @RequestMapping(method = RequestMethod.GET)
     public ResponseEntity<?> list() {
         final List<Apartment> list = apartmentService.getList();
         if (list.isEmpty()) {
@@ -36,8 +36,7 @@ public class ApartmentApi extends AbstractApi {
     }
 
     @RequestMapping(value = "/paginated", params = {"page", "size"}, method = RequestMethod.GET)
-    public ResponseEntity<?> findPaginated(@RequestParam("page") int page, @RequestParam("size") int size,
-                                           UriComponentsBuilder uriBuilder) {
+    public ResponseEntity<?> findPaginated(@RequestParam("page") int page, @RequestParam("size") int size) {
 
         final List<Apartment> list = apartmentService.paginatedList(page, size);
 
@@ -58,7 +57,7 @@ public class ApartmentApi extends AbstractApi {
         try {
             apartmentService.save(apartment);
         } catch (Exception e) {
-            result.rejectValue("apartmentNumber", "error.apartment", DUPLICATE_VALUE);
+            result.rejectValue("apartmentNumber", "error.apartment", ControllerMessages.DUPLICATE_VALUE);
             final Map<String, String> test = new HashMap<>();
             for (FieldError fieldError : result.getFieldErrors()) {
                 test.put(fieldError.getField(), fieldError.getDefaultMessage());
@@ -80,7 +79,7 @@ public class ApartmentApi extends AbstractApi {
         try {
             apartmentService.update(apartment);
         } catch (Exception e) {
-            result.rejectValue("apartmentNumber", "error.apartment", UNEXPECTED_ERROR);
+            result.rejectValue("apartmentNumber", "error.apartment", ControllerMessages.UNEXPECTED_ERROR);
             final Map<String, String> test = new HashMap<>();
             for (FieldError fieldError : result.getFieldErrors()) {
                 test.put(fieldError.getField(), fieldError.getDefaultMessage());
@@ -96,7 +95,7 @@ public class ApartmentApi extends AbstractApi {
         try {
             apartmentService.deleteByID(id);
         } catch (Exception e) {
-            message.setMessage(CONSTRAINT_VIOLATION);
+            message.setMessage(ControllerMessages.CONSTRAINT_VIOLATION);
             message.setException(e.toString());
             return new ResponseEntity<>(message, HttpStatus.UNPROCESSABLE_ENTITY);
         }

@@ -2,9 +2,6 @@ package kamienica.core.exception;
 
 import kamienica.model.Apartment;
 
-/**
- * Created by macfol on 10/15/16.
- */
 public class NegativeConsumptionValue extends Throwable {
 
 

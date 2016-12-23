@@ -8,9 +8,6 @@ import kamienica.model.MediaUsage;
 
 import java.util.List;
 
-/**
- * Created by macfol on 12/7/16.
- */
 public class CentralGasWaterHeatingCalulator implements ConsumptionCalculator {
     @Override
     public List<MediaUsage> calculateConsumption(final List<Apartment> apartments, final List<Reading> readings) throws NegativeConsumptionValue, UsageCalculationException {

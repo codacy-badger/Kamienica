@@ -1,6 +1,8 @@
-package kamienica.service;
+package kamienica.configuration;
 
 import kamienica.configuration.JUnitConfig;
+import kamienica.core.dao.AbstractDao;
+import kamienica.feature.apartment.ApartmentDao;
 import kamienica.feature.apartment.ApartmentService;
 import kamienica.feature.division.DivisionService;
 import kamienica.feature.invoice.InvoiceService;
@@ -11,6 +13,7 @@ import kamienica.feature.settings.SettingsService;
 import kamienica.feature.tenant.TenantService;
 import kamienica.feature.user_admin.AdminUserService;
 import kamienica.feature.user_admin.SecurityService;
+import kamienica.model.Apartment;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
@@ -18,7 +21,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 @ContextConfiguration(classes = {JUnitConfig.class})
 @RunWith(SpringJUnit4ClassRunner.class)
-public abstract class AbstractServiceTest {
+public abstract class DatabaseTest {
 
     @Autowired
     protected TenantService tenantService;
@@ -41,6 +44,10 @@ public abstract class AbstractServiceTest {
     @Autowired
     protected AdminUserService adminUserService;
 
+    @Autowired
+    protected AbstractDao<Apartment> apartmentAbstractDao;
+    @Autowired
+    protected ApartmentDao apartmentDao;
     /**
      * difference factor for calculated data
      */

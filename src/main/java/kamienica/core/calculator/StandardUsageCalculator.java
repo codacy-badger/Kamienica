@@ -65,7 +65,6 @@ public class StandardUsageCalculator implements ConsumptionCalculator {
 
         for (final Reading r : readings) {
             if(r.getReadingDate().isEqual(latestDate) ||  r.getReadingDate().isEqual(previousDate)) {
-                continue;
             } else  {
                 throw new UsageCalculationException("There are more than two reading dates in the collection");
             }
@@ -83,11 +82,11 @@ public class StandardUsageCalculator implements ConsumptionCalculator {
 
     private void addDifferenceToSharedPart(List<MediaUsage> result, double difference) {
 
-        for (int i = 0; i < result.size(); i++) {
-            if(result.get(i).getApartment().getApartmentNumber() == 0) {
-                double usageToChange = result.get(i).getUsage();
+        for (MediaUsage aResult : result) {
+            if (aResult.getApartment().getApartmentNumber() == 0) {
+                double usageToChange = aResult.getUsage();
                 usageToChange += difference;
-                result.get(i).setUsage(usageToChange);
+                aResult.setUsage(usageToChange);
             }
         }
     }

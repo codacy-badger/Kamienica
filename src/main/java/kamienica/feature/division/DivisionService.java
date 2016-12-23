@@ -20,8 +20,6 @@ public interface DivisionService {
 	
 	Map<Tenant, List<Division>> getMappedList();
 
-//	void update(Division division);
-
 	void deleteAll();
 
 	void prepareForm(DivisionForm form) throws WrongDivisionInputException;

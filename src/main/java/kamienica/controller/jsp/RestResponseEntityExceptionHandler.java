@@ -21,7 +21,7 @@ public class RestResponseEntityExceptionHandler extends ResponseEntityExceptionH
 	@ExceptionHandler(value = { Exception.class, })
 	protected ResponseEntity<Object> handleOtherConflict(RuntimeException ex, WebRequest request) {
 		String bodyOfResponse = "Bląd generalny";
-		return handleExceptionInternal(ex, ex, new HttpHeaders(), HttpStatus.CONFLICT, request);
+		return handleExceptionInternal(ex, bodyOfResponse, new HttpHeaders(), HttpStatus.CONFLICT, request);
 	}
 
 	@ExceptionHandler(value = { ConstraintViolationException.class, })

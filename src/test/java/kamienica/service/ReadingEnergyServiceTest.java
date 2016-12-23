@@ -1,5 +1,6 @@
 package kamienica.service;
 
+import kamienica.configuration.DatabaseTest;
 import kamienica.core.enums.Media;
 import kamienica.core.exception.NoMainCounterException;
 import kamienica.feature.meter.MeterEnergy;
@@ -14,7 +15,7 @@ import java.util.*;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotEquals;
 
-public class ReadingEnergyServiceTest extends AbstractServiceTest {
+public class ReadingEnergyServiceTest extends DatabaseTest {
 
     private Set<Long> meterIdList = new HashSet<>(Arrays.asList(1L, 2L, 3L, 4L, 5L));
 
@@ -133,8 +134,8 @@ public class ReadingEnergyServiceTest extends AbstractServiceTest {
     public void update() throws NoMainCounterException {
         List<ReadingEnergy> list = readingService.getLatestNew(Media.ENERGY);
 
-        for (int i = 0; i < list.size(); i++) {
-            list.get(i).setValue(6767.0);
+        for (ReadingEnergy aList : list) {
+            aList.setValue(6767.0);
         }
         readingService.update(list, new LocalDate(), Media.ENERGY);
         List<ReadingEnergy> list2 = readingService.getLatestNew(Media.ENERGY);

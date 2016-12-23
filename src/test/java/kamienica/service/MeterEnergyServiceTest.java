@@ -1,5 +1,6 @@
 package kamienica.service;
 
+import kamienica.configuration.DatabaseTest;
 import kamienica.core.enums.Media;
 import kamienica.feature.meter.MeterEnergy;
 import org.joda.time.LocalDate;
@@ -10,7 +11,7 @@ import java.util.List;
 
 import static org.junit.Assert.assertEquals;
 
-public class MeterEnergyServiceTest extends AbstractServiceTest {
+public class MeterEnergyServiceTest extends DatabaseTest {
 
 	;
 
@@ -67,7 +68,6 @@ public class MeterEnergyServiceTest extends AbstractServiceTest {
 		MeterEnergy meter = meterService.getById(4L, Media.ENERGY);
 		meter.setDescription("uPdate");
 		meterService.update(meter, Media.ENERGY);
-		meter = null;
 		meter = meterService.getById(4L, Media.ENERGY);
 		assertEquals("uPdate", meter.getDescription());
 	}

@@ -4,6 +4,7 @@ import kamienica.model.Apartment;
 import kamienica.model.Division;
 import kamienica.model.Tenant;
 import kamienica.testutils.EntityProvider;
+import org.junit.Ignore;
 import org.junit.Test;
 
 import java.util.List;
@@ -11,9 +12,6 @@ import java.util.List;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
-/**
- * Created by macfol on 12/18/16.
- */
 public class DivisionValidatorTest {
 
     private static final List<Apartment> apartments = EntityProvider.APARTMENTS;
@@ -22,12 +20,14 @@ public class DivisionValidatorTest {
     private static final List<Tenant> tenants = EntityProvider.TENANTS;
 
 //    @Test
+//    @Ignore
 //    public void validateDivisionShouldReturnTrue() throws Exception {
 //        final boolean result = DivisionValidator.validateDivision(apartments, divisions, tenants);
 //        assertTrue(result);
 //    }
 //
 //    @Test
+//    @Ignore
 //    public void validateDivisionShouldReturnFalse() throws Exception {
 //        final boolean result = DivisionValidator.validateDivision(apartments, divisionsWrong, tenants);
 //        assertFalse(result);

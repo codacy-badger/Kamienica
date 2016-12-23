@@ -30,12 +30,6 @@ public interface InvoiceService {
 	
 	List<? extends Invoice> getList(Media media);
 
-//	public List<InvoiceWater> getWaterInvoiceList();
-//
-//	public List<InvoiceGas> getGasInvoiceList();
-//
-//	public List<InvoiceEnergy> getEnergyInvoiceList();
-
 	void delete(Long id, Media media);
 
 	void deleteGasByID(Long id);

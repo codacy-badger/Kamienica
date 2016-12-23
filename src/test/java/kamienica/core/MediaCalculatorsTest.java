@@ -58,7 +58,7 @@ public class MediaCalculatorsTest {
         List<Reading> readings = new ArrayList<>();
         readings.addAll(EntityProvider.WATER_OLD);
         readings.addAll(EntityProvider.GAS_NEW);
-        List<MediaUsage> result = consumptionCalc.calculateConsumption(EntityProvider.APARTMENTS, readings);
+        consumptionCalc.calculateConsumption(EntityProvider.APARTMENTS, readings);
     }
 
     @Test(expected = NegativeConsumptionValue.class)
@@ -66,7 +66,7 @@ public class MediaCalculatorsTest {
         List<Reading> readings = new ArrayList<>();
         readings.addAll(EntityProvider.ENERGY_OLD);
         readings.addAll(EntityProvider.ENERGY_NEW_MINUS);
-        List<MediaUsage> result = consumptionCalc.calculateConsumption(EntityProvider.APARTMENTS, readings);
+        consumptionCalc.calculateConsumption(EntityProvider.APARTMENTS, readings);
     }
 }
 

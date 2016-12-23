@@ -3,8 +3,8 @@ package kamienica.configuration;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.datatype.joda.JodaModule;
 import kamienica.core.conventer.*;
-import kamienica.feature.invoice.InvoiceEnergyConverter;
-import kamienica.feature.invoice.InvoiceGasConverter;
+import kamienica.core.conventer.InvoiceEnergyConverter;
+import kamienica.core.conventer.InvoiceGasConverter;
 import kamienica.feature.meter.MeterEnergyConverter;
 import kamienica.feature.meter.MeterGasConverter;
 import kamienica.feature.meter.MeterWaterConverter;
@@ -39,7 +39,7 @@ import java.util.List;
 @ComponentScan(basePackages = "kamienica.*")
 public class AppConfig extends WebMvcConfigurerAdapter {
 
-	public static final String VERSION = "1.0";
+	public static final String VERSION = "1.1";
 	@Autowired
 	private ReadingEnergyConverter readingEnergyConverter;
 	@Autowired
@@ -75,7 +75,6 @@ public class AppConfig extends WebMvcConfigurerAdapter {
 	public ViewResolver contentNegotiatingViewResolver(ContentNegotiationManager manager) {
 		ContentNegotiatingViewResolver resolver = new ContentNegotiatingViewResolver();
 		resolver.setContentNegotiationManager(manager);
-		// Define all possible view resolvers
 		List<ViewResolver> resolvers = new ArrayList<>();
 		resolvers.add(jsonViewResolver());
 		resolvers.add(viewResolver());

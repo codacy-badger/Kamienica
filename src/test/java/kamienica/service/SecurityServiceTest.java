@@ -1,5 +1,6 @@
 package kamienica.service;
 
+import kamienica.configuration.DatabaseTest;
 import kamienica.model.Tenant;
 import org.junit.Test;
 import org.springframework.security.core.GrantedAuthority;
@@ -13,16 +14,11 @@ import java.util.Collection;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
-/**
- * Created by macfol on 12/3/16.
- */
-public class SecurityServiceTest extends AbstractServiceTest {
+public class SecurityServiceTest extends DatabaseTest {
 
     private static final String USER_LOGIN = "folik@wp.pl";
     private static final String USER_PASSWD = "witaj";
     private static final SimpleGrantedAuthority ADMIN =  new SimpleGrantedAuthority("ROLE_ADMIN" );
-
-
 
     @Test
     public void loginWithCorrectCredentials() {
@@ -41,7 +37,7 @@ public class SecurityServiceTest extends AbstractServiceTest {
 
     @Test(expected = UsernameNotFoundException.class)
     public void loginWithInCorrectCredentials() {
-        final UserDetails result = securityService.loadUserByUsername("dummy");
+        securityService.loadUserByUsername("dummy");
     }
 
     @Transactional

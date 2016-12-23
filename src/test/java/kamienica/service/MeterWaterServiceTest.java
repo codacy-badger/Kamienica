@@ -1,5 +1,6 @@
 package kamienica.service;
 
+import kamienica.configuration.DatabaseTest;
 import kamienica.core.enums.Media;
 import kamienica.feature.meter.MeterWater;
 import org.joda.time.LocalDate;
@@ -10,7 +11,7 @@ import java.util.List;
 
 import static org.junit.Assert.assertEquals;
 
-public class MeterWaterServiceTest extends AbstractServiceTest {
+public class MeterWaterServiceTest extends DatabaseTest {
 
 	@Test
 	public void getList() {

@@ -26,7 +26,7 @@ public class MeterAbstractDaoImpl<T extends Meter> extends AbstractDao<T> {
 	public Set<Long> getIdListForActiveMeters() {
 		Criteria criteria = createEntityCriteria().setProjection(Projections.property("id"));
 		criteria.add(Restrictions.gt("deactivation", new LocalDate()));
-		return new HashSet<Long>(criteria.list());
+		return new HashSet<>(criteria.list());
 		
 	}
 	

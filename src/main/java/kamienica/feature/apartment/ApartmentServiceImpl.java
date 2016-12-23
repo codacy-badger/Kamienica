@@ -14,9 +14,9 @@ import java.util.List;
 public class ApartmentServiceImpl implements ApartmentService {
 
     @Autowired
-    ApartmentDao apartmentDAO;
+    private ApartmentDao apartmentDAO;
     @Autowired
-    SettingsDao settingsDao;
+    private SettingsDao settingsDao;
 
     @Override
     public void save(Apartment apartment) {
@@ -42,12 +42,12 @@ public class ApartmentServiceImpl implements ApartmentService {
     }
 
     @Override
-    public void update(Apartment apartment) {
+    public void update(final Apartment apartment) {
         apartmentDAO.update(apartment);
     }
 
     @Override
-    public Apartment getById(Long id) {
+    public Apartment getById(final Long id) {
         return apartmentDAO.getById(id);
 
     }

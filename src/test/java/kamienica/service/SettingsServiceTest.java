@@ -1,5 +1,6 @@
 package kamienica.service;
 
+import kamienica.configuration.DatabaseTest;
 import kamienica.model.Settings;
 import org.junit.Test;
 import org.springframework.transaction.annotation.Transactional;
@@ -7,7 +8,7 @@ import org.springframework.transaction.annotation.Transactional;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 
-public class SettingsServiceTest extends AbstractServiceTest {
+public class SettingsServiceTest extends DatabaseTest {
 
     @Test
     public void getList() {

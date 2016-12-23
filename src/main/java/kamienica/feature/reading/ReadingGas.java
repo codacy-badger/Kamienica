@@ -56,7 +56,7 @@ public class ReadingGas extends Reading implements Serializable {
 
 	@Override
 	public String toString() {
-		String nrMieszkania = "";
+		String nrMieszkania;
 		if (this.meter.getApartment() == null) {
 			nrMieszkania = "null";
 		} else {

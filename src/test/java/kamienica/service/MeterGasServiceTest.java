@@ -1,5 +1,6 @@
 package kamienica.service;
 
+import kamienica.configuration.DatabaseTest;
 import kamienica.core.enums.Media;
 import kamienica.feature.meter.MeterGas;
 import org.joda.time.LocalDate;
@@ -8,7 +9,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import static org.junit.Assert.assertEquals;
 
-public class MeterGasServiceTest extends AbstractServiceTest {
+public class MeterGasServiceTest extends DatabaseTest {
 
     @Test
     public void getList() {

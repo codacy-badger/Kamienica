@@ -68,14 +68,14 @@ public class GasConsumptionCalculator {
 
 			double sumaZuzyciaCieplejWody = WaterConsumptionCalculator.countWarmWaterUsage(waterOld, waterNew);
 			HashMap<Integer, Double> mapaZuzyciaCieplejWody = GasConsumptionCalculator.hotWaterUsageMap(waterOld, waterNew);
-			for (int i = 0; i < out.size(); i++) {
-				if (out.get(i).getApartment().getApartmentNumber() != 0) {
-					int nrMieszkania = out.get(i).getApartment().getApartmentNumber();
+			for (MediaUsage anOut : out) {
+				if (anOut.getApartment().getApartmentNumber() != 0) {
+					int nrMieszkania = anOut.getApartment().getApartmentNumber();
 					if (mapaZuzyciaCieplejWody.containsKey(nrMieszkania)) {
 						double zuzycieGazuCwuDlaDanegoMieszkania = (mapaZuzyciaCieplejWody.get(nrMieszkania)
 								/ sumaZuzyciaCieplejWody) * zuzycieCWU;
-						double tmp = out.get(i).getUsage() + zuzycieGazuCwuDlaDanegoMieszkania;
-						out.get(i).setUsage(CommonUtils.decimalFormat(tmp));
+						double tmp = anOut.getUsage() + zuzycieGazuCwuDlaDanegoMieszkania;
+						anOut.setUsage(CommonUtils.decimalFormat(tmp));
 					}
 				}
 			}

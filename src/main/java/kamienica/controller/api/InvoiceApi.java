@@ -1,5 +1,6 @@
 package kamienica.controller.api;
 
+import kamienica.controller.ControllerMessages;
 import kamienica.core.enums.Media;
 import kamienica.core.exception.InvalidDivisionException;
 import kamienica.core.message.ApiErrorResponse;
@@ -22,7 +23,7 @@ import java.util.List;
 @RequestMapping("/api/v1/invoices")
 public class InvoiceApi {
 
-	private static final String WRONG_DIVISION = "Nieprawidłowy algorytm podziału";
+
 	@Autowired
 	private InvoiceService service;
 	@Autowired
@@ -53,7 +54,7 @@ public class InvoiceApi {
 		try {
 			service.save(invoice, Media.ENERGY);
 		} catch (InvalidDivisionException e) {
-			return new ResponseEntity<>(WRONG_DIVISION, HttpStatus.UNPROCESSABLE_ENTITY);
+			return new ResponseEntity<>(ControllerMessages.WRONG_DIVISION, HttpStatus.UNPROCESSABLE_ENTITY);
 		}
 		return new ResponseEntity<>(invoice, HttpStatus.OK);
 	}
@@ -68,7 +69,7 @@ public class InvoiceApi {
 		try {
 			service.save(invoice, Media.GAS);
 		} catch (InvalidDivisionException e) {
-			return new ResponseEntity<>(WRONG_DIVISION, HttpStatus.UNPROCESSABLE_ENTITY);
+			return new ResponseEntity<>(ControllerMessages.WRONG_DIVISION, HttpStatus.UNPROCESSABLE_ENTITY);
 		}
 		return new ResponseEntity<>(invoice, HttpStatus.OK);
 	}
@@ -83,7 +84,7 @@ public class InvoiceApi {
 		try {
 			service.save(invoice, Media.WATER);
 		} catch (InvalidDivisionException e) {
-			return new ResponseEntity<>(WRONG_DIVISION, HttpStatus.UNPROCESSABLE_ENTITY);
+			return new ResponseEntity<>(ControllerMessages.WRONG_DIVISION, HttpStatus.UNPROCESSABLE_ENTITY);
 		}
 		return new ResponseEntity<>(invoice, HttpStatus.OK);
 	}

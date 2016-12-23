@@ -238,11 +238,6 @@ public class InvoiceServiceImpl implements InvoiceService {
 		return invoiceEnergyDao.getById(id);
 	}
 
-	// @Override
-	// public List<InvoiceEnergy> getEnergyInvoiceList() {
-	// return invoiceEnergyDao.getList();
-	// }
-
 	@Override
 	public <T extends Invoice> void update(T invoice, Media media) {
 		double invFactor;
@@ -254,8 +249,8 @@ public class InvoiceServiceImpl implements InvoiceService {
 
 			invFactor = (invoice.getTotalAmount() / oldInv.getTotalAmount());
 			List<PaymentEnergy> paymentsEnergy = paymentEnergyDao.getByInvoice(invoice);
-			for (int i = 0; i < paymentsEnergy.size(); i++) {
-				paymentsEnergy.get(i).setPaymentAmount(paymentsEnergy.get(i).getPaymentAmount() * invFactor);
+			for (PaymentEnergy aPaymentsEnergy : paymentsEnergy) {
+				aPaymentsEnergy.setPaymentAmount(aPaymentsEnergy.getPaymentAmount() * invFactor);
 			}
 
 			for (PaymentEnergy payment : paymentsEnergy) {
@@ -269,8 +264,8 @@ public class InvoiceServiceImpl implements InvoiceService {
 
 			invFactor = (invoice.getTotalAmount() / oldInv.getTotalAmount());
 			List<PaymentGas> paymentsGas = paymentGasDao.getByInvoice(invoice);
-			for (int i = 0; i < paymentsGas.size(); i++) {
-				paymentsGas.get(i).setPaymentAmount(paymentsGas.get(i).getPaymentAmount() * invFactor);
+			for (PaymentGas paymentsGa : paymentsGas) {
+				paymentsGa.setPaymentAmount(paymentsGa.getPaymentAmount() * invFactor);
 			}
 
 			for (PaymentGas payment : paymentsGas) {
@@ -283,8 +278,8 @@ public class InvoiceServiceImpl implements InvoiceService {
 			oldInv = invoiceWaterDao.getById(invoice.getId());
 			invFactor = (invoice.getTotalAmount() / oldInv.getTotalAmount());
 			List<PaymentWater> paymentWater = paymentWaterDao.getByInvoice(invoice);
-			for (int i = 0; i < paymentWater.size(); i++) {
-				paymentWater.get(i).setPaymentAmount(paymentWater.get(i).getPaymentAmount() * invFactor);
+			for (PaymentWater aPaymentWater : paymentWater) {
+				aPaymentWater.setPaymentAmount(aPaymentWater.getPaymentAmount() * invFactor);
 			}
 			for (PaymentWater payment : paymentWater) {
 				paymentWaterDao.update(payment);
@@ -326,25 +321,6 @@ public class InvoiceServiceImpl implements InvoiceService {
 		return invoiceWaterDao.getById(id);
 	}
 
-	// @Override
-	// public List<InvoiceWater> getInvoicesWaterForPayment(PaymentWater
-	// payment) {
-	// List<InvoiceWater> output = water.getInvoicesForPayment(payment);
-	// if (output.isEmpty()) {
-	// output = water.getList();
-	// }
-	// return output;
-	// }
-	//
-	// @Override
-	// public List<InvoiceGas> getInvoicesGasForPayment(PaymentGas payment) {
-	// List<InvoiceGas> output = gas.getInvoicesForPayment(payment);
-	// if (output.isEmpty()) {
-	// output = gas.getList();
-	// }
-	// return output;
-	// }
-
 	@Override
 	public List<? extends Invoice> getList(Media media) {
 		switch (media) {
@@ -358,16 +334,6 @@ public class InvoiceServiceImpl implements InvoiceService {
 			return null;
 		}
 	}
-
-	// @Override
-	// public List<InvoiceWater> getWaterInvoiceList() {
-	// return invoiceWaterDao.getList();
-	// }
-	//
-	// @Override
-	// public List<InvoiceGas> getGasInvoiceList() {
-	// return invoiceGasDao.getList();
-	// }
 
 	@Override
 	public List<InvoiceEnergy> getUnpaidInvoiceEnergy() {

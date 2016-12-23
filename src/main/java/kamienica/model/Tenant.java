@@ -233,9 +233,7 @@ public class Tenant implements Serializable {
 			return false;
 		if (role != other.role)
 			return false;
-		if (status != other.status)
-			return false;
-		return true;
-	}
+        return status == other.status;
+    }
 
 }

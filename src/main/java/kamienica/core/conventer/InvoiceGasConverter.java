@@ -1,6 +1,7 @@
-package kamienica.feature.invoice;
+package kamienica.core.conventer;
 
-import kamienica.model.InvoiceEnergy;
+import kamienica.feature.invoice.InvoiceService;
+import kamienica.model.InvoiceGas;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.convert.converter.Converter;
 import org.springframework.stereotype.Component;
@@ -14,15 +15,15 @@ import org.springframework.stereotype.Component;
  *
  */
 @Component
-public class InvoiceEnergyConverter implements Converter<Object, InvoiceEnergy> {
+public class InvoiceGasConverter implements Converter<Object, InvoiceGas> {
 
 	@Autowired
-	private InvoiceService service;
+    InvoiceService service;
 
 	@Override
-	public InvoiceEnergy convert(Object element) {
+	public InvoiceGas convert(Object element) {
 		Long id = Long.parseLong((String) element);
-		return service.getEnergyByID(id);
+		return service.getGasByID(id);
 	}
 
 }

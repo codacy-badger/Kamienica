@@ -37,10 +37,6 @@ public abstract class AbstractDao<T> {
     @Autowired
     protected SessionFactory sessionFactory;
 
-    protected SessionFactory getSessionFactory() {
-        return sessionFactory;
-    }
-
     protected Session getSession() {
         return sessionFactory.getCurrentSession();
     }

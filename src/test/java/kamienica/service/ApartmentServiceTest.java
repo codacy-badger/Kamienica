@@ -1,36 +1,32 @@
 package kamienica.service;
 
-import kamienica.feature.apartment.ApartmentService;
+import kamienica.configuration.DatabaseTest;
 import kamienica.model.Apartment;
 import org.junit.Test;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
 import static org.junit.Assert.assertEquals;
 
-public class ApartmentServiceTest extends AbstractServiceTest {
-
-	@Autowired
-	ApartmentService service;
+public class ApartmentServiceTest extends DatabaseTest {
 
 	@Test
 	public void getList() {
-		List<Apartment> list = service.getList();
+		List<Apartment> list = apartmentService.getList();
 		assertEquals(4, list.size());
 	}
-	
+
 	@Test
 	public void getPaginatedList() {
-		List<Apartment> list = service.paginatedList(4, 1);
+		List<Apartment> list = apartmentService.paginatedList(4, 1);
 		final long apartmentId = list.get(0).getId();
 		assertEquals(4L, apartmentId);
 	}
 
 	@Test
 	public void getById() {
-		Apartment apartment = service.getById(3L);
+		Apartment apartment = apartmentService.getById(3L);
 		assertEquals(2, apartment.getApartmentNumber());
 
 	}
@@ -38,25 +34,25 @@ public class ApartmentServiceTest extends AbstractServiceTest {
 	@Transactional
 	@Test
 	public void remove() {
-		service.deleteByID(5L);
-		assertEquals(4, service.getList().size());
+		apartmentService.deleteByID(5L);
+		assertEquals(4, apartmentService.getList().size());
 
 	}
 
 	@Transactional
 	@Test
 	public void update() {
-		Apartment ap = service.getById(4L);
+		Apartment ap = apartmentService.getById(4L);
 		ap.setDescription("test");
-		service.update(ap);
-		assertEquals("test", service.getById(4L).getDescription());
+		apartmentService.update(ap);
+		assertEquals("test", apartmentService.getById(4L).getDescription());
 
 	}
 
 	@Test(expected = Exception.class)
 	public void addWithValidationError() {
 		Apartment ap = new Apartment(78L, 1, "1234", "cośtam");
-		service.save(ap);
+		apartmentService.save(ap);
 
 	}
 

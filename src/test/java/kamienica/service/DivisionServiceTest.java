@@ -1,5 +1,6 @@
 package kamienica.service;
 
+import kamienica.configuration.DatabaseTest;
 import kamienica.core.exception.InvalidDivisionException;
 import kamienica.core.exception.WrongDivisionInputException;
 import kamienica.model.Division;
@@ -13,7 +14,7 @@ import java.util.List;
 
 import static org.junit.Assert.assertEquals;
 
-public class DivisionServiceTest extends AbstractServiceTest {
+public class DivisionServiceTest extends DatabaseTest {
 
 
     final LocalDate date = new LocalDate();

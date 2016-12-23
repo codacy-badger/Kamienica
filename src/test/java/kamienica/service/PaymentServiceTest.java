@@ -1,11 +1,12 @@
 package kamienica.service;
 
+import kamienica.configuration.DatabaseTest;
 import kamienica.core.enums.Media;
 import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
 
-public class PaymentServiceTest extends AbstractServiceTest {
+public class PaymentServiceTest extends DatabaseTest {
 
     @Test
     public void getList() {

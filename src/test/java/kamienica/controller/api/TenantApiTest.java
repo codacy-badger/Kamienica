@@ -14,9 +14,6 @@ import java.util.List;
 import static org.mockito.Mockito.calls;
 import static org.mockito.Mockito.verify;
 
-/**
- * Created by macfol on 12/7/16.
- */
 public class TenantApiTest {
 
     @Mock

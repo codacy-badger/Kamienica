@@ -99,7 +99,7 @@ public class DivisionServiceImpl implements DivisionService {
         tmp.setApartment(ap);
         tmp.setTenant(ten);
         if (ap.getApartmentNumber() == 0) {
-            tmp.setDivisionValue(Double.valueOf(CommonUtils.decimalFormat(1 / (double) tenantList.size())));
+            tmp.setDivisionValue(CommonUtils.decimalFormat(1 / (double) tenantList.size()));
         } else if (ap.getApartmentNumber() == ten.getApartment().getApartmentNumber()) {
             tmp.setDivisionValue(1);
         } else {

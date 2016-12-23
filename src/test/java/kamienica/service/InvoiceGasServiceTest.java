@@ -1,5 +1,6 @@
 package kamienica.service;
 
+import kamienica.configuration.DatabaseTest;
 import kamienica.core.enums.Media;
 import kamienica.core.enums.WaterHeatingSystem;
 import kamienica.core.exception.InvalidDivisionException;
@@ -18,7 +19,7 @@ import java.util.List;
 
 import static org.junit.Assert.assertEquals;
 
-public class InvoiceGasServiceTest extends AbstractServiceTest {
+public class InvoiceGasServiceTest extends DatabaseTest {
 
     @Test
     public void getList() {

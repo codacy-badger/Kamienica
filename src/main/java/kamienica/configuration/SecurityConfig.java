@@ -47,14 +47,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 		http.httpBasic().and().authorizeRequests().antMatchers("/api/**").access("hasRole('ADMIN') or hasRole('USER')")
 				.and().csrf().disable();
 
-		// //added to make rest part work
-		// http.httpBasic().and()
-		// .authorizeRequests()
-		// .antMatchers(HttpMethod.GET, "/Rest").permitAll()
-		// .antMatchers(HttpMethod.POST, "/Rest").permitAll()
-		// .antMatchers(HttpMethod.PUT, "/Rest/**").permitAll()
-		// .antMatchers(HttpMethod.PATCH,
-		// "/Rest/**").permitAll().and().csrf().disable();
 
 	}
 }
