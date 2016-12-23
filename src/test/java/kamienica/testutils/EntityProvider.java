@@ -210,14 +210,14 @@ public class EntityProvider {
     }
 
     private static InvoiceEnergy getInvoiceEnergy(List<ReadingEnergy> newReadings) {
-        return new InvoiceEnergy("23424", "energia", new LocalDate(), 150, newReadings.get(0));
+        return new InvoiceEnergy("23424", new LocalDate(), 150, newReadings.get(0));
     }
 
     private static InvoiceWater getInvoiceWater(List<ReadingWater> newReadings) {
-        return new InvoiceWater("23424", "energia", new LocalDate(), 200, newReadings.get(0));
+        return new InvoiceWater("23424", new LocalDate(), 200, newReadings.get(0));
     }
 
     private static InvoiceGas getInvoiceGas(List<ReadingGas> newReadings) {
-        return new InvoiceGas("23424", "energia", new LocalDate(), 300, newReadings.get(0));
+        return new InvoiceGas("23424", new LocalDate(), 300, newReadings.get(0));
     }
 }

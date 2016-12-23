@@ -9,46 +9,46 @@ import javax.persistence.Table;
 import java.io.Serializable;
 
 @Entity
-@Table(name="invoicegas")
-public class InvoiceGas extends Invoice implements Serializable{
+@Table(name = "invoicegas")
+public class InvoiceGas extends Invoice implements Serializable {
 
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 1048539735580240509L;
-	@OneToOne
-	private ReadingGas baseReading;
+    /**
+     *
+     */
+    private static final long serialVersionUID = 1048539735580240509L;
+    @OneToOne
+    private ReadingGas baseReading;
 
-	@Override
-	public ReadingGas getBaseReading() {
-		return baseReading;
-	}
+    @Override
+    public ReadingGas getBaseReading() {
+        return baseReading;
+    }
 
-	public void setBaseReading(ReadingGas baseReading) throws Exception {
-		if (baseReading.getMeter().getApartment() != null) {
-			throw new Exception();
+    public void setBaseReading(ReadingGas baseReading) throws Exception {
+        if (baseReading.getMeter().getApartment() != null) {
+            throw new Exception();
 
-		}
-		this.baseReading = baseReading;
-	}
+        }
+        this.baseReading = baseReading;
+    }
 
-	public InvoiceGas() {
-		super.setDescription("Faktura Za Gaz");
-	}
+    public InvoiceGas() {
 
-	public InvoiceGas(String serialNumber, String description, LocalDate date, double totalAmount, ReadingGas reading) {
-		super(serialNumber, description, date, totalAmount);
-		this.baseReading = reading;
-	}
+    }
 
-	@Override
-	public String toString() {
-		return super.toString();
-	}
-	
-	@Override
-	public LocalDate getReadingDate() {
-		return baseReading.getReadingDate();
-	}
+    public InvoiceGas(String serialNumber, LocalDate date, double totalAmount, ReadingGas reading) {
+        super(serialNumber, date, totalAmount);
+        this.baseReading = reading;
+    }
+
+    @Override
+    public String toString() {
+        return super.toString();
+    }
+
+    @Override
+    public LocalDate getReadingDate() {
+        return baseReading.getReadingDate();
+    }
 
 }

@@ -31,12 +31,11 @@ public class InvoiceEnergy extends Invoice implements Serializable {
     }
 
     public InvoiceEnergy() {
-        super.setDescription("Faktura Za Energię");
     }
 
-    public InvoiceEnergy(String serialNumber, String description, LocalDate date, double totalAmount,
+    public InvoiceEnergy(String serialNumber, LocalDate date, double totalAmount,
                          ReadingEnergy reading) {
-        super(serialNumber, description, date, totalAmount);
+        super(serialNumber, date, totalAmount);
         this.baseReading = reading;
     }
 
