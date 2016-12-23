@@ -67,21 +67,6 @@
 							</p>
 						</div>
 					</div>
-					
-					<div class="form-group">
-						<label for="inputEmail3" class="col-sm-3 control-label">Opis
-								Faktury</label>
-						<div class="col-sm-9">
-							<input type="text" ng-model="ctrl.invoice.description"
-								class="form-control" path='description'
-								placeholder="Pole wymagane" ng-required='true'
-								name="description" />
-							<p class="help-block">
-								<span class='error' ng-show="myForm.description.$invalid">Pole
-									wymagane</span> <span class='error'>{{errors.description}}</span>
-							</p>
-						</div>
-					</div>
 
 					<div class="form-group">
 						<label for="date" class="col-sm-3 control-label">Data
@@ -147,7 +132,6 @@
 						<thead>
 							<tr>
 								<th>Nr Faktury</th>
-								<th>Opis</th>
 								<th>Data</th>
 								<th>Wartość</th>
 								<!-- th>Edytuj</th -->
@@ -159,7 +143,6 @@
 
 							<tr ng-repeat="a in ctrl.invoices">
 								<td><span ng-bind="a.serialNumber"></span></td>
-								<td><span ng-bind="a.description"></span></td>
 								<td><span ng-bind="a.date"></span></td>
 								<td><span ng-bind="a.totalAmount"></span></td>
 								<td>

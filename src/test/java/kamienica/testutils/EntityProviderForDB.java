@@ -37,10 +37,10 @@ public class EntityProviderForDB {
 
     // --------------------------------------SETUP--------------------------------------------------------------
     private static List<Apartment> getApartmentList() {
-        Apartment apartment0 = new Apartment( 0, "0000", "Czesc Wspolna");
-        Apartment apartment1 = new Apartment( 1, "1111", "Piwnica");
-        Apartment apartment2 = new Apartment( 2, "2222", "Parter");
-        Apartment apartment3 = new Apartment( 3, "3333", "1 pietro");
+        Apartment apartment0 = new Apartment(0, "0000", "Czesc Wspolna");
+        Apartment apartment1 = new Apartment(1, "1111", "Piwnica");
+        Apartment apartment2 = new Apartment(2, "2222", "Parter");
+        Apartment apartment3 = new Apartment(3, "3333", "1 pietro");
 
         List<Apartment> apartments = new ArrayList<>();
         apartments.add(apartment0);
@@ -65,10 +65,10 @@ public class EntityProviderForDB {
 
     private static List<Division> getDivisionList() {
         ArrayList<Division> division = new ArrayList<>();
-        division.add(new Division( new LocalDate(), TENANTS.get(0), APARTMENTS.get(0), 0.5));
-        division.add(new Division( new LocalDate(), TENANTS.get(0), APARTMENTS.get(1), 1));
-        division.add(new Division( new LocalDate(), TENANTS.get(0), APARTMENTS.get(2), 0));
-        division.add(new Division( new LocalDate(), TENANTS.get(0), APARTMENTS.get(3), 1));
+        division.add(new Division(new LocalDate(), TENANTS.get(0), APARTMENTS.get(0), 0.5));
+        division.add(new Division(new LocalDate(), TENANTS.get(0), APARTMENTS.get(1), 1));
+        division.add(new Division(new LocalDate(), TENANTS.get(0), APARTMENTS.get(2), 0));
+        division.add(new Division(new LocalDate(), TENANTS.get(0), APARTMENTS.get(3), 1));
 
         division.add(new Division(6L, new LocalDate(), TENANTS.get(1), APARTMENTS.get(0), 0.5));
         division.add(new Division(7L, new LocalDate(), TENANTS.get(1), APARTMENTS.get(1), 0));
@@ -204,14 +204,14 @@ public class EntityProviderForDB {
     }
 
     private static InvoiceEnergy getInvoiceEnergy(List<ReadingEnergy> newReadings) {
-        return new InvoiceEnergy("23424", "energia", new LocalDate(), 150, newReadings.get(0));
+        return new InvoiceEnergy("23424", new LocalDate(), 150, newReadings.get(0));
     }
 
     private static InvoiceWater getInvoiceWater(List<ReadingWater> newReadings) {
-        return new InvoiceWater("23424", "energia", new LocalDate(), 200, newReadings.get(0));
+        return new InvoiceWater("23424", new LocalDate(), 200, newReadings.get(0));
     }
 
     private static InvoiceGas getInvoiceGas(List<ReadingGas> newReadings) {
-        return new InvoiceGas("23424", "energia", new LocalDate(), 300, newReadings.get(0));
+        return new InvoiceGas("23424", new LocalDate(), 300, newReadings.get(0));
     }
 }

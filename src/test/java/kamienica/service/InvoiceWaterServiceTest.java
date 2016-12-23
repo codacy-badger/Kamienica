@@ -30,7 +30,7 @@ public class InvoiceWaterServiceTest extends DatabaseTest {
     public void add() throws InvalidDivisionException {
         List<ReadingWater> list = readingService.getUnresolvedReadingsWater();
         assertEquals(60, list.get(1).getValue(), 0);
-        InvoiceWater invoice = new InvoiceWater("112233", "test", new LocalDate(), 200, list.get(1));
+        InvoiceWater invoice = new InvoiceWater("112233", new LocalDate(), 200, list.get(1));
 
         invoiceService.save(invoice, Media.WATER);
         assertEquals(2, invoiceService.getList(Media.WATER).size());
@@ -54,7 +54,7 @@ public class InvoiceWaterServiceTest extends DatabaseTest {
 
         assertEquals(33, list.get(0).getValue(), 0);
         assertEquals(60, list.get(1).getValue(), 1);
-        InvoiceWater invoice = new InvoiceWater("112233", "test", new LocalDate(), 200, list.get(0));
+        InvoiceWater invoice = new InvoiceWater("112233", new LocalDate(), 200, list.get(0));
 
         invoiceService.save(invoice, Media.WATER);
         assertEquals(2, invoiceService.getList(Media.WATER).size());
@@ -84,7 +84,7 @@ public class InvoiceWaterServiceTest extends DatabaseTest {
     @Test
     @Ignore
     public void update() {
-        InvoiceWater invoice = new InvoiceWater("23423423", "test", new LocalDate(), 400,
+        InvoiceWater invoice = new InvoiceWater("23423423", new LocalDate(), 400,
                 readingService.getById(6L, Media.WATER));
         invoice.setId(1L);
         List<? extends Payment> oldList = paymentService.getPaymentByInvoice(invoice, Media.WATER);

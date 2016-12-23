@@ -22,8 +22,6 @@ public abstract class Invoice {
 	@Column(nullable = false, unique = true)
 	@NotEmpty(message = "Podaj wartość")
 	private String serialNumber;
-	@Column
-	private String description;
 	@Column(nullable = false, unique = true)
 	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	@NotNull(message = "Wprowadź datę")
@@ -35,9 +33,8 @@ public abstract class Invoice {
 	private double totalAmount;
 
 	@Autowired
-	public Invoice(String serialNumber, String description, LocalDate date, double totalAmount) {
+	public Invoice(String serialNumber, LocalDate date, double totalAmount) {
 		this.serialNumber = serialNumber;
-		this.description = description;
 		this.date = date;
 		this.totalAmount = totalAmount;
 
@@ -63,14 +60,6 @@ public abstract class Invoice {
 		this.serialNumber = serialNumber;
 	}
 
-	public String getDescription() {
-		return description;
-	}
-
-	public void setDescription(String description) {
-		this.description = description;
-	}
-
 	public LocalDate getDate() {
 		return date;
 	}
@@ -91,7 +80,7 @@ public abstract class Invoice {
 
 	@Override
 	public String toString() {
-		return "Invoice [id=" + id + ", serialNumber=" + serialNumber + ", description=" + description + ", date="
+		return "Invoice [id=" + id + ", serialNumber=" + serialNumber +  ", date="
 				+ date + ", totalAmount=" + totalAmount + "]";
 	}
 

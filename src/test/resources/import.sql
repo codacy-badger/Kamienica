@@ -112,9 +112,9 @@ INSERT INTO  readingenergy  ( id , readingDate , resolved , value , unit , meter
 INSERT INTO  readingenergy  ( id , readingDate , resolved , value , unit , meter_id ) VALUES (14,'2016-09-01','0',9,'kWh',4);
 INSERT INTO  readingenergy  ( id , readingDate , resolved , value , unit , meter_id ) VALUES (15,'2016-09-01','0',7,'kWh',5);
 
-INSERT INTO  invoicewater  ( id , date , description , serialNumber , totalAmount , baseReading_id ) VALUES (1,'2016-08-01','Faktura Za Wode','123',150,8);
-INSERT INTO  invoicegas  ( id , date , description , serialNumber , totalAmount , baseReading_id ) VALUES (1,'2016-09-01','Faktura Za Gaz','123',150,7);
-INSERT INTO  invoiceenergy  ( id , date , description , serialNumber , totalAmount , baseReading_id ) VALUES (1,'2016-08-01','Faktura Za Energię','1',200,6);
+INSERT INTO  invoicewater  ( id , date , serialNumber , totalAmount , baseReading_id ) VALUES (1,'2016-08-01','123',150,8);
+INSERT INTO  invoicegas  ( id , date , serialNumber , totalAmount , baseReading_id ) VALUES (1,'2016-09-01','123',150,7);
+INSERT INTO  invoiceenergy  ( id , date , serialNumber , totalAmount , baseReading_id ) VALUES (1,'2016-08-01','1',200,6);
 
 
 INSERT INTO  paymentenergy  ( id , paymentAmount , paymentDate , tenant_id , invoice_id ) VALUES (1,88.67,'2016-07-29',1,1);

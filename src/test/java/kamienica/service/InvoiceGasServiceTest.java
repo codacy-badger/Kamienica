@@ -31,7 +31,7 @@ public class InvoiceGasServiceTest extends DatabaseTest {
     public void add() throws InvalidDivisionException {
         List<ReadingGas> list = readingService.getUnresolvedReadingsGas();
         assertEquals(196, list.get(1).getValue(), 0);
-        InvoiceGas invoice = new InvoiceGas("112233", "test", new LocalDate(), 200, list.get(1));
+        InvoiceGas invoice = new InvoiceGas("112233", new LocalDate(), 200, list.get(1));
 
         invoiceService.save(invoice, Media.GAS);
         assertEquals(2, invoiceService.getList(Media.GAS).size());
@@ -53,7 +53,7 @@ public class InvoiceGasServiceTest extends DatabaseTest {
     public void addForFirstReadingWithSharedWaterHeating() throws InvalidDivisionException {
         List<ReadingGas> list = readingService.getUnresolvedReadingsGas();
         assertEquals(114, list.get(0).getValue(), 0);
-        InvoiceGas invoice = new InvoiceGas("112233", "test", new LocalDate(), 200, list.get(0));
+        InvoiceGas invoice = new InvoiceGas("112233",  new LocalDate(), 200, list.get(0));
 
         invoiceService.save(invoice, Media.GAS);
         assertEquals(2, invoiceService.getList(Media.GAS).size());
@@ -79,7 +79,7 @@ public class InvoiceGasServiceTest extends DatabaseTest {
         setings.setWaterHeatingSystem(WaterHeatingSystem.INDIVIDUAL_GAS);
         settingsService.save(setings);
         assertEquals(114, list.get(0).getValue(), 0);
-        InvoiceGas invoice = new InvoiceGas("112233", "test", new LocalDate(), 200, list.get(0));
+        InvoiceGas invoice = new InvoiceGas("112233", new LocalDate(), 200, list.get(0));
 
         invoiceService.save(invoice, Media.GAS);
         assertEquals(2, invoiceService.getList(Media.GAS).size());
@@ -109,7 +109,7 @@ public class InvoiceGasServiceTest extends DatabaseTest {
     @Ignore
     @Test
     public void update() {
-        InvoiceGas invoice = new InvoiceGas("23423423", "test", new LocalDate(), 400,
+        InvoiceGas invoice = new InvoiceGas("23423423", new LocalDate(), 400,
                 readingService.getById(6L, Media.GAS));
         invoice.setId(1L);
         List<? extends Payment> oldList = paymentService.getPaymentList(Media.GAS);
