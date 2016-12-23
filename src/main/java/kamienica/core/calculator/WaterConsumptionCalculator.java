@@ -1,6 +1,6 @@
 package kamienica.core.calculator;
 
-import kamienica.feature.meter.MeterWater;
+import kamienica.model.MeterWater;
 import kamienica.feature.reading.ReadingWater;
 import kamienica.model.Apartment;
 import kamienica.model.MediaUsage;

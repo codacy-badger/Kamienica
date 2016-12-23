@@ -3,7 +3,7 @@ package kamienica.service;
 import kamienica.configuration.DatabaseTest;
 import kamienica.core.enums.Media;
 import kamienica.core.exception.NoMainCounterException;
-import kamienica.feature.meter.MeterEnergy;
+import kamienica.model.MeterEnergy;
 import kamienica.feature.reading.Reading;
 import kamienica.feature.reading.ReadingEnergy;
 import org.joda.time.LocalDate;

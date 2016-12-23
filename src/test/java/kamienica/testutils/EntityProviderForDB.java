@@ -2,9 +2,6 @@ package kamienica.testutils;
 
 import kamienica.core.enums.Status;
 import kamienica.core.enums.UserRole;
-import kamienica.model.MeterEnergy;
-import kamienica.model.MeterGas;
-import kamienica.model.MeterWater;
 import kamienica.feature.reading.ReadingEnergy;
 import kamienica.feature.reading.ReadingGas;
 import kamienica.feature.reading.ReadingWater;
@@ -14,7 +11,7 @@ import org.joda.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
-public class EntityProvider {
+public class EntityProviderForDB {
 
     private static final LocalDate FEBRUARY = LocalDate.parse("2015-02-01");
     private static final LocalDate MARCH = LocalDate.parse("2015-03-01");
@@ -40,10 +37,10 @@ public class EntityProvider {
 
     // --------------------------------------SETUP--------------------------------------------------------------
     private static List<Apartment> getApartmentList() {
-        Apartment apartment0 = new Apartment(1L, 0, "0000", "Czesc Wspolna");
-        Apartment apartment1 = new Apartment(2L, 1, "1111", "Piwnica");
-        Apartment apartment2 = new Apartment(3L, 2, "2222", "Parter");
-        Apartment apartment3 = new Apartment(4L, 3, "3333", "1 pietro");
+        Apartment apartment0 = new Apartment( 0, "0000", "Czesc Wspolna");
+        Apartment apartment1 = new Apartment( 1, "1111", "Piwnica");
+        Apartment apartment2 = new Apartment( 2, "2222", "Parter");
+        Apartment apartment3 = new Apartment( 3, "3333", "1 pietro");
 
         List<Apartment> apartments = new ArrayList<>();
         apartments.add(apartment0);
@@ -57,24 +54,21 @@ public class EntityProvider {
         final List<Tenant> tenants = new ArrayList<>();
         Tenant tenant2 = new Tenant("Maciej (Admin)", "Fol", "kowalski@wp.pl", "222222", APARTMENTS.get(1));
         tenant2.setStatus(Status.ACTIVE);
-        tenant2.setId(1L);
         tenant2.setRole(UserRole.ADMIN);
         Tenant tenant3 = new Tenant("Adam", "Nowak", "nowak@wp.pl", "111111", APARTMENTS.get(2));
         tenant3.setStatus(Status.ACTIVE);
-        tenant3.setId(2L);
 
 
-        tenants.add(tenant2);
         tenants.add(tenant3);
         return tenants;
     }
 
     private static List<Division> getDivisionList() {
         ArrayList<Division> division = new ArrayList<>();
-        division.add(new Division(1L, new LocalDate(), TENANTS.get(0), APARTMENTS.get(0), 0.5));
-        division.add(new Division(2L, new LocalDate(), TENANTS.get(0), APARTMENTS.get(1), 1));
-        division.add(new Division(3L, new LocalDate(), TENANTS.get(0), APARTMENTS.get(2), 0));
-        division.add(new Division(4L, new LocalDate(), TENANTS.get(0), APARTMENTS.get(3), 1));
+        division.add(new Division( new LocalDate(), TENANTS.get(0), APARTMENTS.get(0), 0.5));
+        division.add(new Division( new LocalDate(), TENANTS.get(0), APARTMENTS.get(1), 1));
+        division.add(new Division( new LocalDate(), TENANTS.get(0), APARTMENTS.get(2), 0));
+        division.add(new Division( new LocalDate(), TENANTS.get(0), APARTMENTS.get(3), 1));
 
         division.add(new Division(6L, new LocalDate(), TENANTS.get(1), APARTMENTS.get(0), 0.5));
         division.add(new Division(7L, new LocalDate(), TENANTS.get(1), APARTMENTS.get(1), 0));

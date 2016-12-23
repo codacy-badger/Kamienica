@@ -1,6 +1,7 @@
 package kamienica.feature.meter;
 
 import kamienica.core.dao.AbstractDao;
+import kamienica.model.Meter;
 import org.hibernate.Criteria;
 import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;

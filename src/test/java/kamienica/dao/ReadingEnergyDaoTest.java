@@ -11,7 +11,7 @@
 //
 //import kamienica.model.Apartment;
 //import kamienica.model.InvoiceEnergy;
-//import kamienica.feature.meter.MeterEnergy;
+//import kamienica.model.MeterEnergy;
 //import kamienica.feature.reading.ReadingDao;
 //import kamienica.feature.reading.ReadingEnergy;
 //

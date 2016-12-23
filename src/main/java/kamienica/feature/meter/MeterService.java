@@ -1,6 +1,7 @@
 package kamienica.feature.meter;
 
 import kamienica.core.enums.Media;
+import kamienica.model.Meter;
 import org.springframework.validation.BindingResult;
 
 import java.util.List;

@@ -1,4 +1,4 @@
-package kamienica.feature.payment;
+package kamienica.controller.jsp;
 
 import kamienica.core.enums.Media;
 import org.springframework.stereotype.Controller;

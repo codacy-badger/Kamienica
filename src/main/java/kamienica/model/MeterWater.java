@@ -1,6 +1,4 @@
-package kamienica.feature.meter;
-
-import kamienica.model.Apartment;
+package kamienica.model;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;

@@ -1,6 +1,10 @@
 package kamienica.feature.meter;
 
 import kamienica.core.enums.Media;
+import kamienica.model.Meter;
+import kamienica.model.MeterEnergy;
+import kamienica.model.MeterGas;
+import kamienica.model.MeterWater;
 import org.hibernate.exception.ConstraintViolationException;
 import org.joda.time.LocalDate;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,340 +19,340 @@ import java.util.Set;
 @Transactional
 public class MeterServiceImpl implements MeterService {
 
-	@Autowired
-	MeterDao<MeterEnergy> energy;
+    @Autowired
+    MeterDao<MeterEnergy> energy;
 
-	@Autowired
-	MeterDao<MeterGas> gas;
+    @Autowired
+    MeterDao<MeterGas> gas;
 
-	@Autowired
-	MeterDao<MeterWater> water;
+    @Autowired
+    MeterDao<MeterWater> water;
 
-	@Override
-	public <T extends Meter> void save(T meter, Media media) {
-		if (meter.getApartment() == null) {
-			meter.main = true;
-		}
-		switch (media) {
-		case ENERGY:
+    @Override
+    public <T extends Meter> void save(T meter, Media media) {
+        if (meter.getApartment() == null) {
+            meter.setMain(true);
+        }
+        switch (media) {
+            case ENERGY:
 
-			energy.save((MeterEnergy) meter);
-			break;
-		case GAS:
+                energy.save((MeterEnergy) meter);
+                break;
+            case GAS:
 
-			gas.save((MeterGas) meter);
-			break;
-		case WATER:
+                gas.save((MeterGas) meter);
+                break;
+            case WATER:
 
-			water.save((MeterWater) meter);
-			break;
-		default:
-			break;
-		}
+                water.save((MeterWater) meter);
+                break;
+            default:
+                break;
+        }
 
-	}
+    }
 
-	@Override
-	public <T extends Meter> void update(T meter, Media media) {
-        meter.main = meter.getApartment() == null;
-		switch (media) {
-		case ENERGY:
+    @Override
+    public <T extends Meter> void update(T meter, Media media) {
+        meter.setMain(meter.getApartment() == null);
+        switch (media) {
+            case ENERGY:
 
-			energy.update((MeterEnergy) meter);
-			break;
-		case GAS:
+                energy.update((MeterEnergy) meter);
+                break;
+            case GAS:
 
-			gas.update((MeterGas) meter);
-			break;
-		case WATER:
+                gas.update((MeterGas) meter);
+                break;
+            case WATER:
 
-			water.update((MeterWater) meter);
-			break;
-		default:
-			break;
-		}
+                water.update((MeterWater) meter);
+                break;
+            default:
+                break;
+        }
 
-	}
+    }
 
-	// @Override
-	// public void saveGas(MeterGas meter) {
-	// if (meter.getApartment() == null) {
-	// meter.main = true;
-	// }
-	// gas.save(meter);
-	//
-	// }
-	//
-	// @Override
-	// public void saveWater(MeterWater meter) {
-	// if (meter.getApartment() == null) {
-	// meter.main = true;
-	// }
-	// water.save(meter);
-	//
-	// }
-	//
-	// @Override
-	// public void saveEnergy(MeterEnergy meter) {
-	// if (meter.getApartment() == null) {
-	// meter.main = true;
-	// }
-	// energy.save(meter);
-	//
-	// }
+    // @Override
+    // public void saveGas(MeterGas meter) {
+    // if (meter.getApartment() == null) {
+    // meter.main = true;
+    // }
+    // gas.save(meter);
+    //
+    // }
+    //
+    // @Override
+    // public void saveWater(MeterWater meter) {
+    // if (meter.getApartment() == null) {
+    // meter.main = true;
+    // }
+    // water.save(meter);
+    //
+    // }
+    //
+    // @Override
+    // public void saveEnergy(MeterEnergy meter) {
+    // if (meter.getApartment() == null) {
+    // meter.main = true;
+    // }
+    // energy.save(meter);
+    //
+    // }
 
-	// @Override
-	// public void updateGas(MeterGas meter) {
-	// gas.update(meter);
-	//
-	// }
-	//
-	// @Override
-	// public void updateWater(MeterWater meter) {
-	// water.update(meter);
-	//
-	// }
-	//
-	// @Override
-	// public void updateEnergy(MeterEnergy meter) {
-	// energy.update(meter);
-	//
-	// }
+    // @Override
+    // public void updateGas(MeterGas meter) {
+    // gas.update(meter);
+    //
+    // }
+    //
+    // @Override
+    // public void updateWater(MeterWater meter) {
+    // water.update(meter);
+    //
+    // }
+    //
+    // @Override
+    // public void updateEnergy(MeterEnergy meter) {
+    // energy.update(meter);
+    //
+    // }
 
-	@SuppressWarnings("unchecked")
-	@Override
-	public <T extends Meter> List<T> getList(Media media) {
-		switch (media) {
-		case ENERGY:
+    @SuppressWarnings("unchecked")
+    @Override
+    public <T extends Meter> List<T> getList(Media media) {
+        switch (media) {
+            case ENERGY:
 
-			return (List<T>) energy.getList();
+                return (List<T>) energy.getList();
 
-		case GAS:
+            case GAS:
 
-			return (List<T>) gas.getList();
+                return (List<T>) gas.getList();
 
-		case WATER:
+            case WATER:
 
-			return (List<T>) water.getList();
+                return (List<T>) water.getList();
 
-		default:
-			return null;
-		}
-	}
+            default:
+                return null;
+        }
+    }
 
-	@SuppressWarnings("unchecked")
-	@Override
-	public <T extends Meter> T getById(Long id, Media media) {
-		switch (media) {
-		case ENERGY:
+    @SuppressWarnings("unchecked")
+    @Override
+    public <T extends Meter> T getById(Long id, Media media) {
+        switch (media) {
+            case ENERGY:
 
-			return (T) energy.getById(id);
+                return (T) energy.getById(id);
 
-		case GAS:
+            case GAS:
 
-			return (T) gas.getById(id);
+                return (T) gas.getById(id);
 
-		case WATER:
+            case WATER:
 
-			return (T) water.getById(id);
+                return (T) water.getById(id);
 
-		default:
-			return null;
-		}
-	}
-	//
-	// @Override
-	// public List<MeterEnergy> getEnergyList() {
-	//
-	// return energy.getList();
-	// }
-	//
-	// @Override
-	// public List<MeterGas> getGasList() {
-	// return gas.getList();
-	// }
-	//
-	// @Override
-	// public List<MeterWater> getWaterList() {
-	// return water.getList();
-	// }
+            default:
+                return null;
+        }
+    }
+    //
+    // @Override
+    // public List<MeterEnergy> getEnergyList() {
+    //
+    // return energy.getList();
+    // }
+    //
+    // @Override
+    // public List<MeterGas> getGasList() {
+    // return gas.getList();
+    // }
+    //
+    // @Override
+    // public List<MeterWater> getWaterList() {
+    // return water.getList();
+    // }
 
-	@Override
-	public void delete(Long id, Media media) {
-		switch (media) {
-		case ENERGY:
+    @Override
+    public void delete(Long id, Media media) {
+        switch (media) {
+            case ENERGY:
 
-			try {
-				energy.deleteById(id);
-			} catch (ConstraintViolationException e) {
-				MeterEnergy meter = energy.getById(id);
-				meter.setDeactivation(LocalDate.now());
-				meter.setDescription(meter.getDescription() + " (NIEAKTYWNY)");
-				energy.update(meter);
-			}
+                try {
+                    energy.deleteById(id);
+                } catch (ConstraintViolationException e) {
+                    MeterEnergy meter = energy.getById(id);
+                    meter.setDeactivation(LocalDate.now());
+                    meter.setDescription(meter.getDescription() + " (NIEAKTYWNY)");
+                    energy.update(meter);
+                }
 
-			break;
-		case GAS:
-			try {
-				gas.deleteById(id);
-			} catch (ConstraintViolationException e) {
-				MeterGas meter = gas.getById(id);
-				meter.setDeactivation(LocalDate.now());
-				meter.setDescription(meter.getDescription() + " (NIEAKTYWNY)");
-				gas.update(meter);
-			}
-			break;
-		case WATER:
-			try {
-				water.deleteById(id);
-			} catch (ConstraintViolationException e) {
-				MeterWater meter = water.getById(id);
-				meter.setDeactivation(LocalDate.now());
-				meter.setDescription(meter.getDescription() + " (NIEAKTYWNY)");
-				water.update(meter);
-			}
-			break;
-		default:
-			break;
-		}
+                break;
+            case GAS:
+                try {
+                    gas.deleteById(id);
+                } catch (ConstraintViolationException e) {
+                    MeterGas meter = gas.getById(id);
+                    meter.setDeactivation(LocalDate.now());
+                    meter.setDescription(meter.getDescription() + " (NIEAKTYWNY)");
+                    gas.update(meter);
+                }
+                break;
+            case WATER:
+                try {
+                    water.deleteById(id);
+                } catch (ConstraintViolationException e) {
+                    MeterWater meter = water.getById(id);
+                    meter.setDeactivation(LocalDate.now());
+                    meter.setDescription(meter.getDescription() + " (NIEAKTYWNY)");
+                    water.update(meter);
+                }
+                break;
+            default:
+                break;
+        }
 
-	}
+    }
 
-	// @Override
-	// public void deleteEnergyByID(Long id) {
-	// energy.deleteById(id);
-	//
-	// }
-	//
-	// @Override
-	// public void deleteGasByID(Long id) {
-	// gas.deleteById(id);
-	//
-	// }
-	//
-	// @Override
-	// public void deleteWaterByID(Long id) {
-	// water.deleteById(id);
-	//
-	// }
+    // @Override
+    // public void deleteEnergyByID(Long id) {
+    // energy.deleteById(id);
+    //
+    // }
+    //
+    // @Override
+    // public void deleteGasByID(Long id) {
+    // gas.deleteById(id);
+    //
+    // }
+    //
+    // @Override
+    // public void deleteWaterByID(Long id) {
+    // water.deleteById(id);
+    //
+    // }
 
-	// @Override
-	// public MeterEnergy getEnergyByID(Long id) {
-	// return energy.getById(id);
-	// }
-	//
-	// @Override
-	// public MeterGas getGasByID(Long id) {
-	// return gas.getById(id);
-	// }
-	//
-	// @Override
-	// public MeterWater getWaterByID(Long id) {
-	// return water.getById(id);
-	// }
+    // @Override
+    // public MeterEnergy getEnergyByID(Long id) {
+    // return energy.getById(id);
+    // }
+    //
+    // @Override
+    // public MeterGas getGasByID(Long id) {
+    // return gas.getById(id);
+    // }
+    //
+    // @Override
+    // public MeterWater getWaterByID(Long id) {
+    // return water.getById(id);
+    // }
 
-	@Override
-	public Set<Long> getIdList(Media media) {
-		switch (media) {
-		case ENERGY:
-			return energy.getIdList();
-		case WATER:
-			return water.getIdList();
-		case GAS:
-			return gas.getIdList();
+    @Override
+    public Set<Long> getIdList(Media media) {
+        switch (media) {
+            case ENERGY:
+                return energy.getIdList();
+            case WATER:
+                return water.getIdList();
+            case GAS:
+                return gas.getIdList();
 
-		default:
-			return null;
-		}
-	}
+            default:
+                return null;
+        }
+    }
 
-	@Override
-	public Set<Long> getIdListForActiveMeters(Media media) {
-		switch (media) {
-		case ENERGY:
-			return energy.getIdListForActiveMeters();
-		case WATER:
-			return water.getIdListForActiveMeters();
-		case GAS:
-			return gas.getIdListForActiveMeters();
+    @Override
+    public Set<Long> getIdListForActiveMeters(Media media) {
+        switch (media) {
+            case ENERGY:
+                return energy.getIdListForActiveMeters();
+            case WATER:
+                return water.getIdListForActiveMeters();
+            case GAS:
+                return gas.getIdListForActiveMeters();
 
-		default:
-			return null;
-		}
-	}
+            default:
+                return null;
+        }
+    }
 
-	@Override
-	public boolean ifMainExists(Media media) {
-		switch (media) {
-		case ENERGY:
+    @Override
+    public boolean ifMainExists(Media media) {
+        switch (media) {
+            case ENERGY:
 
-			return energy.ifMainExists();
+                return energy.ifMainExists();
 
-		case GAS:
+            case GAS:
 
-			return gas.ifMainExists();
+                return gas.ifMainExists();
 
-		case WATER:
+            case WATER:
 
-			return water.ifMainExists();
+                return water.ifMainExists();
 
-		default:
-			return false;
-		}
-	}
+            default:
+                return false;
+        }
+    }
 
-	@Override
-	public <T extends Meter> void validateMeter(BindingResult result, Media media, T meter) {
-		final String WARM_CWU = "Licznik Główny nie może być licznikiem CWU bądź Ciepłej Wody";
-		final String MAIN_EXISTS = "Istnieje już w bazie licznik główny";
+    @Override
+    public <T extends Meter> void validateMeter(BindingResult result, Media media, T meter) {
+        final String WARM_CWU = "Licznik Główny nie może być licznikiem CWU bądź Ciepłej Wody";
+        final String MAIN_EXISTS = "Istnieje już w bazie licznik główny";
 
-		switch (media) {
-		case ENERGY:
-			if (meter.isMain() && ifMainExists(Media.ENERGY)) {
-				result.rejectValue("apartment", "error.meter", MAIN_EXISTS);
-			}
-			break;
+        switch (media) {
+            case ENERGY:
+                if (meter.isMain() && ifMainExists(Media.ENERGY)) {
+                    result.rejectValue("apartment", "error.meter", MAIN_EXISTS);
+                }
+                break;
 
-		case GAS:
-			if (meter.isMain() && ifMainExists(Media.GAS)) {
-				result.rejectValue("apartment", "error.meter", MAIN_EXISTS);
-			}
-			if (meter.getApartment() == null && ((MeterGas) meter).isCwu()) {
-				result.rejectValue("cwu", "error.meter", WARM_CWU);
-			}
-			break;
-		case WATER:
-			if (meter.isMain() && ifMainExists(Media.WATER)) {
-				result.rejectValue("apartment", "error.meter", MAIN_EXISTS);
-			}
-			if (meter.getApartment() == null && ((MeterWater) meter).getIsWarmWater()) {
-				result.rejectValue("isWarmWater", "error.meter", WARM_CWU);
-			}
-			break;
-		default:
-			break;
-		}
+            case GAS:
+                if (meter.isMain() && ifMainExists(Media.GAS)) {
+                    result.rejectValue("apartment", "error.meter", MAIN_EXISTS);
+                }
+                if (meter.getApartment() == null && ((MeterGas) meter).isCwu()) {
+                    result.rejectValue("cwu", "error.meter", WARM_CWU);
+                }
+                break;
+            case WATER:
+                if (meter.isMain() && ifMainExists(Media.WATER)) {
+                    result.rejectValue("apartment", "error.meter", MAIN_EXISTS);
+                }
+                if (meter.getApartment() == null && ((MeterWater) meter).getIsWarmWater()) {
+                    result.rejectValue("isWarmWater", "error.meter", WARM_CWU);
+                }
+                break;
+            default:
+                break;
+        }
 
-	}
+    }
 
-	@Override
-	public <T extends Meter> void deactivateMeter(T meter, Media media) {
-		meter.setDeactivation(LocalDate.now());
+    @Override
+    public <T extends Meter> void deactivateMeter(T meter, Media media) {
+        meter.setDeactivation(LocalDate.now());
 
-		switch (media) {
-		case ENERGY:
-			energy.update((MeterEnergy) meter);
-			break;
-		case GAS:
-			gas.update((MeterGas) meter);
-			break;
-		case WATER:
-			water.update((MeterWater) meter);
-			break;
+        switch (media) {
+            case ENERGY:
+                energy.update((MeterEnergy) meter);
+                break;
+            case GAS:
+                gas.update((MeterGas) meter);
+                break;
+            case WATER:
+                water.update((MeterWater) meter);
+                break;
 
-		default:
-			break;
-		}
+            default:
+                break;
+        }
 
-	}
+    }
 }

@@ -2,7 +2,7 @@ package kamienica.service;
 
 import kamienica.configuration.DatabaseTest;
 import kamienica.core.enums.Media;
-import kamienica.feature.meter.MeterWater;
+import kamienica.model.MeterWater;
 import org.joda.time.LocalDate;
 import org.junit.Test;
 import org.springframework.transaction.annotation.Transactional;

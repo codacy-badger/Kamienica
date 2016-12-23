@@ -58,6 +58,14 @@ public class TenantServiceTest extends DatabaseTest {
         assertEquals(Status.INACTIVE,  newOwner.getStatus());
     }
 
+    @Transactional
+    @Test
+    public void divisionShouldBecomeIncorrectAfterRemovingTenant() {
+        tenantService.deleteTenant(2L);
+        boolean resultedState = settingsService.isDivisionCorrect();
+        assertEquals(false, resultedState);
+    }
+
     private Tenant createTenant(LocalDate localDate) {
         final Apartment apartment = apartmentService.getById(2L);
 

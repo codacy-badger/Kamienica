@@ -25,11 +25,11 @@
 //import kamienica.feature.invoice.InvoiceGas;
 //import kamienica.feature.invoice.InvoiceService;
 //import kamienica.feature.invoice.InvoiceWater;
-//import kamienica.feature.meter.MeterEnergy;
-//import kamienica.feature.meter.MeterGas;
+//import kamienica.model.MeterEnergy;
+//import kamienica.model.MeterGas;
 //import kamienica.feature.meter.MeterService;
-//import kamienica.feature.meter.MeterWater;
-//import kamienica.feature.payment.PaymentController;
+//import kamienica.model.MeterWater;
+//import kamienica.controller.jsp.PaymentController;
 //import kamienica.feature.payment.PaymentService;
 //import kamienica.feature.reading.ReadingEnergy;
 //import kamienica.feature.reading.ReadingGas;

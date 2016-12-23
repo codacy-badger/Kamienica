@@ -1,5 +1,6 @@
 package kamienica.feature.meter;
 
+import kamienica.model.MeterEnergy;
 import org.springframework.stereotype.Repository;
 
 @Repository("meterEnergyDao")

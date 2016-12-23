@@ -3,7 +3,7 @@ package kamienica.service;
 import kamienica.configuration.DatabaseTest;
 import kamienica.core.enums.Media;
 import kamienica.core.exception.NoMainCounterException;
-import kamienica.feature.meter.MeterGas;
+import kamienica.model.MeterGas;
 import kamienica.feature.reading.Reading;
 import kamienica.feature.reading.ReadingGas;
 import org.joda.time.LocalDate;

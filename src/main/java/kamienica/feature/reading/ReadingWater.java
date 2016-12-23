@@ -1,6 +1,6 @@
 package kamienica.feature.reading;
 
-import kamienica.feature.meter.MeterWater;
+import kamienica.model.MeterWater;
 import org.joda.time.LocalDate;
 
 import javax.persistence.Column;

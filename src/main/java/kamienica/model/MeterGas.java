@@ -1,6 +1,5 @@
-package kamienica.feature.meter;
+package kamienica.model;
 
-import kamienica.model.Apartment;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import javax.persistence.Column;

@@ -1,6 +1,7 @@
 package kamienica.feature.meter;
 
 import kamienica.core.enums.Media;
+import kamienica.model.MeterWater;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.convert.converter.Converter;
 import org.springframework.stereotype.Component;
