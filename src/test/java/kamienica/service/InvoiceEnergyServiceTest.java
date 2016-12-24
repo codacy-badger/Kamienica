@@ -103,7 +103,7 @@ public class InvoiceEnergyServiceTest extends DatabaseTest {
     @Transactional
     @Test(expected = InvalidDivisionException.class)
     public void prepareForRegistrationWithException() throws InvalidDivisionException {
-        Apartment ap = new Apartment(78, "1234", "dummy");
+        Apartment ap = new Apartment(78, "1234", "dummy", residenceService.getById(1L));
         apartmentService.save(ap);
         List<Reading> list = invoiceService.getUnpaidReadingForNewIncvoice(Media.ENERGY);
         assertEquals(2, list.size());
