@@ -20,13 +20,15 @@ public class Apartment implements Serializable {
     @GeneratedValue
     @Column
     private Long id;
+    @ManyToOne
+    private Residence residence;
     @Column(nullable = false, unique = true)
     @NotNull(message = "Wstaw wartość liczbową")
     @Min(value = 0, message = "Nie może być wartość ujemna")
     @Digits(integer = 100, fraction = 0, message = "Tylko wartości liczbowe")
     private int apartmentNumber;
     @Column
-    @Size(min = 4, max = 4, message = "Kod musi zawiera c dok ladnie cztery cyfry")
+    @Size(min = 4, max = 4, message = "Kod musi zawierać dokladnie cztery cyfry")
     @Digits(integer = 4, fraction = 0, message = "Tylko wartości liczbowe")
     private String intercom;
     @Column(nullable = false)
@@ -43,22 +45,21 @@ public class Apartment implements Serializable {
     }
 
     @Autowired
-    public Apartment(int apartmentNumber, String intecom, String description) {
-
+    public Apartment(int apartmentNumber, String intecom, String description, Residence residence) {
         this.apartmentNumber = apartmentNumber;
         this.intercom = intecom;
         this.description = description;
-
+        this.residence = residence;
     }
 
     public Apartment() {
     }
 
     @Override
-	public String toString() {
-		return "Apartment [id=" + id + ", apartmentNumber=" + apartmentNumber + ", intercom=" + intercom
-				+ ", description=" + description + "]";
-	}
+    public String toString() {
+        return "Apartment [id=" + id + ", apartmentNumber=" + apartmentNumber + ", intercom=" + intercom
+                + ", description=" + description + "]";
+    }
 
     public int getApartmentNumber() {
         return apartmentNumber;
@@ -92,44 +93,39 @@ public class Apartment implements Serializable {
         this.id = id;
     }
 
-	@Override
-	public int hashCode() {
-		final int prime = 31;
-		int result = 1;
-		result = prime * result + apartmentNumber;
-		result = prime * result + ((description == null) ? 0 : description.hashCode());
-		result = prime * result + ((id == null) ? 0 : id.hashCode());
-		result = prime * result + ((intercom == null) ? 0 : intercom.hashCode());
-		return result;
-	}
 
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		Apartment other = (Apartment) obj;
-		if (apartmentNumber != other.apartmentNumber)
-			return false;
-		if (description == null) {
-			if (other.description != null)
-				return false;
-		} else if (!description.equals(other.description))
-			return false;
-		if (id == null) {
-			if (other.id != null)
-				return false;
-		} else if (!id.equals(other.id))
-			return false;
-		if (intercom == null) {
-			if (other.intercom != null)
-				return false;
-		} else if (!intercom.equals(other.intercom))
-			return false;
-		return true;
-	}
+    public Residence getResidence() {
+        return residence;
+    }
 
+    public void setResidence(Residence residence) {
+        this.residence = residence;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Apartment apartment = (Apartment) o;
+
+        if (getApartmentNumber() != apartment.getApartmentNumber()) return false;
+        if (getId() != null ? !getId().equals(apartment.getId()) : apartment.getId() != null) return false;
+        if (getResidence() != null ? !getResidence().equals(apartment.getResidence()) : apartment.getResidence() != null)
+            return false;
+        if (getIntercom() != null ? !getIntercom().equals(apartment.getIntercom()) : apartment.getIntercom() != null)
+            return false;
+        return getDescription() != null ? getDescription().equals(apartment.getDescription()) : apartment.getDescription() == null;
+
+    }
+
+    @Override
+    public int hashCode() {
+        int result = getId() != null ? getId().hashCode() : 0;
+        result = 31 * result + (getResidence() != null ? getResidence().hashCode() : 0);
+        result = 31 * result + getApartmentNumber();
+        result = 31 * result + (getIntercom() != null ? getIntercom().hashCode() : 0);
+        result = 31 * result + (getDescription() != null ? getDescription().hashCode() : 0);
+        return result;
+    }
 }

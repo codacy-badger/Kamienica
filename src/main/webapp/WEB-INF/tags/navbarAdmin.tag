@@ -40,11 +40,9 @@
 		<div class="sidebar-nav navbar-collapse">
 			<ul class="nav" id="side-menu">
 
-
-				<li><a href="${path}/Admin/Apartment/apartment.html"><i
-						class="fa fa-home" aria-hidden="true"></i> Mieszkania</a>
-				<li><a href="${path}/Admin/Tenant/tenant.html"><i
-						class="fa fa-users" aria-hidden="true"></i> Najemcy</a>
+                <li><a href="${path}/Admin/Residence/residence.html"><i class="fa fa-building" aria-hidden="true"></i> Nieruchomości</a></li>
+				<li><a href="${path}/Admin/Apartment/apartment.html"><i class="fa fa-home" aria-hidden="true"></i> Mieszkania</a></li>
+				<li><a href="${path}/Admin/Tenant/tenant.html"><i class="fa fa-users" aria-hidden="true"></i> Najemcy</a>
 				<li><a href="#"><i class="fa fa-wrench fa-fw"></i>
 						Konfiguracja<span class="fa arrow"></span></a>
 					<ul class="nav nav-second-level">

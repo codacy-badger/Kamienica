@@ -16,6 +16,7 @@ public class EntityProviderForDB {
     private static final LocalDate FEBRUARY = LocalDate.parse("2015-02-01");
     private static final LocalDate MARCH = LocalDate.parse("2015-03-01");
 
+    public static final Residence RESIDENCE = createResidence();
     public static final List<Apartment> APARTMENTS = getApartmentList();
     public static final List<Tenant> TENANTS = getTenantList();
 
@@ -37,10 +38,10 @@ public class EntityProviderForDB {
 
     // --------------------------------------SETUP--------------------------------------------------------------
     private static List<Apartment> getApartmentList() {
-        Apartment apartment0 = new Apartment(0, "0000", "Czesc Wspolna");
-        Apartment apartment1 = new Apartment(1, "1111", "Piwnica");
-        Apartment apartment2 = new Apartment(2, "2222", "Parter");
-        Apartment apartment3 = new Apartment(3, "3333", "1 pietro");
+        Apartment apartment0 = new Apartment(0, "0000", "Czesc Wspolna", RESIDENCE);
+        Apartment apartment1 = new Apartment(1, "1111", "Piwnica", RESIDENCE);
+        Apartment apartment2 = new Apartment(2, "2222", "Parter", RESIDENCE);
+        Apartment apartment3 = new Apartment(3, "3333", "1 pietro", RESIDENCE);
 
         List<Apartment> apartments = new ArrayList<>();
         apartments.add(apartment0);
@@ -213,5 +214,10 @@ public class EntityProviderForDB {
 
     private static InvoiceGas getInvoiceGas(List<ReadingGas> newReadings) {
         return new InvoiceGas("23424", new LocalDate(), 300, newReadings.get(0));
+    }
+
+    private static Residence createResidence() {
+        Residence res = new Residence(1L, "Swietojanska", "23", "gdynia");
+        return res;
     }
 }

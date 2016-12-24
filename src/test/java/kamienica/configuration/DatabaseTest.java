@@ -9,6 +9,7 @@ import kamienica.feature.invoice.InvoiceService;
 import kamienica.feature.meter.MeterService;
 import kamienica.feature.payment.PaymentService;
 import kamienica.feature.reading.ReadingService;
+import kamienica.feature.residence.ResidenceService;
 import kamienica.feature.settings.SettingsService;
 import kamienica.feature.tenant.TenantService;
 import kamienica.feature.user_admin.AdminUserService;
@@ -43,6 +44,9 @@ public abstract class DatabaseTest {
     protected SecurityService securityService;
     @Autowired
     protected AdminUserService adminUserService;
+    @Autowired
+    protected ResidenceService residenceService;
+
 
     @Autowired
     protected AbstractDao<Apartment> apartmentAbstractDao;

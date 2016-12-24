@@ -1,7 +1,9 @@
 package kamienica.core.util;
 
+import kamienica.feature.user_admin.SecurityUser;
 import org.joda.time.Days;
 import org.joda.time.LocalDate;
+import org.springframework.security.core.context.SecurityContextHolder;
 
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
@@ -18,5 +20,9 @@ public class CommonUtils {
 
 	public static int countDaysBetween(final LocalDate first, final LocalDate second) {
 		return Days.daysBetween(first, second).getDays();
+	}
+
+	public static SecurityUser fetchSecurityUser() {
+		return (SecurityUser) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 	}
 }

@@ -1,8 +1,10 @@
 
-insert into apartment(id, apartmentNumber, description, intercom) values(1, 0, 'Część Wspólna','6666');
-insert into apartment(id, apartmentNumber, description, intercom) values(2, 1, 'Piwnica','6666');
-insert into apartment(id, apartmentNumber, description, intercom) values(3, 2, 'Parter','6666');
-insert into apartment(id, apartmentNumber, description, intercom) values(4, 3, 'I Piętro','6666');
+insert into residence(id, street, number, city) values (1, 'Świętojańska', '45', 'Gdynia');
+
+insert into apartment(id, apartmentNumber, description, intercom, residence_id) values(1, 0, 'Część Wspólna','6666', 1);
+insert into apartment(id, apartmentNumber, description, intercom, residence_id) values(2, 1, 'Piwnica','6666', 1);
+insert into apartment(id, apartmentNumber, description, intercom, residence_id) values(3, 2, 'Parter','6666', 1);
+insert into apartment(id, apartmentNumber, description, intercom, residence_id) values(4, 3, 'I Piętro','6666', 1);
 --insert into apartment(id, apartmentNumber, description, intercom) values(5, 4, 'II Piętro- Mozna kasować','6666');
 
 INSERT INTO  tenant  ( id , email , firstName , lastName , movementDate , password , phone , role , status , apartment_id ) VALUES (1,'folik@wp.pl','Maciej','Folik','2016-07-25','witaj','530081187','ADMIN','ACTIVE',2);

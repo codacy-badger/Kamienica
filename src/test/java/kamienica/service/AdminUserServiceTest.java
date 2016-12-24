@@ -6,12 +6,10 @@ import kamienica.feature.reading.ReadingEnergy;
 import kamienica.feature.reading.ReadingGas;
 import kamienica.feature.reading.ReadingWater;
 import kamienica.model.Apartment;
+import kamienica.model.Residence;
 import kamienica.model.Tenant;
-import kamienica.testutils.EntityProvider;
 import org.joda.time.Days;
 import org.joda.time.LocalDate;
-import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -27,10 +25,6 @@ public class AdminUserServiceTest extends DatabaseTest {
 
     private final int daysFromLastReading = Days.daysBetween(LocalDate.parse("2016-09-01"), LocalDate.now()).getDays();
 
-//    @Before
-//    public void loadMainData() {
-//        map = adminUserService.getMainData();
-//    }
 
     @Test
     public void emptyApartmentsShouldEqualZero() {
@@ -42,7 +36,8 @@ public class AdminUserServiceTest extends DatabaseTest {
     @Test
     @Transactional
     public void emptyApartmentsShouldEqualOneAfterInsertingNewApartment() {
-        final Apartment ap = new Apartment(7,"1234", "test");
+       final Residence res =  residenceService.getById(1L);
+        final Apartment ap = new Apartment(7,"1234", "test", res);
         apartmentService.save(ap);
         map = adminUserService.getMainData();
         assertEquals(1, map.get("emptyApartments"));
