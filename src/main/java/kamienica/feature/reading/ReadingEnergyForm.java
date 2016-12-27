@@ -1,5 +1,6 @@
 package kamienica.feature.reading;
 
+import kamienica.model.ReadingEnergy;
 import org.joda.time.LocalDate;
 
 import java.util.LinkedList;

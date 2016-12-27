@@ -2,6 +2,7 @@ package kamienica.feature.reading;
 
 import kamienica.core.dao.AbstractDao;
 import kamienica.model.Invoice;
+import kamienica.model.Reading;
 import org.hibernate.Criteria;
 import org.hibernate.Query;
 import org.hibernate.criterion.Order;

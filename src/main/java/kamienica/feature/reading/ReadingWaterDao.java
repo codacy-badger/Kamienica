@@ -4,6 +4,7 @@ import kamienica.core.dao.DaoInterface;
 import kamienica.model.Apartment;
 import kamienica.model.Invoice;
 import kamienica.model.InvoiceGas;
+import kamienica.model.ReadingWater;
 import org.joda.time.LocalDate;
 
 import java.util.HashMap;

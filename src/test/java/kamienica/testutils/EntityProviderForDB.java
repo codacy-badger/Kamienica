@@ -2,9 +2,9 @@ package kamienica.testutils;
 
 import kamienica.core.enums.Status;
 import kamienica.core.enums.UserRole;
-import kamienica.feature.reading.ReadingEnergy;
-import kamienica.feature.reading.ReadingGas;
-import kamienica.feature.reading.ReadingWater;
+import kamienica.model.ReadingEnergy;
+import kamienica.model.ReadingGas;
+import kamienica.model.ReadingWater;
 import kamienica.model.*;
 import org.joda.time.LocalDate;
 

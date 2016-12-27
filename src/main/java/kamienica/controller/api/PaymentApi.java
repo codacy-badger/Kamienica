@@ -1,7 +1,7 @@
 package kamienica.controller.api;
 
 import kamienica.core.enums.Media;
-import kamienica.feature.payment.Payment;
+import kamienica.model.Payment;
 import kamienica.feature.payment.PaymentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;

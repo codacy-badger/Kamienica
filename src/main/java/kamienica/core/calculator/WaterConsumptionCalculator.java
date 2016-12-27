@@ -1,7 +1,7 @@
 package kamienica.core.calculator;
 
 import kamienica.model.MeterWater;
-import kamienica.feature.reading.ReadingWater;
+import kamienica.model.ReadingWater;
 import kamienica.model.Apartment;
 import kamienica.model.MediaUsage;
 import org.joda.time.Days;

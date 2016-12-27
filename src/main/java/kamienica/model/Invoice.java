@@ -1,6 +1,5 @@
 package kamienica.model;
 
-import kamienica.feature.reading.Reading;
 import org.hibernate.annotations.Type;
 import org.hibernate.validator.constraints.NotEmpty;
 import org.joda.time.LocalDate;

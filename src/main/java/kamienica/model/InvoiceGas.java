@@ -1,6 +1,5 @@
 package kamienica.model;
 
-import kamienica.feature.reading.ReadingGas;
 import org.joda.time.LocalDate;
 
 import javax.persistence.Entity;

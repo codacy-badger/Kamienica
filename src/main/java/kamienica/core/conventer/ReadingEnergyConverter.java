@@ -2,7 +2,7 @@ package kamienica.core.conventer;
 
 
 import kamienica.core.enums.Media;
-import kamienica.feature.reading.ReadingEnergy;
+import kamienica.model.ReadingEnergy;
 import kamienica.feature.reading.ReadingService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.convert.converter.Converter;

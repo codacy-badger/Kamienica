@@ -2,7 +2,7 @@ package kamienica.core.calculator;
 
 import kamienica.core.exception.NegativeConsumptionValue;
 import kamienica.core.exception.UsageCalculationException;
-import kamienica.feature.reading.Reading;
+import kamienica.model.Reading;
 import kamienica.model.Apartment;
 import kamienica.model.MediaUsage;
 

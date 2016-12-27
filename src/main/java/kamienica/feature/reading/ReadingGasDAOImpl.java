@@ -1,6 +1,7 @@
 package kamienica.feature.reading;
 
 import kamienica.model.Apartment;
+import kamienica.model.ReadingGas;
 import org.hibernate.Query;
 import org.springframework.stereotype.Repository;
 

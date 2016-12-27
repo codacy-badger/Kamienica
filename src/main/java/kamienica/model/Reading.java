@@ -1,4 +1,4 @@
-package kamienica.feature.reading;
+package kamienica.model;
 
 import kamienica.model.Meter;
 import org.hibernate.annotations.Type;

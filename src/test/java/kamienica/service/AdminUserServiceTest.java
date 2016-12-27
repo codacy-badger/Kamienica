@@ -2,9 +2,9 @@ package kamienica.service;
 
 import kamienica.configuration.DatabaseTest;
 import kamienica.core.enums.Status;
-import kamienica.feature.reading.ReadingEnergy;
-import kamienica.feature.reading.ReadingGas;
-import kamienica.feature.reading.ReadingWater;
+import kamienica.model.ReadingEnergy;
+import kamienica.model.ReadingGas;
+import kamienica.model.ReadingWater;
 import kamienica.model.Apartment;
 import kamienica.model.Residence;
 import kamienica.model.Tenant;

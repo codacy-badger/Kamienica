@@ -1,10 +1,10 @@
 package kamienica.feature.user_admin;
 
 import kamienica.core.enums.Media;
-import kamienica.feature.reading.Reading;
-import kamienica.feature.reading.ReadingEnergy;
-import kamienica.feature.reading.ReadingGas;
-import kamienica.feature.reading.ReadingWater;
+import kamienica.model.Reading;
+import kamienica.model.ReadingEnergy;
+import kamienica.model.ReadingGas;
+import kamienica.model.ReadingWater;
 import kamienica.model.Apartment;
 
 import java.util.HashMap;

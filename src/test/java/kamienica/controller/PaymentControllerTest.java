@@ -31,10 +31,10 @@
 //import kamienica.model.MeterWater;
 //import kamienica.controller.jsp.PaymentController;
 //import kamienica.feature.payment.PaymentService;
-//import kamienica.feature.reading.ReadingEnergy;
-//import kamienica.feature.reading.ReadingGas;
+//import kamienica.model.ReadingEnergy;
+//import kamienica.model.ReadingGas;
 //import kamienica.feature.reading.ReadingService;
-//import kamienica.feature.reading.ReadingWater;
+//import kamienica.model.ReadingWater;
 //import kamienica.model.Tenant;
 //import kamienica.feature.tenant.TenantService;
 //import kamienica.testutils.SetupMethods;

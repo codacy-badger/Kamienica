@@ -2,7 +2,7 @@ package kamienica.feature.reading;
 
 import kamienica.core.enums.Media;
 import kamienica.core.exception.NoMainCounterException;
-import kamienica.model.InvoiceGas;
+import kamienica.model.*;
 import org.joda.time.LocalDate;
 
 import java.util.HashMap;
