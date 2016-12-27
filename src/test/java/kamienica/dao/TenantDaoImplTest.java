@@ -142,7 +142,7 @@
 //		ap.setApartment(null);
 //		ap.setMovementDate(new LocalDate());
 //		ap.setPhone("345");
-//		ap.setRole("ADMIN");
+//		ap.setRole("OWNER");
 //		ap.setStatus("ACTIVE");
 //		ap.setPassword("witaj");
 //		return ap;
@@ -157,7 +157,7 @@
 //		ap.setApartment(null);
 //		ap.setMovementDate(new LocalDate());
 //		ap.setPhone("345");
-//		ap.setRole("ADMIN");
+//		ap.setRole("OWNER");
 //		ap.setStatus("ACTIVE");
 //		ap.setPassword("witaj");
 //		return ap;

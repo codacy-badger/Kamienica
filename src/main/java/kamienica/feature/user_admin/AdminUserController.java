@@ -25,7 +25,7 @@ public class AdminUserController {
 	@Autowired
 	private AdminUserService adminUserService;
 
-	// ===========ADMIN===========================================
+	// ===========OWNER===========================================
 	@RequestMapping("/Admin/home")
 	public ModelAndView home() {
 		HashMap<String, Object> model = adminUserService.getMainData();

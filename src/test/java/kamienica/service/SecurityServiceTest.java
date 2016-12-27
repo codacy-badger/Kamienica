@@ -18,7 +18,7 @@ public class SecurityServiceTest extends DatabaseTest {
 
     private static final String USER_LOGIN = "folik@wp.pl";
     private static final String USER_PASSWD = "witaj";
-    private static final SimpleGrantedAuthority ADMIN =  new SimpleGrantedAuthority("ROLE_ADMIN" );
+    private static final SimpleGrantedAuthority ADMIN =  new SimpleGrantedAuthority("ROLE_OWNER" );
 
     @Test
     public void loginWithCorrectCredentials() {

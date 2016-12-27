@@ -1,7 +1,7 @@
 package kamienica.core.enums;
 
 public enum UserRole {
-	USER("USER"), ADMIN("ADMIN");
+	TENANT("TENANT"), OWNER("OWNER"), ADMIN("ADMIN");
 
 	String userRole;
 

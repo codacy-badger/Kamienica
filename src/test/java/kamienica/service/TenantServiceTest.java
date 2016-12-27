@@ -77,7 +77,7 @@ public class TenantServiceTest extends DatabaseTest {
         tenant.setLastName("dumy");
         tenant.setMovementDate(localDate);
         tenant.setPassword("dummy");
-        tenant.setRole(UserRole.USER);
+        tenant.setRole(UserRole.TENANT);
         tenant.setStatus(Status.ACTIVE);
 
         return tenant;
