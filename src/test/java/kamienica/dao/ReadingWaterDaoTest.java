@@ -9,7 +9,7 @@
 //
 //import kamienica.model.Apartment;
 //import kamienica.feature.meter.MeterWater;
-//import kamienica.feature.reading.ReadingWater;
+//import kamienica.model.ReadingWater;
 //import kamienica.feature.reading.ReadingWaterDAO;
 //
 //public class ReadingWaterDaoTest extends EntityDaoImplTest {

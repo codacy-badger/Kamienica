@@ -1,9 +1,9 @@
 package kamienica.controller.api;
 
 import kamienica.core.enums.Media;
-import kamienica.feature.payment.Payment;
+import kamienica.model.Payment;
 import kamienica.feature.payment.PaymentService;
-import kamienica.feature.reading.Reading;
+import kamienica.model.Reading;
 import kamienica.feature.user_admin.AdminUserService;
 import kamienica.feature.user_admin.SecurityService;
 import kamienica.feature.user_admin.SecurityUser;

@@ -5,9 +5,9 @@ import kamienica.core.enums.UserRole;
 import kamienica.model.MeterEnergy;
 import kamienica.model.MeterGas;
 import kamienica.model.MeterWater;
-import kamienica.feature.reading.ReadingEnergy;
-import kamienica.feature.reading.ReadingGas;
-import kamienica.feature.reading.ReadingWater;
+import kamienica.model.ReadingEnergy;
+import kamienica.model.ReadingGas;
+import kamienica.model.ReadingWater;
 import kamienica.model.*;
 import org.joda.time.LocalDate;
 
@@ -58,7 +58,7 @@ public class EntityProvider {
         Tenant tenant2 = new Tenant("Maciej (Admin)", "Fol", "kowalski@wp.pl", "222222", APARTMENTS.get(1));
         tenant2.setStatus(Status.ACTIVE);
         tenant2.setId(1L);
-        tenant2.setRole(UserRole.ADMIN);
+        tenant2.setRole(UserRole.OWNER);
         Tenant tenant3 = new Tenant("Adam", "Nowak", "nowak@wp.pl", "111111", APARTMENTS.get(2));
         tenant3.setStatus(Status.ACTIVE);
         tenant3.setId(2L);

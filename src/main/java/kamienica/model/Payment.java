@@ -1,4 +1,4 @@
-package kamienica.feature.payment;
+package kamienica.model;
 
 import kamienica.model.Tenant;
 import org.hibernate.annotations.Type;

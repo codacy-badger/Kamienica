@@ -2,9 +2,9 @@ package kamienica.testutils;
 
 import kamienica.core.enums.Status;
 import kamienica.core.enums.UserRole;
-import kamienica.feature.reading.ReadingEnergy;
-import kamienica.feature.reading.ReadingGas;
-import kamienica.feature.reading.ReadingWater;
+import kamienica.model.ReadingEnergy;
+import kamienica.model.ReadingGas;
+import kamienica.model.ReadingWater;
 import kamienica.model.*;
 import org.joda.time.LocalDate;
 
@@ -55,7 +55,7 @@ public class EntityProviderForDB {
         final List<Tenant> tenants = new ArrayList<>();
         Tenant tenant2 = new Tenant("Maciej (Admin)", "Fol", "kowalski@wp.pl", "222222", APARTMENTS.get(1));
         tenant2.setStatus(Status.ACTIVE);
-        tenant2.setRole(UserRole.ADMIN);
+        tenant2.setRole(UserRole.OWNER);
         Tenant tenant3 = new Tenant("Adam", "Nowak", "nowak@wp.pl", "111111", APARTMENTS.get(2));
         tenant3.setStatus(Status.ACTIVE);
 

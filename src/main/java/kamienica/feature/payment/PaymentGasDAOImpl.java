@@ -1,5 +1,6 @@
 package kamienica.feature.payment;
 
+import kamienica.model.PaymentGas;
 import org.springframework.stereotype.Repository;
 
 @Repository("paymentGasDao")

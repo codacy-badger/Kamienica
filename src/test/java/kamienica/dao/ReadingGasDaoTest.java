@@ -11,7 +11,7 @@
 //import kamienica.model.InvoiceGas;
 //import kamienica.feature.meter.MeterGas;
 //import kamienica.feature.reading.ReadingDao;
-//import kamienica.feature.reading.ReadingGas;
+//import kamienica.model.ReadingGas;
 //
 //public class ReadingGasDaoTest extends EntityDaoImplTest {
 //

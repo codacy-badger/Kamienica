@@ -41,7 +41,7 @@ public class Tenant implements Serializable {
     private Apartment apartment;
     @Column(nullable = false)
     @Enumerated(EnumType.STRING)
-    private UserRole role = UserRole.USER;
+    private UserRole role = UserRole.TENANT;
     @Column(nullable = false)
     @Enumerated(EnumType.STRING)
     private Status status = Status.ACTIVE;

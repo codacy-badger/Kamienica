@@ -2,10 +2,10 @@ package kamienica.feature.invoice;
 
 import kamienica.core.enums.Media;
 import kamienica.core.exception.InvalidDivisionException;
-import kamienica.feature.payment.PaymentEnergy;
-import kamienica.feature.payment.PaymentGas;
-import kamienica.feature.payment.PaymentWater;
-import kamienica.feature.reading.Reading;
+import kamienica.model.PaymentEnergy;
+import kamienica.model.PaymentGas;
+import kamienica.model.PaymentWater;
+import kamienica.model.Reading;
 import kamienica.model.Invoice;
 import kamienica.model.InvoiceEnergy;
 import kamienica.model.InvoiceGas;

@@ -1,8 +1,8 @@
 package kamienica.core.calculator;
 
 import kamienica.core.util.CommonUtils;
-import kamienica.feature.reading.ReadingGas;
-import kamienica.feature.reading.ReadingWater;
+import kamienica.model.ReadingGas;
+import kamienica.model.ReadingWater;
 import kamienica.model.Apartment;
 import kamienica.model.MediaUsage;
 import org.joda.time.Days;

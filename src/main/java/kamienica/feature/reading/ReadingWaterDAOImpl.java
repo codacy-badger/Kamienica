@@ -2,6 +2,7 @@ package kamienica.feature.reading;
 
 import kamienica.model.Apartment;
 import kamienica.model.InvoiceGas;
+import kamienica.model.ReadingWater;
 import org.hibernate.Query;
 import org.joda.time.LocalDate;
 import org.springframework.stereotype.Repository;

@@ -22,7 +22,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
 	@Autowired
 	public void configureGlobalSecurity(AuthenticationManagerBuilder auth) throws Exception {
-		auth.inMemoryAuthentication().withUser("superuser").password("override").roles("ADMIN");
+		auth.inMemoryAuthentication().withUser("superuser").password("override").roles("OWNER");
 		auth.userDetailsService(userDetailsService);
 
 	}
@@ -36,15 +36,15 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 		http.addFilterBefore(filter, CsrfFilter.class);
 
 		http.authorizeRequests().antMatchers("/", "/index").permitAll().antMatchers("/Admin/**")
-				.access("hasRole('ADMIN')").antMatchers("/api/**").access("hasRole('ADMIN') or hasRole('USER')")
-				.antMatchers("/User/**").access("hasRole('ADMIN') or hasRole('USER')").and().formLogin()
+				.access("hasRole('OWNER')").antMatchers("/api/**").access("hasRole('OWNER') or hasRole('TENANT')")
+				.antMatchers("/User/**").access("hasRole('OWNER') or hasRole('TENANT')").and().formLogin()
 				.loginPage("/login").usernameParameter("email").passwordParameter("password")
 				.successHandler(customSuccessHandler).and().csrf().and().exceptionHandling().accessDeniedPage("/403");
 
 		// added to make rest part work
 		// more on link:
 		// https://spring.io/guides/tutorials/spring-security-and-angular-js/
-		http.httpBasic().and().authorizeRequests().antMatchers("/api/**").access("hasRole('ADMIN') or hasRole('USER')")
+		http.httpBasic().and().authorizeRequests().antMatchers("/api/**").access("hasRole('OWNER') or hasRole('TENANT')")
 				.and().csrf().disable();
 
 

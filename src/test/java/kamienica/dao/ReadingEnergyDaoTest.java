@@ -13,7 +13,7 @@
 //import kamienica.model.InvoiceEnergy;
 //import kamienica.model.MeterEnergy;
 //import kamienica.feature.reading.ReadingDao;
-//import kamienica.feature.reading.ReadingEnergy;
+//import kamienica.model.ReadingEnergy;
 //
 //public class ReadingEnergyDaoTest extends EntityDaoImplTest {
 //

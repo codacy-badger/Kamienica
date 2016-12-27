@@ -1,5 +1,7 @@
 package kamienica.feature.reading;
 
+import kamienica.model.Reading;
+
 import java.util.List;
 
 public class ReadingValidator {
