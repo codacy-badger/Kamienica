@@ -22,7 +22,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
 	@Autowired
 	public void configureGlobalSecurity(AuthenticationManagerBuilder auth) throws Exception {
-		auth.inMemoryAuthentication().withUser("superuser").password("override").roles("OWNER");
+		auth.inMemoryAuthentication().withUser("superuser").password("override").roles("ADMIN");
 		auth.userDetailsService(userDetailsService);
 
 	}
@@ -35,16 +35,20 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 		filter.setForceEncoding(true);
 		http.addFilterBefore(filter, CsrfFilter.class);
 
-		http.authorizeRequests().antMatchers("/", "/index").permitAll().antMatchers("/Admin/**")
-				.access("hasRole('OWNER')").antMatchers("/api/**").access("hasRole('OWNER') or hasRole('TENANT')")
-				.antMatchers("/User/**").access("hasRole('OWNER') or hasRole('TENANT')").and().formLogin()
-				.loginPage("/login").usernameParameter("email").passwordParameter("password")
-				.successHandler(customSuccessHandler).and().csrf().and().exceptionHandling().accessDeniedPage("/403");
+		http.authorizeRequests()
+				.antMatchers("/", "/index").permitAll()
+				.antMatchers("/Admin/**").access("hasRole('OWNER') or hasRole('ADMIN')")
+				.antMatchers("/api/**").access("hasRole('OWNER') or hasRole('TENANT') or hasRole('ADMIN')")
+				.antMatchers("/User/**").access("hasRole('OWNER') or hasRole('TENANT') or hasRole('ADMIN')")
+				.and().formLogin().loginPage("/login").usernameParameter("email").passwordParameter("password")
+				.successHandler(customSuccessHandler)
+				.and().csrf()
+				.and().exceptionHandling().accessDeniedPage("/403");
 
 		// added to make rest part work
 		// more on link:
 		// https://spring.io/guides/tutorials/spring-security-and-angular-js/
-		http.httpBasic().and().authorizeRequests().antMatchers("/api/**").access("hasRole('OWNER') or hasRole('TENANT')")
+		http.httpBasic().and().authorizeRequests().antMatchers("/api/**").access("hasRole('OWNER') or hasRole('TENANT') or hasRole('ADMIN')")
 				.and().csrf().disable();
 
 
