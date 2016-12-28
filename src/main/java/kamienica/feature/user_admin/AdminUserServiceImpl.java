@@ -41,6 +41,8 @@ public class AdminUserServiceImpl implements AdminUserService {
     @Qualifier("invoiceGas")
     private InvoiceAbstractDao<InvoiceGas> invoiceGasDao;
 
+    final LocalDate now = new LocalDate();
+
     @Override
     public HashMap<String, Object> getMainData() {
         HashMap<String, Object> model = new HashMap<>();
@@ -60,11 +62,15 @@ public class AdminUserServiceImpl implements AdminUserService {
     }
 
     private void addLatestReadings(HashMap<String, Object> model) {
-        final LocalDate now = new LocalDate();
 
-        int energy = CommonUtils.countDaysBetween(energyDao.getLatestDate(), now);
-        int gas = CommonUtils.countDaysBetween(gasDao.getLatestDate(), now);
-        int water = CommonUtils.countDaysBetween(waterDao.getLatestDate(), now);
+
+        final LocalDate energyDate = energyDao.getLatestDate();
+        final LocalDate gasDate = gasDao.getLatestDate();
+        final LocalDate waterDate = waterDao.getLatestDate();
+
+        int energy = countDays(energyDate);
+        int gas = countDays(gasDate);
+        int water = countDays(waterDate);
         String media;
         int days;
         if (energy > gas && energy > water) {
@@ -96,6 +102,14 @@ public class AdminUserServiceImpl implements AdminUserService {
         }
         model.put("invoiceMedia", media);
         model.put("invoiceDays", days);
+
+    }
+
+    private int countDays(LocalDate energyDate) {
+        if (energyDate != null) {
+            return CommonUtils.countDaysBetween(energyDate, now);
+        }
+        return 999;
 
     }
 
