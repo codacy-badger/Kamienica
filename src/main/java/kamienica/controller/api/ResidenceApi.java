@@ -25,17 +25,6 @@ public class ResidenceApi {
     @Autowired
     private ResidenceService service;
 
-    @RequestMapping(method = RequestMethod.GET)
-    public ResponseEntity<?> list() {
-        final List<Residence> list = service.getList();
-        if (list.isEmpty()) {
-            return new ResponseEntity<List<Residence>>(HttpStatus.NOT_FOUND);
-        }
-
-        return new ResponseEntity<>(list, HttpStatus.OK);
-    }
-
-
     @RequestMapping(method = RequestMethod.POST)
     public ResponseEntity<?> create(@Valid @RequestBody final Residence residence, final BindingResult result) {
 

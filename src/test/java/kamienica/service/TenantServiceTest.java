@@ -7,6 +7,8 @@ import kamienica.model.Apartment;
 import kamienica.model.Residence;
 import kamienica.model.Tenant;
 import org.h2.tools.Server;
+import org.hibernate.criterion.Criterion;
+import org.hibernate.criterion.Restrictions;
 import org.joda.time.LocalDate;
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -27,6 +29,15 @@ public class TenantServiceTest extends DatabaseTest {
     public void getList() {
         List<Tenant> list = tenantService.getList();
         assertEquals(5, list.size());
+    }
+
+    @Test
+    public void shouldGetOnlyAciveTenants() {
+        final Criterion active = Restrictions.eq("status", Status.ACTIVE);
+        final Criterion tenant = Restrictions.eq("role", UserRole.TENANT);
+
+        final List<Tenant> result = tenantService.findByCriteria(active, tenant);
+        assertEquals(2, result.size());
     }
 
     @Test
@@ -63,11 +74,11 @@ public class TenantServiceTest extends DatabaseTest {
     @Test
     public void shouldDeactivateNewTenantWhenMovementDateIsOlderThanCurrentTenant() {
         final Tenant newOwner = createTenant(LocalDate.parse("2015-01-01"));
-        assertEquals(Status.ACTIVE,  newOwner.getStatus());
+        assertEquals(Status.ACTIVE, newOwner.getStatus());
         tenantService.saveTenant(newOwner);
         Tenant previousOwner = tenantService.loadByMail(tenantMail);
         assertEquals(Status.ACTIVE, previousOwner.getStatus());
-        assertEquals(Status.INACTIVE,  newOwner.getStatus());
+        assertEquals(Status.INACTIVE, newOwner.getStatus());
     }
 
     @Transactional

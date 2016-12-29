@@ -20,7 +20,7 @@ public class ResidenceServiceTest extends DatabaseTest {
         residenceService.save(res);
 
         final List<Residence> result = residenceService.getList();
-        assertEquals(2, result.size());
+        assertEquals(3, result.size());
     }
 
     @Test(expected = ConstraintViolationException.class)
@@ -45,7 +45,7 @@ public class ResidenceServiceTest extends DatabaseTest {
     @Transactional
     public void getList() throws Exception {
         final List<Residence> result = residenceService.getList();
-        assertEquals(1, result.size());
+        assertEquals(2, result.size());
     }
 
 

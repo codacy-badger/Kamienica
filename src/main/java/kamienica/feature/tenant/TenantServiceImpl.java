@@ -50,6 +50,11 @@ public class TenantServiceImpl implements TenantService {
     }
 
     @Override
+    public List<Tenant> findByCriteria(Criterion... crit) {
+        return tenantDao.findByCriteria(crit);
+    }
+
+    @Override
     public void deleteTenant(Long id) {
         tenantDao.deleteById(id);
         settingsDao.changeDivisionState(false);

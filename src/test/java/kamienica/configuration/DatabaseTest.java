@@ -1,6 +1,5 @@
 package kamienica.configuration;
 
-import kamienica.configuration.JUnitConfig;
 import kamienica.core.dao.AbstractDao;
 import kamienica.feature.apartment.ApartmentDao;
 import kamienica.feature.apartment.ApartmentService;
@@ -47,11 +46,6 @@ public abstract class DatabaseTest {
     @Autowired
     protected ResidenceService residenceService;
 
-
-    @Autowired
-    protected AbstractDao<Apartment> apartmentAbstractDao;
-    @Autowired
-    protected ApartmentDao apartmentDao;
     /**
      * difference factor for calculated data
      */
