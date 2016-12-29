@@ -1,8 +1,12 @@
 package kamienica.feature.tenant;
 
 import kamienica.core.enums.Status;
+import kamienica.core.enums.UserRole;
 import kamienica.feature.settings.SettingsDao;
 import kamienica.model.Tenant;
+import org.hibernate.Criteria;
+import org.hibernate.criterion.Criterion;
+import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -70,6 +74,12 @@ public class TenantServiceImpl implements TenantService {
     @Override
     public Tenant loadByMail(String mail) {
         return tenantDao.loadByMail(mail);
+    }
+
+    @Override
+    public List<Tenant> getOwners() {
+        Criterion onlyOwners = Restrictions.eq("role", UserRole.OWNER);
+        return tenantDao.findByCriteria(onlyOwners);
     }
 
 }

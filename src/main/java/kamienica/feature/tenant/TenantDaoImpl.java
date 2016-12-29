@@ -2,6 +2,7 @@ package kamienica.feature.tenant;
 
 import kamienica.core.dao.AbstractDao;
 import kamienica.core.enums.Status;
+import kamienica.core.enums.UserRole;
 import kamienica.model.Apartment;
 import kamienica.model.Tenant;
 import org.hibernate.Criteria;
@@ -27,6 +28,7 @@ public class TenantDaoImpl extends AbstractDao<Tenant> implements TenantDao {
         criteria.add(Restrictions.eq("email", mail));
         return (Tenant) criteria.uniqueResult();
     }
+
 
     @Override
     public Tenant getTenantForApartment(final Apartment ap) {

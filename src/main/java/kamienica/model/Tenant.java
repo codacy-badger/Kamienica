@@ -13,6 +13,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 import javax.persistence.*;
 import javax.validation.constraints.Digits;
 import java.io.Serializable;
+import java.util.List;
 
 @Entity
 @Table(name = "tenant")
@@ -39,6 +40,8 @@ public class Tenant implements Serializable {
     private String phone;
     @OneToOne
     private Apartment apartment;
+    @OneToMany(fetch = FetchType.EAGER)
+    private List<Residence> residence;
     @Column(nullable = false)
     @Enumerated(EnumType.STRING)
     private UserRole role = UserRole.TENANT;
@@ -236,4 +239,11 @@ public class Tenant implements Serializable {
         return status == other.status;
     }
 
+    public List<Residence> getResidence() {
+        return residence;
+    }
+
+    public void setResidence(List<Residence> residence) {
+        this.residence = residence;
+    }
 }

@@ -4,11 +4,15 @@ import kamienica.configuration.DatabaseTest;
 import kamienica.core.enums.Status;
 import kamienica.core.enums.UserRole;
 import kamienica.model.Apartment;
+import kamienica.model.Residence;
 import kamienica.model.Tenant;
+import org.h2.tools.Server;
 import org.joda.time.LocalDate;
+import org.junit.BeforeClass;
 import org.junit.Test;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.sql.SQLException;
 import java.util.List;
 
 import static org.junit.Assert.assertEquals;
@@ -29,6 +33,14 @@ public class TenantServiceTest extends DatabaseTest {
     public void getActiveTenants() {
         List<Tenant> list = tenantService.getActiveTenants();
         assertEquals(3, list.size());
+    }
+
+    @Test
+    public void getOwners() {
+        List<Tenant> list = tenantService.getOwners();
+        assertEquals(1, list.size());
+        List<Residence> res = list.get(0).getResidence();
+        assertEquals(1, res.size());
     }
 
     @Test

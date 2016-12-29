@@ -19,4 +19,6 @@ public interface TenantService {
 	List<Tenant> getActiveTenants();
 
 	Tenant loadByMail(String mail);
+
+	List<Tenant> getOwners();
 }
