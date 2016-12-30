@@ -33,7 +33,7 @@ public class DivisionController {
 	@RequestMapping("/divisionRegister")
 	public ModelAndView divisionRegister(@ModelAttribute("divisionForm") DivisionForm divisionForm,
 			BindingResult result) {
-		Map<String, Object> model = new HashMap<>();
+		final Map<String, Object> model = new HashMap<>();
 		try {
 			divisionService.prepareForm(divisionForm);
 		} catch (WrongDivisionInputException e) {
@@ -47,7 +47,7 @@ public class DivisionController {
 
 	@RequestMapping(value = "/divisionSave", method = RequestMethod.POST)
 	public ModelAndView divisionSave(@ModelAttribute("divisionForm") DivisionForm divisionForm, final BindingResult result) {
-		LocalDate date = divisionForm.getDate();
+		final LocalDate date = divisionForm.getDate();
 		List<Division> divisionList = divisionForm.getDivisionList();
 		List<Apartment> apartmentList = apartmentService.getList();
 

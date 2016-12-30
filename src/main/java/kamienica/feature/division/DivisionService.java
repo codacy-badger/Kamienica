@@ -14,11 +14,11 @@ public interface DivisionService {
 
 	void saveList(List<Division> division, LocalDate date);
 
-	void saveList(DivisionForm form) throws InvalidDivisionException;
+//	void saveList(DivisionForm form) throws InvalidDivisionException;
 
 	List<Division> getList();
 	
-	Map<Tenant, List<Division>> getMappedList();
+//	Map<Tenant, List<Division>> getMappedList();
 
 	void deleteAll();
 

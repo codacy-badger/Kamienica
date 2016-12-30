@@ -144,45 +144,45 @@ public class InvoiceServiceImpl implements InvoiceService {
 
 	}
 
-	@Override
-	public void saveEnergy(InvoiceEnergy invoice, List<PaymentEnergy> payment) {
-		invoiceEnergyDao.save(invoice);
-		readingEnergyDao.changeResolvementState(invoice, true);
-		for (PaymentEnergy paymentEnergy : payment) {
-			paymentEnergyDao.save(paymentEnergy);
-		}
-
-	}
-
-	@Override
-	public void saveGas(InvoiceGas invoice, List<PaymentGas> payment) {
-		invoiceGasDao.save(invoice);
-		readingGasDao.changeResolvementState(invoice, true);
-
-		for (PaymentGas paymentGas : payment) {
-			paymentGasDao.save(paymentGas);
-		}
-	}
-
-	@Override
-	public void saveWater(InvoiceWater invoice, List<PaymentWater> payment) {
-		invoiceWaterDao.save(invoice);
-		readingWaterDao.changeResolvementState(invoice, true);
-
-		for (PaymentWater paymentWater : payment) {
-			paymentWaterDao.save(paymentWater);
-		}
-
-	}
-
-	@Override
-	public void updateEnergy(InvoiceEnergy invoice, List<PaymentEnergy> payments) {
-		for (PaymentEnergy payment : payments) {
-			paymentEnergyDao.update(payment);
-		}
-		invoiceEnergyDao.update(invoice);
-
-	}
+//	@Override
+//	public void saveEnergy(InvoiceEnergy invoice, List<PaymentEnergy> payment) {
+//		invoiceEnergyDao.save(invoice);
+//		readingEnergyDao.changeResolvementState(invoice, true);
+//		for (PaymentEnergy paymentEnergy : payment) {
+//			paymentEnergyDao.save(paymentEnergy);
+//		}
+//
+//	}
+//
+//	@Override
+//	public void saveGas(InvoiceGas invoice, List<PaymentGas> payment) {
+//		invoiceGasDao.save(invoice);
+//		readingGasDao.changeResolvementState(invoice, true);
+//
+//		for (PaymentGas paymentGas : payment) {
+//			paymentGasDao.save(paymentGas);
+//		}
+//	}
+//
+//	@Override
+//	public void saveWater(InvoiceWater invoice, List<PaymentWater> payment) {
+//		invoiceWaterDao.save(invoice);
+//		readingWaterDao.changeResolvementState(invoice, true);
+//
+//		for (PaymentWater paymentWater : payment) {
+//			paymentWaterDao.save(paymentWater);
+//		}
+//
+//	}
+//
+//	@Override
+//	public void updateEnergy(InvoiceEnergy invoice, List<PaymentEnergy> payments) {
+//		for (PaymentEnergy payment : payments) {
+//			paymentEnergyDao.update(payment);
+//		}
+//		invoiceEnergyDao.update(invoice);
+//
+//	}
 
 	@Override
 	public void delete(Long id, Media media) {
@@ -212,104 +212,104 @@ public class InvoiceServiceImpl implements InvoiceService {
 		}
 	}
 
-	@Override
-	public void deleteEnergyByID(Long id) {
-		readingEnergyDao.changeResolvementState(invoiceEnergyDao.getById(id), false);
-		invoiceEnergyDao.deleteById(id);
-	}
-
-	@Override
-	public void deleteGasByID(Long id) {
-		readingGasDao.changeResolvementState(invoiceEnergyDao.getById(id), false);
-		invoiceGasDao.deleteById(id);
-
-	}
-
-	@Override
-	public void deleteWaterByID(Long id) {
-		// temporaryFix...
-		readingWaterDao.changeResolvementState(invoiceEnergyDao.getById(id), false);
-		invoiceWaterDao.deleteById(id);
-
-	}
+//	@Override
+//	public void deleteEnergyByID(Long id) {
+//		readingEnergyDao.changeResolvementState(invoiceEnergyDao.getById(id), false);
+//		invoiceEnergyDao.deleteById(id);
+//	}
+//
+//	@Override
+//	public void deleteGasByID(Long id) {
+//		readingGasDao.changeResolvementState(invoiceEnergyDao.getById(id), false);
+//		invoiceGasDao.deleteById(id);
+//
+//	}
+//
+//	@Override
+//	public void deleteWaterByID(Long id) {
+//		// temporaryFix...
+//		readingWaterDao.changeResolvementState(invoiceEnergyDao.getById(id), false);
+//		invoiceWaterDao.deleteById(id);
+//
+//	}
 
 	@Override
 	public InvoiceEnergy getEnergyByID(Long id) {
 		return invoiceEnergyDao.getById(id);
 	}
 
-	@Override
-	public <T extends Invoice> void update(T invoice, Media media) {
-		double invFactor;
-		Invoice oldInv;
-		Long id = invoice.getId();
-		switch (media) {
-		case ENERGY:
-			oldInv = invoiceEnergyDao.getById(id);
+//	@Override
+//	public <T extends Invoice> void update(T invoice, Media media) {
+//		double invFactor;
+//		Invoice oldInv;
+//		Long id = invoice.getId();
+//		switch (media) {
+//		case ENERGY:
+//			oldInv = invoiceEnergyDao.getById(id);
+//
+//			invFactor = (invoice.getTotalAmount() / oldInv.getTotalAmount());
+//			List<PaymentEnergy> paymentsEnergy = paymentEnergyDao.getByInvoice(invoice);
+//			for (PaymentEnergy aPaymentsEnergy : paymentsEnergy) {
+//				aPaymentsEnergy.setPaymentAmount(aPaymentsEnergy.getPaymentAmount() * invFactor);
+//			}
+//
+//			for (PaymentEnergy payment : paymentsEnergy) {
+//				paymentEnergyDao.update(payment);
+//			}
+//			invoiceEnergyDao.update((InvoiceEnergy) invoice);
+//			break;
+//		case GAS:
+//
+//			oldInv = invoiceGasDao.getById(invoice.getId());
+//
+//			invFactor = (invoice.getTotalAmount() / oldInv.getTotalAmount());
+//			List<PaymentGas> paymentsGas = paymentGasDao.getByInvoice(invoice);
+//			for (PaymentGas paymentsGa : paymentsGas) {
+//				paymentsGa.setPaymentAmount(paymentsGa.getPaymentAmount() * invFactor);
+//			}
+//
+//			for (PaymentGas payment : paymentsGas) {
+//				paymentGasDao.update(payment);
+//			}
+//			invoiceGasDao.update((InvoiceGas) invoice);
+//			break;
+//		case WATER:
+//
+//			oldInv = invoiceWaterDao.getById(invoice.getId());
+//			invFactor = (invoice.getTotalAmount() / oldInv.getTotalAmount());
+//			List<PaymentWater> paymentWater = paymentWaterDao.getByInvoice(invoice);
+//			for (PaymentWater aPaymentWater : paymentWater) {
+//				aPaymentWater.setPaymentAmount(aPaymentWater.getPaymentAmount() * invFactor);
+//			}
+//			for (PaymentWater payment : paymentWater) {
+//				paymentWaterDao.update(payment);
+//			}
+//			invoiceWaterDao.update((InvoiceWater) invoice);
+//			break;
+//
+//		default:
+//			break;
+//		}
+//	}
 
-			invFactor = (invoice.getTotalAmount() / oldInv.getTotalAmount());
-			List<PaymentEnergy> paymentsEnergy = paymentEnergyDao.getByInvoice(invoice);
-			for (PaymentEnergy aPaymentsEnergy : paymentsEnergy) {
-				aPaymentsEnergy.setPaymentAmount(aPaymentsEnergy.getPaymentAmount() * invFactor);
-			}
-
-			for (PaymentEnergy payment : paymentsEnergy) {
-				paymentEnergyDao.update(payment);
-			}
-			invoiceEnergyDao.update((InvoiceEnergy) invoice);
-			break;
-		case GAS:
-
-			oldInv = invoiceGasDao.getById(invoice.getId());
-
-			invFactor = (invoice.getTotalAmount() / oldInv.getTotalAmount());
-			List<PaymentGas> paymentsGas = paymentGasDao.getByInvoice(invoice);
-			for (PaymentGas paymentsGa : paymentsGas) {
-				paymentsGa.setPaymentAmount(paymentsGa.getPaymentAmount() * invFactor);
-			}
-
-			for (PaymentGas payment : paymentsGas) {
-				paymentGasDao.update(payment);
-			}
-			invoiceGasDao.update((InvoiceGas) invoice);
-			break;
-		case WATER:
-
-			oldInv = invoiceWaterDao.getById(invoice.getId());
-			invFactor = (invoice.getTotalAmount() / oldInv.getTotalAmount());
-			List<PaymentWater> paymentWater = paymentWaterDao.getByInvoice(invoice);
-			for (PaymentWater aPaymentWater : paymentWater) {
-				aPaymentWater.setPaymentAmount(aPaymentWater.getPaymentAmount() * invFactor);
-			}
-			for (PaymentWater payment : paymentWater) {
-				paymentWaterDao.update(payment);
-			}
-			invoiceWaterDao.update((InvoiceWater) invoice);
-			break;
-
-		default:
-			break;
-		}
-	}
-
-	@Override
-	public void updateGas(InvoiceGas invoice, List<PaymentGas> payments) {
-		for (PaymentGas payment : payments) {
-			paymentGasDao.update(payment);
-		}
-		invoiceGasDao.update(invoice);
-
-	}
-
-	@Override
-	public void updateWater(InvoiceWater invoice, List<PaymentWater> payments) {
-		for (PaymentWater payment : payments) {
-			paymentWaterDao.update(payment);
-		}
-
-		invoiceWaterDao.update(invoice);
-
-	}
+//	@Override
+//	public void updateGas(InvoiceGas invoice, List<PaymentGas> payments) {
+//		for (PaymentGas payment : payments) {
+//			paymentGasDao.update(payment);
+//		}
+//		invoiceGasDao.update(invoice);
+//
+//	}
+//
+//	@Override
+//	public void updateWater(InvoiceWater invoice, List<PaymentWater> payments) {
+//		for (PaymentWater payment : payments) {
+//			paymentWaterDao.update(payment);
+//		}
+//
+//		invoiceWaterDao.update(invoice);
+//
+//	}
 
 	@Override
 	public InvoiceGas getGasByID(Long id) {
@@ -335,37 +335,37 @@ public class InvoiceServiceImpl implements InvoiceService {
 		}
 	}
 
-	@Override
-	public List<InvoiceEnergy> getUnpaidInvoiceEnergy() {
-
-		return invoiceEnergyDao.getUnpaidInvoices();
-	}
-
-	@Override
-	public List<InvoiceGas> getUnpaidInvoiceGas() {
-		return invoiceGasDao.getUnpaidInvoices();
-	}
-
-	@Override
-	public List<InvoiceWater> getUnpaidInvoiceWater() {
-		return invoiceWaterDao.getUnpaidInvoices();
-	}
-
-	@Override
-	public InvoiceEnergy getLatestPaidEnergy() {
-
-		return invoiceEnergyDao.getLastResolved();
-	}
-
-	@Override
-	public InvoiceWater getLatestPaidWater() {
-		return invoiceWaterDao.getLastResolved();
-	}
-
-	@Override
-	public InvoiceGas getLatestPaidGas() {
-		return invoiceGasDao.getLastResolved();
-	}
+//	@Override
+//	public List<InvoiceEnergy> getUnpaidInvoiceEnergy() {
+//
+//		return invoiceEnergyDao.getUnpaidInvoices();
+//	}
+//
+//	@Override
+//	public List<InvoiceGas> getUnpaidInvoiceGas() {
+//		return invoiceGasDao.getUnpaidInvoices();
+//	}
+//
+//	@Override
+//	public List<InvoiceWater> getUnpaidInvoiceWater() {
+//		return invoiceWaterDao.getUnpaidInvoices();
+//	}
+//
+//	@Override
+//	public InvoiceEnergy getLatestPaidEnergy() {
+//
+//		return invoiceEnergyDao.getLastResolved();
+//	}
+//
+//	@Override
+//	public InvoiceWater getLatestPaidWater() {
+//		return invoiceWaterDao.getLastResolved();
+//	}
+//
+//	@Override
+//	public InvoiceGas getLatestPaidGas() {
+//		return invoiceGasDao.getLastResolved();
+//	}
 
 	@SuppressWarnings("unchecked")
 	@Override
@@ -397,6 +397,7 @@ public class InvoiceServiceImpl implements InvoiceService {
 
 	@Override
 	public void list(Map<String, Object> model, Media media) {
+		//TODO get rid of that ugly thing
 		switch (media) {
 		case GAS:
 			model.put("invoice", invoiceEnergyDao.getList());

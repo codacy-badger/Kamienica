@@ -14,6 +14,7 @@ import kamienica.feature.tenant.TenantService;
 import kamienica.feature.user_admin.AdminUserService;
 import kamienica.feature.user_admin.SecurityService;
 import kamienica.model.Apartment;
+import org.joda.time.LocalDate;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
@@ -50,5 +51,5 @@ public abstract class DatabaseTest {
      * difference factor for calculated data
      */
     protected final double DELTA = 0.5;
-
+    protected static final LocalDate TODAY = new LocalDate();
 }

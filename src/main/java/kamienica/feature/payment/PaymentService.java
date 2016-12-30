@@ -11,7 +11,7 @@ public interface PaymentService {
 
 	List<? extends Payment> getPaymentForTenant(Tenant tenant, Media media);
 
-	List<? extends Payment> getPaymentByInvoice(Invoice invoice, Media media);
+//	List<? extends Payment> getPaymentByInvoice(Invoice invoice, Media media);
 
 	List<? extends Payment> getPaymentList(Media media);
 

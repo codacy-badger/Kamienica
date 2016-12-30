@@ -301,58 +301,58 @@ public class MeterServiceImpl implements MeterService {
         }
     }
 
-    @Override
-    public <T extends Meter> void validateMeter(BindingResult result, Media media, T meter) {
-        final String WARM_CWU = "Licznik Główny nie może być licznikiem CWU bądź Ciepłej Wody";
-        final String MAIN_EXISTS = "Istnieje już w bazie licznik główny";
-
-        switch (media) {
-            case ENERGY:
-                if (meter.isMain() && ifMainExists(Media.ENERGY)) {
-                    result.rejectValue("apartment", "error.meter", MAIN_EXISTS);
-                }
-                break;
-
-            case GAS:
-                if (meter.isMain() && ifMainExists(Media.GAS)) {
-                    result.rejectValue("apartment", "error.meter", MAIN_EXISTS);
-                }
-                if (meter.getApartment() == null && ((MeterGas) meter).isCwu()) {
-                    result.rejectValue("cwu", "error.meter", WARM_CWU);
-                }
-                break;
-            case WATER:
-                if (meter.isMain() && ifMainExists(Media.WATER)) {
-                    result.rejectValue("apartment", "error.meter", MAIN_EXISTS);
-                }
-                if (meter.getApartment() == null && ((MeterWater) meter).getIsWarmWater()) {
-                    result.rejectValue("isWarmWater", "error.meter", WARM_CWU);
-                }
-                break;
-            default:
-                break;
-        }
-
-    }
-
-    @Override
-    public <T extends Meter> void deactivateMeter(T meter, Media media) {
-        meter.setDeactivation(LocalDate.now());
-
-        switch (media) {
-            case ENERGY:
-                energy.update((MeterEnergy) meter);
-                break;
-            case GAS:
-                gas.update((MeterGas) meter);
-                break;
-            case WATER:
-                water.update((MeterWater) meter);
-                break;
-
-            default:
-                break;
-        }
-
-    }
+//    @Override
+//    public <T extends Meter> void validateMeter(BindingResult result, Media media, T meter) {
+//        final String WARM_CWU = "Licznik Główny nie może być licznikiem CWU bądź Ciepłej Wody";
+//        final String MAIN_EXISTS = "Istnieje już w bazie licznik główny";
+//
+//        switch (media) {
+//            case ENERGY:
+//                if (meter.isMain() && ifMainExists(Media.ENERGY)) {
+//                    result.rejectValue("apartment", "error.meter", MAIN_EXISTS);
+//                }
+//                break;
+//
+//            case GAS:
+//                if (meter.isMain() && ifMainExists(Media.GAS)) {
+//                    result.rejectValue("apartment", "error.meter", MAIN_EXISTS);
+//                }
+//                if (meter.getApartment() == null && ((MeterGas) meter).isCwu()) {
+//                    result.rejectValue("cwu", "error.meter", WARM_CWU);
+//                }
+//                break;
+//            case WATER:
+//                if (meter.isMain() && ifMainExists(Media.WATER)) {
+//                    result.rejectValue("apartment", "error.meter", MAIN_EXISTS);
+//                }
+//                if (meter.getApartment() == null && ((MeterWater) meter).getIsWarmWater()) {
+//                    result.rejectValue("isWarmWater", "error.meter", WARM_CWU);
+//                }
+//                break;
+//            default:
+//                break;
+//        }
+//
+//    }
+//
+//    @Override
+//    public <T extends Meter> void deactivateMeter(T meter, Media media) {
+//        meter.setDeactivation(LocalDate.now());
+//
+//        switch (media) {
+//            case ENERGY:
+//                energy.update((MeterEnergy) meter);
+//                break;
+//            case GAS:
+//                gas.update((MeterGas) meter);
+//                break;
+//            case WATER:
+//                water.update((MeterWater) meter);
+//                break;
+//
+//            default:
+//                break;
+//        }
+//
+//    }
 }

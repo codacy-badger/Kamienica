@@ -2,6 +2,7 @@ package kamienica.service;
 
 import kamienica.configuration.DatabaseTest;
 import kamienica.core.enums.Media;
+import kamienica.model.MeterEnergy;
 import kamienica.model.MeterGas;
 import org.joda.time.LocalDate;
 import org.junit.Test;
@@ -28,5 +29,18 @@ public class MeterGasServiceTest extends DatabaseTest {
         assertEquals(5, meterService.getIdListForActiveMeters(Media.GAS).size());
 
     }
+    @Test
+    public void ifMainExcists() {
+        final boolean result = meterService.ifMainExists(Media.GAS);
+        assertEquals(true, result);
+    }
 
+
+    @Test
+    @Transactional
+    public void delete() {
+        meterService.delete(5L, Media.GAS);
+        final MeterGas deleted = meterService.getById(5L, Media.GAS);
+        assertEquals(TODAY, deleted.getDeactivation());
+    }
 }

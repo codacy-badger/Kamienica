@@ -19,7 +19,7 @@ public interface MeterService {
 
 	<T extends Meter> T getById(Long id, Media media);
 
-	<T extends Meter> void deactivateMeter(T meter, Media media);
+//	<T extends Meter> void deactivateMeter(T meter, Media media);
 
 	Set<Long> getIdList(Media media);
 
@@ -27,6 +27,6 @@ public interface MeterService {
 
 	boolean ifMainExists(Media media);
 
-	<T extends Meter> void validateMeter(BindingResult result, Media media, T meter);
+//	<T extends Meter> void validateMeter(BindingResult result, Media media, T meter);
 
 }
