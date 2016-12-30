@@ -18,6 +18,7 @@ public class CommonUtils {
 		return Double.parseDouble(df.format(input));
 	}
 
+
 	public static int countDaysBetween(final LocalDate first, final LocalDate second) {
 		return Days.daysBetween(first, second).getDays();
 	}

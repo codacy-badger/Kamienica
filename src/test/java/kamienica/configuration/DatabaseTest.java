@@ -51,5 +51,6 @@ public abstract class DatabaseTest {
      * difference factor for calculated data
      */
     protected final double DELTA = 0.5;
+
     protected static final LocalDate TODAY = new LocalDate();
 }

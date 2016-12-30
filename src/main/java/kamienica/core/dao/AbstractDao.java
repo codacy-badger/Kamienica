@@ -7,6 +7,8 @@ import org.hibernate.SessionFactory;
 import org.hibernate.criterion.Criterion;
 import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Projections;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.lang.reflect.ParameterizedType;
@@ -49,7 +51,6 @@ public abstract class AbstractDao<T> {
 
     public void save(T entity) {
         getSession().persist(entity);
-
     }
 
     public void update(T entity) {
