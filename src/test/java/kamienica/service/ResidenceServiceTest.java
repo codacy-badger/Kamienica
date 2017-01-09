@@ -3,6 +3,7 @@ package kamienica.service;
 import kamienica.configuration.DatabaseTest;
 import kamienica.model.Residence;
 import org.hibernate.exception.ConstraintViolationException;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -48,6 +49,19 @@ public class ResidenceServiceTest extends DatabaseTest {
         assertEquals(2, result.size());
     }
 
+    @Test
+    @Ignore
+    public void getListForOwner() {
+        final List<Residence> residences = residenceService.getList();
+        assertEquals(1, residences.size());
+    }
+
+    @Test
+    @Ignore
+    public void getListForAdmin() {
+        final List<Residence> residences = residenceService.getList();
+        assertEquals(2, residences.size());
+    }
 
     @Test
     @Transactional

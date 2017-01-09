@@ -16,10 +16,4 @@ public class ApartmentController {
 
 	}
 
-	@RequestMapping(value = "expeption")
-	public ModelAndView exception() throws Exception {
-		throw new Exception("This should be shown..");
-
-	}
-
 }

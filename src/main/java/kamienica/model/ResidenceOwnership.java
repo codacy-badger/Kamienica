@@ -3,14 +3,17 @@ package kamienica.model;
 import javax.persistence.*;
 import java.util.Set;
 
-@Entity(name = "OWNERSHIP")
-public class Ownership {
+@Entity
+@Table(name = "RESIDENCE_OWNERSHIP"
+        //, uniqueConstraints = {@UniqueConstraint(columnNames = {"readingDate", "te_id"})}
+)
+public class ResidenceOwnership {
 
     @Id
     @GeneratedValue
     private Long id;
-    @OneToMany
-    private Set<Residence> residenceOwned;
+    @OneToOne
+    private Residence residenceOwned;
     @OneToOne
     private Tenant owner;
 
@@ -30,11 +33,11 @@ public class Ownership {
         this.owner = owner;
     }
 
-    public Set<Residence> getResidenceOwned() {
+    public Residence getResidenceOwned() {
         return residenceOwned;
     }
 
-    public void setResidenceOwned(Set<Residence> residenceOwned) {
+    public void setResidenceOwned(Residence residenceOwned) {
         this.residenceOwned = residenceOwned;
     }
 }

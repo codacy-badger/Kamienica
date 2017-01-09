@@ -1,5 +1,6 @@
 package kamienica.core.dao;
 
+import kamienica.model.Residence;
 import org.hibernate.Criteria;
 import org.hibernate.Query;
 import org.hibernate.Session;
@@ -63,6 +64,11 @@ public abstract class AbstractDao<T> {
                 .createSQLQuery("delete from " + persistentClass.getSimpleName().toLowerCase() + " where id = :id");
         query.setLong("id", id);
         query.executeUpdate();
+    }
+
+    public void delete(Long id) {
+        Object o = getById(id);
+        getSession().delete(o);
     }
 
     public void delete(T entity) {

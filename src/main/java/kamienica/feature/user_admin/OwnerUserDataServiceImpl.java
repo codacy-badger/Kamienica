@@ -19,7 +19,7 @@ import java.util.List;
 
 @Service
 @Transactional
-public class AdminUserServiceImpl implements AdminUserService {
+public class OwnerUserDataServiceImpl implements OwnerUserDataService {
 
     @Autowired
     private SettingsDao settingsDao;
@@ -151,4 +151,8 @@ public class AdminUserServiceImpl implements AdminUserService {
         return (SecurityUser) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
     }
 
+    public Tenant getCurrentTenant() {
+        SecurityUser su =  (SecurityUser) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        return su.getTenant();
+    }
 }

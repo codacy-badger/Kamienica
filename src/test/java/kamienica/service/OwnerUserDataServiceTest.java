@@ -18,7 +18,7 @@ import java.util.Map;
 
 import static org.junit.Assert.*;
 
-public class AdminUserServiceTest extends DatabaseTest {
+public class OwnerUserDataServiceTest extends DatabaseTest {
 
 
     private Map<String, Object> map;
@@ -29,7 +29,7 @@ public class AdminUserServiceTest extends DatabaseTest {
     @Test
     public void emptyApartmentsShouldEqualZero() {
 
-        map = adminUserService.getMainData();
+        map = ownerUserDataService.getMainData();
         assertEquals(0, map.get("emptyApartments"));
     }
 
@@ -39,7 +39,7 @@ public class AdminUserServiceTest extends DatabaseTest {
        final Residence res =  residenceService.getById(1L);
         final Apartment ap = new Apartment(7,"1234", "test", res);
         apartmentService.save(ap);
-        map = adminUserService.getMainData();
+        map = ownerUserDataService.getMainData();
         assertEquals(1, map.get("emptyApartments"));
     }
 
@@ -49,51 +49,51 @@ public class AdminUserServiceTest extends DatabaseTest {
         Tenant t = tenantService.getTenantById(4L);
         t.setStatus(Status.INACTIVE);
         tenantService.saveTenant(t);
-        map = adminUserService.getMainData();
+        map = ownerUserDataService.getMainData();
         assertEquals(1, map.get("emptyApartments"));
     }
 
     @Test
     public void getMainDataShouldNotBeNull() {
-        map = adminUserService.getMainData();
+        map = ownerUserDataService.getMainData();
         assertNotNull(map);
     }
 
     @Test
     public void mediaShouldPointToWater() {
-        map = adminUserService.getMainData();
+        map = ownerUserDataService.getMainData();
         assertEquals("Woda", map.get("readingMedia"));
     }
 
     @Test
     public void shouldCorrectlyCountDaysFromLastReading() {
-        map = adminUserService.getMainData();
+        map = ownerUserDataService.getMainData();
         assertEquals(daysFromLastReading, map.get("readingDays"));
     }
 
     @Test
     public void settingShouldBenull() {
-        map = adminUserService.getMainData();
+        map = ownerUserDataService.getMainData();
         assertNull(map.get("settings"));
     }
 
     @Test
     public void getListsForTenants() {
         Apartment apartment = apartmentService.getById(2L);
-        List<ReadingEnergy> energy = adminUserService.getReadingEnergyForTenant(apartment);
+        List<ReadingEnergy> energy = ownerUserDataService.getReadingEnergyForTenant(apartment);
         assertEquals(6, energy.size());
         for (ReadingEnergy readingEnergy : energy) {
             int apNum = readingEnergy.getMeter().getApartment().getApartmentNumber();
             assertTrue(apNum == 0 || apNum == 1);
         }
 
-        List<ReadingGas> gas = adminUserService.getReadingGasForTenant(apartment);
+        List<ReadingGas> gas = ownerUserDataService.getReadingGasForTenant(apartment);
         for (ReadingGas readingGas : gas) {
             int apNum = readingGas.getMeter().getApartment().getApartmentNumber();
             assertTrue(apNum == 0 || apNum == 1);
         }
 
-        List<ReadingWater> water = adminUserService.getReadingWaterForTenant(apartment);
+        List<ReadingWater> water = ownerUserDataService.getReadingWaterForTenant(apartment);
         for (ReadingWater readingWater : water) {
             int apNum = readingWater.getMeter().getApartment().getApartmentNumber();
             assertTrue(apNum == 0 || apNum == 1);

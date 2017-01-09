@@ -1,6 +1,6 @@
 package kamienica.core.util;
 
-import kamienica.feature.user_admin.SecurityUser;
+import kamienica.model.SecurityUser;
 import org.joda.time.Days;
 import org.joda.time.LocalDate;
 import org.springframework.security.core.context.SecurityContextHolder;

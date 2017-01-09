@@ -40,8 +40,6 @@ public class Tenant implements Serializable {
     private String phone;
     @OneToOne
     private Apartment apartment;
-    @OneToMany(fetch = FetchType.EAGER)
-    private List<Residence> residence;
     @Column(nullable = false)
     @Enumerated(EnumType.STRING)
     private UserRole role = UserRole.TENANT;
@@ -237,13 +235,5 @@ public class Tenant implements Serializable {
 		if (role != other.role)
 			return false;
         return status == other.status;
-    }
-
-    public List<Residence> getResidence() {
-        return residence;
-    }
-
-    public void setResidence(List<Residence> residence) {
-        this.residence = residence;
     }
 }

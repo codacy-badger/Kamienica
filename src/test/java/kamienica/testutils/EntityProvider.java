@@ -19,6 +19,10 @@ public class EntityProvider {
     private static final LocalDate FEBRUARY = LocalDate.parse("2015-02-01");
     private static final LocalDate MARCH = LocalDate.parse("2015-03-01");
 
+    public static final Tenant OWNER = createOwner();
+    public static final Tenant ADMIN = createAdmin();
+
+    public static final Residence RESIDENCE = createResicence();
     public static final List<Apartment> APARTMENTS = getApartmentList();
     public static final List<Tenant> TENANTS = getTenantList();
 
@@ -39,11 +43,28 @@ public class EntityProvider {
 
 
     // --------------------------------------SETUP--------------------------------------------------------------
+    private static Residence createResicence() {
+        Residence r = new Residence(1L, "ulica", "numer", "miasto");
+        return r;
+    }
+
+    private static Tenant createOwner() {
+        Tenant t = new Tenant();
+        t.setRole(UserRole.OWNER);
+        return t;
+    }
+
+    private static Tenant createAdmin() {
+        Tenant t = new Tenant();
+        t.setRole(UserRole.ADMIN);
+        return t;
+    }
+
     private static List<Apartment> getApartmentList() {
-        Apartment apartment0 = new Apartment(1L, 0, "0000", "Czesc Wspolna");
-        Apartment apartment1 = new Apartment(2L, 1, "1111", "Piwnica");
-        Apartment apartment2 = new Apartment(3L, 2, "2222", "Parter");
-        Apartment apartment3 = new Apartment(4L, 3, "3333", "1 pietro");
+        Apartment apartment0 = new Apartment(1L, 0, "0000", "Czesc Wspolna", RESIDENCE);
+        Apartment apartment1 = new Apartment(2L, 1, "1111", "Piwnica", RESIDENCE);
+        Apartment apartment2 = new Apartment(3L, 2, "2222", "Parter", RESIDENCE);
+        Apartment apartment3 = new Apartment(4L, 3, "3333", "1 pietro", RESIDENCE);
 
         List<Apartment> apartments = new ArrayList<>();
         apartments.add(apartment0);

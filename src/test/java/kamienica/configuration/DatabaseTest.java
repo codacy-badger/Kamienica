@@ -1,7 +1,5 @@
 package kamienica.configuration;
 
-import kamienica.core.dao.AbstractDao;
-import kamienica.feature.apartment.ApartmentDao;
 import kamienica.feature.apartment.ApartmentService;
 import kamienica.feature.division.DivisionService;
 import kamienica.feature.invoice.InvoiceService;
@@ -11,9 +9,8 @@ import kamienica.feature.reading.ReadingService;
 import kamienica.feature.residence.ResidenceService;
 import kamienica.feature.settings.SettingsService;
 import kamienica.feature.tenant.TenantService;
-import kamienica.feature.user_admin.AdminUserService;
+import kamienica.feature.user_admin.OwnerUserDataService;
 import kamienica.feature.user_admin.SecurityService;
-import kamienica.model.Apartment;
 import org.joda.time.LocalDate;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -43,7 +40,7 @@ public abstract class DatabaseTest {
     @Autowired
     protected SecurityService securityService;
     @Autowired
-    protected AdminUserService adminUserService;
+    protected OwnerUserDataService ownerUserDataService;
     @Autowired
     protected ResidenceService residenceService;
 

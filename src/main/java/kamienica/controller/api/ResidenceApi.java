@@ -1,29 +1,49 @@
 package kamienica.controller.api;
 
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import javax.validation.Valid;
+
+import kamienica.feature.user_admin.OwnerUserDataService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.FieldError;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RestController;
+
 import kamienica.controller.ControllerMessages;
 import kamienica.core.message.ApiErrorResponse;
 import kamienica.core.message.Message;
 import kamienica.feature.residence.ResidenceService;
 import kamienica.model.Residence;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
-import org.springframework.validation.BindingResult;
-import org.springframework.validation.FieldError;
-import org.springframework.web.bind.annotation.*;
-
-import javax.validation.Valid;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 
 @RestController
 @RequestMapping("/api/v1/residences")
 public class ResidenceApi {
 
     @Autowired
-    private ResidenceService service;
+    private ResidenceService residenceService;
+    @Autowired
+    private OwnerUserDataService ownerUserDataService;
+
+    
+    @RequestMapping(method = RequestMethod.GET)
+    public ResponseEntity<?> list() {
+        final List<Residence> list = residenceService.getList();
+        if (list.isEmpty()) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+
+        return new ResponseEntity<>(list, HttpStatus.OK);
+    }
+    
 
     @RequestMapping(method = RequestMethod.POST)
     public ResponseEntity<?> create(@Valid @RequestBody final Residence residence, final BindingResult result) {
@@ -34,7 +54,7 @@ public class ResidenceApi {
             return new ResponseEntity<>(message, HttpStatus.UNPROCESSABLE_ENTITY);
         }
         try {
-            service.save(residence);
+            residenceService.save(residence);
         } catch (Exception e) {
             result.rejectValue("residenceNumber", "error.residence", ControllerMessages.DUPLICATE_VALUE);
             final Map<String, String> test = new HashMap<>();
@@ -57,7 +77,7 @@ public class ResidenceApi {
             return new ResponseEntity<>(message, HttpStatus.UNPROCESSABLE_ENTITY);
         }
         try {
-            service.update(residence);
+            residenceService.update(residence);
         } catch (Exception e) {
             result.rejectValue("residenceNumber", "error.residence", ControllerMessages.UNEXPECTED_ERROR);
             final Map<String, String> test = new HashMap<>();
@@ -73,7 +93,7 @@ public class ResidenceApi {
     public ResponseEntity<Message> delete(@PathVariable("id") final Long id) {
         final Message message = new Message("OK", null);
         try {
-            service.deleteById(id);
+            residenceService.deleteById(id);
         } catch (Exception e) {
             message.setMessage(ControllerMessages.CONSTRAINT_VIOLATION);
             message.setException(e.toString());

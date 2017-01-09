@@ -11,7 +11,7 @@ import javax.validation.constraints.Size;
 import java.io.Serializable;
 
 @Entity
-@Table(name = "apartment")
+@Table(name = "apartment", uniqueConstraints = {@UniqueConstraint(columnNames = {"apartmentNumber", "residence_id"})})
 public class Apartment implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -22,7 +22,7 @@ public class Apartment implements Serializable {
     private Long id;
     @ManyToOne
     private Residence residence;
-    @Column(nullable = false, unique = true)
+    @Column(nullable = false)
     @NotNull(message = "Wstaw wartość liczbową")
     @Min(value = 0, message = "Nie może być wartość ujemna")
     @Digits(integer = 100, fraction = 0, message = "Tylko wartości liczbowe")
@@ -35,13 +35,14 @@ public class Apartment implements Serializable {
     @NotEmpty(message = "Wprowadź opis")
     private String description;
 
+
     @Autowired
-    public Apartment(Long id, int apartmentNumber, String intecom, String description) {
+    public Apartment(Long id, int apartmentNumber, String intecom, String description, Residence residence) {
         this.id = id;
         this.apartmentNumber = apartmentNumber;
         this.intercom = intecom;
         this.description = description;
-
+        this.residence = residence;
     }
 
     @Autowired

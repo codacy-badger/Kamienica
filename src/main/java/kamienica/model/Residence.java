@@ -1,7 +1,5 @@
 package kamienica.model;
 
-import kamienica.core.enums.Status;
-
 import javax.persistence.*;
 import java.io.Serializable;
 
@@ -35,6 +33,10 @@ public class Residence implements Serializable {
         this.street = street;
         this.number = number;
         this.city = city;
+    }
+
+    public static long getSerialVersionUID() {
+        return serialVersionUID;
     }
 
     public Long getId() {
