@@ -105,25 +105,25 @@ public class InvoiceGasServiceTest extends DatabaseTest {
         assertEquals(3, list.size());
     }
 
-    @Transactional
-    @Ignore
-    @Test
-    public void update() {
-        InvoiceGas invoice = new InvoiceGas("23423423", new LocalDate(), 400,
-                readingService.getById(6L, Media.GAS));
-        invoice.setId(1L);
-        List<? extends Payment> oldList = paymentService.getPaymentList(Media.GAS);
-
-        invoice.setTotalAmount(400.0);
-        invoiceService.update(invoice, Media.GAS);
-
-        List<? extends Payment> newList = paymentService.getPaymentList(Media.GAS);
-
-        for (int i = 0; i < newList.size(); i++) {
-            double test = newList.get(i).getPaymentAmount() / oldList.get(i).getPaymentAmount();
-            assertEquals(2, test, 0);
-        }
-    }
+//    @Transactional
+//    @Ignore
+//    @Test
+//    public void update() {
+//        InvoiceGas invoice = new InvoiceGas("23423423", new LocalDate(), 400,
+//                readingService.getById(6L, Media.GAS));
+//        invoice.setId(1L);
+//        List<? extends Payment> oldList = paymentService.getPaymentList(Media.GAS);
+//
+//        invoice.setTotalAmount(400.0);
+//        invoiceService.update(invoice, Media.GAS);
+//
+//        List<? extends Payment> newList = paymentService.getPaymentList(Media.GAS);
+//
+//        for (int i = 0; i < newList.size(); i++) {
+//            double test = newList.get(i).getPaymentAmount() / oldList.get(i).getPaymentAmount();
+//            assertEquals(2, test, 0);
+//        }
+//    }
 
     @Transactional
     @Test(expected = InvalidDivisionException.class)

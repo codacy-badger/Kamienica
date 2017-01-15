@@ -80,26 +80,26 @@ public class InvoiceWaterServiceTest extends DatabaseTest {
 
     }
 
-    @Transactional
-    @Test
-    @Ignore
-    public void update() {
-        InvoiceWater invoice = new InvoiceWater("23423423", new LocalDate(), 400,
-                readingService.getById(6L, Media.WATER));
-        invoice.setId(1L);
-        List<? extends Payment> oldList = paymentService.getPaymentByInvoice(invoice, Media.WATER);
-
-        invoice.setTotalAmount(400.0);
-        invoiceService.update(invoice, Media.WATER);
-
-        List<? extends Payment> newList = paymentService.getPaymentByInvoice(invoice, Media.WATER);
-
-        for (int i = 0; i < newList.size(); i++) {
-            double test = newList.get(i).getPaymentAmount() / oldList.get(i).getPaymentAmount();
-            assertEquals(2, test, 0);
-        }
-
-    }
+//    @Transactional
+//    @Test
+//    @Ignore
+//    public void update() {
+//        InvoiceWater invoice = new InvoiceWater("23423423", new LocalDate(), 400,
+//                readingService.getById(6L, Media.WATER));
+//        invoice.setId(1L);
+//        List<? extends Payment> oldList = paymentService.getPaymentByInvoice(invoice, Media.WATER);
+//
+//        invoice.setTotalAmount(400.0);
+//        invoiceService.update(invoice, Media.WATER);
+//
+//        List<? extends Payment> newList = paymentService.getPaymentByInvoice(invoice, Media.WATER);
+//
+//        for (int i = 0; i < newList.size(); i++) {
+//            double test = newList.get(i).getPaymentAmount() / oldList.get(i).getPaymentAmount();
+//            assertEquals(2, test, 0);
+//        }
+//
+//    }
 
 
     @Transactional

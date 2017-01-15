@@ -1,5 +1,6 @@
 package kamienica.core.dao;
 
+import kamienica.model.Residence;
 import org.hibernate.Criteria;
 import org.hibernate.Query;
 import org.hibernate.Session;
@@ -7,6 +8,8 @@ import org.hibernate.SessionFactory;
 import org.hibernate.criterion.Criterion;
 import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Projections;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.lang.reflect.ParameterizedType;
@@ -49,7 +52,6 @@ public abstract class AbstractDao<T> {
 
     public void save(T entity) {
         getSession().persist(entity);
-
     }
 
     public void update(T entity) {
@@ -62,6 +64,11 @@ public abstract class AbstractDao<T> {
                 .createSQLQuery("delete from " + persistentClass.getSimpleName().toLowerCase() + " where id = :id");
         query.setLong("id", id);
         query.executeUpdate();
+    }
+
+    public void delete(Long id) {
+        Object o = getById(id);
+        getSession().delete(o);
     }
 
     public void delete(T entity) {

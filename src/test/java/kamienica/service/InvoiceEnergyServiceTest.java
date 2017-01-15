@@ -78,27 +78,24 @@ public class InvoiceEnergyServiceTest extends DatabaseTest {
 
     }
 
-    @Transactional
-    @Ignore
-    @Test
-    public void update() {
-        InvoiceEnergy invoice = new InvoiceEnergy("23423423", new LocalDate(), 400,
-                readingService.getById(6L, Media.ENERGY));
-        invoice.setId(1L);
 
-        List<? extends Payment> oldList = paymentService.getPaymentList(Media.ENERGY);
-
-        invoice.setTotalAmount(400.0);
-        invoiceService.update(invoice, Media.ENERGY);
-
-        List<? extends Payment> newList = paymentService.getPaymentList(Media.ENERGY);
-
-        for (int i = 0; i < newList.size(); i++) {
-            double test = newList.get(i).getPaymentAmount() / oldList.get(i).getPaymentAmount();
-            assertEquals(2, test, 0);
-        }
-
-    }
+//    @Ignore
+//    @Test
+//    @Transactional
+//    public void updateEnergy() {
+//        final InvoiceEnergy invoiceEnergy = invoiceService.getEnergyByID(1L);
+//        final List<Payment> oldPayments = (List<Payment>) paymentService.getPaymentList(Media.ENERGY);
+//        invoiceEnergy.setTotalAmount(invoiceEnergy.getTotalAmount() * 2);
+//        invoiceService.update(invoiceEnergy, Media.ENERGY);
+//        final List<Payment> newPayments = (List<Payment>) paymentService.getPaymentList(Media.ENERGY);
+//
+//        for (int i = 0; i < newPayments.size(); i++) {
+//            final double oldPayment = oldPayments.get(i).getPaymentAmount();
+//            final double newPayment = newPayments.get(i).getPaymentAmount();
+//
+//            assertEquals(2, newPayment / oldPayment, DELTA);
+//        }
+//    }
 
     @Transactional
     @Test(expected = InvalidDivisionException.class)

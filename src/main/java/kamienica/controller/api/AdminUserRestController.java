@@ -4,9 +4,9 @@ import kamienica.core.enums.Media;
 import kamienica.model.Payment;
 import kamienica.feature.payment.PaymentService;
 import kamienica.model.Reading;
-import kamienica.feature.user_admin.AdminUserService;
+import kamienica.feature.user_admin.OwnerUserDataService;
 import kamienica.feature.user_admin.SecurityService;
-import kamienica.feature.user_admin.SecurityUser;
+import kamienica.model.SecurityUser;
 import kamienica.model.Apartment;
 import kamienica.model.Tenant;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,7 +28,7 @@ public class AdminUserRestController {
 	@Autowired
 	private SecurityService userDetailsService;
 	@Autowired
-	private AdminUserService adminUserService;
+	private OwnerUserDataService ownerUserDataService;
 
 	// =====================USER===========================================
 	@RequestMapping(value = "/users", method = RequestMethod.GET)
@@ -44,20 +44,20 @@ public class AdminUserRestController {
 	public ResponseEntity<List<? extends Reading>> getReadings(@PathVariable(value = "media") String media) {
 	
 		List<? extends Reading> readings = null;
-		Apartment ap = userDetailsService.getCurrentUser().getApartment();
+		Apartment ap = userDetailsService.getCurrentUser().getTenant().getApartment();
 		
 		switch (media) {
 
 		case "energy":
-			readings = adminUserService.getReadingsForTenant(ap, Media.ENERGY);
+			readings = ownerUserDataService.getReadingsForTenant(ap, Media.ENERGY);
 			break;
 
 		case "gas":
-			readings = adminUserService.getReadingsForTenant(ap, Media.GAS);
+			readings = ownerUserDataService.getReadingsForTenant(ap, Media.GAS);
 			break;
 
 		case "water":
-			readings = adminUserService.getReadingsForTenant(ap, Media.WATER);
+			readings = ownerUserDataService.getReadingsForTenant(ap, Media.WATER);
 			break;
 		default:
 			break;

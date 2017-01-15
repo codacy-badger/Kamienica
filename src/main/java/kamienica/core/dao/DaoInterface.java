@@ -16,6 +16,8 @@ public interface DaoInterface<T> {
 
 	void deleteById(final Long id);
 
+	void delete(final Long id);
+
 	void update(final T object);
 
 	T getById(final Long id);

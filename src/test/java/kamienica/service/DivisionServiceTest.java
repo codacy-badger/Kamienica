@@ -3,6 +3,7 @@ package kamienica.service;
 import kamienica.configuration.DatabaseTest;
 import kamienica.core.exception.InvalidDivisionException;
 import kamienica.core.exception.WrongDivisionInputException;
+import kamienica.feature.division.DivisionForm;
 import kamienica.model.Apartment;
 import kamienica.model.Division;
 import kamienica.model.Tenant;
@@ -61,8 +62,15 @@ public class DivisionServiceTest extends DatabaseTest {
     }
 
     @Test
-    @Ignore
     public void prepareForm() throws WrongDivisionInputException {
+        DivisionForm form = new DivisionForm();
+        divisionService.prepareForm(form);
+
+        final List<Tenant> tenants = form.getTenants();
+        final List<Apartment> apartments = form.getApartments();
+
+        assertEquals(3, tenants.size());
+        assertEquals(4, apartments.size());
     }
 
     @Test

@@ -1,6 +1,6 @@
 -- MySQL dump 10.13  Distrib 5.7.16, for Linux (x86_64)
 --
--- Host: 127.0.0.1    Database: test
+-- Host: 127.0.0.1    Database: kamienica
 -- ------------------------------------------------------
 -- Server version	5.7.16-0ubuntu0.16.04.1
 
@@ -40,118 +40,6 @@ LOCK TABLES `History` WRITE;
 UNLOCK TABLES;
 
 --
--- Table structure for table `RENT_CONTRACT`
---
-
-DROP TABLE IF EXISTS `RENT_CONTRACT`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `RENT_CONTRACT` (
-  `id` bigint(20) NOT NULL AUTO_INCREMENT,
-  `contractEnd` date DEFAULT NULL,
-  `contractStart` date NOT NULL,
-  `apartment_id` bigint(20) DEFAULT NULL,
-  `tenant_id` bigint(20) DEFAULT NULL,
-  PRIMARY KEY (`id`),
-  KEY `FK_au3spjfgu5vbahfq5dbe6u84` (`apartment_id`),
-  KEY `FK_fxhks3ng9tmpm3cxun3pbig0s` (`tenant_id`),
-  CONSTRAINT `FK_au3spjfgu5vbahfq5dbe6u84` FOREIGN KEY (`apartment_id`) REFERENCES `apartment` (`id`),
-  CONSTRAINT `FK_fxhks3ng9tmpm3cxun3pbig0s` FOREIGN KEY (`tenant_id`) REFERENCES `tenant` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `RENT_CONTRACT`
---
-
-LOCK TABLES `RENT_CONTRACT` WRITE;
-/*!40000 ALTER TABLE `RENT_CONTRACT` DISABLE KEYS */;
-/*!40000 ALTER TABLE `RENT_CONTRACT` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
--- Table structure for table `RENT_STATUS`
---
-
-DROP TABLE IF EXISTS `RENT_STATUS`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `RENT_STATUS` (
-  `id` bigint(20) NOT NULL AUTO_INCREMENT,
-  `movementDate` date DEFAULT NULL,
-  `apartmentRented_id` bigint(20) DEFAULT NULL,
-  `tenant_id` bigint(20) DEFAULT NULL,
-  PRIMARY KEY (`id`),
-  KEY `FK_1xlqwaq54t69d4cmdd3hroo72` (`apartmentRented_id`),
-  KEY `FK_t0h42v5po0mts1u00wx8r8h6v` (`tenant_id`),
-  CONSTRAINT `FK_1xlqwaq54t69d4cmdd3hroo72` FOREIGN KEY (`apartmentRented_id`) REFERENCES `apartment` (`id`),
-  CONSTRAINT `FK_t0h42v5po0mts1u00wx8r8h6v` FOREIGN KEY (`tenant_id`) REFERENCES `tenant` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `RENT_STATUS`
---
-
-LOCK TABLES `RENT_STATUS` WRITE;
-/*!40000 ALTER TABLE `RENT_STATUS` DISABLE KEYS */;
-/*!40000 ALTER TABLE `RENT_STATUS` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
--- Table structure for table `RESIDENCE_OWNERSHIP`
---
-
-DROP TABLE IF EXISTS `RESIDENCE_OWNERSHIP`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `RESIDENCE_OWNERSHIP` (
-  `id` bigint(20) NOT NULL AUTO_INCREMENT,
-  `owner_id` bigint(20) DEFAULT NULL,
-  `residenceOwned_id` bigint(20) DEFAULT NULL,
-  PRIMARY KEY (`id`),
-  KEY `FK_noi2kqohg7gnwqv672nn0lcih` (`owner_id`),
-  KEY `FK_7u3j1uj32epmki7sjjkdh0ajt` (`residenceOwned_id`),
-  CONSTRAINT `FK_7u3j1uj32epmki7sjjkdh0ajt` FOREIGN KEY (`residenceOwned_id`) REFERENCES `residence` (`id`),
-  CONSTRAINT `FK_noi2kqohg7gnwqv672nn0lcih` FOREIGN KEY (`owner_id`) REFERENCES `tenant` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `RESIDENCE_OWNERSHIP`
---
-
-LOCK TABLES `RESIDENCE_OWNERSHIP` WRITE;
-/*!40000 ALTER TABLE `RESIDENCE_OWNERSHIP` DISABLE KEYS */;
-/*!40000 ALTER TABLE `RESIDENCE_OWNERSHIP` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
--- Table structure for table `USER_DETAILS`
---
-
-DROP TABLE IF EXISTS `USER_DETAILS`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `USER_DETAILS` (
-  `id` bigint(20) NOT NULL AUTO_INCREMENT,
-  `password` varchar(255) NOT NULL,
-  `role` varchar(255) NOT NULL,
-  `status` varchar(255) NOT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `USER_DETAILS`
---
-
-LOCK TABLES `USER_DETAILS` WRITE;
-/*!40000 ALTER TABLE `USER_DETAILS` DISABLE KEYS */;
-/*!40000 ALTER TABLE `USER_DETAILS` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
 -- Table structure for table `apartment`
 --
 
@@ -163,13 +51,12 @@ CREATE TABLE `apartment` (
   `apartmentNumber` int(11) NOT NULL,
   `description` varchar(255) NOT NULL,
   `intercom` varchar(4) DEFAULT NULL,
-  `residence_id` bigint(20) NOT NULL,
+  `residence_id` bigint(20) DEFAULT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `UK_3ivm5ayi9khyj2vkjjr9y6rib` (`apartmentNumber`),
-  UNIQUE KEY `UK_qbu1v7jfyx6mn8g9lhj7nin7w` (`apartmentNumber`,`residence_id`),
   KEY `FK_ilkik9ihdi11jt0ckhr7ashbu` (`residence_id`),
   CONSTRAINT `FK_ilkik9ihdi11jt0ckhr7ashbu` FOREIGN KEY (`residence_id`) REFERENCES `residence` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=46 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -178,7 +65,7 @@ CREATE TABLE `apartment` (
 
 LOCK TABLES `apartment` WRITE;
 /*!40000 ALTER TABLE `apartment` DISABLE KEYS */;
-INSERT INTO `apartment` VALUES (1,0,'Część Wspólna','6666',1),(2,1,'Piwnica','6666',1),(3,2,'Parter','6666',1),(4,3,'I Pietro','6666',1);
+INSERT INTO `apartment` VALUES (1,0,'Część Wspólna','6666',NULL),(2,1,'Piwnica','6666',NULL),(3,2,'Parter','6666',NULL),(4,3,'I Pietro','6666',NULL);
 /*!40000 ALTER TABLE `apartment` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -200,7 +87,7 @@ CREATE TABLE `division` (
   KEY `FK_h53eoy0r5oklnxy3k9pnrmvvy` (`tenant_id`),
   CONSTRAINT `FK_964trt9yvo2le8ctstywh84uc` FOREIGN KEY (`apartment_id`) REFERENCES `apartment` (`id`),
   CONSTRAINT `FK_h53eoy0r5oklnxy3k9pnrmvvy` FOREIGN KEY (`tenant_id`) REFERENCES `tenant` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=154 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=166 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -209,7 +96,7 @@ CREATE TABLE `division` (
 
 LOCK TABLES `division` WRITE;
 /*!40000 ALTER TABLE `division` DISABLE KEYS */;
-INSERT INTO `division` VALUES (142,'2016-08-12',0.33,1,1),(143,'2016-08-12',1,2,1),(144,'2016-08-12',0,3,1),(145,'2016-08-12',0,4,1),(146,'2016-08-12',0.33,1,3),(147,'2016-08-12',0,2,3),(148,'2016-08-12',0,3,3),(149,'2016-08-12',1,4,3),(150,'2016-08-12',0.33,1,4),(151,'2016-08-12',0,2,4),(152,'2016-08-12',1,3,4),(153,'2016-08-12',0,4,4);
+INSERT INTO `division` VALUES (154,'2016-12-30',0.33,1,1),(155,'2016-12-30',1,2,1),(156,'2016-12-30',0,3,1),(157,'2016-12-30',0,4,1),(158,'2016-12-30',0.33,1,3),(159,'2016-12-30',0,2,3),(160,'2016-12-30',0,3,3),(161,'2016-12-30',1,4,3),(162,'2016-12-30',0.33,1,4),(163,'2016-12-30',0,2,4),(164,'2016-12-30',1,3,4),(165,'2016-12-30',0,4,4);
 /*!40000 ALTER TABLE `division` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -518,7 +405,6 @@ CREATE TABLE `readingenergy` (
   `unit` varchar(255) NOT NULL,
   `meter_id` bigint(20) DEFAULT NULL,
   PRIMARY KEY (`id`),
-  UNIQUE KEY `UK_g4i0eybx1kmsos15pif6t8sgu` (`readingDate`,`meter_id`),
   KEY `FK_5knt9b445xrgemgapg5jesbja` (`meter_id`),
   CONSTRAINT `FK_5knt9b445xrgemgapg5jesbja` FOREIGN KEY (`meter_id`) REFERENCES `meterenergy` (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=21 DEFAULT CHARSET=utf8;
@@ -549,7 +435,6 @@ CREATE TABLE `readinggas` (
   `unit` varchar(255) NOT NULL,
   `meter_id` bigint(20) DEFAULT NULL,
   PRIMARY KEY (`id`),
-  UNIQUE KEY `UK_j088k57lldstrudy8lynt2nr7` (`readingDate`,`meter_id`),
   KEY `FK_fm64ubuqi3kaa8bvr23u73nwh` (`meter_id`),
   CONSTRAINT `FK_fm64ubuqi3kaa8bvr23u73nwh` FOREIGN KEY (`meter_id`) REFERENCES `metergas` (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=19 DEFAULT CHARSET=utf8;
@@ -580,7 +465,6 @@ CREATE TABLE `readingwater` (
   `unit` varchar(255) NOT NULL,
   `meter_id` bigint(20) DEFAULT NULL,
   PRIMARY KEY (`id`),
-  UNIQUE KEY `UK_f6x8ibmtbcdusbax8aybgsob0` (`readingDate`,`meter_id`),
   KEY `FK_l5pfio0fjd6qw0699nkdt6hvw` (`meter_id`),
   CONSTRAINT `FK_l5pfio0fjd6qw0699nkdt6hvw` FOREIGN KEY (`meter_id`) REFERENCES `meterwater` (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=22 DEFAULT CHARSET=utf8;
@@ -647,7 +531,7 @@ CREATE TABLE `settings` (
 
 LOCK TABLES `settings` WRITE;
 /*!40000 ALTER TABLE `settings` DISABLE KEYS */;
-INSERT INTO `settings` VALUES (1,'\0','\0','','\0','SHARED_GAS');
+INSERT INTO `settings` VALUES (1,'','\0','','\0','SHARED_GAS');
 /*!40000 ALTER TABLE `settings` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -685,6 +569,33 @@ LOCK TABLES `tenant` WRITE;
 INSERT INTO `tenant` VALUES (1,'folik@wp.pl','Maciej','Folik','2016-07-25','witaj','530081187','ADMIN','ACTIVE',2),(2,'kow@wp.pl','Andrzej','Kowalski','2014-07-01','witaj','4456','TENANT','INACTIVE',3),(3,'par@wp.pl','Kasia','Para','2015-07-26','witaj','23636','TENANT','ACTIVE',4),(4,'kasia@wp.pl','Kasia','Kowalska','2016-07-29','witaj','3456775','TENANT','ACTIVE',3),(5,'klej@wp.pl','Piotr','Kulej','2010-07-29','witaj','23526564','TENANT','INACTIVE',2);
 /*!40000 ALTER TABLE `tenant` ENABLE KEYS */;
 UNLOCK TABLES;
+
+--
+-- Table structure for table `tenant_residence`
+--
+
+DROP TABLE IF EXISTS `tenant_residence`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `tenant_residence` (
+  `tenant_id` bigint(20) NOT NULL,
+  `residence_id` bigint(20) NOT NULL,
+  UNIQUE KEY `UK_ia1bk63djrwlw6libxjsaaf6e` (`residence_id`),
+  KEY `FK_sma8cunsiakjgvi87rldv3ks` (`tenant_id`),
+  CONSTRAINT `FK_ia1bk63djrwlw6libxjsaaf6e` FOREIGN KEY (`residence_id`) REFERENCES `residence` (`id`),
+  CONSTRAINT `FK_sma8cunsiakjgvi87rldv3ks` FOREIGN KEY (`tenant_id`) REFERENCES `tenant` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `tenant_residence`
+--
+
+LOCK TABLES `tenant_residence` WRITE;
+/*!40000 ALTER TABLE `tenant_residence` DISABLE KEYS */;
+INSERT INTO `tenant_residence` VALUES (1,1);
+/*!40000 ALTER TABLE `tenant_residence` ENABLE KEYS */;
+UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
@@ -695,4 +606,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2017-01-15 18:12:03
+-- Dump completed on 2016-12-30 19:08:09

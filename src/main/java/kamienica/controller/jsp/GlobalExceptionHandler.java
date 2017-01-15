@@ -1,29 +1,43 @@
 package kamienica.controller.jsp;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.NoHandlerFoundException;
 
 import javax.servlet.http.HttpServletRequest;
 import java.sql.SQLException;
+import java.util.HashMap;
 
 @ControllerAdvice
 public class GlobalExceptionHandler {
 
-	
+    private static Logger LOG = LoggerFactory.getLogger(GlobalExceptionHandler.class);
 
-	@ExceptionHandler(SQLException.class)
-	public String handleSQLException(HttpServletRequest request, Exception ex) {
-		return "database_error";
-	}
+    @ExceptionHandler(SQLException.class)
+    public String handleSQLException(HttpServletRequest request, Exception ex) {
 
-	@ExceptionHandler(NoHandlerFoundException.class)
-	public String ggg(HttpServletRequest request, Exception ex) {
-		return "404";
-	}
+        LOG.error("SQL exception: ", ex);
+        return "database_error";
+    }
 
-	
-	
+    @ExceptionHandler(NoHandlerFoundException.class)
+    public String noHandlerFoundException(HttpServletRequest request, Exception ex) {
+
+        LOG.error("No handler found: ", ex);
+        return "404";
+    }
+
+    @ExceptionHandler(Exception.class)
+    public ModelAndView generalException(Exception ex) {
+        LOG.error("Exception: ", ex);
+        final HashMap<String, Object> model = new HashMap<>();
+        model.put("exception", ex.getMessage());
+        return new ModelAndView("error", "model", model);
+    }
+
 //	@ResponseStatus(value = HttpStatus.NOT_FOUND, reason = "IOException occured")
 //	@ExceptionHandler(NoHandlerFoundException.class)
 //	 public ModelAndView handleError404(HttpServletRequest request, Exception e)   {

@@ -1,8 +1,5 @@
 package kamienica.configuration;
 
-import kamienica.configuration.JUnitConfig;
-import kamienica.core.dao.AbstractDao;
-import kamienica.feature.apartment.ApartmentDao;
 import kamienica.feature.apartment.ApartmentService;
 import kamienica.feature.division.DivisionService;
 import kamienica.feature.invoice.InvoiceService;
@@ -12,11 +9,15 @@ import kamienica.feature.reading.ReadingService;
 import kamienica.feature.residence.ResidenceService;
 import kamienica.feature.settings.SettingsService;
 import kamienica.feature.tenant.TenantService;
-import kamienica.feature.user_admin.AdminUserService;
+import kamienica.feature.user_admin.OwnerUserDataService;
 import kamienica.feature.user_admin.SecurityService;
-import kamienica.model.Apartment;
+import org.joda.time.LocalDate;
+import org.junit.BeforeClass;
 import org.junit.runner.RunWith;
+import org.mockito.Mock;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContext;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
@@ -43,18 +44,15 @@ public abstract class DatabaseTest {
     @Autowired
     protected SecurityService securityService;
     @Autowired
-    protected AdminUserService adminUserService;
+    protected OwnerUserDataService ownerUserDataService;
     @Autowired
     protected ResidenceService residenceService;
 
-
-    @Autowired
-    protected AbstractDao<Apartment> apartmentAbstractDao;
-    @Autowired
-    protected ApartmentDao apartmentDao;
     /**
      * difference factor for calculated data
      */
     protected final double DELTA = 0.5;
+
+    protected static final LocalDate TODAY = new LocalDate();
 
 }

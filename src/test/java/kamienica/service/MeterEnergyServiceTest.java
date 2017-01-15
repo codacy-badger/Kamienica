@@ -13,67 +13,82 @@ import static org.junit.Assert.assertEquals;
 
 public class MeterEnergyServiceTest extends DatabaseTest {
 
-	;
+    ;
 
-	@Test
-	public void getList() {
-		assertEquals(5, meterService.getList(Media.ENERGY).size());
-		List<MeterEnergy> list = meterService.getList(Media.ENERGY);
-		assertEquals(5, list.size());
+    @Test
+    public void getList() {
+        assertEquals(5, meterService.getList(Media.ENERGY).size());
+        List<MeterEnergy> list = meterService.getList(Media.ENERGY);
+        assertEquals(5, list.size());
 
-	}
+    }
 
-	@Transactional
-	@Test
-	public void getActiveMeters() {
-		assertEquals(5, meterService.getIdListForActiveMeters(Media.ENERGY).size());
-		MeterEnergy meter = meterService.getById(4L, Media.ENERGY);
-		meter.setDeactivation(LocalDate.now().minusDays(1));
-		meterService.update(meter, Media.ENERGY);
+    @Transactional
+    @Test
+    public void getActiveMeters() {
+        assertEquals(5, meterService.getIdListForActiveMeters(Media.ENERGY).size());
+        MeterEnergy meter = meterService.getById(4L, Media.ENERGY);
+        meter.setDeactivation(LocalDate.now().minusDays(1));
+        meterService.update(meter, Media.ENERGY);
 
-		assertEquals(4, meterService.getIdListForActiveMeters(Media.ENERGY).size());
+        assertEquals(4, meterService.getIdListForActiveMeters(Media.ENERGY).size());
 
-	}
+    }
 
-	@Test
-	public void getById() {
-		MeterEnergy meter = meterService.getById(3L, Media.ENERGY);
-		assertEquals("Piwnica", meter.getDescription());
-		assertEquals(1, meter.getApartment().getApartmentNumber());
+    @Test
+    public void getById() {
+        MeterEnergy meter = meterService.getById(3L, Media.ENERGY);
+        assertEquals("Piwnica", meter.getDescription());
+        assertEquals(1, meter.getApartment().getApartmentNumber());
 
-	}
+    }
 
-	@Transactional
-	@Test
-	public void add() {
-		MeterEnergy meter = createDummyMeter();
-		meterService.save(meter, Media.ENERGY);
-		assertEquals(6, meterService.getIdList(Media.ENERGY).size());
-	}
+    @Transactional
+    @Test
+    public void add() {
+        MeterEnergy meter = createDummyMeter();
+        meterService.save(meter, Media.ENERGY);
+        assertEquals(6, meterService.getIdList(Media.ENERGY).size());
+    }
 
-	@Transactional
-	public void remove() {
-		MeterEnergy meter = createDummyMeter();
-		meterService.save(meter, Media.ENERGY);
-		assertEquals(6, meterService.getList(Media.ENERGY).size());
-		meterService.delete(6L, Media.ENERGY);
-		meterService.delete(7L, Media.ENERGY);
-		meterService.delete(8L, Media.ENERGY);
-		assertEquals(5, meterService.getList(Media.ENERGY).size());
+    @Test
+    @Transactional
+    public void remove() {
+        MeterEnergy meter = createDummyMeter();
+        meterService.save(meter, Media.ENERGY);
+        assertEquals(6, meterService.getList(Media.ENERGY).size());
+        meterService.delete(6L, Media.ENERGY);
+        meterService.delete(7L, Media.ENERGY);
+        meterService.delete(8L, Media.ENERGY);
+        assertEquals(5, meterService.getList(Media.ENERGY).size());
 
-	}
+    }
 
-	@Test
-	public void update() {
-		MeterEnergy meter = meterService.getById(4L, Media.ENERGY);
-		meter.setDescription("uPdate");
-		meterService.update(meter, Media.ENERGY);
-		meter = meterService.getById(4L, Media.ENERGY);
-		assertEquals("uPdate", meter.getDescription());
-	}
+    @Test
+    public void ifMainExcists() {
+        final boolean result = meterService.ifMainExists(Media.ENERGY);
+        assertEquals(true, result);
+    }
 
-	private MeterEnergy createDummyMeter() {
-		return new MeterEnergy("test", "test", "test", meterService.getById(3L, Media.ENERGY).getApartment());
-	}
+    @Test
+    @Transactional
+    public void delete() {
+        meterService.delete(5L, Media.ENERGY);
+        final MeterEnergy deleted = meterService.getById(5L, Media.ENERGY);
+        assertEquals(TODAY, deleted.getDeactivation());
+    }
+
+    @Test
+    public void update() {
+        MeterEnergy meter = meterService.getById(4L, Media.ENERGY);
+        meter.setDescription("uPdate");
+        meterService.update(meter, Media.ENERGY);
+        meter = meterService.getById(4L, Media.ENERGY);
+        assertEquals("uPdate", meter.getDescription());
+    }
+
+    private MeterEnergy createDummyMeter() {
+        return new MeterEnergy("test", "test", "test", meterService.getById(3L, Media.ENERGY).getApartment());
+    }
 
 }

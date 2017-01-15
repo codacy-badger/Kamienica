@@ -1,16 +1,12 @@
 package kamienica.feature.user_admin;
 
 import kamienica.core.enums.Media;
-import kamienica.model.Reading;
-import kamienica.model.ReadingEnergy;
-import kamienica.model.ReadingGas;
-import kamienica.model.ReadingWater;
-import kamienica.model.Apartment;
+import kamienica.model.*;
 
 import java.util.HashMap;
 import java.util.List;
 
-public interface AdminUserService {
+public interface OwnerUserDataService {
 
     HashMap<String, Object> getMainData();
 
@@ -21,5 +17,9 @@ public interface AdminUserService {
     List<ReadingWater> getReadingWaterForTenant(Apartment apartment);
 
     List<ReadingGas> getReadingGasForTenant(Apartment apartment);
+
+    SecurityUser getCurrentUser();
+
+    Tenant getCurrentTenant();
 
 }

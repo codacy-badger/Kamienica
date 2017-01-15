@@ -56,15 +56,15 @@ public class DivisionServiceImpl implements DivisionService {
 
     }
 
-    @Override
-    public void saveList(DivisionForm form) throws InvalidDivisionException {
-        if (DivisionValidator.checkIfDivisionIsCorrect(form.getApartments(), form.getDivisionList())) {
-            throw new InvalidDivisionException();
-        }
-
-        saveList(form.getDivisionList(), form.getDate());
-
-    }
+//    @Override
+//    public void saveList(DivisionForm form) throws InvalidDivisionException {
+//        if (DivisionValidator.checkIfDivisionIsCorrect(form.getApartments(), form.getDivisionList())) {
+//            throw new InvalidDivisionException();
+//        }
+//
+//        saveList(form.getDivisionList(), form.getDate());
+//
+//    }
 
     @Override
     public void prepareForm(DivisionForm form) throws WrongDivisionInputException {
@@ -114,9 +114,9 @@ public class DivisionServiceImpl implements DivisionService {
         return settingsDao.isDivisionCorrect();
     }
 
-    @Override
-    public Map<Tenant, List<Division>> getMappedList() {
-        return null;
-    }
+//    @Override
+//    public Map<Tenant, List<Division>> getMappedList() {
+//        return null;
+//    }
 
 }

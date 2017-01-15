@@ -44,8 +44,7 @@ public class DivisionForm {
 
 	@Override
 	public String toString() {
-		return "DivisionForm [divisionList=" + divisionList + ", date=" + date + ", apartments=" + apartments
-				+ ", tenants=" + tenants + "]";
+		return new StringBuilder().append("DivisionForm [divisionList=").append(divisionList).append(", date=").append(date).append(", apartments=").append(apartments).append(", tenants=").append(tenants).append("]").toString();
 	}
 
 	public LocalDate getDate() {

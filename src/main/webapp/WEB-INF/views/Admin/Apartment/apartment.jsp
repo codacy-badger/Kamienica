@@ -33,7 +33,7 @@
 			<div class='row'>
 				<div class="col-lg-12">
 					<h1 class="page-header well">Mieszkania</h1>
-					
+
 					<div class="alert alert-danger" ng-show="errorField">
 						<strong>BŁĄD: </strong> {{errorMsg}}
 					</div>
@@ -51,6 +51,23 @@
 					name="myForm">
 					<input path="id" readonly="true" type='hidden' /> <input
 						type="hidden" ng-model="ctrl.apartment.id" />
+
+
+
+					<div class="form-group">
+						<label for="inputEmail3" class="col-sm-3 control-label">Nieruchomość</label>
+						<div class="col-sm-9">
+							<select name='residence' ng-model="ctrl.apartment.residence"
+								ng-required='true' class="form-control"
+								ng-options="a.street for a in ctrl.residences"><option>{{ctrl.apartment.residences}}</option>
+							</select>
+							<p class="help-block">
+								<span class='error' ng-show="myForm.tenant_residence.$invalid">Pole
+									wymagane</span> <span class='error'>{{errors.residences}}</span>
+							</p>
+						</div>
+					</div>
+
 					<div class="form-group">
 						<label for="inputEmail3" class="col-sm-3 control-label">Domofon</label>
 						<div class="col-sm-9">
@@ -150,10 +167,12 @@
 			</div>
 		</div>
 	</div>
-	
+
 	<script src="<c:url value='/static/js/angular.js' />"></script>
 	<script src="<c:url value='/static/js/angular-resource.js' />"></script>
 	<script src="<c:url value='/static/angular/app.js' />"></script>
+	<script
+		src="<c:url value='/static/angular/residence/residence_service.js' />"></script>
 	<script
 		src="<c:url value='/static/angular/apartment/apartment_service.js' />"></script>
 	<script

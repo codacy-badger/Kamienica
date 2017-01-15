@@ -4,8 +4,8 @@ import kamienica.core.calculator.ConsumptionCalculator;
 import kamienica.core.calculator.StandardUsageCalculator;
 import kamienica.core.exception.NegativeConsumptionValue;
 import kamienica.core.exception.UsageCalculationException;
-import kamienica.model.Reading;
 import kamienica.model.MediaUsage;
+import kamienica.model.Reading;
 import kamienica.testutils.EntityProvider;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -24,6 +24,8 @@ public class MediaCalculatorsTest {
 
     @Autowired
     private ConsumptionCalculator consumptionCalc;
+
+
 
     @Test
     public void standartCalculatorForEnery() throws NegativeConsumptionValue, UsageCalculationException {

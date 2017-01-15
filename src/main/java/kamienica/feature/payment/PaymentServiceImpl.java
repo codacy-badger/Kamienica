@@ -49,18 +49,18 @@ public class PaymentServiceImpl implements PaymentService {
 		}
 	}
 
-	@Override
-	public List<? extends Payment> getPaymentByInvoice(Invoice invoice, Media media) {
-		switch (media) {
-		case ENERGY:
-			return energy.getByInvoice(invoice);
-		case GAS:
-			return gas.getByInvoice(invoice);
-		case WATER:
-			return water.getByInvoice(invoice);
-		default:
-			return null;
-		}
-	}
+//	@Override
+//	public List<? extends Payment> getPaymentByInvoice(Invoice invoice, Media media) {
+//		switch (media) {
+//		case ENERGY:
+//			return energy.getByInvoice(invoice);
+//		case GAS:
+//			return gas.getByInvoice(invoice);
+//		case WATER:
+//			return water.getByInvoice(invoice);
+//		default:
+//			return null;
+//		}
+//	}
 
 }

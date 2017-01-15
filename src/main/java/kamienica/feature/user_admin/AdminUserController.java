@@ -3,6 +3,7 @@ package kamienica.feature.user_admin;
 import kamienica.core.enums.Media;
 import kamienica.feature.payment.PaymentService;
 import kamienica.model.Apartment;
+import kamienica.model.SecurityUser;
 import kamienica.model.Tenant;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -23,12 +24,12 @@ public class AdminUserController {
 	@Autowired
 	private SecurityService userDetailsService;
 	@Autowired
-	private AdminUserService adminUserService;
+	private OwnerUserDataService ownerUserDataService;
 
 	// ===========OWNER===========================================
 	@RequestMapping("/Admin/home")
 	public ModelAndView home() {
-		HashMap<String, Object> model = adminUserService.getMainData();
+		HashMap<String, Object> model = ownerUserDataService.getMainData();
 		return new ModelAndView("/Admin/Home", "model", model);
 	}
 
@@ -50,19 +51,19 @@ public class AdminUserController {
 	@RequestMapping("/User/userReadings")
 	public ModelAndView aparmtnetRest(@RequestParam(value = "media") String media) {
 		HashMap<String, Object> model = new HashMap<>();
-		Apartment ap = userDetailsService.getCurrentUser().getApartment();
+		Apartment ap = userDetailsService.getCurrentUser().getTenant().getApartment();
 		switch (media) {
 		case "energy":
 			model.put("media", "Energia");
-			model.put("readings", adminUserService.getReadingsForTenant(ap, Media.ENERGY));
+			model.put("readings", ownerUserDataService.getReadingsForTenant(ap, Media.ENERGY));
 			break;
 		case "gas":
 			model.put("media", "Gas");
-			model.put("readings", adminUserService.getReadingsForTenant(ap, Media.GAS));
+			model.put("readings", ownerUserDataService.getReadingsForTenant(ap, Media.GAS));
 			break;
 		case "water":
 			model.put("media", "Woda");
-			model.put("readings", adminUserService.getReadingsForTenant(ap, Media.WATER));
+			model.put("readings", ownerUserDataService.getReadingsForTenant(ap, Media.WATER));
 			break;
 		default:
 			break;

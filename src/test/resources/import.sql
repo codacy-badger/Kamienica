@@ -1,5 +1,6 @@
 
 insert into residence(id, street, number, city) values (1, 'Świętojańska', '45', 'Gdynia');
+insert into residence(id, street, number, city) values (2, 'Pusta', '45', 'Gdynia');
 
 insert into apartment(id, apartmentNumber, description, intercom, residence_id) values(1, 0, 'Część Wspólna','6666', 1);
 insert into apartment(id, apartmentNumber, description, intercom, residence_id) values(2, 1, 'Piwnica','6666', 1);

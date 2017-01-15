@@ -4,8 +4,12 @@ import kamienica.configuration.DatabaseTest;
 import kamienica.core.enums.Status;
 import kamienica.core.enums.UserRole;
 import kamienica.model.Apartment;
+import kamienica.model.Residence;
 import kamienica.model.Tenant;
+import org.hibernate.criterion.Criterion;
+import org.hibernate.criterion.Restrictions;
 import org.joda.time.LocalDate;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -26,9 +30,26 @@ public class TenantServiceTest extends DatabaseTest {
     }
 
     @Test
+    public void shouldGetOnlyAciveTenants() {
+        final Criterion active = Restrictions.eq("status", Status.ACTIVE);
+        final Criterion tenant = Restrictions.eq("role", UserRole.TENANT);
+
+        final List<Tenant> result = tenantService.findByCriteria(active, tenant);
+        assertEquals(2, result.size());
+    }
+
+    @Test
     public void getActiveTenants() {
         List<Tenant> list = tenantService.getActiveTenants();
         assertEquals(3, list.size());
+    }
+
+    @Test
+    public void getOwners() {
+        List<Tenant> list = tenantService.getOwners();
+        assertEquals(1, list.size());
+        final long id = list.get(0).getId();
+        assertEquals(1L, id );
     }
 
     @Test
@@ -47,15 +68,24 @@ public class TenantServiceTest extends DatabaseTest {
         assertEquals(Status.INACTIVE, previousOwner.getStatus());
     }
 
+    @Ignore
+    @Test
+    public void ownerShouldHaveOneResidence() {
+        final Tenant owner = tenantService.getTenantById(1L);
+      //  final List<Residence> residenceList = owner.getResidencesOwned();
+//        assertEquals(1, residenceList.size());
+    }//
+
+
     @Transactional
     @Test
     public void shouldDeactivateNewTenantWhenMovementDateIsOlderThanCurrentTenant() {
         final Tenant newOwner = createTenant(LocalDate.parse("2015-01-01"));
-        assertEquals(Status.ACTIVE,  newOwner.getStatus());
+        assertEquals(Status.ACTIVE, newOwner.getStatus());
         tenantService.saveTenant(newOwner);
         Tenant previousOwner = tenantService.loadByMail(tenantMail);
         assertEquals(Status.ACTIVE, previousOwner.getStatus());
-        assertEquals(Status.INACTIVE,  newOwner.getStatus());
+        assertEquals(Status.INACTIVE, newOwner.getStatus());
     }
 
     @Transactional

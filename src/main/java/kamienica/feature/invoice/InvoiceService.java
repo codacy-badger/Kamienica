@@ -20,11 +20,11 @@ public interface InvoiceService {
 
 	<T extends Invoice> void save(T invoice, Media media) throws InvalidDivisionException;
 
-	void saveEnergy(InvoiceEnergy invoice, List<PaymentEnergy> payment);
-
-	void saveGas(InvoiceGas invoice, List<PaymentGas> payment);
-
-	void saveWater(InvoiceWater invoice, List<PaymentWater> payment);
+//	void saveEnergy(InvoiceEnergy invoice, List<PaymentEnergy> payment);
+//
+//	void saveGas(InvoiceGas invoice, List<PaymentGas> payment);
+//
+//	void saveWater(InvoiceWater invoice, List<PaymentWater> payment);
 
 	void list(Map<String, Object> model, Media media);
 	
@@ -32,19 +32,19 @@ public interface InvoiceService {
 
 	void delete(Long id, Media media);
 
-	void deleteGasByID(Long id);
+//	void deleteGasByID(Long id);
+//
+//	void deleteWaterByID(Long id);
+//
+//	void deleteEnergyByID(Long id);
 
-	void deleteWaterByID(Long id);
+//	<T extends Invoice> void update(T invoice, Media media);
 
-	void deleteEnergyByID(Long id);
-
-	<T extends Invoice> void update(T invoice, Media media);
-
-	void updateGas(InvoiceGas invoice, List<PaymentGas> payments);
-
-	void updateWater(InvoiceWater invoice, List<PaymentWater> payments);
-
-	void updateEnergy(InvoiceEnergy invoice, List<PaymentEnergy> payments);
+//	void updateGas(InvoiceGas invoice, List<PaymentGas> payments);
+//
+//	void updateWater(InvoiceWater invoice, List<PaymentWater> payments);
+//
+//	void updateEnergy(InvoiceEnergy invoice, List<PaymentEnergy> payments);
 
 	InvoiceGas getGasByID(Long id);
 
@@ -52,16 +52,16 @@ public interface InvoiceService {
 
 	InvoiceEnergy getEnergyByID(Long id);
 
-	List<InvoiceEnergy> getUnpaidInvoiceEnergy();
-
-	List<InvoiceGas> getUnpaidInvoiceGas();
-
-	List<InvoiceWater> getUnpaidInvoiceWater();
-
-	InvoiceEnergy getLatestPaidEnergy();
-
-	InvoiceWater getLatestPaidWater();
-
-	InvoiceGas getLatestPaidGas();
+//	List<InvoiceEnergy> getUnpaidInvoiceEnergy();
+//
+//	List<InvoiceGas> getUnpaidInvoiceGas();
+//
+//	List<InvoiceWater> getUnpaidInvoiceWater();
+//
+//	InvoiceEnergy getLatestPaidEnergy();
+//
+//	InvoiceWater getLatestPaidWater();
+//
+//	InvoiceGas getLatestPaidGas();
 
 }

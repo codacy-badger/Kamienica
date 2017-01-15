@@ -42,6 +42,18 @@ public class TenantApi extends AbstractApi {
         return new ResponseEntity<>(list, HttpStatus.OK);
     }
 
+    @RequestMapping(value = "/owners", method = RequestMethod.GET)
+    public ResponseEntity<?> listOwners() {
+        final List<Tenant> list = service.getOwners();
+        if (list.isEmpty()) {
+            return new ResponseEntity<List<Tenant>>(HttpStatus.NOT_FOUND);
+        }
+        final ApiResponse<Tenant> response = new ApiResponse<>();
+        response.setObjectList(list);
+        return new ResponseEntity<>(list, HttpStatus.OK);
+    }
+
+
     @RequestMapping(method = RequestMethod.POST)
     public ResponseEntity<?> save(@Valid @RequestBody final Tenant tenant, final BindingResult result) {
         if (result.hasErrors()) {

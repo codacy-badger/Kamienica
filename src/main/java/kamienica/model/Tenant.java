@@ -235,5 +235,4 @@ public class Tenant implements Serializable {
 			return false;
         return status == other.status;
     }
-
 }
