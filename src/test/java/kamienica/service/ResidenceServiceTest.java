@@ -5,6 +5,7 @@ import kamienica.model.Residence;
 import org.hibernate.exception.ConstraintViolationException;
 import org.junit.Ignore;
 import org.junit.Test;
+import org.mockito.Mockito;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;

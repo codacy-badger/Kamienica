@@ -9,6 +9,7 @@ import kamienica.model.Tenant;
 import org.hibernate.criterion.Criterion;
 import org.hibernate.criterion.Restrictions;
 import org.joda.time.LocalDate;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -66,6 +67,15 @@ public class TenantServiceTest extends DatabaseTest {
         Tenant previousOwner = tenantService.loadByMail(tenantMail);
         assertEquals(Status.INACTIVE, previousOwner.getStatus());
     }
+
+    @Ignore
+    @Test
+    public void ownerShouldHaveOneResidence() {
+        final Tenant owner = tenantService.getTenantById(1L);
+      //  final List<Residence> residenceList = owner.getResidencesOwned();
+//        assertEquals(1, residenceList.size());
+    }//
+
 
     @Transactional
     @Test

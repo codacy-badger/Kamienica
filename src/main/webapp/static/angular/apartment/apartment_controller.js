@@ -2,8 +2,8 @@
 
 App.controller('ApartmentController', [
     '$scope',
-    'Apartment', '$http',
-    function($scope, Apartment, $http) {
+    'Apartment','Residence', '$http',
+    function($scope, Apartment, Residence, $http) {
 
         $scope.toggle = true;
         $scope.errorField = false;
@@ -17,7 +17,7 @@ App.controller('ApartmentController', [
         self.apartments = [];
         self.errors = []
         var arrayIndex;
-
+        self.residences = Residence.query();
 
         self.fetchAll = function() {
             self.apartments = Apartment.query();

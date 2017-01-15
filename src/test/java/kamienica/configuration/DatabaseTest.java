@@ -12,8 +12,12 @@ import kamienica.feature.tenant.TenantService;
 import kamienica.feature.user_admin.OwnerUserDataService;
 import kamienica.feature.user_admin.SecurityService;
 import org.joda.time.LocalDate;
+import org.junit.BeforeClass;
 import org.junit.runner.RunWith;
+import org.mockito.Mock;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContext;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
@@ -50,4 +54,5 @@ public abstract class DatabaseTest {
     protected final double DELTA = 0.5;
 
     protected static final LocalDate TODAY = new LocalDate();
+
 }

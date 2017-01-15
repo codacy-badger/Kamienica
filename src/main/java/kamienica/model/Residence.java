@@ -76,6 +76,10 @@ public class Residence implements Serializable {
         return new StringBuilder().append("Residence [id=").append(id).append(", street=").append(street).append(", number=").append(number).append(", city=").append(city).append("]").toString();
     }
 
+    public String showFullAdress() {
+        return new StringBuilder().append(street).append(" ").append(number).append(", ").append(city).toString();
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

@@ -202,9 +202,9 @@
 					<div class="form-group">
 						<label for="inputEmail3" class="col-sm-3 control-label">Prawa</label>
 						<div class="col-sm-9">
-							<input type="radio" ng-model="ctrl.tenant.role" value="USER"
+							<input type="radio" ng-model="ctrl.tenant.role" value="TENANT"
 								required name='role' />Najemca <input type="radio"
-								ng-model="ctrl.tenant.role" value="ADMIN" required name='role' />Administrator
+								ng-model="ctrl.tenant.role" value="OWNER" required name='role' />Właściciel
 
 							<p class="help-block">
 								<span class='error' ng-show="myForm.role.$invalid">Pole

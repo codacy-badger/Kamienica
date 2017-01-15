@@ -2,8 +2,7 @@ package kamienica.feature.residence;
 
 import java.util.List;
 
-import org.hibernate.criterion.Criterion;
-import org.hibernate.criterion.Restrictions;
+import kamienica.feature.tenant.TenantDao;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -18,22 +17,22 @@ import kamienica.model.Tenant;
 public class ResidenceServiceImpl implements ResidenceService {
 
     @Autowired
-    private ResidenceDao dao;
+    private ResidenceDao residenceDao;
 
     @Override
     public void save(Residence residence) {
-            dao.save(residence);
+        residenceDao.save(residence);
     }
 
 
     @Override
     public void update(Residence residence) {
-        dao.update(residence);
+        residenceDao.update(residence);
     }
 
     @Override
     public List<Residence> getList() {
-        return dao.getList();
+        return residenceDao.getList();
     }
 
     /**
@@ -42,12 +41,12 @@ public class ResidenceServiceImpl implements ResidenceService {
 
     @Override
     public Residence getById(Long id) {
-        return dao.getById(id);
+        return residenceDao.getById(id);
     }
 
     @Override
     public void deleteById(Long id) {
-        dao.delete(id);
+        residenceDao.delete(id);
     }
 
     private boolean isOwner(Tenant t) {
