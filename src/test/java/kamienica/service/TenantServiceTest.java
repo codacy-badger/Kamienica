@@ -59,6 +59,13 @@ public class TenantServiceTest extends DatabaseTest {
         assertEquals("Maciej Folik", tenant.fullName());
     }
 
+    @Test
+    public void tenantWithid1ShouldOwnOneResidence() {
+        final Tenant t = tenantService.getTenantById(1L);
+
+        assertEquals(1, t.getResidencesOwned().size());
+    }
+
     @Transactional
     @Test
     public void shouldDeactivateOldTenantWhenNewIsInserted() {

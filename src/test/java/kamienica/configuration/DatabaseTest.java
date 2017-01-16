@@ -7,10 +7,12 @@ import kamienica.feature.meter.MeterService;
 import kamienica.feature.payment.PaymentService;
 import kamienica.feature.reading.ReadingService;
 import kamienica.feature.residence.ResidenceService;
+import kamienica.feature.residenceownership.ResidenceOwnershipService;
 import kamienica.feature.settings.SettingsService;
 import kamienica.feature.tenant.TenantService;
 import kamienica.feature.user_admin.OwnerUserDataService;
 import kamienica.feature.user_admin.SecurityService;
+import org.h2.tools.Server;
 import org.joda.time.LocalDate;
 import org.junit.BeforeClass;
 import org.junit.runner.RunWith;
@@ -20,6 +22,8 @@ import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+
+import java.sql.SQLException;
 
 @ContextConfiguration(classes = {JUnitConfig.class})
 @RunWith(SpringJUnit4ClassRunner.class)
@@ -47,6 +51,8 @@ public abstract class DatabaseTest {
     protected OwnerUserDataService ownerUserDataService;
     @Autowired
     protected ResidenceService residenceService;
+    @Autowired
+    protected ResidenceOwnershipService residenceOwnershipService;
 
     /**
      * difference factor for calculated data
@@ -54,5 +60,10 @@ public abstract class DatabaseTest {
     protected final double DELTA = 0.5;
 
     protected static final LocalDate TODAY = new LocalDate();
+
+//    @BeforeClass
+//    public static void init() throws SQLException {
+//        Server.main();
+//    }
 
 }
