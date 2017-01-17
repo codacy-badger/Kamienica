@@ -11,10 +11,6 @@ public class ReadingGasForm {
 	private List<ReadingGas> currentReadings = new ArrayList<>();
 	private List<ReadingGas> previousReadings = new ArrayList<>();
 
-	public ReadingGasForm() {
-
-	}
-
 	public List<ReadingGas> getCurrentReadings() {
 		return currentReadings;
 	}

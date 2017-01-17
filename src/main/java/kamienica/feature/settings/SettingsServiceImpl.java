@@ -24,11 +24,6 @@ public class SettingsServiceImpl implements SettingsService {
 	}
 
 	@Override
-	public void delete() {
-
-	}
-
-	@Override
 	public void save(Settings settings) {
 		if (settings.getId() == null) {
 			dao.save(settings);
@@ -40,7 +35,6 @@ public class SettingsServiceImpl implements SettingsService {
 
 	@Override
 	public boolean isDivisionCorrect() {
-
 		return dao.isDivisionCorrect();
 	}
 

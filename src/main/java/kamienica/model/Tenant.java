@@ -167,77 +167,6 @@ public class Tenant implements Serializable {
 	}
 
 
-	@Override
-	public int hashCode() {
-		final int prime = 31;
-		int result = 1;
-		result = prime * result + ((apartment == null) ? 0 : apartment.hashCode());
-		result = prime * result + ((email == null) ? 0 : email.hashCode());
-		result = prime * result + ((firstName == null) ? 0 : firstName.hashCode());
-		result = prime * result + ((id == null) ? 0 : id.hashCode());
-		result = prime * result + ((lastName == null) ? 0 : lastName.hashCode());
-		result = prime * result + ((movementDate == null) ? 0 : movementDate.hashCode());
-		result = prime * result + ((password == null) ? 0 : password.hashCode());
-		result = prime * result + ((phone == null) ? 0 : phone.hashCode());
-		result = prime * result + ((role == null) ? 0 : role.hashCode());
-		result = prime * result + ((status == null) ? 0 : status.hashCode());
-		return result;
-	}
-
-
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		Tenant other = (Tenant) obj;
-		if (apartment == null) {
-			if (other.apartment != null)
-				return false;
-		} else if (!apartment.equals(other.apartment))
-			return false;
-		if (email == null) {
-			if (other.email != null)
-				return false;
-		} else if (!email.equals(other.email))
-			return false;
-		if (firstName == null) {
-			if (other.firstName != null)
-				return false;
-		} else if (!firstName.equals(other.firstName))
-			return false;
-		if (id == null) {
-			if (other.id != null)
-				return false;
-		} else if (!id.equals(other.id))
-			return false;
-		if (lastName == null) {
-			if (other.lastName != null)
-				return false;
-		} else if (!lastName.equals(other.lastName))
-			return false;
-		if (movementDate == null) {
-			if (other.movementDate != null)
-				return false;
-		} else if (!movementDate.equals(other.movementDate))
-			return false;
-		if (password == null) {
-			if (other.password != null)
-				return false;
-		} else if (!password.equals(other.password))
-			return false;
-		if (phone == null) {
-			if (other.phone != null)
-				return false;
-		} else if (!phone.equals(other.phone))
-			return false;
-		if (role != other.role)
-			return false;
-        return status == other.status;
-    }
 
     public List<ResidenceOwnership> getResidencesOwned() {
         return residencesOwned;
@@ -245,5 +174,47 @@ public class Tenant implements Serializable {
 
     public void setResidencesOwned(List<ResidenceOwnership> residencesOwned) {
         this.residencesOwned = residencesOwned;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Tenant)) return false;
+
+        Tenant tenant = (Tenant) o;
+
+        if (getId() != null ? !getId().equals(tenant.getId()) : tenant.getId() != null) return false;
+        if (getFirstName() != null ? !getFirstName().equals(tenant.getFirstName()) : tenant.getFirstName() != null)
+            return false;
+        if (getLastName() != null ? !getLastName().equals(tenant.getLastName()) : tenant.getLastName() != null)
+            return false;
+        if (getEmail() != null ? !getEmail().equals(tenant.getEmail()) : tenant.getEmail() != null) return false;
+        if (getPhone() != null ? !getPhone().equals(tenant.getPhone()) : tenant.getPhone() != null) return false;
+        if (getApartment() != null ? !getApartment().equals(tenant.getApartment()) : tenant.getApartment() != null)
+            return false;
+        if (getRole() != tenant.getRole()) return false;
+        if (getStatus() != tenant.getStatus()) return false;
+        if (getMovementDate() != null ? !getMovementDate().equals(tenant.getMovementDate()) : tenant.getMovementDate() != null)
+            return false;
+        if (getPassword() != null ? !getPassword().equals(tenant.getPassword()) : tenant.getPassword() != null)
+            return false;
+        return getResidencesOwned() != null ? getResidencesOwned().equals(tenant.getResidencesOwned()) : tenant.getResidencesOwned() == null;
+
+    }
+
+    @Override
+    public int hashCode() {
+        int result = getId() != null ? getId().hashCode() : 0;
+        result = 31 * result + (getFirstName() != null ? getFirstName().hashCode() : 0);
+        result = 31 * result + (getLastName() != null ? getLastName().hashCode() : 0);
+        result = 31 * result + (getEmail() != null ? getEmail().hashCode() : 0);
+        result = 31 * result + (getPhone() != null ? getPhone().hashCode() : 0);
+        result = 31 * result + (getApartment() != null ? getApartment().hashCode() : 0);
+        result = 31 * result + (getRole() != null ? getRole().hashCode() : 0);
+        result = 31 * result + (getStatus() != null ? getStatus().hashCode() : 0);
+        result = 31 * result + (getMovementDate() != null ? getMovementDate().hashCode() : 0);
+        result = 31 * result + (getPassword() != null ? getPassword().hashCode() : 0);
+        result = 31 * result + (getResidencesOwned() != null ? getResidencesOwned().hashCode() : 0);
+        return result;
     }
 }

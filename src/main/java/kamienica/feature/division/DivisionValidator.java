@@ -18,22 +18,14 @@ public class DivisionValidator {
                 }
             }
 
-            sumForElement = roundUp(sumForElement);
-            if (sumForElement != 1) {
-                return false;
+            if (sumForElement >= 0.99) {
+                return true;
             }
         }
-        return true;
+        return false;
     }
 
     private static boolean isDivisionForApartmentInScope(Apartment anApartmentList, Division division) {
         return division.getApartment().getId().equals(anApartmentList.getId());
-    }
-
-    private static double roundUp(double sumForElement) {
-        if (sumForElement == 0.99) {
-            sumForElement = 1;
-        }
-        return sumForElement;
     }
 }

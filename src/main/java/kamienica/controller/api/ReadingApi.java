@@ -17,30 +17,29 @@ import java.util.List;
 @RequestMapping("/api/v1/readings")
 public class ReadingApi {
 
-	@Autowired
-	ReadingService service;
+    @Autowired
+    private ReadingService service;
 
-	@RequestMapping(value = "/{media}", method = RequestMethod.GET)
-	public ResponseEntity<?> getList(@PathVariable Media media) {
+    @RequestMapping(value = "/{media}", method = RequestMethod.GET)
+    public ResponseEntity<?> getList(@PathVariable Media media) {
 
-		List<? extends Reading> list = service.getList(media);
-			if (list.isEmpty()) {
-				return new ResponseEntity<Void>(HttpStatus.NOT_FOUND);
-			}
-			return new ResponseEntity<List<? extends Reading>>(list, HttpStatus.OK);
-	}
-	
-	@RequestMapping(value = "/unresolved/{media}", method = RequestMethod.GET)
-	public ResponseEntity<?> getListForInvoice(@PathVariable Media media) {
+        List<? extends Reading> list = service.getList(media);
+        if (list.isEmpty()) {
+            return new ResponseEntity<Void>(HttpStatus.NOT_FOUND);
+        }
+        return new ResponseEntity<List<? extends Reading>>(list, HttpStatus.OK);
+    }
 
-		List<?> list = service.getUnresolvedReadings(media);
-				
-				
-				service.getList(media);
-			if (list.isEmpty()) {
-				return new ResponseEntity<Void>(HttpStatus.NOT_FOUND);
-			}
-			return new ResponseEntity<>(list, HttpStatus.OK);
-	}
+    @RequestMapping(value = "/unresolved/{media}", method = RequestMethod.GET)
+    public ResponseEntity<?> getListForInvoice(@PathVariable Media media) {
+
+        List<?> list = service.getUnresolvedReadings(media);
+
+        service.getList(media);
+        if (list.isEmpty()) {
+            return new ResponseEntity<Void>(HttpStatus.NOT_FOUND);
+        }
+        return new ResponseEntity<>(list, HttpStatus.OK);
+    }
 
 }

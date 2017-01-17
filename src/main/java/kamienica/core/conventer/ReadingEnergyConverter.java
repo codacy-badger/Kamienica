@@ -20,11 +20,11 @@ import org.springframework.stereotype.Component;
 public class ReadingEnergyConverter implements Converter<Object, ReadingEnergy>{
 
 	@Autowired
-	ReadingService readingService;
+	private ReadingService readingService;
 	
 	@Override
 	public ReadingEnergy convert(Object element) {
-		Long id = Long.parseLong((String) element);
+		final Long id = Long.parseLong((String) element);
 		return readingService.getById(id, Media.ENERGY);
 	}
 
