@@ -9,4 +9,8 @@ public class ApiResponse<E> {
     public void setObjectList(List<E> objectList) {
         this.objectList = objectList;
     }
+
+    public List<E> getObjectList() {
+        return objectList;
+    }
 }
