@@ -9,20 +9,20 @@ public class DivisionValidator {
 
     public static boolean checkIfDivisionIsCorrect(final List<Apartment> apartmentList, final List<Division> divisionList) {
 
-        for (Apartment anApartmentList : apartmentList) {
+        for (Apartment a : apartmentList) {
             double sumForElement = 0;
 
             for (Division division : divisionList) {
-                if (isDivisionForApartmentInScope(anApartmentList, division)) {
+                if (isDivisionForApartmentInScope(a, division)) {
                     sumForElement += division.getDivisionValue();
                 }
             }
 
-            if (sumForElement >= 0.99) {
-                return true;
+            if (sumForElement < 0.99 || sumForElement > 1) {
+                return false;
             }
         }
-        return false;
+        return true;
     }
 
     private static boolean isDivisionForApartmentInScope(Apartment anApartmentList, Division division) {
