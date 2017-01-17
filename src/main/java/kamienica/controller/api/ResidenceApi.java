@@ -7,6 +7,8 @@ import java.util.Map;
 import javax.validation.Valid;
 
 import kamienica.feature.user_admin.OwnerUserDataService;
+import kamienica.feature.user_admin.SecurityService;
+import kamienica.model.Tenant;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -54,7 +56,8 @@ public class ResidenceApi {
             return new ResponseEntity<>(message, HttpStatus.UNPROCESSABLE_ENTITY);
         }
         try {
-            residenceService.save(residence);
+            final Tenant t = ownerUserDataService.getCurrentTenant();
+            residenceService.save(residence, t);
         } catch (Exception e) {
             result.rejectValue("residenceNumber", "error.residence", ControllerMessages.DUPLICATE_VALUE);
             final Map<String, String> test = new HashMap<>();

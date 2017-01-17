@@ -13,10 +13,13 @@ INSERT INTO  tenant  ( id , email , firstName , lastName , movementDate , passwo
 INSERT INTO  tenant  ( id , email , firstName , lastName , movementDate , password , phone , role , status , apartment_id ) VALUES (3,'par@wp.pl','Kasia','Para','2015-07-26','witaj','23636','TENANT','ACTIVE',4);
 INSERT INTO  tenant  ( id , email , firstName , lastName , movementDate , password , phone , role , status , apartment_id ) VALUES (4,'kasia@wp.pl','Kasia','Kowalska','2016-07-29','witaj','3456775','TENANT','ACTIVE',3);
 INSERT INTO  tenant  ( id , email , firstName , lastName , movementDate , password , phone , role , status , apartment_id ) VALUES (5,'klej@wp.pl','Piotr','Kulej','2010-07-29','witaj','23526564','TENANT','INACTIVE',2);
+--INSERT INTO  tenant  ( id , email , firstName , lastName , movementDate , password , phone , role , status , apartment_id ) VALUES (6,'admin@admin','admin','admin','2010-07-29','witaj','23526564','ADMIN','ACTIVE',null);
 
 
-INSERT INTO RESIDENCE_OWNERSHIP  VALUES (1,1,1);
+INSERT INTO RESIDENCE_OWNERSHIP (id, owner_id, residenceOwned_id)  VALUES (1,1,1);
+INSERT INTO RESIDENCE_OWNERSHIP (id, owner_id, residenceOwned_id)  VALUES (2,3,2);
 INSERT INTO TENANT_RESIDENCE_OWNERSHIP VALUES (1,1);
+
 
 INSERT INTO  division  ( id , date , divisionValue , apartment_id , tenant_id ) VALUES (1,'2016-07-01',0.33,1,1);
 INSERT INTO  division  ( id , date , divisionValue , apartment_id , tenant_id ) VALUES (2,'2016-07-01',1,2,1);

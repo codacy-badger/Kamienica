@@ -11,7 +11,7 @@ public interface ResidenceOwnershipService {
 
     void delete(Long id);
 
-    void save(ResidenceOwnership residenceOwnership);
+    void save(ResidenceOwnership residenceOwnership, Tenant tenant);
 
     void update(ResidenceOwnership residenceOwnership);
 

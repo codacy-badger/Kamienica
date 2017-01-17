@@ -2,6 +2,8 @@ package kamienica.service;
 
 import kamienica.configuration.DatabaseTest;
 import kamienica.model.Residence;
+import kamienica.model.ResidenceOwnership;
+import kamienica.model.Tenant;
 import org.hibernate.exception.ConstraintViolationException;
 import org.junit.Ignore;
 import org.junit.Test;
@@ -15,21 +17,26 @@ import static org.junit.Assert.assertNotNull;
 
 public class ResidenceServiceTest extends DatabaseTest {
 
+
+
     @Test
     @Transactional
     public void save() {
         final Residence res = new Residence("Świętojańska", "46", "Gdynia");
-        residenceService.save(res);
-
+        final Tenant t = tenantService.getTenantById(1L);
+        residenceService.save(res, t);
         final List<Residence> result = residenceService.getList();
+        final List<ResidenceOwnership> ownerships = residenceOwnershipService.list(t);
         assertEquals(3, result.size());
+        assertEquals(2, ownerships.size());
     }
 
     @Test(expected = ConstraintViolationException.class)
     @Transactional
     public void shouldThrowException() throws Exception {
         final Residence res = new Residence("Świętojańska", "45", "Gdynia");
-        residenceService.save(res);
+        final Tenant t = tenantService.getTenantById(1L);
+        residenceService.save(res, t);
 
         final List<Residence> result = residenceService.getList();
         assertEquals(2, result.size());
@@ -37,7 +44,7 @@ public class ResidenceServiceTest extends DatabaseTest {
 
     @Test
     @Transactional
-    public void update() throws Exception {
+    public void update() {
         Residence residence = residenceService.getById(1L);
         residence.setCity("Sopot");
         residenceService.update(residence);
@@ -45,10 +52,19 @@ public class ResidenceServiceTest extends DatabaseTest {
 
     @Test
     @Transactional
-    public void getList() throws Exception {
+    public void getList()  {
         final List<Residence> result = residenceService.getList();
         assertEquals(2, result.size());
     }
+
+    @Test
+    @Transactional
+    public void getListForTenant() {
+        Tenant t = tenantService.getTenantById(1L);
+        final List<Residence> result = residenceService.listForOwner(t);
+        assertEquals(1, result.size());
+    }
+
 
     @Test
     @Ignore

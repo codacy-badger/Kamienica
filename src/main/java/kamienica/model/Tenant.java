@@ -54,8 +54,6 @@ public class Tenant implements Serializable {
     @Column(nullable = false)
     @NotEmpty(message = "Wprowadź hasło")
     private String password = "witaj";
-    @OneToMany(fetch = FetchType.EAGER)
-    private List<ResidenceOwnership> residencesOwned;
 
     @Autowired
     public Tenant(String firstName, String lastName, String email, String phone, Apartment apartment) {
@@ -239,11 +237,4 @@ public class Tenant implements Serializable {
         return status == other.status;
     }
 
-    public List<ResidenceOwnership> getResidencesOwned() {
-        return residencesOwned;
-    }
-
-    public void setResidencesOwned(List<ResidenceOwnership> residencesOwned) {
-        this.residencesOwned = residencesOwned;
-    }
 }

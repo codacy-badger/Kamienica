@@ -1,8 +1,14 @@
 package kamienica.feature.residence;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
+import kamienica.feature.residenceownership.ResidenceOwnershipDao;
 import kamienica.feature.tenant.TenantDao;
+import kamienica.model.ResidenceOwnership;
+import org.hibernate.FetchMode;
+import org.hibernate.criterion.Criterion;
+import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -18,10 +24,20 @@ public class ResidenceServiceImpl implements ResidenceService {
 
     @Autowired
     private ResidenceDao residenceDao;
+    @Autowired
+    private ResidenceOwnershipDao residenceOwnershipDao;
+    @Autowired
+    private TenantDao tenantDao;
 
     @Override
-    public void save(Residence residence) {
+    public void save(Residence residence, Tenant t) {
+        ResidenceOwnership ro = new ResidenceOwnership();
+        ro.setResidenceOwned(residence);
+        ro.setOwner(t);
         residenceDao.save(residence);
+        residenceOwnershipDao.save(ro);
+
+
     }
 
 
@@ -33,6 +49,13 @@ public class ResidenceServiceImpl implements ResidenceService {
     @Override
     public List<Residence> getList() {
         return residenceDao.getList();
+    }
+
+    @Override
+    public List<Residence> listForOwner(Tenant t) {
+        Criterion forOwner = Restrictions.eq("owner", t);
+        List<ResidenceOwnership> owned = residenceOwnershipDao.findByCriteria(forOwner);
+        return  owned.stream().map(x -> x.getResidenceOwned()).collect(Collectors.toList());
     }
 
     /**
