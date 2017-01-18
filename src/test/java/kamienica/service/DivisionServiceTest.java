@@ -7,7 +7,6 @@ import kamienica.feature.division.DivisionForm;
 import kamienica.model.Apartment;
 import kamienica.model.Division;
 import kamienica.model.Tenant;
-import kamienica.testutils.EntityProvider;
 import org.joda.time.LocalDate;
 import org.junit.Ignore;
 import org.junit.Test;
@@ -19,9 +18,6 @@ import java.util.List;
 import static org.junit.Assert.assertEquals;
 
 public class DivisionServiceTest extends DatabaseTest {
-
-
-    final LocalDate date = new LocalDate();
 
     @Test
     public void getList() {
@@ -43,10 +39,10 @@ public class DivisionServiceTest extends DatabaseTest {
     @Test
     public void saveList() throws InvalidDivisionException {
         final List<Division> listToSave = createCorrectList(true);
-        divisionService.saveList(listToSave, date);
+        divisionService.saveList(listToSave, TODAY);
         final List<Division> result = divisionService.getList();
         for (Division d : result) {
-            assertEquals(date, d.getDate());
+            assertEquals(TODAY, d.getDate());
         }
     }
 
@@ -103,7 +99,7 @@ public class DivisionServiceTest extends DatabaseTest {
                 if (returnCorrect) {
                     value = calculateValue(t, a);
                 }
-                Division d = new Division(date, t, a, value);
+                Division d = new Division(TODAY, t, a, value);
                 listToReturn.add(d);
             }
         }
@@ -114,7 +110,7 @@ public class DivisionServiceTest extends DatabaseTest {
         if (a.getApartmentNumber() == 0) {
             return 0.33;
         }
-        if (t.getApartment().getId() == a.getId()) {
+        if (t.getApartment().getId().equals(a.getId())) {
             return 1;
         } else return 0;
     }

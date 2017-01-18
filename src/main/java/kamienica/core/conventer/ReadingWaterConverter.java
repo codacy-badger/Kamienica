@@ -8,23 +8,21 @@ import org.springframework.core.convert.converter.Converter;
 import org.springframework.stereotype.Component;
 
 /**
- * 
  * @author macfol
- * 
+ *         <p>
  *         The class's role is to convert string value from the jsp form into
  *         object from DB
- *
  */
 @Component
 public class ReadingWaterConverter implements Converter<Object, ReadingWater> {
 
-	@Autowired
-	ReadingService readingService;
+    @Autowired
+    private ReadingService readingService;
 
-	@Override
-	public ReadingWater convert(Object element) {
-		Long id = Long.parseLong((String) element);
-		return readingService.getById(id, Media.WATER);
-	}
+    @Override
+    public ReadingWater convert(Object element) {
+        final Long id = Long.parseLong((String) element);
+        return readingService.getById(id, Media.WATER);
+    }
 
 }

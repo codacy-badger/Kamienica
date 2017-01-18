@@ -1,6 +1,5 @@
 package kamienica.core.dao;
 
-import kamienica.model.Residence;
 import org.hibernate.Criteria;
 import org.hibernate.Query;
 import org.hibernate.Session;
@@ -8,8 +7,6 @@ import org.hibernate.SessionFactory;
 import org.hibernate.criterion.Criterion;
 import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Projections;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.lang.reflect.ParameterizedType;
@@ -19,6 +16,8 @@ import java.util.Set;
 
 public abstract class AbstractDao<T> {
 
+    @Autowired
+    protected SessionFactory sessionFactory;
     protected final Class<T> persistentClass;
 
     @SuppressWarnings("unchecked")
@@ -28,17 +27,10 @@ public abstract class AbstractDao<T> {
 
     }
 
-    public String getTabName() {
+    protected String getTabName() {
         return persistentClass.getSimpleName().toLowerCase();
     }
-    // @SuppressWarnings("unchecked")
-    // public AbstractDao() {
-    //
-    // this.persistentClass = (Class<T>) this.getClass();
-    // }
 
-    @Autowired
-    protected SessionFactory sessionFactory;
 
     protected Session getSession() {
         return sessionFactory.getCurrentSession();

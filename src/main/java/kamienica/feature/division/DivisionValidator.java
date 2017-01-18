@@ -9,17 +9,16 @@ public class DivisionValidator {
 
     public static boolean checkIfDivisionIsCorrect(final List<Apartment> apartmentList, final List<Division> divisionList) {
 
-        for (Apartment anApartmentList : apartmentList) {
+        for (Apartment a : apartmentList) {
             double sumForElement = 0;
 
             for (Division division : divisionList) {
-                if (isDivisionForApartmentInScope(anApartmentList, division)) {
+                if (isDivisionForApartmentInScope(a, division)) {
                     sumForElement += division.getDivisionValue();
                 }
             }
 
-            sumForElement = roundUp(sumForElement);
-            if (sumForElement != 1) {
+            if (sumForElement < 0.99 || sumForElement > 1) {
                 return false;
             }
         }
@@ -28,12 +27,5 @@ public class DivisionValidator {
 
     private static boolean isDivisionForApartmentInScope(Apartment anApartmentList, Division division) {
         return division.getApartment().getId().equals(anApartmentList.getId());
-    }
-
-    private static double roundUp(double sumForElement) {
-        if (sumForElement == 0.99) {
-            sumForElement = 1;
-        }
-        return sumForElement;
     }
 }

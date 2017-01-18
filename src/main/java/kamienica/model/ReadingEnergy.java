@@ -17,7 +17,7 @@ public class ReadingEnergy extends Reading implements Serializable {
 	@Column(nullable = false)
 	private String unit;
 	@ManyToOne
-	MeterEnergy meter;
+	private MeterEnergy meter;
 
 	public ReadingEnergy() {
 	}

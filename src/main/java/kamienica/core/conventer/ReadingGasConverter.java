@@ -19,11 +19,11 @@ import org.springframework.stereotype.Component;
 public class ReadingGasConverter implements Converter<Object, ReadingGas> {
 
 	@Autowired
-	ReadingService readingService;
+	private ReadingService readingService;
 
 	@Override
 	public ReadingGas convert(Object element) {
-		Long id = Long.parseLong((String) element);
+		final Long id = Long.parseLong((String) element);
 		return readingService.getById(id, Media.GAS);
 	}
 

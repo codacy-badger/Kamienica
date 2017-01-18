@@ -22,7 +22,7 @@ public class ApartmentConverter implements Converter<Object, Apartment> {
 
 	@Override
 	public Apartment convert(Object element) {
-		Long id = Long.parseLong((String) element);
+		final Long id = Long.parseLong((String) element);
 		return service.getById(id);
 	}
 
