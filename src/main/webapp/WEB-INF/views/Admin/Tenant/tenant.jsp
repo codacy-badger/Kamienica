@@ -54,9 +54,6 @@
 								<th>Telefon</th>
 								<th>Mieszkanie</th>
 								<th>Data Wprowadzenia</th>
-								<th>Prawa</th>
-								<th>Status</th>
-
 								<th>Edytuj/Usuń</th>
 
 							</tr>
@@ -68,11 +65,12 @@
 
 								<td><span ng-bind="a.email"></span></td>
 								<td><span ng-bind="a.phone"></span></td>
-								<td><span ng-bind="a.apartment.description"></span></td>
+								<td>
+									{{a.apartment.residence.street}}
+									{{a.apartment.residence.number}},
+									{{a.apartment.residence.city}}- 
+									{{a.apartment.description}} </td>
 								<td><span ng-bind="a.movementDate"></span></td>
-								<td><span ng-bind="a.role"></span></td>
-								<td><span ng-bind="a.status"></span></td>
-
 								<td>
 									<button type="button" ng-click="ctrl.edit(a.id, $index)"
 										class="btn-xs btn-warning">

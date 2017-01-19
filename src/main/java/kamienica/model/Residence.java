@@ -73,10 +73,6 @@ public class Residence implements Serializable {
 
     @Override
     public String toString() {
-        return new StringBuilder().append("Residence [id=").append(id).append(", street=").append(street).append(", number=").append(number).append(", city=").append(city).append("]").toString();
-    }
-
-    public String showFullAdress() {
         return new StringBuilder().append(street).append(" ").append(number).append(", ").append(city).toString();
     }
 
