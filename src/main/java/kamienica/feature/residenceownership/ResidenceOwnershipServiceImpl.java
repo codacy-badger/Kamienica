@@ -1,7 +1,6 @@
 package kamienica.feature.residenceownership;
 
 import kamienica.core.enums.UserRole;
-import kamienica.feature.tenant.TenantDao;
 import kamienica.model.ResidenceOwnership;
 import kamienica.model.Tenant;
 import org.hibernate.criterion.Criterion;

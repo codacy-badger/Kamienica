@@ -2,8 +2,6 @@ package kamienica.feature.user_admin;
 
 import kamienica.core.enums.Status;
 import kamienica.feature.tenant.TenantService;
-import kamienica.model.Apartment;
-import kamienica.model.Residence;
 import kamienica.model.SecurityUser;
 import kamienica.model.Tenant;
 import org.springframework.beans.factory.annotation.Autowired;

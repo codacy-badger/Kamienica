@@ -57,12 +57,18 @@
 					<div class="form-group">
 						<label for="inputEmail3" class="col-sm-3 control-label">Nieruchomość</label>
 						<div class="col-sm-9">
-							<select name='residence' ng-model="ctrl.apartment.residence"
+						
+							<select name="residence" ng-model="ctrl.apartment.residence" 
+									ng-options="res as res.street + ' ' + res.number  + ', ' + res.city for res in ctrl.residences" 
+									class="form-control" ng-required='true'>
+							</select>
+						
+							<!-- <select name='residence' ng-model="ctrl.apartment.residence"
 								ng-required='true' class="form-control"
 								ng-options="a.street for a in ctrl.residences"><option>{{ctrl.apartment.residences}}</option>
-							</select>
+							</select>  -->
 							<p class="help-block">
-								<span class='error' ng-show="myForm.tenant_residence.$invalid">Pole
+								<span class='error' ng-show="myForm.residence.$invalid">Pole
 									wymagane</span> <span class='error'>{{errors.residences}}</span>
 							</p>
 						</div>
@@ -138,6 +144,7 @@
 					<table class='table table-stripped table-hover'>
 						<thead>
 							<tr>
+								<th>Nieruchomość</th>
 								<th>Nr Mieszkania</th>
 								<th>Domofon</th>
 								<th>Opis</th>
@@ -147,6 +154,7 @@
 						</thead>
 						<tbody>
 							<tr ng-repeat="a in ctrl.apartments">
+								<td>{{a.residence.street}} {{a.residence.number}}, {{a.residence.city}}</td>
 								<td><span ng-bind="a.apartmentNumber"></span></td>
 								<td><span ng-bind="a.intercom"></span></td>
 								<td><span ng-bind="a.description"></span></td>

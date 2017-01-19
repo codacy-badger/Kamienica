@@ -38,7 +38,9 @@ public class ResidenceApi {
     
     @RequestMapping(method = RequestMethod.GET)
     public ResponseEntity<?> list() {
-        final List<Residence> list = residenceService.getList();
+        final Tenant t = ownerUserDataService.getCurrentTenant();
+
+        final List<Residence> list = residenceService.listForOwner(t);
         if (list.isEmpty()) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }

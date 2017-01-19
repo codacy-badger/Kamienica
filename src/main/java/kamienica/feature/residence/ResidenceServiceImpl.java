@@ -1,20 +1,18 @@
 package kamienica.feature.residence;
 
-import java.util.List;
-import java.util.stream.Collectors;
-
 import kamienica.feature.residenceownership.ResidenceOwnershipDao;
 import kamienica.feature.tenant.TenantDao;
+import kamienica.model.Residence;
 import kamienica.model.ResidenceOwnership;
+import kamienica.model.Tenant;
 import org.hibernate.criterion.Criterion;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import kamienica.core.enums.UserRole;
-import kamienica.model.Residence;
-import kamienica.model.Tenant;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @Transactional
@@ -38,8 +36,6 @@ public class ResidenceServiceImpl implements ResidenceService {
         ro.setOwner(t);
         residenceDao.save(residence);
         residenceOwnershipDao.save(ro);
-        t.getResidencesOwned().add(ro);
-        tenantDao.update(t);
     }
 
     @Override

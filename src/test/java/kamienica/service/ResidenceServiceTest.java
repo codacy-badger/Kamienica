@@ -17,8 +17,6 @@ import static org.junit.Assert.assertNotNull;
 
 public class ResidenceServiceTest extends DatabaseTest {
 
-
-
     @Test
     @Transactional
     public void save() {
@@ -29,7 +27,6 @@ public class ResidenceServiceTest extends DatabaseTest {
         final List<ResidenceOwnership> ownerships = residenceOwnershipService.list(t);
         assertEquals(3, result.size());
         assertEquals(2, ownerships.size());
-        assertEquals(2, t.getResidencesOwned().size());
     }
 
     @Test(expected = ConstraintViolationException.class)
