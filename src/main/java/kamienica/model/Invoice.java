@@ -30,6 +30,8 @@ public abstract class Invoice {
 	@Min(value = 0, message = "Tylko wartości dodatnie")
 	@NotNull(message = "Podaj wartość")
 	private double totalAmount;
+	@OneToOne
+	private Residence residence;
 
 	@Autowired
 	public Invoice(String serialNumber, LocalDate date, double totalAmount) {
@@ -85,4 +87,11 @@ public abstract class Invoice {
 
 	public abstract LocalDate getReadingDate();
 
+	public Residence getResidence() {
+		return residence;
+	}
+
+	public void setResidence(Residence residence) {
+		this.residence = residence;
+	}
 }

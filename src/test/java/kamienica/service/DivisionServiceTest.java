@@ -6,6 +6,7 @@ import kamienica.core.exception.WrongDivisionInputException;
 import kamienica.feature.division.DivisionForm;
 import kamienica.model.Apartment;
 import kamienica.model.Division;
+import kamienica.model.Residence;
 import kamienica.model.Tenant;
 import org.joda.time.LocalDate;
 import org.junit.Ignore;
@@ -68,6 +69,14 @@ public class DivisionServiceTest extends DatabaseTest {
         assertEquals(3, tenants.size());
         assertEquals(4, apartments.size());
     }
+
+    @Test
+    public void createDivisionForResidence() {
+        Residence res = residenceService.getById(1L);
+        List<Division> divisions = divisionService.createDivisionForResidence(res);
+        assertEquals(12, divisions.size());
+    }
+
 
     @Test
     @Ignore

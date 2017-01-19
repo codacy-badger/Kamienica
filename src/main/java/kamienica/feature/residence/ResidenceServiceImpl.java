@@ -6,7 +6,6 @@ import java.util.stream.Collectors;
 import kamienica.feature.residenceownership.ResidenceOwnershipDao;
 import kamienica.feature.tenant.TenantDao;
 import kamienica.model.ResidenceOwnership;
-import org.hibernate.FetchMode;
 import org.hibernate.criterion.Criterion;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,7 +13,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import kamienica.core.enums.UserRole;
-import kamienica.feature.user_admin.OwnerUserDataService;
 import kamienica.model.Residence;
 import kamienica.model.Tenant;
 
@@ -22,12 +20,16 @@ import kamienica.model.Tenant;
 @Transactional
 public class ResidenceServiceImpl implements ResidenceService {
 
+    private final ResidenceDao residenceDao;
+    private final ResidenceOwnershipDao residenceOwnershipDao;
+    private final TenantDao tenantDao;
+
     @Autowired
-    private ResidenceDao residenceDao;
-    @Autowired
-    private ResidenceOwnershipDao residenceOwnershipDao;
-    @Autowired
-    private TenantDao tenantDao;
+    public ResidenceServiceImpl(ResidenceDao residenceDao, ResidenceOwnershipDao residenceOwnershipDao, TenantDao tenantDao) {
+        this.residenceDao = residenceDao;
+        this.residenceOwnershipDao = residenceOwnershipDao;
+        this.tenantDao = tenantDao;
+    }
 
     @Override
     public void save(Residence residence, Tenant t) {
@@ -36,10 +38,9 @@ public class ResidenceServiceImpl implements ResidenceService {
         ro.setOwner(t);
         residenceDao.save(residence);
         residenceOwnershipDao.save(ro);
-
-
+        t.getResidencesOwned().add(ro);
+        tenantDao.update(t);
     }
-
 
     @Override
     public void update(Residence residence) {
@@ -58,10 +59,6 @@ public class ResidenceServiceImpl implements ResidenceService {
         return  owned.stream().map(x -> x.getResidenceOwned()).collect(Collectors.toList());
     }
 
-    /**
-     * Gets list depending on the role user is having
-     */
-
     @Override
     public Residence getById(Long id) {
         return residenceDao.getById(id);
@@ -70,13 +67,5 @@ public class ResidenceServiceImpl implements ResidenceService {
     @Override
     public void deleteById(Long id) {
         residenceDao.delete(id);
-    }
-
-    private boolean isOwner(Tenant t) {
-        return t.getRole().equals(UserRole.OWNER);
-    }
-
-    private boolean isAdmin(Tenant t) {
-        return t.getRole().equals(UserRole.ADMIN);
     }
 }

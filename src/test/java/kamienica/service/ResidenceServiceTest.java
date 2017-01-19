@@ -29,6 +29,7 @@ public class ResidenceServiceTest extends DatabaseTest {
         final List<ResidenceOwnership> ownerships = residenceOwnershipService.list(t);
         assertEquals(3, result.size());
         assertEquals(2, ownerships.size());
+        assertEquals(2, t.getResidencesOwned().size());
     }
 
     @Test(expected = ConstraintViolationException.class)
