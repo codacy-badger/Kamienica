@@ -24,14 +24,18 @@ import java.util.List;
 @Transactional
 public class DivisionServiceImpl implements DivisionService {
 
+    private final DivisionDao divisionDAO;
+    private final TenantDao tenantDAO;
+    private final ApartmentDao apartmentDAO;
+    private final SettingsDao settingsDao;
+
     @Autowired
-    DivisionDao divisionDAO;
-    @Autowired
-    TenantDao tenantDAO;
-    @Autowired
-    ApartmentDao apartmentDAO;
-    @Autowired
-    SettingsDao settingsDao;
+    public DivisionServiceImpl(DivisionDao divisionDAO, TenantDao tenantDAO, ApartmentDao apartmentDAO, SettingsDao settingsDao) {
+        this.divisionDAO = divisionDAO;
+        this.tenantDAO = tenantDAO;
+        this.apartmentDAO = apartmentDAO;
+        this.settingsDao = settingsDao;
+    }
 
     @Override
     public List<Division> getList() {
@@ -53,19 +57,16 @@ public class DivisionServiceImpl implements DivisionService {
     public void deleteAll() {
         divisionDAO.deleteAll();
         settingsDao.changeDivisionState(false);
-
     }
 
     @Override
     public void saveList(List<Division> division, LocalDate date) {
-
         divisionDAO.deleteAll();
         for (Division div : division) {
             div.setDate(date);
             divisionDAO.save(div);
         }
         settingsDao.changeDivisionState(true);
-
     }
 
     @Override
@@ -86,7 +87,6 @@ public class DivisionServiceImpl implements DivisionService {
 
     @Override
     public List<Division> prepareDivisionList(List<Tenant> tenantList, List<Apartment> apartmentList) {
-
         List<Division> divisionList = new ArrayList<>();
         for (Tenant ten : tenantList) {
             for (Apartment ap : apartmentList) {
@@ -110,15 +110,9 @@ public class DivisionServiceImpl implements DivisionService {
         return tmp;
     }
 
-
     @Override
     public boolean isDivisionCorrect() {
         return settingsDao.isDivisionCorrect();
     }
-
-//    @Override
-//    public Map<Tenant, List<Division>> getMappedList() {
-//        return null;
-//    }
 
 }

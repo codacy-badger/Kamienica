@@ -13,10 +13,14 @@ import java.util.List;
 @Transactional
 public class ApartmentServiceImpl implements ApartmentService {
 
+    private final ApartmentDao apartmentDAO;
+    private final SettingsDao settingsDao;
+
     @Autowired
-    private ApartmentDao apartmentDAO;
-    @Autowired
-    private SettingsDao settingsDao;
+    public ApartmentServiceImpl(ApartmentDao apartmentDAO, SettingsDao settingsDao) {
+        this.apartmentDAO = apartmentDAO;
+        this.settingsDao = settingsDao;
+    }
 
     @Override
     public void save(Apartment apartment) {

@@ -11,8 +11,12 @@ import java.util.List;
 @Transactional
 public class SettingsServiceImpl implements SettingsService {
 
+	private final SettingsDao dao;
+
 	@Autowired
-	private SettingsDao dao;
+	public SettingsServiceImpl(SettingsDao dao) {
+		this.dao = dao;
+	}
 
 	@Override
 	public Settings getSettings() {

@@ -1,7 +1,6 @@
 package kamienica.feature.residenceownership;
 
 import kamienica.core.enums.UserRole;
-import kamienica.feature.tenant.TenantDao;
 import kamienica.model.ResidenceOwnership;
 import kamienica.model.Tenant;
 import org.hibernate.criterion.Criterion;
@@ -16,8 +15,12 @@ import java.util.List;
 @Transactional
 public class ResidenceOwnershipServiceImpl implements ResidenceOwnershipService {
 
+    private final ResidenceOwnershipDao residenceOwnershipDao;
+
     @Autowired
-    ResidenceOwnershipDao residenceOwnershipDao;
+    public ResidenceOwnershipServiceImpl(ResidenceOwnershipDao residenceOwnershipDao) {
+        this.residenceOwnershipDao = residenceOwnershipDao;
+    }
 
     @Override
     public List<ResidenceOwnership> list(final Tenant t) {
@@ -28,7 +31,6 @@ public class ResidenceOwnershipServiceImpl implements ResidenceOwnershipService 
             return residenceOwnershipDao.getList();
         }
     }
-
 
     @Override
     public void delete(Long id) {

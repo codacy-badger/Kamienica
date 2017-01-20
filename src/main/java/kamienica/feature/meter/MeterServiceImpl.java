@@ -10,7 +10,6 @@ import org.joda.time.LocalDate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.validation.BindingResult;
 
 import java.util.List;
 import java.util.Set;
@@ -19,14 +18,16 @@ import java.util.Set;
 @Transactional
 public class MeterServiceImpl implements MeterService {
 
-    @Autowired
-    MeterDao<MeterEnergy> energy;
+    private final MeterDao<MeterEnergy> energy;
+    private final MeterDao<MeterGas> gas;
+    private final MeterDao<MeterWater> water;
 
     @Autowired
-    MeterDao<MeterGas> gas;
-
-    @Autowired
-    MeterDao<MeterWater> water;
+    public MeterServiceImpl(MeterDao<MeterEnergy> energy, MeterDao<MeterGas> gas, MeterDao<MeterWater> water) {
+        this.energy = energy;
+        this.gas = gas;
+        this.water = water;
+    }
 
     @Override
     public <T extends Meter> void save(T meter, Media media) {

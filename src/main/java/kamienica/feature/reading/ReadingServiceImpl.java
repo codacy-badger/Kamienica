@@ -6,7 +6,6 @@ import kamienica.feature.meter.MeterDao;
 import kamienica.model.*;
 import org.joda.time.LocalDate;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -19,19 +18,25 @@ import java.util.Set;
 @Transactional
 public class ReadingServiceImpl implements ReadingService {
 
-    @Qualifier("readingEnergyDao")
+   // @Qualifier("readingEnergyDao")
+    private final ReadingEnergyDao energy;
+    private final ReadingWaterDao water;
+    private final ReadingGasDao gas;
+    private final MeterDao<MeterEnergy> meterEnergy;
+    private final MeterDao<MeterGas> meterGas;
+    private final MeterDao<MeterWater> meterWater;
+
     @Autowired
-    private ReadingEnergyDao energy;
-    @Autowired
-    private ReadingWaterDao water;
-    @Autowired
-    private ReadingGasDao gas;
-    @Autowired
-    private MeterDao<MeterEnergy> meterEnergy;
-    @Autowired
-    private MeterDao<MeterGas> meterGas;
-    @Autowired
-    private MeterDao<MeterWater> meterWater;
+    public ReadingServiceImpl(ReadingEnergyDao energy, ReadingWaterDao water,
+                              ReadingGasDao gas, MeterDao<MeterEnergy> meterEnergy,
+                              MeterDao<MeterGas> meterGas, MeterDao<MeterWater> meterWater) {
+        this.energy = energy;
+        this.water = water;
+        this.gas = gas;
+        this.meterEnergy = meterEnergy;
+        this.meterGas = meterGas;
+        this.meterWater = meterWater;
+    }
 
     @Override
     public List<? extends Reading> getList(Media media) {
