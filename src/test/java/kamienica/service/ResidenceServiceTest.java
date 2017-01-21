@@ -1,9 +1,8 @@
 package kamienica.service;
 
 import kamienica.configuration.DatabaseTest;
-import kamienica.model.Residence;
-import kamienica.model.ResidenceOwnership;
-import kamienica.model.Tenant;
+import kamienica.core.enums.Media;
+import kamienica.model.*;
 import org.hibernate.exception.ConstraintViolationException;
 import org.junit.Ignore;
 import org.junit.Test;
@@ -23,10 +22,18 @@ public class ResidenceServiceTest extends DatabaseTest {
         final Residence res = new Residence("Świętojańska", "46", "Gdynia");
         final Tenant t = tenantService.getTenantById(1L);
         residenceService.save(res, t);
+
         final List<Residence> result = residenceService.getList();
-        final List<ResidenceOwnership> ownerships = residenceOwnershipService.list(t);
         assertEquals(3, result.size());
+
+        final List<ResidenceOwnership> ownerships = residenceOwnershipService.list(t);
         assertEquals(2, ownerships.size());
+
+        final List<Apartment> ap = apartmentService.getList();
+        assertEquals(5, ap.size());
+
+        final List<MeterEnergy> meterEnergies = meterService.getListForOwner(Media.ENERGY, t);
+        assertEquals(5, meterEnergies.size());
     }
 
     @Test(expected = ConstraintViolationException.class)

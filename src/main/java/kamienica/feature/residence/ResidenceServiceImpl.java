@@ -1,10 +1,10 @@
 package kamienica.feature.residence;
 
+import kamienica.core.enums.Media;
+import kamienica.feature.apartment.ApartmentDao;
+import kamienica.feature.meter.MeterService;
 import kamienica.feature.residenceownership.ResidenceOwnershipDao;
-import kamienica.feature.tenant.TenantDao;
-import kamienica.model.Residence;
-import kamienica.model.ResidenceOwnership;
-import kamienica.model.Tenant;
+import kamienica.model.*;
 import org.hibernate.criterion.Criterion;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,20 +20,26 @@ public class ResidenceServiceImpl implements ResidenceService {
 
     private final ResidenceDao residenceDao;
     private final ResidenceOwnershipDao residenceOwnershipDao;
+    private final ApartmentDao apartmentDao;
 
     @Autowired
-    public ResidenceServiceImpl(ResidenceDao residenceDao, ResidenceOwnershipDao residenceOwnershipDao) {
+    public ResidenceServiceImpl(ResidenceDao residenceDao, ResidenceOwnershipDao residenceOwnershipDao,
+                                ApartmentDao apartmentDao) {
         this.residenceDao = residenceDao;
         this.residenceOwnershipDao = residenceOwnershipDao;
+        this.apartmentDao = apartmentDao;
     }
 
     @Override
-    public void save(Residence residence, Tenant t) {
+    public void save(final Residence residence, final Tenant t) {
         ResidenceOwnership ro = new ResidenceOwnership();
         ro.setResidenceOwned(residence);
         ro.setOwner(t);
         residenceDao.save(residence);
         residenceOwnershipDao.save(ro);
+
+        final Apartment ap = new Apartment(residence, 0, "0000", "Część Wpólna");
+        apartmentDao.save(ap);
     }
 
     @Override
