@@ -1,9 +1,9 @@
 package kamienica.core.calculator;
 
 import kamienica.core.util.CommonUtils;
-import kamienica.model.ReadingEnergy;
 import kamienica.model.Apartment;
 import kamienica.model.MediaUsage;
+import kamienica.model.ReadingEnergy;
 
 import java.util.ArrayList;
 import java.util.List;

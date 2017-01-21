@@ -3,9 +3,9 @@ package kamienica.core.calculator;
 import kamienica.core.exception.NegativeConsumptionValue;
 import kamienica.core.exception.UsageCalculationException;
 import kamienica.core.util.CommonUtils;
-import kamienica.model.Reading;
 import kamienica.model.Apartment;
 import kamienica.model.MediaUsage;
+import kamienica.model.Reading;
 import org.joda.time.LocalDate;
 import org.springframework.stereotype.Component;
 

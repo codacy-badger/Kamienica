@@ -1,9 +1,7 @@
 package kamienica.feature.residence;
 
-import kamienica.core.enums.Media;
 import kamienica.feature.apartment.ApartmentDao;
 import kamienica.feature.meter.MeterDao;
-import kamienica.feature.meter.MeterService;
 import kamienica.feature.residenceownership.ResidenceOwnershipDao;
 import kamienica.model.*;
 import org.hibernate.criterion.Criterion;

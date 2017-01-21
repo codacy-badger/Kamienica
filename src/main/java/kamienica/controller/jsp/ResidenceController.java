@@ -1,8 +1,6 @@
 package kamienica.controller.jsp;
 
-import kamienica.core.util.CommonUtils;
 import kamienica.feature.residence.ResidenceService;
-import kamienica.model.Residence;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;

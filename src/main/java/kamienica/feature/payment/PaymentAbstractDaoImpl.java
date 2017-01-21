@@ -1,11 +1,7 @@
 package kamienica.feature.payment;
 
 import kamienica.core.dao.AbstractDao;
-import kamienica.model.Reading;
-import kamienica.model.Invoice;
-import kamienica.model.Payment;
-import kamienica.model.PaymentEnergy;
-import kamienica.model.Tenant;
+import kamienica.model.*;
 import org.hibernate.Criteria;
 import org.hibernate.Query;
 import org.hibernate.criterion.Order;

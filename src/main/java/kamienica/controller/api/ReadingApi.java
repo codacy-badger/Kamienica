@@ -1,8 +1,8 @@
 package kamienica.controller.api;
 
 import kamienica.core.enums.Media;
-import kamienica.model.Reading;
 import kamienica.feature.reading.ReadingService;
+import kamienica.model.Reading;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

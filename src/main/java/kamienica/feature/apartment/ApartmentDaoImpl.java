@@ -3,10 +3,7 @@ package kamienica.feature.apartment;
 import kamienica.core.dao.AbstractDao;
 import kamienica.model.Apartment;
 import kamienica.model.Residence;
-import kamienica.model.Tenant;
 import org.hibernate.Query;
-import org.hibernate.criterion.Criterion;
-import org.hibernate.criterion.Restrictions;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;

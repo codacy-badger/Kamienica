@@ -3,7 +3,6 @@ package kamienica.feature.user_admin;
 import kamienica.core.enums.Media;
 import kamienica.feature.payment.PaymentService;
 import kamienica.model.Apartment;
-import kamienica.model.SecurityUser;
 import kamienica.model.Tenant;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -17,12 +16,12 @@ import java.util.Map;
 import java.util.Objects;
 
 @Controller
-public class AdminUserController {
+public class UserController {
 
 	@Autowired
 	private PaymentService paymentService;
 	@Autowired
-	private SecurityService userDetailsService;
+	private SecurityService securityService;
 	@Autowired
 	private OwnerUserDataService ownerUserDataService;
 
@@ -33,13 +32,13 @@ public class AdminUserController {
 		return new ModelAndView("/Admin/Home", "model", model);
 	}
 
-	// =====================USER===========================================
+	// =====================TENANT===========================================
 	@RequestMapping("/User/userHome")
 	public ModelAndView userHome() {
 		Map<String, Object> model = new HashMap<>();
-		SecurityUser myUser = userDetailsService.getCurrentUser();
-		if (myUser != null) {
-			model.put("user", myUser);
+		final Tenant t = ownerUserDataService.getLoggedTenant();
+		if (t != null) {
+			model.put("user", t);
 
 		} else {
 			return new ModelAndView("/User/UserHome");
@@ -51,7 +50,7 @@ public class AdminUserController {
 	@RequestMapping("/User/userReadings")
 	public ModelAndView aparmtnetRest(@RequestParam(value = "media") String media) {
 		HashMap<String, Object> model = new HashMap<>();
-		Apartment ap = userDetailsService.getCurrentUser().getTenant().getApartment();
+		Apartment ap = ownerUserDataService.getLoggedTenant().getApartment();
 		switch (media) {
 		case "energy":
 			model.put("media", "Energia");
@@ -75,7 +74,7 @@ public class AdminUserController {
 	@RequestMapping("/User/userPayment")
 	public ModelAndView userPayment() {
 		Map<String, Object> model = new HashMap<>();
-		Tenant tenant = userDetailsService.getCurrentUser().getTenant();
+		final Tenant tenant = ownerUserDataService.getLoggedTenant();
 
 		model.put("energy", paymentService.getPaymentForTenant(tenant, Media.ENERGY));
 		model.put("water", paymentService.getPaymentForTenant(tenant, Media.GAS));
@@ -99,14 +98,14 @@ public class AdminUserController {
 		}
 
 		try {
-			userDetailsService.changePassword(email, oldPassword, newPassword);
+			securityService.changePassword(email, oldPassword, newPassword);
 		} catch (UsernameNotFoundException e) {
 			model.put("error", "Niepoprawny login lub hasło");
 			return new ModelAndView("/User/UserPassword", "model", model);
 		}
 		model.put("class", "alert-success");
 		model.put("msg", "Hasło zostało zmienione");
-		model.put("user", userDetailsService.getCurrentUser().getTenant());
+		model.put("user", ownerUserDataService.getLoggedTenant());
 		return new ModelAndView("/User/UserHome", "model", model);
 	}
 

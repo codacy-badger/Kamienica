@@ -13,7 +13,6 @@ import org.springframework.format.annotation.DateTimeFormat;
 import javax.persistence.*;
 import javax.validation.constraints.Digits;
 import java.io.Serializable;
-import java.util.List;
 
 @Entity
 @Table(name = "tenant")

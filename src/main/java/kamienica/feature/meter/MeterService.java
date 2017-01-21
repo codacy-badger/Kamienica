@@ -3,7 +3,6 @@ package kamienica.feature.meter;
 import kamienica.core.enums.Media;
 import kamienica.model.Meter;
 import kamienica.model.Tenant;
-import org.springframework.validation.BindingResult;
 
 import java.util.List;
 import java.util.Set;
