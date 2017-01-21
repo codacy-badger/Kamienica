@@ -42,6 +42,14 @@ public abstract class Meter {
 		this.apartment = apartment;
 	}
 
+	public Meter(String description, String serialNumber, String unit, Apartment apartment, Residence res) {
+		this.description = description;
+		this.serialNumber = serialNumber;
+		this.unit = unit;
+		this.apartment = apartment;
+		this.residence = res;
+	}
+
 	public Meter() {
 	}
 

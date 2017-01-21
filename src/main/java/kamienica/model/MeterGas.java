@@ -16,9 +16,13 @@ public class MeterGas extends Meter implements Serializable {
     @Column(nullable = false)
     private boolean cwu;
 
-    @Autowired
     public MeterGas(String description, String serialNumber, String unit, Apartment apartment, boolean isCWU) {
         super(description, serialNumber, unit, apartment);
+        this.cwu = isCWU;
+    }
+
+    public MeterGas(String description, String serialNumber, String unit, Apartment apartment, Residence res, boolean isCWU) {
+        super(description, serialNumber, unit, apartment, res);
         this.cwu = isCWU;
     }
 

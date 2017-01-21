@@ -33,7 +33,8 @@ public class ResidenceServiceTest extends DatabaseTest {
         assertEquals(5, ap.size());
 
         final List<MeterEnergy> meterEnergies = meterService.getListForOwner(Media.ENERGY, t);
-        assertEquals(5, meterEnergies.size());
+        assertEquals(6, meterEnergies.size());
+
     }
 
     @Test(expected = ConstraintViolationException.class)

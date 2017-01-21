@@ -12,9 +12,13 @@ public class MeterEnergy extends Meter implements Serializable {
 
 	private static final long serialVersionUID = 1767126420777438931L;
 
-	@Autowired
 	public MeterEnergy(String description, String serialNumber, String unit, Apartment apartment) {
 		super(description, serialNumber, unit, apartment);
+
+	}
+
+	public MeterEnergy(String description, String serialNumber, String unit, Apartment apartment, Residence res) {
+		super(description, serialNumber, unit, apartment, res);
 
 	}
 
