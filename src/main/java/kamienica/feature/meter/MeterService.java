@@ -2,6 +2,7 @@ package kamienica.feature.meter;
 
 import kamienica.core.enums.Media;
 import kamienica.model.Meter;
+import kamienica.model.Tenant;
 import org.springframework.validation.BindingResult;
 
 import java.util.List;
@@ -15,7 +16,7 @@ public interface MeterService {
 
 	void delete(Long id, Media media);
 
-	<T extends Meter> List<T> getList(Media media);
+	<T extends Meter> List<T> getListForOwner(Media media, Tenant t);
 
 	<T extends Meter> T getById(Long id, Media media);
 

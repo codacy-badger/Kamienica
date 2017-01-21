@@ -53,10 +53,10 @@
 //
 //	@Testing
 //	public void listApartments() {
-//		when(service.getList()).thenReturn(apartments);
+//		when(service.getListForOwner()).thenReturn(apartments);
 //		Assert.assertEquals(controller.apartmentList().getModel().get("apartment"), apartments);
 //		Assert.assertEquals(controller.apartmentList().getViewName(), "/Admin/Apartment/ApartmentList");
-//		verify(service, atLeastOnce()).getList();
+//		verify(service, atLeastOnce()).getListForOwner();
 //
 //	}
 ////

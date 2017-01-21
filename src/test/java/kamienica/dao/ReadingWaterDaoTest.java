@@ -21,12 +21,12 @@
 //
 //	@Testing
 //	public void getUnresolvedReadings() {
-//		List<ReadingWater> list = dao.getList();
+//		List<ReadingWater> list = dao.getListForOwner();
 //		for (ReadingWater readingWater : list) {
 //			System.out.println(readingWater);
 //		}
 //
-//		List<MeterWater> meterList = meterDAO.getList();
+//		List<MeterWater> meterList = meterDAO.getListForOwner();
 //		for (MeterWater meterWater : meterList) {
 //			System.out.println(meterWater);
 //		}
@@ -87,10 +87,10 @@
 //		MeterWater test = meterDAO.getById(1L);
 //		ReadingWater reading = new ReadingWater(new LocalDate(), 300, test);
 //		dao.save(reading);
-//		Assert.assertEquals(dao.getList().size(), 16);
+//		Assert.assertEquals(dao.getListForOwner().size(), 16);
 //		Assert.assertEquals(dao.getById(16L).getValue(), 300.0);
 //		dao.deleteById(13L);
-//		Assert.assertEquals(dao.getList().size(), 15);
+//		Assert.assertEquals(dao.getListForOwner().size(), 15);
 //	}
 //
 //	private static Apartment getAp() {

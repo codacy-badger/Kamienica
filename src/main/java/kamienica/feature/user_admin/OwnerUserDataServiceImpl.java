@@ -151,7 +151,7 @@ public class OwnerUserDataServiceImpl implements OwnerUserDataService {
         return (SecurityUser) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
     }
 
-    public Tenant getCurrentTenant() {
+    public Tenant getLoggedTenant() {
         SecurityUser su =  (SecurityUser) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         return su.getTenant();
     }

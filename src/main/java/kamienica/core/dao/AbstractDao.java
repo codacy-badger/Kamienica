@@ -1,5 +1,6 @@
 package kamienica.core.dao;
 
+import kamienica.model.Residence;
 import org.hibernate.Criteria;
 import org.hibernate.Query;
 import org.hibernate.Session;
@@ -7,6 +8,7 @@ import org.hibernate.SessionFactory;
 import org.hibernate.criterion.Criterion;
 import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Projections;
+import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.lang.reflect.ParameterizedType;
@@ -19,6 +21,7 @@ public abstract class AbstractDao<T> {
     @Autowired
     protected SessionFactory sessionFactory;
     protected final Class<T> persistentClass;
+
 
     @SuppressWarnings("unchecked")
     public AbstractDao() {
@@ -110,6 +113,11 @@ public abstract class AbstractDao<T> {
     public List<T> getBySQLQuery(final String queryString) {
         Query query = getSession().createSQLQuery(queryString);
         return query.list();
+    }
+
+    public List<T> findForResidence(final List<Residence> residences) {
+        final Criterion forResidence = Restrictions.in("residence", residences);
+        return findByCriteria(forResidence);
     }
 
     @SuppressWarnings("unchecked")

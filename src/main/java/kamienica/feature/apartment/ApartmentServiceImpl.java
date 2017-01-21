@@ -1,7 +1,12 @@
 package kamienica.feature.apartment;
 
+import kamienica.feature.residence.ResidenceService;
+import kamienica.feature.residenceownership.ResidenceOwnershipDao;
 import kamienica.feature.settings.SettingsDao;
 import kamienica.model.Apartment;
+import kamienica.model.Residence;
+import kamienica.model.ResidenceOwnership;
+import kamienica.model.Tenant;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -17,6 +22,8 @@ public class ApartmentServiceImpl implements ApartmentService {
     private ApartmentDao apartmentDAO;
     @Autowired
     private SettingsDao settingsDao;
+    @Autowired
+    private ResidenceService residenceService;
 
     @Override
     public void save(Apartment apartment) {
@@ -27,6 +34,12 @@ public class ApartmentServiceImpl implements ApartmentService {
     @Override
     public List<Apartment> getList() {
         return apartmentDAO.getList();
+    }
+
+    @Override
+    public List<Apartment> getListForOwner(Tenant t) {
+        List<Residence> residences = residenceService.listForOwner(t);
+        return apartmentDAO.findForResidence(residences);
     }
 
     @Override

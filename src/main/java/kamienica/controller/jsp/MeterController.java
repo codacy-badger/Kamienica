@@ -145,7 +145,7 @@ public class MeterController {
 //	public ModelAndView meterEnergyList() {
 //		Map<String, Object> model = new HashMap<>();
 //
-//		model.put("meter", meterService.getList(Media.ENERGY));
+//		model.put("meter", meterService.getListForOwner(Media.ENERGY));
 //		return new ModelAndView("/Admin/Meter/MeterEnergyList", model);
 //
 //	}
@@ -153,7 +153,7 @@ public class MeterController {
 //	@RequestMapping("/Admin/Meter/meterWaterList")
 //	public ModelAndView meterWaterList() {
 //		Map<String, Object> model = new HashMap<>();
-//		model.put("meter", meterService.getList(Media.WATER));
+//		model.put("meter", meterService.getListForOwner(Media.WATER));
 //		return new ModelAndView("/Admin/Meter/MeterWaterList", model);
 //
 //	}
@@ -161,7 +161,7 @@ public class MeterController {
 //	@RequestMapping("/Admin/Meter/meterGasList")
 //	public ModelAndView meterGasList() {
 //		Map<String, Object> model = new HashMap<>();
-//		model.put("meter", meterService.getList(Media.GAS));
+//		model.put("meter", meterService.getListForOwner(Media.GAS));
 //		return new ModelAndView("/Admin/Meter/MeterGasList", model);
 //
 //	}

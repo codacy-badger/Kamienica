@@ -3,9 +3,7 @@ package kamienica.service;
 import kamienica.configuration.DatabaseTest;
 import kamienica.core.enums.Media;
 import kamienica.core.exception.NoMainCounterException;
-import kamienica.model.MeterGas;
-import kamienica.model.Reading;
-import kamienica.model.ReadingGas;
+import kamienica.model.*;
 import org.joda.time.LocalDate;
 import org.junit.Test;
 import org.springframework.transaction.annotation.Transactional;
@@ -90,7 +88,8 @@ public class ReadingGasServiceTest extends DatabaseTest {
     @Transactional
     @Test
     public void firstReadingForANewMeter() throws NoMainCounterException {
-        MeterGas meter = new MeterGas("test", "34", "3535", null, false);
+        final Apartment ap = apartmentService.getById(2L);
+        MeterGas meter = new MeterGas("test", "34", "3535", ap, false);
         meterService.save(meter, Media.GAS);
         List<ReadingGas> list = readingService.getLatestNew(Media.GAS);
         assertEquals(7, list.size());
@@ -117,7 +116,8 @@ public class ReadingGasServiceTest extends DatabaseTest {
     @Transactional
     @Test
     public void add() throws NoMainCounterException {
-        List<MeterGas> list = meterService.getList(Media.GAS);
+        final Tenant t = tenantService.getTenantById(1L);
+        List<MeterGas> list = meterService.getListForOwner(Media.GAS, t);
         List<ReadingGas> toSave = new ArrayList<>();
         for (MeterGas meter : list) {
             ReadingGas reading = new ReadingGas(LocalDate.parse("2050-01-01"), 800, meter);

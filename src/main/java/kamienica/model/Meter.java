@@ -27,6 +27,8 @@ public abstract class Meter {
 	protected String unit;
 	@ManyToOne
 	protected Apartment apartment;
+	@ManyToOne
+	protected Residence residence;
 	@Column(columnDefinition = "TINYINT(1)")
 	protected boolean main = false;
 	@DateTimeFormat(pattern = "yyyy-MM-dd")
@@ -41,6 +43,15 @@ public abstract class Meter {
 	}
 
 	public Meter() {
+	}
+
+
+	public Residence getResidence() {
+		return residence;
+	}
+
+	public void setResidence(Residence residence) {
+		this.residence = residence;
 	}
 
 	public LocalDate getDeactivation() {

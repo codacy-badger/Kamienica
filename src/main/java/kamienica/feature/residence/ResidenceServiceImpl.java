@@ -20,13 +20,11 @@ public class ResidenceServiceImpl implements ResidenceService {
 
     private final ResidenceDao residenceDao;
     private final ResidenceOwnershipDao residenceOwnershipDao;
-    private final TenantDao tenantDao;
 
     @Autowired
-    public ResidenceServiceImpl(ResidenceDao residenceDao, ResidenceOwnershipDao residenceOwnershipDao, TenantDao tenantDao) {
+    public ResidenceServiceImpl(ResidenceDao residenceDao, ResidenceOwnershipDao residenceOwnershipDao) {
         this.residenceDao = residenceDao;
         this.residenceOwnershipDao = residenceOwnershipDao;
-        this.tenantDao = tenantDao;
     }
 
     @Override

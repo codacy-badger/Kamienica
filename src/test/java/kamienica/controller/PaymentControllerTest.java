@@ -110,14 +110,14 @@
 //	// ArrayList<Tenant> tenants = (ArrayList<Tenant>)
 //	// tenantService.getActiveTenants();
 //	// ArrayList<Division> division = (ArrayList<Division>)
-//	// divisionService.getList();
+//	// divisionService.getListForOwner();
 //	// ArrayList<Apartment> apartments = (ArrayList<Apartment>)
-//	// apartmentService.getList();
+//	// apartmentService.getListForOwner();
 //	@Testing
 //	public void ValidateDivision() {
 //		when(tenantService.getActiveTenants()).thenReturn(tenants);
-//		when(divisionService.getList()).thenReturn(division);
-//		when(apartmentService.getList()).thenReturn(apartments);
+//		when(divisionService.getListForOwner()).thenReturn(division);
+//		when(apartmentService.getListForOwner()).thenReturn(apartments);
 //		Assert.assertEquals(DivisionValidator.validateDivision(apartments, division, tenants),
 //				true);	
 //	}
@@ -125,19 +125,19 @@
 //	@Testing
 //	public void prepareList() {
 //		when(tenantService.getActiveTenants()).thenReturn(tenants);
-//		when(divisionService.getList()).thenReturn(division);
-//		when(apartmentService.getList()).thenReturn(apartments);
+//		when(divisionService.getListForOwner()).thenReturn(division);
+//		when(apartmentService.getListForOwner()).thenReturn(apartments);
 //	
 //	}
 //	// @Testing
 //	// public void paymentRegister() {
-//	// when(apartmentService.getList()).thenReturn(apartments);
-//	// when(tenantService.getList()).thenReturn(tenants);
-//	// when(divisionService.getList()).thenReturn(division);
+//	// when(apartmentService.getListForOwner()).thenReturn(apartments);
+//	// when(tenantService.getListForOwner()).thenReturn(tenants);
+//	// when(divisionService.getListForOwner()).thenReturn(division);
 //	// when()
 //	// Assert.assertEquals(controller.apartmentList().getModel(), myModel);
 //	// Assert.assertEquals(myModel.get("apartment"), apartments);
-//	// verify(service, atLeastOnce()).getList();
+//	// verify(service, atLeastOnce()).getListForOwner();
 //	// }
 //
 //	// ---------------------SETUP------------------------------------------------
