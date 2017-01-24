@@ -38,7 +38,7 @@ public class PaymentGasDAOImpl extends PaymentAbstractDaoImpl<PaymentGas> implem
 	// }
 	//
 	// @Override
-	// public List<PaymentGas> getList() {
+	// public List<PaymentGas> getListForOwner() {
 	// @SuppressWarnings("unchecked")
 	// List<PaymentGas> list =
 	// getSession().createCriteria(PaymentGas.class).addOrder(Order.asc("paymentDate"))

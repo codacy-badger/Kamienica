@@ -1,5 +1,6 @@
 package kamienica.configuration;
 
+import kamienica.core.util.CommonUtils;
 import kamienica.feature.apartment.ApartmentService;
 import kamienica.feature.division.DivisionService;
 import kamienica.feature.invoice.InvoiceService;
@@ -12,21 +13,18 @@ import kamienica.feature.settings.SettingsService;
 import kamienica.feature.tenant.TenantService;
 import kamienica.feature.user_admin.OwnerUserDataService;
 import kamienica.feature.user_admin.SecurityService;
-import org.h2.tools.Server;
 import org.joda.time.LocalDate;
-import org.junit.BeforeClass;
+import org.junit.Rule;
 import org.junit.runner.RunWith;
-import org.mockito.Mock;
+import org.powermock.core.classloader.annotations.PrepareForTest;
+import org.powermock.modules.junit4.rule.PowerMockRule;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.context.SecurityContext;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
-import java.sql.SQLException;
-
 @ContextConfiguration(classes = {JUnitConfig.class})
 @RunWith(SpringJUnit4ClassRunner.class)
+@PrepareForTest(CommonUtils.class)
 public abstract class DatabaseTest {
 
     @Autowired
@@ -53,6 +51,8 @@ public abstract class DatabaseTest {
     protected ResidenceService residenceService;
     @Autowired
     protected ResidenceOwnershipService residenceOwnershipService;
+
+
 
     /**
      * difference factor for calculated data

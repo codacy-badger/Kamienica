@@ -30,7 +30,7 @@
 //    @Ignore
 //    public void list() throws Exception {
 //     //   api.list(true);
-//        verify(service, calls(1)).getList();
+//        verify(service, calls(1)).getListForOwner();
 //    }
 //
 //    @Test

@@ -3,10 +3,11 @@ package kamienica.controller.api;
 import kamienica.core.enums.Media;
 import kamienica.core.message.ApiErrorResponse;
 import kamienica.core.message.Message;
-import kamienica.model.Meter;
-import kamienica.model.MeterEnergy;
 import kamienica.feature.meter.MeterService;
 import kamienica.model.Apartment;
+import kamienica.model.Meter;
+import kamienica.model.MeterEnergy;
+import kamienica.model.Tenant;
 import org.hibernate.exception.ConstraintViolationException;
 import org.joda.time.LocalDate;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,8 +31,8 @@ public class MeterApi extends AbstractApi {
 
     @RequestMapping(value = "/{media}", method = RequestMethod.GET)
     public ResponseEntity<?> getList(@PathVariable Media media, @RequestParam(required = false) final LocalDate date) {
-
-        final List<? extends Meter> list = service.getList(media);
+        final Tenant t = ownerUserDataService.getLoggedTenant();
+        final List<? extends Meter> list = service.getListForOwner(media, t);
         if (list.isEmpty()) {
             return new ResponseEntity<List<Apartment>>(HttpStatus.NOT_FOUND);
         }

@@ -56,6 +56,14 @@ public class Apartment implements Serializable {
     public Apartment() {
     }
 
+    @Autowired
+    public Apartment(Residence res, int apartmentNumber, String intecom, String description) {
+        this.apartmentNumber = apartmentNumber;
+        this.intercom = intecom;
+        this.description = description;
+        this.residence = res;
+    }
+
     @Override
     public String toString() {
         return "Apartment [id=" + id + ", apartmentNumber=" + apartmentNumber + ", intercom=" + intercom

@@ -1,14 +1,10 @@
 package kamienica.controller.api;
 
 import kamienica.core.enums.Media;
-import kamienica.model.Payment;
 import kamienica.feature.payment.PaymentService;
-import kamienica.model.Reading;
 import kamienica.feature.user_admin.OwnerUserDataService;
 import kamienica.feature.user_admin.SecurityService;
-import kamienica.model.SecurityUser;
-import kamienica.model.Apartment;
-import kamienica.model.Tenant;
+import kamienica.model.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

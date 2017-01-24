@@ -3,6 +3,7 @@ package kamienica.service;
 import kamienica.configuration.DatabaseTest;
 import kamienica.core.enums.Media;
 import kamienica.model.MeterEnergy;
+import kamienica.model.Tenant;
 import org.joda.time.LocalDate;
 import org.junit.Test;
 import org.springframework.transaction.annotation.Transactional;
@@ -17,8 +18,8 @@ public class MeterEnergyServiceTest extends DatabaseTest {
 
     @Test
     public void getList() {
-        assertEquals(5, meterService.getList(Media.ENERGY).size());
-        List<MeterEnergy> list = meterService.getList(Media.ENERGY);
+        final Tenant t = tenantService.getTenantById(1L);
+        List<MeterEnergy> list = meterService.getListForOwner(Media.ENERGY, t);
         assertEquals(5, list.size());
 
     }
@@ -54,13 +55,14 @@ public class MeterEnergyServiceTest extends DatabaseTest {
     @Test
     @Transactional
     public void remove() {
+        final Tenant t = tenantService.getTenantById(1L);
         MeterEnergy meter = createDummyMeter();
         meterService.save(meter, Media.ENERGY);
-        assertEquals(6, meterService.getList(Media.ENERGY).size());
+        assertEquals(6, meterService.getListForOwner(Media.ENERGY, t).size());
         meterService.delete(6L, Media.ENERGY);
         meterService.delete(7L, Media.ENERGY);
         meterService.delete(8L, Media.ENERGY);
-        assertEquals(5, meterService.getList(Media.ENERGY).size());
+        assertEquals(5, meterService.getListForOwner(Media.ENERGY, t).size());
 
     }
 
@@ -88,7 +90,9 @@ public class MeterEnergyServiceTest extends DatabaseTest {
     }
 
     private MeterEnergy createDummyMeter() {
-        return new MeterEnergy("test", "test", "test", meterService.getById(3L, Media.ENERGY).getApartment());
+        MeterEnergy m =  new MeterEnergy("test", "test", "test", meterService.getById(3L, Media.ENERGY).getApartment());
+        m.setResidence(residenceService.getById(1L));
+        return m;
     }
 
 }

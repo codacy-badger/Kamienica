@@ -79,10 +79,10 @@
 //		MeterGas test = meterDAO.getById(1L);
 //		ReadingGas reading = new ReadingGas(new LocalDate(), 300, test);
 //		dao.save(reading);
-//		Assert.assertEquals(dao.getList().size(), 16);
+//		Assert.assertEquals(dao.getListForOwner().size(), 16);
 //		Assert.assertEquals(dao.getById(16L).getValue(), 300.0);
 //		dao.deleteById(13L);
-//		Assert.assertEquals(dao.getList().size(), 15);
+//		Assert.assertEquals(dao.getListForOwner().size(), 15);
 //	}
 //
 //	private static Apartment getAp() {

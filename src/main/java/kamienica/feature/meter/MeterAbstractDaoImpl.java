@@ -2,12 +2,14 @@ package kamienica.feature.meter;
 
 import kamienica.core.dao.AbstractDao;
 import kamienica.model.Meter;
+import kamienica.model.Tenant;
 import org.hibernate.Criteria;
 import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
 import org.joda.time.LocalDate;
 
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 public class MeterAbstractDaoImpl<T extends Meter> extends AbstractDao<T> {
@@ -30,6 +32,6 @@ public class MeterAbstractDaoImpl<T extends Meter> extends AbstractDao<T> {
 		return new HashSet<>(criteria.list());
 		
 	}
-	
-		
+
+
 }

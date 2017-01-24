@@ -114,14 +114,14 @@
 //		MeterEnergy test = meterDAO.getById(1L);
 //		ReadingEnergy reading = new ReadingEnergy(new LocalDate(), 300, test);
 //		dao.save(reading);
-//		Assert.assertEquals(dao.getList().size(), 21);
+//		Assert.assertEquals(dao.getListForOwner().size(), 21);
 //	}
 //
 //	@Rollback
 //	@Testing
 //	public void remove() {
 //		dao.deleteById(13L);
-//		Assert.assertEquals(dao.getList().size(), 20);
+//		Assert.assertEquals(dao.getListForOwner().size(), 20);
 //	}
 //
 //	private static Apartment getAp() {

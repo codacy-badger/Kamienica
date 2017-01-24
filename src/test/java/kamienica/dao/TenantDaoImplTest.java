@@ -63,7 +63,7 @@
 //	}
 //
 //	@Testing
-//	public void getCurrentTenant() {
+//	public void getLoggedTenant() {
 //		Apartment ap = apDao.getById(2L);
 //		Tenant ten = dao.getTenantForApartment(ap);
 //		Assert.assertEquals(ten.getFirstName(), "Maciej");
@@ -97,27 +97,27 @@
 //	@Testing(dependsOnMethods = { "findAll" })
 //	public void saveTenant() {
 //		dao.save(getSample());
-//		Assert.assertEquals(dao.getList().size(), 5);
+//		Assert.assertEquals(dao.getListForOwner().size(), 5);
 //	}
 //
 //	@Rollback
 //	@Testing(dependsOnMethods = { "findAll" })
 //	public void deleteById() {
-//		Assert.assertEquals(dao.getList().size(), 4);
+//		Assert.assertEquals(dao.getListForOwner().size(), 4);
 //		dao.deleteById(1L);
-//		Assert.assertEquals(dao.getList().size(), 3);
+//		Assert.assertEquals(dao.getListForOwner().size(), 3);
 //	}
 //
 //	@Testing(dependsOnMethods = { "findAll" })
 //	public void deleteInvalidId() {
-//		Assert.assertEquals(dao.getList().size(), 4);
+//		Assert.assertEquals(dao.getListForOwner().size(), 4);
 //		dao.deleteById(8L);
-//		Assert.assertEquals(dao.getList().size(), 4);
+//		Assert.assertEquals(dao.getListForOwner().size(), 4);
 //	}
 //
 //	@Testing
 //	public void findAll() {
-//		List<Tenant> list = dao.getList();
+//		List<Tenant> list = dao.getListForOwner();
 //		System.out.println(list);
 //		Assert.assertEquals(list.size(), 4);
 //	}
@@ -130,7 +130,7 @@
 //	@Testing(expectedExceptions = org.hibernate.exception.ConstraintViolationException.class)
 //	public void saveDuplicateEmail() {
 //		dao.save(getDuplcate());
-//		Assert.assertEquals(dao.getList().size(), 4);
+//		Assert.assertEquals(dao.getListForOwner().size(), 4);
 //	}
 //
 //	public Tenant getSample() {

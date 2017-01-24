@@ -2,8 +2,11 @@ package kamienica.feature.apartment;
 
 import kamienica.core.dao.AbstractDao;
 import kamienica.model.Apartment;
+import kamienica.model.Residence;
 import org.hibernate.Query;
 import org.springframework.stereotype.Repository;
+
+import java.util.List;
 
 @Repository("apartmentDao")
 public class ApartmentDaoImpl extends AbstractDao<Apartment> implements ApartmentDao {
@@ -17,5 +20,9 @@ public class ApartmentDaoImpl extends AbstractDao<Apartment> implements Apartmen
         return ((Number) query.uniqueResult()).intValue();
     }
 
+    @Override
+    public List<Apartment> getListForOwner(List<Residence> residences) {
+        return findForResidence(residences);
+    }
 
 }

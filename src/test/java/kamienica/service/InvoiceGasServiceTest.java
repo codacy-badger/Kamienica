@@ -4,14 +4,9 @@ import kamienica.configuration.DatabaseTest;
 import kamienica.core.enums.Media;
 import kamienica.core.enums.WaterHeatingSystem;
 import kamienica.core.exception.InvalidDivisionException;
-import kamienica.model.Payment;
-import kamienica.model.Reading;
-import kamienica.model.ReadingGas;
-import kamienica.model.Apartment;
-import kamienica.model.InvoiceGas;
-import kamienica.model.Settings;
+import kamienica.model.*;
 import org.joda.time.LocalDate;
-import org.junit.Ignore;
+import org.junit.Before;
 import org.junit.Test;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -21,9 +16,19 @@ import static org.junit.Assert.assertEquals;
 
 public class InvoiceGasServiceTest extends DatabaseTest {
 
+    private  Tenant t;
+    private Residence r;
+
+    @Before
+    public void initData() {
+        t = tenantService.getTenantById(1L);
+        r = residenceService.getById(1L);
+    }
+
     @Test
     public void getList() {
-        assertEquals(1, invoiceService.getList(Media.GAS).size());
+
+        assertEquals(1, invoiceService.getList(Media.GAS, t).size());
     }
 
     @Test
@@ -33,8 +38,8 @@ public class InvoiceGasServiceTest extends DatabaseTest {
         assertEquals(196, list.get(1).getValue(), 0);
         InvoiceGas invoice = new InvoiceGas("112233", new LocalDate(), 200, list.get(1));
 
-        invoiceService.save(invoice, Media.GAS);
-        assertEquals(2, invoiceService.getList(Media.GAS).size());
+        invoiceService.save(invoice, Media.GAS, t, r);
+        assertEquals(2, invoiceService.getList(Media.GAS, t).size());
         List<? extends Payment> paymentList = paymentService.getPaymentList(Media.GAS);
 
         assertEquals(6, paymentList.size());
@@ -55,8 +60,8 @@ public class InvoiceGasServiceTest extends DatabaseTest {
         assertEquals(114, list.get(0).getValue(), 0);
         InvoiceGas invoice = new InvoiceGas("112233",  new LocalDate(), 200, list.get(0));
 
-        invoiceService.save(invoice, Media.GAS);
-        assertEquals(2, invoiceService.getList(Media.GAS).size());
+        invoiceService.save(invoice, Media.GAS, t, r);
+        assertEquals(2, invoiceService.getList(Media.GAS, t).size());
         List<? extends Payment> paymentList = paymentService.getPaymentList(Media.GAS);
 
         assertEquals(6, paymentList.size());
@@ -81,8 +86,8 @@ public class InvoiceGasServiceTest extends DatabaseTest {
         assertEquals(114, list.get(0).getValue(), 0);
         InvoiceGas invoice = new InvoiceGas("112233", new LocalDate(), 200, list.get(0));
 
-        invoiceService.save(invoice, Media.GAS);
-        assertEquals(2, invoiceService.getList(Media.GAS).size());
+        invoiceService.save(invoice, Media.GAS, t, r);
+        assertEquals(2, invoiceService.getList(Media.GAS, t).size());
         List<? extends Payment> paymentList = paymentService.getPaymentList(Media.GAS);
 
         assertEquals(6, paymentList.size());

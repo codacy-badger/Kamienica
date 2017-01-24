@@ -1,8 +1,8 @@
 package kamienica.core.conventer;
 
 import kamienica.core.enums.Media;
-import kamienica.model.ReadingGas;
 import kamienica.feature.reading.ReadingService;
+import kamienica.model.ReadingGas;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.convert.converter.Converter;
 import org.springframework.stereotype.Component;

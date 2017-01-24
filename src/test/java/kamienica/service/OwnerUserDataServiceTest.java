@@ -2,12 +2,7 @@ package kamienica.service;
 
 import kamienica.configuration.DatabaseTest;
 import kamienica.core.enums.Status;
-import kamienica.model.ReadingEnergy;
-import kamienica.model.ReadingGas;
-import kamienica.model.ReadingWater;
-import kamienica.model.Apartment;
-import kamienica.model.Residence;
-import kamienica.model.Tenant;
+import kamienica.model.*;
 import org.joda.time.Days;
 import org.joda.time.LocalDate;
 import org.junit.Test;

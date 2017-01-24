@@ -2,7 +2,6 @@ package kamienica.feature.residence;
 
 import kamienica.model.Residence;
 import kamienica.model.Tenant;
-import org.hibernate.criterion.Criterion;
 
 import java.util.List;
 

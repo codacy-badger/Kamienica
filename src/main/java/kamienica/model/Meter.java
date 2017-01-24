@@ -1,6 +1,5 @@
 package kamienica.model;
 
-import kamienica.model.Apartment;
 import org.hibernate.annotations.Type;
 import org.hibernate.validator.constraints.NotEmpty;
 import org.joda.time.LocalDate;
@@ -27,6 +26,8 @@ public abstract class Meter {
 	protected String unit;
 	@ManyToOne
 	protected Apartment apartment;
+	@ManyToOne
+	protected Residence residence;
 	@Column(columnDefinition = "TINYINT(1)")
 	protected boolean main = false;
 	@DateTimeFormat(pattern = "yyyy-MM-dd")
@@ -40,7 +41,24 @@ public abstract class Meter {
 		this.apartment = apartment;
 	}
 
+	public Meter(String description, String serialNumber, String unit, Apartment apartment, Residence res) {
+		this.description = description;
+		this.serialNumber = serialNumber;
+		this.unit = unit;
+		this.apartment = apartment;
+		this.residence = res;
+	}
+
 	public Meter() {
+	}
+
+
+	public Residence getResidence() {
+		return residence;
+	}
+
+	public void setResidence(Residence residence) {
+		this.residence = residence;
 	}
 
 	public LocalDate getDeactivation() {

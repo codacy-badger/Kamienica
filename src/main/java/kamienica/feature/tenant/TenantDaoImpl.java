@@ -2,7 +2,6 @@ package kamienica.feature.tenant;
 
 import kamienica.core.dao.AbstractDao;
 import kamienica.core.enums.Status;
-import kamienica.core.enums.UserRole;
 import kamienica.model.Apartment;
 import kamienica.model.Tenant;
 import org.hibernate.Criteria;

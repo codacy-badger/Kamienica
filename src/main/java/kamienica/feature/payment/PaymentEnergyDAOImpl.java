@@ -26,7 +26,7 @@ public class PaymentEnergyDAOImpl extends PaymentAbstractDaoImpl<PaymentEnergy>
 //	}
 //
 //	@Override
-//	public List<PaymentEnergy> getList() {
+//	public List<PaymentEnergy> getListForOwner() {
 //		@SuppressWarnings("unchecked")
 //		List<PaymentEnergy> list = getSession().createCriteria(PaymentEnergy.class).addOrder(Order.asc("paymentDate"))
 //				.addOrder(Order.asc("tenant")).list();
