@@ -1,6 +1,6 @@
 package kamienica.feature.reading;
 
-import kamienica.core.dao.AbstractDao;
+import kamienica.core.daoservice.BasicDaoImpl;
 import kamienica.model.Invoice;
 import kamienica.model.Reading;
 import org.hibernate.Criteria;
@@ -13,7 +13,7 @@ import org.joda.time.LocalDate;
 import java.util.List;
 import java.util.Set;
 
-public abstract class ReadingAbstractDaoImpl<T extends Reading> extends AbstractDao<T> {
+public abstract class ReadingAbstractDaoImpl<T extends Reading> extends BasicDaoImpl<T> {
 
 	protected static final String GET_PREVIOUS = "SELECT * FROM %1$s where readingDate=(SELECT max(readingDate) FROM %1$s WHERE readingDate < :date )  AND meter_id IN(:list)";
 	protected static final String COUNT_LAST_READING_DAYS = "SELECT DATEDIFF(CURDATE() , readingDate) FROM %s order by readingDate desc limit 1;";

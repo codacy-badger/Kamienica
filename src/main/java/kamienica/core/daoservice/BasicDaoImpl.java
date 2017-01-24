@@ -1,8 +1,7 @@
-package kamienica.core.dao;
+package kamienica.core.daoservice;
 
-import kamienica.core.util.SecurityDetails;
-import kamienica.model.Apartment;
 import kamienica.model.Residence;
+import kamienica.model.Tenant;
 import org.hibernate.Criteria;
 import org.hibernate.Query;
 import org.hibernate.Session;
@@ -18,14 +17,14 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-public abstract class AbstractDao<T> {
+public abstract class BasicDaoImpl<T> {
 
     @Autowired
     private SessionFactory sessionFactory;
     protected final Class<T> persistentClass;
 
     @SuppressWarnings("unchecked")
-    public AbstractDao() {
+    public BasicDaoImpl() {
         this.persistentClass = (Class<T>) ((ParameterizedType) this.getClass().getGenericSuperclass())
                 .getActualTypeArguments()[0];
     }
@@ -108,6 +107,11 @@ public abstract class AbstractDao<T> {
         final Criterion forResidence = Restrictions.in("residence", residences);
         return findByCriteria(forResidence);
     }
+    public List<T> findForOwner(final Tenant t) {
+        final Criterion forResidence = Restrictions.eq("tenant", t);
+        return findByCriteria(forResidence);
+    }
+
 
     @SuppressWarnings("unchecked")
     public List<T> findByCriteria(final int firstResult, final int maxResults, final Order order,
@@ -134,15 +138,6 @@ public abstract class AbstractDao<T> {
         return crit.list();
     }
 
-   public List<T> listForOwner() {
-        final List<Residence> res = SecurityDetails.getResidencesForOwner();
-        return findByCriteria(Restrictions.in("residence", res));
-    }
-
-    public List<T> listForTenant() {
-        final Apartment ap = SecurityDetails.getApartmentForLoggedTenant();
-        return findByCriteria(Restrictions.eq("apartment", ap));
-    }
 
 
     protected Criteria createEntityCriteria() {

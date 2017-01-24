@@ -1,12 +1,12 @@
 package kamienica.feature.apartment;
 
-import kamienica.core.dao.DaoInterface;
+import kamienica.core.daoservice.BasicDao;
 import kamienica.model.Apartment;
 import kamienica.model.Residence;
 
 import java.util.List;
 
-public interface ApartmentDao extends DaoInterface<Apartment> {
+public interface ApartmentDao extends BasicDao<Apartment> {
 
 	int getNumOfEmptyApartment();
 

@@ -18,15 +18,15 @@
 //public class ReadingEnergyDaoTest extends EntityDaoImplTest {
 //
 //	@Autowired
-//	ReadingDao<ReadingEnergy, InvoiceEnergy> dao;
+//	ReadingDao<ReadingEnergy, InvoiceEnergy> daoservice;
 //	@Autowired
-//	DaoInterface<MeterEnergy> meterDAO;
+//	BasicDao<MeterEnergy> meterDAO;
 //
 //	
 //
 //	@Testing
 //	public void getUnresolvedReadings() {
-//		List<ReadingEnergy> list = dao.getUnresolvedReadings();
+//		List<ReadingEnergy> list = daoservice.getUnresolvedReadings();
 //		System.out.println(list);
 //		Assert.assertEquals(list.size(), 2);
 //	}
@@ -34,7 +34,7 @@
 //	@Testing
 //	public void getByDate() {
 //
-//		List<ReadingEnergy> list = dao.getByDate(new LocalDate(2010, 01, 01).toString());
+//		List<ReadingEnergy> list = daoservice.getByDate(new LocalDate(2010, 01, 01).toString());
 //		Assert.assertEquals(list.size(), 5);
 //		for (int i = 0; i < list.size(); i++) {
 //			if (i > 0) {
@@ -52,18 +52,18 @@
 //		System.out.println(start.getMonthOfYear());
 //		LocalDate end = LocalDate.now();
 //		int actual = Days.daysBetween(start, end).getDays();
-//		Assert.assertEquals(dao.countDaysFromLastReading(), actual);
+//		Assert.assertEquals(daoservice.countDaysFromLastReading(), actual);
 //	}
 //
 //	@Rollback
 //	@Testing
 //	public void resolveReadings() {
-//		ReadingEnergy reading = dao.getById(13L);
+//		ReadingEnergy reading = daoservice.getById(13L);
 //		InvoiceEnergy invoice = new InvoiceEnergy("sdf", "test", LocalDate.now(), 120, reading);
-//		dao.resolveReadings(invoice);
-//		dao.getUnresolvedReadings();
+//		daoservice.resolveReadings(invoice);
+//		daoservice.getUnresolvedReadings();
 //
-//		List<ReadingEnergy> list = dao.getByDate(new LocalDate(2010, 04, 01).toString());
+//		List<ReadingEnergy> list = daoservice.getByDate(new LocalDate(2010, 04, 01).toString());
 //		Assert.assertEquals(list.size(), 5);
 //		for (ReadingEnergy readingEnergy : list) {
 //			Assert.assertTrue(readingEnergy.isResolved());
@@ -73,7 +73,7 @@
 //
 //	// @Testing
 //	// public void getPrevious() {
-//	// List<ReadingEnergy> list = dao.getPrevious("2010-03-01");
+//	// List<ReadingEnergy> list = daoservice.getPrevious("2010-03-01");
 //	// Assert.assertEquals(list.size(), 4);
 //	// for (ReadingEnergy readingEnergy : list) {
 //	// Assert.assertEquals(readingEnergy.getValue(), 120.0);
@@ -82,7 +82,7 @@
 //	//
 //	// @Testing
 //	// public void getLatestList() {
-//	// List<ReadingEnergy> list = dao.getLatestList();
+//	// List<ReadingEnergy> list = daoservice.getLatestList();
 //	// Assert.assertEquals(list.size(), 4);
 //	// for (ReadingEnergy readingEnergy : list) {
 //	// Assert.assertEquals(readingEnergy.getValue(), 145.0);
@@ -92,7 +92,7 @@
 //	@Testing
 //	public void listForTenant() {
 //
-//		List<ReadingEnergy> list = dao.getListForTenant(getAp());
+//		List<ReadingEnergy> list = daoservice.getListForTenant(getAp());
 //		double sum = 0.0;
 //		for (ReadingEnergy readingEnergy : list) {
 //			sum += readingEnergy.getValue();
@@ -104,7 +104,7 @@
 //
 //	// @Testing
 //	// public void getLatestMap() {
-//	// HashMap<Integer, ReadingEnergy> list = dao.getLatestReadingsMap();
+//	// HashMap<Integer, ReadingEnergy> list = daoservice.getLatestReadingsMap();
 //	// Assert.assertEquals(list.get(1).getValue(), 145.0);
 //	//
 //	// }
@@ -113,15 +113,15 @@
 //	public void add() {
 //		MeterEnergy test = meterDAO.getById(1L);
 //		ReadingEnergy reading = new ReadingEnergy(new LocalDate(), 300, test);
-//		dao.save(reading);
-//		Assert.assertEquals(dao.getListForOwner().size(), 21);
+//		daoservice.save(reading);
+//		Assert.assertEquals(daoservice.getListForOwner().size(), 21);
 //	}
 //
 //	@Rollback
 //	@Testing
 //	public void remove() {
-//		dao.deleteById(13L);
-//		Assert.assertEquals(dao.getListForOwner().size(), 20);
+//		daoservice.deleteById(13L);
+//		Assert.assertEquals(daoservice.getListForOwner().size(), 20);
 //	}
 //
 //	private static Apartment getAp() {

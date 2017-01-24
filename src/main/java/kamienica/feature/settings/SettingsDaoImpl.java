@@ -1,6 +1,6 @@
 package kamienica.feature.settings;
 
-import kamienica.core.dao.AbstractDao;
+import kamienica.core.daoservice.BasicDaoImpl;
 import kamienica.model.Settings;
 import org.hibernate.Criteria;
 import org.hibernate.Query;
@@ -8,7 +8,7 @@ import org.hibernate.criterion.Projections;
 import org.springframework.stereotype.Repository;
 
 @Repository("settingsDao")
-public class SettingsDaoImpl extends AbstractDao<Settings> implements SettingsDao {
+public class SettingsDaoImpl extends BasicDaoImpl<Settings> implements SettingsDao {
 
 	@Override
 	public boolean isDivisionCorrect() {

@@ -1,6 +1,6 @@
 package kamienica.feature.reading;
 
-import kamienica.core.dao.DaoInterface;
+import kamienica.core.daoservice.BasicDao;
 import kamienica.model.Apartment;
 import kamienica.model.Invoice;
 import kamienica.model.ReadingGas;
@@ -9,7 +9,7 @@ import org.joda.time.LocalDate;
 import java.util.List;
 import java.util.Set;
 
-public interface ReadingGasDao extends DaoInterface<ReadingGas> {
+public interface ReadingGasDao extends BasicDao<ReadingGas> {
 
 	List<ReadingGas> getByDate(LocalDate date);
 

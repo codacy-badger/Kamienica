@@ -5,7 +5,6 @@ import kamienica.core.exception.NoMainCounterException;
 import kamienica.model.*;
 import org.joda.time.LocalDate;
 
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;

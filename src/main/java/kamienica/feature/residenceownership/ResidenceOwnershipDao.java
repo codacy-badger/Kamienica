@@ -1,7 +1,7 @@
 package kamienica.feature.residenceownership;
 
-import kamienica.core.dao.DaoInterface;
+import kamienica.core.daoservice.BasicDao;
 import kamienica.model.ResidenceOwnership;
 
-public interface ResidenceOwnershipDao extends DaoInterface<ResidenceOwnership> {
+public interface ResidenceOwnershipDao extends BasicDao<ResidenceOwnership> {
 }

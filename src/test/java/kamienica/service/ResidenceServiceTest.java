@@ -2,7 +2,6 @@ package kamienica.service;
 
 import kamienica.configuration.DatabaseTest;
 import kamienica.core.enums.Media;
-import kamienica.core.util.SecurityDetails;
 import kamienica.model.*;
 import org.hibernate.exception.ConstraintViolationException;
 import org.junit.Ignore;
@@ -13,8 +12,6 @@ import java.util.List;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
-import static org.powermock.api.mockito.PowerMockito.mockStatic;
-import static org.powermock.api.mockito.PowerMockito.when;
 
 public class ResidenceServiceTest extends DatabaseTest {
 
@@ -37,14 +34,6 @@ public class ResidenceServiceTest extends DatabaseTest {
         final List<MeterEnergy> meterEnergies = meterService.getListForOwner(Media.ENERGY, t);
         assertEquals(6, meterEnergies.size());
 
-    }
-
-    @Test
-    public void adssad() {
-       // mockStatic(SecurityDetails.class);
-        when(SecurityDetails.getLoggedTenant()).thenReturn(tenantService.getTenantById(1L));
-        long id = SecurityDetails.getLoggedTenant().getId();
-        assertEquals(1L, id);
     }
 
     @Test(expected = ConstraintViolationException.class)

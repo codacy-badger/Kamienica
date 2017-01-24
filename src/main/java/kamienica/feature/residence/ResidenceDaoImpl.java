@@ -1,6 +1,6 @@
 package kamienica.feature.residence;
 
-import kamienica.core.dao.AbstractDao;
+import kamienica.core.daoservice.BasicDaoImpl;
 import kamienica.model.Residence;
 import kamienica.model.Tenant;
 import org.hibernate.FetchMode;
@@ -10,7 +10,7 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 @Repository("residenceDao")
-public class ResidenceDaoImpl extends AbstractDao<Residence> implements ResidenceDao {
+public class ResidenceDaoImpl extends BasicDaoImpl<Residence> implements ResidenceDao {
     @Override
     public List<Residence> listForOwner(Tenant t) {
 

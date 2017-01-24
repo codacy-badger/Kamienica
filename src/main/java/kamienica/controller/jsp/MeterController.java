@@ -207,7 +207,7 @@ public class MeterController {
 //		try {
 //			meterService.update(meter, Media.ENERGY);
 //			// meterService.updateEnergy(meter);
-//		} catch (org.springframework.dao.DataIntegrityViolationException e) {
+//		} catch (org.springframework.daoservice.DataIntegrityViolationException e) {
 //
 //			Map<String, Object> model = prepareModel();
 //			model.put("url", "/Admin/Meter/meterEnergyOverwrite.html");
@@ -236,7 +236,7 @@ public class MeterController {
 //		try {
 //			meterService.update(meter, Media.WATER);
 //			// meterService.updateWater(meter);
-//		} catch (org.springframework.dao.DataIntegrityViolationException e) {
+//		} catch (org.springframework.daoservice.DataIntegrityViolationException e) {
 //			Map<String, Object> model = prepareModel();
 //			model.put("url", "/Admin/Meter/meterWaterOverwrite.html");
 //			if (e.getRootCause().toString().contains("desc")) {
@@ -262,7 +262,7 @@ public class MeterController {
 //		try {
 //			meterService.update(meter, Media.GAS);
 //			// meterService.updateGas(meter);
-//		} catch (org.springframework.dao.DataIntegrityViolationException e) {
+//		} catch (org.springframework.daoservice.DataIntegrityViolationException e) {
 //			Map<String, Object> model = prepareModel();
 //			model.put("url", "/Admin/Meter/meterGasOverwrite.html");
 //			if (e.getRootCause().toString().contains("desc")) {

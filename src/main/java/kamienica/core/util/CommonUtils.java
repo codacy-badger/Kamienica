@@ -1,16 +1,10 @@
 package kamienica.core.util;
 
-import kamienica.model.Apartment;
-import kamienica.model.Residence;
-import kamienica.model.SecurityUser;
-import kamienica.model.Tenant;
 import org.joda.time.Days;
 import org.joda.time.LocalDate;
-import org.springframework.security.core.context.SecurityContextHolder;
 
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
-import java.util.List;
 import java.util.Locale;
 
 public class CommonUtils {
