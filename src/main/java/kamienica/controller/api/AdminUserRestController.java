@@ -1,9 +1,10 @@
 package kamienica.controller.api;
 
 import kamienica.core.enums.Media;
+import kamienica.core.util.SecurityDetails;
 import kamienica.feature.payment.PaymentService;
 import kamienica.feature.user_admin.OwnerUserDataService;
-import kamienica.feature.user_admin.SecurityService;
+import kamienica.feature.user_admin.SecurityServiceImpl;
 import kamienica.model.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -22,7 +23,7 @@ public class AdminUserRestController {
 	@Autowired
 	private PaymentService paymentService;
 	@Autowired
-	private SecurityService userDetailsService;
+	private SecurityServiceImpl userDetailsService;
 	@Autowired
 	private OwnerUserDataService ownerUserDataService;
 
@@ -40,7 +41,7 @@ public class AdminUserRestController {
 	public ResponseEntity<List<? extends Reading>> getReadings(@PathVariable(value = "media") String media) {
 	
 		List<? extends Reading> readings = null;
-		Apartment ap = userDetailsService.getCurrentUser().getTenant().getApartment();
+		Apartment ap = SecurityDetails.getLoggedTenant().getApartment();
 		
 		switch (media) {
 
@@ -68,7 +69,7 @@ public class AdminUserRestController {
 
 	@RequestMapping(value = "/user/{media}/payments", method = RequestMethod.GET)
 	public ResponseEntity<List<? extends Payment>> userPayment(@PathVariable(value = "media") Media media) {
-		Tenant tenant = userDetailsService.getCurrentUser().getTenant();
+		Tenant tenant = SecurityDetails.getLoggedTenant();
 		List<? extends Payment> list;
 		list = paymentService.getPaymentForTenant(tenant, media);
 

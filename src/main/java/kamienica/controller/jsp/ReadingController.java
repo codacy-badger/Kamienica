@@ -2,7 +2,7 @@ package kamienica.controller.jsp;
 
 import kamienica.core.enums.Media;
 import kamienica.core.exception.NoMainCounterException;
-import kamienica.core.util.CommonUtils;
+import kamienica.core.util.SecurityDetails;
 import kamienica.feature.meter.MeterService;
 import kamienica.feature.reading.*;
 import kamienica.model.*;
@@ -153,7 +153,7 @@ public class ReadingController {
 
     @RequestMapping("/readingList")
     public ModelAndView readingList(@RequestParam("media") Media media) {
-        final Tenant t = CommonUtils.getLoggedTenant();
+        final Tenant t = SecurityDetails.getLoggedTenant();
         Map<String, Object> model = new HashMap<>();
         switch (media) {
             case ENERGY:

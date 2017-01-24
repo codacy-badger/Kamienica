@@ -1,5 +1,7 @@
 package kamienica.core.dao;
 
+import kamienica.core.util.SecurityDetails;
+import kamienica.model.Apartment;
 import kamienica.model.Residence;
 import org.hibernate.Criteria;
 import org.hibernate.Query;
@@ -19,26 +21,14 @@ import java.util.Set;
 public abstract class AbstractDao<T> {
 
     @Autowired
-    protected SessionFactory sessionFactory;
+    private SessionFactory sessionFactory;
     protected final Class<T> persistentClass;
-
 
     @SuppressWarnings("unchecked")
     public AbstractDao() {
         this.persistentClass = (Class<T>) ((ParameterizedType) this.getClass().getGenericSuperclass())
                 .getActualTypeArguments()[0];
-
     }
-
-    protected String getTabName() {
-        return persistentClass.getSimpleName().toLowerCase();
-    }
-
-
-    protected Session getSession() {
-        return sessionFactory.getCurrentSession();
-    }
-
 
     @SuppressWarnings("unchecked")
     public T getById(Long id) {
@@ -61,13 +51,13 @@ public abstract class AbstractDao<T> {
         query.executeUpdate();
     }
 
+    public void delete(T entity) {
+        getSession().delete(entity);
+    }
+
     public void delete(Long id) {
         Object o = getById(id);
         getSession().delete(o);
-    }
-
-    public void delete(T entity) {
-        getSession().delete(entity);
     }
 
     @SuppressWarnings("unchecked")
@@ -84,12 +74,10 @@ public abstract class AbstractDao<T> {
         return criteria.list();
     }
 
-
     @SuppressWarnings("unchecked")
     public Set<Long> getIdList() {
         Criteria criteria = createEntityCriteria().setProjection(Projections.property("id"));
         return new HashSet<>(criteria.list());
-
     }
 
     public long countByCriteria(final Criterion... criterion) {
@@ -146,8 +134,27 @@ public abstract class AbstractDao<T> {
         return crit.list();
     }
 
+   public List<T> listForOwner() {
+        final List<Residence> res = SecurityDetails.getResidencesForOwner();
+        return findByCriteria(Restrictions.in("residence", res));
+    }
+
+    public List<T> listForTenant() {
+        final Apartment ap = SecurityDetails.getApartmentForLoggedTenant();
+        return findByCriteria(Restrictions.eq("apartment", ap));
+    }
+
+
     protected Criteria createEntityCriteria() {
         return getSession().createCriteria(persistentClass);
+    }
+
+    protected String getTabName() {
+        return persistentClass.getSimpleName().toLowerCase();
+    }
+
+    protected Session getSession() {
+        return sessionFactory.getCurrentSession();
     }
 
 }

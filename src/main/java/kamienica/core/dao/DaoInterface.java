@@ -11,21 +11,19 @@ public interface DaoInterface<T> {
 
     void save(final T object);
 
-    List<T> getList();
-
-    List<T> paginatedList(final Integer firstResult, final Integer maxResults);
-
     void deleteById(final Long id);
 
     void delete(final Long id);
 
     void update(final T object);
 
-    T getById(final Long id);
+    List<T> getList();
 
-    Set<Long> getIdList();
+    List<T> listForOwner();
 
-    long countByCriteria(final Criterion... criterion);
+    List<T> listForTenant();
+
+    List<T> paginatedList(final Integer firstResult, final Integer maxResults);
 
     List<T> findByCriteria(final Criterion... criterion);
 
@@ -35,4 +33,12 @@ public interface DaoInterface<T> {
                            final Criterion... criterion);
 
     List<T> findForResidence(List<Residence> res);
+
+    T getById(final Long id);
+
+    Set<Long> getIdList();
+
+    long countByCriteria(final Criterion... criterion);
+
+
 }

@@ -21,7 +21,7 @@ public class UserController {
 	@Autowired
 	private PaymentService paymentService;
 	@Autowired
-	private SecurityService securityService;
+	private SecurityServiceImpl securityService;
 	@Autowired
 	private OwnerUserDataService ownerUserDataService;
 

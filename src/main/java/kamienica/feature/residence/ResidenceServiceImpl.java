@@ -20,11 +20,8 @@ public class ResidenceServiceImpl implements ResidenceService {
     private final ResidenceDao residenceDao;
     private final ResidenceOwnershipDao residenceOwnershipDao;
     private final ApartmentDao apartmentDao;
-
     private final MeterDao<MeterEnergy> energy;
-
     private final MeterDao<MeterGas> gas;
-
     private final MeterDao<MeterWater> water;
 
     @Autowired
@@ -46,19 +43,19 @@ public class ResidenceServiceImpl implements ResidenceService {
         residenceDao.save(residence);
         residenceOwnershipDao.save(ro);
 
-//        saveEssentialData(residence);
+        saveEssentialData(residence);
     }
-//TODO enabling this fails to save any data
-//    private void saveEssentialData(Residence residence) {
-//        final Apartment ap = new Apartment(residence, 0, "0000", "Część Wpólna");
-//        apartmentDao.save(ap);
-//        final MeterWater mw = new MeterWater("Licznik Główny Wody", "", "m3", ap, residence, false);
-//        final MeterGas mg = new MeterGas("Licznik Główny Gazu", "", "m3", ap, residence, false);
-//        final MeterEnergy me = new MeterEnergy("Licznik Główny Energii", "", "m3", ap, residence);
-//        energy.save(me);
-//        gas.save(mg);
-//        water.save(mw);
-//    }
+//TODO enabling this fails to save any data in tests
+    private void saveEssentialData(Residence residence) {
+        final Apartment ap = new Apartment(residence, 0, "0000", "Część Wpólna");
+        apartmentDao.save(ap);
+        final MeterWater mw = new MeterWater("Licznik Główny Wody", "", "m3", ap, residence, false);
+        final MeterGas mg = new MeterGas("Licznik Główny Gazu", "", "m3", ap, residence, false);
+        final MeterEnergy me = new MeterEnergy("Licznik Główny Energii", "", "m3", ap, residence);
+        energy.save(me);
+        gas.save(mg);
+        water.save(mw);
+    }
 
     @Override
     public void update(Residence residence) {
