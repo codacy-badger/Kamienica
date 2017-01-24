@@ -27,7 +27,17 @@ public class ReadingApi {
         if (list.isEmpty()) {
             return new ResponseEntity<Void>(HttpStatus.NOT_FOUND);
         }
-        return new ResponseEntity<List<? extends Reading>>(list, HttpStatus.OK);
+        return new ResponseEntity<>(list, HttpStatus.OK);
+    }
+
+    @RequestMapping(value = "/map/{media}", method = RequestMethod.GET)
+    public ResponseEntity<?> getMappedList(@PathVariable Media media) {
+
+        List<? extends Reading> list = service.getList(media);
+        if (list.isEmpty()) {
+            return new ResponseEntity<Void>(HttpStatus.NOT_FOUND);
+        }
+        return new ResponseEntity<>(list, HttpStatus.OK);
     }
 
     @RequestMapping(value = "/unresolved/{media}", method = RequestMethod.GET)

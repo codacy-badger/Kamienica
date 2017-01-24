@@ -42,6 +42,13 @@ public class ReadingGasServiceTest extends DatabaseTest {
     }
 
     @Test
+    public void getListForOwner() {
+        final Tenant t = tenantService.getTenantById(1L);
+        List<ReadingGas> list = (List<ReadingGas>) readingService.getListForOwner(Media.GAS, t);
+        assertEquals(18, list.size());
+    }
+
+    @Test
     public void getList() {
         assertEquals(18, readingService.getList(Media.GAS).size());
     }

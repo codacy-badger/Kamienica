@@ -35,8 +35,9 @@ public class Residence implements Serializable {
         this.city = city;
     }
 
-    public static long getSerialVersionUID() {
-        return serialVersionUID;
+    @Override
+    public String toString() {
+        return new StringBuilder().append(street).append(" ").append(number).append(", ").append(city).toString();
     }
 
     public Long getId() {
@@ -69,33 +70,5 @@ public class Residence implements Serializable {
 
     public void setCity(String city) {
         this.city = city;
-    }
-
-    @Override
-    public String toString() {
-        return new StringBuilder().append(street).append(" ").append(number).append(", ").append(city).toString();
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-
-        Residence residence = (Residence) o;
-
-        if (!getId().equals(residence.getId())) return false;
-        if (!getStreet().equals(residence.getStreet())) return false;
-        if (!getNumber().equals(residence.getNumber())) return false;
-        return getCity().equals(residence.getCity());
-
-    }
-
-    @Override
-    public int hashCode() {
-        int result = getId().hashCode();
-        result = 31 * result + getStreet().hashCode();
-        result = 31 * result + getNumber().hashCode();
-        result = 31 * result + getCity().hashCode();
-        return result;
     }
 }

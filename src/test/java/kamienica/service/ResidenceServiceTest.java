@@ -28,8 +28,8 @@ public class ResidenceServiceTest extends DatabaseTest {
         final List<ResidenceOwnership> ownerships = residenceOwnershipService.list(t);
         assertEquals(2, ownerships.size());
 
-        final List<Apartment> ap = apartmentService.getList();
-        assertEquals(5, ap.size());
+//        final List<Apartment> ap = apartmentService.getList();
+//        assertEquals(5, ap.size());
 
         final List<MeterEnergy> meterEnergies = meterService.getListForOwner(Media.ENERGY, t);
         assertEquals(6, meterEnergies.size());
@@ -57,7 +57,7 @@ public class ResidenceServiceTest extends DatabaseTest {
 
     @Test
     @Transactional
-    public void getList()  {
+    public void getList() {
         final List<Residence> result = residenceService.getList();
         assertEquals(2, result.size());
     }
@@ -70,11 +70,10 @@ public class ResidenceServiceTest extends DatabaseTest {
         assertEquals(1, result.size());
     }
 
-
     @Test
-    @Ignore
     public void getListForOwner() {
-        final List<Residence> residences = residenceService.getList();
+        Tenant t = tenantService.getTenantById(1L);
+        final List<Residence> residences = residenceService.listForOwner(t);
         assertEquals(1, residences.size());
     }
 

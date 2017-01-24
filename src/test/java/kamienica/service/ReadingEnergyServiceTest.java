@@ -19,13 +19,22 @@ public class ReadingEnergyServiceTest extends DatabaseTest {
 
     @Test
     public void getLatest() throws NoMainCounterException {
-        List<ReadingEnergy> list2 = readingService.getLatestNew(Media.ENERGY);
+        List<ReadingEnergy> list = readingService.getLatestNew(Media.ENERGY);
 
-        assertEquals(5, list2.size());
-        for (ReadingEnergy readingEnergy : list2) {
+        assertEquals(5, list.size());
+        for (ReadingEnergy readingEnergy : list) {
             assertEquals(LocalDate.parse("2016-09-01"), readingEnergy.getReadingDate());
         }
     }
+
+    @Test
+    public void getListForOwner() {
+        final Tenant t = tenantService.getTenantById(1L);
+        List<ReadingEnergy> list = (List<ReadingEnergy>) readingService.getListForOwner(Media.ENERGY, t);
+        assertEquals(15, list.size());
+    }
+
+
 
     @Transactional
     @Test

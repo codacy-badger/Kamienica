@@ -3,14 +3,19 @@ package kamienica.feature.reading;
 import kamienica.core.enums.Media;
 import kamienica.core.exception.NoMainCounterException;
 import kamienica.feature.meter.MeterDao;
+import kamienica.feature.residence.ResidenceService;
+import kamienica.feature.residenceownership.ResidenceOwnershipService;
+import kamienica.feature.user_admin.OwnerUserDataService;
 import kamienica.model.*;
+import org.hibernate.criterion.Criterion;
+import org.hibernate.criterion.Order;
+import org.hibernate.criterion.Restrictions;
 import org.joda.time.LocalDate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -32,9 +37,16 @@ public class ReadingServiceImpl implements ReadingService {
     private MeterDao<MeterGas> meterGas;
     @Autowired
     private MeterDao<MeterWater> meterWater;
+    @Autowired
+    private OwnerUserDataService ownerUserDataService;
+    @Autowired
+    private ResidenceOwnershipService residenceOwnershipService;
+    @Autowired
+    private ResidenceService residenceService;
+
 
     @Override
-    public List<? extends Reading> getList(Media media) {
+    public List<? extends Reading> getList(final Media media) {
         switch (media) {
             case ENERGY:
                 return energy.getList();
@@ -42,6 +54,27 @@ public class ReadingServiceImpl implements ReadingService {
                 return gas.getList();
             case WATER:
                 return water.getList();
+            default:
+                return null;
+        }
+    }
+
+    @Override
+    public List<? extends Reading> getListForOwner(final Media media, final Tenant t) {
+        //TODO refactor this as it takes 2 seconds to retreive data. Consider adding Residence to readings model
+
+        final List<Residence> residences = residenceService.listForOwner(t);
+        Criterion c = Restrictions.in("residence", residences);
+        switch (media) {
+            case ENERGY:
+                final List<MeterEnergy> me = meterEnergy.findByCriteria(c);
+                return energy.findByCriteria(Restrictions.in("meter", me));
+            case GAS:
+                final List<MeterGas> mg = meterGas.findByCriteria(c);
+                return gas.findByCriteria(Restrictions.in("meter", mg));
+            case WATER:
+                final List<MeterWater> mw = meterWater.findByCriteria(c);
+                return water.findByCriteria(Restrictions.in("meter", mw));
             default:
                 return null;
         }
@@ -155,7 +188,6 @@ public class ReadingServiceImpl implements ReadingService {
 
     @Override
     public List<ReadingEnergy> energyLatestEdit() {
-
         return energy.getLatestList(energy.getLatestDate());
     }
 
@@ -167,25 +199,6 @@ public class ReadingServiceImpl implements ReadingService {
     @Override
     public List<ReadingWater> waterLatestEdit() {
         return water.getLatestList(water.getLatestDate());
-    }
-
-    @Override
-    public List<? extends Reading> getPreviousReadingEnergy(LocalDate date, Media media) {
-        switch (media) {
-            case ENERGY:
-                return energy.getPrevious(date, meterEnergy.getIdList());
-
-            case GAS:
-
-                return gas.getPrevious(date, meterGas.getIdList());
-            case WATER:
-
-                return water.getPrevious(date, meterWater.getIdList());
-
-            default:
-                break;
-        }
-        return null;
     }
 
     @Override
@@ -304,33 +317,33 @@ public class ReadingServiceImpl implements ReadingService {
         return water.getUnresolvedReadings();
     }
 
-    @Override
-    public HashMap<String, List<ReadingWater>> getWaterReadingsForGasConsumption(InvoiceGas invoice) {
-        return water.getWaterReadingForGasConsumption(invoice);
-    }
-
-    @Override
-    public void deleteList(List<? extends Reading> list, Media media) {
-        switch (media) {
-            case ENERGY:
-                for (Reading reading : list) {
-                    energy.deleteById(reading.getId());
-                }
-                break;
-            case GAS:
-                for (Reading reading : list) {
-                    gas.deleteById(reading.getId());
-                }
-                break;
-            case WATER:
-                for (Reading reading : list) {
-                    water.deleteById(reading.getId());
-                }
-                break;
-            default:
-                break;
-        }
-    }
+//    @Override
+//    public HashMap<String, List<ReadingWater>> getWaterReadingsForGasConsumption(InvoiceGas invoice) {
+//        return water.getWaterReadingForGasConsumption(invoice);
+//    }
+//
+//    @Override
+//    public void deleteList(List<? extends Reading> list, Media media) {
+//        switch (media) {
+//            case ENERGY:
+//                for (Reading reading : list) {
+//                    energy.deleteById(reading.getId());
+//                }
+//                break;
+//            case GAS:
+//                for (Reading reading : list) {
+//                    gas.deleteById(reading.getId());
+//                }
+//                break;
+//            case WATER:
+//                for (Reading reading : list) {
+//                    water.deleteById(reading.getId());
+//                }
+//                break;
+//            default:
+//                break;
+//        }
+//    }
 
 
     @Override

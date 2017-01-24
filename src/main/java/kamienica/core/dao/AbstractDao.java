@@ -110,6 +110,7 @@ public abstract class AbstractDao<T> {
         return criteria.list();
     }
 
+
     public List<T> getBySQLQuery(final String queryString) {
         Query query = getSession().createSQLQuery(queryString);
         return query.list();
