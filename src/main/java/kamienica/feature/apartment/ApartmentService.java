@@ -1,6 +1,7 @@
 package kamienica.feature.apartment;
 
 import kamienica.model.Apartment;
+import kamienica.model.Tenant;
 
 import java.util.List;
 
@@ -9,6 +10,8 @@ public interface ApartmentService {
 	void save(Apartment apartment);
 
 	List<Apartment> getList();
+
+	List<Apartment> getListForOwner(Tenant t);
 
 	List<Apartment> paginatedList(Integer firstResult, Integer maxResults);
 

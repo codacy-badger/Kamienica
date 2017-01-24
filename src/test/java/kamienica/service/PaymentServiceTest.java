@@ -3,7 +3,6 @@ package kamienica.service;
 import kamienica.configuration.DatabaseTest;
 import kamienica.core.enums.Media;
 import kamienica.model.Payment;
-import kamienica.model.PaymentEnergy;
 import kamienica.model.Tenant;
 import org.junit.Test;
 

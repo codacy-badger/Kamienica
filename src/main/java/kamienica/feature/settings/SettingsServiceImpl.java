@@ -11,8 +11,12 @@ import java.util.List;
 @Transactional
 public class SettingsServiceImpl implements SettingsService {
 
+	private final SettingsDao dao;
+
 	@Autowired
-	private SettingsDao dao;
+	public SettingsServiceImpl(SettingsDao dao) {
+		this.dao = dao;
+	}
 
 	@Override
 	public Settings getSettings() {
@@ -21,11 +25,6 @@ public class SettingsServiceImpl implements SettingsService {
 			return null;
 		}
 		return list.get(0);
-	}
-
-	@Override
-	public void delete() {
-
 	}
 
 	@Override
@@ -40,7 +39,6 @@ public class SettingsServiceImpl implements SettingsService {
 
 	@Override
 	public boolean isDivisionCorrect() {
-
 		return dao.isDivisionCorrect();
 	}
 

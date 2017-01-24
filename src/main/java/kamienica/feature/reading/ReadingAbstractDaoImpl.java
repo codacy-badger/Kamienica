@@ -1,6 +1,6 @@
 package kamienica.feature.reading;
 
-import kamienica.core.dao.AbstractDao;
+import kamienica.core.daoservice.BasicDaoImpl;
 import kamienica.model.Invoice;
 import kamienica.model.Reading;
 import org.hibernate.Criteria;
@@ -13,12 +13,12 @@ import org.joda.time.LocalDate;
 import java.util.List;
 import java.util.Set;
 
-public abstract class ReadingAbstractDaoImpl<T extends Reading> extends AbstractDao<T> {
+public abstract class ReadingAbstractDaoImpl<T extends Reading> extends BasicDaoImpl<T> {
 
-	public static final String GET_PREVIOUS = "SELECT * FROM %1$s where readingDate=(SELECT max(readingDate) FROM %1$s WHERE readingDate < :date )  AND meter_id IN(:list)";
-	public static final String COUNT_LAST_READING_DAYS = "SELECT DATEDIFF(CURDATE() , readingDate) FROM %s order by readingDate desc limit 1;";
-	public static final String DELETE_LATEST = "delete from  %s where readingDate=:date and resolved=:res";
-	public static final String CHANGE_RESOLVEMENT = "update %s set resolved= :res where readingDate = :paramdate";
+	protected static final String GET_PREVIOUS = "SELECT * FROM %1$s where readingDate=(SELECT max(readingDate) FROM %1$s WHERE readingDate < :date )  AND meter_id IN(:list)";
+	protected static final String COUNT_LAST_READING_DAYS = "SELECT DATEDIFF(CURDATE() , readingDate) FROM %s order by readingDate desc limit 1;";
+	protected static final String DELETE_LATEST = "delete from  %s where readingDate=:date and resolved=:res";
+	protected static final String CHANGE_RESOLVEMENT = "update %s set resolved= :res where readingDate = :paramdate";
 
 	@Override
 	public List<T> getList() {

@@ -18,11 +18,11 @@ import org.springframework.stereotype.Component;
 public class InvoiceGasConverter implements Converter<Object, InvoiceGas> {
 
 	@Autowired
-    InvoiceService service;
+    private InvoiceService service;
 
 	@Override
 	public InvoiceGas convert(Object element) {
-		Long id = Long.parseLong((String) element);
+		final Long id = Long.parseLong((String) element);
 		return service.getGasByID(id);
 	}
 

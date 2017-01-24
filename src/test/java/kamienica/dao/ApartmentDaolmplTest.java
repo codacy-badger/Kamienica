@@ -20,7 +20,7 @@ public class ApartmentDaolmplTest {
 	@Test
 	@Ignore
 	public void findById() {
-		//TODO work out dao layer
+		//TODO work out daoservice layer
 
 		Apartment ap = apartemtnDao.getById(1L);
 

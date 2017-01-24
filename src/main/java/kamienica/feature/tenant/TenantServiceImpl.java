@@ -4,7 +4,6 @@ import kamienica.core.enums.Status;
 import kamienica.core.enums.UserRole;
 import kamienica.feature.settings.SettingsDao;
 import kamienica.model.Tenant;
-import org.hibernate.Criteria;
 import org.hibernate.criterion.Criterion;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,10 +16,14 @@ import java.util.List;
 @Transactional
 public class TenantServiceImpl implements TenantService {
 
+    private final TenantDao tenantDao;
+    private final SettingsDao settingsDao;
+
     @Autowired
-    private TenantDao tenantDao;
-    @Autowired
-    private SettingsDao settingsDao;
+    public TenantServiceImpl(TenantDao tenantDao, SettingsDao settingsDao) {
+        this.tenantDao = tenantDao;
+        this.settingsDao = settingsDao;
+    }
 
     @Override
     public void saveTenant(Tenant newTenant) {

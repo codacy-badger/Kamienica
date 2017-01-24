@@ -3,8 +3,6 @@ package kamienica.configuration;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.datatype.joda.JodaModule;
 import kamienica.core.conventer.*;
-import kamienica.core.conventer.InvoiceEnergyConverter;
-import kamienica.core.conventer.InvoiceGasConverter;
 import kamienica.feature.meter.MeterEnergyConverter;
 import kamienica.feature.meter.MeterGasConverter;
 import kamienica.feature.meter.MeterWaterConverter;

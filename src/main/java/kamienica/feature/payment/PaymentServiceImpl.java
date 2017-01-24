@@ -12,12 +12,16 @@ import java.util.List;
 @Transactional
 public class PaymentServiceImpl implements PaymentService {
 
-	@Autowired
 	private PaymentDao<PaymentGas> gas;
-	@Autowired
 	private PaymentDao<PaymentEnergy> energy;
-	@Autowired
 	private PaymentDao<PaymentWater> water;
+
+	@Autowired
+	public PaymentServiceImpl(PaymentDao<PaymentGas> gas, PaymentDao<PaymentEnergy> energy, PaymentDao<PaymentWater> water) {
+		this.gas = gas;
+		this.energy = energy;
+		this.water = water;
+	}
 
 	@Override
 	public List<? extends Payment> getPaymentList(Media media) {

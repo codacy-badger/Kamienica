@@ -3,9 +3,7 @@ package kamienica.service;
 import kamienica.configuration.DatabaseTest;
 import kamienica.core.enums.Media;
 import kamienica.core.exception.NoMainCounterException;
-import kamienica.model.MeterWater;
-import kamienica.model.Reading;
-import kamienica.model.ReadingWater;
+import kamienica.model.*;
 import org.joda.time.LocalDate;
 import org.junit.Test;
 import org.springframework.transaction.annotation.Transactional;
@@ -42,6 +40,13 @@ public class ReadingWaterServiceTest extends DatabaseTest {
         for (ReadingWater readingWater : list2) {
             assertEquals(LocalDate.parse("2016-09-01"), readingWater.getReadingDate());
         }
+    }
+
+    @Test
+    public void getListForOwner() {
+        final Tenant t = tenantService.getTenantById(1L);
+        List<ReadingWater> list = (List<ReadingWater>) readingService.getListForOwner(Media.WATER, t);
+        assertEquals(21, list.size());
     }
 
     @Test
@@ -90,7 +95,8 @@ public class ReadingWaterServiceTest extends DatabaseTest {
     @Transactional
     @Test
     public void firstReadingForANewMeter() throws NoMainCounterException {
-        MeterWater meter = new MeterWater("test", "346767676", "3535", null, false);
+        final Apartment ap = apartmentService.getById(2L);
+        MeterWater meter = new MeterWater("test", "346767676", "3535", ap, false);
         meterService.save(meter, Media.WATER);
         List<ReadingWater> list = readingService.getLatestNew(Media.WATER);
         assertEquals(8, list.size());
@@ -117,7 +123,8 @@ public class ReadingWaterServiceTest extends DatabaseTest {
     @Transactional
     @Test
     public void add() throws NoMainCounterException {
-        List<MeterWater> list = meterService.getList(Media.WATER);
+        final Tenant t = tenantService.getTenantById(1L);
+        List<MeterWater> list = meterService.getListForOwner(Media.WATER, t);
         List<ReadingWater> toSave = new ArrayList<>();
         for (MeterWater meter : list) {
             ReadingWater reading = new ReadingWater(LocalDate.parse("2050-01-01"), 800, meter);

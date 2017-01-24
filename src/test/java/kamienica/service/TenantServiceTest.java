@@ -4,7 +4,6 @@ import kamienica.configuration.DatabaseTest;
 import kamienica.core.enums.Status;
 import kamienica.core.enums.UserRole;
 import kamienica.model.Apartment;
-import kamienica.model.Residence;
 import kamienica.model.Tenant;
 import org.hibernate.criterion.Criterion;
 import org.hibernate.criterion.Restrictions;
@@ -59,6 +58,7 @@ public class TenantServiceTest extends DatabaseTest {
         assertEquals("Maciej Folik", tenant.fullName());
     }
 
+
     @Transactional
     @Test
     public void shouldDeactivateOldTenantWhenNewIsInserted() {
@@ -92,6 +92,15 @@ public class TenantServiceTest extends DatabaseTest {
     @Test
     public void divisionShouldBecomeIncorrectAfterRemovingTenant() {
         tenantService.deleteTenant(2L);
+        boolean resultedState = settingsService.isDivisionCorrect();
+        assertEquals(false, resultedState);
+    }
+
+    @Ignore("Please check why this fails")
+    @Transactional
+    @Test
+    public void whyFails() {
+        tenantService.deleteTenant(3L);
         boolean resultedState = settingsService.isDivisionCorrect();
         assertEquals(false, resultedState);
     }

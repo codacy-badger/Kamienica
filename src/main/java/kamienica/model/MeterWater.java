@@ -18,6 +18,10 @@ public class MeterWater extends Meter implements Serializable {
 		super(description, serialNumber, unit, apartment);
 		this.isWarmWater = isWarmWater;
 	}
+	public MeterWater(String description, String serialNumber, String unit, Apartment apartment, Residence res, boolean isWarmWater) {
+		super(description, serialNumber, unit, apartment, res);
+		this.isWarmWater = isWarmWater;
+	}
 
 	public MeterWater() {
 		super.setUnit("m3");

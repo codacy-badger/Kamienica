@@ -1,12 +1,9 @@
 package kamienica.model;
 
 import javax.persistence.*;
-import java.util.Set;
 
 @Entity
-@Table(name = "RESIDENCE_OWNERSHIP"
-        //, uniqueConstraints = {@UniqueConstraint(columnNames = {"readingDate", "te_id"})}
-)
+@Table(name = "RESIDENCE_OWNERSHIP")
 public class ResidenceOwnership {
 
     @Id

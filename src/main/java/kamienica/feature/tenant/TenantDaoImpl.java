@@ -1,8 +1,7 @@
 package kamienica.feature.tenant;
 
-import kamienica.core.dao.AbstractDao;
+import kamienica.core.daoservice.BasicDaoImpl;
 import kamienica.core.enums.Status;
-import kamienica.core.enums.UserRole;
 import kamienica.model.Apartment;
 import kamienica.model.Tenant;
 import org.hibernate.Criteria;
@@ -12,7 +11,7 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 @Repository("tenantDao")
-public class TenantDaoImpl extends AbstractDao<Tenant> implements TenantDao {
+public class TenantDaoImpl extends BasicDaoImpl<Tenant> implements TenantDao {
 
     @Override
     @SuppressWarnings("unchecked")

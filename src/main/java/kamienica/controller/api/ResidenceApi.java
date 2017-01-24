@@ -1,28 +1,23 @@
 package kamienica.controller.api;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
-import javax.validation.Valid;
-
+import kamienica.controller.ControllerMessages;
+import kamienica.core.message.ApiErrorResponse;
+import kamienica.core.message.Message;
+import kamienica.feature.residence.ResidenceService;
 import kamienica.feature.user_admin.OwnerUserDataService;
+import kamienica.model.Residence;
+import kamienica.model.Tenant;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
-import kamienica.controller.ControllerMessages;
-import kamienica.core.message.ApiErrorResponse;
-import kamienica.core.message.Message;
-import kamienica.feature.residence.ResidenceService;
-import kamienica.model.Residence;
+import javax.validation.Valid;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/api/v1/residences")
@@ -36,7 +31,9 @@ public class ResidenceApi {
     
     @RequestMapping(method = RequestMethod.GET)
     public ResponseEntity<?> list() {
-        final List<Residence> list = residenceService.getList();
+        final Tenant t = ownerUserDataService.getLoggedTenant();
+
+        final List<Residence> list = residenceService.listForOwner(t);
         if (list.isEmpty()) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
@@ -54,7 +51,8 @@ public class ResidenceApi {
             return new ResponseEntity<>(message, HttpStatus.UNPROCESSABLE_ENTITY);
         }
         try {
-            residenceService.save(residence);
+            final Tenant t = ownerUserDataService.getLoggedTenant();
+            residenceService.save(residence, t);
         } catch (Exception e) {
             result.rejectValue("residenceNumber", "error.residence", ControllerMessages.DUPLICATE_VALUE);
             final Map<String, String> test = new HashMap<>();

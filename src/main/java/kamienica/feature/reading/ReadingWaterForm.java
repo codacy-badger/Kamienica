@@ -15,10 +15,6 @@ public class ReadingWaterForm {
 		return currentReadings;
 	}
 
-	public ReadingWaterForm() {
-
-	}
-
 	public void setCurrentReadings(List<ReadingWater> currentReadings) {
 		this.currentReadings = currentReadings;
 	}

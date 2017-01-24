@@ -2,12 +2,10 @@ package kamienica.controller.jsp;
 
 import kamienica.core.enums.Media;
 import kamienica.core.exception.NoMainCounterException;
+import kamienica.core.util.SecurityDetails;
 import kamienica.feature.meter.MeterService;
 import kamienica.feature.reading.*;
-import kamienica.model.Reading;
-import kamienica.model.ReadingEnergy;
-import kamienica.model.ReadingGas;
-import kamienica.model.ReadingWater;
+import kamienica.model.*;
 import org.joda.time.LocalDate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -155,10 +153,11 @@ public class ReadingController {
 
     @RequestMapping("/readingList")
     public ModelAndView readingList(@RequestParam("media") Media media) {
+        final Tenant t = SecurityDetails.getLoggedTenant();
         Map<String, Object> model = new HashMap<>();
         switch (media) {
             case ENERGY:
-                List<? extends Reading> energy = readingService.getList(media);
+                List<? extends Reading> energy = readingService.getListForOwner(media, t);
                 model.put("reading", energy);
                 model.put("media", "Energia");
                 if (!energy.isEmpty()) {
@@ -169,7 +168,7 @@ public class ReadingController {
                 break;
             case WATER:
 
-                List<? extends Reading> water = readingService.getList(media);
+                List<? extends Reading> water = readingService.getListForOwner(media, t);
                 model.put("reading", water);
                 model.put("media", "Woda");
                 if (!water.isEmpty()) {
@@ -179,7 +178,7 @@ public class ReadingController {
                 }
                 break;
             case GAS:
-                List<? extends Reading> gas = readingService.getList(media);
+                List<? extends Reading> gas = readingService.getListForOwner(media, t);
                 model.put("reading", gas);
                 model.put("media", "Gaz");
                 if (!gas.isEmpty()) {

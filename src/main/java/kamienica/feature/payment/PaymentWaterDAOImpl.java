@@ -34,7 +34,7 @@ public class PaymentWaterDAOImpl extends PaymentAbstractDaoImpl<PaymentWater>
 //	}
 //
 //	@Override
-//	public List<PaymentWater> getList() {
+//	public List<PaymentWater> getListForOwner() {
 //		@SuppressWarnings("unchecked")
 //		List<PaymentWater> list = getSession().createCriteria(PaymentWater.class).addOrder(Order.asc("paymentDate"))
 //				.addOrder(Order.asc("tenant")).list();

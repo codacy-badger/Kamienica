@@ -3,12 +3,9 @@ package kamienica.service;
 import kamienica.configuration.DatabaseTest;
 import kamienica.core.enums.Media;
 import kamienica.core.exception.InvalidDivisionException;
-import kamienica.model.Payment;
-import kamienica.model.ReadingWater;
-import kamienica.model.Apartment;
-import kamienica.model.InvoiceWater;
+import kamienica.model.*;
 import org.joda.time.LocalDate;
-import org.junit.Ignore;
+import org.junit.Before;
 import org.junit.Test;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -18,9 +15,18 @@ import static org.junit.Assert.assertEquals;
 
 public class InvoiceWaterServiceTest extends DatabaseTest {
 
+    private Tenant t;
+    private Residence r;
+
+    @Before
+    public void initData() {
+        t = tenantService.getTenantById(1L);
+        r = residenceService.getById(1L);
+    }
+
     @Test
     public void getList() {
-        assertEquals(1, invoiceService.getList(Media.WATER).size());
+        assertEquals(1, invoiceService.getList(Media.WATER, t).size());
 
     }
 
@@ -32,8 +38,8 @@ public class InvoiceWaterServiceTest extends DatabaseTest {
         assertEquals(60, list.get(1).getValue(), 0);
         InvoiceWater invoice = new InvoiceWater("112233", new LocalDate(), 200, list.get(1));
 
-        invoiceService.save(invoice, Media.WATER);
-        assertEquals(2, invoiceService.getList(Media.WATER).size());
+        invoiceService.save(invoice, Media.WATER, t, r);
+        assertEquals(2, invoiceService.getList(Media.WATER, t).size());
         List<? extends Payment> paymentList = paymentService.getPaymentList(Media.WATER);
 
         assertEquals(6, paymentList.size());
@@ -56,8 +62,8 @@ public class InvoiceWaterServiceTest extends DatabaseTest {
         assertEquals(60, list.get(1).getValue(), 1);
         InvoiceWater invoice = new InvoiceWater("112233", new LocalDate(), 200, list.get(0));
 
-        invoiceService.save(invoice, Media.WATER);
-        assertEquals(2, invoiceService.getList(Media.WATER).size());
+        invoiceService.save(invoice, Media.WATER, t, r);
+        assertEquals(2, invoiceService.getList(Media.WATER, t).size());
         List<? extends Payment> paymentList = paymentService.getPaymentList(Media.WATER);
 
         assertEquals(6, paymentList.size());

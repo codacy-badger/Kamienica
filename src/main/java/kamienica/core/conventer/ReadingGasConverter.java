@@ -1,8 +1,8 @@
 package kamienica.core.conventer;
 
 import kamienica.core.enums.Media;
-import kamienica.model.ReadingGas;
 import kamienica.feature.reading.ReadingService;
+import kamienica.model.ReadingGas;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.convert.converter.Converter;
 import org.springframework.stereotype.Component;
@@ -19,11 +19,11 @@ import org.springframework.stereotype.Component;
 public class ReadingGasConverter implements Converter<Object, ReadingGas> {
 
 	@Autowired
-	ReadingService readingService;
+	private ReadingService readingService;
 
 	@Override
 	public ReadingGas convert(Object element) {
-		Long id = Long.parseLong((String) element);
+		final Long id = Long.parseLong((String) element);
 		return readingService.getById(id, Media.GAS);
 	}
 

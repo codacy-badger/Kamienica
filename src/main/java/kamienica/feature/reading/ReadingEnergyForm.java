@@ -18,10 +18,6 @@ public class ReadingEnergyForm extends ReadingForm<ReadingEnergy> {
 				+ newReadings;
 	}
 
-	public ReadingEnergyForm() {
-
-	}
-
 	public ReadingEnergyForm(LocalDate oldDate, LocalDate newDate, List<ReadingEnergy> currentReadings,
 			List<ReadingEnergy> previousReadings, List<ReadingEnergy> newReadings) {
 		super(oldDate, newDate);

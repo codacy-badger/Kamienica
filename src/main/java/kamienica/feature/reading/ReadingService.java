@@ -5,7 +5,6 @@ import kamienica.core.exception.NoMainCounterException;
 import kamienica.model.*;
 import org.joda.time.LocalDate;
 
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -22,11 +21,13 @@ public interface ReadingService {
 	
 	List<? extends Reading> getList(Media media);
 
+	List<? extends Reading> getListForOwner(Media media, Tenant t);
+
 	List<? extends Reading> getByDate(LocalDate date, Media media);
 
-	void deleteList(List<? extends Reading> list, Media media);
-
-	List<? extends Reading> getPreviousReadingEnergy(LocalDate date, Media media);
+//	void deleteList(List<? extends Reading> list, Media media);
+//
+//	List<? extends Reading> getPreviousReadingEnergy(LocalDate date, Media media);
 
 	List<ReadingEnergy> getPreviousReadingEnergy(LocalDate date, Set<Long> meterIdList);
 
@@ -46,7 +47,7 @@ public interface ReadingService {
 
 	List<ReadingWater> getUnresolvedReadingsWater();
 
-	HashMap<String, List<ReadingWater>> getWaterReadingsForGasConsumption(InvoiceGas invoice);
+//	HashMap<String, List<ReadingWater>> getWaterReadingsForGasConsumption(InvoiceGas invoice);
 
     List<?> getUnresolvedReadings(Media media);
 

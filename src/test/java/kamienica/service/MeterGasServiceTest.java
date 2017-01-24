@@ -2,8 +2,8 @@ package kamienica.service;
 
 import kamienica.configuration.DatabaseTest;
 import kamienica.core.enums.Media;
-import kamienica.model.MeterEnergy;
 import kamienica.model.MeterGas;
+import kamienica.model.Tenant;
 import org.joda.time.LocalDate;
 import org.junit.Test;
 import org.springframework.transaction.annotation.Transactional;
@@ -14,7 +14,8 @@ public class MeterGasServiceTest extends DatabaseTest {
 
     @Test
     public void getList() {
-        assertEquals(6, meterService.getList(Media.GAS).size());
+        final Tenant t = tenantService.getTenantById(1L);
+        assertEquals(6, meterService.getListForOwner(Media.GAS, t).size());
 
     }
 

@@ -6,8 +6,6 @@ public interface SettingsService {
 
 	Settings getSettings();
 
-	void delete();
-
 	void save(Settings settings);
 
 	boolean isDivisionCorrect();

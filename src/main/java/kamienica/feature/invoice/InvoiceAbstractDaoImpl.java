@@ -1,6 +1,6 @@
 package kamienica.feature.invoice;
 
-import kamienica.core.dao.AbstractDao;
+import kamienica.core.daoservice.BasicDaoImpl;
 import kamienica.core.enums.PaymentStatus;
 import kamienica.model.Invoice;
 import org.hibernate.Criteria;
@@ -10,7 +10,7 @@ import org.hibernate.criterion.Restrictions;
 
 import java.util.List;
 
-public class InvoiceAbstractDaoImpl<I extends Invoice> extends AbstractDao<I> {
+public class InvoiceAbstractDaoImpl<I extends Invoice> extends BasicDaoImpl<I> {
 
 	@SuppressWarnings("unchecked")
 	public List<I> getUnpaidInvoices() {

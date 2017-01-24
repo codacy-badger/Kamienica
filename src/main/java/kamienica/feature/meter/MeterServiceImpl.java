@@ -1,16 +1,15 @@
 package kamienica.feature.meter;
 
 import kamienica.core.enums.Media;
-import kamienica.model.Meter;
-import kamienica.model.MeterEnergy;
-import kamienica.model.MeterGas;
-import kamienica.model.MeterWater;
+import kamienica.feature.residence.ResidenceService;
+import kamienica.model.*;
+import org.hibernate.criterion.Criterion;
+import org.hibernate.criterion.Restrictions;
 import org.hibernate.exception.ConstraintViolationException;
 import org.joda.time.LocalDate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.validation.BindingResult;
 
 import java.util.List;
 import java.util.Set;
@@ -19,17 +18,24 @@ import java.util.Set;
 @Transactional
 public class MeterServiceImpl implements MeterService {
 
-    @Autowired
-    MeterDao<MeterEnergy> energy;
+    private final MeterDao<MeterEnergy> energy;
+    private final MeterDao<MeterGas> gas;
+    private final MeterDao<MeterWater> water;
+    private final ResidenceService residenceService;
 
     @Autowired
-    MeterDao<MeterGas> gas;
-
-    @Autowired
-    MeterDao<MeterWater> water;
+    public MeterServiceImpl(MeterDao<MeterEnergy> energy, MeterDao<MeterGas> gas, MeterDao<MeterWater> water, ResidenceService residenceService) {
+        this.energy = energy;
+        this.gas = gas;
+        this.water = water;
+        this.residenceService = residenceService;
+    }
 
     @Override
     public <T extends Meter> void save(T meter, Media media) {
+        //TODO think on a better way to do this...
+        meter.setResidence(meter.getApartment().getResidence());
+        //TODO this check shoudl be removed in #138
         if (meter.getApartment() == null) {
             meter.setMain(true);
         }
@@ -74,66 +80,23 @@ public class MeterServiceImpl implements MeterService {
 
     }
 
-    // @Override
-    // public void saveGas(MeterGas meter) {
-    // if (meter.getApartment() == null) {
-    // meter.main = true;
-    // }
-    // gas.save(meter);
-    //
-    // }
-    //
-    // @Override
-    // public void saveWater(MeterWater meter) {
-    // if (meter.getApartment() == null) {
-    // meter.main = true;
-    // }
-    // water.save(meter);
-    //
-    // }
-    //
-    // @Override
-    // public void saveEnergy(MeterEnergy meter) {
-    // if (meter.getApartment() == null) {
-    // meter.main = true;
-    // }
-    // energy.save(meter);
-    //
-    // }
-
-    // @Override
-    // public void updateGas(MeterGas meter) {
-    // gas.update(meter);
-    //
-    // }
-    //
-    // @Override
-    // public void updateWater(MeterWater meter) {
-    // water.update(meter);
-    //
-    // }
-    //
-    // @Override
-    // public void updateEnergy(MeterEnergy meter) {
-    // energy.update(meter);
-    //
-    // }
-
     @SuppressWarnings("unchecked")
     @Override
-    public <T extends Meter> List<T> getList(Media media) {
+    public <T extends Meter> List<T> getListForOwner(final Media media, final Tenant t) {
+        List<Residence> residences = residenceService.listForOwner(t);
+        Criterion c = Restrictions.in("residence", residences);
         switch (media) {
             case ENERGY:
 
-                return (List<T>) energy.getList();
+                return (List<T>) energy.findByCriteria(c);
 
             case GAS:
 
-                return (List<T>) gas.getList();
+                return (List<T>) gas.findByCriteria(c);
 
             case WATER:
 
-                return (List<T>) water.getList();
+                return (List<T>) water.findByCriteria(c);
 
             default:
                 return null;
@@ -160,22 +123,6 @@ public class MeterServiceImpl implements MeterService {
                 return null;
         }
     }
-    //
-    // @Override
-    // public List<MeterEnergy> getEnergyList() {
-    //
-    // return energy.getList();
-    // }
-    //
-    // @Override
-    // public List<MeterGas> getGasList() {
-    // return gas.getList();
-    // }
-    //
-    // @Override
-    // public List<MeterWater> getWaterList() {
-    // return water.getList();
-    // }
 
     @Override
     public void delete(Long id, Media media) {
@@ -218,38 +165,6 @@ public class MeterServiceImpl implements MeterService {
 
     }
 
-    // @Override
-    // public void deleteEnergyByID(Long id) {
-    // energy.deleteById(id);
-    //
-    // }
-    //
-    // @Override
-    // public void deleteGasByID(Long id) {
-    // gas.deleteById(id);
-    //
-    // }
-    //
-    // @Override
-    // public void deleteWaterByID(Long id) {
-    // water.deleteById(id);
-    //
-    // }
-
-    // @Override
-    // public MeterEnergy getEnergyByID(Long id) {
-    // return energy.getById(id);
-    // }
-    //
-    // @Override
-    // public MeterGas getGasByID(Long id) {
-    // return gas.getById(id);
-    // }
-    //
-    // @Override
-    // public MeterWater getWaterByID(Long id) {
-    // return water.getById(id);
-    // }
 
     @Override
     public Set<Long> getIdList(Media media) {
@@ -301,58 +216,4 @@ public class MeterServiceImpl implements MeterService {
         }
     }
 
-//    @Override
-//    public <T extends Meter> void validateMeter(BindingResult result, Media media, T meter) {
-//        final String WARM_CWU = "Licznik Główny nie może być licznikiem CWU bądź Ciepłej Wody";
-//        final String MAIN_EXISTS = "Istnieje już w bazie licznik główny";
-//
-//        switch (media) {
-//            case ENERGY:
-//                if (meter.isMain() && ifMainExists(Media.ENERGY)) {
-//                    result.rejectValue("apartment", "error.meter", MAIN_EXISTS);
-//                }
-//                break;
-//
-//            case GAS:
-//                if (meter.isMain() && ifMainExists(Media.GAS)) {
-//                    result.rejectValue("apartment", "error.meter", MAIN_EXISTS);
-//                }
-//                if (meter.getApartment() == null && ((MeterGas) meter).isCwu()) {
-//                    result.rejectValue("cwu", "error.meter", WARM_CWU);
-//                }
-//                break;
-//            case WATER:
-//                if (meter.isMain() && ifMainExists(Media.WATER)) {
-//                    result.rejectValue("apartment", "error.meter", MAIN_EXISTS);
-//                }
-//                if (meter.getApartment() == null && ((MeterWater) meter).getIsWarmWater()) {
-//                    result.rejectValue("isWarmWater", "error.meter", WARM_CWU);
-//                }
-//                break;
-//            default:
-//                break;
-//        }
-//
-//    }
-//
-//    @Override
-//    public <T extends Meter> void deactivateMeter(T meter, Media media) {
-//        meter.setDeactivation(LocalDate.now());
-//
-//        switch (media) {
-//            case ENERGY:
-//                energy.update((MeterEnergy) meter);
-//                break;
-//            case GAS:
-//                gas.update((MeterGas) meter);
-//                break;
-//            case WATER:
-//                water.update((MeterWater) meter);
-//                break;
-//
-//            default:
-//                break;
-//        }
-//
-//    }
 }

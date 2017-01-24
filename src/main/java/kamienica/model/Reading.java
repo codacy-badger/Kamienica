@@ -1,6 +1,5 @@
 package kamienica.model;
 
-import kamienica.model.Meter;
 import org.hibernate.annotations.Type;
 import org.joda.time.LocalDate;
 import org.springframework.beans.factory.annotation.Autowired;

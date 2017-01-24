@@ -8,8 +8,8 @@ import java.util.List;
 
 public abstract class ReadingForm<T extends Reading> {
 
-	LocalDate oldDate;
-	LocalDate newDate;
+	private LocalDate oldDate;
+	private LocalDate newDate;
 
 	public ReadingForm(LocalDate oldDate, LocalDate newDate) {
 		this.oldDate = oldDate;

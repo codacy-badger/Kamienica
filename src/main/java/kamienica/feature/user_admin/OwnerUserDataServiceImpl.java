@@ -4,7 +4,9 @@ import kamienica.core.enums.Media;
 import kamienica.core.util.CommonUtils;
 import kamienica.feature.apartment.ApartmentDao;
 import kamienica.feature.invoice.InvoiceAbstractDao;
-import kamienica.feature.reading.*;
+import kamienica.feature.reading.ReadingEnergyDao;
+import kamienica.feature.reading.ReadingGasDao;
+import kamienica.feature.reading.ReadingWaterDao;
 import kamienica.feature.settings.SettingsDao;
 import kamienica.model.*;
 import org.joda.time.LocalDate;
@@ -151,7 +153,7 @@ public class OwnerUserDataServiceImpl implements OwnerUserDataService {
         return (SecurityUser) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
     }
 
-    public Tenant getCurrentTenant() {
+    public Tenant getLoggedTenant() {
         SecurityUser su =  (SecurityUser) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         return su.getTenant();
     }

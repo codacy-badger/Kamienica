@@ -1,11 +1,7 @@
 package kamienica.feature.payment;
 
-import kamienica.core.dao.AbstractDao;
-import kamienica.model.Reading;
-import kamienica.model.Invoice;
-import kamienica.model.Payment;
-import kamienica.model.PaymentEnergy;
-import kamienica.model.Tenant;
+import kamienica.core.daoservice.BasicDaoImpl;
+import kamienica.model.*;
 import org.hibernate.Criteria;
 import org.hibernate.Query;
 import org.hibernate.criterion.Order;
@@ -13,7 +9,7 @@ import org.hibernate.criterion.Restrictions;
 
 import java.util.List;
 
-public class PaymentAbstractDaoImpl<P extends Payment> extends AbstractDao<P> {
+public class PaymentAbstractDaoImpl<P extends Payment> extends BasicDaoImpl<P> {
 
 	@SuppressWarnings("unchecked")
 	public List<P> getByInvoice(Invoice invoice) {

@@ -20,6 +20,6 @@ public interface OwnerUserDataService {
 
     SecurityUser getCurrentUser();
 
-    Tenant getCurrentTenant();
+    Tenant getLoggedTenant();
 
 }

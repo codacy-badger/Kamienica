@@ -1,14 +1,14 @@
 package kamienica.feature.payment;
 
-import kamienica.core.dao.DaoInterface;
-import kamienica.model.Reading;
+import kamienica.core.daoservice.BasicDao;
 import kamienica.model.Invoice;
 import kamienica.model.Payment;
+import kamienica.model.Reading;
 import kamienica.model.Tenant;
 
 import java.util.List;
 
-public interface PaymentDao<P extends Payment> extends DaoInterface<P> {
+public interface PaymentDao<P extends Payment> extends BasicDao<P> {
 
 	void deleteByDate(String date);
 

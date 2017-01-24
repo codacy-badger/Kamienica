@@ -4,7 +4,6 @@ import kamienica.model.Apartment;
 import kamienica.model.Division;
 import kamienica.model.Tenant;
 import kamienica.testutils.EntityProvider;
-import org.junit.Ignore;
 import org.junit.Test;
 
 import java.util.List;

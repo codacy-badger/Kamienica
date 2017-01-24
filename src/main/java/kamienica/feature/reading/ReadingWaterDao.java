@@ -1,6 +1,6 @@
 package kamienica.feature.reading;
 
-import kamienica.core.dao.DaoInterface;
+import kamienica.core.daoservice.BasicDao;
 import kamienica.model.Apartment;
 import kamienica.model.Invoice;
 import kamienica.model.InvoiceGas;
@@ -11,7 +11,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Set;
 
-public interface ReadingWaterDao extends DaoInterface<ReadingWater> {
+public interface ReadingWaterDao extends BasicDao<ReadingWater> {
 
 	List<ReadingWater> getByDate(LocalDate date);
 

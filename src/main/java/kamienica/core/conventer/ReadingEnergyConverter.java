@@ -2,8 +2,8 @@ package kamienica.core.conventer;
 
 
 import kamienica.core.enums.Media;
-import kamienica.model.ReadingEnergy;
 import kamienica.feature.reading.ReadingService;
+import kamienica.model.ReadingEnergy;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.convert.converter.Converter;
 import org.springframework.stereotype.Component;
@@ -20,11 +20,11 @@ import org.springframework.stereotype.Component;
 public class ReadingEnergyConverter implements Converter<Object, ReadingEnergy>{
 
 	@Autowired
-	ReadingService readingService;
+	private ReadingService readingService;
 	
 	@Override
 	public ReadingEnergy convert(Object element) {
-		Long id = Long.parseLong((String) element);
+		final Long id = Long.parseLong((String) element);
 		return readingService.getById(id, Media.ENERGY);
 	}
 
