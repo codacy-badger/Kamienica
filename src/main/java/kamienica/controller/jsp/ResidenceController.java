@@ -13,15 +13,10 @@ import java.util.Map;
 @Controller
 @RequestMapping("/Admin/Residence")
 public class ResidenceController {
-    @Autowired
-    ResidenceService service;
 
     @RequestMapping(value = "/residence", method = RequestMethod.GET)
     public ModelAndView list() {
-        Map<String, Object> model = new HashMap<>();
-        //final Residence res = CommonUtils.fetchSecurityUser().getResidence();
-        //model.put("residence", res);
-        return new ModelAndView("/Admin/Residence/residence", model);
+        return new ModelAndView("/Admin/Residence/residence");
 
     }
 

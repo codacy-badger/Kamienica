@@ -15,6 +15,8 @@ public interface ResidenceService {
 
     List<Residence> listForOwner();
 
+    List<Residence> listForFirstLogin(Tenant tenant);
+
     Residence getById(Long id);
 
     void deleteById(Long id);

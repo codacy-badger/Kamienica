@@ -38,7 +38,7 @@ public class ResidenceServiceTest extends ServiceTest {
         final List<ResidenceOwnership> ownerships = residenceOwnershipService.list();
         assertEquals(2, ownerships.size());
 
-        final List<Apartment> ap = apartmentService.getList();
+        final List<Apartment> ap = apartmentService.list();
         assertEquals(5, ap.size());
 
         final List<MeterEnergy> meterEnergies = meterService.getListForOwner(Media.ENERGY);

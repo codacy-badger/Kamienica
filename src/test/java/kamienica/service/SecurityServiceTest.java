@@ -14,6 +14,7 @@ import java.util.Collection;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
+@Transactional
 public class SecurityServiceTest extends ServiceTest {
 
     private static final String USER_LOGIN = "folik@wp.pl";

@@ -76,6 +76,13 @@ public class ResidenceServiceImpl implements ResidenceService {
     }
 
     @Override
+    public List<Residence> listForFirstLogin(Tenant tenant) {
+        Criterion forOwner = Restrictions.eq("owner", tenant);
+        List<ResidenceOwnership> owned = residenceOwnershipDao.findByCriteria(forOwner);
+        return owned.stream().map(ResidenceOwnership::getResidenceOwned).collect(Collectors.toList());
+    }
+
+    @Override
     public Residence getById(Long id) {
         return residenceDao.getById(id);
     }

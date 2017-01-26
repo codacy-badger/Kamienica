@@ -49,7 +49,7 @@ public class DivisionController {
 	public ModelAndView divisionSave(@ModelAttribute("divisionForm") DivisionForm divisionForm, final BindingResult result) {
 		final LocalDate date = divisionForm.getDate();
 		List<Division> divisionList = divisionForm.getDivisionList();
-		List<Apartment> apartmentList = apartmentService.getList();
+		List<Apartment> apartmentList = apartmentService.list();
 
 		if (DivisionValidator.checkIfDivisionIsCorrect(apartmentList, divisionList)) {
 			divisionService.saveList(divisionList, date);
@@ -70,7 +70,7 @@ public class DivisionController {
 		DivisionForm divisionForm = new DivisionForm();
 		divisionForm.setDivisionList(divisionService.getList());
 		List<Tenant> tenants = tenantService.getActiveTenants();
-		List<Apartment> apartments = apartmentService.getList();
+		List<Apartment> apartments = apartmentService.list();
 		if (!divisionService.isDivisionCorrect()) {
 			model.put("error", "Podział jest nieaktualny. Proszę zaktualizować dane ");
 		}

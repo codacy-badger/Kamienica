@@ -33,7 +33,7 @@ public class InvoiceEnergyServiceTest extends ServiceTest {
         when(SecurityDetails.getLoggedTenant()).thenReturn(tenantService.getTenantById(1L));
         when(SecurityDetails.getResidencesForOwner()).thenReturn(getMockedResidences());
 
-        assertEquals(1, invoiceService.getList(Media.ENERGY).size());
+        assertEquals(1, invoiceService.list(Media.ENERGY).size());
 
     }
 
@@ -50,7 +50,7 @@ public class InvoiceEnergyServiceTest extends ServiceTest {
         InvoiceEnergy invoice = new InvoiceEnergy("112233", new LocalDate(), 200, list.get(1));
 
         invoiceService.save(invoice, Media.ENERGY, t, r);
-        assertEquals(2, invoiceService.getList(Media.ENERGY).size());
+        assertEquals(2, invoiceService.list(Media.ENERGY).size());
         List<? extends Payment> paymentList = paymentService.getPaymentList(Media.ENERGY);
 
         assertEquals(6, paymentList.size());
@@ -69,13 +69,13 @@ public class InvoiceEnergyServiceTest extends ServiceTest {
         mockStatic(SecurityDetails.class);
         when(SecurityDetails.getLoggedTenant()).thenReturn(tenantService.getTenantById(1L));
         when(SecurityDetails.getResidencesForOwner()).thenReturn(getMockedResidences());
-        
+
         List<ReadingEnergy> list = readingService.getUnresolvedReadingsEnergy();
         assertEquals(11, list.get(0).getValue(), 0);
 
         InvoiceEnergy invoice = new InvoiceEnergy("112233", new LocalDate(), 200, list.get(0));
         invoiceService.save(invoice, Media.ENERGY, t, r);
-        assertEquals(2, invoiceService.getList(Media.ENERGY).size());
+        assertEquals(2, invoiceService.list(Media.ENERGY).size());
         List<? extends Payment> paymentList = paymentService.getPaymentList(Media.ENERGY);
 
         assertEquals(6, paymentList.size());

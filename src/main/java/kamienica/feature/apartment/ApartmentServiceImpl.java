@@ -9,6 +9,7 @@ import kamienica.model.Tenant;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 
 import javax.validation.constraints.NotNull;
 import java.util.List;
@@ -19,13 +20,11 @@ public class ApartmentServiceImpl implements ApartmentService {
 
     private final ApartmentDao apartmentDAO;
     private final SettingsDao settingsDao;
-    private final ResidenceService residenceService;
 
     @Autowired
-    public ApartmentServiceImpl(ApartmentDao apartmentDAO, SettingsDao settingsDao, ResidenceService residenceService) {
+    public ApartmentServiceImpl(ApartmentDao apartmentDAO, SettingsDao settingsDao) {
         this.apartmentDAO = apartmentDAO;
         this.settingsDao = settingsDao;
-        this.residenceService = residenceService;
     }
 
     @Override
@@ -35,14 +34,19 @@ public class ApartmentServiceImpl implements ApartmentService {
     }
 
     @Override
-    public List<Apartment> getList() {
+    public List<Apartment> list() {
         return apartmentDAO.getList();
     }
 
     @Override
-    public List<Apartment> getListForOwner() {
+    public List<Apartment> listForOwner() {
         List<Residence> residences = SecurityDetails.getResidencesForOwner();
         return apartmentDAO.findForResidence(residences);
+    }
+
+    @Override
+    public List<Apartment> listForTenant() {
+        throw new NotImplementedException();
     }
 
     @Override
@@ -51,7 +55,7 @@ public class ApartmentServiceImpl implements ApartmentService {
     }
 
     @Override
-    public void deleteByID(Long id) {
+    public void deleteById(Long id) {
         apartmentDAO.deleteById(id);
         settingsDao.changeDivisionState(false);
 

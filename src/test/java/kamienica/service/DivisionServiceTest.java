@@ -99,7 +99,7 @@ public class DivisionServiceTest extends ServiceTest {
 
 
     private List<Division> createCorrectList(boolean returnCorrect) {
-        List<Apartment> apartments = apartmentService.getList();
+        List<Apartment> apartments = apartmentService.list();
         List<Tenant> tenants = tenantService.getActiveTenants();
         List<Division> listToReturn = new ArrayList<>();
         for (Apartment a : apartments) {

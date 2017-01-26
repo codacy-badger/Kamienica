@@ -27,7 +27,7 @@ public class ApartmentApi  {
 
     @RequestMapping(method = RequestMethod.GET)
     public ResponseEntity<?> list() {
-        final List<Apartment> list = apartmentService.getListForOwner();
+        final List<Apartment> list = apartmentService.listForOwner();
         if (list.isEmpty()) {
             return new ResponseEntity<List<Apartment>>(HttpStatus.NOT_FOUND);
         }
@@ -93,7 +93,7 @@ public class ApartmentApi  {
     public ResponseEntity<Message> delete(@PathVariable("id") final Long id) {
         final Message message = new Message("OK", null);
         try {
-            apartmentService.deleteByID(id);
+            apartmentService.deleteById(id);
         } catch (Exception e) {
             message.setMessage(ControllerMessages.CONSTRAINT_VIOLATION);
             message.setException(e.toString());

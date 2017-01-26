@@ -33,7 +33,7 @@ public class InvoiceGasServiceTest extends ServiceTest {
         mockStatic(SecurityDetails.class);
         when(SecurityDetails.getResidencesForOwner()).thenReturn(getMockedResidences());
 
-        assertEquals(1, invoiceService.getList(Media.GAS).size());
+        assertEquals(1, invoiceService.list(Media.GAS).size());
     }
 
     @Test
@@ -48,7 +48,7 @@ public class InvoiceGasServiceTest extends ServiceTest {
         InvoiceGas invoice = new InvoiceGas("112233", new LocalDate(), 200, list.get(1));
 
         invoiceService.save(invoice, Media.GAS, t, r);
-        assertEquals(2, invoiceService.getList(Media.GAS).size());
+        assertEquals(2, invoiceService.list(Media.GAS).size());
         List<? extends Payment> paymentList = paymentService.getPaymentList(Media.GAS);
 
         assertEquals(6, paymentList.size());
@@ -75,7 +75,7 @@ public class InvoiceGasServiceTest extends ServiceTest {
         InvoiceGas invoice = new InvoiceGas("112233",  new LocalDate(), 200, list.get(0));
 
         invoiceService.save(invoice, Media.GAS, t, r);
-        assertEquals(2, invoiceService.getList(Media.GAS).size());
+        assertEquals(2, invoiceService.list(Media.GAS).size());
 
         List<? extends Payment> paymentList = paymentService.getPaymentList(Media.GAS);
 
@@ -106,7 +106,7 @@ public class InvoiceGasServiceTest extends ServiceTest {
         InvoiceGas invoice = new InvoiceGas("112233", new LocalDate(), 200, list.get(0));
 
         invoiceService.save(invoice, Media.GAS, t, r);
-        assertEquals(2, invoiceService.getList(Media.GAS).size());
+        assertEquals(2, invoiceService.list(Media.GAS).size());
         List<? extends Payment> paymentList = paymentService.getPaymentList(Media.GAS);
 
         assertEquals(6, paymentList.size());

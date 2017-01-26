@@ -16,14 +16,14 @@ public class ApartmentServiceTest extends ServiceTest {
 
     @Test
     public void getList() {
-        List<Apartment> list = apartmentService.getList();
+        List<Apartment> list = apartmentService.list();
         assertEquals(4, list.size());
     }
 
     @Test
     public void getListForOwner() {
         when(SecurityDetails.getResidencesForOwner()).thenReturn(getMockedResidences());
-        List<Apartment> list = apartmentService.getListForOwner();
+        List<Apartment> list = apartmentService.listForOwner();
         assertEquals(4, list.size());
     }
 
@@ -45,8 +45,8 @@ public class ApartmentServiceTest extends ServiceTest {
     @Transactional
     @Test
     public void remove() {
-        apartmentService.deleteByID(5L);
-        assertEquals(4, apartmentService.getList().size());
+        apartmentService.deleteById(5L);
+        assertEquals(4, apartmentService.list().size());
 
     }
 

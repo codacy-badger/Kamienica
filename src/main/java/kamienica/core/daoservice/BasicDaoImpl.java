@@ -20,7 +20,7 @@ import java.util.Set;
 public abstract class BasicDaoImpl<T> {
 
     @Autowired
-    private SessionFactory sessionFactory;
+    protected SessionFactory sessionFactory;
     protected final Class<T> persistentClass;
 
     @SuppressWarnings("unchecked")
@@ -82,7 +82,6 @@ public abstract class BasicDaoImpl<T> {
     public long countByCriteria(final Criterion... criterion) {
         Criteria criteria = createEntityCriteria();
         criteria.setProjection(Projections.rowCount());
-
         for (final Criterion c : criterion) {
             criteria.add(c);
         }
@@ -107,11 +106,26 @@ public abstract class BasicDaoImpl<T> {
         final Criterion forResidence = Restrictions.in("residence", residences);
         return findByCriteria(forResidence);
     }
+
     public List<T> findForOwner(final Tenant t) {
         final Criterion forResidence = Restrictions.eq("tenant", t);
         return findByCriteria(forResidence);
     }
 
+    public List<T> findByCriteria(final Order order, final Criterion... criterion) {
+        Session session = getSession();
+        Criteria crit = session.createCriteria(persistentClass);
+
+        for (final Criterion c : criterion) {
+            crit.add(c);
+        }
+
+        if (order != null) {
+            crit.addOrder(order);
+        }
+
+        return crit.list();
+    }
 
     @SuppressWarnings("unchecked")
     public List<T> findByCriteria(final int firstResult, final int maxResults, final Order order,
@@ -137,8 +151,6 @@ public abstract class BasicDaoImpl<T> {
 
         return crit.list();
     }
-
-
 
     protected Criteria createEntityCriteria() {
         return getSession().createCriteria(persistentClass);

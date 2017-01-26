@@ -15,7 +15,7 @@ public interface InvoiceService {
 
 	void list(Map<String, Object> model, Media media);
 	
-	List<? extends Invoice> getList(Media media);
+	List<? extends Invoice> list(Media media);
 
 	void delete(Long id, Media media);
 

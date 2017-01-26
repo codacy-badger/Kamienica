@@ -12,10 +12,8 @@ public class SecurityUser extends User {
     private Tenant tenant;
     private List<Residence> residencesOwned;
 
-    public SecurityUser(Tenant tenant, String username, String password, boolean enabled,
-                        boolean accountNonExpired, boolean credentialsNonExpired, boolean accountNonLocked,
-                        Collection<? extends GrantedAuthority> authorities, List<Residence> residencesOwned) {
-        super(username, password, enabled, accountNonExpired, credentialsNonExpired, accountNonLocked, authorities);
+    public SecurityUser(Tenant tenant, boolean enabled, Collection<? extends GrantedAuthority> authorities, List<Residence> residencesOwned) {
+        super(tenant.getEmail(), tenant.getPassword(), enabled, true, true, true, authorities);
         this.tenant = tenant;
         this.residencesOwned = residencesOwned;
     }

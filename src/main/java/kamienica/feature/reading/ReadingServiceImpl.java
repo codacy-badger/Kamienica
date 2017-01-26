@@ -7,6 +7,7 @@ import kamienica.feature.meter.MeterDao;
 import kamienica.feature.residence.ResidenceService;
 import kamienica.model.*;
 import org.hibernate.criterion.Criterion;
+import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Restrictions;
 import org.joda.time.LocalDate;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -58,17 +59,18 @@ public class ReadingServiceImpl implements ReadingService {
     @Override
     public List<? extends Reading> getListForOwner(final Media media) {
         final List<Residence> residences = SecurityDetails.getResidencesForOwner();
-        Criterion c = Restrictions.in("residence", residences);
+        final Criterion c = Restrictions.in("residence", residences);
+        final Order o = Order.desc("readingDate");
         switch (media) {
             case ENERGY:
                 final List<MeterEnergy> me = meterEnergy.findByCriteria(c);
-                return energy.findByCriteria(Restrictions.in("meter", me));
+                return energy.findByCriteria(o, Restrictions.in("meter", me));
             case GAS:
                 final List<MeterGas> mg = meterGas.findByCriteria(c);
-                return gas.findByCriteria(Restrictions.in("meter", mg));
+                return gas.findByCriteria(o, Restrictions.in("meter", mg));
             case WATER:
                 final List<MeterWater> mw = meterWater.findByCriteria(c);
-                return water.findByCriteria(Restrictions.in("meter", mw));
+                return water.findByCriteria(o, Restrictions.in("meter", mw));
             default:
                 return null;
         }
