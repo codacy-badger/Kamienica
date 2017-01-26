@@ -29,8 +29,7 @@ public class InvoiceApi extends AbstractApi {
     @RequestMapping(value = "/{media}", method = RequestMethod.GET)
     public ResponseEntity<?> getList(@PathVariable final Media media) {
 
-        final Tenant t = ownerUserDataService.getCurrentUser().getTenant();
-        List<? extends Invoice> list = invoiceService.getList(media, t);
+        List<? extends Invoice> list = invoiceService.getList(media);
         if (list.isEmpty()) {
             return new ResponseEntity<List<? extends Invoice>>(HttpStatus.NO_CONTENT);
         }

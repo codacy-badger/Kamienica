@@ -157,7 +157,7 @@ public class ReadingController {
         Map<String, Object> model = new HashMap<>();
         switch (media) {
             case ENERGY:
-                List<? extends Reading> energy = readingService.getListForOwner(media, t);
+                List<? extends Reading> energy = readingService.getListForOwner(media);
                 model.put("reading", energy);
                 model.put("media", "Energia");
                 if (!energy.isEmpty()) {
@@ -168,7 +168,7 @@ public class ReadingController {
                 break;
             case WATER:
 
-                List<? extends Reading> water = readingService.getListForOwner(media, t);
+                List<? extends Reading> water = readingService.getListForOwner(media);
                 model.put("reading", water);
                 model.put("media", "Woda");
                 if (!water.isEmpty()) {
@@ -178,7 +178,7 @@ public class ReadingController {
                 }
                 break;
             case GAS:
-                List<? extends Reading> gas = readingService.getListForOwner(media, t);
+                List<? extends Reading> gas = readingService.getListForOwner(media);
                 model.put("reading", gas);
                 model.put("media", "Gaz");
                 if (!gas.isEmpty()) {

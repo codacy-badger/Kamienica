@@ -13,6 +13,8 @@ import kamienica.feature.settings.SettingsService;
 import kamienica.feature.tenant.TenantService;
 import kamienica.feature.user_admin.OwnerUserDataService;
 import kamienica.feature.user_admin.SecurityServiceImpl;
+import kamienica.model.Residence;
+import kamienica.model.Tenant;
 import org.joda.time.LocalDate;
 import org.junit.BeforeClass;
 import org.junit.runner.RunWith;
@@ -24,6 +26,8 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 import static org.powermock.api.mockito.PowerMockito.mockStatic;
 
@@ -31,7 +35,7 @@ import static org.powermock.api.mockito.PowerMockito.mockStatic;
 @ContextConfiguration(classes = {JUnitConfig.class})
 @PowerMockRunnerDelegate(SpringJUnit4ClassRunner.class)
 @PrepareForTest(SecurityDetails.class)
-public abstract class DatabaseTest {
+public abstract class ServiceTest {
 
     @Autowired
     protected TenantService tenantService;
@@ -69,6 +73,17 @@ public abstract class DatabaseTest {
     public static void init() throws SQLException {
 //        Server.main();
         mockStatic(SecurityDetails.class);
+    }
+
+
+    protected List<Residence> getMockedResidences() {
+        List<Residence> residences = new ArrayList<>();
+        residences.add(residenceService.getById(1L));
+        return residences;
+    }
+
+    protected Tenant getOwner() {
+        return tenantService.getTenantById(1L);
     }
 
 }

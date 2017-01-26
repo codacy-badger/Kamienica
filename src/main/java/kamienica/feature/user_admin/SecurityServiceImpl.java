@@ -74,7 +74,7 @@ public class SecurityServiceImpl implements UserDetailsService {
     }
 
     private List<Residence> getResidnecesForOwner(final Tenant tenant) {
-        return residenceService.listForOwner(tenant);
+        return residenceService.listForOwner();
     }
 
     private Tenant findTenant(final String email) {

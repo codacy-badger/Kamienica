@@ -1,8 +1,10 @@
 package kamienica.service;
 
-import kamienica.configuration.DatabaseTest;
+import kamienica.configuration.ServiceTest;
 import kamienica.core.enums.Media;
+import kamienica.core.util.SecurityDetails;
 import kamienica.model.MeterEnergy;
+import kamienica.model.Residence;
 import kamienica.model.Tenant;
 import org.joda.time.LocalDate;
 import org.junit.Test;
@@ -11,15 +13,19 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 
 import static org.junit.Assert.assertEquals;
+import static org.powermock.api.mockito.PowerMockito.mockStatic;
+import static org.powermock.api.mockito.PowerMockito.when;
 
-public class MeterEnergyServiceTest extends DatabaseTest {
+public class MeterEnergyServiceTest extends ServiceTest {
 
-    ;
 
     @Test
     public void getList() {
-        final Tenant t = tenantService.getTenantById(1L);
-        List<MeterEnergy> list = meterService.getListForOwner(Media.ENERGY, t);
+        List<Residence> residences = getMockedResidences();
+        mockStatic(SecurityDetails.class);
+        when(SecurityDetails.getResidencesForOwner()).thenReturn(residences);
+        when(SecurityDetails.getResidencesForOwner()).thenReturn(residences);
+        List<MeterEnergy> list = meterService.getListForOwner(Media.ENERGY);
         assertEquals(5, list.size());
 
     }
@@ -55,14 +61,16 @@ public class MeterEnergyServiceTest extends DatabaseTest {
     @Test
     @Transactional
     public void remove() {
-        final Tenant t = tenantService.getTenantById(1L);
+        mockStatic(SecurityDetails.class);
+        List<Residence> residences = getMockedResidences();
+        when(SecurityDetails.getResidencesForOwner()).thenReturn(residences);
         MeterEnergy meter = createDummyMeter();
         meterService.save(meter, Media.ENERGY);
-        assertEquals(6, meterService.getListForOwner(Media.ENERGY, t).size());
+        assertEquals(6, meterService.getListForOwner(Media.ENERGY).size());
         meterService.delete(6L, Media.ENERGY);
         meterService.delete(7L, Media.ENERGY);
         meterService.delete(8L, Media.ENERGY);
-        assertEquals(5, meterService.getListForOwner(Media.ENERGY, t).size());
+        assertEquals(5, meterService.getListForOwner(Media.ENERGY).size());
 
     }
 

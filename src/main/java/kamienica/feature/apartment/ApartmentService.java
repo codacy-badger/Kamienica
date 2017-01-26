@@ -11,7 +11,7 @@ public interface ApartmentService {
 
 	List<Apartment> getList();
 
-	List<Apartment> getListForOwner(Tenant t);
+	List<Apartment> getListForOwner();
 
 	List<Apartment> paginatedList(Integer firstResult, Integer maxResults);
 

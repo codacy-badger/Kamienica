@@ -1,6 +1,6 @@
 package kamienica.service;
 
-import kamienica.configuration.DatabaseTest;
+import kamienica.configuration.ServiceTest;
 import kamienica.core.enums.Media;
 import kamienica.model.Payment;
 import kamienica.model.Tenant;
@@ -10,7 +10,7 @@ import java.util.List;
 
 import static org.junit.Assert.assertEquals;
 
-public class PaymentServiceTest extends DatabaseTest {
+public class PaymentServiceTest extends ServiceTest {
 
 
     @Test

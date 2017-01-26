@@ -1,6 +1,7 @@
 package kamienica.feature.meter;
 
 import kamienica.core.enums.Media;
+import kamienica.core.util.SecurityDetails;
 import kamienica.feature.residence.ResidenceService;
 import kamienica.model.*;
 import org.hibernate.criterion.Criterion;
@@ -21,14 +22,12 @@ public class MeterServiceImpl implements MeterService {
     private final MeterDao<MeterEnergy> energy;
     private final MeterDao<MeterGas> gas;
     private final MeterDao<MeterWater> water;
-    private final ResidenceService residenceService;
 
     @Autowired
-    public MeterServiceImpl(MeterDao<MeterEnergy> energy, MeterDao<MeterGas> gas, MeterDao<MeterWater> water, ResidenceService residenceService) {
+    public MeterServiceImpl(MeterDao<MeterEnergy> energy, MeterDao<MeterGas> gas, MeterDao<MeterWater> water) {
         this.energy = energy;
         this.gas = gas;
         this.water = water;
-        this.residenceService = residenceService;
     }
 
     @Override
@@ -82,8 +81,8 @@ public class MeterServiceImpl implements MeterService {
 
     @SuppressWarnings("unchecked")
     @Override
-    public <T extends Meter> List<T> getListForOwner(final Media media, final Tenant t) {
-        List<Residence> residences = residenceService.listForOwner(t);
+    public <T extends Meter> List<T> getListForOwner(final Media media) {
+        List<Residence> residences = SecurityDetails.getResidencesForOwner();
         Criterion c = Restrictions.in("residence", residences);
         switch (media) {
             case ENERGY:

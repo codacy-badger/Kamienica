@@ -1,5 +1,6 @@
 package kamienica.feature.apartment;
 
+import kamienica.core.util.SecurityDetails;
 import kamienica.feature.residence.ResidenceService;
 import kamienica.feature.settings.SettingsDao;
 import kamienica.model.Apartment;
@@ -39,8 +40,8 @@ public class ApartmentServiceImpl implements ApartmentService {
     }
 
     @Override
-    public List<Apartment> getListForOwner(Tenant t) {
-        List<Residence> residences = residenceService.listForOwner(t);
+    public List<Apartment> getListForOwner() {
+        List<Residence> residences = SecurityDetails.getResidencesForOwner();
         return apartmentDAO.findForResidence(residences);
     }
 

@@ -7,13 +7,13 @@ import java.util.List;
 
 public interface ResidenceService {
 
-    void save(Residence residence, Tenant t);
+    void save(Residence residence);
 
     void update(Residence residence);
 
     List<Residence> getList();
 
-    List<Residence> listForOwner(Tenant t);
+    List<Residence> listForOwner();
 
     Residence getById(Long id);
 

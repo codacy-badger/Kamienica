@@ -1,21 +1,29 @@
 package kamienica.service;
 
-import kamienica.configuration.DatabaseTest;
+import kamienica.configuration.ServiceTest;
 import kamienica.core.enums.Media;
+import kamienica.core.util.SecurityDetails;
 import kamienica.model.MeterGas;
+import kamienica.model.Residence;
 import kamienica.model.Tenant;
 import org.joda.time.LocalDate;
 import org.junit.Test;
 import org.springframework.transaction.annotation.Transactional;
 
-import static org.junit.Assert.assertEquals;
+import java.util.List;
 
-public class MeterGasServiceTest extends DatabaseTest {
+import static org.junit.Assert.assertEquals;
+import static org.powermock.api.mockito.PowerMockito.mockStatic;
+import static org.powermock.api.mockito.PowerMockito.when;
+
+public class MeterGasServiceTest extends ServiceTest {
 
     @Test
     public void getList() {
-        final Tenant t = tenantService.getTenantById(1L);
-        assertEquals(6, meterService.getListForOwner(Media.GAS, t).size());
+        List<Residence> residenceList = getMockedResidences();
+        mockStatic(SecurityDetails.class);
+        when(SecurityDetails.getResidencesForOwner()).thenReturn(residenceList);
+        assertEquals(6, meterService.getListForOwner(Media.GAS).size());
 
     }
 

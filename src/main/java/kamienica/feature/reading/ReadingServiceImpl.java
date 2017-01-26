@@ -2,6 +2,7 @@ package kamienica.feature.reading;
 
 import kamienica.core.enums.Media;
 import kamienica.core.exception.NoMainCounterException;
+import kamienica.core.util.SecurityDetails;
 import kamienica.feature.meter.MeterDao;
 import kamienica.feature.residence.ResidenceService;
 import kamienica.model.*;
@@ -27,19 +28,17 @@ public class ReadingServiceImpl implements ReadingService {
     private final MeterDao<MeterEnergy> meterEnergy;
     private final MeterDao<MeterGas> meterGas;
     private final MeterDao<MeterWater> meterWater;
-    private final ResidenceService residenceService;
 
     @Autowired
     public ReadingServiceImpl(ReadingEnergyDao energy, ReadingWaterDao water,
                               ReadingGasDao gas, MeterDao<MeterEnergy> meterEnergy,
-                              MeterDao<MeterGas> meterGas, MeterDao<MeterWater> meterWater, ResidenceService residenceService) {
+                              MeterDao<MeterGas> meterGas, MeterDao<MeterWater> meterWater) {
         this.energy = energy;
         this.water = water;
         this.gas = gas;
         this.meterEnergy = meterEnergy;
         this.meterGas = meterGas;
         this.meterWater = meterWater;
-        this.residenceService = residenceService;
     }
 
     @Override
@@ -57,10 +56,8 @@ public class ReadingServiceImpl implements ReadingService {
     }
 
     @Override
-    public List<? extends Reading> getListForOwner(final Media media, final Tenant t) {
-        //TODO refactor this as it takes 2 seconds to retreive data. Consider adding Residence to readings model
-
-        final List<Residence> residences = residenceService.listForOwner(t);
+    public List<? extends Reading> getListForOwner(final Media media) {
+        final List<Residence> residences = SecurityDetails.getResidencesForOwner();
         Criterion c = Restrictions.in("residence", residences);
         switch (media) {
             case ENERGY:

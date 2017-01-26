@@ -15,18 +15,14 @@ public interface MeterService {
 
 	void delete(Long id, Media media);
 
-	<T extends Meter> List<T> getListForOwner(Media media, Tenant t);
+	<T extends Meter> List<T> getListForOwner(Media media);
 
 	<T extends Meter> T getById(Long id, Media media);
-
-//	<T extends Meter> void deactivateMeter(T meter, Media media);
 
 	Set<Long> getIdList(Media media);
 
 	Set<Long> getIdListForActiveMeters(Media media);
 
 	boolean ifMainExists(Media media);
-
-//	<T extends Meter> void validateMeter(BindingResult result, Media media, T meter);
 
 }

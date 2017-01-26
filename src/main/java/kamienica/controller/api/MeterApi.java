@@ -32,7 +32,7 @@ public class MeterApi extends AbstractApi {
     @RequestMapping(value = "/{media}", method = RequestMethod.GET)
     public ResponseEntity<?> getList(@PathVariable Media media, @RequestParam(required = false) final LocalDate date) {
         final Tenant t = ownerUserDataService.getLoggedTenant();
-        final List<? extends Meter> list = service.getListForOwner(media, t);
+        final List<? extends Meter> list = service.getListForOwner(media);
         if (list.isEmpty()) {
             return new ResponseEntity<List<Apartment>>(HttpStatus.NOT_FOUND);
         }

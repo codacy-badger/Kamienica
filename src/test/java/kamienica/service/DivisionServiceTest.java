@@ -1,6 +1,6 @@
 package kamienica.service;
 
-import kamienica.configuration.DatabaseTest;
+import kamienica.configuration.ServiceTest;
 import kamienica.core.exception.InvalidDivisionException;
 import kamienica.core.exception.WrongDivisionInputException;
 import kamienica.feature.division.DivisionForm;
@@ -18,7 +18,7 @@ import java.util.List;
 
 import static org.junit.Assert.assertEquals;
 
-public class DivisionServiceTest extends DatabaseTest {
+public class DivisionServiceTest extends ServiceTest {
 
     @Test
     public void getList() {

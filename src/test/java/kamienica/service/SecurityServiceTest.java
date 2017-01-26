@@ -1,6 +1,6 @@
 package kamienica.service;
 
-import kamienica.configuration.DatabaseTest;
+import kamienica.configuration.ServiceTest;
 import kamienica.model.Tenant;
 import org.junit.Test;
 import org.springframework.security.core.GrantedAuthority;
@@ -14,7 +14,7 @@ import java.util.Collection;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
-public class SecurityServiceTest extends DatabaseTest {
+public class SecurityServiceTest extends ServiceTest {
 
     private static final String USER_LOGIN = "folik@wp.pl";
     private static final String USER_PASSWD = "witaj";

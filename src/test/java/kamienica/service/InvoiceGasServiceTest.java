@@ -1,9 +1,10 @@
 package kamienica.service;
 
-import kamienica.configuration.DatabaseTest;
+import kamienica.configuration.ServiceTest;
 import kamienica.core.enums.Media;
 import kamienica.core.enums.WaterHeatingSystem;
 import kamienica.core.exception.InvalidDivisionException;
+import kamienica.core.util.SecurityDetails;
 import kamienica.model.*;
 import org.joda.time.LocalDate;
 import org.junit.Before;
@@ -13,8 +14,10 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 
 import static org.junit.Assert.assertEquals;
+import static org.powermock.api.mockito.PowerMockito.mockStatic;
+import static org.powermock.api.mockito.PowerMockito.when;
 
-public class InvoiceGasServiceTest extends DatabaseTest {
+public class InvoiceGasServiceTest extends ServiceTest {
 
     private  Tenant t;
     private Residence r;
@@ -27,19 +30,25 @@ public class InvoiceGasServiceTest extends DatabaseTest {
 
     @Test
     public void getList() {
+        mockStatic(SecurityDetails.class);
+        when(SecurityDetails.getResidencesForOwner()).thenReturn(getMockedResidences());
 
-        assertEquals(1, invoiceService.getList(Media.GAS, t).size());
+        assertEquals(1, invoiceService.getList(Media.GAS).size());
     }
 
     @Test
     @Transactional
     public void add() throws InvalidDivisionException {
+        mockStatic(SecurityDetails.class);
+        when(SecurityDetails.getLoggedTenant()).thenReturn(getOwner());
+        when(SecurityDetails.getResidencesForOwner()).thenReturn(getMockedResidences());
+
         List<ReadingGas> list = readingService.getUnresolvedReadingsGas();
         assertEquals(196, list.get(1).getValue(), 0);
         InvoiceGas invoice = new InvoiceGas("112233", new LocalDate(), 200, list.get(1));
 
         invoiceService.save(invoice, Media.GAS, t, r);
-        assertEquals(2, invoiceService.getList(Media.GAS, t).size());
+        assertEquals(2, invoiceService.getList(Media.GAS).size());
         List<? extends Payment> paymentList = paymentService.getPaymentList(Media.GAS);
 
         assertEquals(6, paymentList.size());
@@ -56,12 +65,18 @@ public class InvoiceGasServiceTest extends DatabaseTest {
     @Test
     @Transactional
     public void addForFirstReadingWithSharedWaterHeating() throws InvalidDivisionException {
+        mockStatic(SecurityDetails.class);
+        when(SecurityDetails.getLoggedTenant()).thenReturn(getOwner());
+        when(SecurityDetails.getResidencesForOwner()).thenReturn(getMockedResidences());
+
+
         List<ReadingGas> list = readingService.getUnresolvedReadingsGas();
         assertEquals(114, list.get(0).getValue(), 0);
         InvoiceGas invoice = new InvoiceGas("112233",  new LocalDate(), 200, list.get(0));
 
         invoiceService.save(invoice, Media.GAS, t, r);
-        assertEquals(2, invoiceService.getList(Media.GAS, t).size());
+        assertEquals(2, invoiceService.getList(Media.GAS).size());
+
         List<? extends Payment> paymentList = paymentService.getPaymentList(Media.GAS);
 
         assertEquals(6, paymentList.size());
@@ -79,6 +94,10 @@ public class InvoiceGasServiceTest extends DatabaseTest {
     @Test
     @Transactional
     public void addForFirstReadingWithSeparateWaterHeating() throws InvalidDivisionException {
+        mockStatic(SecurityDetails.class);
+        when(SecurityDetails.getLoggedTenant()).thenReturn(getOwner());
+        when(SecurityDetails.getResidencesForOwner()).thenReturn(getMockedResidences());
+
         List<ReadingGas> list = readingService.getUnresolvedReadingsGas();
         Settings setings = settingsService.getSettings();
         setings.setWaterHeatingSystem(WaterHeatingSystem.INDIVIDUAL_GAS);
@@ -87,7 +106,7 @@ public class InvoiceGasServiceTest extends DatabaseTest {
         InvoiceGas invoice = new InvoiceGas("112233", new LocalDate(), 200, list.get(0));
 
         invoiceService.save(invoice, Media.GAS, t, r);
-        assertEquals(2, invoiceService.getList(Media.GAS, t).size());
+        assertEquals(2, invoiceService.getList(Media.GAS).size());
         List<? extends Payment> paymentList = paymentService.getPaymentList(Media.GAS);
 
         assertEquals(6, paymentList.size());

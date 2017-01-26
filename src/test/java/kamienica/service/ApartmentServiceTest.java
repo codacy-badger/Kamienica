@@ -1,6 +1,7 @@
 package kamienica.service;
 
-import kamienica.configuration.DatabaseTest;
+import kamienica.configuration.ServiceTest;
+import kamienica.core.util.SecurityDetails;
 import kamienica.model.Apartment;
 import kamienica.model.Residence;
 import org.junit.Test;
@@ -9,14 +10,23 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 
 import static org.junit.Assert.assertEquals;
+import static org.powermock.api.mockito.PowerMockito.when;
 
-public class ApartmentServiceTest extends DatabaseTest {
+public class ApartmentServiceTest extends ServiceTest {
 
     @Test
     public void getList() {
         List<Apartment> list = apartmentService.getList();
         assertEquals(4, list.size());
     }
+
+    @Test
+    public void getListForOwner() {
+        when(SecurityDetails.getResidencesForOwner()).thenReturn(getMockedResidences());
+        List<Apartment> list = apartmentService.getListForOwner();
+        assertEquals(4, list.size());
+    }
+
 
     @Test
     public void getPaginatedList() {

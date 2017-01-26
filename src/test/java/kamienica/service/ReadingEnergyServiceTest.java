@@ -1,8 +1,9 @@
 package kamienica.service;
 
-import kamienica.configuration.DatabaseTest;
+import kamienica.configuration.ServiceTest;
 import kamienica.core.enums.Media;
 import kamienica.core.exception.NoMainCounterException;
+import kamienica.core.util.SecurityDetails;
 import kamienica.model.*;
 import org.joda.time.LocalDate;
 import org.junit.Test;
@@ -12,8 +13,10 @@ import java.util.*;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotEquals;
+import static org.powermock.api.mockito.PowerMockito.mockStatic;
+import static org.powermock.api.mockito.PowerMockito.when;
 
-public class ReadingEnergyServiceTest extends DatabaseTest {
+public class ReadingEnergyServiceTest extends ServiceTest {
 
     private Set<Long> meterIdList = new HashSet<>(Arrays.asList(1L, 2L, 3L, 4L, 5L));
 
@@ -29,8 +32,9 @@ public class ReadingEnergyServiceTest extends DatabaseTest {
 
     @Test
     public void getListForOwner() {
-        final Tenant t = tenantService.getTenantById(1L);
-        List<ReadingEnergy> list = (List<ReadingEnergy>) readingService.getListForOwner(Media.ENERGY, t);
+        List<Residence> residences = getMockedResidences();
+        when(SecurityDetails.getResidencesForOwner()).thenReturn(residences);
+        List<ReadingEnergy> list = (List<ReadingEnergy>) readingService.getListForOwner(Media.ENERGY);
         assertEquals(15, list.size());
     }
 
@@ -126,8 +130,9 @@ public class ReadingEnergyServiceTest extends DatabaseTest {
     @Transactional
     @Test
     public void add() throws NoMainCounterException {
-        final Tenant t = tenantService.getTenantById(1L);
-        List<MeterEnergy> list = meterService.getListForOwner(Media.ENERGY, t);
+        mockStatic(SecurityDetails.class);
+        when(SecurityDetails.getResidencesForOwner()).thenReturn(getMockedResidences());
+        List<MeterEnergy> list = meterService.getListForOwner(Media.ENERGY);
         List<ReadingEnergy> toSave = new ArrayList<>();
         for (MeterEnergy meter : list) {
             ReadingEnergy reading = new ReadingEnergy(LocalDate.parse("2050-01-01"), 800, meter);

@@ -1,6 +1,6 @@
 package kamienica.service;
 
-import kamienica.configuration.DatabaseTest;
+import kamienica.configuration.ServiceTest;
 import kamienica.core.enums.Status;
 import kamienica.model.*;
 import org.joda.time.Days;
@@ -13,7 +13,7 @@ import java.util.Map;
 
 import static org.junit.Assert.*;
 
-public class OwnerUserDataServiceTest extends DatabaseTest {
+public class OwnerUserDataServiceTest extends ServiceTest {
 
 
     private Map<String, Object> map;

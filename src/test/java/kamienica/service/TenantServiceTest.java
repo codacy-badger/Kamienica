@@ -1,6 +1,6 @@
 package kamienica.service;
 
-import kamienica.configuration.DatabaseTest;
+import kamienica.configuration.ServiceTest;
 import kamienica.core.enums.Status;
 import kamienica.core.enums.UserRole;
 import kamienica.model.Apartment;
@@ -17,7 +17,7 @@ import java.util.List;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 
-public class TenantServiceTest extends DatabaseTest {
+public class TenantServiceTest extends ServiceTest {
 
     private final String dummyMail = "dummy@dummy";
     private final String tenantMail = "folik@wp.pl";

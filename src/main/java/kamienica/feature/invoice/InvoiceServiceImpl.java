@@ -8,6 +8,7 @@ import kamienica.core.enums.Media;
 import kamienica.core.enums.Status;
 import kamienica.core.enums.WaterHeatingSystem;
 import kamienica.core.exception.InvalidDivisionException;
+import kamienica.core.util.SecurityDetails;
 import kamienica.feature.apartment.ApartmentDao;
 import kamienica.feature.division.DivisionDao;
 import kamienica.feature.division.DivisionService;
@@ -200,8 +201,8 @@ public class InvoiceServiceImpl implements InvoiceService {
     }
 
     @Override
-    public List<? extends Invoice> getList(final Media media, final Tenant t) {
-        final List<Residence> residences = residenceService.listForOwner(t);
+    public List<? extends Invoice> getList(final Media media) {
+        final List<Residence> residences = SecurityDetails.getResidencesForOwner();
         final Criterion forTheseResidences = Restrictions.in("residence", residences);
         switch (media) {
             case ENERGY:

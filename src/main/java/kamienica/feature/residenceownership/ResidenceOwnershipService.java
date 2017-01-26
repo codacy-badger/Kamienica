@@ -7,7 +7,7 @@ import java.util.List;
 
 public interface ResidenceOwnershipService {
 
-    List<ResidenceOwnership> list(Tenant t);
+    List<ResidenceOwnership> list();
 
     void delete(Long id);
 

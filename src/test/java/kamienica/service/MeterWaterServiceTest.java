@@ -1,8 +1,10 @@
 package kamienica.service;
 
-import kamienica.configuration.DatabaseTest;
+import kamienica.configuration.ServiceTest;
 import kamienica.core.enums.Media;
+import kamienica.core.util.SecurityDetails;
 import kamienica.model.MeterWater;
+import kamienica.model.Residence;
 import kamienica.model.Tenant;
 import org.joda.time.LocalDate;
 import org.junit.Test;
@@ -11,14 +13,21 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 
 import static org.junit.Assert.assertEquals;
+import static org.powermock.api.mockito.PowerMockito.mockStatic;
+import static org.powermock.api.mockito.PowerMockito.when;
 
-public class MeterWaterServiceTest extends DatabaseTest {
+public class MeterWaterServiceTest extends ServiceTest {
 
     @Test
     public void getList() {
-        final Tenant t = tenantService.getTenantById(1L);
-        List<MeterWater> list = meterService.getListForOwner(Media.WATER, t);
+        Tenant t = getOwner();
+        List<Residence> residences = getMockedResidences();
 
+        mockStatic(SecurityDetails.class);
+        when(SecurityDetails.getLoggedTenant()).thenReturn(t);
+        when(SecurityDetails.getResidencesForOwner()).thenReturn(residences);
+
+        List<MeterWater> list = meterService.getListForOwner(Media.WATER);
         assertEquals(7, list.size());
 
     }

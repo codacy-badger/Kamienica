@@ -21,7 +21,7 @@ public interface ReadingService {
 	
 	List<? extends Reading> getList(Media media);
 
-	List<? extends Reading> getListForOwner(Media media, Tenant t);
+	List<? extends Reading> getListForOwner(Media media);
 
 	List<? extends Reading> getByDate(LocalDate date, Media media);
 
