@@ -1,11 +1,9 @@
 package kamienica.feature.apartment;
 
 import kamienica.core.util.SecurityDetails;
-import kamienica.feature.residence.ResidenceService;
 import kamienica.feature.settings.SettingsDao;
 import kamienica.model.Apartment;
 import kamienica.model.Residence;
-import kamienica.model.Tenant;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;

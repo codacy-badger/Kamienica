@@ -4,7 +4,6 @@ import kamienica.core.enums.Media;
 import kamienica.core.exception.NoMainCounterException;
 import kamienica.core.util.SecurityDetails;
 import kamienica.feature.meter.MeterDao;
-import kamienica.feature.residence.ResidenceService;
 import kamienica.model.*;
 import org.hibernate.criterion.Criterion;
 import org.hibernate.criterion.Order;

@@ -5,7 +5,6 @@ import kamienica.core.enums.Media;
 import kamienica.core.util.SecurityDetails;
 import kamienica.model.MeterEnergy;
 import kamienica.model.Residence;
-import kamienica.model.Tenant;
 import org.joda.time.LocalDate;
 import org.junit.Test;
 import org.springframework.transaction.annotation.Transactional;

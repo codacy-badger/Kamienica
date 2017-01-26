@@ -7,7 +7,6 @@ import kamienica.model.*;
 import org.hibernate.exception.ConstraintViolationException;
 import org.junit.Ignore;
 import org.junit.Test;
-import org.powermock.core.classloader.annotations.PrepareForTest;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;

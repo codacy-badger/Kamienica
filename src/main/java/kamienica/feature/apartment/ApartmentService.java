@@ -2,7 +2,6 @@ package kamienica.feature.apartment;
 
 import kamienica.core.daoservice.BasicService;
 import kamienica.model.Apartment;
-import kamienica.model.Tenant;
 
 import java.util.List;
 

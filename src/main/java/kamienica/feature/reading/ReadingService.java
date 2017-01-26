@@ -2,7 +2,10 @@ package kamienica.feature.reading;
 
 import kamienica.core.enums.Media;
 import kamienica.core.exception.NoMainCounterException;
-import kamienica.model.*;
+import kamienica.model.Reading;
+import kamienica.model.ReadingEnergy;
+import kamienica.model.ReadingGas;
+import kamienica.model.ReadingWater;
 import org.joda.time.LocalDate;
 
 import java.util.List;

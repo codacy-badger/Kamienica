@@ -2,7 +2,6 @@ package kamienica.feature.meter;
 
 import kamienica.core.enums.Media;
 import kamienica.core.util.SecurityDetails;
-import kamienica.feature.residence.ResidenceService;
 import kamienica.model.*;
 import org.hibernate.criterion.Criterion;
 import org.hibernate.criterion.Restrictions;
