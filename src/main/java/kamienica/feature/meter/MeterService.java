@@ -14,6 +14,8 @@ public interface MeterService {
 
 	void delete(Long id, Media media);
 
+	<T extends Meter> List<T> list(Media media);
+
 	<T extends Meter> List<T> getListForOwner(Media media);
 
 	<T extends Meter> T getById(Long id, Media media);

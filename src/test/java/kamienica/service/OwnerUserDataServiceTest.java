@@ -41,9 +41,9 @@ public class OwnerUserDataServiceTest extends ServiceTest {
     @Test
     @Transactional
     public void emptyApartmentsShouldEqualOneAfterDeactivatingTenant() {
-        Tenant t = tenantService.getTenantById(4L);
+        Tenant t = tenantService.getById(4L);
         t.setStatus(Status.INACTIVE);
-        tenantService.saveTenant(t);
+        tenantService.save(t);
         map = ownerUserDataService.getMainData();
         assertEquals(1, map.get("emptyApartments"));
     }

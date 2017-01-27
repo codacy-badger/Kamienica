@@ -23,14 +23,14 @@ public class InvoiceEnergyServiceTest extends ServiceTest {
 
     @Before
     public void initData() {
-        t = tenantService.getTenantById(1L);
+        t = tenantService.getById(1L);
         r = residenceService.getById(1L);
     }
 
     @Test
     public void getList() {
         mockStatic(SecurityDetails.class);
-        when(SecurityDetails.getLoggedTenant()).thenReturn(tenantService.getTenantById(1L));
+        when(SecurityDetails.getLoggedTenant()).thenReturn(tenantService.getById(1L));
         when(SecurityDetails.getResidencesForOwner()).thenReturn(getMockedResidences());
 
         assertEquals(1, invoiceService.list(Media.ENERGY).size());
@@ -41,7 +41,7 @@ public class InvoiceEnergyServiceTest extends ServiceTest {
     @Test
     public void add() throws InvalidDivisionException {
         mockStatic(SecurityDetails.class);
-        when(SecurityDetails.getLoggedTenant()).thenReturn(tenantService.getTenantById(1L));
+        when(SecurityDetails.getLoggedTenant()).thenReturn(tenantService.getById(1L));
         when(SecurityDetails.getResidencesForOwner()).thenReturn(getMockedResidences());
 
         List<ReadingEnergy> list = readingService.getUnresolvedReadingsEnergy();
@@ -67,7 +67,7 @@ public class InvoiceEnergyServiceTest extends ServiceTest {
     @Test
     public void addForFirstReading() throws InvalidDivisionException {
         mockStatic(SecurityDetails.class);
-        when(SecurityDetails.getLoggedTenant()).thenReturn(tenantService.getTenantById(1L));
+        when(SecurityDetails.getLoggedTenant()).thenReturn(tenantService.getById(1L));
         when(SecurityDetails.getResidencesForOwner()).thenReturn(getMockedResidences());
 
         List<ReadingEnergy> list = readingService.getUnresolvedReadingsEnergy();

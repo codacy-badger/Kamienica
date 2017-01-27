@@ -1,7 +1,9 @@
 package kamienica.feature.meter;
 
 import kamienica.core.daoservice.BasicDaoImpl;
+import kamienica.core.util.SecurityDetails;
 import kamienica.model.Meter;
+import kamienica.model.SecurityUser;
 import org.hibernate.Criteria;
 import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
@@ -27,6 +29,7 @@ public class MeterAbstractDaoImpl<T extends Meter> extends BasicDaoImpl<T> {
 	public Set<Long> getIdListForActiveMeters() {
 		Criteria criteria = createEntityCriteria().setProjection(Projections.property("id"));
 		criteria.add(Restrictions.gt("deactivation", new LocalDate()));
+		criteria.add(Restrictions.in("residence", SecurityDetails.getResidencesForOwner()));
 		return new HashSet<>(criteria.list());
 		
 	}

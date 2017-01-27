@@ -17,19 +17,18 @@ import static org.junit.Assert.assertTrue;
 @Transactional
 public class SecurityServiceTest extends ServiceTest {
 
-    private static final String USER_LOGIN = "folik@wp.pl";
     private static final String USER_PASSWD = "witaj";
     private static final SimpleGrantedAuthority ADMIN =  new SimpleGrantedAuthority("ROLE_OWNER" );
 
     @Test
     public void loginWithCorrectCredentials() {
-        final UserDetails result = securityService.loadUserByUsername(USER_LOGIN);
+        final UserDetails result = securityService.loadUserByUsername(FIRST_OWNER_MAIL);
         assertEquals(true, result.isAccountNonExpired());
         assertEquals(true, result.isAccountNonLocked());
         assertEquals(true, result.isCredentialsNonExpired());
         assertEquals(true, result.isEnabled());
         assertEquals(USER_PASSWD, result.getPassword());
-        assertEquals(USER_LOGIN, result.getUsername());
+        assertEquals(FIRST_OWNER_MAIL, result.getUsername());
 
         final Collection<? extends GrantedAuthority> authoritiesList = result.getAuthorities();
         assertTrue(authoritiesList.contains(ADMIN));
@@ -44,15 +43,15 @@ public class SecurityServiceTest extends ServiceTest {
     @Transactional
     @Test
     public void changePassword(){
-        securityService.changePassword(USER_LOGIN, "witaj", "nowe");
-        final Tenant tenant = tenantService.loadByMail(USER_LOGIN);
+        securityService.changePassword(FIRST_OWNER_MAIL, "witaj", "nowe");
+        final Tenant tenant = tenantService.loadByMail(FIRST_OWNER_MAIL);
         assertEquals("nowe", tenant.getPassword());
     }
 
     @Test(expected = UsernameNotFoundException.class)
     public void changePasswordWithIncorrectCredentials(){
-        securityService.changePassword(USER_LOGIN, "dummy", "nowe");
-        final Tenant tenant = tenantService.loadByMail(USER_LOGIN);
+        securityService.changePassword(FIRST_OWNER_MAIL, "dummy", "nowe");
+        final Tenant tenant = tenantService.loadByMail(FIRST_OWNER_MAIL);
         assertEquals("nowe", tenant.getPassword());
     }
 }

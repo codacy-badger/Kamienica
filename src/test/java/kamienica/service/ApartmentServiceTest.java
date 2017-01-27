@@ -17,7 +17,7 @@ public class ApartmentServiceTest extends ServiceTest {
     @Test
     public void getList() {
         List<Apartment> list = apartmentService.list();
-        assertEquals(4, list.size());
+        assertEquals(5, list.size());
     }
 
     @Test
@@ -39,14 +39,6 @@ public class ApartmentServiceTest extends ServiceTest {
     public void getById() {
         Apartment apartment = apartmentService.getById(3L);
         assertEquals(2, apartment.getApartmentNumber());
-
-    }
-
-    @Transactional
-    @Test
-    public void remove() {
-        apartmentService.deleteById(5L);
-        assertEquals(4, apartmentService.list().size());
 
     }
 

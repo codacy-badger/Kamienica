@@ -55,7 +55,7 @@ public class SecurityServiceImpl implements UserDetailsService {
 
 
         tenant.setPassword(newPwassword);
-        tenantService.updateTenant(tenant);
+        tenantService.update(tenant);
     }
 
     private void checkOldPassword(Tenant tenant, String oldPassowrd) {

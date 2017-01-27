@@ -22,8 +22,12 @@ import java.util.Map;
 @RequestMapping("/api/v1/apartments")
 public class ApartmentApi  {
 
+    private final ApartmentService apartmentService;
+
     @Autowired
-    private ApartmentService apartmentService;
+    public ApartmentApi(ApartmentService apartmentService) {
+        this.apartmentService = apartmentService;
+    }
 
     @RequestMapping(method = RequestMethod.GET)
     public ResponseEntity<?> list() {

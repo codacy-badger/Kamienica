@@ -24,7 +24,7 @@ public class InvoiceGasServiceTest extends ServiceTest {
 
     @Before
     public void initData() {
-        t = tenantService.getTenantById(1L);
+        t = tenantService.getById(1L);
         r = residenceService.getById(1L);
     }
 

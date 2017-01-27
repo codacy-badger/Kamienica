@@ -23,7 +23,7 @@ public class InvoiceWaterServiceTest extends ServiceTest {
 
     @Before
     public void initData() {
-        t = tenantService.getTenantById(1L);
+        t = tenantService.getById(1L);
         r = residenceService.getById(1L);
     }
 
@@ -49,7 +49,7 @@ public class InvoiceWaterServiceTest extends ServiceTest {
         InvoiceWater invoice = new InvoiceWater("112233", new LocalDate(), 200, list.get(1));
 
         invoiceService.save(invoice, Media.WATER, t, r);
-        when(SecurityDetails.getLoggedTenant()).thenReturn(tenantService.getTenantById(1L));
+        when(SecurityDetails.getLoggedTenant()).thenReturn(tenantService.getById(1L));
         assertEquals(2, invoiceService.list(Media.WATER).size());
         List<? extends Payment> paymentList = paymentService.getPaymentList(Media.WATER);
 
@@ -77,7 +77,7 @@ public class InvoiceWaterServiceTest extends ServiceTest {
         InvoiceWater invoice = new InvoiceWater("112233", new LocalDate(), 200, list.get(0));
 
         invoiceService.save(invoice, Media.WATER, t, r);
-        when(SecurityDetails.getLoggedTenant()).thenReturn(tenantService.getTenantById(1L));
+        when(SecurityDetails.getLoggedTenant()).thenReturn(tenantService.getById(1L));
         assertEquals(2, invoiceService.list(Media.WATER).size());
         List<? extends Payment> paymentList = paymentService.getPaymentList(Media.WATER);
 

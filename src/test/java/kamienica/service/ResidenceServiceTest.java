@@ -38,7 +38,7 @@ public class ResidenceServiceTest extends ServiceTest {
         assertEquals(2, ownerships.size());
 
         final List<Apartment> ap = apartmentService.list();
-        assertEquals(5, ap.size());
+        assertEquals(6, ap.size());
 
         final List<MeterEnergy> meterEnergies = meterService.getListForOwner(Media.ENERGY);
         assertEquals(5, meterEnergies.size());
@@ -49,7 +49,7 @@ public class ResidenceServiceTest extends ServiceTest {
     @Transactional
     public void shouldThrowException() throws Exception {
         mockStatic(SecurityDetails.class);
-        Tenant t = tenantService.getTenantById(1L);
+        Tenant t = tenantService.getById(1L);
         when(SecurityDetails.getLoggedTenant()).thenReturn(t);
 
         final Residence res = new Residence("Świętojańska", "45", "Gdynia");
@@ -79,7 +79,7 @@ public class ResidenceServiceTest extends ServiceTest {
     @Test
     @Transactional
     public void getListForTenant() {
-        Tenant t = tenantService.getTenantById(1L);
+        Tenant t = tenantService.getById(1L);
         mockStatic(SecurityDetails.class);
         when(SecurityDetails.getLoggedTenant()).thenReturn(t);
 
@@ -89,7 +89,7 @@ public class ResidenceServiceTest extends ServiceTest {
 
     @Test
     public void getListForOwner() {
-        Tenant t = tenantService.getTenantById(1L);
+        Tenant t = tenantService.getById(1L);
         when(SecurityDetails.getLoggedTenant()).thenReturn(t);
 
         final List<Residence> residences = residenceService.listForOwner();

@@ -19,7 +19,7 @@ import static org.powermock.api.mockito.PowerMockito.when;
 public class MeterWaterServiceTest extends ServiceTest {
 
     @Test
-    public void getList() {
+    public void getListForOwner() {
         Tenant t = getOwner();
         List<Residence> residences = getMockedResidences();
 
@@ -30,6 +30,12 @@ public class MeterWaterServiceTest extends ServiceTest {
         List<MeterWater> list = meterService.getListForOwner(Media.WATER);
         assertEquals(7, list.size());
 
+    }
+
+    @Test
+    public void getList() {
+        List<MeterWater> list = meterService.list(Media.WATER);
+        assertEquals(8, list.size());
     }
 
     @Test
@@ -49,6 +55,8 @@ public class MeterWaterServiceTest extends ServiceTest {
     @Transactional
     @Test
     public void getActiveMeters() {
+        mockStatic(SecurityDetails.class);
+        when(SecurityDetails.getResidencesForOwner()).thenReturn(getMockedResidences());
         assertEquals(7, meterService.getIdListForActiveMeters(Media.WATER).size());
         MeterWater meter = meterService.getById(4L, Media.WATER);
         meter.setDeactivation(LocalDate.now().minusDays(1));

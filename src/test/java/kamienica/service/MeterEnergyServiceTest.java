@@ -19,19 +19,26 @@ public class MeterEnergyServiceTest extends ServiceTest {
 
 
     @Test
-    public void getList() {
+    public void getListForFirstOwner() {
         List<Residence> residences = getMockedResidences();
         mockStatic(SecurityDetails.class);
         when(SecurityDetails.getResidencesForOwner()).thenReturn(residences);
         when(SecurityDetails.getResidencesForOwner()).thenReturn(residences);
         List<MeterEnergy> list = meterService.getListForOwner(Media.ENERGY);
         assertEquals(5, list.size());
+    }
 
+    @Test
+    public void getList() {
+        List<MeterEnergy> list = meterService.list(Media.ENERGY);
+        assertEquals(6, list.size());
     }
 
     @Transactional
     @Test
     public void getActiveMeters() {
+        mockStatic(SecurityDetails.class);
+        when(SecurityDetails.getResidencesForOwner()).thenReturn(getMockedResidences());
         assertEquals(5, meterService.getIdListForActiveMeters(Media.ENERGY).size());
         MeterEnergy meter = meterService.getById(4L, Media.ENERGY);
         meter.setDeactivation(LocalDate.now().minusDays(1));
@@ -54,7 +61,7 @@ public class MeterEnergyServiceTest extends ServiceTest {
     public void add() {
         MeterEnergy meter = createDummyMeter();
         meterService.save(meter, Media.ENERGY);
-        assertEquals(6, meterService.getIdList(Media.ENERGY).size());
+        assertEquals(7, meterService.getIdList(Media.ENERGY).size());
     }
 
     @Test

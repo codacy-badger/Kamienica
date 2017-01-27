@@ -6,18 +6,19 @@ insert into apartment(id, apartmentNumber, description, intercom, residence_id) 
 insert into apartment(id, apartmentNumber, description, intercom, residence_id) values(2, 1, 'Piwnica','6666', 1);
 insert into apartment(id, apartmentNumber, description, intercom, residence_id) values(3, 2, 'Parter','6666', 1);
 insert into apartment(id, apartmentNumber, description, intercom, residence_id) values(4, 3, 'I Piętro','6666', 1);
+insert into apartment(id, apartmentNumber, description, intercom, residence_id) values(5, 2, 'Mieszkanie z drugiej rezydencji','6666', 2);
 
-INSERT INTO  tenant  ( id , email , firstName , lastName , movementDate , password , phone , role , status , apartment_id ) VALUES (1,'folik@wp.pl','Maciej','Folik','2016-07-25','witaj','530081187','OWNER','ACTIVE',2);
+INSERT INTO  tenant  ( id , email , firstName , lastName , movementDate , password , phone , role , status , apartment_id ) VALUES (1,'owner@res1','LivesAndOwns','1Residence','2016-07-25','witaj','530081187','OWNER','ACTIVE',2);
 INSERT INTO  tenant  ( id , email , firstName , lastName , movementDate , password , phone , role , status , apartment_id ) VALUES (2,'kow@wp.pl','Andrzej','Kowalski','2014-07-01','witaj','4456','TENANT','INACTIVE',3);
 INSERT INTO  tenant  ( id , email , firstName , lastName , movementDate , password , phone , role , status , apartment_id ) VALUES (3,'par@wp.pl','Kasia','Para','2015-07-26','witaj','23636','TENANT','ACTIVE',4);
 INSERT INTO  tenant  ( id , email , firstName , lastName , movementDate , password , phone , role , status , apartment_id ) VALUES (4,'kasia@wp.pl','Kasia','Kowalska','2016-07-29','witaj','3456775','TENANT','ACTIVE',3);
 INSERT INTO  tenant  ( id , email , firstName , lastName , movementDate , password , phone , role , status , apartment_id ) VALUES (5,'klej@wp.pl','Piotr','Kulej','2010-07-29','witaj','23526564','TENANT','INACTIVE',2);
+INSERT INTO  tenant  ( id , email , firstName , lastName , movementDate , password , phone , role , status , apartment_id ) VALUES (6,'tenant@rez2','Tenant','2Residence','2010-07-29','witaj','23526564','TENANT','ACTIVE',5);
+INSERT INTO  tenant  ( id , email , firstName , lastName , movementDate , password , phone , role , status , apartment_id ) VALUES (7,'owner@rez2','Owner','2Residence','2010-07-29','witaj','23526564','OWNER','ACTIVE',null);
 
 
 INSERT INTO RESIDENCE_OWNERSHIP (id, owner_id, residenceOwned_id)  VALUES (1,1,1);
-INSERT INTO RESIDENCE_OWNERSHIP (id, owner_id, residenceOwned_id)  VALUES (2,3,2);
---INSERT INTO TENANT_RESIDENCE_OWNERSHIP VALUES (1,1);
-
+INSERT INTO RESIDENCE_OWNERSHIP (id, owner_id, residenceOwned_id)  VALUES (2,7,2);
 
 INSERT INTO  division  ( id , date , divisionValue , apartment_id , tenant_id ) VALUES (1,'2016-07-01',0.33,1,1);
 INSERT INTO  division  ( id , date , divisionValue , apartment_id , tenant_id ) VALUES (2,'2016-07-01',1,2,1);
@@ -37,6 +38,7 @@ INSERT INTO  meterenergy  ( id , deactivation , description , main , serialNumbe
 INSERT INTO  meterenergy  ( id , deactivation , description , main , serialNumber , unit , apartment_id, residence_id ) VALUES (3,'2600-01-01','Piwnica',0,'1','kWh',2, 1);
 INSERT INTO  meterenergy  ( id , deactivation , description , main , serialNumber , unit , apartment_id, residence_id ) VALUES (4,'2600-01-01','Parter',0,'2','kWh',3, 1);
 INSERT INTO  meterenergy  ( id , deactivation , description , main , serialNumber , unit , apartment_id, residence_id ) VALUES (5,'2600-01-01','I pietro',0,'3','kWh',4, 1);
+INSERT INTO  meterenergy  ( id , deactivation , description , main , serialNumber , unit , apartment_id, residence_id ) VALUES (6,'2600-01-01','2res',0,'53','kWh',5, 2);
 
 INSERT INTO  meterwater  ( id , deactivation , description , main , serialNumber , unit , isWarmWater , apartment_id, residence_id ) VALUES (1,'2600-01-01','G?ówny',1,'00','m3','0',NULL, 1);
 INSERT INTO  meterwater  ( id , deactivation , description , main , serialNumber , unit , isWarmWater , apartment_id, residence_id ) VALUES (2,'2600-01-01','Piwnica',0,'1','m3','0',2, 1);
@@ -45,6 +47,7 @@ INSERT INTO  meterwater  ( id , deactivation , description , main , serialNumber
 INSERT INTO  meterwater  ( id , deactivation , description , main , serialNumber , unit , isWarmWater , apartment_id, residence_id ) VALUES (5,'2600-01-01','Parter ciepla',0,'1111','m3','1',3, 1);
 INSERT INTO  meterwater  ( id , deactivation , description , main , serialNumber , unit , isWarmWater , apartment_id, residence_id ) VALUES (6,'2600-01-01','I pietro zimna',0,'3','m3','0',4, 1);
 INSERT INTO  meterwater  ( id , deactivation , description , main , serialNumber , unit , isWarmWater , apartment_id, residence_id ) VALUES (7,'2600-01-01','I pietro ciepla',0,'34','m3','1',4, 1);
+INSERT INTO  meterwater  ( id , deactivation , description , main , serialNumber , unit , isWarmWater , apartment_id, residence_id ) VALUES (8,'2600-01-01','2res',0,'53','m3','1',5, 2);
 
 INSERT INTO  metergas  ( id , deactivation , description , main , serialNumber , unit , cwu , apartment_id, residence_id ) VALUES (1,'2600-01-01','Główny',1,'00','m3','0',NULL, 1);
 INSERT INTO  metergas  ( id , deactivation , description , main , serialNumber , unit , cwu , apartment_id, residence_id ) VALUES (2,'2600-01-01','Ogrzewanie',0,'0000','m3','0',1, 1);
@@ -52,6 +55,8 @@ INSERT INTO  metergas  ( id , deactivation , description , main , serialNumber ,
 INSERT INTO  metergas  ( id , deactivation , description , main , serialNumber , unit , cwu , apartment_id, residence_id ) VALUES (4,'2600-01-01','Parter',0,'2','m3','0',3, 1);
 INSERT INTO  metergas  ( id , deactivation , description , main , serialNumber , unit , cwu , apartment_id, residence_id ) VALUES (5,'2600-01-01','I pietro',0,'3','m3','0',4, 1);
 INSERT INTO  metergas  ( id , deactivation , description , main , serialNumber , unit , cwu , apartment_id, residence_id ) VALUES (6,'2600-01-01','CWU',0,'000000','m3','1',1, 1);
+INSERT INTO  metergas  ( id , deactivation , description , main , serialNumber , unit , cwu , apartment_id, residence_id ) VALUES (7,'2600-01-01','2res',0,'53','kWh','0',5, 2);
+
 
 INSERT INTO  readinggas  ( id , readingDate , resolved , value , unit , meter_id ) VALUES (1,'2016-07-29','0',114,'m3',1);
 INSERT INTO  readinggas  ( id , readingDate , resolved , value , unit , meter_id ) VALUES (2,'2016-07-29','0',1.5,'m3',2);

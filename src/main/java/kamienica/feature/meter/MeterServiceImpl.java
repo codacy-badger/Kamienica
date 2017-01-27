@@ -163,6 +163,21 @@ public class MeterServiceImpl implements MeterService {
 
     }
 
+    @Override
+    public <T extends Meter> List<T> list(Media media) {
+        switch (media) {
+            case ENERGY:
+                return (List<T>) energy.getList();
+            case WATER:
+                return (List<T>) water.getList();
+            case GAS:
+                return (List<T>) gas.getList();
+
+            default:
+                return null;
+        }
+    }
+
 
     @Override
     public Set<Long> getIdList(Media media) {

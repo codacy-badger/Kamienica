@@ -18,6 +18,7 @@ import java.util.List;
 
 import static org.junit.Assert.assertEquals;
 
+@Ignore("Planning to get rid of Division class")
 public class DivisionServiceTest extends ServiceTest {
 
     @Test

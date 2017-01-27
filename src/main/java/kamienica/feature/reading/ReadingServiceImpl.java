@@ -21,7 +21,6 @@ import java.util.Set;
 @Transactional
 public class ReadingServiceImpl implements ReadingService {
 
-   // @Qualifier("readingEnergyDao")
     private final ReadingEnergyDao energy;
     private final ReadingWaterDao water;
     private final ReadingGasDao gas;
@@ -58,18 +57,19 @@ public class ReadingServiceImpl implements ReadingService {
     @Override
     public List<? extends Reading> getListForOwner(final Media media) {
         final List<Residence> residences = SecurityDetails.getResidencesForOwner();
-        final Criterion c = Restrictions.in("residence", residences);
-        final Order o = Order.desc("readingDate");
+        final Criterion byResidence = Restrictions.in("residence", residences);
+        final Order byDate = Order.desc("readingDate");
+        //TODO parent restriction http://stackoverflow.com/questions/19815731/hibernate-criteria-child-restriction after chenging meter status to enum
         switch (media) {
             case ENERGY:
-                final List<MeterEnergy> me = meterEnergy.findByCriteria(c);
-                return energy.findByCriteria(o, Restrictions.in("meter", me));
+                final List<MeterEnergy> me = meterEnergy.findByCriteria(byResidence);
+                return energy.findByCriteria(byDate, Restrictions.in("meter", me));
             case GAS:
-                final List<MeterGas> mg = meterGas.findByCriteria(c);
-                return gas.findByCriteria(o, Restrictions.in("meter", mg));
+                final List<MeterGas> mg = meterGas.findByCriteria(byResidence);
+                return gas.findByCriteria(byDate, Restrictions.in("meter", mg));
             case WATER:
-                final List<MeterWater> mw = meterWater.findByCriteria(c);
-                return water.findByCriteria(o, Restrictions.in("meter", mw));
+                final List<MeterWater> mw = meterWater.findByCriteria(byResidence);
+                return water.findByCriteria(byDate, Restrictions.in("meter", mw));
             default:
                 return null;
         }
@@ -81,85 +81,37 @@ public class ReadingServiceImpl implements ReadingService {
      * method will create fake '0' readings for each meter. It will also create
      * 0 reading for every new meter that has been recently added
      *
-     * @throws NoMainCounterException
+     * @throws NoMainCounterException when no main meter for residence
      */
     @SuppressWarnings("unchecked")
     @Override
     public <T extends Reading> List<T> getLatestNew(Media media) throws NoMainCounterException {
-        Set<Long> idList;
         LocalDate fakeDate = new LocalDate().minusDays(100);
         switch (media) {
             case ENERGY:
                 if (!meterEnergy.ifMainExists()) {
                     throw new NoMainCounterException();
                 }
-                idList = meterEnergy.getIdListForActiveMeters();
-                List<ReadingEnergy> energyList = latestEdit(Media.ENERGY);
-                if (energyList.isEmpty()) {
-                    for (Long tmpLong : idList) {
-                        energyList.add(new ReadingEnergy(fakeDate, 0.0, meterEnergy.getById(tmpLong)));
-                    }
-                } else {
-                    for (ReadingEnergy readingEnergy : energyList) {
-                        // consider using LambdaJ
-                        idList.remove(readingEnergy.getMeter().getId());
-                    }
-                    for (Long tmpLong : idList) {
-                        energyList.add(
-                                new ReadingEnergy(energyList.get(0).getReadingDate(), 0.0, meterEnergy.getById(tmpLong)));
-                    }
-                }
-                return (List<T>) energyList;
+                return latestEnergy(fakeDate);
             case GAS:
                 if (!meterGas.ifMainExists()) {
                     throw new NoMainCounterException();
                 }
-                idList = meterGas.getIdListForActiveMeters();
-                List<ReadingGas> gasList = latestEdit(Media.GAS);
-
-                // if this the very first time user creates readings
-                if (gasList.isEmpty()) {
-                    for (Long tmpLong : idList) {
-                        gasList.add(new ReadingGas(fakeDate, 0.0, meterGas.getById(tmpLong)));
-                    }
-                } else {
-                    // checks if there has been a new meter and adds fake '0'
-                    // reading
-                    for (ReadingGas readingGas : gasList) {
-                        idList.remove(readingGas.getMeter().getId());
-                    }
-                    for (Long tmpLong : idList) {
-                        gasList.add(new ReadingGas(gasList.get(0).getReadingDate(), 0.0, meterGas.getById(tmpLong)));
-                    }
-                }
-                return (List<T>) gasList;
+                return latestGas(fakeDate);
 
             case WATER:
                 if (!meterWater.ifMainExists()) {
                     throw new NoMainCounterException();
                 }
-                idList = meterWater.getIdListForActiveMeters();
-                List<ReadingWater> waterList = latestEdit(Media.WATER);
-                if (waterList.isEmpty()) {
-                    for (Long tmpLong : idList) {
-                        waterList.add(new ReadingWater(fakeDate, 0.0, meterWater.getById(tmpLong)));
-                    }
-                } else {
-                    for (ReadingWater readingWater : waterList) {
-                        idList.remove(readingWater.getMeter().getId());
-                    }
-                    for (Long tmpLong : idList) {
-                        waterList
-                                .add(new ReadingWater(waterList.get(0).getReadingDate(), 0.0, meterWater.getById(tmpLong)));
-                    }
-                }
-                return (List<T>) waterList;
+                return latestWater(fakeDate);
 
             default:
-                break;
+                return null;
         }
-        return null;
+
     }
+
+
 
     @SuppressWarnings("unchecked")
     @Override
@@ -226,7 +178,6 @@ public class ReadingServiceImpl implements ReadingService {
         }
 
     }
-
 
     @Override
     public <T extends Reading> void save(List<T> reading, LocalDate localDate, Media media) {
@@ -312,33 +263,6 @@ public class ReadingServiceImpl implements ReadingService {
         return water.getUnresolvedReadings();
     }
 
-//    @Override
-//    public HashMap<String, List<ReadingWater>> getWaterReadingsForGasConsumption(InvoiceGas invoice) {
-//        return water.getWaterReadingForGasConsumption(invoice);
-//    }
-//
-//    @Override
-//    public void deleteList(List<? extends Reading> list, Media media) {
-//        switch (media) {
-//            case ENERGY:
-//                for (Reading reading : list) {
-//                    energy.deleteById(reading.getId());
-//                }
-//                break;
-//            case GAS:
-//                for (Reading reading : list) {
-//                    gas.deleteById(reading.getId());
-//                }
-//                break;
-//            case WATER:
-//                for (Reading reading : list) {
-//                    water.deleteById(reading.getId());
-//                }
-//                break;
-//            default:
-//                break;
-//        }
-//    }
 
 
     @Override
@@ -417,5 +341,67 @@ public class ReadingServiceImpl implements ReadingService {
 
     }
 
+    private <T extends Reading> List<T> latestWater(LocalDate fakeDate) {
+        Set<Long> idList;
+        idList = meterWater.getIdListForActiveMeters();
+        List<ReadingWater> waterList = latestEdit(Media.WATER);
+        if (waterList.isEmpty()) {
+            for (Long tmpLong : idList) {
+                waterList.add(new ReadingWater(fakeDate, 0.0, meterWater.getById(tmpLong)));
+            }
+        } else {
+            for (ReadingWater readingWater : waterList) {
+                idList.remove(readingWater.getMeter().getId());
+            }
+            for (Long tmpLong : idList) {
+                waterList
+                        .add(new ReadingWater(waterList.get(0).getReadingDate(), 0.0, meterWater.getById(tmpLong)));
+            }
+        }
+        return (List<T>) waterList;
+    }
 
+    private <T extends Reading> List<T> latestGas(LocalDate fakeDate) {
+        Set<Long> idList;
+        idList = meterGas.getIdListForActiveMeters();
+        List<ReadingGas> gasList = latestEdit(Media.GAS);
+
+        // if this the very first time user creates readings
+        if (gasList.isEmpty()) {
+            for (Long tmpLong : idList) {
+                gasList.add(new ReadingGas(fakeDate, 0.0, meterGas.getById(tmpLong)));
+            }
+        } else {
+            // checks if there has been a new meter and adds fake '0'
+            // reading
+            for (ReadingGas readingGas : gasList) {
+                idList.remove(readingGas.getMeter().getId());
+            }
+            for (Long tmpLong : idList) {
+                gasList.add(new ReadingGas(gasList.get(0).getReadingDate(), 0.0, meterGas.getById(tmpLong)));
+            }
+        }
+        return (List<T>) gasList;
+    }
+
+    private <T extends Reading> List<T> latestEnergy(LocalDate fakeDate) {
+        Set<Long> idList;
+        idList = meterEnergy.getIdListForActiveMeters();
+        List<ReadingEnergy> energyList = latestEdit(Media.ENERGY);
+        if (energyList.isEmpty()) {
+            for (Long tmpLong : idList) {
+                energyList.add(new ReadingEnergy(fakeDate, 0.0, meterEnergy.getById(tmpLong)));
+            }
+        } else {
+            for (ReadingEnergy readingEnergy : energyList) {
+                // consider using LambdaJ
+                idList.remove(readingEnergy.getMeter().getId());
+            }
+            for (Long tmpLong : idList) {
+                energyList.add(
+                        new ReadingEnergy(energyList.get(0).getReadingDate(), 0.0, meterEnergy.getById(tmpLong)));
+            }
+        }
+        return (List<T>) energyList;
+    }
 }

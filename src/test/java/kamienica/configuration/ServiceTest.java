@@ -15,6 +15,7 @@ import kamienica.feature.user_admin.OwnerUserDataService;
 import kamienica.feature.user_admin.SecurityServiceImpl;
 import kamienica.model.Residence;
 import kamienica.model.Tenant;
+import org.h2.tools.Server;
 import org.joda.time.LocalDate;
 import org.junit.BeforeClass;
 import org.junit.runner.RunWith;
@@ -68,6 +69,8 @@ public abstract class ServiceTest {
     protected final double DELTA = 0.5;
 
     protected static final LocalDate TODAY = new LocalDate();
+    protected final static String FIRST_OWNER_MAIL = "owner@res1";
+
 
     @BeforeClass
     public static void init() throws SQLException {
@@ -83,7 +86,7 @@ public abstract class ServiceTest {
     }
 
     protected Tenant getOwner() {
-        return tenantService.getTenantById(1L);
+        return tenantService.getById(1L);
     }
 
 }

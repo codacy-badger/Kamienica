@@ -79,7 +79,7 @@
 //
 //	@Rollback
 //	@Testing
-//	public void updateTenant() {
+//	public void update() {
 //		Tenant ten = daoservice.getById(1L);
 //		Assert.assertEquals(ten.getFirstName(), "Maciej");
 //		ten.setFirstName("Karol");
@@ -95,7 +95,7 @@
 //
 //	@Rollback
 //	@Testing(dependsOnMethods = { "findAll" })
-//	public void saveTenant() {
+//	public void save() {
 //		daoservice.save(getSample());
 //		Assert.assertEquals(daoservice.getListForOwner().size(), 5);
 //	}

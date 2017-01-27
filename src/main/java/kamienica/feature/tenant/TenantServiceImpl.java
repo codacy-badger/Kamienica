@@ -26,7 +26,7 @@ public class TenantServiceImpl implements TenantService {
     }
 
     @Override
-    public void saveTenant(Tenant newTenant) {
+    public void save(Tenant newTenant) {
         Tenant currentTenant = tenantDao.getTenantForApartment(newTenant.getApartment());
         if (currentTenant == null) {
             tenantDao.save(newTenant);
@@ -48,8 +48,18 @@ public class TenantServiceImpl implements TenantService {
 
 
     @Override
-    public List<Tenant> getList() {
+    public List<Tenant> list() {
         return tenantDao.getList();
+    }
+
+    @Override
+    public List<Tenant> listForOwner() {
+        return null;
+    }
+
+    @Override
+    public List<Tenant> listForTenant() {
+        return null;
     }
 
     @Override
@@ -58,19 +68,19 @@ public class TenantServiceImpl implements TenantService {
     }
 
     @Override
-    public void deleteTenant(Long id) {
+    public void deleteById(Long id) {
         tenantDao.deleteById(id);
         settingsDao.changeDivisionState(false);
     }
 
     @Override
-    public void updateTenant(Tenant tenant) {
+    public void update(Tenant tenant) {
         tenantDao.update(tenant);
 
     }
 
     @Override
-    public Tenant getTenantById(Long id) {
+    public Tenant getById(Long id) {
         return tenantDao.getById(id);
     }
 

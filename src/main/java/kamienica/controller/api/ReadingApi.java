@@ -23,7 +23,7 @@ public class ReadingApi {
     @RequestMapping(value = "/{media}", method = RequestMethod.GET)
     public ResponseEntity<?> getList(@PathVariable Media media) {
 
-        List<? extends Reading> list = service.getList(media);
+        List<? extends Reading> list = service.getListForOwner(media);
         if (list.isEmpty()) {
             return new ResponseEntity<Void>(HttpStatus.NOT_FOUND);
         }
