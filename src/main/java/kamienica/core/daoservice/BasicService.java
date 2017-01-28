@@ -1,7 +1,5 @@
 package kamienica.core.daoservice;
 
-import org.hibernate.criterion.Criterion;
-
 import java.util.List;
 
 public interface BasicService<T> {

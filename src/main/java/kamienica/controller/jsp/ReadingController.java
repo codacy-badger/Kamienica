@@ -153,7 +153,6 @@ public class ReadingController {
 
     @RequestMapping("/readingList")
     public ModelAndView readingList(@RequestParam("media") Media media) {
-        final Tenant t = SecurityDetails.getLoggedTenant();
         Map<String, Object> model = new HashMap<>();
         switch (media) {
             case ENERGY:

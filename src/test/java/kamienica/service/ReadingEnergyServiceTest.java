@@ -22,6 +22,8 @@ public class ReadingEnergyServiceTest extends ServiceTest {
 
     @Test
     public void getLatest() throws NoMainCounterException {
+        mockStatic(SecurityDetails.class);
+        when(SecurityDetails.getResidencesForOwner()).thenReturn(getMockedResidences());
         List<ReadingEnergy> list = readingService.getLatestNew(Media.ENERGY);
 
         assertEquals(5, list.size());
@@ -43,6 +45,8 @@ public class ReadingEnergyServiceTest extends ServiceTest {
     @Transactional
     @Test
     public void getLatestActiveOnly() throws NoMainCounterException {
+        mockStatic(SecurityDetails.class);
+        when(SecurityDetails.getResidencesForOwner()).thenReturn(getMockedResidences());
         MeterEnergy meter = meterService.getById(3L, Media.ENERGY);
         meter.setDeactivation(LocalDate.parse("2016-01-01"));
         meterService.update(meter, Media.ENERGY);
@@ -102,6 +106,8 @@ public class ReadingEnergyServiceTest extends ServiceTest {
     @Transactional
     @Test
     public void firstReadingForANewMeter() throws NoMainCounterException {
+        mockStatic(SecurityDetails.class);
+        when(SecurityDetails.getResidencesForOwner()).thenReturn(getMockedResidences());
         final Apartment ap = apartmentService.getById(2L);
         MeterEnergy meter = new MeterEnergy("test", "34", "3535", ap);
         meterService.save(meter, Media.ENERGY);
@@ -146,6 +152,8 @@ public class ReadingEnergyServiceTest extends ServiceTest {
     @Transactional
     @Test
     public void update() throws NoMainCounterException {
+        mockStatic(SecurityDetails.class);
+        when(SecurityDetails.getResidencesForOwner()).thenReturn(getMockedResidences());
         List<ReadingEnergy> list = readingService.getLatestNew(Media.ENERGY);
 
         for (ReadingEnergy aList : list) {

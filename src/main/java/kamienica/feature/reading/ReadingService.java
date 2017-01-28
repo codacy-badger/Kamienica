@@ -2,10 +2,7 @@ package kamienica.feature.reading;
 
 import kamienica.core.enums.Media;
 import kamienica.core.exception.NoMainCounterException;
-import kamienica.model.Reading;
-import kamienica.model.ReadingEnergy;
-import kamienica.model.ReadingGas;
-import kamienica.model.ReadingWater;
+import kamienica.model.*;
 import org.joda.time.LocalDate;
 
 import java.util.List;
@@ -28,10 +25,6 @@ public interface ReadingService {
 
 	List<? extends Reading> getByDate(LocalDate date, Media media);
 
-//	void deleteList(List<? extends Reading> list, Media media);
-//
-//	List<? extends Reading> getPreviousReadingEnergy(LocalDate date, Media media);
-
 	List<ReadingEnergy> getPreviousReadingEnergy(LocalDate date, Set<Long> meterIdList);
 
 	List<ReadingGas> getPreviousReadingGas(LocalDate date, Set<Long> meterIdList);
@@ -49,8 +42,6 @@ public interface ReadingService {
 	List<ReadingWater> waterLatestEdit();
 
 	List<ReadingWater> getUnresolvedReadingsWater();
-
-//	HashMap<String, List<ReadingWater>> getWaterReadingsForGasConsumption(InvoiceGas invoice);
 
     List<?> getUnresolvedReadings(Media media);
 

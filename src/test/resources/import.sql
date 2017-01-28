@@ -65,6 +65,8 @@ INSERT INTO  readinggas  ( id , readingDate , resolved , value , unit , meter_id
 INSERT INTO  readinggas  ( id , readingDate , resolved , value , unit , meter_id ) VALUES (5,'2016-07-29','0',5,'m3',5);
 INSERT INTO  readinggas  ( id , readingDate , resolved , value , unit , meter_id ) VALUES (6,'2016-07-29','0',100,'m3',6);
 
+
+
 INSERT INTO  readinggas  ( id , readingDate , resolved , value , unit , meter_id ) VALUES (7,'2016-09-01','1',169,'m3',1);
 INSERT INTO  readinggas  ( id , readingDate , resolved , value , unit , meter_id ) VALUES (8,'2016-09-01','1',2,'m3',2);
 INSERT INTO  readinggas  ( id , readingDate , resolved , value , unit , meter_id ) VALUES (9,'2016-09-01','1',6,'m3',3);
@@ -78,6 +80,7 @@ INSERT INTO  readinggas  ( id , readingDate , resolved , value , unit , meter_id
 INSERT INTO  readinggas  ( id , readingDate , resolved , value , unit , meter_id ) VALUES (16,'2016-10-01','0',5,'m3',4);
 INSERT INTO  readinggas  ( id , readingDate , resolved , value , unit , meter_id ) VALUES (17,'2016-10-01','0',10,'m3',5);
 INSERT INTO  readinggas  ( id , readingDate , resolved , value , unit , meter_id ) VALUES (18,'2016-10-01','0',170,'m3',6);
+INSERT INTO  readinggas  ( id , readingDate , resolved , value , unit , meter_id ) VALUES (19,'2016-07-29','0',100,'m3',7);
 ---------
 
 INSERT INTO  readingwater  ( id , readingDate , resolved , value , unit , meter_id ) VALUES (1,'2016-07-01','0',33,'m3',1);
@@ -103,7 +106,7 @@ INSERT INTO  readingwater  ( id , readingDate , resolved , value , unit , meter_
 INSERT INTO  readingwater  ( id , readingDate , resolved , value , unit , meter_id ) VALUES (19,'2016-09-01','0',16,'m3',5);
 INSERT INTO  readingwater  ( id , readingDate , resolved , value , unit , meter_id ) VALUES (20,'2016-09-01','0',11,'m3',6);
 INSERT INTO  readingwater  ( id , readingDate , resolved , value , unit , meter_id ) VALUES (21,'2016-09-01','0',9,'m3',7);
-
+INSERT INTO  readingwater  ( id , readingDate , resolved , value , unit , meter_id ) VALUES (22,'2016-09-01','0',9,'m3',8);
 -------------------------------------------------
 INSERT INTO  readingenergy  ( id , readingDate , resolved , value , unit , meter_id ) VALUES (1,'2016-07-01','0',11,'kWh',1);
 INSERT INTO  readingenergy  ( id , readingDate , resolved , value , unit , meter_id ) VALUES (2,'2016-07-01','0',5,'kWh',2);
@@ -120,6 +123,7 @@ INSERT INTO  readingenergy  ( id , readingDate , resolved , value , unit , meter
 INSERT INTO  readingenergy  ( id , readingDate , resolved , value , unit , meter_id ) VALUES (13,'2016-09-01','0',5,'kWh',3);
 INSERT INTO  readingenergy  ( id , readingDate , resolved , value , unit , meter_id ) VALUES (14,'2016-09-01','0',9,'kWh',4);
 INSERT INTO  readingenergy  ( id , readingDate , resolved , value , unit , meter_id ) VALUES (15,'2016-09-01','0',7,'kWh',5);
+INSERT INTO  readingenergy  ( id , readingDate , resolved , value , unit , meter_id ) VALUES (16,'2016-09-01','0',7,'kWh',6);
 
 INSERT INTO  invoicewater  ( id , date , serialNumber , totalAmount , baseReading_id , residence_id) VALUES (1,'2016-08-01','123',150,8,1);
 INSERT INTO  invoicegas  ( id , date , serialNumber , totalAmount , baseReading_id, residence_id) VALUES (1,'2016-09-01','123',150,7,1);

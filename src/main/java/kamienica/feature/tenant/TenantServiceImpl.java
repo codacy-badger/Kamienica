@@ -2,7 +2,10 @@ package kamienica.feature.tenant;
 
 import kamienica.core.enums.Status;
 import kamienica.core.enums.UserRole;
+import kamienica.core.util.SecurityDetails;
+import kamienica.feature.apartment.ApartmentDao;
 import kamienica.feature.settings.SettingsDao;
+import kamienica.model.Apartment;
 import kamienica.model.Tenant;
 import org.hibernate.criterion.Criterion;
 import org.hibernate.criterion.Restrictions;
@@ -17,12 +20,12 @@ import java.util.List;
 public class TenantServiceImpl implements TenantService {
 
     private final TenantDao tenantDao;
-    private final SettingsDao settingsDao;
+    private final ApartmentDao apartmentDao;
 
     @Autowired
-    public TenantServiceImpl(TenantDao tenantDao, SettingsDao settingsDao) {
+    public TenantServiceImpl(TenantDao tenantDao,  ApartmentDao apartmentDao) {
         this.tenantDao = tenantDao;
-        this.settingsDao = settingsDao;
+        this.apartmentDao = apartmentDao;
     }
 
     @Override
@@ -30,7 +33,6 @@ public class TenantServiceImpl implements TenantService {
         Tenant currentTenant = tenantDao.getTenantForApartment(newTenant.getApartment());
         if (currentTenant == null) {
             tenantDao.save(newTenant);
-            settingsDao.changeDivisionState(false);
         } else compareMovementDatesAndPersist(newTenant, currentTenant);
     }
 
@@ -42,7 +44,6 @@ public class TenantServiceImpl implements TenantService {
             currentTenant.setStatus(Status.INACTIVE);
             tenantDao.save(currentTenant);
             tenantDao.save(newTenant);
-            settingsDao.changeDivisionState(false);
         }
     }
 
@@ -54,7 +55,9 @@ public class TenantServiceImpl implements TenantService {
 
     @Override
     public List<Tenant> listForOwner() {
-        return null;
+        List<Apartment> apartments = apartmentDao.getListForOwner(SecurityDetails.getResidencesForOwner());
+        Criterion c = Restrictions.in("apartment", apartments);
+        return findByCriteria(c);
     }
 
     @Override
@@ -70,7 +73,6 @@ public class TenantServiceImpl implements TenantService {
     @Override
     public void deleteById(Long id) {
         tenantDao.deleteById(id);
-        settingsDao.changeDivisionState(false);
     }
 
     @Override

@@ -3,7 +3,6 @@ package kamienica.feature.meter;
 import kamienica.core.daoservice.BasicDaoImpl;
 import kamienica.core.util.SecurityDetails;
 import kamienica.model.Meter;
-import kamienica.model.SecurityUser;
 import org.hibernate.Criteria;
 import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;

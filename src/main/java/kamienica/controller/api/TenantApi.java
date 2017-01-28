@@ -36,8 +36,8 @@ public class TenantApi extends AbstractApi {
         if (list.isEmpty()) {
             return new ResponseEntity<List<Tenant>>(HttpStatus.NOT_FOUND);
         }
-        final ApiResponse<Tenant> response = new ApiResponse<>();
-        response.setObjectList(list);
+//        final ApiResponse<Tenant> response = new ApiResponse<>();
+//        response.setObjectList(list);
         return new ResponseEntity<>(list, HttpStatus.OK);
     }
 
@@ -47,8 +47,8 @@ public class TenantApi extends AbstractApi {
         if (list.isEmpty()) {
             return new ResponseEntity<List<Tenant>>(HttpStatus.NOT_FOUND);
         }
-        final ApiResponse<Tenant> response = new ApiResponse<>();
-        response.setObjectList(list);
+//        final ApiResponse<Tenant> response = new ApiResponse<>();
+//        response.setObjectList(list);
         return new ResponseEntity<>(list, HttpStatus.OK);
     }
 

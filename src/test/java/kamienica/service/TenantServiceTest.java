@@ -68,13 +68,13 @@ public class TenantServiceTest extends ServiceTest {
         assertEquals(Status.INACTIVE, previousOwner.getStatus());
     }
 
-    @Ignore
-    @Test
-    public void ownerShouldHaveOneResidence() {
-        final Tenant owner = tenantService.getById(1L);
-      //  final List<Residence> residenceList = owner.getResidencesOwned();
-//        assertEquals(1, residenceList.size());
-    }//
+//    @Ignore
+//    @Test
+//    public void ownerShouldHaveOneResidence() {
+//        final Tenant owner = tenantService.getById(1L);
+//      //  final List<Residence> residenceList = owner.getResidencesOwned();
+////        assertEquals(1, residenceList.size());
+//    }//
 
 
     @Transactional
@@ -90,6 +90,7 @@ public class TenantServiceTest extends ServiceTest {
 
     @Transactional
     @Test
+    @Ignore("Removing division")
     public void divisionShouldBecomeIncorrectAfterRemovingTenant() {
         tenantService.deleteById(2L);
         boolean resultedState = settingsService.isDivisionCorrect();

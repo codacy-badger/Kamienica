@@ -5,7 +5,6 @@ import kamienica.core.enums.Status;
 import kamienica.model.Apartment;
 import kamienica.model.Tenant;
 import org.hibernate.Criteria;
-import org.hibernate.criterion.Criterion;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.stereotype.Repository;
 

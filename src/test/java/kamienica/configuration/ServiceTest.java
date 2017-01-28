@@ -15,7 +15,6 @@ import kamienica.feature.user_admin.OwnerUserDataService;
 import kamienica.feature.user_admin.SecurityServiceImpl;
 import kamienica.model.Residence;
 import kamienica.model.Tenant;
-import org.h2.tools.Server;
 import org.joda.time.LocalDate;
 import org.junit.BeforeClass;
 import org.junit.runner.RunWith;

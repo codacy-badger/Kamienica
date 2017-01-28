@@ -13,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -112,7 +113,6 @@ public class ReadingServiceImpl implements ReadingService {
     }
 
 
-
     @SuppressWarnings("unchecked")
     @Override
     public <T extends Reading> List<T> latestEdit(Media media) {
@@ -184,16 +184,14 @@ public class ReadingServiceImpl implements ReadingService {
         switch (media) {
             case ENERGY:
                 for (T t : reading) {
-                    t.setReadingDate(localDate);
-                    t.setUnit(t.getMeter().getUnit());
+                    setReading(localDate, t);
                     energy.save((ReadingEnergy) t);
                 }
                 break;
 
             case GAS:
                 for (T t : reading) {
-                    t.setReadingDate(localDate);
-                    t.setUnit(t.getMeter().getUnit());
+                    setReading(localDate, t);
                     gas.save((ReadingGas) t);
                 }
 
@@ -201,8 +199,7 @@ public class ReadingServiceImpl implements ReadingService {
             case WATER:
 
                 for (T t : reading) {
-                    t.setReadingDate(localDate);
-                    t.setUnit(t.getMeter().getUnit());
+                    setReading(localDate, t);
                     water.save((ReadingWater) t);
                 }
                 break;
@@ -211,7 +208,6 @@ public class ReadingServiceImpl implements ReadingService {
         }
 
     }
-
 
     @SuppressWarnings("unchecked")
     @Override
@@ -264,44 +260,39 @@ public class ReadingServiceImpl implements ReadingService {
     }
 
 
-
     @Override
     public <T extends Reading> void update(List<T> readings, LocalDate date, Media media) {
         switch (media) {
             case ENERGY:
-                for (T readingEnergy : readings) {
-                    if (readingEnergy.getValue() < 0) {
-                        throw new IllegalArgumentException();
-                    }
-                    readingEnergy.setReadingDate(date);
-                    readingEnergy.setUnit(readingEnergy.getMeter().getUnit());
-                    energy.update((ReadingEnergy) readingEnergy);
+                for (T r : readings) {
+                    setReading(date, r);
+                    energy.update((ReadingEnergy) r);
                 }
                 break;
             case GAS:
-                for (T readingGas : readings) {
-                    if (readingGas.getValue() < 0) {
-                        throw new IllegalArgumentException();
-                    }
-                    readingGas.setReadingDate(date);
-                    readingGas.setUnit(readingGas.getMeter().getUnit());
-                    gas.update((ReadingGas) readingGas);
+                for (T r : readings) {
+                    setReading(date, r);
+                    gas.update((ReadingGas) r);
                 }
                 break;
             case WATER:
-                for (T readingEnergy : readings) {
-                    if (readingEnergy.getValue() < 0) {
-                        throw new IllegalArgumentException();
-                    }
-                    readingEnergy.setReadingDate(date);
-                    readingEnergy.setUnit(readingEnergy.getMeter().getUnit());
-                    water.update((ReadingWater) readingEnergy);
+                for (T r : readings) {
+                    setReading(date, r);
+                    water.update((ReadingWater) r);
                 }
                 break;
 
             default:
                 break;
         }
+    }
+
+    private <T extends Reading> void setReading(LocalDate date, T r) {
+        if (r.getValue() < 0) {
+            throw new IllegalArgumentException();
+        }
+        r.setReadingDate(date);
+        r.setUnit(r.getMeter().getUnit());
     }
 
 
