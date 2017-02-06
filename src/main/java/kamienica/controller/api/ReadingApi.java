@@ -6,10 +6,7 @@ import kamienica.model.Reading;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -17,11 +14,16 @@ import java.util.List;
 @RequestMapping("/api/v1/readings")
 public class ReadingApi {
 
+
+    private final ReadingService service;
+
     @Autowired
-    private ReadingService service;
+    public ReadingApi(ReadingService service) {
+        this.service = service;
+    }
 
     @RequestMapping(value = "/{media}", method = RequestMethod.GET)
-    public ResponseEntity<?> getList(@PathVariable Media media) {
+    public ResponseEntity<?> getList(@PathVariable Media media, @RequestParam(value = "residence_id", required = false) Long id) {
 
         List<? extends Reading> list = service.getListForOwner(media);
         if (list.isEmpty()) {

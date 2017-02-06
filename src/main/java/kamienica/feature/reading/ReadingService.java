@@ -19,7 +19,7 @@ public interface ReadingService {
 
 	<T extends Reading> void update(List<T> readings, LocalDate date, Media media);
 	
-	List<? extends Reading> getList(Media media);
+	List<? extends Reading> getList(Residence r, Media media);
 
 	List<? extends Reading> getListForOwner(Media media);
 

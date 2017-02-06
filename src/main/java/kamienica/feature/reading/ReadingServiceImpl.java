@@ -42,7 +42,7 @@ public class ReadingServiceImpl implements ReadingService {
     }
 
     @Override
-    public List<? extends Reading> getList(final Media media) {
+    public List<? extends Reading> getList(final Residence r, final Media media) {
         switch (media) {
             case ENERGY:
                 return energy.getList();
