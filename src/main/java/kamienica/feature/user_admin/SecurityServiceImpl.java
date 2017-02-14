@@ -21,7 +21,7 @@ import java.util.List;
 @Component
 public class SecurityServiceImpl implements UserDetailsService {
 
-    public static final String ERROR_MSG = "Login or Passowords are invalid";
+    private static final String ERROR_MSG = "Login or Passowords are invalid";
     private final TenantService tenantService;
     private final ResidenceService residenceService;
 
@@ -41,8 +41,7 @@ public class SecurityServiceImpl implements UserDetailsService {
 
         List<Residence> residencesOwned = getResidnecesForOwner(tenant);
 
-        return new SecurityUser(tenant, tenant.getEmail(), tenant.getPassword(), isActive(tenant), true, true, true,
-                authorities, residencesOwned);
+        return new SecurityUser(tenant, isActive(tenant), authorities, residencesOwned);
     }
 
     public void changePassword(final String mail, final String oldPassowrd, final String newPwassword)
@@ -53,7 +52,7 @@ public class SecurityServiceImpl implements UserDetailsService {
 
 
         tenant.setPassword(newPwassword);
-        tenantService.updateTenant(tenant);
+        tenantService.update(tenant);
     }
 
     private void checkOldPassword(Tenant tenant, String oldPassowrd) {
@@ -73,8 +72,8 @@ public class SecurityServiceImpl implements UserDetailsService {
         return (SecurityUser) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
     }
 
-    private List<Residence> getResidnecesForOwner(final Tenant tenant) {
-        return residenceService.listForOwner(tenant);
+    private List<Residence> getResidnecesForOwner(final Tenant t) {
+       return residenceService.listForFirstLogin(t);
     }
 
     private Tenant findTenant(final String email) {

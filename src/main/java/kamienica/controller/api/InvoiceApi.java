@@ -20,17 +20,19 @@ import java.util.List;
 @RequestMapping("/api/v1/invoices")
 public class InvoiceApi extends AbstractApi {
 
+    private final InvoiceService invoiceService;
+    private final ResidenceService residenceService;
 
     @Autowired
-    private InvoiceService invoiceService;
-    @Autowired
-    private ResidenceService residenceService;
+    public InvoiceApi(InvoiceService invoiceService, ResidenceService residenceService) {
+        this.invoiceService = invoiceService;
+        this.residenceService = residenceService;
+    }
 
     @RequestMapping(value = "/{media}", method = RequestMethod.GET)
     public ResponseEntity<?> getList(@PathVariable final Media media) {
 
-        final Tenant t = ownerUserDataService.getCurrentUser().getTenant();
-        List<? extends Invoice> list = invoiceService.getList(media, t);
+        List<? extends Invoice> list = invoiceService.list(media);
         if (list.isEmpty()) {
             return new ResponseEntity<List<? extends Invoice>>(HttpStatus.NO_CONTENT);
         }

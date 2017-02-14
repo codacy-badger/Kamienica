@@ -2,14 +2,13 @@ package kamienica.controller.api;
 
 import kamienica.core.enums.Media;
 import kamienica.feature.reading.ReadingService;
+import kamienica.feature.residence.ResidenceService;
 import kamienica.model.Reading;
+import kamienica.model.Residence;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -17,28 +16,29 @@ import java.util.List;
 @RequestMapping("/api/v1/readings")
 public class ReadingApi {
 
+
+    private final ReadingService service;
+    private final ResidenceService residenceService;
+
     @Autowired
-    private ReadingService service;
+    public ReadingApi(ReadingService service, ResidenceService residenceService) {
+        this.service = service;
+        this.residenceService = residenceService;
+    }
 
     @RequestMapping(value = "/{media}", method = RequestMethod.GET)
-    public ResponseEntity<?> getList(@PathVariable Media media) {
+    public ResponseEntity<?> getList(@PathVariable Media media, @RequestParam(value = "residence_id", required = false) Long id) {
 
-        List<? extends Reading> list = service.getList(media);
+        final Residence r = residenceService.getById(id);
+
+        List<? extends Reading> list = service.getList(r, media);
         if (list.isEmpty()) {
             return new ResponseEntity<Void>(HttpStatus.NOT_FOUND);
         }
         return new ResponseEntity<>(list, HttpStatus.OK);
     }
 
-    @RequestMapping(value = "/map/{media}", method = RequestMethod.GET)
-    public ResponseEntity<?> getMappedList(@PathVariable Media media) {
 
-        List<? extends Reading> list = service.getList(media);
-        if (list.isEmpty()) {
-            return new ResponseEntity<Void>(HttpStatus.NOT_FOUND);
-        }
-        return new ResponseEntity<>(list, HttpStatus.OK);
-    }
 
     @RequestMapping(value = "/unresolved/{media}", method = RequestMethod.GET)
     public ResponseEntity<?> getListForInvoice(@PathVariable Media media) {

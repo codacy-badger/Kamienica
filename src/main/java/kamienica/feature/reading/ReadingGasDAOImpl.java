@@ -2,7 +2,9 @@ package kamienica.feature.reading;
 
 import kamienica.model.Apartment;
 import kamienica.model.ReadingGas;
+import kamienica.model.Residence;
 import org.hibernate.Query;
+import org.hibernate.criterion.Restrictions;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -20,6 +22,11 @@ public class ReadingGasDAOImpl extends ReadingAbstractDaoImpl<ReadingGas> implem
         @SuppressWarnings("unchecked")
         List<ReadingGas> result = query.list();
         return result;
+    }
+
+    @Override
+    public List<ReadingGas> getList(Residence r) {
+        return createEntityCriteria().createCriteria("meter").add(Restrictions.eq("residence",r )).list();
     }
 
 

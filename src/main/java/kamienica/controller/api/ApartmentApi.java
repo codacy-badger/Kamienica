@@ -22,12 +22,16 @@ import java.util.Map;
 @RequestMapping("/api/v1/apartments")
 public class ApartmentApi  {
 
+    private final ApartmentService apartmentService;
+
     @Autowired
-    private ApartmentService apartmentService;
+    public ApartmentApi(ApartmentService apartmentService) {
+        this.apartmentService = apartmentService;
+    }
 
     @RequestMapping(method = RequestMethod.GET)
     public ResponseEntity<?> list() {
-        final List<Apartment> list = apartmentService.getList();
+        final List<Apartment> list = apartmentService.listForOwner();
         if (list.isEmpty()) {
             return new ResponseEntity<List<Apartment>>(HttpStatus.NOT_FOUND);
         }
@@ -93,7 +97,7 @@ public class ApartmentApi  {
     public ResponseEntity<Message> delete(@PathVariable("id") final Long id) {
         final Message message = new Message("OK", null);
         try {
-            apartmentService.deleteByID(id);
+            apartmentService.deleteById(id);
         } catch (Exception e) {
             message.setMessage(ControllerMessages.CONSTRAINT_VIOLATION);
             message.setException(e.toString());

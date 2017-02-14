@@ -26,6 +26,8 @@ public interface BasicDao<T> {
 
     List<T> paginatedList(final Integer firstResult, final Integer maxResults);
 
+    List<T> findByCriteria(Order order, Criterion... criterion);
+
     List<T> findByCriteria(final Criterion... criterion);
 
     List<T> getBySQLQuery(final String queryString);

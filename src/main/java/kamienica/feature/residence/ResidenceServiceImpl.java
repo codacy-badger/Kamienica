@@ -1,5 +1,6 @@
 package kamienica.feature.residence;
 
+import kamienica.core.util.SecurityDetails;
 import kamienica.feature.apartment.ApartmentDao;
 import kamienica.feature.meter.MeterDao;
 import kamienica.feature.residenceownership.ResidenceOwnershipDao;
@@ -36,10 +37,10 @@ public class ResidenceServiceImpl implements ResidenceService {
     }
 
     @Override
-    public void save(final Residence residence, final Tenant t) {
+    public void save(final Residence residence) {
         ResidenceOwnership ro = new ResidenceOwnership();
         ro.setResidenceOwned(residence);
-        ro.setOwner(t);
+        ro.setOwner(SecurityDetails.getLoggedTenant());
         residenceDao.save(residence);
         residenceOwnershipDao.save(ro);
 
@@ -68,8 +69,15 @@ public class ResidenceServiceImpl implements ResidenceService {
     }
 
     @Override
-    public List<Residence> listForOwner(Tenant t) {
-        Criterion forOwner = Restrictions.eq("owner", t);
+    public List<Residence> listForOwner() {
+        Criterion forOwner = Restrictions.eq("owner", SecurityDetails.getLoggedTenant());
+        List<ResidenceOwnership> owned = residenceOwnershipDao.findByCriteria(forOwner);
+        return owned.stream().map(ResidenceOwnership::getResidenceOwned).collect(Collectors.toList());
+    }
+
+    @Override
+    public List<Residence> listForFirstLogin(Tenant tenant) {
+        Criterion forOwner = Restrictions.eq("owner", tenant);
         List<ResidenceOwnership> owned = residenceOwnershipDao.findByCriteria(forOwner);
         return owned.stream().map(ResidenceOwnership::getResidenceOwned).collect(Collectors.toList());
     }

@@ -1,6 +1,7 @@
 package kamienica.feature.residenceownership;
 
 import kamienica.core.enums.UserRole;
+import kamienica.core.util.SecurityDetails;
 import kamienica.model.ResidenceOwnership;
 import kamienica.model.Tenant;
 import org.hibernate.criterion.Criterion;
@@ -23,7 +24,8 @@ public class ResidenceOwnershipServiceImpl implements ResidenceOwnershipService 
     }
 
     @Override
-    public List<ResidenceOwnership> list(final Tenant t) {
+    public List<ResidenceOwnership> list() {
+        final Tenant t = SecurityDetails.getLoggedTenant();
         if (t.getRole().equals(UserRole.OWNER)) {
             Criterion forOwner = Restrictions.eq("owner", t);
             return residenceOwnershipDao.findByCriteria(forOwner);

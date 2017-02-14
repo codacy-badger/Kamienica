@@ -2,7 +2,9 @@ package kamienica.feature.tenant;
 
 import kamienica.core.enums.Status;
 import kamienica.core.enums.UserRole;
-import kamienica.feature.settings.SettingsDao;
+import kamienica.core.util.SecurityDetails;
+import kamienica.feature.apartment.ApartmentDao;
+import kamienica.model.Apartment;
 import kamienica.model.Tenant;
 import org.hibernate.criterion.Criterion;
 import org.hibernate.criterion.Restrictions;
@@ -17,20 +19,19 @@ import java.util.List;
 public class TenantServiceImpl implements TenantService {
 
     private final TenantDao tenantDao;
-    private final SettingsDao settingsDao;
+    private final ApartmentDao apartmentDao;
 
     @Autowired
-    public TenantServiceImpl(TenantDao tenantDao, SettingsDao settingsDao) {
+    public TenantServiceImpl(TenantDao tenantDao,  ApartmentDao apartmentDao) {
         this.tenantDao = tenantDao;
-        this.settingsDao = settingsDao;
+        this.apartmentDao = apartmentDao;
     }
 
     @Override
-    public void saveTenant(Tenant newTenant) {
+    public void save(Tenant newTenant) {
         Tenant currentTenant = tenantDao.getTenantForApartment(newTenant.getApartment());
         if (currentTenant == null) {
             tenantDao.save(newTenant);
-            settingsDao.changeDivisionState(false);
         } else compareMovementDatesAndPersist(newTenant, currentTenant);
     }
 
@@ -42,14 +43,25 @@ public class TenantServiceImpl implements TenantService {
             currentTenant.setStatus(Status.INACTIVE);
             tenantDao.save(currentTenant);
             tenantDao.save(newTenant);
-            settingsDao.changeDivisionState(false);
         }
     }
 
 
     @Override
-    public List<Tenant> getList() {
+    public List<Tenant> list() {
         return tenantDao.getList();
+    }
+
+    @Override
+    public List<Tenant> listForOwner() {
+        List<Apartment> apartments = apartmentDao.getListForOwner(SecurityDetails.getResidencesForOwner());
+        Criterion c = Restrictions.in("apartment", apartments);
+        return findByCriteria(c);
+    }
+
+    @Override
+    public List<Tenant> listForTenant() {
+        return null;
     }
 
     @Override
@@ -58,19 +70,18 @@ public class TenantServiceImpl implements TenantService {
     }
 
     @Override
-    public void deleteTenant(Long id) {
+    public void deleteById(Long id) {
         tenantDao.deleteById(id);
-        settingsDao.changeDivisionState(false);
     }
 
     @Override
-    public void updateTenant(Tenant tenant) {
+    public void update(Tenant tenant) {
         tenantDao.update(tenant);
 
     }
 
     @Override
-    public Tenant getTenantById(Long id) {
+    public Tenant getById(Long id) {
         return tenantDao.getById(id);
     }
 

@@ -1,7 +1,8 @@
 package kamienica.service;
 
-import kamienica.configuration.DatabaseTest;
+import kamienica.configuration.ServiceTest;
 import kamienica.core.enums.Media;
+import kamienica.core.util.SecurityDetails;
 import kamienica.model.*;
 import org.hibernate.exception.ConstraintViolationException;
 import org.junit.Ignore;
@@ -12,36 +13,49 @@ import java.util.List;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
+import static org.powermock.api.mockito.PowerMockito.mockStatic;
+import static org.powermock.api.mockito.PowerMockito.when;
 
-public class ResidenceServiceTest extends DatabaseTest {
+public class ResidenceServiceTest extends ServiceTest {
 
     @Test
     @Transactional
     public void save() {
         final Residence res = new Residence("Świętojańska", "46", "Gdynia");
-        final Tenant t = tenantService.getTenantById(1L);
-        residenceService.save(res, t);
+
+        final Tenant t = getOwner();
+        List<Residence> residences = getMockedResidences();
+
+        mockStatic(SecurityDetails.class);
+        when(SecurityDetails.getResidencesForOwner()).thenReturn(residences);
+        when(SecurityDetails.getLoggedTenant()).thenReturn(t);
+        residenceService.save(res);
 
         final List<Residence> result = residenceService.getList();
         assertEquals(3, result.size());
 
-        final List<ResidenceOwnership> ownerships = residenceOwnershipService.list(t);
+        final List<ResidenceOwnership> ownerships = residenceOwnershipService.list();
         assertEquals(2, ownerships.size());
 
-        final List<Apartment> ap = apartmentService.getList();
-        assertEquals(5, ap.size());
+        final List<Apartment> ap = apartmentService.list();
+        assertEquals(6, ap.size());
 
-        final List<MeterEnergy> meterEnergies = meterService.getListForOwner(Media.ENERGY, t);
-        assertEquals(6, meterEnergies.size());
+        final List<MeterEnergy> meterEnergies = meterService.getListForOwner(Media.ENERGY);
+        assertEquals(5, meterEnergies.size());
 
     }
 
     @Test(expected = ConstraintViolationException.class)
     @Transactional
     public void shouldThrowException() throws Exception {
+        mockStatic(SecurityDetails.class);
+        Tenant t = tenantService.getById(1L);
+        when(SecurityDetails.getLoggedTenant()).thenReturn(t);
+
         final Residence res = new Residence("Świętojańska", "45", "Gdynia");
-        final Tenant t = tenantService.getTenantById(1L);
-        residenceService.save(res, t);
+
+
+        residenceService.save(res);
 
         final List<Residence> result = residenceService.getList();
         assertEquals(2, result.size());
@@ -65,15 +79,20 @@ public class ResidenceServiceTest extends DatabaseTest {
     @Test
     @Transactional
     public void getListForTenant() {
-        Tenant t = tenantService.getTenantById(1L);
-        final List<Residence> result = residenceService.listForOwner(t);
+        Tenant t = tenantService.getById(1L);
+        mockStatic(SecurityDetails.class);
+        when(SecurityDetails.getLoggedTenant()).thenReturn(t);
+
+        final List<Residence> result = residenceService.listForOwner();
         assertEquals(1, result.size());
     }
 
     @Test
     public void getListForOwner() {
-        Tenant t = tenantService.getTenantById(1L);
-        final List<Residence> residences = residenceService.listForOwner(t);
+        Tenant t = tenantService.getById(1L);
+        when(SecurityDetails.getLoggedTenant()).thenReturn(t);
+
+        final List<Residence> residences = residenceService.listForOwner();
         assertEquals(1, residences.size());
     }
 

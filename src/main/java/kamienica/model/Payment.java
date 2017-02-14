@@ -13,16 +13,16 @@ public abstract class Payment {
 	@Id
 	@GeneratedValue
 	@Column
-	private Long id;
+	protected Long id;
 	@Column
 	@Temporal(TemporalType.DATE)
 	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	@Type(type = "org.jadira.usertype.dateandtime.joda.PersistentLocalDate")
-	private LocalDate paymentDate;
+	protected LocalDate paymentDate;
 	@Column
-	private double paymentAmount;
+	protected double paymentAmount;
 	@ManyToOne
-	private Tenant tenant;
+	protected Tenant tenant;
 
 	public Long getId() {
 		return id;

@@ -1,8 +1,9 @@
 package kamienica.service;
 
-import kamienica.configuration.DatabaseTest;
+import kamienica.configuration.ServiceTest;
 import kamienica.core.enums.Media;
 import kamienica.core.exception.InvalidDivisionException;
+import kamienica.core.util.SecurityDetails;
 import kamienica.model.*;
 import org.joda.time.LocalDate;
 import org.junit.Before;
@@ -12,34 +13,44 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 
 import static org.junit.Assert.assertEquals;
+import static org.powermock.api.mockito.PowerMockito.mockStatic;
+import static org.powermock.api.mockito.PowerMockito.when;
 
-public class InvoiceEnergyServiceTest extends DatabaseTest {
+public class InvoiceEnergyServiceTest extends ServiceTest {
 
     private  Tenant t;
     private Residence r;
 
     @Before
     public void initData() {
-        t = tenantService.getTenantById(1L);
+        t = tenantService.getById(1L);
         r = residenceService.getById(1L);
     }
 
     @Test
     public void getList() {
-        assertEquals(1, invoiceService.getList(Media.ENERGY, t).size());
+        mockStatic(SecurityDetails.class);
+        when(SecurityDetails.getLoggedTenant()).thenReturn(tenantService.getById(1L));
+        when(SecurityDetails.getResidencesForOwner()).thenReturn(getMockedResidences());
+
+        assertEquals(1, invoiceService.list(Media.ENERGY).size());
 
     }
 
     @Transactional
     @Test
     public void add() throws InvalidDivisionException {
+        mockStatic(SecurityDetails.class);
+        when(SecurityDetails.getLoggedTenant()).thenReturn(tenantService.getById(1L));
+        when(SecurityDetails.getResidencesForOwner()).thenReturn(getMockedResidences());
+
         List<ReadingEnergy> list = readingService.getUnresolvedReadingsEnergy();
         assertEquals(true, divisionService.isDivisionCorrect());
         assertEquals(31, list.get(1).getValue(), 0);
         InvoiceEnergy invoice = new InvoiceEnergy("112233", new LocalDate(), 200, list.get(1));
 
         invoiceService.save(invoice, Media.ENERGY, t, r);
-        assertEquals(2, invoiceService.getList(Media.ENERGY, t).size());
+        assertEquals(2, invoiceService.list(Media.ENERGY).size());
         List<? extends Payment> paymentList = paymentService.getPaymentList(Media.ENERGY);
 
         assertEquals(6, paymentList.size());
@@ -55,12 +66,16 @@ public class InvoiceEnergyServiceTest extends DatabaseTest {
     @Transactional
     @Test
     public void addForFirstReading() throws InvalidDivisionException {
+        mockStatic(SecurityDetails.class);
+        when(SecurityDetails.getLoggedTenant()).thenReturn(tenantService.getById(1L));
+        when(SecurityDetails.getResidencesForOwner()).thenReturn(getMockedResidences());
+
         List<ReadingEnergy> list = readingService.getUnresolvedReadingsEnergy();
         assertEquals(11, list.get(0).getValue(), 0);
 
         InvoiceEnergy invoice = new InvoiceEnergy("112233", new LocalDate(), 200, list.get(0));
         invoiceService.save(invoice, Media.ENERGY, t, r);
-        assertEquals(2, invoiceService.getList(Media.ENERGY, t).size());
+        assertEquals(2, invoiceService.list(Media.ENERGY).size());
         List<? extends Payment> paymentList = paymentService.getPaymentList(Media.ENERGY);
 
         assertEquals(6, paymentList.size());

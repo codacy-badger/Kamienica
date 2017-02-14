@@ -1,9 +1,10 @@
 package kamienica.service;
 
-import kamienica.configuration.DatabaseTest;
+import kamienica.configuration.ServiceTest;
 import kamienica.core.enums.Media;
+import kamienica.core.util.SecurityDetails;
 import kamienica.model.MeterEnergy;
-import kamienica.model.Tenant;
+import kamienica.model.Residence;
 import org.joda.time.LocalDate;
 import org.junit.Test;
 import org.springframework.transaction.annotation.Transactional;
@@ -11,28 +12,38 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 
 import static org.junit.Assert.assertEquals;
+import static org.powermock.api.mockito.PowerMockito.mockStatic;
+import static org.powermock.api.mockito.PowerMockito.when;
 
-public class MeterEnergyServiceTest extends DatabaseTest {
+public class MeterEnergyServiceTest extends ServiceTest {
 
-    ;
+
+    @Test
+    public void getListForFirstOwner() {
+        List<Residence> residences = getMockedResidences();
+        mockStatic(SecurityDetails.class);
+        when(SecurityDetails.getResidencesForOwner()).thenReturn(residences);
+        when(SecurityDetails.getResidencesForOwner()).thenReturn(residences);
+        List<MeterEnergy> list = meterService.getListForOwner(Media.ENERGY);
+        assertEquals(5, list.size());
+    }
 
     @Test
     public void getList() {
-        final Tenant t = tenantService.getTenantById(1L);
-        List<MeterEnergy> list = meterService.getListForOwner(Media.ENERGY, t);
-        assertEquals(5, list.size());
-
+        List<MeterEnergy> list = meterService.list(Media.ENERGY);
+        assertEquals(6, list.size());
     }
 
     @Transactional
     @Test
     public void getActiveMeters() {
-        assertEquals(5, meterService.getIdListForActiveMeters(Media.ENERGY).size());
+        final Residence r = residenceService.getById(1L);
+        assertEquals(5, meterService.getIdListForActiveMeters(r, Media.ENERGY).size());
         MeterEnergy meter = meterService.getById(4L, Media.ENERGY);
         meter.setDeactivation(LocalDate.now().minusDays(1));
         meterService.update(meter, Media.ENERGY);
 
-        assertEquals(4, meterService.getIdListForActiveMeters(Media.ENERGY).size());
+        assertEquals(4, meterService.getIdListForActiveMeters(r, Media.ENERGY).size());
 
     }
 
@@ -49,20 +60,22 @@ public class MeterEnergyServiceTest extends DatabaseTest {
     public void add() {
         MeterEnergy meter = createDummyMeter();
         meterService.save(meter, Media.ENERGY);
-        assertEquals(6, meterService.getIdList(Media.ENERGY).size());
+        assertEquals(7, meterService.getIdList(Media.ENERGY).size());
     }
 
     @Test
     @Transactional
     public void remove() {
-        final Tenant t = tenantService.getTenantById(1L);
+        mockStatic(SecurityDetails.class);
+        List<Residence> residences = getMockedResidences();
+        when(SecurityDetails.getResidencesForOwner()).thenReturn(residences);
         MeterEnergy meter = createDummyMeter();
         meterService.save(meter, Media.ENERGY);
-        assertEquals(6, meterService.getListForOwner(Media.ENERGY, t).size());
+        assertEquals(6, meterService.getListForOwner(Media.ENERGY).size());
         meterService.delete(6L, Media.ENERGY);
         meterService.delete(7L, Media.ENERGY);
         meterService.delete(8L, Media.ENERGY);
-        assertEquals(5, meterService.getListForOwner(Media.ENERGY, t).size());
+        assertEquals(5, meterService.getListForOwner(Media.ENERGY).size());
 
     }
 

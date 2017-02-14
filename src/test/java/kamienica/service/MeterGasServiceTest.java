@@ -1,33 +1,47 @@
 package kamienica.service;
 
-import kamienica.configuration.DatabaseTest;
+import kamienica.configuration.ServiceTest;
 import kamienica.core.enums.Media;
+import kamienica.core.util.SecurityDetails;
 import kamienica.model.MeterGas;
-import kamienica.model.Tenant;
+import kamienica.model.Residence;
 import org.joda.time.LocalDate;
 import org.junit.Test;
 import org.springframework.transaction.annotation.Transactional;
 
-import static org.junit.Assert.assertEquals;
+import java.util.List;
 
-public class MeterGasServiceTest extends DatabaseTest {
+import static org.junit.Assert.assertEquals;
+import static org.powermock.api.mockito.PowerMockito.mockStatic;
+import static org.powermock.api.mockito.PowerMockito.when;
+
+public class MeterGasServiceTest extends ServiceTest {
+
+    @Test
+    public void getListForOwner() {
+        List<Residence> residenceList = getMockedResidences();
+        mockStatic(SecurityDetails.class);
+        when(SecurityDetails.getResidencesForOwner()).thenReturn(residenceList);
+        assertEquals(6, meterService.getListForOwner(Media.GAS).size());
+
+    }
 
     @Test
     public void getList() {
-        final Tenant t = tenantService.getTenantById(1L);
-        assertEquals(6, meterService.getListForOwner(Media.GAS, t).size());
-
+        List<MeterGas> list = meterService.list(Media.GAS);
+        assertEquals(7, list.size());
     }
 
     @Transactional
     @Test
     public void getActiveMeters() {
-        assertEquals(6, meterService.getIdListForActiveMeters(Media.GAS).size());
+        final Residence r = residenceService.getById(1L);
+        assertEquals(6, meterService.getIdListForActiveMeters(r, Media.GAS).size());
         MeterGas meter = meterService.getById(4L, Media.GAS);
         meter.setDeactivation(LocalDate.now().minusDays(1));
         meterService.update(meter, Media.GAS);
 
-        assertEquals(5, meterService.getIdListForActiveMeters(Media.GAS).size());
+        assertEquals(5, meterService.getIdListForActiveMeters(r, Media.GAS).size());
 
     }
     @Test

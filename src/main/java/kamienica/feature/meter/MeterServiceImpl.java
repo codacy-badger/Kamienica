@@ -1,7 +1,7 @@
 package kamienica.feature.meter;
 
 import kamienica.core.enums.Media;
-import kamienica.feature.residence.ResidenceService;
+import kamienica.core.util.SecurityDetails;
 import kamienica.model.*;
 import org.hibernate.criterion.Criterion;
 import org.hibernate.criterion.Restrictions;
@@ -21,14 +21,12 @@ public class MeterServiceImpl implements MeterService {
     private final MeterDao<MeterEnergy> energy;
     private final MeterDao<MeterGas> gas;
     private final MeterDao<MeterWater> water;
-    private final ResidenceService residenceService;
 
     @Autowired
-    public MeterServiceImpl(MeterDao<MeterEnergy> energy, MeterDao<MeterGas> gas, MeterDao<MeterWater> water, ResidenceService residenceService) {
+    public MeterServiceImpl(MeterDao<MeterEnergy> energy, MeterDao<MeterGas> gas, MeterDao<MeterWater> water) {
         this.energy = energy;
         this.gas = gas;
         this.water = water;
-        this.residenceService = residenceService;
     }
 
     @Override
@@ -82,8 +80,8 @@ public class MeterServiceImpl implements MeterService {
 
     @SuppressWarnings("unchecked")
     @Override
-    public <T extends Meter> List<T> getListForOwner(final Media media, final Tenant t) {
-        List<Residence> residences = residenceService.listForOwner(t);
+    public <T extends Meter> List<T> getListForOwner(final Media media) {
+        List<Residence> residences = SecurityDetails.getResidencesForOwner();
         Criterion c = Restrictions.in("residence", residences);
         switch (media) {
             case ENERGY:
@@ -165,6 +163,21 @@ public class MeterServiceImpl implements MeterService {
 
     }
 
+    @Override
+    public <T extends Meter> List<T> list(Media media) {
+        switch (media) {
+            case ENERGY:
+                return (List<T>) energy.getList();
+            case WATER:
+                return (List<T>) water.getList();
+            case GAS:
+                return (List<T>) gas.getList();
+
+            default:
+                return null;
+        }
+    }
+
 
     @Override
     public Set<Long> getIdList(Media media) {
@@ -182,14 +195,14 @@ public class MeterServiceImpl implements MeterService {
     }
 
     @Override
-    public Set<Long> getIdListForActiveMeters(Media media) {
+    public Set<Long> getIdListForActiveMeters(final Residence r, final Media media) {
         switch (media) {
             case ENERGY:
-                return energy.getIdListForActiveMeters();
+                return energy.getIdListForActiveMeters(r);
             case WATER:
-                return water.getIdListForActiveMeters();
+                return water.getIdListForActiveMeters(r);
             case GAS:
-                return gas.getIdListForActiveMeters();
+                return gas.getIdListForActiveMeters(r);
 
             default:
                 return null;

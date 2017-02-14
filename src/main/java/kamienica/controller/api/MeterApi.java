@@ -7,7 +7,6 @@ import kamienica.feature.meter.MeterService;
 import kamienica.model.Apartment;
 import kamienica.model.Meter;
 import kamienica.model.MeterEnergy;
-import kamienica.model.Tenant;
 import org.hibernate.exception.ConstraintViolationException;
 import org.joda.time.LocalDate;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,13 +25,16 @@ import java.util.Map;
 @RequestMapping("/api/v1/meters")
 public class MeterApi extends AbstractApi {
 
+    private final MeterService service;
+
     @Autowired
-    private MeterService service;
+    public MeterApi(MeterService service) {
+        this.service = service;
+    }
 
     @RequestMapping(value = "/{media}", method = RequestMethod.GET)
     public ResponseEntity<?> getList(@PathVariable Media media, @RequestParam(required = false) final LocalDate date) {
-        final Tenant t = ownerUserDataService.getLoggedTenant();
-        final List<? extends Meter> list = service.getListForOwner(media, t);
+        final List<? extends Meter> list = service.getListForOwner(media);
         if (list.isEmpty()) {
             return new ResponseEntity<List<Apartment>>(HttpStatus.NOT_FOUND);
         }

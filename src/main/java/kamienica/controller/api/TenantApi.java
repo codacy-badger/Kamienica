@@ -1,7 +1,6 @@
 package kamienica.controller.api;
 
 import kamienica.core.message.ApiErrorResponse;
-import kamienica.core.message.ApiResponse;
 import kamienica.core.message.Message;
 import kamienica.feature.tenant.TenantService;
 import kamienica.model.Tenant;
@@ -22,23 +21,22 @@ import java.util.Map;
 @RequestMapping("/api/v1/tenants")
 public class TenantApi extends AbstractApi {
 
+    private final TenantService service;
+
     @Autowired
-    private TenantService service;
+    public TenantApi(TenantService service) {
+        this.service = service;
+    }
 
     @RequestMapping(method = RequestMethod.GET)
-    public ResponseEntity<?> list(@RequestParam(value = "deactivated", required = false) final boolean deactivated) {
-        final List<Tenant> list;
-        if (deactivated) {
-            list = service.getList();
-        } else {
-            list = service.getActiveTenants();
-        }
+    public ResponseEntity<?> list() {
+        final List<Tenant> list = service.listForOwner();
 
         if (list.isEmpty()) {
             return new ResponseEntity<List<Tenant>>(HttpStatus.NOT_FOUND);
         }
-        final ApiResponse<Tenant> response = new ApiResponse<>();
-        response.setObjectList(list);
+//        final ApiResponse<Tenant> response = new ApiResponse<>();
+//        response.setObjectList(list);
         return new ResponseEntity<>(list, HttpStatus.OK);
     }
 
@@ -48,8 +46,8 @@ public class TenantApi extends AbstractApi {
         if (list.isEmpty()) {
             return new ResponseEntity<List<Tenant>>(HttpStatus.NOT_FOUND);
         }
-        final ApiResponse<Tenant> response = new ApiResponse<>();
-        response.setObjectList(list);
+//        final ApiResponse<Tenant> response = new ApiResponse<>();
+//        response.setObjectList(list);
         return new ResponseEntity<>(list, HttpStatus.OK);
     }
 
@@ -62,7 +60,7 @@ public class TenantApi extends AbstractApi {
             return new ResponseEntity<>(message, HttpStatus.UNPROCESSABLE_ENTITY);
         }
         try {
-            service.saveTenant(tenant);
+            service.save(tenant);
         } catch (ConstraintViolationException e) {
             result.rejectValue("apartmentNumber", "error.apartment", DUPLICATE_VALUE);
 
@@ -79,7 +77,7 @@ public class TenantApi extends AbstractApi {
     public ResponseEntity<Message> delete(@PathVariable("id") final Long id) {
         Message message = new Message("OK", null);
         try {
-            service.deleteTenant(id);
+            service.deleteById(id);
         } catch (Exception e) {
             message.setMessage(CONSTRAINT_VIOLATION);
             message.setException(e.toString());
@@ -97,7 +95,7 @@ public class TenantApi extends AbstractApi {
             message.setErrors(result.getFieldErrors());
             return new ResponseEntity<>(message, HttpStatus.UNPROCESSABLE_ENTITY);
         }
-        service.updateTenant(tenant);
+        service.update(tenant);
         return new ResponseEntity<>(tenant, HttpStatus.OK);
     }
 }

@@ -1,10 +1,11 @@
 package kamienica.service;
 
-import kamienica.configuration.DatabaseTest;
+import kamienica.configuration.ServiceTest;
 import kamienica.core.enums.Status;
 import kamienica.model.*;
 import org.joda.time.Days;
 import org.joda.time.LocalDate;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -13,7 +14,7 @@ import java.util.Map;
 
 import static org.junit.Assert.*;
 
-public class OwnerUserDataServiceTest extends DatabaseTest {
+public class OwnerUserDataServiceTest extends ServiceTest {
 
 
     private Map<String, Object> map;
@@ -41,9 +42,9 @@ public class OwnerUserDataServiceTest extends DatabaseTest {
     @Test
     @Transactional
     public void emptyApartmentsShouldEqualOneAfterDeactivatingTenant() {
-        Tenant t = tenantService.getTenantById(4L);
+        Tenant t = tenantService.getById(4L);
         t.setStatus(Status.INACTIVE);
-        tenantService.saveTenant(t);
+        tenantService.save(t);
         map = ownerUserDataService.getMainData();
         assertEquals(1, map.get("emptyApartments"));
     }
@@ -54,12 +55,13 @@ public class OwnerUserDataServiceTest extends DatabaseTest {
         assertNotNull(map);
     }
 
+    @Ignore("Method will be re-implemented after table merging")
     @Test
     public void mediaShouldPointToWater() {
         map = ownerUserDataService.getMainData();
         assertEquals("Woda", map.get("readingMedia"));
     }
-
+    @Ignore("Method will be re-implemented after table merging")
     @Test
     public void shouldCorrectlyCountDaysFromLastReading() {
         map = ownerUserDataService.getMainData();

@@ -1,6 +1,6 @@
 package kamienica.service;
 
-import kamienica.configuration.DatabaseTest;
+import kamienica.configuration.ServiceTest;
 import kamienica.core.exception.InvalidDivisionException;
 import kamienica.core.exception.WrongDivisionInputException;
 import kamienica.feature.division.DivisionForm;
@@ -18,7 +18,8 @@ import java.util.List;
 
 import static org.junit.Assert.assertEquals;
 
-public class DivisionServiceTest extends DatabaseTest {
+@Ignore("Planning to get rid of Division class")
+public class DivisionServiceTest extends ServiceTest {
 
     @Test
     public void getList() {
@@ -99,7 +100,7 @@ public class DivisionServiceTest extends DatabaseTest {
 
 
     private List<Division> createCorrectList(boolean returnCorrect) {
-        List<Apartment> apartments = apartmentService.getList();
+        List<Apartment> apartments = apartmentService.list();
         List<Tenant> tenants = tenantService.getActiveTenants();
         List<Division> listToReturn = new ArrayList<>();
         for (Apartment a : apartments) {

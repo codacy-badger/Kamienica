@@ -1,8 +1,9 @@
 package kamienica.service;
 
-import kamienica.configuration.DatabaseTest;
+import kamienica.configuration.ServiceTest;
 import kamienica.core.enums.Media;
 import kamienica.core.exception.InvalidDivisionException;
+import kamienica.core.util.SecurityDetails;
 import kamienica.model.*;
 import org.joda.time.LocalDate;
 import org.junit.Before;
@@ -12,21 +13,26 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 
 import static org.junit.Assert.assertEquals;
+import static org.powermock.api.mockito.PowerMockito.mockStatic;
+import static org.powermock.api.mockito.PowerMockito.when;
 
-public class InvoiceWaterServiceTest extends DatabaseTest {
+public class InvoiceWaterServiceTest extends ServiceTest {
 
     private Tenant t;
     private Residence r;
 
     @Before
     public void initData() {
-        t = tenantService.getTenantById(1L);
+        t = tenantService.getById(1L);
         r = residenceService.getById(1L);
     }
 
     @Test
     public void getList() {
-        assertEquals(1, invoiceService.getList(Media.WATER, t).size());
+        mockStatic(SecurityDetails.class);
+        when(SecurityDetails.getResidencesForOwner()).thenReturn(getMockedResidences());
+
+        assertEquals(1, invoiceService.list(Media.WATER).size());
 
     }
 
@@ -34,12 +40,17 @@ public class InvoiceWaterServiceTest extends DatabaseTest {
     @Test
     @Transactional
     public void add() throws InvalidDivisionException {
+        mockStatic(SecurityDetails.class);
+        when(SecurityDetails.getLoggedTenant()).thenReturn(getOwner());
+        when(SecurityDetails.getResidencesForOwner()).thenReturn(getMockedResidences());
+
         List<ReadingWater> list = readingService.getUnresolvedReadingsWater();
         assertEquals(60, list.get(1).getValue(), 0);
         InvoiceWater invoice = new InvoiceWater("112233", new LocalDate(), 200, list.get(1));
 
         invoiceService.save(invoice, Media.WATER, t, r);
-        assertEquals(2, invoiceService.getList(Media.WATER, t).size());
+        when(SecurityDetails.getLoggedTenant()).thenReturn(tenantService.getById(1L));
+        assertEquals(2, invoiceService.list(Media.WATER).size());
         List<? extends Payment> paymentList = paymentService.getPaymentList(Media.WATER);
 
         assertEquals(6, paymentList.size());
@@ -56,6 +67,9 @@ public class InvoiceWaterServiceTest extends DatabaseTest {
     @Test
     @Transactional
     public void addForFirstReading() throws InvalidDivisionException {
+        mockStatic(SecurityDetails.class);
+        when(SecurityDetails.getLoggedTenant()).thenReturn(getOwner());
+        when(SecurityDetails.getResidencesForOwner()).thenReturn(getMockedResidences());
         List<ReadingWater> list = readingService.getUnresolvedReadingsWater();
 
         assertEquals(33, list.get(0).getValue(), 0);
@@ -63,7 +77,8 @@ public class InvoiceWaterServiceTest extends DatabaseTest {
         InvoiceWater invoice = new InvoiceWater("112233", new LocalDate(), 200, list.get(0));
 
         invoiceService.save(invoice, Media.WATER, t, r);
-        assertEquals(2, invoiceService.getList(Media.WATER, t).size());
+        when(SecurityDetails.getLoggedTenant()).thenReturn(tenantService.getById(1L));
+        assertEquals(2, invoiceService.list(Media.WATER).size());
         List<? extends Payment> paymentList = paymentService.getPaymentList(Media.WATER);
 
         assertEquals(6, paymentList.size());

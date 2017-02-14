@@ -4,9 +4,7 @@ import kamienica.controller.ControllerMessages;
 import kamienica.core.message.ApiErrorResponse;
 import kamienica.core.message.Message;
 import kamienica.feature.residence.ResidenceService;
-import kamienica.feature.user_admin.OwnerUserDataService;
 import kamienica.model.Residence;
-import kamienica.model.Tenant;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -23,24 +21,24 @@ import java.util.Map;
 @RequestMapping("/api/v1/residences")
 public class ResidenceApi {
 
-    @Autowired
-    private ResidenceService residenceService;
-    @Autowired
-    private OwnerUserDataService ownerUserDataService;
+    private final ResidenceService residenceService;
 
-    
+    @Autowired
+    public ResidenceApi(ResidenceService residenceService) {
+        this.residenceService = residenceService;
+    }
+
     @RequestMapping(method = RequestMethod.GET)
     public ResponseEntity<?> list() {
-        final Tenant t = ownerUserDataService.getLoggedTenant();
 
-        final List<Residence> list = residenceService.listForOwner(t);
+        final List<Residence> list = residenceService.listForOwner();
         if (list.isEmpty()) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
 
         return new ResponseEntity<>(list, HttpStatus.OK);
     }
-    
+
 
     @RequestMapping(method = RequestMethod.POST)
     public ResponseEntity<?> create(@Valid @RequestBody final Residence residence, final BindingResult result) {
@@ -51,8 +49,7 @@ public class ResidenceApi {
             return new ResponseEntity<>(message, HttpStatus.UNPROCESSABLE_ENTITY);
         }
         try {
-            final Tenant t = ownerUserDataService.getLoggedTenant();
-            residenceService.save(residence, t);
+            residenceService.save(residence);
         } catch (Exception e) {
             result.rejectValue("residenceNumber", "error.residence", ControllerMessages.DUPLICATE_VALUE);
             final Map<String, String> test = new HashMap<>();
@@ -66,7 +63,7 @@ public class ResidenceApi {
     }
 
     @RequestMapping(value = "/{id}", method = RequestMethod.PUT)
-    public ResponseEntity<?> update(@PathVariable("id") final Long id, 
+    public ResponseEntity<?> update(@PathVariable("id") final Long id,
                                     @RequestBody final Residence residence, final BindingResult result) {
 
         if (result.hasErrors()) {

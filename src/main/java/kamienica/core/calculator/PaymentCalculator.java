@@ -13,8 +13,7 @@ public class PaymentCalculator {
 
 
     public static List<PaymentEnergy> createPaymentEnergyList(final List<Tenant> tenants, final InvoiceEnergy invoice,
-                                                              final List<Division> division, final List<MediaUsage> usage) throws InvalidDivisionException {
-        validateDivision(division);
+                                                              final List<Division> division, final List<MediaUsage> usage)  {
         double sumOfExpences = invoice.getTotalAmount();
         List<PaymentEnergy> listToReturn = new ArrayList<>();
 

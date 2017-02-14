@@ -3,7 +3,9 @@ package kamienica.feature.reading;
 import kamienica.model.Apartment;
 import kamienica.model.InvoiceGas;
 import kamienica.model.ReadingWater;
+import kamienica.model.Residence;
 import org.hibernate.Query;
+import org.hibernate.criterion.Restrictions;
 import org.joda.time.LocalDate;
 import org.springframework.stereotype.Repository;
 
@@ -29,11 +31,11 @@ public class ReadingWaterDAOImpl extends ReadingAbstractDaoImpl<ReadingWater> im
 
     @Override
     @SuppressWarnings("unchecked")
-    public List<ReadingWater> getWaterReadingForGasConsumption2(LocalDate date) {
+    public List<ReadingWater> getWaterReadingForGasConsumption2(final Residence r, final LocalDate date) {
         String queryString = "SELECT * FROM readingwater where readingdate = "
-                + "(select MAX(readingdate) from readingwater where readingdate < :date)";
+                + "(select MAX(readingdate) from readingwater where readingdate < :date) AND residence_id = :r";
         Query query = getSession().createSQLQuery(queryString).addEntity(persistentClass).setDate("date",
-                date.toDate());
+                date.toDate()).setLong("r", r.getId());
 
         return query.list();
     }
@@ -58,6 +60,11 @@ public class ReadingWaterDAOImpl extends ReadingAbstractDaoImpl<ReadingWater> im
         out.put("new", newReadings);
 
         return out;
+    }
+
+    @Override
+    public List<ReadingWater> getList(Residence r) {
+        return createEntityCriteria().createCriteria("meter").add(Restrictions.eq("residence",r )).list();
     }
 
 
