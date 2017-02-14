@@ -1,7 +1,6 @@
 package kamienica.controller.api;
 
 import kamienica.core.message.ApiErrorResponse;
-import kamienica.core.message.ApiResponse;
 import kamienica.core.message.Message;
 import kamienica.feature.tenant.TenantService;
 import kamienica.model.Tenant;

@@ -4,7 +4,6 @@ import kamienica.core.enums.Status;
 import kamienica.core.enums.UserRole;
 import kamienica.core.util.SecurityDetails;
 import kamienica.feature.apartment.ApartmentDao;
-import kamienica.feature.settings.SettingsDao;
 import kamienica.model.Apartment;
 import kamienica.model.Tenant;
 import org.hibernate.criterion.Criterion;

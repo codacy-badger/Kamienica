@@ -1,7 +1,10 @@
 package kamienica.feature.reading;
 
 import kamienica.core.daoservice.BasicDao;
-import kamienica.model.*;
+import kamienica.model.Apartment;
+import kamienica.model.Invoice;
+import kamienica.model.ReadingGas;
+import kamienica.model.Residence;
 import org.joda.time.LocalDate;
 
 import java.util.List;

@@ -12,9 +12,6 @@ import java.util.List;
 import static org.junit.Assert.assertEquals;
 import static org.powermock.api.mockito.PowerMockito.when;
 
-/**
- * Created by macfol on 1/16/17.
- */
 public class ResidenceOwnershipServiceTest extends ServiceTest {
 
 
@@ -31,7 +28,6 @@ public class ResidenceOwnershipServiceTest extends ServiceTest {
     @Ignore("must add admin")
     @Test
     public void listForAdmin() throws Exception {
-        final Tenant OWNER = getOwner();
         final List<ResidenceOwnership> result = residenceOwnershipService.list();
         assertEquals(1, result.size());
     }

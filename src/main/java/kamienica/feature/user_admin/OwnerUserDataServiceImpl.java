@@ -2,7 +2,6 @@ package kamienica.feature.user_admin;
 
 import kamienica.core.enums.Media;
 import kamienica.core.util.CommonUtils;
-import kamienica.core.util.SecurityDetails;
 import kamienica.feature.apartment.ApartmentDao;
 import kamienica.feature.invoice.InvoiceAbstractDao;
 import kamienica.feature.reading.ReadingEnergyDao;

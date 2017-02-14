@@ -2,7 +2,6 @@ package kamienica.feature.user_admin;
 
 import kamienica.core.enums.Status;
 import kamienica.feature.residence.ResidenceService;
-import kamienica.feature.residenceownership.ResidenceOwnershipDao;
 import kamienica.feature.tenant.TenantService;
 import kamienica.model.Residence;
 import kamienica.model.SecurityUser;
@@ -25,13 +24,11 @@ public class SecurityServiceImpl implements UserDetailsService {
     private static final String ERROR_MSG = "Login or Passowords are invalid";
     private final TenantService tenantService;
     private final ResidenceService residenceService;
-    private final ResidenceOwnershipDao ownershipDao;
 
     @Autowired
-    public SecurityServiceImpl(TenantService tenantService, ResidenceService residenceService, ResidenceOwnershipDao ownershipDao) {
+    public SecurityServiceImpl(TenantService tenantService, ResidenceService residenceService) {
         this.tenantService = tenantService;
         this.residenceService = residenceService;
-        this.ownershipDao = ownershipDao;
     }
 
     @Override

@@ -1,6 +1,5 @@
 package kamienica.feature.reading;
 
-import kamienica.core.enums.Media;
 import kamienica.model.Apartment;
 import kamienica.model.ReadingEnergy;
 import kamienica.model.Residence;

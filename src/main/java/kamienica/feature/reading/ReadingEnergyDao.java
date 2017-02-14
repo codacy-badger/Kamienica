@@ -1,7 +1,6 @@
 package kamienica.feature.reading;
 
 import kamienica.core.daoservice.BasicDao;
-import kamienica.core.enums.Media;
 import kamienica.model.Apartment;
 import kamienica.model.Invoice;
 import kamienica.model.ReadingEnergy;

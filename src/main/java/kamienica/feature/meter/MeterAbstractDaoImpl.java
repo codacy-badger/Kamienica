@@ -1,7 +1,6 @@
 package kamienica.feature.meter;
 
 import kamienica.core.daoservice.BasicDaoImpl;
-import kamienica.core.util.SecurityDetails;
 import kamienica.model.Meter;
 import kamienica.model.Residence;
 import org.hibernate.Criteria;
