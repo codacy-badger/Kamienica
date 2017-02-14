@@ -45,6 +45,20 @@ public class ReadingServiceImpl implements ReadingService {
     public List<? extends Reading> getList(final Residence r, final Media media) {
         switch (media) {
             case ENERGY:
+                return energy.getList(r);
+            case GAS:
+                return gas.getList(r);
+            case WATER:
+                return water.getList(r);
+            default:
+                return null;
+        }
+    }
+
+    @Override
+    public List<? extends Reading> getList(final Media media) {
+        switch (media) {
+            case ENERGY:
                 return energy.getList();
             case GAS:
                 return gas.getList();
@@ -55,28 +69,6 @@ public class ReadingServiceImpl implements ReadingService {
         }
     }
 
-    @Override
-    public List<? extends Reading> getListForOwner(final Media media) {
-        final List<Residence> residences = SecurityDetails.getResidencesForOwner();
-        final Criterion byResidence = Restrictions.in("residence", residences);
-        final Order byDate = Order.desc("readingDate");
-        //TODO parent restriction http://stackoverflow.com/questions/19815731/hibernate-criteria-child-restriction after chenging meter status to enum
-        switch (media) {
-            case ENERGY:
-                final List<MeterEnergy> me = meterEnergy.findByCriteria(byResidence);
-                return energy.findByCriteria(byDate, Restrictions.in("meter", me));
-            case GAS:
-                final List<MeterGas> mg = meterGas.findByCriteria(byResidence);
-                return gas.findByCriteria(byDate, Restrictions.in("meter", mg));
-            case WATER:
-                final List<MeterWater> mw = meterWater.findByCriteria(byResidence);
-                return water.findByCriteria(byDate, Restrictions.in("meter", mw));
-            default:
-                return null;
-        }
-    }
-
-
     /**
      * Method designed for creating new readings. If this is the first input the
      * method will create fake '0' readings for each meter. It will also create
@@ -86,25 +78,25 @@ public class ReadingServiceImpl implements ReadingService {
      */
     @SuppressWarnings("unchecked")
     @Override
-    public <T extends Reading> List<T> getLatestNew(Media media) throws NoMainCounterException {
-        LocalDate fakeDate = new LocalDate().minusDays(100);
+    public <T extends Reading> List<T> getLatestNew(final Residence r, final Media media) throws NoMainCounterException {
+        final LocalDate fakeDate = new LocalDate().minusDays(100);
         switch (media) {
             case ENERGY:
                 if (!meterEnergy.ifMainExists()) {
                     throw new NoMainCounterException();
                 }
-                return latestEnergy(fakeDate);
+                return latestEnergy(r, fakeDate);
             case GAS:
                 if (!meterGas.ifMainExists()) {
                     throw new NoMainCounterException();
                 }
-                return latestGas(fakeDate);
+                return latestGas(r, fakeDate);
 
             case WATER:
                 if (!meterWater.ifMainExists()) {
                     throw new NoMainCounterException();
                 }
-                return latestWater(fakeDate);
+                return latestWater(r, fakeDate);
 
             default:
                 return null;
@@ -115,17 +107,17 @@ public class ReadingServiceImpl implements ReadingService {
 
     @SuppressWarnings("unchecked")
     @Override
-    public <T extends Reading> List<T> latestEdit(Media media) {
+    public <T extends Reading> List<T> latestEdit(final Residence r, final Media media) {
         switch (media) {
             case ENERGY:
 
-                return (List<T>) energy.getLatestList(energy.getLatestDate());
+                return (List<T>) energy.getLatestList(r, energy.getLatestDate(r));
             case GAS:
 
-                return (List<T>) gas.getLatestList(gas.getLatestDate());
+                return (List<T>) gas.getLatestList(r, gas.getLatestDate(r));
             case WATER:
 
-                return (List<T>) water.getLatestList(water.getLatestDate());
+                return (List<T>) water.getLatestList(r, water.getLatestDate(r));
 
             default:
                 break;
@@ -134,18 +126,18 @@ public class ReadingServiceImpl implements ReadingService {
     }
 
     @Override
-    public List<ReadingEnergy> energyLatestEdit() {
-        return energy.getLatestList(energy.getLatestDate());
+    public List<ReadingEnergy> energyLatestEdit(final Residence r) {
+        return energy.getLatestList(r, energy.getLatestDate(r));
     }
 
     @Override
-    public List<ReadingGas> gasLatestEdit() {
-        return gas.getLatestList(gas.getLatestDate());
+    public List<ReadingGas> gasLatestEdit(final Residence r) {
+        return gas.getLatestList(r, gas.getLatestDate(r));
     }
 
     @Override
-    public List<ReadingWater> waterLatestEdit() {
-        return water.getLatestList(water.getLatestDate());
+    public List<ReadingWater> waterLatestEdit(final Residence r) {
+        return water.getLatestList(r, water.getLatestDate(r));
     }
 
     @Override
@@ -164,14 +156,14 @@ public class ReadingServiceImpl implements ReadingService {
     }
 
     @Override
-    public List<? extends Reading> getByDate(LocalDate date, Media media) {
+    public List<? extends Reading> getByDate(final Residence r, final LocalDate date, final Media media) {
         switch (media) {
             case ENERGY:
-                return energy.getByDate(date);
+                return energy.getByDate(r, date);
             case GAS:
-                return gas.getByDate(date);
+                return gas.getByDate(r, date);
             case WATER:
-                return water.getByDate(date);
+                return water.getByDate(r, date);
 
             default:
                 return null;
@@ -297,21 +289,21 @@ public class ReadingServiceImpl implements ReadingService {
 
 
     @Override
-    public void deleteLatestReadings(Media media) {
+    public void deleteLatestReadings(final Residence r, Media media) {
         switch (media) {
             case ENERGY:
 
-                energy.deleteLatestReadings(energy.getLatestDate());
+                energy.deleteLatestReadings(energy.getLatestDate(r));
 
                 break;
             case GAS:
 
-                gas.deleteLatestReadings(gas.getLatestDate());
+                gas.deleteLatestReadings(gas.getLatestDate(r));
 
                 break;
             case WATER:
 
-                water.deleteLatestReadings(water.getLatestDate());
+                water.deleteLatestReadings(water.getLatestDate(r));
 
                 break;
             default:
@@ -332,10 +324,10 @@ public class ReadingServiceImpl implements ReadingService {
 
     }
 
-    private <T extends Reading> List<T> latestWater(LocalDate fakeDate) {
-        Set<Long> idList;
-        idList = meterWater.getIdListForActiveMeters();
-        List<ReadingWater> waterList = latestEdit(Media.WATER);
+
+    private <T extends Reading> List<T> latestWater(final Residence r, final LocalDate fakeDate) {
+        Set<Long> idList = meterWater.getIdListForActiveMeters(r);
+        List<ReadingWater> waterList = latestEdit(r, Media.WATER);
         if (waterList.isEmpty()) {
             for (Long tmpLong : idList) {
                 waterList.add(new ReadingWater(fakeDate, 0.0, meterWater.getById(tmpLong)));
@@ -352,10 +344,9 @@ public class ReadingServiceImpl implements ReadingService {
         return (List<T>) waterList;
     }
 
-    private <T extends Reading> List<T> latestGas(LocalDate fakeDate) {
-        Set<Long> idList;
-        idList = meterGas.getIdListForActiveMeters();
-        List<ReadingGas> gasList = latestEdit(Media.GAS);
+    private <T extends Reading> List<T> latestGas(final Residence r, final LocalDate fakeDate) {
+        Set<Long> idList = meterGas.getIdListForActiveMeters(r);
+        List<ReadingGas> gasList = latestEdit(r, Media.GAS);
 
         // if this the very first time user creates readings
         if (gasList.isEmpty()) {
@@ -375,10 +366,9 @@ public class ReadingServiceImpl implements ReadingService {
         return (List<T>) gasList;
     }
 
-    private <T extends Reading> List<T> latestEnergy(LocalDate fakeDate) {
-        Set<Long> idList;
-        idList = meterEnergy.getIdListForActiveMeters();
-        List<ReadingEnergy> energyList = latestEdit(Media.ENERGY);
+    private <T extends Reading> List<T> latestEnergy(final Residence r, final LocalDate fakeDate) {
+        Set<Long> idList = meterEnergy.getIdListForActiveMeters(r);
+        List<ReadingEnergy> energyList = latestEdit(r, Media.ENERGY);
         if (energyList.isEmpty()) {
             for (Long tmpLong : idList) {
                 energyList.add(new ReadingEnergy(fakeDate, 0.0, meterEnergy.getById(tmpLong)));

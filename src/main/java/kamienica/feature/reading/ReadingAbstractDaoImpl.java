@@ -3,6 +3,7 @@ package kamienica.feature.reading;
 import kamienica.core.daoservice.BasicDaoImpl;
 import kamienica.model.Invoice;
 import kamienica.model.Reading;
+import kamienica.model.Residence;
 import org.hibernate.Criteria;
 import org.hibernate.Query;
 import org.hibernate.criterion.Order;
@@ -20,28 +21,30 @@ public abstract class ReadingAbstractDaoImpl<T extends Reading> extends BasicDao
 	protected static final String DELETE_LATEST = "delete from  %s where readingDate=:date and resolved=:res";
 	protected static final String CHANGE_RESOLVEMENT = "update %s set resolved= :res where readingDate = :paramdate";
 
-	@Override
-	public List<T> getList() {
+	public List<T> getList(Residence r) {
 
 		@SuppressWarnings("unchecked")
-		List<T> list = createEntityCriteria().addOrder(Order.desc("readingDate")).list();
-		return list;
+		Criteria c =  createEntityCriteria();
+		c.createCriteria("meter").add(Restrictions.eq("residence", r));
+		c.addOrder(Order.desc("readingDate")).list();
+		return c.list();
 	}
 
-	public List<T> getByDate(LocalDate readingDate) {
+	public List<T> getByDate(final Residence r, LocalDate readingDate) {
 		@SuppressWarnings("unchecked")
-		List<T> list = createEntityCriteria().add(Restrictions.eq("readingDate", readingDate)).list();
-		return list;
+		Criteria c =  createEntityCriteria();
+		c.add(Restrictions.eq("readingDate", readingDate));
+		c.add(Restrictions.eq("residence", r));
+		return c.list();
 
 	}
 
 	@SuppressWarnings("unchecked")
-	public List<T> getLatestList(LocalDate date) {
+	public List<T> getLatestList(final Residence r, LocalDate date) {
 		Criteria readings = createEntityCriteria().add(Restrictions.eq("readingDate", date));
 		Criteria meters = readings.createCriteria("meter");
+		meters.add(Restrictions.eq("residence", r));
 		meters.add(Restrictions.gt("deactivation", LocalDate.now()));
-		
-		
 		return readings.list();
 	}
 
@@ -91,8 +94,10 @@ public abstract class ReadingAbstractDaoImpl<T extends Reading> extends BasicDao
 
 	}
 
-	public LocalDate getLatestDate() {
-		Criteria criteria = createEntityCriteria().setProjection(Projections.max("readingDate"));
+	public LocalDate getLatestDate(final Residence r) {
+		Criteria criteria = createEntityCriteria();
+		criteria.createCriteria("meter").add(Restrictions.eq("residence", r));
+		criteria.setProjection(Projections.max("readingDate"));
 		return (LocalDate) criteria.uniqueResult();
 	}
 }

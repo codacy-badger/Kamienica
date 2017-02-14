@@ -2,6 +2,7 @@ package kamienica.feature.user_admin;
 
 import kamienica.core.enums.Media;
 import kamienica.core.util.CommonUtils;
+import kamienica.core.util.SecurityDetails;
 import kamienica.feature.apartment.ApartmentDao;
 import kamienica.feature.invoice.InvoiceAbstractDao;
 import kamienica.feature.reading.ReadingEnergyDao;
@@ -64,46 +65,51 @@ public class OwnerUserDataServiceImpl implements OwnerUserDataService {
     }
 
     private void addLatestReadings(HashMap<String, Object> model) {
+//TODO implement method after merging the tables
 
+//        final LocalDate energyDate = energyDao.getLatestDate(SecurityDetails.getResidencesForOwner());
+//        final LocalDate gasDate = gasDao.getLatestDate();
+//        final LocalDate waterDate = waterDao.getLatestDate();
+//
+//        int energy = countDays(energyDate);
+//        int gas = countDays(gasDate);
+//        int water = countDays(waterDate);
+//        String media;
+//        int days;
+//        if (energy > gas && energy > water) {
+//            days = energy;
+//            media = "Energia";
+//        } else if (water > gas) {
+//            days = water;
+//            media = "Woda";
+//        } else {
+//            days = gas;
+//            media = "Gaz";
+//        }
+//        model.put("readingMedia", media);
+//        model.put("readingDays", days);
 
-        final LocalDate energyDate = energyDao.getLatestDate();
-        final LocalDate gasDate = gasDao.getLatestDate();
-        final LocalDate waterDate = waterDao.getLatestDate();
+//        energy = invoiceEnergyDao.getDaysOfLastInvoice();
+//        gas = invoiceGasDao.getDaysOfLastInvoice();
+//        water = invoiceWaterDao.getDaysOfLastInvoice();
+//
+//        if (energy > gas && energy > water) {
+//            days = energy;
+//            media = "Energia";
+//        } else if (water > gas) {
+//            days = water;
+//            media = "Woda";
+//        } else {
+//            days = gas;
+//            media = "Gaz";
+//        }
+//        model.put("invoiceMedia", media);
+//        model.put("invoiceDays", days);
 
-        int energy = countDays(energyDate);
-        int gas = countDays(gasDate);
-        int water = countDays(waterDate);
-        String media;
-        int days;
-        if (energy > gas && energy > water) {
-            days = energy;
-            media = "Energia";
-        } else if (water > gas) {
-            days = water;
-            media = "Woda";
-        } else {
-            days = gas;
-            media = "Gaz";
-        }
-        model.put("readingMedia", media);
-        model.put("readingDays", days);
-
-        energy = invoiceEnergyDao.getDaysOfLastInvoice();
-        gas = invoiceGasDao.getDaysOfLastInvoice();
-        water = invoiceWaterDao.getDaysOfLastInvoice();
-
-        if (energy > gas && energy > water) {
-            days = energy;
-            media = "Energia";
-        } else if (water > gas) {
-            days = water;
-            media = "Woda";
-        } else {
-            days = gas;
-            media = "Gaz";
-        }
-        model.put("invoiceMedia", media);
-        model.put("invoiceDays", days);
+        model.put("readingMedia", "Błąd");
+        model.put("readingDays", 0);
+        model.put("invoiceMedia", "błąd");
+        model.put("invoiceDays", 0);
 
     }
 
@@ -154,7 +160,7 @@ public class OwnerUserDataServiceImpl implements OwnerUserDataService {
     }
 
     public Tenant getLoggedTenant() {
-        SecurityUser su =  (SecurityUser) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        SecurityUser su = (SecurityUser) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         return su.getTenant();
     }
 }

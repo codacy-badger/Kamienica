@@ -18,8 +18,6 @@ public interface OwnerUserDataService {
 
     List<ReadingGas> getReadingGasForTenant(Apartment apartment);
 
-    SecurityUser getCurrentUser();
-
     Tenant getLoggedTenant();
 
 }

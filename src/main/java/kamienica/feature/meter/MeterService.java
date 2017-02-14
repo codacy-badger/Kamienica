@@ -2,6 +2,7 @@ package kamienica.feature.meter;
 
 import kamienica.core.enums.Media;
 import kamienica.model.Meter;
+import kamienica.model.Residence;
 
 import java.util.List;
 import java.util.Set;
@@ -22,7 +23,7 @@ public interface MeterService {
 
 	Set<Long> getIdList(Media media);
 
-	Set<Long> getIdListForActiveMeters(Media media);
+	Set<Long> getIdListForActiveMeters(Residence r, Media media);
 
 	boolean ifMainExists(Media media);
 

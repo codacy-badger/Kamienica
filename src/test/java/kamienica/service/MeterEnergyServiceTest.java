@@ -37,14 +37,13 @@ public class MeterEnergyServiceTest extends ServiceTest {
     @Transactional
     @Test
     public void getActiveMeters() {
-        mockStatic(SecurityDetails.class);
-        when(SecurityDetails.getResidencesForOwner()).thenReturn(getMockedResidences());
-        assertEquals(5, meterService.getIdListForActiveMeters(Media.ENERGY).size());
+        final Residence r = residenceService.getById(1L);
+        assertEquals(5, meterService.getIdListForActiveMeters(r, Media.ENERGY).size());
         MeterEnergy meter = meterService.getById(4L, Media.ENERGY);
         meter.setDeactivation(LocalDate.now().minusDays(1));
         meterService.update(meter, Media.ENERGY);
 
-        assertEquals(4, meterService.getIdListForActiveMeters(Media.ENERGY).size());
+        assertEquals(4, meterService.getIdListForActiveMeters(r, Media.ENERGY).size());
 
     }
 

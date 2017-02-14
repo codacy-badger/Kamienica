@@ -1,10 +1,7 @@
 package kamienica.feature.reading;
 
 import kamienica.core.daoservice.BasicDao;
-import kamienica.model.Apartment;
-import kamienica.model.Invoice;
-import kamienica.model.InvoiceGas;
-import kamienica.model.ReadingWater;
+import kamienica.model.*;
 import org.joda.time.LocalDate;
 
 import java.util.HashMap;
@@ -13,11 +10,11 @@ import java.util.Set;
 
 public interface ReadingWaterDao extends BasicDao<ReadingWater> {
 
-	List<ReadingWater> getByDate(LocalDate date);
+	List<ReadingWater> getByDate(Residence r, LocalDate date);
 
 	List<ReadingWater> getPrevious(LocalDate date, Set<Long> meterId);
 
-	List<ReadingWater> getLatestList(LocalDate date);
+	List<ReadingWater> getLatestList(Residence r, LocalDate date);
 
 	List<ReadingWater> getListForTenant(Apartment apartment);
 
@@ -35,10 +32,11 @@ public interface ReadingWaterDao extends BasicDao<ReadingWater> {
 
 	void deleteLatestReadings(LocalDate date);
 
-	LocalDate getLatestDate();
+	LocalDate getLatestDate(Residence r);
 	
-	List<ReadingWater> getWaterReadingForGasConsumption2(LocalDate date);
+	List<ReadingWater> getWaterReadingForGasConsumption2(Residence r, LocalDate date);
 
 	HashMap<String, List<ReadingWater>> getWaterReadingForGasConsumption(InvoiceGas invoice);
 
+    List<ReadingWater> getList(Residence r);
 }

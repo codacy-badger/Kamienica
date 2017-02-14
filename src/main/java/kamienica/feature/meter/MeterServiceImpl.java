@@ -195,14 +195,14 @@ public class MeterServiceImpl implements MeterService {
     }
 
     @Override
-    public Set<Long> getIdListForActiveMeters(Media media) {
+    public Set<Long> getIdListForActiveMeters(final Residence r, final Media media) {
         switch (media) {
             case ENERGY:
-                return energy.getIdListForActiveMeters();
+                return energy.getIdListForActiveMeters(r);
             case WATER:
-                return water.getIdListForActiveMeters();
+                return water.getIdListForActiveMeters(r);
             case GAS:
-                return gas.getIdListForActiveMeters();
+                return gas.getIdListForActiveMeters(r);
 
             default:
                 return null;

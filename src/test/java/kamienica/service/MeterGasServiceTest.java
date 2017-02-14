@@ -35,14 +35,13 @@ public class MeterGasServiceTest extends ServiceTest {
     @Transactional
     @Test
     public void getActiveMeters() {
-        mockStatic(SecurityDetails.class);
-        when(SecurityDetails.getResidencesForOwner()).thenReturn(getMockedResidences());
-        assertEquals(6, meterService.getIdListForActiveMeters(Media.GAS).size());
+        final Residence r = residenceService.getById(1L);
+        assertEquals(6, meterService.getIdListForActiveMeters(r, Media.GAS).size());
         MeterGas meter = meterService.getById(4L, Media.GAS);
         meter.setDeactivation(LocalDate.now().minusDays(1));
         meterService.update(meter, Media.GAS);
 
-        assertEquals(5, meterService.getIdListForActiveMeters(Media.GAS).size());
+        assertEquals(5, meterService.getIdListForActiveMeters(r, Media.GAS).size());
 
     }
     @Test

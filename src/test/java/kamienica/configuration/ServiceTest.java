@@ -37,6 +37,7 @@ import static org.powermock.api.mockito.PowerMockito.mockStatic;
 @PrepareForTest(SecurityDetails.class)
 public abstract class ServiceTest {
 
+    protected static final long RESIDENCE_ID = 1L;
     @Autowired
     protected TenantService tenantService;
     @Autowired

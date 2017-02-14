@@ -21,9 +21,9 @@ public interface ReadingService {
 	
 	List<? extends Reading> getList(Residence r, Media media);
 
-	List<? extends Reading> getListForOwner(Media media);
+	List<? extends Reading> getList(Media media);
 
-	List<? extends Reading> getByDate(LocalDate date, Media media);
+	List<? extends Reading> getByDate(Residence r, LocalDate date, Media media);
 
 	List<ReadingEnergy> getPreviousReadingEnergy(LocalDate date, Set<Long> meterIdList);
 
@@ -31,15 +31,15 @@ public interface ReadingService {
 
 	List<ReadingWater> getPreviousReadingWater(LocalDate date, Set<Long> meterIdList);
 
-	<T extends Reading> List<T> getLatestNew(Media media) throws NoMainCounterException;
+	<T extends Reading> List<T> getLatestNew(Residence r, Media media) throws NoMainCounterException;
 
-	<T extends Reading> List<T> latestEdit(Media media);
+	<T extends Reading> List<T> latestEdit(Residence r, Media media);
 
-	List<ReadingEnergy> energyLatestEdit();
+	List<ReadingEnergy> energyLatestEdit(final Residence r);
 
-	List<ReadingGas> gasLatestEdit();
+	List<ReadingGas> gasLatestEdit(final Residence r);
 
-	List<ReadingWater> waterLatestEdit();
+	List<ReadingWater> waterLatestEdit(final Residence r);
 
 	List<ReadingWater> getUnresolvedReadingsWater();
 
@@ -49,6 +49,6 @@ public interface ReadingService {
 
 	List<ReadingGas> getUnresolvedReadingsGas();
 
-	void deleteLatestReadings(Media media);
+	void deleteLatestReadings(final Residence r, Media media);
 
 }

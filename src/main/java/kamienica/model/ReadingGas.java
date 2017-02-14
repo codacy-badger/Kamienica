@@ -31,6 +31,7 @@ public class ReadingGas extends Reading implements Serializable {
 		super(date, value);
 		this.unit = meter.getUnit();
 		this.meter = meter;
+		this.residence = meter.getResidence();
 	}
 
 	public ReadingGas() {

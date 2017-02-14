@@ -1,9 +1,7 @@
 package kamienica.feature.reading;
 
 import kamienica.core.daoservice.BasicDao;
-import kamienica.model.Apartment;
-import kamienica.model.Invoice;
-import kamienica.model.ReadingGas;
+import kamienica.model.*;
 import org.joda.time.LocalDate;
 
 import java.util.List;
@@ -11,11 +9,11 @@ import java.util.Set;
 
 public interface ReadingGasDao extends BasicDao<ReadingGas> {
 
-	List<ReadingGas> getByDate(LocalDate date);
+	List<ReadingGas> getByDate(Residence r, LocalDate date);
 
 	List<ReadingGas> getPrevious(LocalDate date, Set<Long> meterId);
 
-	List<ReadingGas> getLatestList(LocalDate date);
+	List<ReadingGas> getLatestList(Residence r, LocalDate date);
 
 	List<ReadingGas> getListForTenant(Apartment apartment);
 
@@ -34,5 +32,8 @@ public interface ReadingGasDao extends BasicDao<ReadingGas> {
 
 	void deleteLatestReadings(LocalDate date);
 
-	LocalDate getLatestDate();
+	LocalDate getLatestDate(Residence r);
+
+    List<ReadingGas> getList(Residence r);
 }
+

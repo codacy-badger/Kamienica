@@ -22,6 +22,7 @@ import kamienica.feature.tenant.TenantDao;
 import kamienica.model.*;
 import org.hibernate.criterion.Criterion;
 import org.hibernate.criterion.Restrictions;
+import org.joda.time.LocalDate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -215,7 +216,7 @@ public class InvoiceServiceImpl implements InvoiceService {
                 invoice.getBaseReading().getReadingDate(), meterService.getIdList(Media.WATER));
 
         List<ReadingWater> readingWaterNew = (List<ReadingWater>) readingService
-                .getByDate(invoice.getBaseReading().getReadingDate(), Media.WATER);
+                .getByDate(invoice.getResidence(), invoice.getBaseReading().getReadingDate(), Media.WATER);
 
         List<MediaUsage> usageWater = WaterConsumptionCalculator.countConsumption(apartments, readingWaterOld,
                 readingWaterNew);
@@ -234,15 +235,16 @@ public class InvoiceServiceImpl implements InvoiceService {
 
         List<ReadingGas> readingGasOld = readingService.getPreviousReadingGas(invoice.getReadingDate(),
                 meterService.getIdList(Media.GAS));
-        List<ReadingGas> readingGasNew = (List<ReadingGas>) readingService.getByDate(invoice.getReadingDate(),
+        List<ReadingGas> readingGasNew = (List<ReadingGas>) readingService.getByDate(invoice.getResidence(), invoice.getReadingDate(),
                 Media.GAS);
         List<MediaUsage> usageGas;
         if (settings.getWaterHeatingSystem().equals(WaterHeatingSystem.SHARED_GAS)) {
+
             List<ReadingWater> waterNew = readingWaterDao
-                    .getWaterReadingForGasConsumption2(invoice.getReadingDate());
+                    .getWaterReadingForGasConsumption2(invoice.getResidence(), invoice.getReadingDate());
 
             List<ReadingWater> waterOld = readingWaterDao
-                    .getWaterReadingForGasConsumption2(waterNew.get(0).getReadingDate());
+                    .getWaterReadingForGasConsumption2(invoice.getResidence(), waterNew.get(0).getReadingDate());
 
             usageGas = GasConsumptionCalculator.countConsumption(apartments, readingGasOld, readingGasNew, waterOld,
                     waterNew);
@@ -262,11 +264,12 @@ public class InvoiceServiceImpl implements InvoiceService {
     }
 
     private <T extends Invoice> void saveEnergy(T invoice, List<Apartment> apartments, List<Tenant> tenants, List<Division> division)  {
-        List<ReadingEnergy> readingEnergyOld = readingService.getPreviousReadingEnergy(
-                invoice.getBaseReading().getReadingDate(), meterService.getIdList(Media.ENERGY));
+        final LocalDate baseReadingDate =  invoice.getBaseReading().getReadingDate();
 
-        List<ReadingEnergy> readingEnergyNew = (List<ReadingEnergy>) readingService
-                .getByDate(invoice.getBaseReading().getReadingDate(), Media.ENERGY);
+
+        List<ReadingEnergy> readingEnergyOld = readingService.getPreviousReadingEnergy(baseReadingDate, meterService.getIdList(Media.ENERGY));
+
+        List<ReadingEnergy> readingEnergyNew = (List<ReadingEnergy>) readingService.getByDate(invoice.getResidence(), baseReadingDate, Media.ENERGY);
 
         List<MediaUsage> usageEnergy = EnergyConsumptionCalculator.countConsumption(apartments, readingEnergyOld,
                 readingEnergyNew);
