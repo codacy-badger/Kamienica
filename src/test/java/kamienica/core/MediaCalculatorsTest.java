@@ -2,10 +2,10 @@ package kamienica.core;
 
 import kamienica.core.calculator.ConsumptionCalculator;
 import kamienica.core.calculator.StandardUsageCalculator;
-import kamienica.core.exception.NegativeConsumptionValue;
-import kamienica.core.exception.UsageCalculationException;
-import kamienica.model.MediaUsage;
-import kamienica.model.Reading;
+import kamienica.model.exception.NegativeConsumptionValue;
+import kamienica.model.exception.UsageCalculationException;
+import kamienica.model.entity.MediaUsage;
+import kamienica.model.entity.Reading;
 import kamienica.testutils.EntityProvider;
 import org.junit.Test;
 import org.junit.runner.RunWith;

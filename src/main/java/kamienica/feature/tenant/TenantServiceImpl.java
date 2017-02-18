@@ -1,11 +1,11 @@
 package kamienica.feature.tenant;
 
-import kamienica.core.enums.Status;
-import kamienica.core.enums.UserRole;
+import kamienica.feature.apartment.IApartmentDao;
+import kamienica.model.enums.Status;
+import kamienica.model.enums.UserRole;
 import kamienica.core.util.SecurityDetails;
-import kamienica.feature.apartment.ApartmentDao;
-import kamienica.model.Apartment;
-import kamienica.model.Tenant;
+import kamienica.model.entity.Apartment;
+import kamienica.model.entity.Tenant;
 import org.hibernate.criterion.Criterion;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,13 +16,13 @@ import java.util.List;
 
 @Service
 @Transactional
-public class TenantServiceImpl implements TenantService {
+public class TenantServiceImpl implements ITenantService {
 
-    private final TenantDao tenantDao;
-    private final ApartmentDao apartmentDao;
+    private final ITenantDao tenantDao;
+    private final IApartmentDao apartmentDao;
 
     @Autowired
-    public TenantServiceImpl(TenantDao tenantDao,  ApartmentDao apartmentDao) {
+    public TenantServiceImpl(ITenantDao tenantDao, IApartmentDao apartmentDao) {
         this.tenantDao = tenantDao;
         this.apartmentDao = apartmentDao;
     }

@@ -1,11 +1,11 @@
 package kamienica.core.calculator;
 
-import kamienica.core.exception.NegativeConsumptionValue;
-import kamienica.core.exception.UsageCalculationException;
+import kamienica.model.exception.NegativeConsumptionValue;
+import kamienica.model.exception.UsageCalculationException;
 import kamienica.core.util.CommonUtils;
-import kamienica.model.Apartment;
-import kamienica.model.MediaUsage;
-import kamienica.model.Reading;
+import kamienica.model.entity.Apartment;
+import kamienica.model.entity.MediaUsage;
+import kamienica.model.entity.Reading;
 import org.joda.time.LocalDate;
 import org.springframework.stereotype.Component;
 
@@ -23,8 +23,8 @@ public class StandardUsageCalculator implements ConsumptionCalculator {
     private LocalDate latestDate;
     private LocalDate previousDate;
     private Predicate<Reading> noNullApartment = s -> s.getMeter().getApartment() != null;
-    private Predicate<Reading> maxDate = s -> s.getReadingDate().equals(latestDate);
-    private Predicate<Reading> minDate = s -> s.getReadingDate().equals(previousDate);
+    private Predicate<Reading> maxDate = s -> s.getReadingDetails().getReadingDate().equals(latestDate);
+    private Predicate<Reading> minDate = s -> s.getReadingDetails().getReadingDate().equals(previousDate);
     private double totalUsageCounted = 0;
 
 
@@ -64,7 +64,7 @@ public class StandardUsageCalculator implements ConsumptionCalculator {
     private void validateReadingDates(List<Reading> readings) throws UsageCalculationException {
 
         for (final Reading r : readings) {
-            if(r.getReadingDate().isEqual(latestDate) ||  r.getReadingDate().isEqual(previousDate)) {
+            if(r.getReadingDetails().getReadingDate().isEqual(latestDate) ||  r.getReadingDetails().getReadingDate().isEqual(previousDate)) {
             } else  {
                 throw new UsageCalculationException("There are more than two reading dates in the collection");
             }
@@ -137,11 +137,11 @@ public class StandardUsageCalculator implements ConsumptionCalculator {
     }
 
     private LocalDate findLatestDate(@NotNull List<Reading> readings) {
-        return readings.stream().map(Reading::getReadingDate).min(LocalDate::compareTo).get();
+        return readings.stream().map(x -> x.getReadingDetails().getReadingDate()).min(LocalDate::compareTo).get();
     }
 
     private LocalDate findNewestDate(@NotNull List<Reading> readings) {
-        return readings.stream().map(Reading::getReadingDate).max(LocalDate::compareTo).get();
+        return readings.stream().map(x -> x.getReadingDetails().getReadingDate()).max(LocalDate::compareTo).get();
     }
 
     private void validateReadingType(List<Reading> readings) throws UsageCalculationException {

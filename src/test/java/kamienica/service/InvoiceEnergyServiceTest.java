@@ -1,10 +1,10 @@
 package kamienica.service;
 
 import kamienica.configuration.ServiceTest;
-import kamienica.core.enums.Media;
-import kamienica.core.exception.InvalidDivisionException;
+import kamienica.model.enums.Media;
+import kamienica.model.exception.InvalidDivisionException;
 import kamienica.core.util.SecurityDetails;
-import kamienica.model.*;
+import kamienica.model.entity.*;
 import org.joda.time.LocalDate;
 import org.junit.Before;
 import org.junit.Test;
@@ -18,7 +18,7 @@ import static org.powermock.api.mockito.PowerMockito.when;
 
 public class InvoiceEnergyServiceTest extends ServiceTest {
 
-    private  Tenant t;
+    private Tenant t;
     private Residence r;
 
     @Before
@@ -44,21 +44,21 @@ public class InvoiceEnergyServiceTest extends ServiceTest {
         when(SecurityDetails.getLoggedTenant()).thenReturn(tenantService.getById(1L));
         when(SecurityDetails.getResidencesForOwner()).thenReturn(getMockedResidences());
 
-        List<ReadingEnergy> list = readingService.getUnresolvedReadingsEnergy();
+        List<ReadingEnergy> list = IReadingService.getUnresolvedReadingsEnergy();
         assertEquals(true, divisionService.isDivisionCorrect());
         assertEquals(31, list.get(1).getValue(), 0);
         InvoiceEnergy invoice = new InvoiceEnergy("112233", new LocalDate(), 200, list.get(1));
 
         invoiceService.save(invoice, Media.ENERGY, t, r);
         assertEquals(2, invoiceService.list(Media.ENERGY).size());
-        List<? extends Payment> paymentList = paymentService.getPaymentList(Media.ENERGY);
+        List<? extends Payment> paymentList = IPaymentService.getPaymentList(Media.ENERGY);
 
         assertEquals(6, paymentList.size());
         assertEquals(30.30, paymentList.get(3).getPaymentAmount(), DELTA);
         assertEquals(48.48, paymentList.get(4).getPaymentAmount(), DELTA);
         assertEquals(121.212, paymentList.get(5).getPaymentAmount(), DELTA);
 
-        list = readingService.getUnresolvedReadingsEnergy();
+        list = IReadingService.getUnresolvedReadingsEnergy();
         assertEquals(1, list.size());
         assertEquals(LocalDate.parse("2016-07-01"), list.get(0).getReadingDate());
     }
@@ -70,13 +70,13 @@ public class InvoiceEnergyServiceTest extends ServiceTest {
         when(SecurityDetails.getLoggedTenant()).thenReturn(tenantService.getById(1L));
         when(SecurityDetails.getResidencesForOwner()).thenReturn(getMockedResidences());
 
-        List<ReadingEnergy> list = readingService.getUnresolvedReadingsEnergy();
+        List<ReadingEnergy> list = IReadingService.getUnresolvedReadingsEnergy();
         assertEquals(11, list.get(0).getValue(), 0);
 
         InvoiceEnergy invoice = new InvoiceEnergy("112233", new LocalDate(), 200, list.get(0));
         invoiceService.save(invoice, Media.ENERGY, t, r);
         assertEquals(2, invoiceService.list(Media.ENERGY).size());
-        List<? extends Payment> paymentList = paymentService.getPaymentList(Media.ENERGY);
+        List<? extends Payment> paymentList = IPaymentService.getPaymentList(Media.ENERGY);
 
         assertEquals(6, paymentList.size());
 
@@ -84,7 +84,7 @@ public class InvoiceEnergyServiceTest extends ServiceTest {
         assertEquals(84.85, paymentList.get(4).getPaymentAmount(), DELTA);
         assertEquals(66.67, paymentList.get(5).getPaymentAmount(), DELTA);
 
-        list = readingService.getUnresolvedReadingsEnergy();
+        list = IReadingService.getUnresolvedReadingsEnergy();
         assertEquals(1, list.size());
         assertEquals(LocalDate.parse("2016-09-01"), list.get(0).getReadingDate());
     }
@@ -93,7 +93,7 @@ public class InvoiceEnergyServiceTest extends ServiceTest {
     @Test
     public void remove() {
         invoiceService.delete(1L, Media.ENERGY);
-        List<ReadingEnergy> list = readingService.getUnresolvedReadingsEnergy();
+        List<ReadingEnergy> list = IReadingService.getUnresolvedReadingsEnergy();
         assertEquals(3, list.size());
 
     }
@@ -104,10 +104,10 @@ public class InvoiceEnergyServiceTest extends ServiceTest {
 //    @Transactional
 //    public void updateEnergy() {
 //        final InvoiceEnergy invoiceEnergy = invoiceService.getEnergyByID(1L);
-//        final List<Payment> oldPayments = (List<Payment>) paymentService.getPaymentList(Media.ENERGY);
+//        final List<Payment> oldPayments = (List<Payment>) IPaymentService.getPaymentList(Media.ENERGY);
 //        invoiceEnergy.setTotalAmount(invoiceEnergy.getTotalAmount() * 2);
 //        invoiceService.update(invoiceEnergy, Media.ENERGY);
-//        final List<Payment> newPayments = (List<Payment>) paymentService.getPaymentList(Media.ENERGY);
+//        final List<Payment> newPayments = (List<Payment>) IPaymentService.getPaymentList(Media.ENERGY);
 //
 //        for (int i = 0; i < newPayments.size(); i++) {
 //            final double oldPayment = oldPayments.get(i).getPaymentAmount();

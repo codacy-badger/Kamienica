@@ -1,10 +1,10 @@
 package kamienica.core.calculator;
 
-import kamienica.core.exception.NegativeConsumptionValue;
-import kamienica.core.exception.UsageCalculationException;
-import kamienica.model.Apartment;
-import kamienica.model.MediaUsage;
-import kamienica.model.Reading;
+import kamienica.model.exception.NegativeConsumptionValue;
+import kamienica.model.exception.UsageCalculationException;
+import kamienica.model.entity.Apartment;
+import kamienica.model.entity.MediaUsage;
+import kamienica.model.entity.Reading;
 
 import java.util.List;
 

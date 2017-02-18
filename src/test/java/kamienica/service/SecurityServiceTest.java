@@ -1,7 +1,7 @@
 package kamienica.service;
 
 import kamienica.configuration.ServiceTest;
-import kamienica.model.Tenant;
+import kamienica.model.entity.Tenant;
 import org.junit.Test;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;

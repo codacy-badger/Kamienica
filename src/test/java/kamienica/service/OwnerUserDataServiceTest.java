@@ -1,8 +1,10 @@
 package kamienica.service;
 
 import kamienica.configuration.ServiceTest;
-import kamienica.core.enums.Status;
-import kamienica.model.*;
+import kamienica.model.enums.Status;
+import kamienica.model.entity.Apartment;
+import kamienica.model.entity.Residence;
+import kamienica.model.entity.Tenant;
 import org.joda.time.Days;
 import org.joda.time.LocalDate;
 import org.junit.Ignore;

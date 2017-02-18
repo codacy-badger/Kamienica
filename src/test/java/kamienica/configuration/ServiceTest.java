@@ -1,20 +1,20 @@
 package kamienica.configuration;
 
 import kamienica.core.util.SecurityDetails;
-import kamienica.feature.apartment.ApartmentService;
-import kamienica.feature.division.DivisionService;
-import kamienica.feature.invoice.InvoiceService;
-import kamienica.feature.meter.MeterService;
-import kamienica.feature.payment.PaymentService;
-import kamienica.feature.reading.ReadingService;
+import kamienica.feature.apartment.IApartmentService;
+import kamienica.feature.division.IDivisionService;
+import kamienica.feature.invoice.IInvoiceService;
+import kamienica.feature.meter.IMeterService;
+import kamienica.feature.payment.IPaymentService;
+import kamienica.feature.reading.IReadingService;
 import kamienica.feature.residence.ResidenceService;
-import kamienica.feature.residenceownership.ResidenceOwnershipService;
-import kamienica.feature.settings.SettingsService;
-import kamienica.feature.tenant.TenantService;
+import kamienica.feature.residenceownership.IResidenceOwnershipService;
+import kamienica.feature.settings.ISettingsService;
+import kamienica.feature.tenant.ITenantService;
 import kamienica.feature.user_admin.OwnerUserDataService;
 import kamienica.feature.user_admin.SecurityServiceImpl;
-import kamienica.model.Residence;
-import kamienica.model.Tenant;
+import kamienica.model.entity.Residence;
+import kamienica.model.entity.Tenant;
 import org.joda.time.LocalDate;
 import org.junit.BeforeClass;
 import org.junit.runner.RunWith;
@@ -39,21 +39,21 @@ public abstract class ServiceTest {
 
     protected static final long RESIDENCE_ID = 1L;
     @Autowired
-    protected TenantService tenantService;
+    protected ITenantService tenantService;
     @Autowired
-    protected ApartmentService apartmentService;
+    protected IApartmentService apartmentService;
     @Autowired
-    protected SettingsService settingsService;
+    protected ISettingsService settingsService;
     @Autowired
-    protected DivisionService divisionService;
+    protected IDivisionService divisionService;
     @Autowired
-    protected PaymentService paymentService;
+    protected IPaymentService IPaymentService;
     @Autowired
-    protected InvoiceService invoiceService;
+    protected IInvoiceService invoiceService;
     @Autowired
-    protected ReadingService readingService;
+    protected IReadingService IReadingService;
     @Autowired
-    protected MeterService meterService;
+    protected IMeterService meterService;
     @Autowired
     protected SecurityServiceImpl securityService;
     @Autowired
@@ -61,7 +61,7 @@ public abstract class ServiceTest {
     @Autowired
     protected ResidenceService residenceService;
     @Autowired
-    protected ResidenceOwnershipService residenceOwnershipService;
+    protected IResidenceOwnershipService residenceOwnershipService;
 
     /**
      * difference factor for calculated data

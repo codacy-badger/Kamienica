@@ -1,9 +1,9 @@
 package kamienica.core.util;
 
-import kamienica.model.Apartment;
-import kamienica.model.Residence;
-import kamienica.model.SecurityUser;
-import kamienica.model.Tenant;
+import kamienica.model.entity.Apartment;
+import kamienica.model.entity.Residence;
+import kamienica.model.entity.SecurityUser;
+import kamienica.model.entity.Tenant;
 import org.springframework.security.core.context.SecurityContextHolder;
 
 import java.util.List;

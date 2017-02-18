@@ -1,9 +1,9 @@
 package kamienica.feature.apartment;
 
 import kamienica.core.util.SecurityDetails;
-import kamienica.feature.settings.SettingsDao;
-import kamienica.model.Apartment;
-import kamienica.model.Residence;
+import kamienica.feature.settings.ISettingsDao;
+import kamienica.model.entity.Apartment;
+import kamienica.model.entity.Residence;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -14,13 +14,13 @@ import java.util.List;
 
 @Service
 @Transactional
-public class ApartmentServiceImpl implements ApartmentService {
+public class ApartmentServiceImpl implements IApartmentService {
 
-    private final ApartmentDao apartmentDAO;
-    private final SettingsDao settingsDao;
+    private final IApartmentDao apartmentDAO;
+    private final ISettingsDao settingsDao;
 
     @Autowired
-    public ApartmentServiceImpl(ApartmentDao apartmentDAO, SettingsDao settingsDao) {
+    public ApartmentServiceImpl(IApartmentDao apartmentDAO, ISettingsDao settingsDao) {
         this.apartmentDAO = apartmentDAO;
         this.settingsDao = settingsDao;
     }

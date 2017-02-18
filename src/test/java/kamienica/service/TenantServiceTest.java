@@ -1,10 +1,10 @@
 package kamienica.service;
 
 import kamienica.configuration.ServiceTest;
-import kamienica.core.enums.Status;
-import kamienica.core.enums.UserRole;
-import kamienica.model.Apartment;
-import kamienica.model.Tenant;
+import kamienica.model.enums.Status;
+import kamienica.model.enums.UserRole;
+import kamienica.model.entity.Apartment;
+import kamienica.model.entity.Tenant;
 import org.hibernate.criterion.Criterion;
 import org.hibernate.criterion.Restrictions;
 import org.joda.time.LocalDate;

@@ -1,7 +1,7 @@
 package kamienica.service;
 
 import kamienica.configuration.ServiceTest;
-import kamienica.model.Settings;
+import kamienica.model.entity.Settings;
 import org.junit.Test;
 import org.springframework.transaction.annotation.Transactional;
 

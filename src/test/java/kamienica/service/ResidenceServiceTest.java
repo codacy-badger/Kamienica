@@ -1,9 +1,12 @@
 package kamienica.service;
 
 import kamienica.configuration.ServiceTest;
-import kamienica.core.enums.Media;
+import kamienica.model.enums.Media;
 import kamienica.core.util.SecurityDetails;
-import kamienica.model.*;
+import kamienica.model.entity.Apartment;
+import kamienica.model.entity.Residence;
+import kamienica.model.entity.ResidenceOwnership;
+import kamienica.model.entity.Tenant;
 import org.hibernate.exception.ConstraintViolationException;
 import org.junit.Ignore;
 import org.junit.Test;

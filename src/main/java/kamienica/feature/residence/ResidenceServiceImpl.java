@@ -1,10 +1,12 @@
 package kamienica.feature.residence;
 
 import kamienica.core.util.SecurityDetails;
-import kamienica.feature.apartment.ApartmentDao;
-import kamienica.feature.meter.MeterDao;
-import kamienica.feature.residenceownership.ResidenceOwnershipDao;
-import kamienica.model.*;
+import kamienica.feature.apartment.IApartmentDao;
+import kamienica.feature.meter.IMeterDao;
+import kamienica.feature.residenceownership.IResidenceOwnershipDao;
+import kamienica.model.entity.*;
+import kamienica.model.enums.Media;
+import kamienica.model.enums.Status;
 import org.hibernate.criterion.Criterion;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,21 +21,17 @@ import java.util.stream.Collectors;
 public class ResidenceServiceImpl implements ResidenceService {
 
     private final ResidenceDao residenceDao;
-    private final ResidenceOwnershipDao residenceOwnershipDao;
-    private final ApartmentDao apartmentDao;
-    private final MeterDao<MeterEnergy> energy;
-    private final MeterDao<MeterGas> gas;
-    private final MeterDao<MeterWater> water;
+    private final IResidenceOwnershipDao residenceOwnershipDao;
+    private final IApartmentDao apartmentDao;
+    private final IMeterDao meterDao;
 
     @Autowired
-    public ResidenceServiceImpl(ResidenceDao residenceDao, ResidenceOwnershipDao residenceOwnershipDao,
-                                ApartmentDao apartmentDao, MeterDao<MeterEnergy> energy, MeterDao<MeterGas> gas, MeterDao<MeterWater> water) {
+    public ResidenceServiceImpl(ResidenceDao residenceDao, IResidenceOwnershipDao residenceOwnershipDao,
+                                IApartmentDao apartmentDao, IMeterDao meterDao) {
         this.residenceDao = residenceDao;
         this.residenceOwnershipDao = residenceOwnershipDao;
         this.apartmentDao = apartmentDao;
-        this.energy = energy;
-        this.gas = gas;
-        this.water = water;
+        this.meterDao = meterDao;
     }
 
     @Override
@@ -46,16 +44,17 @@ public class ResidenceServiceImpl implements ResidenceService {
 
         saveEssentialData(residence);
     }
-//TODO enabling this fails to save any data in tests
+
+    //TODO enabling this fails to save any data in tests
     private void saveEssentialData(Residence residence) {
         final Apartment ap = new Apartment(residence, 0, "0000", "Część Wpólna");
         apartmentDao.save(ap);
-        final MeterWater mw = new MeterWater("Licznik Główny Wody", "", "m3", ap, residence, false);
-        final MeterGas mg = new MeterGas("Licznik Główny Gazu", "", "m3", ap, residence, false);
-        final MeterEnergy me = new MeterEnergy("Licznik Główny Energii", "", "m3", ap, residence);
-        energy.save(me);
-        gas.save(mg);
-        water.save(mw);
+        final Meter mw = new Meter("Licznik Główny Wody", "N/A", "m3", ap, residence, true, Status.ACTIVE, false, false, Media.WATER);
+        final Meter mg = new Meter("Licznik Główny Gazu", "N/A", "m3", ap, residence, true, Status.ACTIVE, false, false, Media.GAS);
+        final Meter me = new Meter("Licznik Główny Energii", "N/A", "m3", ap, residence, true, Status.ACTIVE, false, false, Media.ENERGY);
+        meterDao.save(me);
+        meterDao.save(mg);
+        meterDao.save(mw);
     }
 
     @Override

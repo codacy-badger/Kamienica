@@ -1,7 +1,7 @@
 //package kamienica.controller.api;
 //
-//import kamienica.feature.tenant.TenantService;
-//import kamienica.model.Tenant;
+//import kamienica.feature.tenant.ITenantService;
+//import kamienica.model.entity.Tenant;
 //import kamienica.testutils.EntityProvider;
 //import org.junit.Ignore;
 //import org.junit.Test;
@@ -17,7 +17,7 @@
 //public class TenantApiTest {
 //
 //    @Mock
-//    private TenantService service;
+//    private ITenantService service;
 //
 //    @Spy
 //    private static List<Tenant> tenantList= EntityProvider.TENANTS;

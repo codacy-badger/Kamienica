@@ -1,10 +1,9 @@
 package kamienica.service;
 
 import kamienica.configuration.ServiceTest;
-import kamienica.core.enums.Media;
+import kamienica.model.enums.Media;
 import kamienica.core.util.SecurityDetails;
-import kamienica.model.MeterGas;
-import kamienica.model.Residence;
+import kamienica.model.entity.Residence;
 import org.joda.time.LocalDate;
 import org.junit.Test;
 import org.springframework.transaction.annotation.Transactional;

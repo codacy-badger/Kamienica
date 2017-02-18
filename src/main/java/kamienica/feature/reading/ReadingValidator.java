@@ -1,13 +1,13 @@
 package kamienica.feature.reading;
 
-import kamienica.model.Reading;
+import kamienica.model.entity.Reading;
 
 import java.util.List;
 
 public class ReadingValidator {
 
-	public static boolean validateMeterReadings(List<? extends Reading> currentReadings,
-			List<? extends Reading> newReadings) {
+	public static boolean validateMeterReadings(List<Reading> currentReadings,
+			List<Reading> newReadings) {
 //		double primaryReading = 0;
 //		double sumOfReadings = 0;
 		/*

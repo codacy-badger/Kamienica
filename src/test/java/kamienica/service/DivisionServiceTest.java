@@ -1,13 +1,13 @@
 package kamienica.service;
 
 import kamienica.configuration.ServiceTest;
-import kamienica.core.exception.InvalidDivisionException;
-import kamienica.core.exception.WrongDivisionInputException;
+import kamienica.model.exception.InvalidDivisionException;
+import kamienica.model.exception.WrongDivisionInputException;
 import kamienica.feature.division.DivisionForm;
-import kamienica.model.Apartment;
-import kamienica.model.Division;
-import kamienica.model.Residence;
-import kamienica.model.Tenant;
+import kamienica.model.entity.Apartment;
+import kamienica.model.entity.Division;
+import kamienica.model.entity.Residence;
+import kamienica.model.entity.Tenant;
 import org.joda.time.LocalDate;
 import org.junit.Ignore;
 import org.junit.Test;

@@ -1,15 +1,15 @@
 package kamienica.feature.division;
 
-import kamienica.core.enums.Status;
-import kamienica.core.exception.WrongDivisionInputException;
+import kamienica.feature.apartment.IApartmentDao;
+import kamienica.model.enums.Status;
+import kamienica.model.exception.WrongDivisionInputException;
 import kamienica.core.util.CommonUtils;
-import kamienica.feature.apartment.ApartmentDao;
-import kamienica.feature.settings.SettingsDao;
-import kamienica.feature.tenant.TenantDao;
-import kamienica.model.Apartment;
-import kamienica.model.Division;
-import kamienica.model.Residence;
-import kamienica.model.Tenant;
+import kamienica.feature.settings.ISettingsDao;
+import kamienica.feature.tenant.ITenantDao;
+import kamienica.model.entity.Apartment;
+import kamienica.model.entity.Division;
+import kamienica.model.entity.Residence;
+import kamienica.model.entity.Tenant;
 import org.hibernate.criterion.Criterion;
 import org.hibernate.criterion.Restrictions;
 import org.joda.time.LocalDate;
@@ -22,15 +22,15 @@ import java.util.List;
 
 @Service
 @Transactional
-public class DivisionServiceImpl implements DivisionService {
+public class DivisionServiceImpl implements IDivisionService {
 
-    private final DivisionDao divisionDAO;
-    private final TenantDao tenantDAO;
-    private final ApartmentDao apartmentDAO;
-    private final SettingsDao settingsDao;
+    private final IDivisionDao divisionDAO;
+    private final ITenantDao tenantDAO;
+    private final IApartmentDao apartmentDAO;
+    private final ISettingsDao settingsDao;
 
     @Autowired
-    public DivisionServiceImpl(DivisionDao divisionDAO, TenantDao tenantDAO, ApartmentDao apartmentDAO, SettingsDao settingsDao) {
+    public DivisionServiceImpl(IDivisionDao divisionDAO, ITenantDao tenantDAO, IApartmentDao apartmentDAO, ISettingsDao settingsDao) {
         this.divisionDAO = divisionDAO;
         this.tenantDAO = tenantDAO;
         this.apartmentDAO = apartmentDAO;

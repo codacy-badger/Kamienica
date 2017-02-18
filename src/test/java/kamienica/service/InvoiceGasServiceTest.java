@@ -1,11 +1,11 @@
 package kamienica.service;
 
 import kamienica.configuration.ServiceTest;
-import kamienica.core.enums.Media;
-import kamienica.core.enums.WaterHeatingSystem;
-import kamienica.core.exception.InvalidDivisionException;
+import kamienica.model.enums.Media;
+import kamienica.model.enums.WaterHeatingSystem;
+import kamienica.model.exception.InvalidDivisionException;
 import kamienica.core.util.SecurityDetails;
-import kamienica.model.*;
+import kamienica.model.entity.*;
 import org.joda.time.LocalDate;
 import org.junit.Before;
 import org.junit.Test;
@@ -43,13 +43,13 @@ public class InvoiceGasServiceTest extends ServiceTest {
         when(SecurityDetails.getLoggedTenant()).thenReturn(getOwner());
         when(SecurityDetails.getResidencesForOwner()).thenReturn(getMockedResidences());
 
-        List<ReadingGas> list = readingService.getUnresolvedReadingsGas();
+        List<ReadingGas> list = IReadingService.getUnresolvedReadingsGas();
         assertEquals(196, list.get(1).getValue(), 0);
         InvoiceGas invoice = new InvoiceGas("112233", new LocalDate(), 200, list.get(1));
 
         invoiceService.save(invoice, Media.GAS, t, r);
         assertEquals(2, invoiceService.list(Media.GAS).size());
-        List<? extends Payment> paymentList = paymentService.getPaymentList(Media.GAS);
+        List<? extends Payment> paymentList = IPaymentService.getPaymentList(Media.GAS);
 
         assertEquals(6, paymentList.size());
 
@@ -57,7 +57,7 @@ public class InvoiceGasServiceTest extends ServiceTest {
         assertEquals(64.55, paymentList.get(4).getPaymentAmount(), DELTA);
         assertEquals(92.06, paymentList.get(5).getPaymentAmount(), DELTA);
 
-        list = readingService.getUnresolvedReadingsGas();
+        list = IReadingService.getUnresolvedReadingsGas();
         assertEquals(1, list.size());
         assertEquals(LocalDate.parse("2016-07-29"), list.get(0).getReadingDate());
     }
@@ -70,14 +70,14 @@ public class InvoiceGasServiceTest extends ServiceTest {
         when(SecurityDetails.getResidencesForOwner()).thenReturn(getMockedResidences());
 
 
-        List<ReadingGas> list = readingService.getUnresolvedReadingsGas();
+        List<ReadingGas> list = IReadingService.getUnresolvedReadingsGas();
         assertEquals(114, list.get(0).getValue(), 0);
         InvoiceGas invoice = new InvoiceGas("112233",  new LocalDate(), 200, list.get(0));
 
         invoiceService.save(invoice, Media.GAS, t, r);
         assertEquals(2, invoiceService.list(Media.GAS).size());
 
-        List<? extends Payment> paymentList = paymentService.getPaymentList(Media.GAS);
+        List<? extends Payment> paymentList = IPaymentService.getPaymentList(Media.GAS);
 
         assertEquals(6, paymentList.size());
 
@@ -85,7 +85,7 @@ public class InvoiceGasServiceTest extends ServiceTest {
         assertEquals(68.13, paymentList.get(4).getPaymentAmount(), DELTA);
         assertEquals(103.61, paymentList.get(5).getPaymentAmount(), DELTA);
 
-        list = readingService.getUnresolvedReadingsGas();
+        list = IReadingService.getUnresolvedReadingsGas();
         assertEquals(1, list.size());
         assertEquals(LocalDate.parse("2016-10-01"), list.get(0).getReadingDate());
 
@@ -98,7 +98,7 @@ public class InvoiceGasServiceTest extends ServiceTest {
         when(SecurityDetails.getLoggedTenant()).thenReturn(getOwner());
         when(SecurityDetails.getResidencesForOwner()).thenReturn(getMockedResidences());
 
-        List<ReadingGas> list = readingService.getUnresolvedReadingsGas();
+        List<ReadingGas> list = IReadingService.getUnresolvedReadingsGas();
         Settings setings = settingsService.getSettings();
         setings.setWaterHeatingSystem(WaterHeatingSystem.INDIVIDUAL_GAS);
         settingsService.save(setings);
@@ -107,7 +107,7 @@ public class InvoiceGasServiceTest extends ServiceTest {
 
         invoiceService.save(invoice, Media.GAS, t, r);
         assertEquals(2, invoiceService.list(Media.GAS).size());
-        List<? extends Payment> paymentList = paymentService.getPaymentList(Media.GAS);
+        List<? extends Payment> paymentList = IPaymentService.getPaymentList(Media.GAS);
 
         assertEquals(6, paymentList.size());
 
@@ -115,7 +115,7 @@ public class InvoiceGasServiceTest extends ServiceTest {
         assertEquals(78.57, paymentList.get(4).getPaymentAmount(), DELTA);
         assertEquals(50.00, paymentList.get(5).getPaymentAmount(), DELTA);
 
-        list = readingService.getUnresolvedReadingsGas();
+        list = IReadingService.getUnresolvedReadingsGas();
         assertEquals(1, list.size());
         assertEquals(LocalDate.parse("2016-10-01"), list.get(0).getReadingDate());
 
@@ -125,7 +125,7 @@ public class InvoiceGasServiceTest extends ServiceTest {
     @Transactional
     public void remove() {
         invoiceService.delete(1L, Media.GAS);
-        List<ReadingGas> list = readingService.getUnresolvedReadingsGas();
+        List<ReadingGas> list = IReadingService.getUnresolvedReadingsGas();
         assertEquals(3, list.size());
     }
 
@@ -134,14 +134,14 @@ public class InvoiceGasServiceTest extends ServiceTest {
 //    @Test
 //    public void update() {
 //        InvoiceGas invoice = new InvoiceGas("23423423", new LocalDate(), 400,
-//                readingService.getById(6L, Media.GAS));
+//                IReadingService.getById(6L, Media.GAS));
 //        invoice.setId(1L);
-//        List<? extends Payment> oldList = paymentService.getPaymentList(Media.GAS);
+//        List<? extends Payment> oldList = IPaymentService.getPaymentList(Media.GAS);
 //
 //        invoice.setTotalAmount(400.0);
 //        invoiceService.update(invoice, Media.GAS);
 //
-//        List<? extends Payment> newList = paymentService.getPaymentList(Media.GAS);
+//        List<? extends Payment> newList = IPaymentService.getPaymentList(Media.GAS);
 //
 //        for (int i = 0; i < newList.size(); i++) {
 //            double test = newList.get(i).getPaymentAmount() / oldList.get(i).getPaymentAmount();

@@ -1,7 +1,7 @@
 package kamienica.feature.settings;
 
-import kamienica.core.enums.WaterHeatingSystem;
-import kamienica.model.Settings;
+import kamienica.model.enums.WaterHeatingSystem;
+import kamienica.model.entity.Settings;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
@@ -23,7 +23,7 @@ public class SettingsController {
 	private ArrayList<Boolean> values = new ArrayList<>(Arrays.asList(true, false));
 	private ArrayList<String> labels = new ArrayList<>(Arrays.asList("Tak", "Nie"));
 	@Autowired
-	private SettingsService service;
+	private ISettingsService service;
 
 	@RequestMapping(value = "/list", method = RequestMethod.GET)
 	public ModelAndView list(@ModelAttribute("settings") Settings settings, BindingResult result) {

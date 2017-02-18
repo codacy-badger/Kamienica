@@ -16,45 +16,45 @@
 //import org.testng.annotations.BeforeClass;
 //import org.testng.annotations.Testing;
 //
-//import kamienica.model.Apartment;
-//import kamienica.feature.apartment.ApartmentService;
-//import kamienica.model.Division;
-//import kamienica.feature.division.DivisionService;
+//import kamienica.model.entity.Apartment;
+//import kamienica.feature.apartment.IApartmentService;
+//import kamienica.model.entity.Division;
+//import kamienica.feature.division.IDivisionService;
 //import kamienica.feature.division.DivisionValidator;
 //import kamienica.feature.invoice.InvoiceEnergy;
 //import kamienica.feature.invoice.InvoiceGas;
-//import kamienica.feature.invoice.InvoiceService;
+//import kamienica.feature.invoice.IInvoiceService;
 //import kamienica.feature.invoice.InvoiceWater;
 //import kamienica.model.MeterEnergy;
 //import kamienica.model.MeterGas;
-//import kamienica.feature.meter.MeterService;
+//import kamienica.feature.meter.IMeterService;
 //import kamienica.model.MeterWater;
 //import kamienica.controller.jsp.PaymentController;
-//import kamienica.feature.payment.PaymentService;
+//import kamienica.feature.payment.IPaymentService;
 //import kamienica.model.ReadingEnergy;
 //import kamienica.model.ReadingGas;
-//import kamienica.feature.reading.ReadingService;
+//import kamienica.feature.reading.IReadingService;
 //import kamienica.model.ReadingWater;
-//import kamienica.model.Tenant;
-//import kamienica.feature.tenant.TenantService;
+//import kamienica.model.entity.Tenant;
+//import kamienica.feature.tenant.ITenantService;
 //import kamienica.testutils.SetupMethods;
 //
 //public class PaymentControllerTest {
 //
 //	@Mock
-//	private ApartmentService apartmentService;
+//	private IApartmentService apartmentService;
 //	@Mock
-//	private InvoiceService invoiceService;
+//	private IInvoiceService invoiceService;
 //	@Mock
-//	private MeterService meterService;
+//	private IMeterService meterService;
 //	@Mock
-//	private TenantService tenantService;
+//	private ITenantService tenantService;
 //	@Mock
-//	private DivisionService divisionService;
+//	private IDivisionService divisionService;
 //	@Mock
-//	private ReadingService readingService;
+//	private IReadingService IReadingService;
 //	@Mock
-//	private PaymentService paymentService;
+//	private IPaymentService IPaymentService;
 //
 //	@Mock
 //	MessageSource message;

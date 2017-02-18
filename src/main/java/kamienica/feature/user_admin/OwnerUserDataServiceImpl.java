@@ -1,17 +1,14 @@
 package kamienica.feature.user_admin;
 
-import kamienica.core.enums.Media;
 import kamienica.core.util.CommonUtils;
-import kamienica.feature.apartment.ApartmentDao;
-import kamienica.feature.invoice.InvoiceAbstractDao;
-import kamienica.feature.reading.ReadingEnergyDao;
-import kamienica.feature.reading.ReadingGasDao;
-import kamienica.feature.reading.ReadingWaterDao;
-import kamienica.feature.settings.SettingsDao;
-import kamienica.model.*;
+import kamienica.feature.apartment.IApartmentDao;
+import kamienica.feature.invoice.IInvoiceDao;
+import kamienica.feature.reading.IReadingDao;
+import kamienica.feature.settings.ISettingsDao;
+import kamienica.model.entity.*;
+import kamienica.model.enums.Media;
 import org.joda.time.LocalDate;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -23,27 +20,22 @@ import java.util.List;
 @Transactional
 public class OwnerUserDataServiceImpl implements OwnerUserDataService {
 
-    @Autowired
-    private SettingsDao settingsDao;
-    @Autowired
-    private ApartmentDao apartmentDao;
-    @Autowired
-    private ReadingEnergyDao energyDao;
-    @Autowired
-    private ReadingWaterDao waterDao;
-    @Autowired
-    private ReadingGasDao gasDao;
-    @Autowired
-    @Qualifier("invoiceEnergy")
-    private InvoiceAbstractDao<InvoiceEnergy> invoiceEnergyDao;
-    @Autowired
-    @Qualifier("invoiceWater")
-    private InvoiceAbstractDao<InvoiceWater> invoiceWaterDao;
-    @Autowired
-    @Qualifier("invoiceGas")
-    private InvoiceAbstractDao<InvoiceGas> invoiceGasDao;
+    private final ISettingsDao settingsDao;
+    private final IApartmentDao apartmentDao;
+    private final IReadingDao readingDao;
+    private final IInvoiceDao invoiceDao;
 
-    final LocalDate now = new LocalDate();
+    @Autowired
+    public OwnerUserDataServiceImpl(ISettingsDao settingsDao, IApartmentDao apartmentDao, IReadingDao readingDao, IInvoiceDao invoiceDao) {
+        this.settingsDao = settingsDao;
+        this.apartmentDao = apartmentDao;
+        this.readingDao = readingDao;
+        this.invoiceDao = invoiceDao;
+    }
+
+
+
+    private final LocalDate now = new LocalDate();
 
     @Override
     public HashMap<String, Object> getMainData() {
@@ -66,7 +58,7 @@ public class OwnerUserDataServiceImpl implements OwnerUserDataService {
     private void addLatestReadings(HashMap<String, Object> model) {
 //TODO implement method after merging the tables
 
-//        final LocalDate energyDate = energyDao.getLatestDate(SecurityDetails.getResidencesForOwner());
+//        final LocalDate energyDate = readingDao.getLatestDate(SecurityDetails.getResidencesForOwner());
 //        final LocalDate gasDate = gasDao.getLatestDate();
 //        final LocalDate waterDate = waterDao.getLatestDate();
 //
@@ -88,7 +80,7 @@ public class OwnerUserDataServiceImpl implements OwnerUserDataService {
 //        model.put("readingMedia", media);
 //        model.put("readingDays", days);
 
-//        energy = invoiceEnergyDao.getDaysOfLastInvoice();
+//        energy = invoiceDao.getDaysOfLastInvoice();
 //        gas = invoiceGasDao.getDaysOfLastInvoice();
 //        water = invoiceWaterDao.getDaysOfLastInvoice();
 //
@@ -121,32 +113,32 @@ public class OwnerUserDataServiceImpl implements OwnerUserDataService {
     }
 
     @Override
-    public List<ReadingEnergy> getReadingEnergyForTenant(Apartment aparmtent) {
-        return energyDao.getListForTenant(aparmtent);
+    public List<Reading> getReadingEnergyForTenant(Apartment aparmtent) {
+        return readingDao.getListForTenant(aparmtent);
     }
 
     @Override
-    public List<ReadingGas> getReadingGasForTenant(Apartment aparmtent) {
-        return gasDao.getListForTenant(aparmtent);
+    public List<Reading> getReadingGasForTenant(Apartment aparmtent) {
+        return readingDao.getListForTenant(aparmtent);
     }
 
     @Override
-    public List<ReadingWater> getReadingWaterForTenant(Apartment aparmtent) {
-        return waterDao.getListForTenant(aparmtent);
+    public List<Reading> getReadingWaterForTenant(Apartment aparmtent) {
+        return readingDao.getListForTenant(aparmtent);
     }
 
     @Override
-    public List<? extends Reading> getReadingsForTenant(Apartment apartment, Media media) {
+    public List<Reading> getReadingsForTenant(Apartment apartment, Media media) {
 
         switch (media) {
             case ENERGY:
-                return energyDao.getListForTenant(apartment);
+                return readingDao.getListForTenant(apartment);
 
             case GAS:
-                return gasDao.getListForTenant(apartment);
+                return readingDao.getListForTenant(apartment);
 
             case WATER:
-                return waterDao.getListForTenant(apartment);
+                return readingDao.getListForTenant(apartment);
 
             default:
                 throw new IllegalArgumentException();

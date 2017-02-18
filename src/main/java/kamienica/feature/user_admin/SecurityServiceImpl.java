@@ -1,11 +1,11 @@
 package kamienica.feature.user_admin;
 
-import kamienica.core.enums.Status;
+import kamienica.feature.tenant.ITenantService;
+import kamienica.model.enums.Status;
 import kamienica.feature.residence.ResidenceService;
-import kamienica.feature.tenant.TenantService;
-import kamienica.model.Residence;
-import kamienica.model.SecurityUser;
-import kamienica.model.Tenant;
+import kamienica.model.entity.Residence;
+import kamienica.model.entity.SecurityUser;
+import kamienica.model.entity.Tenant;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -22,11 +22,11 @@ import java.util.List;
 public class SecurityServiceImpl implements UserDetailsService {
 
     private static final String ERROR_MSG = "Login or Passowords are invalid";
-    private final TenantService tenantService;
+    private final ITenantService tenantService;
     private final ResidenceService residenceService;
 
     @Autowired
-    public SecurityServiceImpl(TenantService tenantService, ResidenceService residenceService) {
+    public SecurityServiceImpl(ITenantService tenantService, ResidenceService residenceService) {
         this.tenantService = tenantService;
         this.residenceService = residenceService;
     }

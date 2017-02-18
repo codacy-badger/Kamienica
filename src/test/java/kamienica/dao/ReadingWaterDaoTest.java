@@ -7,7 +7,7 @@
 //import org.testng.Assert;
 //import org.testng.annotations.Testing;
 //
-//import kamienica.model.Apartment;
+//import kamienica.model.entity.Apartment;
 //import kamienica.feature.meter.MeterWater;
 //import kamienica.model.ReadingWater;
 //import kamienica.feature.reading.ReadingWaterDAO;

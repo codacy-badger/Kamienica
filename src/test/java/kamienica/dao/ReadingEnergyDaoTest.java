@@ -9,16 +9,16 @@
 //import org.testng.Assert;
 //import org.testng.annotations.Testing;
 //
-//import kamienica.model.Apartment;
+//import kamienica.model.entity.Apartment;
 //import kamienica.model.InvoiceEnergy;
 //import kamienica.model.MeterEnergy;
-//import kamienica.feature.reading.ReadingDao;
+//import kamienica.feature.reading.IReadingDao;
 //import kamienica.model.ReadingEnergy;
 //
 //public class ReadingEnergyDaoTest extends EntityDaoImplTest {
 //
 //	@Autowired
-//	ReadingDao<ReadingEnergy, InvoiceEnergy> daoservice;
+//	IReadingDao<ReadingEnergy, InvoiceEnergy> daoservice;
 //	@Autowired
 //	BasicDao<MeterEnergy> meterDAO;
 //
@@ -66,7 +66,7 @@
 //		List<ReadingEnergy> list = daoservice.getByDate(new LocalDate(2010, 04, 01).toString());
 //		Assert.assertEquals(list.size(), 5);
 //		for (ReadingEnergy readingEnergy : list) {
-//			Assert.assertTrue(readingEnergy.isResolved());
+//			Assert.assertTrue(readingEnergy.getResolvement());
 //		}
 //
 //	}

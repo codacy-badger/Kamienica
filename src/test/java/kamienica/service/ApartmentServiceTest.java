@@ -2,8 +2,8 @@ package kamienica.service;
 
 import kamienica.configuration.ServiceTest;
 import kamienica.core.util.SecurityDetails;
-import kamienica.model.Apartment;
-import kamienica.model.Residence;
+import kamienica.model.entity.Apartment;
+import kamienica.model.entity.Residence;
 import org.junit.Test;
 import org.springframework.transaction.annotation.Transactional;
 

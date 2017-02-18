@@ -1,10 +1,9 @@
 package kamienica.core.calculator;
 
 import kamienica.core.util.CommonUtils;
-import kamienica.model.Apartment;
-import kamienica.model.MediaUsage;
-import kamienica.model.ReadingGas;
-import kamienica.model.ReadingWater;
+import kamienica.model.entity.Apartment;
+import kamienica.model.entity.MediaUsage;
+import kamienica.model.entity.Reading;
 import org.joda.time.Days;
 
 import java.util.ArrayList;
@@ -17,8 +16,8 @@ public class GasConsumptionCalculator {
 	/**
 	 * This method is designed for shared water heatig system
 	 */
-	public static List<MediaUsage> countConsumption(List<Apartment> aparment, List<ReadingGas> gasOld,
-													List<ReadingGas> gasNew, List<ReadingWater> waterOld, List<ReadingWater> waterNew) {
+	public static List<MediaUsage> countConsumption(List<Apartment> aparment, List<Reading> gasOld,
+													List<Reading> gasNew, List<Reading> waterOld, List<Reading> waterNew) {
 		ArrayList<MediaUsage> out = new ArrayList<>();
 		for (Apartment m : aparment) {
 
@@ -28,7 +27,7 @@ public class GasConsumptionCalculator {
 			double sumNew = 0;
 			tmp.setApartment(m);
 			for (int i = 0; i < gasNew.size(); i++) {
-				if (!gasNew.get(i).belongsToCWUMeter()) {
+				if (!gasNew.get(i).getMeter().isCwu()) {
 
 					if (gasNew.get(i).getMeter().getApartment() != null) {
 						if (gasNew.get(i).getMeter().getApartment().getApartmentNumber() == m.getApartmentNumber()) {
@@ -36,7 +35,7 @@ public class GasConsumptionCalculator {
 						}
 					}
 					if (!gasOld.isEmpty()) {
-						if (!gasOld.get(i).belongsToCWUMeter()) {
+						if (!gasOld.get(i).getMeter().isCwu()) {
 							if (gasOld.get(i).getMeter().getApartment() != null) {
 								if (gasOld.get(i).getMeter().getApartment().getApartmentNumber() == m
 										.getApartmentNumber()) {
@@ -50,10 +49,9 @@ public class GasConsumptionCalculator {
 			}
 			double usage = sumNew - sumPrevious;
 			tmp.setUsage(usage);
-			tmp.setUnit(gasNew.get(0).getUnit());
 			if (!gasOld.isEmpty()) {
 				tmp.setDaysBetweenReadings(
-						Days.daysBetween(gasOld.get(0).getReadingDate(), gasNew.get(0).getReadingDate()).getDays());
+						Days.daysBetween(gasOld.get(0).getReadingDetails().getReadingDate(), gasNew.get(0).getReadingDetails().getReadingDate()).getDays());
 				// tmp.setDaysBetweenReadings(Days.daysBetween(new
 				// DateTime(gasOld.get(0).getReadingDate()),
 				// new DateTime(gasNew.get(0).getReadingDate())).getDays());
@@ -85,8 +83,8 @@ public class GasConsumptionCalculator {
 	}
 
 	/** Method for individual water heating system */
-	public static ArrayList<MediaUsage> countConsumption(List<Apartment> aparment, List<ReadingGas> gasOld,
-														 List<ReadingGas> gasNew) {
+	public static ArrayList<MediaUsage> countConsumption(List<Apartment> aparment, List<Reading> gasOld,
+														 List<Reading> gasNew) {
 		ArrayList<MediaUsage> out = new ArrayList<>();
 		for (Apartment m : aparment) {
 
@@ -96,7 +94,7 @@ public class GasConsumptionCalculator {
 			double sumNew = 0;
 			tmp.setApartment(m);
 			for (int i = 0; i < gasNew.size(); i++) {
-				if (!gasNew.get(i).belongsToCWUMeter()) {
+				if (!gasNew.get(i).getMeter().isCwu()) {
 
 					if (gasNew.get(i).getMeter().getApartment() != null) {
 						if (gasNew.get(i).getMeter().getApartment().getApartmentNumber() == m.getApartmentNumber()) {
@@ -104,7 +102,7 @@ public class GasConsumptionCalculator {
 						}
 					}
 					if (!gasOld.isEmpty()) {
-						if (!gasOld.get(i).belongsToCWUMeter()) {
+						if (!gasOld.get(i).getMeter().isCwu()) {
 							if (gasOld.get(i).getMeter().getApartment() != null) {
 								if (gasOld.get(i).getMeter().getApartment().getApartmentNumber() == m
 										.getApartmentNumber()) {
@@ -118,10 +116,10 @@ public class GasConsumptionCalculator {
 			}
 			double usage = sumNew - sumPrevious;
 			tmp.setUsage(usage);
-			tmp.setUnit(gasNew.get(0).getUnit());
+//			tmp.setUnit(gasNew.get(0).getUnit());
 			if (!gasOld.isEmpty()) {
 				tmp.setDaysBetweenReadings(
-						Days.daysBetween(gasOld.get(0).getReadingDate(), gasNew.get(0).getReadingDate()).getDays());
+						Days.daysBetween(gasOld.get(0).getReadingDetails().getReadingDate(), gasNew.get(0).getReadingDetails().getReadingDate()).getDays());
 				// tmp.setDaysBetweenReadings(Days.daysBetween(new
 				// DateTime(gasOld.get(0).getReadingDate()),
 				// new DateTime(gasNew.get(0).getReadingDate())).getDays());
@@ -139,19 +137,19 @@ public class GasConsumptionCalculator {
 	 * Counts warm water usage for each apartment
 	 * 
 	 */
-	private static HashMap<Integer, Double> hotWaterUsageMap(List<ReadingWater> oldReading,
-			List<ReadingWater> newReading) {
+	private static HashMap<Integer, Double> hotWaterUsageMap(List<Reading> oldReading,
+			List<Reading> newReading) {
 		HashMap<Integer, Double> output = new HashMap<>();
-		for (ReadingWater o : newReading) {
+		for (Reading o : newReading) {
 			if (o.getMeter().getApartment() != null && o.getMeter().getApartment().getApartmentNumber() != 0) {
-				if (o.getMeter().getIsWarmWater()) {
+				if (o.getMeter().isWarmWater()) {
 					output.put(o.getMeter().getApartment().getApartmentNumber(), o.getValue());
 				}
 			}
 		}
-		for (ReadingWater o : oldReading) {
+		for (Reading o : oldReading) {
 			if (o.getMeter().getApartment() != null && o.getMeter().getApartment().getApartmentNumber() != 0) {
-				if (o.getMeter().getIsWarmWater()) {
+				if (o.getMeter().isWarmWater()) {
 					double consumption = output.get(o.getMeter().getApartment().getApartmentNumber());
 					consumption = consumption - o.getValue();
 					output.put(o.getMeter().getApartment().getApartmentNumber(), consumption);
@@ -161,15 +159,15 @@ public class GasConsumptionCalculator {
 		return output;
 	}
 
-	private static double sumCWU(List<ReadingGas> gasOld, List<ReadingGas> gasNew) {
+	private static double sumCWU(List<Reading> gasOld, List<Reading> gasNew) {
 		double out = 0;
-		for (ReadingGas w : gasNew) {
-			if (w.belongsToCWUMeter())
+		for (Reading w : gasNew) {
+			if (w.getMeter().isCwu())
 				out += w.getValue();
 		}
 
-		for (ReadingGas w : gasOld) {
-			if (w.belongsToCWUMeter())
+		for (Reading w : gasOld) {
+			if (w.getMeter().isCwu())
 				out -= w.getValue();
 		}
 		return out;
