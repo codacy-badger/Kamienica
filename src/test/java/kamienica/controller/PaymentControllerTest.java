@@ -33,7 +33,7 @@
 //import kamienica.feature.payment.IPaymentService;
 //import kamienica.model.ReadingEnergy;
 //import kamienica.model.ReadingGas;
-//import kamienica.feature.reading.IReadingService;
+//import kamienica.feature.reading.readingService;
 //import kamienica.model.ReadingWater;
 //import kamienica.model.entity.Tenant;
 //import kamienica.feature.tenant.ITenantService;
@@ -52,9 +52,9 @@
 //	@Mock
 //	private IDivisionService divisionService;
 //	@Mock
-//	private IReadingService IReadingService;
+//	private readingService readingService;
 //	@Mock
-//	private IPaymentService IPaymentService;
+//	private paymentService paymentService;
 //
 //	@Mock
 //	MessageSource message;

@@ -2,6 +2,7 @@ package kamienica.testutils;
 
 import kamienica.model.entity.*;
 import kamienica.model.enums.Media;
+import kamienica.model.enums.Resolvement;
 import kamienica.model.enums.Status;
 import kamienica.model.enums.UserRole;
 import org.joda.time.LocalDate;
@@ -124,116 +125,116 @@ public class EntityProvider {
         return metersWater;
     }
 
+    //LocalDate readingDate, Resolvement resolvement, Media media
     private static List<ReadingDetails> createReadingDetailsWater() {
         List<ReadingDetails> details = new ArrayList<>();
+        details.add(new ReadingDetails(FEBRUARY, Resolvement.UNRESOLVED, Media.WATER));
+        details.add(new ReadingDetails(MARCH, Resolvement.UNRESOLVED, Media.WATER));
         return details;
     }
 
     private static List<ReadingDetails> createReadingDetailsGas() {
         List<ReadingDetails> details = new ArrayList<>();
+        details.add(new ReadingDetails(FEBRUARY, Resolvement.UNRESOLVED, Media.GAS));
+        details.add(new ReadingDetails(MARCH, Resolvement.UNRESOLVED, Media.GAS));
         return details;
     }
 
     private static List<ReadingDetails> createReadingDetailsEnergy() {
         List<ReadingDetails> details = new ArrayList<>();
+        details.add(new ReadingDetails(FEBRUARY, Resolvement.UNRESOLVED, Media.ENERGY));
+        details.add(new ReadingDetails(MARCH, Resolvement.UNRESOLVED, Media.ENERGY));
         return details;
     }
 
-
     private static List<Reading> getReadingsGasOld() {
         List<Reading> readingsGasOld = new ArrayList<>();
-        readingsGasOld.add(new Reading(FEBRUARY, 73, METERS_GAS.get(0)));
-        readingsGasOld.add(new Reading(FEBRUARY, 10, METERS_GAS.get(1)));
-        readingsGasOld.add(new Reading(FEBRUARY, 12, METERS_GAS.get(2)));
-        readingsGasOld.add(new Reading(FEBRUARY, 10, METERS_GAS.get(3)));
-        readingsGasOld.add(new Reading(FEBRUARY, 18, METERS_GAS.get(4)));
-        readingsGasOld.add(new Reading(FEBRUARY, 11, METERS_GAS.get(5)));
-        readingsGasOld.add(new Reading(FEBRUARY, 12, METERS_GAS.get(6)));
+        readingsGasOld.add(new Reading(GAS_READING_DETAILS.get(0), 73, RESIDENCE, METERS_GAS.get(0)));
+        readingsGasOld.add(new Reading(GAS_READING_DETAILS.get(0), 10, RESIDENCE, METERS_GAS.get(1)));
+        readingsGasOld.add(new Reading(GAS_READING_DETAILS.get(0), 12, RESIDENCE, METERS_GAS.get(2)));
+        readingsGasOld.add(new Reading(GAS_READING_DETAILS.get(0), 10, RESIDENCE, METERS_GAS.get(3)));
+        readingsGasOld.add(new Reading(GAS_READING_DETAILS.get(0), 18, RESIDENCE, METERS_GAS.get(4)));
+        readingsGasOld.add(new Reading(GAS_READING_DETAILS.get(0), 11, RESIDENCE, METERS_GAS.get(5)));
+        readingsGasOld.add(new Reading(GAS_READING_DETAILS.get(0), 12, RESIDENCE, METERS_GAS.get(6)));
         return readingsGasOld;
     }
 
     private static List<Reading> getReadingsGasNew() {
         List<Reading> readingsGasNew = new ArrayList<>();
-        readingsGasNew.add(new Reading(MARCH, 100, METERS_GAS.get(0)));
-        readingsGasNew.add(new Reading(MARCH, 15, METERS_GAS.get(1)));
-        readingsGasNew.add(new Reading(MARCH, 15, METERS_GAS.get(2)));
-        readingsGasNew.add(new Reading(MARCH, 20, METERS_GAS.get(3)));
-        readingsGasNew.add(new Reading(MARCH, 20, METERS_GAS.get(4)));
-        readingsGasNew.add(new Reading(MARCH, 15, METERS_GAS.get(5)));
-        readingsGasNew.add(new Reading(MARCH, 15, METERS_GAS.get(6)));
+        readingsGasNew.add(new Reading(GAS_READING_DETAILS.get(1), 100, RESIDENCE, METERS_GAS.get(0)));
+        readingsGasNew.add(new Reading(GAS_READING_DETAILS.get(1), 15, RESIDENCE, METERS_GAS.get(1)));
+        readingsGasNew.add(new Reading(GAS_READING_DETAILS.get(1), 15, RESIDENCE, METERS_GAS.get(2)));
+        readingsGasNew.add(new Reading(GAS_READING_DETAILS.get(1), 20, RESIDENCE, METERS_GAS.get(3)));
+        readingsGasNew.add(new Reading(GAS_READING_DETAILS.get(1), 20, RESIDENCE, METERS_GAS.get(4)));
+        readingsGasNew.add(new Reading(GAS_READING_DETAILS.get(1), 15, RESIDENCE, METERS_GAS.get(5)));
+        readingsGasNew.add(new Reading(GAS_READING_DETAILS.get(1), 15, RESIDENCE, METERS_GAS.get(6)));
         return readingsGasNew;
     }
 
-
     private static List<Reading> getReadingsEnergyOld() {
         List<Reading> readingsEnergyOld = new ArrayList<>();
-        readingsEnergyOld.add(new Reading(FEBRUARY, 5, METERS_ENERGY.get(0)));
-        readingsEnergyOld.add(new Reading(FEBRUARY, 5, METERS_ENERGY.get(1)));
-        readingsEnergyOld.add(new Reading(FEBRUARY, 10, METERS_ENERGY.get(2)));
-        readingsEnergyOld.add(new Reading(FEBRUARY, 15, METERS_ENERGY.get(3)));
-        readingsEnergyOld.add(new Reading(FEBRUARY, 35, METERS_ENERGY.get(4)));
+        readingsEnergyOld.add(new Reading(ENERGY_READING_DETAILS.get(0), 5, RESIDENCE, METERS_ENERGY.get(0)));
+        readingsEnergyOld.add(new Reading(ENERGY_READING_DETAILS.get(0), 5, RESIDENCE, METERS_ENERGY.get(1)));
+        readingsEnergyOld.add(new Reading(ENERGY_READING_DETAILS.get(0), 10, RESIDENCE, METERS_ENERGY.get(2)));
+        readingsEnergyOld.add(new Reading(ENERGY_READING_DETAILS.get(0), 15, RESIDENCE, METERS_ENERGY.get(3)));
+        readingsEnergyOld.add(new Reading(ENERGY_READING_DETAILS.get(0), 35, RESIDENCE, METERS_ENERGY.get(4)));
         return readingsEnergyOld;
     }
 
     private static List<Reading> getReadingsEnergyNew() {
         List<Reading> readingsEnergyNew = new ArrayList<>();
-        readingsEnergyNew.add(new Reading(MARCH, 15, METERS_ENERGY.get(0)));
-        readingsEnergyNew.add(new Reading(MARCH, 10, METERS_ENERGY.get(1)));
-        readingsEnergyNew.add(new Reading(MARCH, 25, METERS_ENERGY.get(2)));
-        readingsEnergyNew.add(new Reading(MARCH, 20, METERS_ENERGY.get(3)));
-        readingsEnergyNew.add(new Reading(MARCH, 70, METERS_ENERGY.get(4)));
+        readingsEnergyNew.add(new Reading(ENERGY_READING_DETAILS.get(1), 15, RESIDENCE, METERS_ENERGY.get(0)));
+        readingsEnergyNew.add(new Reading(ENERGY_READING_DETAILS.get(1), 10, RESIDENCE, METERS_ENERGY.get(1)));
+        readingsEnergyNew.add(new Reading(ENERGY_READING_DETAILS.get(1), 25, RESIDENCE, METERS_ENERGY.get(2)));
+        readingsEnergyNew.add(new Reading(ENERGY_READING_DETAILS.get(1), 20, RESIDENCE, METERS_ENERGY.get(3)));
+        readingsEnergyNew.add(new Reading(ENERGY_READING_DETAILS.get(1), 70, RESIDENCE, METERS_ENERGY.get(4)));
         return readingsEnergyNew;
     }
 
     private static List<Reading> getReadingsEnergyNewForMinusResult() {
         List<Reading> readingsEnergyNew = new ArrayList<>();
-        readingsEnergyNew.add(new Reading(MARCH, 1, METERS_ENERGY.get(0)));
-        readingsEnergyNew.add(new Reading(MARCH, 1, METERS_ENERGY.get(1)));
-        readingsEnergyNew.add(new Reading(MARCH, 2, METERS_ENERGY.get(2)));
-        readingsEnergyNew.add(new Reading(MARCH, 2, METERS_ENERGY.get(3)));
-        readingsEnergyNew.add(new Reading(MARCH, 7, METERS_ENERGY.get(4)));
+        readingsEnergyNew.add(new Reading(ENERGY_READING_DETAILS.get(1), 1, RESIDENCE, METERS_ENERGY.get(0)));
+        readingsEnergyNew.add(new Reading(ENERGY_READING_DETAILS.get(1), 1, RESIDENCE, METERS_ENERGY.get(1)));
+        readingsEnergyNew.add(new Reading(ENERGY_READING_DETAILS.get(1), 2, RESIDENCE, METERS_ENERGY.get(2)));
+        readingsEnergyNew.add(new Reading(ENERGY_READING_DETAILS.get(1), 2, RESIDENCE, METERS_ENERGY.get(3)));
+        readingsEnergyNew.add(new Reading(ENERGY_READING_DETAILS.get(1), 7, RESIDENCE, METERS_ENERGY.get(4)));
         return readingsEnergyNew;
     }
 
-
-    //--------------------------------------WATER--------------------------
-
-
     private static List<Reading> getReadingsWaterOld() {
         List<Reading> readings = new ArrayList<>();
-        readings.add(new Reading(FEBRUARY, 80, METERS_WATER.get(0)));
-        readings.add(new Reading(FEBRUARY, 10, METERS_WATER.get(1)));
-        readings.add(new Reading(FEBRUARY, 10, METERS_WATER.get(2)));
-        readings.add(new Reading(FEBRUARY, 15, METERS_WATER.get(3)));
-        readings.add(new Reading(FEBRUARY, 15, METERS_WATER.get(4)));
-        readings.add(new Reading(FEBRUARY, 12, METERS_WATER.get(5)));
-        readings.add(new Reading(FEBRUARY, 12, METERS_WATER.get(6)));
+        readings.add(new Reading(WATER_READING_DETAILS.get(0), 80, RESIDENCE, METERS_WATER.get(0)));
+        readings.add(new Reading(WATER_READING_DETAILS.get(0), 10, RESIDENCE, METERS_WATER.get(1)));
+        readings.add(new Reading(WATER_READING_DETAILS.get(0), 10, RESIDENCE, METERS_WATER.get(2)));
+        readings.add(new Reading(WATER_READING_DETAILS.get(0), 15, RESIDENCE, METERS_WATER.get(3)));
+        readings.add(new Reading(WATER_READING_DETAILS.get(0), 15, RESIDENCE, METERS_WATER.get(4)));
+        readings.add(new Reading(WATER_READING_DETAILS.get(0), 12, RESIDENCE, METERS_WATER.get(5)));
+        readings.add(new Reading(WATER_READING_DETAILS.get(0), 12, RESIDENCE, METERS_WATER.get(6)));
         return readings;
     }
 
     private static List<Reading> getReadingsWaterNew() {
         List<Reading> readings = new ArrayList<>();
-        readings.add(new Reading(MARCH, 100, METERS_WATER.get(0)));
-        readings.add(new Reading(MARCH, 11, METERS_WATER.get(1)));
-        readings.add(new Reading(MARCH, 11, METERS_WATER.get(2)));
-        readings.add(new Reading(MARCH, 20, METERS_WATER.get(3)));
-        readings.add(new Reading(MARCH, 20, METERS_WATER.get(4)));
-        readings.add(new Reading(MARCH, 15, METERS_WATER.get(5)));
-        readings.add(new Reading(MARCH, 15, METERS_WATER.get(6)));
+        readings.add(new Reading(WATER_READING_DETAILS.get(1), 100, RESIDENCE, METERS_WATER.get(0)));
+        readings.add(new Reading(WATER_READING_DETAILS.get(1), 11, RESIDENCE, METERS_WATER.get(1)));
+        readings.add(new Reading(WATER_READING_DETAILS.get(1), 11, RESIDENCE, METERS_WATER.get(2)));
+        readings.add(new Reading(WATER_READING_DETAILS.get(1), 20, RESIDENCE, METERS_WATER.get(3)));
+        readings.add(new Reading(WATER_READING_DETAILS.get(1), 20, RESIDENCE, METERS_WATER.get(4)));
+        readings.add(new Reading(WATER_READING_DETAILS.get(1), 15, RESIDENCE, METERS_WATER.get(5)));
+        readings.add(new Reading(WATER_READING_DETAILS.get(1), 15, RESIDENCE, METERS_WATER.get(6)));
         return readings;
     }
 
-
     private static Invoice getInvoiceEnergy(List<Reading> newReadings) {
-        return new Invoice("23424", new LocalDate(), 150, RESIDENCE, newReadings.get(0).getReadingDetails());
+        return new Invoice("23424", new LocalDate(), 150, RESIDENCE, newReadings.get(0).getReadingDetails(), Media.ENERGY);
     }
 
     private static Invoice getInvoiceWater(List<Reading> newReadings) {
-        return new Invoice("23424", new LocalDate(), 200, RESIDENCE, newReadings.get(0).getReadingDetails());
+        return new Invoice("23424", new LocalDate(), 200, RESIDENCE, newReadings.get(0).getReadingDetails(), Media.WATER);
     }
 
     private static Invoice getInvoiceGas(List<Reading> newReadings) {
-        return new Invoice("23424", new LocalDate(), 300, RESIDENCE, newReadings.get(0).getReadingDetails());
+        return new Invoice("23424", new LocalDate(), 300, RESIDENCE, newReadings.get(0).getReadingDetails(), Media.GAS);
     }
 
     private static Residence createResidence() {

@@ -39,7 +39,7 @@ public class MeterService implements IMeterService {
     }
 
     @Override
-    public void update(Meter meter, Media media) {
+    public void update(Meter meter) {
         meter.setMain(meter.getApartment() == null);
 
         meterDao.update(meter);

@@ -1,10 +1,12 @@
 package kamienica.service;
 
 import kamienica.configuration.ServiceTest;
+import kamienica.model.entity.Meter;
 import kamienica.model.enums.Media;
 import kamienica.core.util.SecurityDetails;
 import kamienica.model.entity.Residence;
 import kamienica.model.entity.Tenant;
+import kamienica.model.enums.Status;
 import org.joda.time.LocalDate;
 import org.junit.Test;
 import org.springframework.transaction.annotation.Transactional;
@@ -26,14 +28,14 @@ public class MeterWaterServiceTest extends ServiceTest {
         when(SecurityDetails.getLoggedTenant()).thenReturn(t);
         when(SecurityDetails.getResidencesForOwner()).thenReturn(residences);
 
-        List<MeterWater> list = meterService.getListForOwner(Media.WATER);
+        List<Meter> list = meterService.getListForOwner(Media.WATER);
         assertEquals(7, list.size());
 
     }
 
     @Test
     public void getList() {
-        List<MeterWater> list = meterService.list(Media.WATER);
+        List<Meter> list = meterService.list(Media.WATER);
         assertEquals(8, list.size());
     }
 
@@ -47,8 +49,8 @@ public class MeterWaterServiceTest extends ServiceTest {
     @Transactional
     public void delete() {
         meterService.delete(5L, Media.WATER);
-        final MeterWater deleted = meterService.getById(5L, Media.WATER);
-        assertEquals(TODAY, deleted.getDeactivation());
+        final Meter deleted = meterService.getById(5L, Media.WATER);
+        assertEquals(Status.INACTIVE, deleted.getStatus());
     }
 
     @Transactional
@@ -56,9 +58,9 @@ public class MeterWaterServiceTest extends ServiceTest {
     public void getActiveMeters() {
         final Residence r = residenceService.getById(1L);
         assertEquals(7, meterService.getIdListForActiveMeters(r, Media.WATER).size());
-        MeterWater meter = meterService.getById(4L, Media.WATER);
-        meter.setDeactivation(LocalDate.now().minusDays(1));
-        meterService.update(meter, Media.WATER);
+        Meter meter = meterService.getById(4L, Media.WATER);
+        meter.setStatus(Status.INACTIVE);
+        meterService.update(meter);
 
         assertEquals(6, meterService.getIdListForActiveMeters(r, Media.WATER).size());
 

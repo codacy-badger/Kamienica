@@ -59,6 +59,19 @@ public class Meter {
         this.media = media;
     }
 
+    public Meter(String description, String serialNumber, String unit, Apartment apartment, Media media) {
+        this.description = description;
+        this.serialNumber = serialNumber;
+        this.unit = unit;
+        this.apartment = apartment;
+        this.residence = apartment.getResidence();
+        this.main = false;
+        this.status = Status.ACTIVE;
+        this.cwu = false;
+        this.isWarmWater = false;
+        this.media = media;
+    }
+
     public Long getId() {
         return id;
     }

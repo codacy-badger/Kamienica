@@ -1,9 +1,11 @@
 package kamienica.service;
 
 import kamienica.configuration.ServiceTest;
+import kamienica.model.entity.Meter;
 import kamienica.model.enums.Media;
 import kamienica.core.util.SecurityDetails;
 import kamienica.model.entity.Residence;
+import kamienica.model.enums.Status;
 import org.joda.time.LocalDate;
 import org.junit.Test;
 import org.springframework.transaction.annotation.Transactional;
@@ -23,13 +25,13 @@ public class MeterEnergyServiceTest extends ServiceTest {
         mockStatic(SecurityDetails.class);
         when(SecurityDetails.getResidencesForOwner()).thenReturn(residences);
         when(SecurityDetails.getResidencesForOwner()).thenReturn(residences);
-        List<MeterEnergy> list = meterService.getListForOwner(Media.ENERGY);
+        List<Meter> list = meterService.getListForOwner(Media.ENERGY);
         assertEquals(5, list.size());
     }
 
     @Test
     public void getList() {
-        List<MeterEnergy> list = meterService.list(Media.ENERGY);
+        List<Meter> list = meterService.list(Media.ENERGY);
         assertEquals(6, list.size());
     }
 
@@ -38,9 +40,9 @@ public class MeterEnergyServiceTest extends ServiceTest {
     public void getActiveMeters() {
         final Residence r = residenceService.getById(1L);
         assertEquals(5, meterService.getIdListForActiveMeters(r, Media.ENERGY).size());
-        MeterEnergy meter = meterService.getById(4L, Media.ENERGY);
-        meter.setDeactivation(LocalDate.now().minusDays(1));
-        meterService.update(meter, Media.ENERGY);
+        Meter meter = meterService.getById(4L, Media.ENERGY);
+        meter.setStatus(Status.INACTIVE);
+        meterService.update(meter);
 
         assertEquals(4, meterService.getIdListForActiveMeters(r, Media.ENERGY).size());
 
@@ -48,7 +50,7 @@ public class MeterEnergyServiceTest extends ServiceTest {
 
     @Test
     public void getById() {
-        MeterEnergy meter = meterService.getById(3L, Media.ENERGY);
+        Meter meter = meterService.getById(3L, Media.ENERGY);
         assertEquals("Piwnica", meter.getDescription());
         assertEquals(1, meter.getApartment().getApartmentNumber());
 
@@ -57,7 +59,7 @@ public class MeterEnergyServiceTest extends ServiceTest {
     @Transactional
     @Test
     public void add() {
-        MeterEnergy meter = createDummyMeter();
+        Meter meter = createDummyMeter();
         meterService.save(meter, Media.ENERGY);
         assertEquals(7, meterService.getIdList(Media.ENERGY).size());
     }
@@ -68,7 +70,7 @@ public class MeterEnergyServiceTest extends ServiceTest {
         mockStatic(SecurityDetails.class);
         List<Residence> residences = getMockedResidences();
         when(SecurityDetails.getResidencesForOwner()).thenReturn(residences);
-        MeterEnergy meter = createDummyMeter();
+        Meter meter = createDummyMeter();
         meterService.save(meter, Media.ENERGY);
         assertEquals(6, meterService.getListForOwner(Media.ENERGY).size());
         meterService.delete(6L, Media.ENERGY);
@@ -88,21 +90,23 @@ public class MeterEnergyServiceTest extends ServiceTest {
     @Transactional
     public void delete() {
         meterService.delete(5L, Media.ENERGY);
-        final MeterEnergy deleted = meterService.getById(5L, Media.ENERGY);
-        assertEquals(TODAY, deleted.getDeactivation());
+        final Meter deleted = meterService.getById(5L, Media.ENERGY);
+        assertEquals(Status.INACTIVE, deleted.getStatus());
     }
 
     @Test
     public void update() {
-        MeterEnergy meter = meterService.getById(4L, Media.ENERGY);
+        Meter meter = meterService.getById(4L, Media.ENERGY);
         meter.setDescription("uPdate");
-        meterService.update(meter, Media.ENERGY);
+        meterService.update(meter);
         meter = meterService.getById(4L, Media.ENERGY);
         assertEquals("uPdate", meter.getDescription());
     }
 
-    private MeterEnergy createDummyMeter() {
-        MeterEnergy m =  new MeterEnergy("test", "test", "test", meterService.getById(3L, Media.ENERGY).getApartment());
+    private Meter createDummyMeter() {
+        final Residence r = residenceService.getById(RESIDENCE_ID);
+        //String description, String serialNumber, String unit, Apartment apartment, Residence residence, boolean main, Status status, boolean cwu, boolean isWarmWater, Media media
+        Meter m = new Meter("test", "test", "test", meterService.getById(3L, Media.ENERGY).getApartment(), r, false, Status.ACTIVE, false, false, Media.ENERGY);
         m.setResidence(residenceService.getById(1L));
         return m;
     }

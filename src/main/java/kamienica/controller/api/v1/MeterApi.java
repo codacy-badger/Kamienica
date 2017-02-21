@@ -71,7 +71,7 @@ public class MeterApi extends AbstractApi {
             return new ResponseEntity<>(message, HttpStatus.UNPROCESSABLE_ENTITY);
         }
         try {
-            service.update(meter, media);
+            service.update(meter);
         } catch (ConstraintViolationException e) {
             result.rejectValue("serialNumber", "error.serialNumber", DUPLICATE_VALUE);
             final Map<String, String> test = new HashMap<>();

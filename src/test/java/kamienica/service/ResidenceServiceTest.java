@@ -1,12 +1,9 @@
 package kamienica.service;
 
 import kamienica.configuration.ServiceTest;
+import kamienica.model.entity.*;
 import kamienica.model.enums.Media;
 import kamienica.core.util.SecurityDetails;
-import kamienica.model.entity.Apartment;
-import kamienica.model.entity.Residence;
-import kamienica.model.entity.ResidenceOwnership;
-import kamienica.model.entity.Tenant;
 import org.hibernate.exception.ConstraintViolationException;
 import org.junit.Ignore;
 import org.junit.Test;
@@ -43,7 +40,7 @@ public class ResidenceServiceTest extends ServiceTest {
         final List<Apartment> ap = apartmentService.list();
         assertEquals(6, ap.size());
 
-        final List<MeterEnergy> meterEnergies = meterService.getListForOwner(Media.ENERGY);
+        final List<Meter> meterEnergies = meterService.getListForOwner(Media.ENERGY);
         assertEquals(5, meterEnergies.size());
 
     }

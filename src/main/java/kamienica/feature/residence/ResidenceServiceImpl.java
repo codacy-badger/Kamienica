@@ -49,9 +49,9 @@ public class ResidenceServiceImpl implements ResidenceService {
     private void saveEssentialData(Residence residence) {
         final Apartment ap = new Apartment(residence, 0, "0000", "Część Wpólna");
         apartmentDao.save(ap);
-        final Meter mw = new Meter("Licznik Główny Wody", "N/A", "m3", ap, residence, true, Status.ACTIVE, false, false, Media.WATER);
-        final Meter mg = new Meter("Licznik Główny Gazu", "N/A", "m3", ap, residence, true, Status.ACTIVE, false, false, Media.GAS);
-        final Meter me = new Meter("Licznik Główny Energii", "N/A", "m3", ap, residence, true, Status.ACTIVE, false, false, Media.ENERGY);
+        final Meter mw = new Meter("Licznik Główny Wody", "GW", "m3", ap, residence, true, Status.ACTIVE, false, false, Media.WATER);
+        final Meter mg = new Meter("Licznik Główny Gazu", "GG", "m3", ap, residence, true, Status.ACTIVE, false, false, Media.GAS);
+        final Meter me = new Meter("Licznik Główny Energii", "GE", "m3", ap, residence, true, Status.ACTIVE, false, false, Media.ENERGY);
         meterDao.save(me);
         meterDao.save(mg);
         meterDao.save(mw);

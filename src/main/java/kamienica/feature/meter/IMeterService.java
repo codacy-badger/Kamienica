@@ -11,7 +11,7 @@ public interface IMeterService {
 
 	void save(Meter meter, Media media);
 
-	void update(Meter meter, Media media);
+	void update(Meter meter);
 
 	void delete(Long id, Media media);
 

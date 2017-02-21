@@ -47,11 +47,11 @@ public abstract class ServiceTest {
     @Autowired
     protected IDivisionService divisionService;
     @Autowired
-    protected IPaymentService IPaymentService;
+    protected IPaymentService paymentService;
     @Autowired
     protected IInvoiceService invoiceService;
     @Autowired
-    protected IReadingService IReadingService;
+    protected IReadingService readingService;
     @Autowired
     protected IMeterService meterService;
     @Autowired
@@ -70,7 +70,7 @@ public abstract class ServiceTest {
 
     protected static final LocalDate TODAY = new LocalDate();
     protected final static String FIRST_OWNER_MAIL = "owner@res1";
-
+    protected final static Long RES_1_OWNER_ID = 1L;
 
     @BeforeClass
     public static void init() throws SQLException {

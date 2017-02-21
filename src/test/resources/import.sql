@@ -33,29 +33,29 @@ INSERT INTO  division  ( id , date , divisionValue , apartment_id , tenant_id ) 
 INSERT INTO  division  ( id , date , divisionValue , apartment_id , tenant_id ) VALUES (13,'2016-07-01',1,3,4);
 INSERT INTO  division  ( id , date , divisionValue , apartment_id , tenant_id ) VALUES (14,'2016-07-01',0,4,4);
 
-INSERT INTO  meterenergy  ( id , deactivation , description , main , serialNumber , unit , apartment_id, residence_id) VALUES (1,'2600-01-01','Główny',1,'0','kWh',NULL, 1);
-INSERT INTO  meterenergy  ( id , deactivation , description , main , serialNumber , unit , apartment_id, residence_id ) VALUES (2,'2600-01-01','Czesc Wspolna',0,'00','kWh',1, 1);
-INSERT INTO  meterenergy  ( id , deactivation , description , main , serialNumber , unit , apartment_id, residence_id ) VALUES (3,'2600-01-01','Piwnica',0,'1','kWh',2, 1);
-INSERT INTO  meterenergy  ( id , deactivation , description , main , serialNumber , unit , apartment_id, residence_id ) VALUES (4,'2600-01-01','Parter',0,'2','kWh',3, 1);
-INSERT INTO  meterenergy  ( id , deactivation , description , main , serialNumber , unit , apartment_id, residence_id ) VALUES (5,'2600-01-01','I pietro',0,'3','kWh',4, 1);
-INSERT INTO  meterenergy  ( id , deactivation , description , main , serialNumber , unit , apartment_id, residence_id ) VALUES (6,'2600-01-01','2res',0,'53','kWh',5, 2);
+INSERT INTO  meterenergy  ( id , status , description , main , serialNumber , unit , apartment_id, residence_id) VALUES (1,'ACTIVE','Główny',1,'0','kWh',NULL, 1);
+INSERT INTO  meterenergy  ( id , status , description , main , serialNumber , unit , apartment_id, residence_id ) VALUES (2,'ACTIVE','Czesc Wspolna',0,'00','kWh',1, 1);
+INSERT INTO  meterenergy  ( id , status , description , main , serialNumber , unit , apartment_id, residence_id ) VALUES (3,'ACTIVE','Piwnica',0,'1','kWh',2, 1);
+INSERT INTO  meterenergy  ( id , status , description , main , serialNumber , unit , apartment_id, residence_id ) VALUES (4,'ACTIVE','Parter',0,'2','kWh',3, 1);
+INSERT INTO  meterenergy  ( id , status , description , main , serialNumber , unit , apartment_id, residence_id ) VALUES (5,'ACTIVE','I pietro',0,'3','kWh',4, 1);
+INSERT INTO  meterenergy  ( id , status , description , main , serialNumber , unit , apartment_id, residence_id ) VALUES (6,'ACTIVE','2res',0,'53','kWh',5, 2);
 
-INSERT INTO  meterwater  ( id , deactivation , description , main , serialNumber , unit , isWarmWater , apartment_id, residence_id ) VALUES (1,'2600-01-01','G?ówny',1,'00','m3','0',NULL, 1);
-INSERT INTO  meterwater  ( id , deactivation , description , main , serialNumber , unit , isWarmWater , apartment_id, residence_id ) VALUES (2,'2600-01-01','Piwnica',0,'1','m3','0',2, 1);
-INSERT INTO  meterwater  ( id , deactivation , description , main , serialNumber , unit , isWarmWater , apartment_id, residence_id ) VALUES (3,'2600-01-01','Piwnica ciepla',0,'11','m3','1',2, 1);
-INSERT INTO  meterwater  ( id , deactivation , description , main , serialNumber , unit , isWarmWater , apartment_id, residence_id ) VALUES (4,'2600-01-01','Parter zimna',0,'22','m3','0',3, 1);
-INSERT INTO  meterwater  ( id , deactivation , description , main , serialNumber , unit , isWarmWater , apartment_id, residence_id ) VALUES (5,'2600-01-01','Parter ciepla',0,'1111','m3','1',3, 1);
-INSERT INTO  meterwater  ( id , deactivation , description , main , serialNumber , unit , isWarmWater , apartment_id, residence_id ) VALUES (6,'2600-01-01','I pietro zimna',0,'3','m3','0',4, 1);
-INSERT INTO  meterwater  ( id , deactivation , description , main , serialNumber , unit , isWarmWater , apartment_id, residence_id ) VALUES (7,'2600-01-01','I pietro ciepla',0,'34','m3','1',4, 1);
-INSERT INTO  meterwater  ( id , deactivation , description , main , serialNumber , unit , isWarmWater , apartment_id, residence_id ) VALUES (8,'2600-01-01','2res',0,'53','m3','1',5, 2);
+INSERT INTO  meterwater  ( id , status , description , main , serialNumber , unit , isWarmWater , apartment_id, residence_id ) VALUES (1,'ACTIVE','G?ówny',1,'00','m3','0',NULL, 1);
+INSERT INTO  meterwater  ( id , status , description , main , serialNumber , unit , isWarmWater , apartment_id, residence_id ) VALUES (2,'ACTIVE','Piwnica',0,'1','m3','0',2, 1);
+INSERT INTO  meterwater  ( id , status , description , main , serialNumber , unit , isWarmWater , apartment_id, residence_id ) VALUES (3,'ACTIVE','Piwnica ciepla',0,'11','m3','1',2, 1);
+INSERT INTO  meterwater  ( id , status , description , main , serialNumber , unit , isWarmWater , apartment_id, residence_id ) VALUES (4,'ACTIVE','Parter zimna',0,'22','m3','0',3, 1);
+INSERT INTO  meterwater  ( id , status , description , main , serialNumber , unit , isWarmWater , apartment_id, residence_id ) VALUES (5,'ACTIVE','Parter ciepla',0,'1111','m3','1',3, 1);
+INSERT INTO  meterwater  ( id , status , description , main , serialNumber , unit , isWarmWater , apartment_id, residence_id ) VALUES (6,'ACTIVE','I pietro zimna',0,'3','m3','0',4, 1);
+INSERT INTO  meterwater  ( id , status , description , main , serialNumber , unit , isWarmWater , apartment_id, residence_id ) VALUES (7,'ACTIVE','I pietro ciepla',0,'34','m3','1',4, 1);
+INSERT INTO  meterwater  ( id , status , description , main , serialNumber , unit , isWarmWater , apartment_id, residence_id ) VALUES (8,'ACTIVE','2res',0,'53','m3','1',5, 2);
 
-INSERT INTO  metergas  ( id , deactivation , description , main , serialNumber , unit , cwu , apartment_id, residence_id ) VALUES (1,'2600-01-01','Główny',1,'00','m3','0',NULL, 1);
-INSERT INTO  metergas  ( id , deactivation , description , main , serialNumber , unit , cwu , apartment_id, residence_id ) VALUES (2,'2600-01-01','Ogrzewanie',0,'0000','m3','0',1, 1);
-INSERT INTO  metergas  ( id , deactivation , description , main , serialNumber , unit , cwu , apartment_id, residence_id ) VALUES (3,'2600-01-01','Piwnica',0,'1','m3','0',2, 1);
-INSERT INTO  metergas  ( id , deactivation , description , main , serialNumber , unit , cwu , apartment_id, residence_id ) VALUES (4,'2600-01-01','Parter',0,'2','m3','0',3, 1);
-INSERT INTO  metergas  ( id , deactivation , description , main , serialNumber , unit , cwu , apartment_id, residence_id ) VALUES (5,'2600-01-01','I pietro',0,'3','m3','0',4, 1);
-INSERT INTO  metergas  ( id , deactivation , description , main , serialNumber , unit , cwu , apartment_id, residence_id ) VALUES (6,'2600-01-01','CWU',0,'000000','m3','1',1, 1);
-INSERT INTO  metergas  ( id , deactivation , description , main , serialNumber , unit , cwu , apartment_id, residence_id ) VALUES (7,'2600-01-01','2res',0,'53','kWh','0',5, 2);
+INSERT INTO  metergas  ( id , status , description , main , serialNumber , unit , cwu , apartment_id, residence_id ) VALUES (1,'ACTIVE','Główny',1,'00','m3','0',NULL, 1);
+INSERT INTO  metergas  ( id , status , description , main , serialNumber , unit , cwu , apartment_id, residence_id ) VALUES (2,'ACTIVE','Ogrzewanie',0,'0000','m3','0',1, 1);
+INSERT INTO  metergas  ( id , status , description , main , serialNumber , unit , cwu , apartment_id, residence_id ) VALUES (3,'ACTIVE','Piwnica',0,'1','m3','0',2, 1);
+INSERT INTO  metergas  ( id , status , description , main , serialNumber , unit , cwu , apartment_id, residence_id ) VALUES (4,'ACTIVE','Parter',0,'2','m3','0',3, 1);
+INSERT INTO  metergas  ( id , status , description , main , serialNumber , unit , cwu , apartment_id, residence_id ) VALUES (5,'ACTIVE','I pietro',0,'3','m3','0',4, 1);
+INSERT INTO  metergas  ( id , status , description , main , serialNumber , unit , cwu , apartment_id, residence_id ) VALUES (6,'ACTIVE','CWU',0,'000000','m3','1',1, 1);
+INSERT INTO  metergas  ( id , status , description , main , serialNumber , unit , cwu , apartment_id, residence_id ) VALUES (7,'ACTIVE','2res',0,'53','kWh','0',5, 2);
 
 
 INSERT INTO  readinggas  ( id , readingDate , resolvement , value , unit , meter_id, residence_id ) VALUES (1,'2016-07-29','0',114,'m3',1, 1);

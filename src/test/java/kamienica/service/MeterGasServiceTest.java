@@ -1,9 +1,11 @@
 package kamienica.service;
 
 import kamienica.configuration.ServiceTest;
+import kamienica.model.entity.Meter;
 import kamienica.model.enums.Media;
 import kamienica.core.util.SecurityDetails;
 import kamienica.model.entity.Residence;
+import kamienica.model.enums.Status;
 import org.joda.time.LocalDate;
 import org.junit.Test;
 import org.springframework.transaction.annotation.Transactional;
@@ -27,7 +29,7 @@ public class MeterGasServiceTest extends ServiceTest {
 
     @Test
     public void getList() {
-        List<MeterGas> list = meterService.list(Media.GAS);
+        List<Meter> list = meterService.list(Media.GAS);
         assertEquals(7, list.size());
     }
 
@@ -36,9 +38,9 @@ public class MeterGasServiceTest extends ServiceTest {
     public void getActiveMeters() {
         final Residence r = residenceService.getById(1L);
         assertEquals(6, meterService.getIdListForActiveMeters(r, Media.GAS).size());
-        MeterGas meter = meterService.getById(4L, Media.GAS);
-        meter.setDeactivation(LocalDate.now().minusDays(1));
-        meterService.update(meter, Media.GAS);
+        Meter meter = meterService.getById(4L, Media.GAS);
+        meter.setStatus(Status.INACTIVE);
+        meterService.update(meter);
 
         assertEquals(5, meterService.getIdListForActiveMeters(r, Media.GAS).size());
 
@@ -54,7 +56,7 @@ public class MeterGasServiceTest extends ServiceTest {
     @Transactional
     public void delete() {
         meterService.delete(5L, Media.GAS);
-        final MeterGas deleted = meterService.getById(5L, Media.GAS);
-        assertEquals(TODAY, deleted.getDeactivation());
+        final Meter deleted = meterService.getById(5L, Media.GAS);
+        assertEquals(Status.INACTIVE, deleted.getStatus());
     }
 }
