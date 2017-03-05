@@ -6,11 +6,11 @@ import kamienica.model.enums.Media;
 import kamienica.core.util.SecurityDetails;
 import kamienica.model.entity.Residence;
 import kamienica.model.enums.Status;
-import org.joda.time.LocalDate;
 import org.junit.Test;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Set;
 
 import static org.junit.Assert.assertEquals;
 import static org.powermock.api.mockito.PowerMockito.mockStatic;
@@ -40,18 +40,18 @@ public class MeterEnergyServiceTest extends ServiceTest {
     public void getActiveMeters() {
         final Residence r = residenceService.getById(1L);
         assertEquals(5, meterService.getIdListForActiveMeters(r, Media.ENERGY).size());
-        Meter meter = meterService.getById(4L, Media.ENERGY);
+        Meter meter = meterService.getById(4L);
         meter.setStatus(Status.INACTIVE);
         meterService.update(meter);
-
-        assertEquals(4, meterService.getIdListForActiveMeters(r, Media.ENERGY).size());
+        Set<Long> metersId = meterService.getIdListForActiveMeters(r, Media.ENERGY);
+        assertEquals(4,metersId.size());
 
     }
 
     @Test
     public void getById() {
-        Meter meter = meterService.getById(3L, Media.ENERGY);
-        assertEquals("Piwnica", meter.getDescription());
+        Meter meter = meterService.getById(3L);
+        assertEquals("E Piwnica", meter.getDescription());
         assertEquals(1, meter.getApartment().getApartmentNumber());
 
     }
@@ -60,8 +60,10 @@ public class MeterEnergyServiceTest extends ServiceTest {
     @Test
     public void add() {
         Meter meter = createDummyMeter();
-        meterService.save(meter, Media.ENERGY);
-        assertEquals(7, meterService.getIdList(Media.ENERGY).size());
+        meterService.save(meter);
+        Residence r = residenceService.getById(RESIDENCE_ID);
+        List<Meter> meters = meterService.list(r, Media.ENERGY);
+        assertEquals(6, meters.size());
     }
 
     @Test
@@ -71,11 +73,9 @@ public class MeterEnergyServiceTest extends ServiceTest {
         List<Residence> residences = getMockedResidences();
         when(SecurityDetails.getResidencesForOwner()).thenReturn(residences);
         Meter meter = createDummyMeter();
-        meterService.save(meter, Media.ENERGY);
+        meterService.save(meter);
         assertEquals(6, meterService.getListForOwner(Media.ENERGY).size());
-        meterService.delete(6L, Media.ENERGY);
-        meterService.delete(7L, Media.ENERGY);
-        meterService.delete(8L, Media.ENERGY);
+        meterService.delete(meter.getId());
         assertEquals(5, meterService.getListForOwner(Media.ENERGY).size());
 
     }
@@ -89,24 +89,24 @@ public class MeterEnergyServiceTest extends ServiceTest {
     @Test
     @Transactional
     public void delete() {
-        meterService.delete(5L, Media.ENERGY);
-        final Meter deleted = meterService.getById(5L, Media.ENERGY);
+        meterService.delete(5L);
+        final Meter deleted = meterService.getById(5L);
         assertEquals(Status.INACTIVE, deleted.getStatus());
     }
 
     @Test
     public void update() {
-        Meter meter = meterService.getById(4L, Media.ENERGY);
+        Meter meter = meterService.getById(4L);
         meter.setDescription("uPdate");
         meterService.update(meter);
-        meter = meterService.getById(4L, Media.ENERGY);
+        meter = meterService.getById(4L);
         assertEquals("uPdate", meter.getDescription());
     }
 
     private Meter createDummyMeter() {
         final Residence r = residenceService.getById(RESIDENCE_ID);
         //String description, String serialNumber, String unit, Apartment apartment, Residence residence, boolean main, Status status, boolean cwu, boolean isWarmWater, Media media
-        Meter m = new Meter("test", "test", "test", meterService.getById(3L, Media.ENERGY).getApartment(), r, false, Status.ACTIVE, false, false, Media.ENERGY);
+        Meter m = new Meter("test", "test", "test", meterService.getById(3L).getApartment(), r, false, Status.ACTIVE, false, false, Media.ENERGY);
         m.setResidence(residenceService.getById(1L));
         return m;
     }

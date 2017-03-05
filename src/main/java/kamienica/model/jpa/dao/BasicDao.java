@@ -2,6 +2,7 @@ package kamienica.model.jpa.dao;
 
 import kamienica.model.entity.Residence;
 import kamienica.model.entity.Tenant;
+import kamienica.model.enums.Media;
 import org.hibernate.criterion.Criterion;
 import org.hibernate.criterion.Order;
 
@@ -14,11 +15,15 @@ public interface BasicDao<T> {
 
     void deleteById(final Long id);
 
+    void delete(T entity);
+
     void delete(final Long id);
 
     void update(final T object);
 
     List<T> getList();
+
+    List<T> getList(Media media);
 
     List<T> findForResidence(List<Residence> res);
 
@@ -30,14 +35,18 @@ public interface BasicDao<T> {
 
     List<T> findByCriteria(final Criterion... criterion);
 
+    T findOneByCriteria(final Criterion... criterion);
+
     List<T> getBySQLQuery(final String queryString);
+
+    T getOneBySQLQuery(final String queryString);
 
     List<T> findByCriteria(final int firstResult, final int maxResults, final Order order,
                            final Criterion... criterion);
 
     T getById(final Long id);
 
-    Set<Long> getIdList();
+    Set<Long> getIdList(final Residence r, final Media media);
 
     long countByCriteria(final Criterion... criterion);
 

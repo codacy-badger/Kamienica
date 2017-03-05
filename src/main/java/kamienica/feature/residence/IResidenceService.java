@@ -5,7 +5,7 @@ import kamienica.model.entity.Tenant;
 
 import java.util.List;
 
-public interface ResidenceService {
+public interface IResidenceService {
 
     void save(Residence residence);
 

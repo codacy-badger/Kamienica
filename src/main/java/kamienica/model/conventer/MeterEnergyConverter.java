@@ -2,7 +2,6 @@ package kamienica.model.conventer;
 
 import kamienica.feature.meter.IMeterService;
 import kamienica.model.entity.Meter;
-import kamienica.model.enums.Media;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.convert.converter.Converter;
 import org.springframework.stereotype.Component;
@@ -24,7 +23,7 @@ public class MeterEnergyConverter implements Converter<Object, Meter> {
 	@Override
 	public Meter convert(Object element) {
 		Long id = Long.parseLong((String) element);
-		return service.getById(id, Media.ENERGY);
+		return service.getById(id);
 	}
 
 }

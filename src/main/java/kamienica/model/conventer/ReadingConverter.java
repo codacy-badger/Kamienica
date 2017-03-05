@@ -3,7 +3,6 @@ package kamienica.model.conventer;
 
 import kamienica.feature.reading.IReadingService;
 import kamienica.model.entity.Reading;
-import kamienica.model.enums.Media;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.convert.converter.Converter;
 import org.springframework.stereotype.Component;

@@ -148,8 +148,9 @@ public class InvoiceService implements IInvoiceService {
 
 
     private void saveWater(Invoice invoice, List<Apartment> apartments, List<Tenant> tenants, List<Division> division) {
+        final Residence r = apartments.get(0).getResidence();
         List<Reading> ReadingOld = readingService.getPreviousReading(
-                invoice.getReadingDetails().getReadingDate(), meterService.getIdList(Media.WATER));
+                invoice.getReadingDetails().getReadingDate(), meterService.list(r, Media.WATER));
 
         List<Reading> ReadingNew = readingService
                 .getByDate(invoice.getResidence(), invoice.getReadingDetails().getReadingDate(), Media.WATER);
@@ -168,9 +169,9 @@ public class InvoiceService implements IInvoiceService {
 
     private void saveGas(Invoice invoice, List<Apartment> apartments, List<Tenant> tenants, List<Division> division) {
         Settings settings = settingsDao.getList().get(0);
-
+        final Residence r = apartments.get(0).getResidence();
         List<Reading> ReadingOld = readingService.getPreviousReading(invoice.getReadingDetails().getReadingDate(),
-                meterService.getIdList(Media.GAS));
+                meterService.list(r, Media.GAS));
         List<Reading> ReadingNew = readingService.getByDate(invoice.getResidence(), invoice.getReadingDetails().getReadingDate(),
                 Media.GAS);
         List<MediaUsage> usageGas;
@@ -201,9 +202,9 @@ public class InvoiceService implements IInvoiceService {
 
     private <T extends Invoice> void saveEnergy(T invoice, List<Apartment> apartments, List<Tenant> tenants, List<Division> division) {
         final LocalDate baseReadingDate = invoice.getReadingDetails().getReadingDate();
+        final Residence r = apartments.get(0).getResidence();
 
-
-        List<Reading> ReadingOld = readingService.getPreviousReading(baseReadingDate, meterService.getIdList(Media.ENERGY));
+        List<Reading> ReadingOld = readingService.getPreviousReading(baseReadingDate, meterService.list(r, Media.ENERGY));
 
         List<Reading> ReadingNew = readingService.getByDate(invoice.getResidence(), baseReadingDate, Media.ENERGY);
 

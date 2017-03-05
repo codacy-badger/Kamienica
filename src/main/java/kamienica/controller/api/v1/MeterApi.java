@@ -50,7 +50,7 @@ public class MeterApi extends AbstractApi {
             return new ResponseEntity<>(message, HttpStatus.UNPROCESSABLE_ENTITY);
         }
         try {
-            service.save(meter, media);
+            service.save(meter);
         } catch (ConstraintViolationException e) {
             result.rejectValue("serialNumber", "error.serialNumber", DUPLICATE_VALUE);
             final Map<String, String> test = new HashMap<>();
@@ -80,14 +80,14 @@ public class MeterApi extends AbstractApi {
             }
             return new ResponseEntity<>(test, HttpStatus.CONFLICT);
         }
-        return new ResponseEntity<Meter>(meter, HttpStatus.CREATED);
+        return new ResponseEntity<>(meter, HttpStatus.CREATED);
     }
 
     @RequestMapping(value = "{media}/{id}", method = RequestMethod.DELETE)
     public ResponseEntity<Message> delete(@PathVariable("media") final Media media, @PathVariable("id") final Long id) {
         final Message message = new Message("OK", null);
         try {
-            service.delete(id, media);
+            service.delete(id);
         } catch (Exception e) {
             message.setMessage(CONSTRAINT_VIOLATION);
             message.setException(e.toString());

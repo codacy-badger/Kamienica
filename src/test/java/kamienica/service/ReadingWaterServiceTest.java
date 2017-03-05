@@ -7,6 +7,8 @@ import kamienica.model.enums.Media;
 import kamienica.model.enums.Status;
 import kamienica.model.exception.NoMainCounterException;
 import org.joda.time.LocalDate;
+import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -19,14 +21,18 @@ import static org.powermock.api.mockito.PowerMockito.when;
 
 public class ReadingWaterServiceTest extends ServiceTest {
 
-    private Set<Long> meterIdList = new HashSet<>(Arrays.asList(RESIDENCE_ID, 2L, 3L, 4L, 5L, 6L, 7L));
+    private Residence r;
+
+    @Before
+    public void fetchResidence() {
+        r = residenceService.getById(RESIDENCE_ID);
+    }
 
     @Test
     public void getLatest() throws NoMainCounterException {
         mockStatic(SecurityDetails.class);
         when(SecurityDetails.getResidencesForOwner()).thenReturn(getMockedResidences());
 
-        final Residence r = residenceService.getById(RESIDENCE_ID);
         List<Reading> list = readingService.getLatestNew(r, Media.WATER);
         assertEquals(7, list.size());
         for (Reading readingWater : list) {
@@ -39,37 +45,27 @@ public class ReadingWaterServiceTest extends ServiceTest {
     public void getLatestActiveOnly() throws NoMainCounterException {
         mockStatic(SecurityDetails.class);
         when(SecurityDetails.getResidencesForOwner()).thenReturn(getMockedResidences());
-        Meter meter = meterService.getById(3L, Media.WATER);
+        Meter meter = meterService.getById(3L);
         meter.setStatus(Status.INACTIVE);
         meterService.update(meter);
 
-        final Residence r = residenceService.getById(RESIDENCE_ID);
+        List<Reading> readings = readingService.getLatestNew(r, Media.WATER);
 
-        List<Reading> list2 = readingService.getLatestNew(r, Media.WATER);
-
-        assertEquals(6, list2.size());
-        for (Reading readingWater : list2) {
+        assertEquals(7, readings.size());
+        for (Reading readingWater : readings) {
             assertEquals(LocalDate.parse("2016-09-01"), readingWater.getReadingDetails().getReadingDate());
         }
     }
 
     @Test
     public void getListForResidence() {
-        final Residence r = residenceService.getById(RESIDENCE_ID);
         List<Reading> list = readingService.getList(r, Media.WATER);
         assertEquals(21, list.size());
     }
 
     @Test
-    public void getList() {
-        final Residence r = residenceService.getById(RESIDENCE_ID);
-        assertEquals(22, readingService.getList(r, Media.WATER).size());
-    }
-
-    @Test
     @Transactional
     public void shouldDeleteLatestList() {
-        final Residence r = residenceService.getById(RESIDENCE_ID);
         readingService.deleteLatestReadings(r, Media.WATER);
         List<Reading> list = readingService.getList(r, Media.WATER);
         assertEquals(14, list.size());
@@ -80,7 +76,8 @@ public class ReadingWaterServiceTest extends ServiceTest {
 
     @Test
     public void shouldRetrieviePreviousReadings() {
-        List<Reading> list = readingService.getPreviousReading(LocalDate.parse("2016-08-01"), meterIdList);
+        List<Meter> meters = meterService.list(r, Media.WATER);
+        List<Reading> list = readingService.getPreviousReading(LocalDate.parse("2016-08-01"), meters);
         for (Reading readingWater : list) {
             assertEquals(LocalDate.parse("2016-07-01"), readingWater.getReadingDetails().getReadingDate());
         }
@@ -89,7 +86,7 @@ public class ReadingWaterServiceTest extends ServiceTest {
     @SuppressWarnings("unchecked")
     @Test
     public void getByDate() {
-        final Residence r = residenceService.getById(RESIDENCE_ID);
+
         List<Reading> list = readingService.getByDate(r, LocalDate.parse("2016-07-01"), Media.WATER);
         for (Reading readingWater : list) {
             assertEquals(LocalDate.parse("2016-07-01"), readingWater.getReadingDetails().getReadingDate());
@@ -97,6 +94,7 @@ public class ReadingWaterServiceTest extends ServiceTest {
     }
 
     @Test
+    @Ignore("deprecated, to be removed")
     public void getUnresolved() {
         List<Reading> list = readingService.getUnresolvedReadings(Media.WATER, residenceService.getById(RESIDENCE_ID));
         assertEquals(2, list.size());
@@ -115,7 +113,7 @@ public class ReadingWaterServiceTest extends ServiceTest {
         when(SecurityDetails.getResidencesForOwner()).thenReturn(getMockedResidences());
         final Apartment ap = apartmentService.getById(2L);
         Meter meter = new Meter("test", "346767676", "unit", ap, ap.getResidence(), false, Status.ACTIVE, false, false, Media.WATER);
-        meterService.save(meter, Media.WATER);
+        meterService.save(meter);
 
         final Residence r = residenceService.getById(RESIDENCE_ID);
 
@@ -125,15 +123,16 @@ public class ReadingWaterServiceTest extends ServiceTest {
 
     @Test
     public void getById() {
-        Reading reading = readingService.getById(4L);
+        Reading reading = readingService.getById(22L);
         assertEquals(LocalDate.parse("2016-07-01"), reading.getReadingDetails().getReadingDate());
-        assertEquals(5, reading.getValue(), 0);
+        assertEquals(2, reading.getValue(), 0);
 
     }
 
     @Test
     public void getPreviousReadings() {
-        List<Reading> list = readingService.getPreviousReading(LocalDate.parse("2016-09-01"), meterIdList);
+        List<Meter> meters = meterService.list(r, Media.WATER);
+        List<Reading> list = readingService.getPreviousReading(LocalDate.parse("2016-09-01"), meters);
         assertEquals(7, list.size());
         for (Reading readingWater : list) {
             assertEquals("2016-08-01", readingWater.getReadingDetails().getReadingDate().toString());
@@ -147,21 +146,20 @@ public class ReadingWaterServiceTest extends ServiceTest {
         mockStatic(SecurityDetails.class);
         List<Residence> residences = getMockedResidences();
         when(SecurityDetails.getResidencesForOwner()).thenReturn(residences);
-        final Residence r = residenceService.getById(RESIDENCE_ID);
         List<Meter> list = meterService.getListForOwner(Media.WATER);
         List<Reading> toSave = new ArrayList<>();
-
-        final ReadingDetails details = new ReadingDetails(LocalDate.parse("2050-01-01"), Media.WATER);
+        final LocalDate dateForNewReadings = LocalDate.parse("2050-01-01");
+        final ReadingDetails details = new ReadingDetails(dateForNewReadings, Media.WATER, r);
 
         for (Meter meter : list) {
             Reading reading = new Reading(details, 800, r, meter);
             toSave.add(reading);
         }
-        readingService.save(toSave, LocalDate.parse("2050-01-01"));
+        readingService.save(toSave, details);
 
 
-        assertEquals(29, readingService.getList(r, Media.WATER).size());
-        assertEquals(LocalDate.parse("2050-01-01"), readingService.getLatestNew(r, Media.WATER).get(0).getReadingDetails().getReadingDate());
+        assertEquals(28, readingService.getList(r, Media.WATER).size());
+        assertEquals(dateForNewReadings, readingService.getLatestNew(r, Media.WATER).get(0).getReadingDetails().getReadingDate());
     }
 
 }

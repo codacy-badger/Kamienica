@@ -2,10 +2,7 @@ package kamienica.model.entity;
 
 import kamienica.model.enums.Media;
 import kamienica.model.enums.Status;
-import org.hibernate.annotations.Type;
 import org.hibernate.validator.constraints.NotEmpty;
-import org.joda.time.LocalDate;
-import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
 

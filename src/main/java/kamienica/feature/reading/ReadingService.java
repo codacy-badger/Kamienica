@@ -1,17 +1,24 @@
 package kamienica.feature.reading;
 
 import kamienica.feature.meter.IMeterDao;
+import kamienica.feature.readingdetails.IReadingDetailsDao;
+import kamienica.model.entity.Meter;
 import kamienica.model.entity.Reading;
 import kamienica.model.entity.ReadingDetails;
 import kamienica.model.entity.Residence;
 import kamienica.model.enums.Media;
 import kamienica.model.enums.Resolvement;
+import kamienica.model.enums.Status;
 import kamienica.model.exception.NoMainCounterException;
+import org.hibernate.criterion.Criterion;
+import org.hibernate.criterion.Order;
+import org.hibernate.criterion.Restrictions;
 import org.joda.time.LocalDate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -22,11 +29,13 @@ public class ReadingService implements IReadingService {
 
     private final IReadingDao readingDao;
     private final IMeterDao meterDao;
+    private final IReadingDetailsDao readingDetailsDao;
 
     @Autowired
-    public ReadingService(IReadingDao readingDao, IMeterDao meterDao) {
+    public ReadingService(IReadingDao readingDao, IMeterDao meterDao, IReadingDetailsDao readingDetailsDao) {
         this.readingDao = readingDao;
         this.meterDao = meterDao;
+        this.readingDetailsDao = readingDetailsDao;
     }
 
     @Override
@@ -42,32 +51,69 @@ public class ReadingService implements IReadingService {
      * @throws NoMainCounterException when no main meter for residence
      */
     @Override
+    @Deprecated
     public List<Reading> getLatestNew(final Residence r, final Media media) throws NoMainCounterException {
         if (!meterDao.ifMainExists()) {
             throw new NoMainCounterException();
         }
-        return latestReadings(r, media);
+        //TODO refactor this method after merging is done (issue #100)
+        final LocalDate fakeDate = new LocalDate().minusDays(100);
+        final Set<Meter> meters = new HashSet<>(meterDao.findByCriteria(Restrictions.eq("residence", r), Restrictions.eq("media", media), Restrictions.eq("status", Status.ACTIVE)));
+        final List<Reading> readings = latestEdit(r, media);
+        final ReadingDetails rd = new ReadingDetails(fakeDate, Resolvement.UNRESOLVED, Media.ENERGY);
+        // if this the very first time user creates readings
+        if (readings.isEmpty()) {
+            for (Meter m : meters) {
+                final Reading reading = new Reading(rd, 0, r, m);
+                readings.add(reading);
+            }
+        } else {
+            //two situations -> newly added meter, or a meter that has been deactivated
+            for (int i = 0; i < readings.size(); i++) {
+                final Reading reading = readings.get(i);
+                if (reading.getMeter().getStatus().equals(Status.INACTIVE)) {
+                    readings.remove(i--);
+                }
+                meters.remove(reading.getMeter());
+            }
+            for (Meter m : meters) {
+                final Reading reading = new Reading(rd, 0.0, r, m);
+                readings.add(reading);
+            }
+        }
+        return readings;
     }
 
     @Override
     public List<Reading> latestEdit(final Residence r, final Media media) {
-        return readingDao.getLatestList(r, readingDao.getLatestDate(r, media));
+        final ReadingDetails details = readingDetailsDao.getLatest(r, media);
+        Criterion c1 = Restrictions.eq("residence", r);
+        Criterion c2 = Restrictions.eq("readingDetails", details);
+        return readingDao.findByCriteria(c1, c2);
     }
 
+
+
     @Override
-    public List<Reading> getPreviousReading(LocalDate date, Set<Long> idList) {
-        return readingDao.getPrevious(date, idList);
+    public List<Reading> getPreviousReading(LocalDate date, List<Meter> meters) {
+        //TODO very bas solution but this method gets kicked soon anyway so no point of refactoring it
+        final Media m = meters.get(0).getMedia();
+        List<ReadingDetails> details = readingDetailsDao.findByCriteria(Order.desc("readingDate"), Restrictions.lt("readingDate", date) , Restrictions.eq("media", m));
+        return readingDao.getPrevious(details.get(0), meters);
     }
 
     @Override
     public List<Reading> getByDate(final Residence r, final LocalDate date, final Media media) {
-        return readingDao.getByDate(r, date);
+        final ReadingDetails rd = readingDetailsDao.findOneByCriteria(Restrictions.eq("readingDate", date), Restrictions.eq("media", media), Restrictions.eq("residence", r));
+        return readingDao.findByCriteria(Restrictions.eq("readingDetails", rd));
     }
 
     @Override
-    public void save(List<Reading> reading, LocalDate localDate) {
+    public void save(final List<Reading> reading, final ReadingDetails details) {
+        readingDetailsDao.save(details);
         for (Reading r : reading) {
-            setReading(localDate, r);
+            validateReadingValue(r);
+            r.setReadingDetails(details);
             readingDao.save(r);
         }
     }
@@ -84,23 +130,29 @@ public class ReadingService implements IReadingService {
     }
 
     @Override
-    public void update(List<Reading> readings, LocalDate date) {
+    public void update(List<Reading> readings, final LocalDate date) {
+        final ReadingDetails details = readingDetailsDao.getById(readings.get(0).getReadingDetails().getId());
+        details.setReadingDate(date);
+        readingDetailsDao.update(details);
         for (Reading r : readings) {
-            setReading(date, r);
+            validateReadingValue(r);
+            r.setReadingDetails(details);
             readingDao.update(r);
         }
     }
 
-    private void setReading(LocalDate date, Reading r) {
+    private void validateReadingValue(final Reading r) {
         if (r.getValue() < 0) {
-            throw new IllegalArgumentException();
+            throw new IllegalArgumentException("Reading value cannot be below zero");
         }
-        r.getReadingDetails().setReadingDate(date);
     }
 
     @Override
-    public void deleteLatestReadings(final Residence r, Media media) {
-        readingDao.deleteLatestReadings(readingDao.getLatestDate(r, media));
+    public void deleteLatestReadings(final Residence r, final Media media) {
+        final ReadingDetails details = readingDetailsDao.getLatest(r, media);
+        final Criterion c = Restrictions.eq("readingDetails", details);
+        List<Reading> readingsToDelete = readingDao.findByCriteria(c);
+        for (Reading reading : readingsToDelete) readingDao.delete(reading);
     }
 
     @Override
@@ -113,31 +165,5 @@ public class ReadingService implements IReadingService {
             model.put("oldDate", list.get(0).getReadingDetails().getReadingDate().plusDays(1));
         }
 
-    }
-
-    private List<Reading> latestReadings(final Residence r, final Media m) {
-        //TODO refactor this method after merging is done (issue #100)
-        final LocalDate fakeDate = new LocalDate().minusDays(100);
-        final Set<Long> idList = meterDao.getIdListForActiveMeters(r);
-        final List<Reading> readings = latestEdit(r, m);
-        // if this the very first time user creates readings
-        if (readings.isEmpty()) {
-            for (Long tmpLong : idList) {
-                final ReadingDetails rd = new ReadingDetails(fakeDate, Resolvement.UNRESOLVED, Media.ENERGY);
-                final Reading reading = new Reading(rd, 0, r, meterDao.getById(tmpLong));
-                readings.add(reading);
-            }
-        } else {
-            for (Reading reading : readings) {
-                // consider using LambdaJ
-                idList.remove(reading.getMeter().getId());
-            }
-            for (Long tmpLong : idList) {
-                final ReadingDetails rd = readings.get(0).getReadingDetails();
-                final Reading reading = new Reading(rd, 0.0, r, meterDao.getById(tmpLong));
-                readings.add(reading);
-            }
-        }
-        return readings;
     }
 }

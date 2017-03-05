@@ -18,7 +18,7 @@ import java.util.stream.Collectors;
 
 @Service
 @Transactional
-public class ResidenceServiceImpl implements ResidenceService {
+public class ResidenceServiceImpl implements IResidenceService {
 
     private final ResidenceDao residenceDao;
     private final IResidenceOwnershipDao residenceOwnershipDao;

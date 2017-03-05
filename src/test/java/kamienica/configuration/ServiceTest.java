@@ -7,7 +7,8 @@ import kamienica.feature.invoice.IInvoiceService;
 import kamienica.feature.meter.IMeterService;
 import kamienica.feature.payment.IPaymentService;
 import kamienica.feature.reading.IReadingService;
-import kamienica.feature.residence.ResidenceService;
+import kamienica.feature.readingdetails.IReadingDetailsService;
+import kamienica.feature.residence.IResidenceService;
 import kamienica.feature.residenceownership.IResidenceOwnershipService;
 import kamienica.feature.settings.ISettingsService;
 import kamienica.feature.tenant.ITenantService;
@@ -59,25 +60,24 @@ public abstract class ServiceTest {
     @Autowired
     protected OwnerUserDataService ownerUserDataService;
     @Autowired
-    protected ResidenceService residenceService;
+    protected IResidenceService residenceService;
     @Autowired
     protected IResidenceOwnershipService residenceOwnershipService;
-
+    @Autowired
+    protected IReadingDetailsService readingDetailsService;
     /**
      * difference factor for calculated data
      */
     protected final double DELTA = 0.5;
-
     protected static final LocalDate TODAY = new LocalDate();
     protected final static String FIRST_OWNER_MAIL = "owner@res1";
     protected final static Long RES_1_OWNER_ID = 1L;
 
     @BeforeClass
     public static void init() throws SQLException {
-//        Server.main();
+//          Server.main();
         mockStatic(SecurityDetails.class);
     }
-
 
     protected List<Residence> getMockedResidences() {
         List<Residence> residences = new ArrayList<>();
@@ -89,4 +89,7 @@ public abstract class ServiceTest {
         return tenantService.getById(1L);
     }
 
+    protected Residence getOWnersResidence() {
+        return residenceService.getById(RESIDENCE_ID);
+    }
 }

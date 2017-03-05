@@ -78,26 +78,11 @@ public class DivisionServiceTest extends ServiceTest {
         assertEquals(12, divisions.size());
     }
 
-
-    @Test
-    @Ignore
-    public void prepareDivisionListForRegistration() {
-
-    }
-
-
     @Test
     public void isDivisionCorrect() {
         final boolean result = divisionService.isDivisionCorrect();
         assertEquals(true, result);
     }
-
-    @Test
-    @Ignore
-    public void getMappedList() {
-
-    }
-
 
     private List<Division> createCorrectList(boolean returnCorrect) {
         List<Apartment> apartments = apartmentService.list();

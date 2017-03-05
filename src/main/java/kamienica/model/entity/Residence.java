@@ -81,8 +81,7 @@ public class Residence implements Serializable {
 
         if (!getId().equals(residence.getId())) return false;
         if (!getStreet().equals(residence.getStreet())) return false;
-        if (!getNumber().equals(residence.getNumber())) return false;
-        return getCity().equals(residence.getCity());
+        return getNumber().equals(residence.getNumber()) && getCity().equals(residence.getCity());
     }
 
     @Override

@@ -3,7 +3,7 @@ package kamienica.controller.api.v1;
 import kamienica.controller.ControllerMessages;
 import kamienica.core.message.ApiErrorResponse;
 import kamienica.feature.invoice.IInvoiceService;
-import kamienica.feature.residence.ResidenceService;
+import kamienica.feature.residence.IResidenceService;
 import kamienica.model.entity.Invoice;
 import kamienica.model.entity.Residence;
 import kamienica.model.entity.Tenant;
@@ -23,10 +23,10 @@ import java.util.List;
 public class InvoiceApi extends AbstractApi {
 
     private final IInvoiceService invoiceService;
-    private final ResidenceService residenceService;
+    private final IResidenceService residenceService;
 
     @Autowired
-    public InvoiceApi(IInvoiceService invoiceService, ResidenceService residenceService) {
+    public InvoiceApi(IInvoiceService invoiceService, IResidenceService residenceService) {
         this.invoiceService = invoiceService;
         this.residenceService = residenceService;
     }

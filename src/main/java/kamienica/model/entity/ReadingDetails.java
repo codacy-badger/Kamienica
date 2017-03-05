@@ -34,10 +34,11 @@ public class ReadingDetails extends DBEntity {
         this.media = media;
     }
 
-    public ReadingDetails(LocalDate readingDate, Media media) {
+    public ReadingDetails(LocalDate readingDate, Media media, Residence r) {
         this.readingDate = readingDate;
         this.resolvement = Resolvement.UNRESOLVED;
         this.media = media;
+        this.residence = r;
     }
 
     public LocalDate getReadingDate() {

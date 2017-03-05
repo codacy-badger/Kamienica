@@ -1,21 +1,17 @@
 package kamienica.feature.reading;
 
-import kamienica.model.entity.Apartment;
-import kamienica.model.entity.Invoice;
-import kamienica.model.entity.Reading;
-import kamienica.model.entity.Residence;
+import kamienica.model.entity.*;
 import kamienica.model.enums.Media;
 import kamienica.model.jpa.dao.BasicDao;
 import org.joda.time.LocalDate;
 
 import java.util.List;
-import java.util.Set;
 
 public interface IReadingDao extends BasicDao<Reading> {
 
     List<Reading> getByDate(Residence r, LocalDate date);
 
-    List<Reading> getPrevious(LocalDate date, Set<Long> meterId);
+    List<Reading> getPrevious(ReadingDetails details, List<Meter> meters);
 
     List<Reading> getLatestList(Residence r, LocalDate date);
 
@@ -23,6 +19,7 @@ public interface IReadingDao extends BasicDao<Reading> {
 
     List<Reading> getListForTenant(Apartment apartment);
 
+    List<Reading> list(ReadingDetails details);
     /**
      * @return List<ReadingAbsract>
 	 * 
@@ -34,8 +31,6 @@ public interface IReadingDao extends BasicDao<Reading> {
     void changeResolvementState(Invoice invoice, boolean resolved);
 
     int countDaysFromLastReading();
-
-    void deleteLatestReadings(LocalDate date);
 
     LocalDate getLatestDate(Residence r, Media m);
 

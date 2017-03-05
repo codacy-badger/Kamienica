@@ -1,10 +1,8 @@
 package kamienica.feature.reading;
 
-import kamienica.model.entity.Apartment;
-import kamienica.model.entity.Invoice;
-import kamienica.model.entity.Reading;
-import kamienica.model.entity.Residence;
+import kamienica.model.entity.*;
 import kamienica.model.enums.Media;
+import kamienica.model.enums.Status;
 import kamienica.model.jpa.dao.BasicDaoImpl;
 import org.hibernate.Criteria;
 import org.hibernate.Query;
@@ -15,7 +13,6 @@ import org.joda.time.LocalDate;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
-import java.util.Set;
 
 @Repository("readingDao")
 public class ReadingDao extends BasicDaoImpl<Reading> implements IReadingDao {
@@ -24,7 +21,7 @@ public class ReadingDao extends BasicDaoImpl<Reading> implements IReadingDao {
     private static final String COUNT_LAST_READING_DAYS = "SELECT DATEDIFF(CURDATE() , readingDate) FROM %s order by readingDate desc limit 1;";
     private static final String DELETE_LATEST = "delete from  %s where readingDate=:date and resolved=:res";
     private static final String CHANGE_RESOLVEMENT = "update %s set resolved= :res where readingDate = :paramdate";
-
+    private static final String LIST_FOR_TENANT = "select * from readingenergy where meter_id IN(select id from meterenergy where apartment_id IN(SELECT id FROM apartment where apartmentnumber IN(0, :num))) order by readingDate desc;";
 
     @Override
     @SuppressWarnings("unchecked")
@@ -39,21 +36,23 @@ public class ReadingDao extends BasicDaoImpl<Reading> implements IReadingDao {
     @Override
     @SuppressWarnings("unchecked")
     public List<Reading> getLatestList(final Residence r, LocalDate date) {
-        Criteria readings = createEntityCriteria().add(Restrictions.eq("readingDate", date));
-        Criteria meters = readings.createCriteria("meter");
-        meters.add(Restrictions.eq("residence", r));
-        meters.add(Restrictions.gt("deactivation", LocalDate.now()));
-        return readings.list();
+        //TODO inspect whether this method does exatcly as getByDate
+        Criteria c = createEntityCriteria().add(Restrictions.eq("readingDate", date));
+        c.createCriteria("meter").add(Restrictions.eq("residence", r)).add(Restrictions.eq("status", Status.ACTIVE));
+        return c.list();
     }
 
     @Override
-    public List<Reading> getPrevious(LocalDate readingDate, Set<Long> meterId) {
-        String queryString = String.format(GET_PREVIOUS, getTabName());
-        Query query = getSession().createSQLQuery(queryString).addEntity(this.persistentClass)
-                .setDate("date", readingDate.toDate()).setParameterList("list", meterId);
-        @SuppressWarnings("unchecked")
-        List<Reading> result = query.list();
-        return result;
+    public List<Reading> getPrevious(ReadingDetails details, List<Meter> meters) {
+//        String queryString = String.format(GET_PREVIOUS, getTabName());
+//        Query query = getSession().createSQLQuery(queryString).addEntity(this.persistentClass)
+//                .setDate("date", readingDate.toDate()).setParameterList("list", meterId);
+//        @SuppressWarnings("unchecked")
+//        List<Reading> result = query.list();
+        Criteria c = createEntityCriteria();
+        c.add(Restrictions.eq("readingDetails", details));
+        c.add(Restrictions.in("meter", meters));
+        return c.list();
     }
 
     @Override
@@ -91,20 +90,10 @@ public class ReadingDao extends BasicDaoImpl<Reading> implements IReadingDao {
     }
 
     @Override
-    public void deleteLatestReadings(LocalDate date) {
-        String sql = String.format(DELETE_LATEST, getTabName());
-        Query query = getSession().createSQLQuery(sql);
-        query.setParameter("date", date.toString()).setParameter("res", false);
-        query.executeUpdate();
-
-    }
-
-    @Override
     public LocalDate getLatestDate(final Residence r, final Media media) {
         Criteria criteria = createEntityCriteria();
-        criteria.add(Restrictions.eq("media", media));
         criteria.createCriteria("meter").add(Restrictions.eq("residence", r));
-        criteria.setProjection(Projections.max("readingDate"));
+        criteria.createCriteria("readingDetails").add(Restrictions.eq("media", media)).setProjection(Projections.max("readingDate"));
         return (LocalDate) criteria.uniqueResult();
     }
 
@@ -112,21 +101,23 @@ public class ReadingDao extends BasicDaoImpl<Reading> implements IReadingDao {
     @SuppressWarnings("unchecked")
     public List<Reading> getList(Residence r, Media media) {
         Criteria c = createEntityCriteria();
-        c.createCriteria("meter");
-        c.add(Restrictions.eq("residence", r));
-        c.add(Restrictions.eq("media", media));
-        c.addOrder(Order.desc("readingDate")).list();
+        c.createCriteria("meter").add(Restrictions.eq("residence", r));
+        c.createCriteria("readingDetails").add(Restrictions.eq("media", media)).addOrder(Order.desc("readingDate"));
         return c.list();
     }
 
+    @SuppressWarnings("unchecked")
     @Override
     public List<Reading> getListForTenant(Apartment apartment) {
-        String old = "select * from readingenergy where meter_id IN(select id from meterenergy where apartment_id IN(SELECT id FROM apartment where apartmentnumber IN(0, :num))) order by readingDate desc;";
-        Query query = getSession().createSQLQuery(old).addEntity(Reading.class).setInteger("num",
+        Query query = getSession().createSQLQuery(LIST_FOR_TENANT).addEntity(Reading.class).setInteger("num",
                 apartment.getApartmentNumber());
-        @SuppressWarnings("unchecked")
-        List<Reading> result = query.list();
-        return result;
+
+        return (List<Reading>) query.list();
+    }
+
+    @Override
+    public List<Reading> list(ReadingDetails details) {
+        return findByCriteria(Restrictions.eq("readingDetails", details));
     }
 
     @Override

@@ -3,7 +3,7 @@ package kamienica.controller.api.v1;
 import kamienica.controller.ControllerMessages;
 import kamienica.core.message.ApiErrorResponse;
 import kamienica.core.message.Message;
-import kamienica.feature.residence.ResidenceService;
+import kamienica.feature.residence.IResidenceService;
 import kamienica.model.entity.Residence;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -21,10 +21,10 @@ import java.util.Map;
 @RequestMapping("/api/v1/residences")
 public class ResidenceApi {
 
-    private final ResidenceService residenceService;
+    private final IResidenceService residenceService;
 
     @Autowired
-    public ResidenceApi(ResidenceService residenceService) {
+    public ResidenceApi(IResidenceService residenceService) {
         this.residenceService = residenceService;
     }
 
