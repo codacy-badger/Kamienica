@@ -28,7 +28,6 @@ public class ApartmentServiceImpl implements IApartmentService {
     @Override
     public void save(Apartment apartment) {
         apartmentDAO.save(apartment);
-        settingsDao.changeDivisionState(false);
     }
 
     @Override
@@ -55,8 +54,6 @@ public class ApartmentServiceImpl implements IApartmentService {
     @Override
     public void deleteById(Long id) {
         apartmentDAO.deleteById(id);
-        settingsDao.changeDivisionState(false);
-
     }
 
     @Override

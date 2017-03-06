@@ -4,6 +4,7 @@ import kamienica.model.entity.Invoice;
 import kamienica.model.entity.Payment;
 import kamienica.model.entity.Reading;
 import kamienica.model.entity.Tenant;
+import kamienica.model.enums.Media;
 import kamienica.model.jpa.dao.BasicDaoImpl;
 import org.hibernate.Criteria;
 import org.hibernate.Query;
@@ -31,24 +32,26 @@ public class PaymentDao extends BasicDaoImpl<Payment> implements IPaymentDao {
     }
 
     @Override
-    public List<Payment> getList() {
+    public List<Payment> getList(final Media media) {
         Criteria c = createEntityCriteria();
         c.addOrder(Order.asc("paymentDate"));
         c.addOrder(Order.asc("tenant"));
+        c.createCriteria("invoice").add(Restrictions.eq("media", media));
         return c.list();
     }
 
     @Override
-    public List<Payment> getPaymentForTenant(Tenant tenant) {
+    public List<Payment> getPaymentForTenant(final Tenant tenant, final Media media) {
         Criteria c = createEntityCriteria();
         c.add(Restrictions.eq("tenant", tenant));
         c.addOrder(Order.asc("paymentDate")).addOrder(Order.asc("tenant"));
+        c.createCriteria("invoice").add(Restrictions.eq("media", media));
         return c.list();
     }
 
     @Override
     public Payment getLatestPayment() {
-        //TODO change the logic here
+        //TODO change the logic here and add test!!!
         List<Payment> list = getSession().createCriteria(persistentClass).addOrder(Order.desc("readingDate"))
                 .list();
         if (list.isEmpty()) {

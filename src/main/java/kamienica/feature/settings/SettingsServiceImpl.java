@@ -37,15 +37,4 @@ public class SettingsServiceImpl implements ISettingsService {
 
 	}
 
-	@Override
-	public boolean isDivisionCorrect() {
-		return dao.isDivisionCorrect();
-	}
-
-	@Override
-	public void changeDivisionState(boolean state) {
-		dao.changeDivisionState(state);
-
-	}
-
 }

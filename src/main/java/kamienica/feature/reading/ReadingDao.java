@@ -2,6 +2,7 @@ package kamienica.feature.reading;
 
 import kamienica.model.entity.*;
 import kamienica.model.enums.Media;
+import kamienica.model.enums.Resolvement;
 import kamienica.model.enums.Status;
 import kamienica.model.jpa.dao.BasicDaoImpl;
 import org.hibernate.Criteria;
@@ -53,19 +54,6 @@ public class ReadingDao extends BasicDaoImpl<Reading> implements IReadingDao {
         c.add(Restrictions.eq("readingDetails", details));
         c.add(Restrictions.in("meter", meters));
         return c.list();
-    }
-
-    @Override
-    @SuppressWarnings("unchecked")
-    public List<Reading> getUnresolvedReadings(final Media media, Residence r) {
-        Criteria c = createEntityCriteria();
-        c.add(Restrictions.eq("resolved", false));
-        c.add(Restrictions.eq("media", media));
-        c.addOrder(Order.asc("readingDate"));
-        Criteria meters = c.createCriteria("meter");
-        meters.add(Restrictions.isNull("apartment"));
-        return c.list();
-
     }
 
     @Override

@@ -88,23 +88,6 @@ public class TenantServiceTest extends ServiceTest {
         assertEquals(Status.INACTIVE, newOwner.getStatus());
     }
 
-    @Transactional
-    @Test
-    @Ignore("Removing division")
-    public void divisionShouldBecomeIncorrectAfterRemovingTenant() {
-        tenantService.deleteById(2L);
-        boolean resultedState = settingsService.isDivisionCorrect();
-        assertEquals(false, resultedState);
-    }
-
-    @Ignore("Please check why this fails")
-    @Transactional
-    @Test
-    public void whyFails() {
-        tenantService.deleteById(3L);
-        boolean resultedState = settingsService.isDivisionCorrect();
-        assertEquals(false, resultedState);
-    }
 
     private Tenant createTenant(LocalDate localDate) {
         final Apartment apartment = apartmentService.getById(2L);

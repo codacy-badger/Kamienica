@@ -23,5 +23,4 @@ public interface IDivisionService {
 
 	List<Division> prepareDivisionList(List<Tenant> tenantList, List<Apartment> apartmentList);
 
-	boolean isDivisionCorrect();
 }

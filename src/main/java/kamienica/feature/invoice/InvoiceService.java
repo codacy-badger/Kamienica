@@ -11,13 +11,14 @@ import kamienica.feature.meter.IMeterService;
 import kamienica.feature.payment.IPaymentDao;
 import kamienica.feature.reading.IReadingDao;
 import kamienica.feature.reading.IReadingService;
+import kamienica.feature.readingdetails.ReadingDetailsDao;
 import kamienica.feature.settings.ISettingsDao;
 import kamienica.feature.tenant.ITenantDao;
 import kamienica.model.entity.*;
 import kamienica.model.enums.Media;
+import kamienica.model.enums.Resolvement;
 import kamienica.model.enums.Status;
 import kamienica.model.enums.WaterHeatingSystem;
-import kamienica.model.exception.InvalidDivisionException;
 import org.hibernate.criterion.Criterion;
 import org.hibernate.criterion.Restrictions;
 import org.joda.time.LocalDate;
@@ -41,13 +42,14 @@ public class InvoiceService implements IInvoiceService {
     private final IReadingDao readingDao;
     private final IPaymentDao paymentDao;
     private final ISettingsDao settingsDao;
+    private final ReadingDetailsDao readingDetailsDao;
 
     @Autowired
     public InvoiceService(ITenantDao tenantDao, IDivisionService divisionService,
                           IApartmentDao apartmentDao, IReadingService readingService,
                           IMeterService meterService, IInvoiceDao invoiceDao,
                           IReadingDao readingDao, IPaymentDao paymentDao,
-                          ISettingsDao settingsDao) {
+                          ISettingsDao settingsDao, ReadingDetailsDao readingDetailsDao) {
         this.tenantDao = tenantDao;
         this.divisionService = divisionService;
         this.apartmentDao = apartmentDao;
@@ -57,6 +59,7 @@ public class InvoiceService implements IInvoiceService {
         this.readingDao = readingDao;
         this.paymentDao = paymentDao;
         this.settingsDao = settingsDao;
+        this.readingDetailsDao = readingDetailsDao;
     }
 
 
@@ -102,22 +105,8 @@ public class InvoiceService implements IInvoiceService {
     public List<Invoice> list(final Media media) {
         final List<Residence> residences = SecurityDetails.getResidencesForOwner();
         final Criterion forTheseResidences = Restrictions.in("residence", residences);
-        return invoiceDao.findByCriteria(forTheseResidences);
-    }
-
-    @SuppressWarnings("unchecked")
-    @Override
-    public List<Reading> getUnpaidReadingForNewIncvoice(final Residence r, final Media media) throws InvalidDivisionException {
-
-        if (!settingsDao.isDivisionCorrect())
-
-        {
-            throw new InvalidDivisionException(
-                    "Lista aktualnych najemców i mieszkań się nie zgadza. Sprawdź algorytm podziału");
-        }
-        return readingDao.getUnresolvedReadings(media, r);
-
-
+        final Criterion forMedia = Restrictions.eq("media", media);
+        return invoiceDao.findByCriteria(forTheseResidences, forMedia);
     }
 
     @Override
@@ -161,7 +150,9 @@ public class InvoiceService implements IInvoiceService {
                 division, usageWater);
 
         invoiceDao.save(invoice);
-        readingDao.changeResolvementState(invoice, true);
+        ReadingDetails rd = invoice.getReadingDetails();
+        rd.setResolvement(Resolvement.RESOLVED);
+        readingDetailsDao.update(rd);
         for (Payment payment : paymentWater) {
             paymentDao.save(payment);
         }
@@ -193,19 +184,20 @@ public class InvoiceService implements IInvoiceService {
                 division, usageGas);
 
         invoiceDao.save(invoice);
-        readingDao.changeResolvementState(invoice, true);
+        ReadingDetails rd = invoice.getReadingDetails();
+        rd.setResolvement(Resolvement.RESOLVED);
+        readingDetailsDao.update(rd);
 
         for (Payment payment : paymentGas) {
             paymentDao.save(payment);
         }
     }
 
-    private <T extends Invoice> void saveEnergy(T invoice, List<Apartment> apartments, List<Tenant> tenants, List<Division> division) {
+    private  void saveEnergy(Invoice invoice, List<Apartment> apartments, List<Tenant> tenants, List<Division> division) {
         final LocalDate baseReadingDate = invoice.getReadingDetails().getReadingDate();
         final Residence r = apartments.get(0).getResidence();
 
         List<Reading> ReadingOld = readingService.getPreviousReading(baseReadingDate, meterService.list(r, Media.ENERGY));
-
         List<Reading> ReadingNew = readingService.getByDate(invoice.getResidence(), baseReadingDate, Media.ENERGY);
 
         List<MediaUsage> usageEnergy = EnergyConsumptionCalculator.countConsumption(apartments, ReadingOld,
@@ -213,7 +205,10 @@ public class InvoiceService implements IInvoiceService {
         List<Payment> paymentEnergy = PaymentCalculator.createPaymentList(tenants, invoice, division, usageEnergy);
 
         invoiceDao.save(invoice);
-        readingDao.changeResolvementState(invoice, true);
+        ReadingDetails rd = invoice.getReadingDetails();
+        rd.setResolvement(Resolvement.RESOLVED);
+        readingDetailsDao.update(rd);
+
         for (Payment payment : paymentEnergy) {
             paymentDao.save(payment);
         }

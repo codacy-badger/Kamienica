@@ -48,11 +48,7 @@ public class OwnerUserDataServiceImpl implements OwnerUserDataService {
 
     private void checkConfig(HashMap<String, Object> model) {
         List<Settings> list = settingsDao.getList();
-        if (list.isEmpty()) {
-            model.put("settings", "BRAK USTAWIEŃ");
-        } else if (!list.get(0).isCorrectDivision()) {
-            model.put("settings", "Podział niekatualny");
-        }
+            model.put("settings", "BRAK USTAWIEŃ.... Nie ma już algoruytmu podzialui");
     }
 
     private void addLatestReadings(HashMap<String, Object> model) {

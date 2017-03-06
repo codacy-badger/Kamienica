@@ -49,13 +49,11 @@ public class InvoiceApi extends AbstractApi {
             message.setErrors(result.getFieldErrors());
             return new ResponseEntity<>(message, HttpStatus.UNPROCESSABLE_ENTITY);
         }
-        try {
-            final Tenant t = ownerUserDataService.getLoggedTenant();
-            final Residence r = residenceService.getById(residenceId);
-            invoiceService.save(invoice, Media.ENERGY, t, r);
-        } catch (InvalidDivisionException e) {
-            return new ResponseEntity<>(ControllerMessages.WRONG_DIVISION, HttpStatus.UNPROCESSABLE_ENTITY);
-        }
+
+        final Tenant t = ownerUserDataService.getLoggedTenant();
+        final Residence r = residenceService.getById(residenceId);
+        invoiceService.save(invoice, Media.ENERGY, t, r);
+
         return new ResponseEntity<>(invoice, HttpStatus.OK);
     }
 
@@ -66,13 +64,11 @@ public class InvoiceApi extends AbstractApi {
             message.setErrors(result.getFieldErrors());
             return new ResponseEntity<>(message, HttpStatus.UNPROCESSABLE_ENTITY);
         }
-        try {
-            final Tenant t = ownerUserDataService.getLoggedTenant();
-            final Residence r = residenceService.getById(residenceId);
-            invoiceService.save(invoice, Media.GAS, t, r);
-        } catch (InvalidDivisionException e) {
-            return new ResponseEntity<>(ControllerMessages.WRONG_DIVISION, HttpStatus.UNPROCESSABLE_ENTITY);
-        }
+
+        final Tenant t = ownerUserDataService.getLoggedTenant();
+        final Residence r = residenceService.getById(residenceId);
+        invoiceService.save(invoice, Media.GAS, t, r);
+
         return new ResponseEntity<>(invoice, HttpStatus.OK);
     }
 
@@ -83,13 +79,10 @@ public class InvoiceApi extends AbstractApi {
             message.setErrors(result.getFieldErrors());
             return new ResponseEntity<>(message, HttpStatus.UNPROCESSABLE_ENTITY);
         }
-        try {
-            final Residence r = residenceService.getById(residenceId);
-            final Tenant t = ownerUserDataService.getLoggedTenant();
-            invoiceService.save(invoice, Media.WATER, t, r);
-        } catch (InvalidDivisionException e) {
-            return new ResponseEntity<>(ControllerMessages.WRONG_DIVISION, HttpStatus.UNPROCESSABLE_ENTITY);
-        }
+        final Residence r = residenceService.getById(residenceId);
+        final Tenant t = ownerUserDataService.getLoggedTenant();
+        invoiceService.save(invoice, Media.WATER, t, r);
+
         return new ResponseEntity<>(invoice, HttpStatus.OK);
     }
 

@@ -99,13 +99,14 @@ public class ReadingService implements IReadingService {
         //TODO very bas solution but this method gets kicked soon anyway so no point of refactoring it
         final Media m = meters.get(0).getMedia();
         List<ReadingDetails> details = readingDetailsDao.findByCriteria(Order.desc("readingDate"), Restrictions.lt("readingDate", date) , Restrictions.eq("media", m));
-        return readingDao.getPrevious(details.get(0), meters);
+        return readingDao.findByCriteria(Restrictions.in("meter", meters), Restrictions.eq("readingDetails", details.get(0)));
+        //return readingDao.getPrevious(details.get(0), meters);
     }
 
     @Override
     public List<Reading> getByDate(final Residence r, final LocalDate date, final Media media) {
         final ReadingDetails rd = readingDetailsDao.findOneByCriteria(Restrictions.eq("readingDate", date), Restrictions.eq("media", media), Restrictions.eq("residence", r));
-        return readingDao.findByCriteria(Restrictions.eq("readingDetails", rd));
+        return readingDao.findByCriteria(Restrictions.eq("readingDetails", rd), Restrictions.eq("residence", r));
     }
 
     @Override
@@ -123,11 +124,6 @@ public class ReadingService implements IReadingService {
         return readingDao.getById(id);
     }
 
-    @Override
-    public List<Reading> getUnresolvedReadings(final Media media, final Residence residence) {
-        return readingDao.getUnresolvedReadings(media, residence);
-
-    }
 
     @Override
     public void update(List<Reading> readings, final LocalDate date) {

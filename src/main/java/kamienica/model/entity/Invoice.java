@@ -11,13 +11,17 @@ import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 
 @Entity
-@Table(name = "INVOICE")
+@Table(name = "INVOICE"
+        //TODO see why this fails
+        //, uniqueConstraints = {@UniqueConstraint(columnNames = {"invoiceDate", "media", "residence"})}
+
+)
 public class Invoice extends DBEntity {
 
     @Column(nullable = false, unique = true)
     @NotEmpty(message = "Podaj wartość")
     private String serialNumber;
-    @Column(nullable = false, unique = true)
+    @Column(nullable = false)
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     @NotNull(message = "Wprowadź datę")
     @Type(type = "org.jadira.usertype.dateandtime.joda.PersistentLocalDate")
@@ -30,6 +34,7 @@ public class Invoice extends DBEntity {
     private Residence residence;
     @OneToOne
     private ReadingDetails readingDetails;
+    @Enumerated(EnumType.STRING)
     private Media media;
 
     public Invoice() {

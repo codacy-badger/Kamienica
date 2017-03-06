@@ -4,6 +4,7 @@ import kamienica.model.entity.Invoice;
 import kamienica.model.entity.Payment;
 import kamienica.model.entity.Reading;
 import kamienica.model.entity.Tenant;
+import kamienica.model.enums.Media;
 import kamienica.model.jpa.dao.BasicDao;
 
 import java.util.List;
@@ -18,7 +19,7 @@ public interface IPaymentDao extends BasicDao<Payment> {
 
 	List<Payment> getByReading(Reading reading);
 
-	List<Payment> getPaymentForTenant(Tenant tenant);
+	List<Payment> getPaymentForTenant(Tenant tenant, Media media);
 
 	Payment getLatestPayment();
 

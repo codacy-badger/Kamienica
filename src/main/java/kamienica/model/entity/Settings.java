@@ -12,7 +12,6 @@ public class Settings {
 	@GeneratedValue
 	private Long id;
 	private boolean gas = true;
-	private boolean correctDivision = false;
 	private boolean internet = false;
 	private boolean garbage = false;
 	@Enumerated(EnumType.STRING)
@@ -21,12 +20,10 @@ public class Settings {
 	public Settings() {
 	}
 
-	public Settings(Long id, boolean gas, boolean correctDivision, boolean internet, boolean garbage,
+	public Settings(Long id, boolean gas, boolean internet, boolean garbage,
 			WaterHeatingSystem waterHeatingSystem) {
-		super();
 		this.id = id;
 		this.gas = gas;
-		this.correctDivision = correctDivision;
 		this.internet = internet;
 		this.garbage = garbage;
 		this.waterHeatingSystem = waterHeatingSystem;
@@ -56,14 +53,6 @@ public class Settings {
 		this.gas = gas;
 	}
 
-	public boolean isCorrectDivision() {
-		return correctDivision;
-	}
-
-	public void setCorrectDivision(boolean correctDivision) {
-		this.correctDivision = correctDivision;
-	}
-
 	public boolean isInternet() {
 		return internet;
 	}
@@ -82,7 +71,7 @@ public class Settings {
 
 	@Override
 	public String toString() {
-		return "Settings [id=" + id + ", gas=" + gas + ", correctDivision=" + correctDivision + ", internet=" + internet
+		return "Settings [id=" + id + ", gas=" + gas + ", internet=" + internet
 				+ ", garbage=" + garbage + ", waterHeatingSystem=" + waterHeatingSystem + "]";
 	}
 

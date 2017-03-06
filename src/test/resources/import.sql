@@ -139,22 +139,23 @@ INSERT INTO  reading  ( id , readingDetails_id,  value , meter_id, residence_id 
 INSERT INTO  reading  ( id , readingDetails_id,  value , meter_id, residence_id ) VALUES (56,9,7,5, 1);
 INSERT INTO  reading  ( id , readingDetails_id,  value , meter_id, residence_id ) VALUES (57,9,7,6, 2);
 
-INSERT INTO  invoicewater  ( id , date , serialNumber , totalAmount , baseReading_id , residence_id) VALUES (1,'2016-08-01','123',150,8,1);
-INSERT INTO  invoicegas  ( id , date , serialNumber , totalAmount , baseReading_id, residence_id) VALUES (1,'2016-09-01','123',150,7,1);
-INSERT INTO  invoiceenergy  ( id , date , serialNumber , totalAmount , baseReading_id, residence_id) VALUES (1,'2016-08-01','1',200,6,1);
+--String serialNumber, LocalDate invoiceDate, double totalAmount, Residence residence, ReadingDetails readingDetails, Media media
+INSERT INTO  invoice  ( id , invoiceDate , serialNumber , totalAmount , readingDetails_id , residence_id, media) VALUES (1,'2016-08-01','1',150,5,1, 'WATER');
+INSERT INTO  invoice  ( id , invoiceDate , serialNumber , totalAmount , readingDetails_id, residence_id, media) VALUES (2,'2016-09-01','2',150,2,1, 'GAS');
+INSERT INTO  invoice  ( id , invoiceDate , serialNumber , totalAmount , readingDetails_id, residence_id, media) VALUES (3,'2016-08-01','3',200,8,1, 'ENERGY');
 
 
-INSERT INTO  paymentenergy  ( id , paymentAmount , paymentDate , tenant_id , invoice_id) VALUES (1,88.67,'2016-07-29',1,1);
-INSERT INTO  paymentenergy  ( id , paymentAmount , paymentDate , tenant_id , invoice_id) VALUES (2,66.44,'2016-07-29',3,1);
-INSERT INTO  paymentenergy  ( id , paymentAmount , paymentDate , tenant_id , invoice_id) VALUES (3,44.22,'2016-07-29',4,1);
+INSERT INTO  payment ( id , paymentAmount , paymentDate , tenant_id , invoice_id) VALUES (1,88.67,'2016-07-29',1,3);
+INSERT INTO  payment ( id , paymentAmount , paymentDate , tenant_id , invoice_id) VALUES (2,66.44,'2016-07-29',3,3);
+INSERT INTO  payment ( id , paymentAmount , paymentDate , tenant_id , invoice_id) VALUES (3,44.22,'2016-07-29',4,3);
 
-INSERT INTO  paymentgas  ( id , paymentAmount , paymentDate , tenant_id , invoice_id ) VALUES (1,38.63,'2016-07-29',1,1);
-INSERT INTO  paymentgas  ( id , paymentAmount , paymentDate , tenant_id , invoice_id ) VALUES (2,40,'2016-07-29',3,1);
-INSERT INTO  paymentgas  ( id , paymentAmount , paymentDate , tenant_id , invoice_id ) VALUES (3,71.36,'2016-07-29',4,1);
+INSERT INTO  payment ( id , paymentAmount , paymentDate , tenant_id , invoice_id ) VALUES (4,38.63,'2016-07-29',1,2);
+INSERT INTO  payment ( id , paymentAmount , paymentDate , tenant_id , invoice_id ) VALUES (5,40.00,'2016-07-29',3,2);
+INSERT INTO  payment ( id , paymentAmount , paymentDate , tenant_id , invoice_id ) VALUES (6,71.36,'2016-07-29',4,2);
 
-INSERT INTO  paymentwater  ( id , paymentAmount , paymentDate , tenant_id , invoice_id ) VALUES (1,27.27,'2016-07-29',1,1);
-INSERT INTO  paymentwater  ( id , paymentAmount , paymentDate , tenant_id , invoice_id ) VALUES (2,68.18,'2016-07-29',3,1);
-INSERT INTO  paymentwater  ( id , paymentAmount , paymentDate , tenant_id , invoice_id ) VALUES (3,54.55,'2016-07-29',4,1);
+INSERT INTO  payment  ( id , paymentAmount , paymentDate , tenant_id , invoice_id ) VALUES (7,27.27,'2016-07-29',1,1);
+INSERT INTO  payment  ( id , paymentAmount , paymentDate , tenant_id , invoice_id ) VALUES (8,68.18,'2016-07-29',3,1);
+INSERT INTO  payment  ( id , paymentAmount , paymentDate , tenant_id , invoice_id ) VALUES (9,54.55,'2016-07-29',4,1);
 
 
-INSERT INTO  settings  ( id , correctDivision , garbage , IPaymentDao , internet , waterHeatingSystem ) VALUES (1,'1','0','1','0','SHARED_GAS');
+INSERT INTO  settings  ( id , garbage , gas, internet , waterHeatingSystem ) VALUES (1,'1','1','0','SHARED_GAS');

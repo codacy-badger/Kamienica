@@ -18,7 +18,6 @@ public class PaymentServiceTest extends ServiceTest {
         assertEquals(3, paymentService.getPaymentList(Media.ENERGY).size());
         assertEquals(3, paymentService.getPaymentList(Media.GAS).size());
         assertEquals(3, paymentService.getPaymentList(Media.WATER).size());
-
     }
 
 

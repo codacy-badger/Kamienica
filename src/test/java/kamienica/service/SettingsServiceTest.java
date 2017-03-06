@@ -14,7 +14,7 @@ public class SettingsServiceTest extends ServiceTest {
     public void getList() {
         Settings settings = settingsService.getSettings();
 
-        assertEquals(true, settings.isCorrectDivision());
+        assertEquals(true, settings.isGarbage());
 
     }
 
@@ -24,13 +24,5 @@ public class SettingsServiceTest extends ServiceTest {
 
     }
 
-    @Test
-    @Transactional
-    public void changeResolvementState() {
-        settingsService.changeDivisionState(false);
-        assertEquals(false, settingsService.isDivisionCorrect());
-        settingsService.changeDivisionState(true);
-        assertEquals(true, settingsService.isDivisionCorrect());
-    }
 
 }

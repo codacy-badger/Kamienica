@@ -56,7 +56,6 @@ public class DivisionServiceImpl implements IDivisionService {
     @Override
     public void deleteAll() {
         divisionDAO.deleteAll();
-        settingsDao.changeDivisionState(false);
     }
 
     @Override
@@ -66,7 +65,6 @@ public class DivisionServiceImpl implements IDivisionService {
             div.setDate(date);
             divisionDAO.save(div);
         }
-        settingsDao.changeDivisionState(true);
     }
 
     @Override
@@ -110,9 +108,5 @@ public class DivisionServiceImpl implements IDivisionService {
         return tmp;
     }
 
-    @Override
-    public boolean isDivisionCorrect() {
-        return settingsDao.isDivisionCorrect();
-    }
 
 }

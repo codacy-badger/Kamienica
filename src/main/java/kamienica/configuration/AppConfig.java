@@ -3,6 +3,8 @@ package kamienica.configuration;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.datatype.joda.JodaModule;
 import kamienica.model.conventer.*;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
 import org.springframework.context.annotation.Bean;
@@ -34,6 +36,8 @@ import java.util.List;
 @ComponentScan(basePackages = "kamienica.*")
 public class AppConfig extends WebMvcConfigurerAdapter {
 
+	private final static Logger LOG = LoggerFactory.getLogger(AppConfig.class);
+
 	public static final String VERSION = "1.2";
 	@Autowired
 	private ReadingConverter readingConverter;
@@ -62,6 +66,7 @@ public class AppConfig extends WebMvcConfigurerAdapter {
 		resolvers.add(jsonViewResolver());
 		resolvers.add(viewResolver());
 		resolver.setViewResolvers(resolvers);
+		LOG.info("Setting resolvers", resolver);
 		return resolver;
 	}
 
@@ -113,6 +118,7 @@ public class AppConfig extends WebMvcConfigurerAdapter {
 		registry.addConverter(apartmentConverter);
 		registry.addConverter(meterEnergyConverter);
 		registry.addConverter(tenantConverter);
+		LOG.info("Setting entity formatters", registry);
 
 	}
 

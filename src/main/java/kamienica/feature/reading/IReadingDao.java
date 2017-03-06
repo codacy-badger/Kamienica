@@ -20,13 +20,6 @@ public interface IReadingDao extends BasicDao<Reading> {
     List<Reading> getListForTenant(Apartment apartment);
 
     List<Reading> list(ReadingDetails details);
-    /**
-     * @return List<ReadingAbsract>
-	 * 
-	 *         Returns list of unresolved reading for main counter. This list is
-	 *         used for new Incoives
-	 */
-    List<Reading> getUnresolvedReadings(Media media, Residence r);
 
     void changeResolvementState(Invoice invoice, boolean resolved);
 

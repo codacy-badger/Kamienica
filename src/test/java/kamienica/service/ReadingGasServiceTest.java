@@ -92,17 +92,6 @@ public class ReadingGasServiceTest extends ServiceTest {
         }
     }
 
-    @Test
-    @Ignore("deprecated method. For delete")
-    public void getUnresolved() {
-        List<Reading> list = readingService.getUnresolvedReadings(Media.GAS, residence);
-        assertEquals(2, list.size());
-        assertEquals(TWENTYNINGTH_JULY, list.get(0).getReadingDetails().getReadingDate());
-        assertEquals(true, list.get(0).getMeter().isMain());
-        assertEquals(FIRST_OCTOBER, list.get(1).getReadingDetails().getReadingDate());
-
-    }
-
     @Transactional
     @Test
     public void firstReadingForANewMeter() throws NoMainCounterException {

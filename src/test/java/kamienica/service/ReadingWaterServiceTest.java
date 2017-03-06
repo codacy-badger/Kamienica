@@ -93,19 +93,6 @@ public class ReadingWaterServiceTest extends ServiceTest {
         }
     }
 
-    @Test
-    @Ignore("deprecated, to be removed")
-    public void getUnresolved() {
-        List<Reading> list = readingService.getUnresolvedReadings(Media.WATER, residenceService.getById(RESIDENCE_ID));
-        assertEquals(2, list.size());
-        assertEquals("2016-07-01", list.get(0).getReadingDetails().getReadingDate().toString());
-        assertEquals(true, list.get(0).getMeter().isMain());
-        assertEquals("2016-09-01", list.get(1).getReadingDetails().toString());
-
-    }
-
-
-    //(String description, String serialNumber, String unit, Apartment apartment, Residence residence, boolean main, Status status, boolean cwu, boolean isWarmWater, Media media
     @Transactional
     @Test
     public void firstReadingForANewMeter() throws NoMainCounterException {

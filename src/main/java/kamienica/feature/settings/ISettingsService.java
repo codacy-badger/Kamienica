@@ -8,7 +8,4 @@ public interface ISettingsService {
 
 	void save(Settings settings);
 
-	boolean isDivisionCorrect();
-
-	void changeDivisionState(boolean state);
 }

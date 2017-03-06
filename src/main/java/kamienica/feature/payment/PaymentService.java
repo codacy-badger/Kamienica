@@ -22,13 +22,13 @@ public class PaymentService implements IPaymentService {
 
     @Override
     public List<Payment> getPaymentList(Media media) {
-        return paymentDao.getList();
+        return paymentDao.getList(media);
     }
 
 
     @Override
     public List<Payment> getPaymentForTenant(Tenant tenant, Media media) {
-        return paymentDao.getPaymentForTenant(tenant);
+        return paymentDao.getPaymentForTenant(tenant, media);
     }
 
 }

@@ -34,9 +34,6 @@ public interface IReadingService  {
     @Deprecated
     List<Reading> latestEdit(Residence r, Media media);
 
-    @Deprecated
-    List<Reading> getUnresolvedReadings(Media media, Residence r);
-
     void deleteLatestReadings(final Residence r, Media media);
 
 }

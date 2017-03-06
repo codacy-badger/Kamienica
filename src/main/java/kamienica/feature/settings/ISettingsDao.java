@@ -6,7 +6,5 @@ import kamienica.model.entity.Settings;
 
 public interface ISettingsDao extends BasicDao<Settings> {
 
-	boolean isDivisionCorrect();
 
-	void changeDivisionState(boolean state);
 }
