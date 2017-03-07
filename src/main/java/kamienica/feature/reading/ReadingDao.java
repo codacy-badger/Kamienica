@@ -110,11 +110,11 @@ public class ReadingDao extends BasicDaoImpl<Reading> implements IReadingDao {
 
     @Override
     @SuppressWarnings("unchecked")
-    public List<Reading> getWaterReadingForGasConsumption(final Residence r, final LocalDate date) {
-        String queryString = "SELECT * FROM readingwater where readingdate = "
+    public List<Reading> getWaterReadingForGasConsumption(final Residence r, final ReadingDetails details) {
+        String queryString = "SELECT * FROM reading where readingdate = "
                 + "(select MAX(readingdate) from readingwater where readingdate < :date) AND residence_id = :r";
         Query query = getSession().createSQLQuery(queryString).addEntity(persistentClass).setDate("date",
-                date.toDate()).setLong("r", r.getId());
+                details.getReadingDate().toDate()).setLong("r", r.getId());
 
         return query.list();
     }

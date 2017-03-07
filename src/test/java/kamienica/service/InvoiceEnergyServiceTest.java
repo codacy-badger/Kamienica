@@ -14,6 +14,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 import static org.powermock.api.mockito.PowerMockito.mockStatic;
 import static org.powermock.api.mockito.PowerMockito.when;
 
@@ -94,9 +95,11 @@ public class InvoiceEnergyServiceTest extends ServiceTest {
     @Transactional
     @Test
     public void remove() {
-        invoiceService.delete(1L);
-        List<ReadingDetails> list = readingDetailsService.getUnresolved( r, Media.ENERGY);
-        assertEquals(3, list.size());
+        invoiceService.delete(3L);
+        List<ReadingDetails> details = readingDetailsService.getUnresolved( r, Media.ENERGY);
+        List<Invoice> invoices = invoiceService.list(Media.ENERGY);
+        assertTrue(invoices.isEmpty());
+        assertEquals(3, details.size());
 
     }
 

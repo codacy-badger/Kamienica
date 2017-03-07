@@ -27,5 +27,5 @@ public interface IReadingDao extends BasicDao<Reading> {
 
     LocalDate getLatestDate(Residence r, Media m);
 
-    List<Reading> getWaterReadingForGasConsumption(Residence r, LocalDate date);
+    List<Reading> getWaterReadingForGasConsumption(Residence r,ReadingDetails details);
 }

@@ -89,10 +89,12 @@ public class InvoiceService implements IInvoiceService {
 
     @Override
     public void delete(Long id) {
-        Invoice invoice;
-        invoice = invoiceDao.getById(id);
+        final Invoice invoice = invoiceDao.getById(id);
+        final ReadingDetails details = invoice.getReadingDetails();
+        details.setResolvement(Resolvement.UNRESOLVED);
+
+        readingDetailsDao.update(details);
         paymentDao.deleteForInvoice(invoice);
-        readingDao.changeResolvementState(invoice, false);
         invoiceDao.deleteById(id);
     }
 
@@ -167,12 +169,12 @@ public class InvoiceService implements IInvoiceService {
                 Media.GAS);
         List<MediaUsage> usageGas;
         if (settings.getWaterHeatingSystem().equals(WaterHeatingSystem.SHARED_GAS)) {
-
+            ReadingDetails readingDetails = readingDetailsDao.getLatestPriorToDate(invoice.getReadingDetails().getReadingDate(), invoice.getResidence(), Media.WATER);
             List<Reading> waterNew = readingDao
-                    .getWaterReadingForGasConsumption(invoice.getResidence(), invoice.getReadingDetails().getReadingDate());
+                    .getWaterReadingForGasConsumption(invoice.getResidence(), invoice.getReadingDetails());
 
-            List<Reading> waterOld = readingDao
-                    .getWaterReadingForGasConsumption(invoice.getResidence(), waterNew.get(0).getReadingDetails().getReadingDate());
+            List<Reading> waterOld = readingDao.findByCriteria(Restrictions.eq("readingDetails", readingDetails));
+                   // .getWaterReadingForGasConsumption(invoice.getResidence(), waterNew.get(0).getReadingDetails().getReadingDate());
 
             usageGas = GasConsumptionCalculator.countConsumption(apartments, ReadingOld, ReadingNew, waterOld,
                     waterNew);
@@ -193,7 +195,7 @@ public class InvoiceService implements IInvoiceService {
         }
     }
 
-    private  void saveEnergy(Invoice invoice, List<Apartment> apartments, List<Tenant> tenants, List<Division> division) {
+    private void saveEnergy(Invoice invoice, List<Apartment> apartments, List<Tenant> tenants, List<Division> division) {
         final LocalDate baseReadingDate = invoice.getReadingDetails().getReadingDate();
         final Residence r = apartments.get(0).getResidence();
 

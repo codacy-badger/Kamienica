@@ -18,6 +18,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
@@ -93,13 +94,16 @@ public class ReadingService implements IReadingService {
     }
 
 
-
     @Override
     public List<Reading> getPreviousReading(LocalDate date, List<Meter> meters) {
         //TODO very bas solution but this method gets kicked soon anyway so no point of refactoring it
         final Media m = meters.get(0).getMedia();
-        List<ReadingDetails> details = readingDetailsDao.findByCriteria(Order.desc("readingDate"), Restrictions.lt("readingDate", date) , Restrictions.eq("media", m));
-        return readingDao.findByCriteria(Restrictions.in("meter", meters), Restrictions.eq("readingDetails", details.get(0)));
+        List<ReadingDetails> details = readingDetailsDao.findByCriteria(Order.desc("readingDate"), Restrictions.lt("readingDate", date), Restrictions.eq("media", m));
+        if (details.isEmpty()) {
+            return new ArrayList<>();
+        } else {
+            return readingDao.findByCriteria(Restrictions.in("meter", meters), Restrictions.eq("readingDetails", details.get(0)));
+        }
         //return readingDao.getPrevious(details.get(0), meters);
     }
 
