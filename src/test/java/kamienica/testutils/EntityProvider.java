@@ -4,7 +4,6 @@ import kamienica.model.entity.*;
 import kamienica.model.enums.Media;
 import kamienica.model.enums.Resolvement;
 import kamienica.model.enums.Status;
-import kamienica.model.enums.UserRole;
 import org.joda.time.LocalDate;
 
 import java.util.ArrayList;

@@ -2,7 +2,10 @@ package kamienica.service;
 
 import kamienica.configuration.ServiceTest;
 import kamienica.core.util.SecurityDetails;
-import kamienica.model.entity.*;
+import kamienica.model.entity.Invoice;
+import kamienica.model.entity.Payment;
+import kamienica.model.entity.ReadingDetails;
+import kamienica.model.entity.Residence;
 import kamienica.model.enums.Media;
 import kamienica.model.exception.InvalidDivisionException;
 import org.joda.time.LocalDate;
@@ -14,17 +17,16 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.fail;
 import static org.powermock.api.mockito.PowerMockito.mockStatic;
 import static org.powermock.api.mockito.PowerMockito.when;
 
 public class InvoiceWaterServiceTest extends ServiceTest {
 
-    private Tenant t;
     private Residence r;
 
     @Before
     public void initData() {
-        t = tenantService.getById(1L);
         r = residenceService.getById(1L);
     }
 
@@ -123,6 +125,7 @@ public class InvoiceWaterServiceTest extends ServiceTest {
     @Test
     @Ignore("not implemented yet")
     public void shouldNotBeAbleToInsertInvoiceWithSameDateResidenceAndMedia() {
+        fail();
     }
 
     @Test

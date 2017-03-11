@@ -1,7 +1,6 @@
 package kamienica.feature.apartment;
 
 import kamienica.core.util.SecurityDetails;
-import kamienica.feature.settings.ISettingsDao;
 import kamienica.model.entity.Apartment;
 import kamienica.model.entity.Residence;
 import org.springframework.beans.factory.annotation.Autowired;

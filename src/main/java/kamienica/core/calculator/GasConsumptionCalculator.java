@@ -103,12 +103,10 @@ public class GasConsumptionCalculator {
                         }
                     }
                     if (!gasOld.isEmpty()) {
-                        if (!gasOld.get(i).getMeter().isCwu()) {
-                            if (gasOld.get(i).getMeter().getApartment() != null) {
-                                if (gasOld.get(i).getMeter().getApartment().getApartmentNumber() == m
-                                        .getApartmentNumber()) {
-                                    sumPrevious = sumPrevious + gasOld.get(i).getValue();
-                                }
+                        if (!gasOld.get(i).getMeter().isCwu() && gasOld.get(i).getMeter().getApartment() != null) {
+                            if (gasOld.get(i).getMeter().getApartment().getApartmentNumber() == m
+                                    .getApartmentNumber()) {
+                                sumPrevious = sumPrevious + gasOld.get(i).getValue();
                             }
                         }
                     }
@@ -146,12 +144,10 @@ public class GasConsumptionCalculator {
             }
         }
         for (Reading o : oldReading) {
-            if (o.getMeter().getApartment() != null && o.getMeter().getApartment().getApartmentNumber() != 0) {
-                if (o.getMeter().isWarmWater()) {
-                    double consumption = output.get(o.getMeter().getApartment().getApartmentNumber());
-                    consumption = consumption - o.getValue();
-                    output.put(o.getMeter().getApartment().getApartmentNumber(), consumption);
-                }
+            if (o.getMeter().getApartment() != null && o.getMeter().getApartment().getApartmentNumber() != 0 && o.getMeter().isWarmWater()) {
+                double consumption = output.get(o.getMeter().getApartment().getApartmentNumber());
+                consumption = consumption - o.getValue();
+                output.put(o.getMeter().getApartment().getApartmentNumber(), consumption);
             }
         }
         return output;

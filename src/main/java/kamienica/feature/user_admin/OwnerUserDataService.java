@@ -1,11 +1,12 @@
 package kamienica.feature.user_admin;
 
-import kamienica.core.util.CommonUtils;
 import kamienica.feature.apartment.IApartmentDao;
-import kamienica.feature.invoice.IInvoiceDao;
 import kamienica.feature.reading.IReadingDao;
 import kamienica.feature.settings.ISettingsDao;
-import kamienica.model.entity.*;
+import kamienica.model.entity.Apartment;
+import kamienica.model.entity.Reading;
+import kamienica.model.entity.SecurityUser;
+import kamienica.model.entity.Tenant;
 import kamienica.model.enums.Media;
 import org.joda.time.LocalDate;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,14 +21,11 @@ import java.util.List;
 @Transactional
 public class OwnerUserDataService implements IOwnerUserDataService {
 
-    private final ISettingsDao settingsDao;
     private final IApartmentDao apartmentDao;
     private final IReadingDao readingDao;
-    private final LocalDate now = new LocalDate();
 
     @Autowired
-    public OwnerUserDataService(ISettingsDao settingsDao, IApartmentDao apartmentDao, IReadingDao readingDao) {
-        this.settingsDao = settingsDao;
+    public OwnerUserDataService(IApartmentDao apartmentDao, IReadingDao readingDao) {
         this.apartmentDao = apartmentDao;
         this.readingDao = readingDao;
     }
@@ -42,7 +40,7 @@ public class OwnerUserDataService implements IOwnerUserDataService {
     }
 
     private void checkConfig(HashMap<String, Object> model) {
-        List<Settings> list = settingsDao.getList();
+      //  List<Settings> list = settingsDao.getList();
             model.put("settings", "BRAK USTAWIEŃ.... Nie ma już algoruytmu podzialui");
     }
 
@@ -95,13 +93,13 @@ public class OwnerUserDataService implements IOwnerUserDataService {
 
     }
 
-    private int countDays(LocalDate energyDate) {
-        if (energyDate != null) {
-            return CommonUtils.countDaysBetween(energyDate, now);
-        }
-        return 999;
-
-    }
+//    private int countDays(LocalDate energyDate) {
+//        if (energyDate != null) {
+//            return CommonUtils.countDaysBetween(energyDate, now);
+//        }
+//        return 999;
+//
+//    }
 
     @Override
     public List<Reading> getReadingEnergyForTenant(Apartment aparmtent) {

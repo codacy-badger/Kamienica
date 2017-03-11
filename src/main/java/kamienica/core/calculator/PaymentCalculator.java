@@ -40,12 +40,6 @@ public class PaymentCalculator {
         return listToReturn;
     }
 
-    private static void validateDivision(List<Division> division) throws InvalidDivisionException {
-        if (division == null || division.size() == 0) {
-            throw new InvalidDivisionException();
-        }
-    }
-
     private static double sumUsage(List<MediaUsage> listaZuzycia) {
         double suma = 0;
         for (MediaUsage i : listaZuzycia) {

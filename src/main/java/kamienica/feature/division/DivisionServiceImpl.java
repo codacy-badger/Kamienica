@@ -2,7 +2,6 @@ package kamienica.feature.division;
 
 import kamienica.core.util.CommonUtils;
 import kamienica.feature.apartment.IApartmentDao;
-import kamienica.feature.settings.ISettingsDao;
 import kamienica.feature.tenant.ITenantDao;
 import kamienica.model.entity.Apartment;
 import kamienica.model.entity.Division;
@@ -27,14 +26,12 @@ public class DivisionServiceImpl implements IDivisionService {
     private final IDivisionDao divisionDAO;
     private final ITenantDao tenantDAO;
     private final IApartmentDao apartmentDAO;
-    private final ISettingsDao settingsDao;
 
     @Autowired
-    public DivisionServiceImpl(IDivisionDao divisionDAO, ITenantDao tenantDAO, IApartmentDao apartmentDAO, ISettingsDao settingsDao) {
+    public DivisionServiceImpl(IDivisionDao divisionDAO, ITenantDao tenantDAO, IApartmentDao apartmentDAO) {
         this.divisionDAO = divisionDAO;
         this.tenantDAO = tenantDAO;
         this.apartmentDAO = apartmentDAO;
-        this.settingsDao = settingsDao;
     }
 
     @Override
