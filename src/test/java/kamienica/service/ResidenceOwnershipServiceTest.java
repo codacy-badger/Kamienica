@@ -2,8 +2,7 @@ package kamienica.service;
 
 import kamienica.configuration.ServiceTest;
 import kamienica.core.util.SecurityDetails;
-import kamienica.model.ResidenceOwnership;
-import kamienica.model.Tenant;
+import kamienica.model.entity.ResidenceOwnership;
 import org.junit.Ignore;
 import org.junit.Test;
 
@@ -14,10 +13,8 @@ import static org.powermock.api.mockito.PowerMockito.when;
 
 public class ResidenceOwnershipServiceTest extends ServiceTest {
 
-
-
     @Test
-    public void listForOwner() throws Exception {
+    public void listForOwner() {
         when(SecurityDetails.getLoggedTenant()).thenReturn(getOwner());
         final List<ResidenceOwnership> result = residenceOwnershipService.list();
         assertEquals(1, result.size());
@@ -27,7 +24,7 @@ public class ResidenceOwnershipServiceTest extends ServiceTest {
 
     @Ignore("must add admin")
     @Test
-    public void listForAdmin() throws Exception {
+    public void listForAdmin() {
         final List<ResidenceOwnership> result = residenceOwnershipService.list();
         assertEquals(1, result.size());
     }

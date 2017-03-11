@@ -400,7 +400,7 @@ DROP TABLE IF EXISTS `readingenergy`;
 CREATE TABLE `readingenergy` (
   `id` bigint(20) NOT NULL AUTO_INCREMENT,
   `readingDate` date NOT NULL,
-  `resolved` bit(1) DEFAULT NULL,
+  `resolvement` bit(1) DEFAULT NULL,
   `value` double NOT NULL,
   `unit` varchar(255) NOT NULL,
   `meter_id` bigint(20) DEFAULT NULL,
@@ -430,7 +430,7 @@ DROP TABLE IF EXISTS `readinggas`;
 CREATE TABLE `readinggas` (
   `id` bigint(20) NOT NULL AUTO_INCREMENT,
   `readingDate` date NOT NULL,
-  `resolved` bit(1) DEFAULT NULL,
+  `resolvement` bit(1) DEFAULT NULL,
   `value` double NOT NULL,
   `unit` varchar(255) NOT NULL,
   `meter_id` bigint(20) DEFAULT NULL,
@@ -460,7 +460,7 @@ DROP TABLE IF EXISTS `readingwater`;
 CREATE TABLE `readingwater` (
   `id` bigint(20) NOT NULL AUTO_INCREMENT,
   `readingDate` date NOT NULL,
-  `resolved` bit(1) DEFAULT NULL,
+  `resolvement` bit(1) DEFAULT NULL,
   `value` double NOT NULL,
   `unit` varchar(255) NOT NULL,
   `meter_id` bigint(20) DEFAULT NULL,
@@ -518,7 +518,7 @@ CREATE TABLE `settings` (
   `id` bigint(20) NOT NULL AUTO_INCREMENT,
   `correctDivision` bit(1) NOT NULL,
   `garbage` bit(1) NOT NULL,
-  `gas` bit(1) NOT NULL,
+  `IPaymentDao` bit(1) NOT NULL,
   `internet` bit(1) NOT NULL,
   `waterHeatingSystem` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`id`)

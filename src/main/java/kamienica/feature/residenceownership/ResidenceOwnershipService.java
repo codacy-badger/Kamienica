@@ -1,18 +1,52 @@
 package kamienica.feature.residenceownership;
 
-import kamienica.model.ResidenceOwnership;
-import kamienica.model.Tenant;
+import kamienica.core.util.SecurityDetails;
+import kamienica.model.entity.ResidenceOwnership;
+import kamienica.model.entity.Tenant;
+import kamienica.model.enums.UserRole;
+import org.hibernate.criterion.Criterion;
+import org.hibernate.criterion.Restrictions;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
-public interface ResidenceOwnershipService {
+@Service
+@Transactional
+public class ResidenceOwnershipService implements IResidenceOwnershipService {
 
-    List<ResidenceOwnership> list();
+    private final IResidenceOwnershipDao residenceOwnershipDao;
 
-    void delete(Long id);
+    @Autowired
+    public ResidenceOwnershipService(IResidenceOwnershipDao residenceOwnershipDao) {
+        this.residenceOwnershipDao = residenceOwnershipDao;
+    }
 
-    void save(ResidenceOwnership residenceOwnership, Tenant tenant);
+    @Override
+    public List<ResidenceOwnership> list() {
+        final Tenant t = SecurityDetails.getLoggedTenant();
+        if (t.getRole().equals(UserRole.OWNER)) {
+            Criterion forOwner = Restrictions.eq("owner", t);
+            return residenceOwnershipDao.findByCriteria(forOwner);
+        } else {
+            return residenceOwnershipDao.getList();
+        }
+    }
 
-    void update(ResidenceOwnership residenceOwnership);
+    @Override
+    public void delete(Long id) {
+        residenceOwnershipDao.delete(id);
+    }
 
+    @Override
+    public void save(final ResidenceOwnership residenceOwnership, final Tenant tenant) {
+
+        residenceOwnershipDao.save(residenceOwnership);
+    }
+
+    @Override
+    public void update(final ResidenceOwnership residenceOwnership) {
+        residenceOwnershipDao.update(residenceOwnership);
+    }
 }

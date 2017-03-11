@@ -1,6 +1,6 @@
 package kamienica.controller.jsp;
 
-import kamienica.core.enums.Media;
+import kamienica.model.enums.Media;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;

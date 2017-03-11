@@ -1,9 +1,9 @@
 package kamienica.feature.user_admin;
 
-import kamienica.core.enums.Media;
-import kamienica.feature.payment.PaymentService;
-import kamienica.model.Apartment;
-import kamienica.model.Tenant;
+import kamienica.feature.payment.IPaymentService;
+import kamienica.model.entity.Apartment;
+import kamienica.model.entity.Tenant;
+import kamienica.model.enums.Media;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Controller;
@@ -19,11 +19,11 @@ import java.util.Objects;
 public class UserController {
 
 	@Autowired
-	private PaymentService paymentService;
+	private IPaymentService IPaymentService;
 	@Autowired
 	private SecurityServiceImpl securityService;
 	@Autowired
-	private OwnerUserDataService ownerUserDataService;
+	private IOwnerUserDataService ownerUserDataService;
 
 	// ===========OWNER===========================================
 	@RequestMapping("/Admin/home")
@@ -76,9 +76,9 @@ public class UserController {
 		Map<String, Object> model = new HashMap<>();
 		final Tenant tenant = ownerUserDataService.getLoggedTenant();
 
-		model.put("energy", paymentService.getPaymentForTenant(tenant, Media.ENERGY));
-		model.put("water", paymentService.getPaymentForTenant(tenant, Media.GAS));
-		model.put("gas", paymentService.getPaymentForTenant(tenant, Media.WATER));
+		model.put("energy", IPaymentService.getPaymentForTenant(tenant, Media.ENERGY));
+		model.put("water", IPaymentService.getPaymentForTenant(tenant, Media.GAS));
+		model.put("gas", IPaymentService.getPaymentForTenant(tenant, Media.WATER));
 
 		return new ModelAndView("/User/UserPayment", "model", model);
 	}

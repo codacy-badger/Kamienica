@@ -1,9 +1,9 @@
 package kamienica.service;
 
 import kamienica.configuration.ServiceTest;
-import kamienica.core.enums.Media;
-import kamienica.model.Payment;
-import kamienica.model.Tenant;
+import kamienica.model.entity.Payment;
+import kamienica.model.entity.Tenant;
+import kamienica.model.enums.Media;
 import org.junit.Test;
 
 import java.util.List;
@@ -18,14 +18,13 @@ public class PaymentServiceTest extends ServiceTest {
         assertEquals(3, paymentService.getPaymentList(Media.ENERGY).size());
         assertEquals(3, paymentService.getPaymentList(Media.GAS).size());
         assertEquals(3, paymentService.getPaymentList(Media.WATER).size());
-
     }
 
 
     @Test
     public void getEnergyForTenant() {
         final Tenant TENANT = tenantService.getById(1L);
-        List<Payment> result = (List<Payment>) paymentService.getPaymentForTenant(TENANT, Media.ENERGY);
+        List<Payment> result = paymentService.getPaymentForTenant(TENANT, Media.ENERGY);
         assertEquals(1, result.size());
         assertEquals(88.67, result.get(0).getPaymentAmount(), DELTA);
     }
@@ -34,7 +33,7 @@ public class PaymentServiceTest extends ServiceTest {
     @Test
     public void getGasForTenant() {
         final Tenant TENANT = tenantService.getById(1L);
-        List<Payment> result = (List<Payment>) paymentService.getPaymentForTenant(TENANT, Media.GAS);
+        List<Payment> result = paymentService.getPaymentForTenant(TENANT, Media.GAS);
         assertEquals(1, result.size());
         assertEquals(38.63, result.get(0).getPaymentAmount(), DELTA);
     }
@@ -43,7 +42,7 @@ public class PaymentServiceTest extends ServiceTest {
     @Test
     public void getWaterForTenant() {
         final Tenant TENANT = tenantService.getById(1L);
-        List<Payment> result = (List<Payment>) paymentService.getPaymentForTenant(TENANT, Media.WATER);
+        List<Payment> result = paymentService.getPaymentForTenant(TENANT, Media.WATER);
         assertEquals(1, result.size());
         assertEquals(27.27, result.get(0).getPaymentAmount(), DELTA);
     }

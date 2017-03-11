@@ -1,20 +1,21 @@
 package kamienica.configuration;
 
 import kamienica.core.util.SecurityDetails;
-import kamienica.feature.apartment.ApartmentService;
-import kamienica.feature.division.DivisionService;
-import kamienica.feature.invoice.InvoiceService;
-import kamienica.feature.meter.MeterService;
-import kamienica.feature.payment.PaymentService;
-import kamienica.feature.reading.ReadingService;
-import kamienica.feature.residence.ResidenceService;
-import kamienica.feature.residenceownership.ResidenceOwnershipService;
-import kamienica.feature.settings.SettingsService;
-import kamienica.feature.tenant.TenantService;
-import kamienica.feature.user_admin.OwnerUserDataService;
+import kamienica.feature.apartment.IApartmentService;
+import kamienica.feature.invoice.IInvoiceService;
+import kamienica.feature.meter.IMeterService;
+import kamienica.feature.payment.IPaymentService;
+import kamienica.feature.reading.IReadingService;
+import kamienica.feature.readingdetails.IReadingDetailsService;
+import kamienica.feature.residence.IResidenceService;
+import kamienica.feature.residenceownership.IResidenceOwnershipService;
+import kamienica.feature.settings.ISettingsService;
+import kamienica.feature.tenant.ITenantService;
+import kamienica.feature.user_admin.IOwnerUserDataService;
 import kamienica.feature.user_admin.SecurityServiceImpl;
-import kamienica.model.Residence;
-import kamienica.model.Tenant;
+import kamienica.model.entity.Payment;
+import kamienica.model.entity.Residence;
+import kamienica.model.entity.Tenant;
 import org.joda.time.LocalDate;
 import org.junit.BeforeClass;
 import org.junit.runner.RunWith;
@@ -39,45 +40,41 @@ public abstract class ServiceTest {
 
     protected static final long RESIDENCE_ID = 1L;
     @Autowired
-    protected TenantService tenantService;
+    protected ITenantService tenantService;
     @Autowired
-    protected ApartmentService apartmentService;
+    protected IApartmentService apartmentService;
     @Autowired
-    protected SettingsService settingsService;
+    protected ISettingsService settingsService;
     @Autowired
-    protected DivisionService divisionService;
+    protected IPaymentService paymentService;
     @Autowired
-    protected PaymentService paymentService;
+    protected IInvoiceService invoiceService;
     @Autowired
-    protected InvoiceService invoiceService;
+    protected IReadingService readingService;
     @Autowired
-    protected ReadingService readingService;
-    @Autowired
-    protected MeterService meterService;
+    protected IMeterService meterService;
     @Autowired
     protected SecurityServiceImpl securityService;
     @Autowired
-    protected OwnerUserDataService ownerUserDataService;
+    protected IOwnerUserDataService ownerUserDataService;
     @Autowired
-    protected ResidenceService residenceService;
+    protected IResidenceService residenceService;
     @Autowired
-    protected ResidenceOwnershipService residenceOwnershipService;
-
+    protected IResidenceOwnershipService residenceOwnershipService;
+    @Autowired
+    protected IReadingDetailsService readingDetailsService;
     /**
      * difference factor for calculated data
      */
     protected final double DELTA = 0.5;
-
     protected static final LocalDate TODAY = new LocalDate();
     protected final static String FIRST_OWNER_MAIL = "owner@res1";
-
+    protected final static Long RES_1_OWNER_ID = 1L;
 
     @BeforeClass
     public static void init() throws SQLException {
-//        Server.main();
         mockStatic(SecurityDetails.class);
     }
-
 
     protected List<Residence> getMockedResidences() {
         List<Residence> residences = new ArrayList<>();
@@ -89,4 +86,15 @@ public abstract class ServiceTest {
         return tenantService.getById(1L);
     }
 
+    protected Residence getOWnersResidence() {
+        return residenceService.getById(RESIDENCE_ID);
+    }
+
+    protected double countTotalPayment(List<Payment> paymentList) {
+        double result = 0;
+        for (Payment p : paymentList) {
+            result += p.getPaymentAmount();
+        }
+        return result;
+    }
 }

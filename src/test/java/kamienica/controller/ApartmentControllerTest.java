@@ -19,14 +19,14 @@
 //import org.testng.annotations.BeforeClass;
 //import org.testng.annotations.Testing;
 //
-//import kamienica.model.Apartment;
+//import kamienica.model.entity.Apartment;
 //import kamienica.feature.apartment.ApartmentController;
-//import kamienica.feature.apartment.ApartmentService;
+//import kamienica.feature.apartment.IApartmentService;
 //import kamienica.testutils.SetupMethods;
 //
 //public class ApartmentControllerTest {
 //	@Mock
-//	ApartmentService service;
+//	IApartmentService service;
 //
 //	@Mock
 //	MessageSource message;

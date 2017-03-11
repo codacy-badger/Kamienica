@@ -1,14 +1,13 @@
 package kamienica.service;
 
 import kamienica.configuration.ServiceTest;
-import kamienica.core.enums.Status;
-import kamienica.core.enums.UserRole;
-import kamienica.model.Apartment;
-import kamienica.model.Tenant;
+import kamienica.model.entity.Apartment;
+import kamienica.model.entity.Tenant;
+import kamienica.model.enums.Status;
+import kamienica.model.enums.UserRole;
 import org.hibernate.criterion.Criterion;
 import org.hibernate.criterion.Restrictions;
 import org.joda.time.LocalDate;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -88,23 +87,6 @@ public class TenantServiceTest extends ServiceTest {
         assertEquals(Status.INACTIVE, newOwner.getStatus());
     }
 
-    @Transactional
-    @Test
-    @Ignore("Removing division")
-    public void divisionShouldBecomeIncorrectAfterRemovingTenant() {
-        tenantService.deleteById(2L);
-        boolean resultedState = settingsService.isDivisionCorrect();
-        assertEquals(false, resultedState);
-    }
-
-    @Ignore("Please check why this fails")
-    @Transactional
-    @Test
-    public void whyFails() {
-        tenantService.deleteById(3L);
-        boolean resultedState = settingsService.isDivisionCorrect();
-        assertEquals(false, resultedState);
-    }
 
     private Tenant createTenant(LocalDate localDate) {
         final Apartment apartment = apartmentService.getById(2L);

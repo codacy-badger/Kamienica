@@ -1,15 +1,16 @@
 package kamienica.service;
 
 import kamienica.configuration.ServiceTest;
-import kamienica.core.enums.Media;
 import kamienica.core.util.SecurityDetails;
-import kamienica.model.MeterGas;
-import kamienica.model.Residence;
-import org.joda.time.LocalDate;
+import kamienica.model.entity.Meter;
+import kamienica.model.entity.Residence;
+import kamienica.model.enums.Media;
+import kamienica.model.enums.Status;
 import org.junit.Test;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Set;
 
 import static org.junit.Assert.assertEquals;
 import static org.powermock.api.mockito.PowerMockito.mockStatic;
@@ -28,22 +29,24 @@ public class MeterGasServiceTest extends ServiceTest {
 
     @Test
     public void getList() {
-        List<MeterGas> list = meterService.list(Media.GAS);
+        List<Meter> list = meterService.list(Media.GAS);
         assertEquals(7, list.size());
     }
 
     @Transactional
     @Test
-    public void getActiveMeters() {
+    public void deactivateMeter() {
         final Residence r = residenceService.getById(1L);
-        assertEquals(6, meterService.getIdListForActiveMeters(r, Media.GAS).size());
-        MeterGas meter = meterService.getById(4L, Media.GAS);
-        meter.setDeactivation(LocalDate.now().minusDays(1));
-        meterService.update(meter, Media.GAS);
-
-        assertEquals(5, meterService.getIdListForActiveMeters(r, Media.GAS).size());
+        final Set<Long> meters = meterService.getIdListForActiveMeters(r, Media.GAS);
+        assertEquals(6, meters.size());
+        Meter meter = meterService.getById(17L);
+        meter.setStatus(Status.INACTIVE);
+        meterService.update(meter);
+        final Set<Long> metersId = meterService.getIdListForActiveMeters(r, Media.GAS);
+        assertEquals(5, metersId.size());
 
     }
+
     @Test
     public void ifMainExcists() {
         final boolean result = meterService.ifMainExists(Media.GAS);
@@ -54,8 +57,8 @@ public class MeterGasServiceTest extends ServiceTest {
     @Test
     @Transactional
     public void delete() {
-        meterService.delete(5L, Media.GAS);
-        final MeterGas deleted = meterService.getById(5L, Media.GAS);
-        assertEquals(TODAY, deleted.getDeactivation());
+        meterService.delete(5L);
+        final Meter deleted = meterService.getById(5L);
+        assertEquals(Status.INACTIVE, deleted.getStatus());
     }
 }

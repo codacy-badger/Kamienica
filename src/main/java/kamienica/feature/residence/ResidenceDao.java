@@ -1,8 +1,8 @@
 package kamienica.feature.residence;
 
-import kamienica.core.daoservice.BasicDao;
-import kamienica.model.Residence;
-import kamienica.model.Tenant;
+import kamienica.model.entity.Residence;
+import kamienica.model.entity.Tenant;
+import kamienica.model.jpa.dao.BasicDao;
 
 import java.util.List;
 

@@ -1,14 +1,28 @@
 package kamienica.feature.apartment;
 
-import kamienica.core.daoservice.BasicDao;
-import kamienica.model.Apartment;
-import kamienica.model.Residence;
+import kamienica.model.entity.Apartment;
+import kamienica.model.entity.Residence;
+import kamienica.model.jpa.dao.BasicDaoImpl;
+import org.hibernate.Query;
+import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
-public interface ApartmentDao extends BasicDao<Apartment> {
+@Repository("apartmentDao")
+public class ApartmentDao extends BasicDaoImpl<Apartment> implements IApartmentDao {
 
-	int getNumOfEmptyApartment();
+    //TODO change the method - add owner as the main parameter
+    private static final String COUNT_EMPTY_APARTMENTS = "SELECT count(*) FROM apartment WHERE NOT EXISTS (SELECT * FROM tenant WHERE apartment.id = tenant.apartment_id AND tenant.status='ACTIVE' ) and apartmentNumber > 0";
 
-	List<Apartment> getListForOwner(List<Residence> residences);
+    @Override
+    public int getNumOfEmptyApartment() {
+        Query query = getSession().createSQLQuery(COUNT_EMPTY_APARTMENTS);
+        return ((Number) query.uniqueResult()).intValue();
+    }
+
+    @Override
+    public List<Apartment> getListForOwner(List<Residence> residences) {
+        return findForResidence(residences);
+    }
+
 }

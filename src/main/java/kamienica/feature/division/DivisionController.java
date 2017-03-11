@@ -1,11 +1,11 @@
 package kamienica.feature.division;
 
-import kamienica.core.exception.WrongDivisionInputException;
-import kamienica.feature.apartment.ApartmentService;
-import kamienica.feature.tenant.TenantService;
-import kamienica.model.Apartment;
-import kamienica.model.Division;
-import kamienica.model.Tenant;
+import kamienica.feature.apartment.IApartmentService;
+import kamienica.feature.tenant.ITenantService;
+import kamienica.model.entity.Apartment;
+import kamienica.model.entity.Division;
+import kamienica.model.entity.Tenant;
+import kamienica.model.exception.WrongDivisionInputException;
 import org.joda.time.LocalDate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -24,11 +24,11 @@ import java.util.Map;
 public class DivisionController {
 
 	@Autowired
-	private ApartmentService apartmentService;
+	private IApartmentService apartmentService;
 	@Autowired
-	private TenantService tenantService;
+	private ITenantService tenantService;
 	@Autowired
-	private DivisionService divisionService;
+	private IDivisionService divisionService;
 
 	@RequestMapping("/divisionRegister")
 	public ModelAndView divisionRegister(@ModelAttribute("divisionForm") DivisionForm divisionForm,
@@ -71,9 +71,6 @@ public class DivisionController {
 		divisionForm.setDivisionList(divisionService.getList());
 		List<Tenant> tenants = tenantService.getActiveTenants();
 		List<Apartment> apartments = apartmentService.list();
-		if (!divisionService.isDivisionCorrect()) {
-			model.put("error", "Podział jest nieaktualny. Proszę zaktualizować dane ");
-		}
 		model.put("tenantList", tenants);
 		model.put("apartment", apartments);
 		model.put("divisionForm", divisionForm);

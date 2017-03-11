@@ -1,12 +1,12 @@
 package kamienica.feature.division;
 
-import kamienica.core.daoservice.BasicDaoImpl;
-import kamienica.model.Division;
+import kamienica.model.entity.Division;
+import kamienica.model.jpa.dao.BasicDaoImpl;
 import org.hibernate.Query;
 import org.springframework.stereotype.Repository;
 
 @Repository("divisionDao")
-public class DivisionDaoImpl extends BasicDaoImpl<Division> implements DivisionDao {
+public class DivisionDaoImpl extends BasicDaoImpl<Division> implements IDivisionDao {
 
 	@Override
 	public void deleteAll() {

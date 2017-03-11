@@ -1,6 +1,6 @@
 package kamienica.feature.settings;
 
-import kamienica.model.Settings;
+import kamienica.model.entity.Settings;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -9,12 +9,12 @@ import java.util.List;
 
 @Service
 @Transactional
-public class SettingsServiceImpl implements SettingsService {
+public class SettingsServiceImpl implements ISettingsService {
 
-	private final SettingsDao dao;
+	private final ISettingsDao dao;
 
 	@Autowired
-	public SettingsServiceImpl(SettingsDao dao) {
+	public SettingsServiceImpl(ISettingsDao dao) {
 		this.dao = dao;
 	}
 
@@ -34,17 +34,6 @@ public class SettingsServiceImpl implements SettingsService {
 		} else {
 			dao.update(settings);
 		}
-
-	}
-
-	@Override
-	public boolean isDivisionCorrect() {
-		return dao.isDivisionCorrect();
-	}
-
-	@Override
-	public void changeDivisionState(boolean state) {
-		dao.changeDivisionState(state);
 
 	}
 

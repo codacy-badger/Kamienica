@@ -1,11 +1,10 @@
 package kamienica.service;
 
 import kamienica.configuration.ServiceTest;
-import kamienica.core.enums.Media;
 import kamienica.core.util.SecurityDetails;
-import kamienica.model.*;
+import kamienica.model.entity.*;
+import kamienica.model.enums.Media;
 import org.hibernate.exception.ConstraintViolationException;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -40,7 +39,7 @@ public class ResidenceServiceTest extends ServiceTest {
         final List<Apartment> ap = apartmentService.list();
         assertEquals(6, ap.size());
 
-        final List<MeterEnergy> meterEnergies = meterService.getListForOwner(Media.ENERGY);
+        final List<Meter> meterEnergies = meterService.getListForOwner(Media.ENERGY);
         assertEquals(5, meterEnergies.size());
 
     }
@@ -94,13 +93,6 @@ public class ResidenceServiceTest extends ServiceTest {
 
         final List<Residence> residences = residenceService.listForOwner();
         assertEquals(1, residences.size());
-    }
-
-    @Test
-    @Ignore
-    public void getListForAdmin() {
-        final List<Residence> residences = residenceService.getList();
-        assertEquals(2, residences.size());
     }
 
     @Test

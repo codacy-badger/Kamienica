@@ -1,15 +1,14 @@
 package kamienica.feature.division;
 
-import kamienica.core.enums.Status;
-import kamienica.core.exception.WrongDivisionInputException;
 import kamienica.core.util.CommonUtils;
-import kamienica.feature.apartment.ApartmentDao;
-import kamienica.feature.settings.SettingsDao;
-import kamienica.feature.tenant.TenantDao;
-import kamienica.model.Apartment;
-import kamienica.model.Division;
-import kamienica.model.Residence;
-import kamienica.model.Tenant;
+import kamienica.feature.apartment.IApartmentDao;
+import kamienica.feature.tenant.ITenantDao;
+import kamienica.model.entity.Apartment;
+import kamienica.model.entity.Division;
+import kamienica.model.entity.Residence;
+import kamienica.model.entity.Tenant;
+import kamienica.model.enums.Status;
+import kamienica.model.exception.WrongDivisionInputException;
 import org.hibernate.criterion.Criterion;
 import org.hibernate.criterion.Restrictions;
 import org.joda.time.LocalDate;
@@ -22,19 +21,17 @@ import java.util.List;
 
 @Service
 @Transactional
-public class DivisionServiceImpl implements DivisionService {
+public class DivisionServiceImpl implements IDivisionService {
 
-    private final DivisionDao divisionDAO;
-    private final TenantDao tenantDAO;
-    private final ApartmentDao apartmentDAO;
-    private final SettingsDao settingsDao;
+    private final IDivisionDao divisionDAO;
+    private final ITenantDao tenantDAO;
+    private final IApartmentDao apartmentDAO;
 
     @Autowired
-    public DivisionServiceImpl(DivisionDao divisionDAO, TenantDao tenantDAO, ApartmentDao apartmentDAO, SettingsDao settingsDao) {
+    public DivisionServiceImpl(IDivisionDao divisionDAO, ITenantDao tenantDAO, IApartmentDao apartmentDAO) {
         this.divisionDAO = divisionDAO;
         this.tenantDAO = tenantDAO;
         this.apartmentDAO = apartmentDAO;
-        this.settingsDao = settingsDao;
     }
 
     @Override
@@ -56,7 +53,6 @@ public class DivisionServiceImpl implements DivisionService {
     @Override
     public void deleteAll() {
         divisionDAO.deleteAll();
-        settingsDao.changeDivisionState(false);
     }
 
     @Override
@@ -66,7 +62,6 @@ public class DivisionServiceImpl implements DivisionService {
             div.setDate(date);
             divisionDAO.save(div);
         }
-        settingsDao.changeDivisionState(true);
     }
 
     @Override
@@ -110,9 +105,5 @@ public class DivisionServiceImpl implements DivisionService {
         return tmp;
     }
 
-    @Override
-    public boolean isDivisionCorrect() {
-        return settingsDao.isDivisionCorrect();
-    }
 
 }

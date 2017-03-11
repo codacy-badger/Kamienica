@@ -1,8 +1,8 @@
 package kamienica.dao;
 
 import kamienica.configuration.JUnitConfig;
-import kamienica.feature.apartment.ApartmentDao;
-import kamienica.model.Apartment;
+import kamienica.feature.apartment.IApartmentDao;
+import kamienica.model.entity.Apartment;
 import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -15,7 +15,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 public class ApartmentDaolmplTest {
 
 	@Autowired
-    ApartmentDao apartemtnDao;
+	IApartmentDao apartemtnDao;
 
 	@Test
 	@Ignore
@@ -23,7 +23,6 @@ public class ApartmentDaolmplTest {
 		//TODO work out daoservice layer
 
 		Apartment ap = apartemtnDao.getById(1L);
-
 	}
 
 

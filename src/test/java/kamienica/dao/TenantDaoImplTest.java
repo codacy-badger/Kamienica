@@ -11,18 +11,18 @@
 //import org.testng.Assert;
 //import org.testng.annotations.Testing;
 //
-//import kamienica.model.Apartment;
-//import kamienica.feature.apartment.ApartmentDao;
-//import kamienica.model.Tenant;
-//import kamienica.feature.tenant.TenantDao;
+//import kamienica.model.entity.Apartment;
+//import kamienica.feature.apartment.IApartmentDao;
+//import kamienica.model.entity.Tenant;
+//import kamienica.feature.tenant.ITenantDao;
 //import kamienica.feature.tenant.Status;
 //
 //public class TenantDaoImplTest extends EntityDaoImplTest {
 //
 //	@Autowired
-//	TenantDao daoservice;
+//	ITenantDao daoservice;
 //	@Autowired
-//	ApartmentDao apDao;
+//	IApartmentDao apDao;
 //
 //	@Testing(expectedExceptions = javax.validation.ConstraintViolationException.class)
 //	public void saveNull() {

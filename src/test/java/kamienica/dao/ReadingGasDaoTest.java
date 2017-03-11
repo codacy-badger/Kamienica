@@ -7,16 +7,16 @@
 //import org.testng.Assert;
 //import org.testng.annotations.Testing;
 //
-//import kamienica.model.Apartment;
+//import kamienica.model.entity.Apartment;
 //import kamienica.model.InvoiceGas;
 //import kamienica.feature.meter.MeterGas;
-//import kamienica.feature.reading.ReadingDao;
+//import kamienica.feature.reading.IReadingDao;
 //import kamienica.model.ReadingGas;
 //
 //public class ReadingGasDaoTest extends EntityDaoImplTest {
 //
 //	@Autowired
-//	ReadingDao<ReadingGas, InvoiceGas> daoservice;
+//	IReadingDao<ReadingGas, InvoiceGas> daoservice;
 //	@Autowired
 //	BasicDao<MeterGas> meterDAO;
 //

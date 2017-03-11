@@ -1,7 +1,7 @@
 package kamienica.feature.division;
 
-import kamienica.model.Apartment;
-import kamienica.model.Division;
+import kamienica.model.entity.Apartment;
+import kamienica.model.entity.Division;
 
 import java.util.List;
 
