@@ -14,6 +14,7 @@ import kamienica.feature.settings.ISettingsService;
 import kamienica.feature.tenant.ITenantService;
 import kamienica.feature.user_admin.OwnerUserDataService;
 import kamienica.feature.user_admin.SecurityServiceImpl;
+import kamienica.model.entity.Payment;
 import kamienica.model.entity.Residence;
 import kamienica.model.entity.Tenant;
 import org.h2.tools.Server;
@@ -92,5 +93,13 @@ public abstract class ServiceTest {
 
     protected Residence getOWnersResidence() {
         return residenceService.getById(RESIDENCE_ID);
+    }
+
+    protected double countTotalPayment(List<Payment> paymentList) {
+        double result = 0;
+        for (Payment p : paymentList) {
+            result += p.getPaymentAmount();
+        }
+        return result;
     }
 }

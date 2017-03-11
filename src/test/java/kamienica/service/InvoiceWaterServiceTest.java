@@ -45,11 +45,11 @@ public class InvoiceWaterServiceTest extends ServiceTest {
         when(SecurityDetails.getLoggedTenant()).thenReturn(getOwner());
         when(SecurityDetails.getResidencesForOwner()).thenReturn(getMockedResidences());
 
-        List<ReadingDetails> list = readingDetailsService.getUnresolved( r, Media.ENERGY);
+        List<ReadingDetails> list = readingDetailsService.getUnresolved( r, Media.WATER);
         assertEquals(2, list.size());
         Invoice invoice = new Invoice("112233", TODAY, 200, r, list.get(1), Media.WATER);
 
-        invoiceService.save(invoice, Media.WATER, t, r);
+        invoiceService.save(invoice);
         when(SecurityDetails.getLoggedTenant()).thenReturn(tenantService.getById(1L));
         assertEquals(2, invoiceService.list(Media.WATER).size());
         List<Payment> paymentList = paymentService.getPaymentList(Media.WATER);
@@ -60,7 +60,7 @@ public class InvoiceWaterServiceTest extends ServiceTest {
         assertEquals(52.38, paymentList.get(4).getPaymentAmount(), DELTA);
         assertEquals(109.52, paymentList.get(5).getPaymentAmount(), DELTA);
 
-       list = readingDetailsService.getUnresolved( r, Media.ENERGY);
+       list = readingDetailsService.getUnresolved( r, Media.WATER);
         assertEquals(1, list.size());
         assertEquals(LocalDate.parse("2016-07-01"), list.get(0).getReadingDate());
     }
@@ -71,23 +71,22 @@ public class InvoiceWaterServiceTest extends ServiceTest {
         mockStatic(SecurityDetails.class);
         when(SecurityDetails.getLoggedTenant()).thenReturn(getOwner());
         when(SecurityDetails.getResidencesForOwner()).thenReturn(getMockedResidences());
-        List<ReadingDetails> list = readingDetailsService.getUnresolved( r, Media.ENERGY);
+        List<ReadingDetails> list = readingDetailsService.getUnresolved( r, Media.WATER);
 
         assertEquals(2, list.size());
         Invoice invoice = new Invoice("112233", TODAY, 200, r, list.get(0), Media.WATER);
 
-        invoiceService.save(invoice, Media.WATER, t, r);
+        invoiceService.save(invoice);
         when(SecurityDetails.getLoggedTenant()).thenReturn(tenantService.getById(1L));
         assertEquals(2, invoiceService.list(Media.WATER).size());
         List<Payment> paymentList = paymentService.getPaymentList(Media.WATER);
 
         assertEquals(6, paymentList.size());
-
         assertEquals(36.36, paymentList.get(3).getPaymentAmount(), DELTA);
         assertEquals(72.72, paymentList.get(4).getPaymentAmount(), DELTA);
         assertEquals(90.90, paymentList.get(5).getPaymentAmount(), DELTA);
 
-        list = readingDetailsService.getUnresolved( r, Media.ENERGY);
+        list = readingDetailsService.getUnresolved( r, Media.WATER);
         assertEquals(1, list.size());
         assertEquals(LocalDate.parse("2016-09-01"), list.get(0).getReadingDate());
     }
@@ -96,7 +95,7 @@ public class InvoiceWaterServiceTest extends ServiceTest {
     @Transactional
     public void remove() {
         invoiceService.delete(1L);
-        List<ReadingDetails> list = readingDetailsService.getUnresolved( r, Media.ENERGY);
+        List<ReadingDetails> list = readingDetailsService.getUnresolved( r, Media.WATER);
         assertEquals(3, list.size());
 
     }
@@ -126,21 +125,10 @@ public class InvoiceWaterServiceTest extends ServiceTest {
     public void shouldNotBeAbleToInsertInvoiceWithSameDateResidenceAndMedia() {
     }
 
-
-    @Transactional
-    @Test(expected = InvalidDivisionException.class)
-    public void prepareForRegistrationWithException() throws InvalidDivisionException {
-        Apartment ap = new Apartment(78, "1234", "dummy", residenceService.getById(1L));
-        apartmentService.save(ap);
-        List<ReadingDetails> list = readingDetailsService.getUnresolved( r, Media.ENERGY);
-        assertEquals(2, list.size());
-    }
-
     @Test
     public void prepareForRegistration() throws InvalidDivisionException {
         // apService.deleteByID(5L);
-        List<ReadingDetails> list = readingDetailsService.getUnresolved( r, Media.ENERGY);
-
+        List<ReadingDetails> list = readingDetailsService.getUnresolved( r, Media.WATER);
         assertEquals(2, list.size());
     }
 

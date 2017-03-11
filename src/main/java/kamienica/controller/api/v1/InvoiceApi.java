@@ -50,9 +50,10 @@ public class InvoiceApi extends AbstractApi {
             return new ResponseEntity<>(message, HttpStatus.UNPROCESSABLE_ENTITY);
         }
 
-        final Tenant t = ownerUserDataService.getLoggedTenant();
         final Residence r = residenceService.getById(residenceId);
-        invoiceService.save(invoice, Media.ENERGY, t, r);
+        invoice.setResidence(r);
+        invoice.setMedia(Media.ENERGY);
+        invoiceService.save(invoice);
 
         return new ResponseEntity<>(invoice, HttpStatus.OK);
     }
@@ -65,9 +66,10 @@ public class InvoiceApi extends AbstractApi {
             return new ResponseEntity<>(message, HttpStatus.UNPROCESSABLE_ENTITY);
         }
 
-        final Tenant t = ownerUserDataService.getLoggedTenant();
         final Residence r = residenceService.getById(residenceId);
-        invoiceService.save(invoice, Media.GAS, t, r);
+        invoice.setResidence(r);
+        invoice.setMedia(Media.GAS);
+        invoiceService.save(invoice);
 
         return new ResponseEntity<>(invoice, HttpStatus.OK);
     }
@@ -80,8 +82,9 @@ public class InvoiceApi extends AbstractApi {
             return new ResponseEntity<>(message, HttpStatus.UNPROCESSABLE_ENTITY);
         }
         final Residence r = residenceService.getById(residenceId);
-        final Tenant t = ownerUserDataService.getLoggedTenant();
-        invoiceService.save(invoice, Media.WATER, t, r);
+        invoice.setResidence(r);
+        invoice.setMedia(Media.ENERGY);
+        invoiceService.save(invoice);
 
         return new ResponseEntity<>(invoice, HttpStatus.OK);
     }

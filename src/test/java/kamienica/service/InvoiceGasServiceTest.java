@@ -48,7 +48,7 @@ public class InvoiceGasServiceTest extends ServiceTest {
         assertEquals(2, list.size());
         Invoice invoice = new Invoice("112233", TODAY, 200, r, list.get(1), Media.GAS);
 
-        invoiceService.save(invoice, Media.GAS, t, r);
+        invoiceService.save(invoice);
         assertEquals(2, invoiceService.list(Media.GAS).size());
         List<Payment> paymentList = paymentService.getPaymentList(Media.GAS);
 
@@ -75,11 +75,10 @@ public class InvoiceGasServiceTest extends ServiceTest {
         assertEquals(2, list.size());
         Invoice invoice = new Invoice("112233", TODAY, 200, r, list.get(0), Media.GAS);
 
-        invoiceService.save(invoice, Media.GAS, t, r);
+        invoiceService.save(invoice);
         assertEquals(2, invoiceService.list(Media.GAS).size());
 
         List<Payment> paymentList = paymentService.getPaymentList(Media.GAS);
-
         assertEquals(6, paymentList.size());
 
         assertEquals(28.27, paymentList.get(3).getPaymentAmount(), DELTA);
@@ -91,6 +90,8 @@ public class InvoiceGasServiceTest extends ServiceTest {
         assertEquals(LocalDate.parse("2016-10-01"), list.get(0).getReadingDate());
 
     }
+
+
 
     @Test
     @Transactional
@@ -106,7 +107,7 @@ public class InvoiceGasServiceTest extends ServiceTest {
         assertEquals(2, list.size());
         Invoice invoice = new Invoice("112233", TODAY, 200, r, list.get(0), Media.GAS);
 
-        invoiceService.save(invoice, Media.GAS, t, r);
+        invoiceService.save(invoice);
         assertEquals(2, invoiceService.list(Media.GAS).size());
         List<Payment> paymentList = paymentService.getPaymentList(Media.GAS);
 
@@ -130,20 +131,9 @@ public class InvoiceGasServiceTest extends ServiceTest {
         assertEquals(2, list.size());
     }
 
-
     @Test
     @Ignore("not implemented yet")
     public void shouldNotBeAbleToInsertInvoiceWithSameDateResidenceAndMedia() {}
-
-
-    @Transactional
-    @Test(expected = InvalidDivisionException.class)
-    public void prepareForRegistrationWithException() throws InvalidDivisionException {
-        Apartment ap = new Apartment(78, "1234", "dummy", residenceService.getById(1L));
-        apartmentService.save(ap);
-        List<ReadingDetails> list = readingDetailsService.getUnresolved( r, Media.GAS);
-        assertEquals(2, list.size());
-    }
 
     @Transactional
     @Test

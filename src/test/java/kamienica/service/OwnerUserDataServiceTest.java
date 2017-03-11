@@ -17,6 +17,8 @@ import java.util.Map;
 
 import static org.junit.Assert.*;
 
+
+@Ignore("Owner and Admin serives will be separated")
 public class OwnerUserDataServiceTest extends ServiceTest {
 
 
@@ -71,13 +73,13 @@ public class OwnerUserDataServiceTest extends ServiceTest {
         assertEquals(daysFromLastReading, map.get("readingDays"));
     }
 
-    @Test
+    @Test @Ignore("Method will be re-implemented after table merging")
     public void settingShouldBenull() {
         map = ownerUserDataService.getMainData();
         assertNull(map.get("settings"));
     }
 
-    @Test
+    @Test @Ignore("Method will be re-implemented after table merging")
     public void getListsForTenants() {
         Apartment apartment = apartmentService.getById(2L);
         List<Reading> energy = ownerUserDataService.getReadingEnergyForTenant(apartment);

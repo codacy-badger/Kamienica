@@ -8,7 +8,7 @@ import kamienica.model.entity.Reading;
 
 import java.util.List;
 
-public interface ConsumptionCalculator {
+public interface IConsumptionCalculator {
 
     List<MediaUsage> calculateConsumption(List<Apartment> apartments, List<Reading> readings) throws NegativeConsumptionValue, UsageCalculationException;
 }

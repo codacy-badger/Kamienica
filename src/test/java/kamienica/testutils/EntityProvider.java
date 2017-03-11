@@ -6,9 +6,12 @@ import kamienica.model.enums.Resolvement;
 import kamienica.model.enums.Status;
 import kamienica.model.enums.UserRole;
 import org.joda.time.LocalDate;
+import org.junit.Test;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import static org.junit.Assert.assertEquals;
 
 public class EntityProvider {
 

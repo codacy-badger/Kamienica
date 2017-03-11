@@ -103,13 +103,11 @@ public class WaterConsumptionCalculator {
         double output = 0;
 
         for (Reading o : newReadings) {
-            if (o.getMeter().isWarmWater()) ;
-            output += o.getValue();
+            if (o.getMeter().isWarmWater()) output += o.getValue();
         }
 
         for (Reading o : oldReadings) {
-            if (o.getMeter().isWarmWater())
-                output = output - o.getValue();
+            if (o.getMeter().isWarmWater()) output = output - o.getValue();
         }
 
         return output;

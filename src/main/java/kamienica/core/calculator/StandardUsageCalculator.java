@@ -17,8 +17,8 @@ import java.util.function.Predicate;
 /**
  * Standard calculation method
  */
-@Component
-public class StandardUsageCalculator implements ConsumptionCalculator {
+@Component(value = "standard")
+public class StandardUsageCalculator implements IConsumptionCalculator {
 
     private LocalDate latestDate;
     private LocalDate previousDate;

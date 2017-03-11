@@ -52,7 +52,7 @@ public class InvoiceEnergyServiceTest extends ServiceTest {
 
         Invoice invoice = new Invoice("112233", TODAY, 200, r, list.get(1), Media.ENERGY);
 
-        invoiceService.save(invoice, Media.ENERGY, t, r);
+        invoiceService.save(invoice);
         assertEquals(2, invoiceService.list(Media.ENERGY).size());
         List<Payment> paymentList = paymentService.getPaymentList(Media.ENERGY);
 
@@ -77,7 +77,7 @@ public class InvoiceEnergyServiceTest extends ServiceTest {
         assertEquals(2, details.size());
 
         Invoice invoice = new Invoice("34", new LocalDate(), 200, r, details.get(0), Media.ENERGY);
-        invoiceService.save(invoice, Media.ENERGY, t, r);
+        invoiceService.save(invoice);
         assertEquals(2, invoiceService.list(Media.ENERGY).size());
         List<Payment> paymentList = paymentService.getPaymentList(Media.ENERGY);
 

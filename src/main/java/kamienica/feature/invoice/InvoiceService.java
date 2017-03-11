@@ -65,7 +65,10 @@ public class InvoiceService implements IInvoiceService {
 
     @SuppressWarnings("unchecked")
     @Override
-    public void save(final Invoice invoice, final Media media, final Tenant tenant, final Residence residence) {
+    public void save(final Invoice invoice) {
+        final Residence residence = invoice.getResidence();
+        final Media media = invoice.getMedia();
+
         final List<Apartment> apartments = apartmentDao.findByCriteria(Restrictions.eq("residence", residence));
         final List<Tenant> tenants = tenantDao.findByCriteria(Restrictions.in("apartment", apartments), Restrictions.eq("status", Status.ACTIVE));
         final List<Division> division = divisionService.createDivisionForResidence(residence);
@@ -169,11 +172,12 @@ public class InvoiceService implements IInvoiceService {
                 Media.GAS);
         List<MediaUsage> usageGas;
         if (settings.getWaterHeatingSystem().equals(WaterHeatingSystem.SHARED_GAS)) {
-            ReadingDetails readingDetails = readingDetailsDao.getLatestPriorToDate(invoice.getReadingDetails().getReadingDate(), invoice.getResidence(), Media.WATER);
-            List<Reading> waterNew = readingDao
-                    .getWaterReadingForGasConsumption(invoice.getResidence(), invoice.getReadingDetails());
-
-            List<Reading> waterOld = readingDao.findByCriteria(Restrictions.eq("readingDetails", readingDetails));
+            ReadingDetails readingDetailsNew = readingDetailsDao.getLatestPriorToDate(invoice.getReadingDetails().getReadingDate(), invoice.getResidence(), Media.WATER);
+            ReadingDetails readingDetailsOld = readingDetailsDao.getLatestPriorToDate(readingDetailsNew.getReadingDate(), invoice.getResidence(), Media.WATER);
+            //List<Reading> waterNew = readingDao
+             //       .getWaterReadingForGasConsumption(invoice.getResidence(), invoice.getReadingDetails());
+            List<Reading> waterNew = readingDao.findByCriteria(Restrictions.eq("readingDetails", readingDetailsNew));
+            List<Reading> waterOld = readingDao.findByCriteria(Restrictions.eq("readingDetails", readingDetailsOld));
                    // .getWaterReadingForGasConsumption(invoice.getResidence(), waterNew.get(0).getReadingDetails().getReadingDate());
 
             usageGas = GasConsumptionCalculator.countConsumption(apartments, ReadingOld, ReadingNew, waterOld,

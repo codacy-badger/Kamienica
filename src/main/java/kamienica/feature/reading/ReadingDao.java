@@ -22,7 +22,8 @@ public class ReadingDao extends BasicDaoImpl<Reading> implements IReadingDao {
     private static final String COUNT_LAST_READING_DAYS = "SELECT DATEDIFF(CURDATE() , readingDate) FROM %s order by readingDate desc limit 1;";
     private static final String DELETE_LATEST = "delete from  %s where readingDate=:date and resolved=:res";
     private static final String CHANGE_RESOLVEMENT = "update %s set resolved= :res where readingDate = :paramdate";
-    private static final String LIST_FOR_TENANT = "select * from readingenergy where meter_id IN(select id from meterenergy where apartment_id IN(SELECT id FROM apartment where apartmentnumber IN(0, :num))) order by readingDate desc;";
+    //TODO what the hell is this...
+    private static final String LIST_FOR_TENANT = "select * from reading where meter_id IN(select id from meter where apartment_id IN(SELECT id FROM apartment where apartmentnumber IN(0, :num)));";
 
     @Override
     @SuppressWarnings("unchecked")
