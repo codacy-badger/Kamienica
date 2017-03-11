@@ -1,11 +1,11 @@
 package kamienica.controller.api.v1;
 
-import kamienica.model.enums.Media;
 import kamienica.core.util.SecurityDetails;
 import kamienica.feature.payment.IPaymentService;
-import kamienica.feature.user_admin.OwnerUserDataService;
+import kamienica.feature.user_admin.IOwnerUserDataService;
 import kamienica.feature.user_admin.SecurityServiceImpl;
 import kamienica.model.entity.*;
+import kamienica.model.enums.Media;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -25,7 +25,7 @@ public class AdminUserRestController {
 	@Autowired
 	private SecurityServiceImpl userDetailsService;
 	@Autowired
-	private OwnerUserDataService ownerUserDataService;
+	private IOwnerUserDataService ownerUserDataService;
 
 	// =====================USER===========================================
 	@RequestMapping(value = "/users", method = RequestMethod.GET)

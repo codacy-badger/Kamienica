@@ -1,10 +1,7 @@
 package kamienica.feature.settings;
 
-import kamienica.model.jpa.dao.BasicDaoImpl;
 import kamienica.model.entity.Settings;
-import org.hibernate.Criteria;
-import org.hibernate.Query;
-import org.hibernate.criterion.Projections;
+import kamienica.model.jpa.dao.BasicDaoImpl;
 import org.springframework.stereotype.Repository;
 
 @Repository("settingsDao")

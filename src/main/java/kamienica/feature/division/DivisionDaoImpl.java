@@ -1,7 +1,7 @@
 package kamienica.feature.division;
 
-import kamienica.model.jpa.dao.BasicDaoImpl;
 import kamienica.model.entity.Division;
+import kamienica.model.jpa.dao.BasicDaoImpl;
 import org.hibernate.Query;
 import org.springframework.stereotype.Repository;
 

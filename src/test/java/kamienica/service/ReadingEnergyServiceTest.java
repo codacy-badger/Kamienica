@@ -8,11 +8,11 @@ import kamienica.model.enums.Status;
 import kamienica.model.exception.NoMainCounterException;
 import org.joda.time.LocalDate;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotEquals;
@@ -28,7 +28,7 @@ public class ReadingEnergyServiceTest extends ServiceTest {
 
     @Before
     public void initData() {
-        r = residenceService.getById(RESIDENCE_ID);
+        r = getOWnersResidence();
     }
 
 

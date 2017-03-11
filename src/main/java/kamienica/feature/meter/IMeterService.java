@@ -1,8 +1,8 @@
 package kamienica.feature.meter;
 
-import kamienica.model.enums.Media;
 import kamienica.model.entity.Meter;
 import kamienica.model.entity.Residence;
+import kamienica.model.enums.Media;
 
 import java.util.List;
 import java.util.Set;

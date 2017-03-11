@@ -1,9 +1,9 @@
 package kamienica.feature.tenant;
 
-import kamienica.model.jpa.dao.BasicDaoImpl;
-import kamienica.model.enums.Status;
 import kamienica.model.entity.Apartment;
 import kamienica.model.entity.Tenant;
+import kamienica.model.enums.Status;
+import kamienica.model.jpa.dao.BasicDaoImpl;
 import org.hibernate.Criteria;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.stereotype.Repository;

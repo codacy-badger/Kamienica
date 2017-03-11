@@ -1,14 +1,13 @@
 package kamienica.service;
 
 import kamienica.configuration.ServiceTest;
-import kamienica.model.enums.Status;
-import kamienica.model.enums.UserRole;
 import kamienica.model.entity.Apartment;
 import kamienica.model.entity.Tenant;
+import kamienica.model.enums.Status;
+import kamienica.model.enums.UserRole;
 import org.hibernate.criterion.Criterion;
 import org.hibernate.criterion.Restrictions;
 import org.joda.time.LocalDate;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.springframework.transaction.annotation.Transactional;
 

@@ -1,8 +1,8 @@
 package kamienica.feature.payment;
 
-import kamienica.model.enums.Media;
 import kamienica.model.entity.Payment;
 import kamienica.model.entity.Tenant;
+import kamienica.model.enums.Media;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;

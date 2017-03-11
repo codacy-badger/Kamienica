@@ -1,11 +1,11 @@
 package kamienica.service;
 
 import kamienica.configuration.ServiceTest;
-import kamienica.model.entity.Meter;
-import kamienica.model.enums.Media;
 import kamienica.core.util.SecurityDetails;
+import kamienica.model.entity.Meter;
 import kamienica.model.entity.Residence;
 import kamienica.model.entity.Tenant;
+import kamienica.model.enums.Media;
 import kamienica.model.enums.Status;
 import org.junit.Test;
 import org.springframework.transaction.annotation.Transactional;

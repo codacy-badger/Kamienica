@@ -1,11 +1,8 @@
 package kamienica.feature.invoice;
 
-import kamienica.model.enums.Media;
-import kamienica.model.exception.InvalidDivisionException;
 import kamienica.model.entity.Invoice;
-import kamienica.model.entity.Reading;
 import kamienica.model.entity.Residence;
-import kamienica.model.entity.Tenant;
+import kamienica.model.enums.Media;
 
 import java.util.List;
 import java.util.Map;

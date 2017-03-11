@@ -1,8 +1,8 @@
 package kamienica.feature.residence;
 
-import kamienica.model.jpa.dao.BasicDaoImpl;
 import kamienica.model.entity.Residence;
 import kamienica.model.entity.Tenant;
+import kamienica.model.jpa.dao.BasicDaoImpl;
 import org.hibernate.FetchMode;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.stereotype.Repository;

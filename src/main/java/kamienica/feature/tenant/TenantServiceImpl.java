@@ -1,11 +1,11 @@
 package kamienica.feature.tenant;
 
-import kamienica.feature.apartment.IApartmentDao;
-import kamienica.model.enums.Status;
-import kamienica.model.enums.UserRole;
 import kamienica.core.util.SecurityDetails;
+import kamienica.feature.apartment.IApartmentDao;
 import kamienica.model.entity.Apartment;
 import kamienica.model.entity.Tenant;
+import kamienica.model.enums.Status;
+import kamienica.model.enums.UserRole;
 import org.hibernate.criterion.Criterion;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;

@@ -1,15 +1,15 @@
 package kamienica.feature.division;
 
-import kamienica.feature.apartment.IApartmentDao;
-import kamienica.model.enums.Status;
-import kamienica.model.exception.WrongDivisionInputException;
 import kamienica.core.util.CommonUtils;
+import kamienica.feature.apartment.IApartmentDao;
 import kamienica.feature.settings.ISettingsDao;
 import kamienica.feature.tenant.ITenantDao;
 import kamienica.model.entity.Apartment;
 import kamienica.model.entity.Division;
 import kamienica.model.entity.Residence;
 import kamienica.model.entity.Tenant;
+import kamienica.model.enums.Status;
+import kamienica.model.exception.WrongDivisionInputException;
 import org.hibernate.criterion.Criterion;
 import org.hibernate.criterion.Restrictions;
 import org.joda.time.LocalDate;

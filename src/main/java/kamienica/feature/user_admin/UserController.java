@@ -1,9 +1,9 @@
 package kamienica.feature.user_admin;
 
 import kamienica.feature.payment.IPaymentService;
-import kamienica.model.enums.Media;
 import kamienica.model.entity.Apartment;
 import kamienica.model.entity.Tenant;
+import kamienica.model.enums.Media;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Controller;
@@ -23,7 +23,7 @@ public class UserController {
 	@Autowired
 	private SecurityServiceImpl securityService;
 	@Autowired
-	private OwnerUserDataService ownerUserDataService;
+	private IOwnerUserDataService ownerUserDataService;
 
 	// ===========OWNER===========================================
 	@RequestMapping("/Admin/home")

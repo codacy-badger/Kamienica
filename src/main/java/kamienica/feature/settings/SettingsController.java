@@ -1,7 +1,7 @@
 package kamienica.feature.settings;
 
-import kamienica.model.enums.WaterHeatingSystem;
 import kamienica.model.entity.Settings;
+import kamienica.model.enums.WaterHeatingSystem;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;

@@ -2,7 +2,6 @@ package kamienica.feature.reading;
 
 import kamienica.model.entity.*;
 import kamienica.model.enums.Media;
-import kamienica.model.enums.Resolvement;
 import kamienica.model.enums.Status;
 import kamienica.model.jpa.dao.BasicDaoImpl;
 import org.hibernate.Criteria;
@@ -18,9 +17,7 @@ import java.util.List;
 @Repository("readingDao")
 public class ReadingDao extends BasicDaoImpl<Reading> implements IReadingDao {
 
-    private static final String GET_PREVIOUS = "SELECT * FROM %1$s where readingDate=(SELECT max(readingDate) FROM %1$s WHERE readingDate < :date )  AND meter_id IN(:list)";
     private static final String COUNT_LAST_READING_DAYS = "SELECT DATEDIFF(CURDATE() , readingDate) FROM %s order by readingDate desc limit 1;";
-    private static final String DELETE_LATEST = "delete from  %s where readingDate=:date and resolved=:res";
     private static final String CHANGE_RESOLVEMENT = "update %s set resolved= :res where readingDate = :paramdate";
     //TODO what the hell is this...
     private static final String LIST_FOR_TENANT = "select * from reading where meter_id IN(select id from meter where apartment_id IN(SELECT id FROM apartment where apartmentnumber IN(0, :num)));";

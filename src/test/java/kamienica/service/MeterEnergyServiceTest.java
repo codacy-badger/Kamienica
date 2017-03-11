@@ -1,10 +1,10 @@
 package kamienica.service;
 
 import kamienica.configuration.ServiceTest;
-import kamienica.model.entity.Meter;
-import kamienica.model.enums.Media;
 import kamienica.core.util.SecurityDetails;
+import kamienica.model.entity.Meter;
 import kamienica.model.entity.Residence;
+import kamienica.model.enums.Media;
 import kamienica.model.enums.Status;
 import org.junit.Test;
 import org.springframework.transaction.annotation.Transactional;
@@ -61,7 +61,7 @@ public class MeterEnergyServiceTest extends ServiceTest {
     public void add() {
         Meter meter = createDummyMeter();
         meterService.save(meter);
-        Residence r = residenceService.getById(RESIDENCE_ID);
+        Residence r = getOWnersResidence();
         List<Meter> meters = meterService.list(r, Media.ENERGY);
         assertEquals(6, meters.size());
     }
@@ -104,7 +104,7 @@ public class MeterEnergyServiceTest extends ServiceTest {
     }
 
     private Meter createDummyMeter() {
-        final Residence r = residenceService.getById(RESIDENCE_ID);
+        final Residence r = getOWnersResidence();
         //String description, String serialNumber, String unit, Apartment apartment, Residence residence, boolean main, Status status, boolean cwu, boolean isWarmWater, Media media
         Meter m = new Meter("test", "test", "test", meterService.getById(3L).getApartment(), r, false, Status.ACTIVE, false, false, Media.ENERGY);
         m.setResidence(residenceService.getById(1L));

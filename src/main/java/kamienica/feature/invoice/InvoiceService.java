@@ -174,11 +174,8 @@ public class InvoiceService implements IInvoiceService {
         if (settings.getWaterHeatingSystem().equals(WaterHeatingSystem.SHARED_GAS)) {
             ReadingDetails readingDetailsNew = readingDetailsDao.getLatestPriorToDate(invoice.getReadingDetails().getReadingDate(), invoice.getResidence(), Media.WATER);
             ReadingDetails readingDetailsOld = readingDetailsDao.getLatestPriorToDate(readingDetailsNew.getReadingDate(), invoice.getResidence(), Media.WATER);
-            //List<Reading> waterNew = readingDao
-             //       .getWaterReadingForGasConsumption(invoice.getResidence(), invoice.getReadingDetails());
             List<Reading> waterNew = readingDao.findByCriteria(Restrictions.eq("readingDetails", readingDetailsNew));
             List<Reading> waterOld = readingDao.findByCriteria(Restrictions.eq("readingDetails", readingDetailsOld));
-                   // .getWaterReadingForGasConsumption(invoice.getResidence(), waterNew.get(0).getReadingDetails().getReadingDate());
 
             usageGas = GasConsumptionCalculator.countConsumption(apartments, ReadingOld, ReadingNew, waterOld,
                     waterNew);

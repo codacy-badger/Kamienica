@@ -14,15 +14,13 @@ import java.util.List;
 
 @Service
 @Transactional
-public class ApartmentServiceImpl implements IApartmentService {
+public class ApartmentService implements IApartmentService {
 
     private final IApartmentDao apartmentDAO;
-    private final ISettingsDao settingsDao;
 
     @Autowired
-    public ApartmentServiceImpl(IApartmentDao apartmentDAO, ISettingsDao settingsDao) {
+    public ApartmentService(IApartmentDao apartmentDAO) {
         this.apartmentDAO = apartmentDAO;
-        this.settingsDao = settingsDao;
     }
 
     @Override

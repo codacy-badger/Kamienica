@@ -2,7 +2,6 @@ package kamienica.configuration;
 
 import kamienica.core.util.SecurityDetails;
 import kamienica.feature.apartment.IApartmentService;
-import kamienica.feature.division.IDivisionService;
 import kamienica.feature.invoice.IInvoiceService;
 import kamienica.feature.meter.IMeterService;
 import kamienica.feature.payment.IPaymentService;
@@ -12,12 +11,11 @@ import kamienica.feature.residence.IResidenceService;
 import kamienica.feature.residenceownership.IResidenceOwnershipService;
 import kamienica.feature.settings.ISettingsService;
 import kamienica.feature.tenant.ITenantService;
-import kamienica.feature.user_admin.OwnerUserDataService;
+import kamienica.feature.user_admin.IOwnerUserDataService;
 import kamienica.feature.user_admin.SecurityServiceImpl;
 import kamienica.model.entity.Payment;
 import kamienica.model.entity.Residence;
 import kamienica.model.entity.Tenant;
-import org.h2.tools.Server;
 import org.joda.time.LocalDate;
 import org.junit.BeforeClass;
 import org.junit.runner.RunWith;
@@ -48,8 +46,6 @@ public abstract class ServiceTest {
     @Autowired
     protected ISettingsService settingsService;
     @Autowired
-    protected IDivisionService divisionService;
-    @Autowired
     protected IPaymentService paymentService;
     @Autowired
     protected IInvoiceService invoiceService;
@@ -60,7 +56,7 @@ public abstract class ServiceTest {
     @Autowired
     protected SecurityServiceImpl securityService;
     @Autowired
-    protected OwnerUserDataService ownerUserDataService;
+    protected IOwnerUserDataService ownerUserDataService;
     @Autowired
     protected IResidenceService residenceService;
     @Autowired
@@ -77,7 +73,6 @@ public abstract class ServiceTest {
 
     @BeforeClass
     public static void init() throws SQLException {
-//          Server.main();
         mockStatic(SecurityDetails.class);
     }
 

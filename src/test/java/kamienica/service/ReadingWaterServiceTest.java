@@ -8,11 +8,11 @@ import kamienica.model.enums.Status;
 import kamienica.model.exception.NoMainCounterException;
 import org.joda.time.LocalDate;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotEquals;
@@ -25,7 +25,7 @@ public class ReadingWaterServiceTest extends ServiceTest {
 
     @Before
     public void fetchResidence() {
-        r = residenceService.getById(RESIDENCE_ID);
+        r = getOWnersResidence();
     }
 
     @Test
@@ -101,8 +101,6 @@ public class ReadingWaterServiceTest extends ServiceTest {
         final Apartment ap = apartmentService.getById(2L);
         Meter meter = new Meter("test", "346767676", "unit", ap, ap.getResidence(), false, Status.ACTIVE, false, false, Media.WATER);
         meterService.save(meter);
-
-        final Residence r = residenceService.getById(RESIDENCE_ID);
 
         List<Reading> list = readingService.getLatestNew(r, Media.WATER);
         assertEquals(8, list.size());

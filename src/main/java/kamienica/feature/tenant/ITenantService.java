@@ -1,7 +1,7 @@
 package kamienica.feature.tenant;
 
-import kamienica.model.jpa.service.BasicService;
 import kamienica.model.entity.Tenant;
+import kamienica.model.jpa.service.BasicService;
 import org.hibernate.criterion.Criterion;
 
 import java.util.List;

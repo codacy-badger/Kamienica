@@ -1,9 +1,9 @@
 package kamienica.service;
 
 import kamienica.configuration.ServiceTest;
-import kamienica.model.enums.Media;
 import kamienica.model.entity.Payment;
 import kamienica.model.entity.Tenant;
+import kamienica.model.enums.Media;
 import org.junit.Test;
 
 import java.util.List;

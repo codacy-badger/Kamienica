@@ -1,9 +1,9 @@
 package kamienica.feature.residenceownership;
 
-import kamienica.model.enums.UserRole;
 import kamienica.core.util.SecurityDetails;
 import kamienica.model.entity.ResidenceOwnership;
 import kamienica.model.entity.Tenant;
+import kamienica.model.enums.UserRole;
 import org.hibernate.criterion.Criterion;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;

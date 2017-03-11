@@ -1,11 +1,11 @@
 package kamienica.feature.user_admin;
 
-import kamienica.feature.tenant.ITenantService;
-import kamienica.model.enums.Status;
 import kamienica.feature.residence.IResidenceService;
+import kamienica.feature.tenant.ITenantService;
 import kamienica.model.entity.Residence;
 import kamienica.model.entity.SecurityUser;
 import kamienica.model.entity.Tenant;
+import kamienica.model.enums.Status;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;

@@ -1,7 +1,7 @@
 package kamienica.feature.apartment;
 
-import kamienica.model.jpa.service.BasicService;
 import kamienica.model.entity.Apartment;
+import kamienica.model.jpa.service.BasicService;
 
 import java.util.List;
 

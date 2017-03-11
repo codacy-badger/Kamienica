@@ -8,11 +8,11 @@ import kamienica.model.enums.Status;
 import kamienica.model.exception.NoMainCounterException;
 import org.joda.time.LocalDate;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotEquals;
@@ -29,7 +29,7 @@ public class ReadingGasServiceTest extends ServiceTest {
 
     @Before
     public void initData() {
-        residence = residenceService.getById(RESIDENCE_ID);
+        residence =getOWnersResidence();
     }
 
     @Test
@@ -85,7 +85,7 @@ public class ReadingGasServiceTest extends ServiceTest {
     @SuppressWarnings("unchecked")
     @Test
     public void getByDate() {
-        final Residence r = residenceService.getById(RESIDENCE_ID);
+        final Residence r = residence;
         List<Reading> list =  readingService.getByDate(r, FIRST_JULY, Media.GAS);
         for (Reading readingGas : list) {
             assertEquals(FIRST_JULY, readingGas.getReadingDetails().getReadingDate());
@@ -128,8 +128,7 @@ public class ReadingGasServiceTest extends ServiceTest {
         when(SecurityDetails.getResidencesForOwner()).thenReturn(getMockedResidences());
         List<Meter> list = meterService.getListForOwner(Media.GAS);
         List<Reading> readingsToSave = new ArrayList<>();
-        final Residence r = residenceService.getById(RESIDENCE_ID);
-        final ReadingDetails details = new ReadingDetails(LocalDate.parse("2050-01-01"), Media.GAS, r);
+        final ReadingDetails details = new ReadingDetails(LocalDate.parse("2050-01-01"), Media.GAS, residence);
 
         for (Meter meter : list) {
             Reading reading = new Reading(details, 800, residence, meter);
@@ -138,7 +137,7 @@ public class ReadingGasServiceTest extends ServiceTest {
 
         readingService.save(readingsToSave, details);
         assertEquals(24, readingService.getList(residence, Media.GAS).size());
-        List<Reading> result = readingService.getLatestNew(r, Media.GAS);
+        List<Reading> result = readingService.getLatestNew(residence, Media.GAS);
         assertEquals(LocalDate.parse("2050-01-01"), result.get(0).getReadingDetails().getReadingDate());
     }
 

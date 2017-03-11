@@ -20,7 +20,7 @@ public class ReadingDetailsServiceTest extends ServiceTest {
 
     @Before
     public void setResidence() {
-        r = residenceService.getById(RESIDENCE_ID);
+        r = getOWnersResidence();
     }
 
     @Test

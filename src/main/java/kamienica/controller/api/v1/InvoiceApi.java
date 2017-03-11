@@ -1,14 +1,11 @@
 package kamienica.controller.api.v1;
 
-import kamienica.controller.ControllerMessages;
 import kamienica.core.message.ApiErrorResponse;
 import kamienica.feature.invoice.IInvoiceService;
 import kamienica.feature.residence.IResidenceService;
 import kamienica.model.entity.Invoice;
 import kamienica.model.entity.Residence;
-import kamienica.model.entity.Tenant;
 import kamienica.model.enums.Media;
-import kamienica.model.exception.InvalidDivisionException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

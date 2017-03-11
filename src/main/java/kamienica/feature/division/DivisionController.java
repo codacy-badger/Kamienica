@@ -1,11 +1,11 @@
 package kamienica.feature.division;
 
 import kamienica.feature.apartment.IApartmentService;
-import kamienica.model.exception.WrongDivisionInputException;
 import kamienica.feature.tenant.ITenantService;
 import kamienica.model.entity.Apartment;
 import kamienica.model.entity.Division;
 import kamienica.model.entity.Tenant;
+import kamienica.model.exception.WrongDivisionInputException;
 import org.joda.time.LocalDate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
