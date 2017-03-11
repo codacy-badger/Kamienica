@@ -36,9 +36,7 @@ public class InvoiceWaterServiceTest extends ServiceTest {
         when(SecurityDetails.getResidencesForOwner()).thenReturn(getMockedResidences());
 
         assertEquals(1, invoiceService.list(Media.WATER).size());
-
     }
-
 
     @Test
     @Transactional
@@ -102,26 +100,6 @@ public class InvoiceWaterServiceTest extends ServiceTest {
 
     }
 
-    //    @Transactional
-//    @Test
-//    @Ignore
-//    public void update() {
-//        Invoice invoice = new Invoice("23423423", new LocalDate(), 400,
-//                readingService.getById(6L, Media.WATER));
-//        invoice.setId(1L);
-//        List<Payment> oldList = paymentService.getPaymentByInvoice(invoice, Media.WATER);
-//
-//        invoice.setTotalAmount(400.0);
-//        invoiceService.update(invoice, Media.WATER);
-//
-//        List<Payment> newList = paymentService.getPaymentByInvoice(invoice, Media.WATER);
-//
-//        for (int i = 0; i < newList.size(); i++) {
-//            double test = newList.get(i).getPaymentAmount() / oldList.get(i).getPaymentAmount();
-//            assertEquals(2, test, 0);
-//        }
-//
-//    }
     @Test
     @Ignore("not implemented yet")
     public void shouldNotBeAbleToInsertInvoiceWithSameDateResidenceAndMedia() {

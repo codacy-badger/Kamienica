@@ -102,12 +102,10 @@ public class GasConsumptionCalculator {
                             sumNew = sumNew + gasNew.get(i).getValue();
                         }
                     }
-                    if (!gasOld.isEmpty()) {
-                        if (!gasOld.get(i).getMeter().isCwu() && gasOld.get(i).getMeter().getApartment() != null) {
-                            if (gasOld.get(i).getMeter().getApartment().getApartmentNumber() == m
-                                    .getApartmentNumber()) {
-                                sumPrevious = sumPrevious + gasOld.get(i).getValue();
-                            }
+                    if (!gasOld.isEmpty() && !gasOld.get(i).getMeter().isCwu() && gasOld.get(i).getMeter().getApartment() != null) {
+                        if (gasOld.get(i).getMeter().getApartment().getApartmentNumber() == m
+                                .getApartmentNumber()) {
+                            sumPrevious = sumPrevious + gasOld.get(i).getValue();
                         }
                     }
 

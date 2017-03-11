@@ -2,7 +2,6 @@ package kamienica.core.calculator;
 
 import kamienica.core.util.CommonUtils;
 import kamienica.model.entity.*;
-import kamienica.model.exception.InvalidDivisionException;
 import org.joda.time.LocalDate;
 
 import java.util.ArrayList;

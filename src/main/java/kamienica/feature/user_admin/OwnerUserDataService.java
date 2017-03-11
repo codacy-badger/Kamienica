@@ -2,13 +2,11 @@ package kamienica.feature.user_admin;
 
 import kamienica.feature.apartment.IApartmentDao;
 import kamienica.feature.reading.IReadingDao;
-import kamienica.feature.settings.ISettingsDao;
 import kamienica.model.entity.Apartment;
 import kamienica.model.entity.Reading;
 import kamienica.model.entity.SecurityUser;
 import kamienica.model.entity.Tenant;
 import kamienica.model.enums.Media;
-import org.joda.time.LocalDate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
