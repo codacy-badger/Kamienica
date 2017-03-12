@@ -11,8 +11,8 @@ import kamienica.feature.residence.IResidenceService;
 import kamienica.feature.residenceownership.IResidenceOwnershipService;
 import kamienica.feature.settings.ISettingsService;
 import kamienica.feature.tenant.ITenantService;
-import kamienica.feature.user_admin.IOwnerUserDataService;
-import kamienica.feature.user_admin.SecurityServiceImpl;
+import kamienica.feature.user.IUserService;
+import kamienica.feature.security.SecurityServiceImpl;
 import kamienica.model.entity.Payment;
 import kamienica.model.entity.Residence;
 import kamienica.model.entity.Tenant;
@@ -38,7 +38,7 @@ import static org.powermock.api.mockito.PowerMockito.mockStatic;
 @PrepareForTest(SecurityDetails.class)
 public abstract class ServiceTest {
 
-    protected static final long RESIDENCE_ID = 1L;
+
     @Autowired
     protected ITenantService tenantService;
     @Autowired
@@ -56,7 +56,7 @@ public abstract class ServiceTest {
     @Autowired
     protected SecurityServiceImpl securityService;
     @Autowired
-    protected IOwnerUserDataService ownerUserDataService;
+    protected IUserService userService;
     @Autowired
     protected IResidenceService residenceService;
     @Autowired
@@ -69,7 +69,7 @@ public abstract class ServiceTest {
     protected final double DELTA = 0.5;
     protected static final LocalDate TODAY = new LocalDate();
     protected final static String FIRST_OWNER_MAIL = "owner@res1";
-    protected final static Long RES_1_OWNER_ID = 1L;
+    private static final long RESIDENCE_ID = 1L;
 
     @BeforeClass
     public static void init() throws SQLException {
@@ -90,11 +90,4 @@ public abstract class ServiceTest {
         return residenceService.getById(RESIDENCE_ID);
     }
 
-    protected double countTotalPayment(List<Payment> paymentList) {
-        double result = 0;
-        for (Payment p : paymentList) {
-            result += p.getPaymentAmount();
-        }
-        return result;
-    }
 }

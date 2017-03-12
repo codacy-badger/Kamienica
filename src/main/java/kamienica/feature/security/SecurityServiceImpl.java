@@ -1,4 +1,4 @@
-package kamienica.feature.user_admin;
+package kamienica.feature.security;
 
 import kamienica.feature.residence.IResidenceService;
 import kamienica.feature.tenant.ITenantService;
@@ -19,7 +19,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Component
-public class SecurityServiceImpl implements UserDetailsService {
+public class SecurityServiceImpl implements UserDetailsService, ISecurityService {
 
     private static final String ERROR_MSG = "Login or Passowords are invalid";
     private final ITenantService tenantService;

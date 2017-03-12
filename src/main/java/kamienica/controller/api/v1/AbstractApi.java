@@ -1,7 +1,8 @@
 package kamienica.controller.api.v1;
 
 import kamienica.core.message.ApiErrorResponse;
-import kamienica.feature.user_admin.IOwnerUserDataService;
+import kamienica.core.util.SecurityDetails;
+import kamienica.feature.user.IUserService;
 import kamienica.model.entity.Tenant;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -13,7 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 public abstract class AbstractApi {
 
     @Autowired
-    protected IOwnerUserDataService ownerUserDataService;
+    protected IUserService ownerUserDataService;
 
     protected static final String DUPLICATE_VALUE = "Istnieje już taka wartość w bazie danych";
     protected static final String CONSTRAINT_VIOLATION = "Nie można usunąć elementu, dla którego istnieją powiązania w bazie";
@@ -26,6 +27,6 @@ public abstract class AbstractApi {
     }
 
     protected Tenant techLoggedTenant() {
-        return ownerUserDataService.getLoggedTenant();
+        return SecurityDetails.getLoggedTenant();
     }
 }

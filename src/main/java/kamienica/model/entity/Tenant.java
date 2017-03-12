@@ -54,7 +54,6 @@ public class Tenant implements Serializable {
     @NotEmpty(message = "Wprowadź hasło")
     private String password = "witaj";
 
-    @Autowired
     public Tenant(String firstName, String lastName, String email, String phone, Apartment apartment) {
         this.firstName = firstName;
         this.lastName = lastName;
@@ -63,16 +62,18 @@ public class Tenant implements Serializable {
         this.phone = phone;
     }
 
+    public Tenant() {
+        this.movementDate = new LocalDate();
+        this.password = "witaj";
+    }
 
     public Status getStatus() {
         return status;
     }
 
-
     public void setStatus(Status status) {
         this.status = status;
     }
-
 
     public UserRole getRole() {
         return role;
@@ -80,11 +81,6 @@ public class Tenant implements Serializable {
 
     public void setRole(UserRole role) {
         this.role = role;
-    }
-
-    public Tenant() {
-        this.movementDate = new LocalDate();
-        this.password = "witaj";
     }
 
     public String fullName() {
@@ -155,12 +151,11 @@ public class Tenant implements Serializable {
         this.password = password;
     }
 
-
-	@Override
-	public String toString() {
-		return "Tenant [id=" + id + ", firstName=" + firstName + ", lastName=" + lastName + ", email=" + email
-				+ ", phone=" + phone + ", apartment=" + apartment + ", role=" + role + ", status=" + status
-				+ ", movementDate=" + movementDate + ", password=" + password + "]";
-	}
+    @Override
+    public String toString() {
+        return "Tenant [id=" + id + ", firstName=" + firstName + ", lastName=" + lastName + ", email=" + email
+                + ", phone=" + phone + ", apartment=" + apartment + ", role=" + role + ", status=" + status
+                + ", movementDate=" + movementDate + ", password=" + password + "]";
+    }
 
 }
