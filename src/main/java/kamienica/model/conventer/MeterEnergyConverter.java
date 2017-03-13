@@ -18,7 +18,7 @@ import org.springframework.stereotype.Component;
 public class MeterEnergyConverter implements Converter<Object, Meter> {
 
 	@Autowired
-    IMeterService service;
+    private IMeterService service;
 
 	@Override
 	public Meter convert(Object element) {

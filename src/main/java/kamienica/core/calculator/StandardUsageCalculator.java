@@ -64,8 +64,7 @@ public class StandardUsageCalculator implements IConsumptionCalculator {
     private void validateReadingDates(List<Reading> readings) throws UsageCalculationException {
 
         for (final Reading r : readings) {
-            if(r.getReadingDetails().getReadingDate().isEqual(latestDate) ||  r.getReadingDetails().getReadingDate().isEqual(previousDate)) {
-            } else  {
+            if (!(r.getReadingDetails().getReadingDate().isEqual(latestDate) || r.getReadingDetails().getReadingDate().isEqual(previousDate))) {
                 throw new UsageCalculationException("There are more than two reading dates in the collection");
             }
         }

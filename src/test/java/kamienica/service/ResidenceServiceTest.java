@@ -63,9 +63,12 @@ public class ResidenceServiceTest extends ServiceTest {
     @Test
     @Transactional
     public void update() {
+        final String city = "Sopot";
         Residence residence = residenceService.getById(1L);
-        residence.setCity("Sopot");
+        residence.setCity(city);
         residenceService.update(residence);
+        residence = residenceService.getById(1L);
+        assertEquals(city, residence.getCity());
     }
 
     @Test
