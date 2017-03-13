@@ -37,10 +37,8 @@ public class WaterConsumptionCalculator {
                 if (isReadingForApartmentInScope(newRading, m, i)) {
                     sumNew = sumNew + newRading.get(i).getValue();
                 }
-                if (!oldReading.isEmpty()) {
-                    if (isReadingForApartmentInScope(oldReading, m, i)) {
-                        sumPrevious = sumPrevious + oldReading.get(i).getValue();
-                    }
+                if (!oldReading.isEmpty() && isReadingForApartmentInScope(oldReading, m, i)) {
+                    sumPrevious = sumPrevious + oldReading.get(i).getValue();
                 }
             }
             double zuzycie = sumNew - sumPrevious;

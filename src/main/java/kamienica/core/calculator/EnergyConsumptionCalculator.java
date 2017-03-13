@@ -24,10 +24,8 @@ public class EnergyConsumptionCalculator {
                 if (isReadingForApartmentInScope(newReadings, m, i)) {
                     sumCurrent = sumCurrent + newReadings.get(i).getValue();
                 }
-                if (!oldReadings.isEmpty()) {
-                    if (isReadingForApartmentInScope(oldReadings, m, i)) {
-                        sumPrevious = sumPrevious + oldReadings.get(i).getValue();
-                    }
+                if (!oldReadings.isEmpty() && isReadingForApartmentInScope(oldReadings, m, i)) {
+                    sumPrevious = sumPrevious + oldReadings.get(i).getValue();
                 }
             }
 

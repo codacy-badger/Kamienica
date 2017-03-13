@@ -8,5 +8,5 @@ import org.springframework.transaction.annotation.Transactional;
 @ContextConfiguration(classes = {JUnitConfig.class})
 @RunWith(SpringJUnit4ClassRunner.class)
 @Transactional
-public class DaoTest {
+public abstract class DaoTest {
 }
