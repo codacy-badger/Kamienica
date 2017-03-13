@@ -12,10 +12,6 @@ public class ApiErrorResponse {
 	private List<FieldError> errors;
 	private Map<String, String> fieldErrors = new HashMap<>();
 
-	public ApiErrorResponse() {
-
-	}
-
 	public void addErrorMessage(String element, String msg) {
 		this.fieldErrors.put(element, msg);
 	}

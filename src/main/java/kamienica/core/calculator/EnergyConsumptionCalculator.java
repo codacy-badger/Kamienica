@@ -21,25 +21,17 @@ public class EnergyConsumptionCalculator {
             double sumCurrent = 0;
 
             for (int i = 0; i < newReadings.size(); i++) {
-                if (newReadings.get(i).getMeter().getApartment() != null) {
-                    if (newReadings.get(i).getMeter().getApartment().getApartmentNumber() == m.getApartmentNumber()) {
-                        sumCurrent = sumCurrent + newReadings.get(i).getValue();
-                    }
+                if (isReadingForApartmentInScope(newReadings, m, i)) {
+                    sumCurrent = sumCurrent + newReadings.get(i).getValue();
                 }
-                if (!oldReadings.isEmpty()) {
-                    if (oldReadings.get(i).getMeter().getApartment() != null) {
-                        if (oldReadings.get(i).getMeter().getApartment().getApartmentNumber() == m
-                                .getApartmentNumber()) {
-                            sumPrevious = sumPrevious + oldReadings.get(i).getValue();
-                        }
-                    }
+                if (!oldReadings.isEmpty() && isReadingForApartmentInScope(oldReadings, m, i)) {
+                    sumPrevious = sumPrevious + oldReadings.get(i).getValue();
                 }
             }
 
             double usage = sumCurrent - sumPrevious;
 
             mediaUsage.setUsage(usage);
-//            mediaUsage.setUnit(newReadings.get(0).getUnit());
             if (oldReadings.isEmpty()) {
                 mediaUsage.setDaysBetweenReadings(0);
             } else {
@@ -51,6 +43,11 @@ public class EnergyConsumptionCalculator {
 
         return out;
 
+    }
+
+    private static boolean isReadingForApartmentInScope(List<Reading> oldReadings, Apartment m, int i) {
+        return oldReadings.get(i).getMeter().getApartment() != null && oldReadings.get(i).getMeter().getApartment().getApartmentNumber() == m
+                .getApartmentNumber();
     }
 
     private static MediaUsage createNewUsageValue(Apartment m) {
