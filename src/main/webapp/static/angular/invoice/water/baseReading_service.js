@@ -4,7 +4,7 @@ App.factory("BaseReading", ["$resource", function($resource) {
     //TODO ugly fix to run locally and on heroku. Needs better solution
     var path = location.origin
     if (path.includes("localhost")) {
-        path = path + "/Kamienica"
+        path = path + "/Kamienica";
 
     };
     return $resource(
