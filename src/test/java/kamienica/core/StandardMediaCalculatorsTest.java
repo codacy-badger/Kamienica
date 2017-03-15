@@ -21,15 +21,11 @@ import static org.junit.Assert.assertEquals;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(classes = StandardUsageCalculator.class)
-@Ignore("java.lang.Exception: Test class should have exactly one public zero-argument constructor")
-public class MediaCalculatorsTest {
+public class StandardMediaCalculatorsTest {
 
-    private final IConsumptionCalculator consumptionCalc;
 
     @Autowired
-    public MediaCalculatorsTest(IConsumptionCalculator consumptionCalc) {
-        this.consumptionCalc = consumptionCalc;
-    }
+    private IConsumptionCalculator consumptionCalc;
 
     @Test
     public void standartCalculatorForEnery() throws NegativeConsumptionValue, UsageCalculationException {
