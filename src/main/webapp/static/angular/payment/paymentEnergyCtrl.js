@@ -1,28 +1,17 @@
-'use strict';
+"use strict";
 
-App.controller('PaymentController', [
-    '$scope',
-    'PaymentEnergy', 
+App.controller("PaymentController", [
+    "$scope",
+    "PaymentEnergy",
     function($scope, PaymentEnergy) {
-
-    
-
         var self = this;
         self.payments = [];
-
 
         self.fetchAll = function() {
             self.payments = PaymentEnergy.query();
         };
 
-        self.fetchAll('ENERGY');
-
-
-
-
-
-
-
+        self.fetchAll("ENERGY");
 
     }
 ]);

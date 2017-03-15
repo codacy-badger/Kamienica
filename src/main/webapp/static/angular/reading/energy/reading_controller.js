@@ -1,8 +1,8 @@
-'use strict';
+"use strict";
 
-App.controller('ReadingController', [
-    '$scope',
-    'Reading', 'MeterEnergy',
+App.controller("ReadingController", [
+    "$scope",
+    "Reading", "MeterEnergy",
     function($scope, Reading, MeterEnergy) {
 
         $scope.toggle = true;
@@ -22,61 +22,61 @@ App.controller('ReadingController', [
 
         self.fetchAllUsers = function() {
             self.readings = Reading.query();
-            console.log(self.meters );
+            console.log(self.meters);
         };
-        
+
         self.fetchAllUsers();
 
         self.createItem = function() {
             self.reading.$save(function() {}).then(function(ok) {
                 $scope.errorField = true;
-                $scope.errorMsg = 'zapisano do bazy';
+                $scope.errorMsg = "zapisano do bazy";
                 self.readings.push(ok);
                 self.reset();
                 $scope.toggle = $scope.toggle === false ? true : false;
             }, function(error) {
                 $scope.errors = error.data;
                 $scope.errorField = true;
-                $scope.errorMsg = 'Nie powiódł się zapis do bazy. Popraw dane i spróbuj ponownie';
+                $scope.errorMsg = "Nie powiódł się zapis do bazy. Popraw dane i spróbuj ponownie";
             });
         };
 
         self.updateItem = function() {
-            	self.reading.$update(function() {}).then(function(ok) {
+            self.reading.$update(function() {}).then(function(ok) {
                 self.readings.splice(arrayIndex, 1, ok);
             }, function(error) {
                 $scope.errors = error.data;
                 $scope.errorField = true;
-                $scope.errorMsg = 'Nie powiódł się zapis do bazy. Popraw dane i spróbuj ponownie';
+                $scope.errorMsg = "Nie powiódł się zapis do bazy. Popraw dane i spróbuj ponownie";
             });;
 
             self.reset();
             $scope.toggle = $scope.toggle === false ? true : false;
         };
-        
+
         self.deleteItem = function(identity, indexArray) {
-        	var reading = self.readings[indexArray];
-        	
-        	reading.$delete(function() {}).then(function(ok) {
+            var reading = self.readings[indexArray];
+
+            reading.$delete(function() {}).then(function(ok) {
                 self.readings.splice(indexArray, 1);
             }, function(error) {
                 $scope.errorField = true;
                 $scope.errorMsg = error.data.message;
             });
-        }; 
+        };
 
-//        self.deleteItem = function(identity, indexArray) {
-//            var reading = Reading.get({
-//                id: identity
-//            }, function() {
-//                reading.$delete(function() {}).then(function(ok) {
-//                    self.readings.splice(indexArray, 1);
-//                }, function(error) {
-//                    $scope.errorField = true;
-//                    $scope.errorMsg = error.data.message;
-//                })
-//            })
-//        };
+        //        self.deleteItem = function(identity, indexArray) {
+        //            var reading = Reading.get({
+        //                id: identity
+        //            }, function() {
+        //                reading.$delete(function() {}).then(function(ok) {
+        //                    self.readings.splice(indexArray, 1);
+        //                }, function(error) {
+        //                    $scope.errorField = true;
+        //                    $scope.errorMsg = error.data.message;
+        //                })
+        //            })
+        //        };
 
         self.submit = function() {
             if (self.reading.id == null) {
@@ -115,7 +115,7 @@ App.controller('ReadingController', [
 
         self.clearError = function() {
             $scope.errorField = false;
-            $scope.errorMsg = '';
+            $scope.errorMsg = "";
         }
 
         $scope.toggleFilter = function() {
@@ -123,30 +123,30 @@ App.controller('ReadingController', [
             $scope.toggle = $scope.toggle === false ? true : false;
 
         }
-        $scope.$watch('toggle', function() {
+        $scope.$watch("toggle", function() {
             // $scope.toggle ? null : self.reset();
 
-            $scope.text = $scope.toggle ? 'Dodaj' :
-                'Lista';
+            $scope.text = $scope.toggle ? "Dodaj" :
+                "Lista";
         })
 
 
         self.switchForm = function() {
 
-            if ($scope.text === 'Dodaj') {
+            if ($scope.text === "Dodaj") {
 
-                $scope.text = 'Lista';
+                $scope.text = "Lista";
                 self.reset();
                 $scope.toggle = false;
-                $scope.errors = '';
+                $scope.errors = "";
                 $scope.errorField = false;
-                $scope.errorMsg = '';
+                $scope.errorMsg = "";
             } else {
-                $scope.text = 'Dodaj';
+                $scope.text = "Dodaj";
                 $scope.toggle = true;
-                $scope.errors = '';
+                $scope.errors = "";
                 $scope.errorField = false;
-                $scope.errorMsg = '';
+                $scope.errorMsg = "";
             }
 
         }

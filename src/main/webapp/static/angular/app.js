@@ -1,8 +1,5 @@
-'use strict';
+"use strict";
 
-
-
-var App = angular.module('myApp',['ngResource']);
-//var Tenant = angular.module('tenant',['ngResource']);
+var App = angular.module("myApp",["ngResource"]);
 
 
