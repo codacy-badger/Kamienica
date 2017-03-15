@@ -4,6 +4,7 @@ import kamienica.core.util.CommonUtils;
 import kamienica.model.entity.Apartment;
 import kamienica.model.entity.MediaUsage;
 import kamienica.model.entity.Reading;
+import kamienica.model.enums.Media;
 import kamienica.model.exception.NegativeConsumptionValue;
 import kamienica.model.exception.UsageCalculationException;
 import org.joda.time.LocalDate;
@@ -144,11 +145,11 @@ public class StandardUsageCalculator implements IConsumptionCalculator {
     }
 
     private void validateReadingType(List<Reading> readings) throws UsageCalculationException {
-        for (int i = 0; i < readings.size() - 1; i++) {
-            Class clazz1 = readings.get(i).getClass();
-            Class clazz2 = readings.get(i + 1).getClass();
-            if (!clazz1.equals(clazz2)) {
-                throw new UsageCalculationException("List contains readings of different type: " + clazz1.getSimpleName() + " vs. " + clazz2.getSimpleName());
+       final Media m = readings.get(0).getReadingDetails().getMedia();
+        for (int i = 1; i < readings.size(); i++) {
+           final Media tmpMedia = readings.get(i).getReadingDetails().getMedia();
+            if (!m.equals(tmpMedia)) {
+                throw new UsageCalculationException("List contains readings of different type: " + m + " vs. " + tmpMedia);
             }
         }
 
