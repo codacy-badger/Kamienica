@@ -55,7 +55,7 @@ public class ReadingService implements IReadingService {
     @Deprecated
     public List<Reading> getLatestNew(final Residence r, final Media media) throws NoMainCounterException {
         if (!meterDao.ifMainExists()) {
-            throw new NoMainCounterException();
+            throw new NoMainCounterException("Missing main meter");
         }
         //TODO refactor this method after merging is done (issue #100)
         final LocalDate fakeDate = new LocalDate().minusDays(100);
@@ -153,17 +153,5 @@ public class ReadingService implements IReadingService {
         final Criterion c = Restrictions.eq("readingDetails", details);
         List<Reading> readingsToDelete = readingDao.findByCriteria(c);
         for (Reading reading : readingsToDelete) readingDao.delete(reading);
-    }
-
-    @Override
-    public void setDates(Map<String, Object> model, List<Reading> list) {
-        model.put("date", new LocalDate());
-
-        if (list.isEmpty()) {
-            model.put("oldDate", "2000-01-01");
-        } else {
-            model.put("oldDate", list.get(0).getReadingDetails().getReadingDate().plusDays(1));
-        }
-
     }
 }

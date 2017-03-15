@@ -13,8 +13,6 @@ import java.util.Map;
 
 public interface IReadingService  {
 
-    void setDates(Map<String, Object> map, List<Reading> list);
-
     Reading getById(Long id);
 
     void save(List<Reading> reading, ReadingDetails details);

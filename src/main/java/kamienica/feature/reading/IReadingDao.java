@@ -16,21 +16,10 @@ public interface IReadingDao extends BasicDao<Reading> {
 
     List<Reading> getByDate(Residence r, LocalDate date);
 
-    List<Reading> getPrevious(ReadingDetails details, List<Meter> meters);
-
-    List<Reading> getLatestList(Residence r, LocalDate date);
-
     List<Reading> getList(Residence r, Media media);
 
     List<Reading> getListForTenant(Apartment apartment);
 
     List<Reading> list(ReadingDetails details);
 
-    void changeResolvementState(Invoice invoice, boolean resolved);
-
-    int countDaysFromLastReading();
-
-    LocalDate getLatestDate(Residence r, Media m);
-
-    List<Reading> getWaterReadingForGasConsumption(Residence r,ReadingDetails details);
 }

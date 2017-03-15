@@ -7,7 +7,6 @@ import kamienica.model.entity.Payment;
 import kamienica.model.entity.ReadingDetails;
 import kamienica.model.entity.Residence;
 import kamienica.model.enums.Media;
-import kamienica.model.exception.InvalidDivisionException;
 import org.joda.time.LocalDate;
 import org.junit.Before;
 import org.junit.Ignore;
@@ -49,7 +48,7 @@ public class InvoiceEnergyServiceTest extends ServiceTest {
         when(SecurityDetails.getLoggedTenant()).thenReturn(tenantService.getById(1L));
         when(SecurityDetails.getResidencesForOwner()).thenReturn(getMockedResidences());
 
-        List<ReadingDetails> list = readingDetailsService.getUnresolved( r, Media.ENERGY);
+        List<ReadingDetails> list = readingDetailsService.getUnresolved(r, Media.ENERGY);
         assertEquals(2, list.size());
 
         Invoice invoice = new Invoice("112233", TODAY, 200, r, list.get(1), Media.ENERGY);
@@ -63,19 +62,19 @@ public class InvoiceEnergyServiceTest extends ServiceTest {
         assertEquals(48.48, paymentList.get(4).getPaymentAmount(), DELTA);
         assertEquals(121.212, paymentList.get(5).getPaymentAmount(), DELTA);
 
-         list = readingDetailsService.getUnresolved( r, Media.ENERGY);
+        list = readingDetailsService.getUnresolved(r, Media.ENERGY);
         assertEquals(1, list.size());
         assertEquals(LocalDate.parse("2016-07-01"), list.get(0).getReadingDate());
     }
 
     @Transactional
     @Test
-    public void addForFirstReading() throws InvalidDivisionException {
+    public void addForFirstReading() {
         mockStatic(SecurityDetails.class);
         when(SecurityDetails.getLoggedTenant()).thenReturn(tenantService.getById(1L));
         when(SecurityDetails.getResidencesForOwner()).thenReturn(getMockedResidences());
 
-        List<ReadingDetails> details = readingDetailsService.getUnresolved( r, Media.ENERGY);
+        List<ReadingDetails> details = readingDetailsService.getUnresolved(r, Media.ENERGY);
         assertEquals(2, details.size());
 
         Invoice invoice = new Invoice("34", new LocalDate(), 200, r, details.get(0), Media.ENERGY);
@@ -89,7 +88,7 @@ public class InvoiceEnergyServiceTest extends ServiceTest {
         assertEquals(84.85, paymentList.get(4).getPaymentAmount(), DELTA);
         assertEquals(66.67, paymentList.get(5).getPaymentAmount(), DELTA);
 
-        details = readingDetailsService.getUnresolved( r, Media.ENERGY);
+        details = readingDetailsService.getUnresolved(r, Media.ENERGY);
         assertEquals(1, details.size());
         assertEquals(LocalDate.parse("2016-09-01"), details.get(0).getReadingDate());
     }
@@ -98,7 +97,7 @@ public class InvoiceEnergyServiceTest extends ServiceTest {
     @Test
     public void remove() {
         invoiceService.delete(3L);
-        List<ReadingDetails> details = readingDetailsService.getUnresolved( r, Media.ENERGY);
+        List<ReadingDetails> details = readingDetailsService.getUnresolved(r, Media.ENERGY);
         List<Invoice> invoices = invoiceService.list(Media.ENERGY);
         assertTrue(invoices.isEmpty());
         assertEquals(3, details.size());
@@ -110,5 +109,5 @@ public class InvoiceEnergyServiceTest extends ServiceTest {
     public void shouldNotBeAbleToInsertInvoiceWithSameDateResidenceAndMedia() {
         fail();
     }
-    }
+}
 
