@@ -2,7 +2,11 @@ package kamienica.service;
 
 import kamienica.configuration.ServiceTest;
 import kamienica.core.util.SecurityDetails;
-import kamienica.model.entity.*;
+import kamienica.model.entity.Invoice;
+import kamienica.model.entity.Payment;
+import kamienica.model.entity.ReadingDetails;
+import kamienica.model.entity.Residence;
+import kamienica.model.entity.Settings;
 import kamienica.model.enums.Media;
 import kamienica.model.enums.WaterHeatingSystem;
 import kamienica.model.exception.InvalidDivisionException;

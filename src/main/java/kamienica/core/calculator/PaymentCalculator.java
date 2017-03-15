@@ -1,7 +1,11 @@
 package kamienica.core.calculator;
 
 import kamienica.core.util.CommonUtils;
-import kamienica.model.entity.*;
+import kamienica.model.entity.Division;
+import kamienica.model.entity.Invoice;
+import kamienica.model.entity.MediaUsage;
+import kamienica.model.entity.Payment;
+import kamienica.model.entity.Tenant;
 import org.joda.time.LocalDate;
 
 import java.util.ArrayList;
