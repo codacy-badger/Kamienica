@@ -2,7 +2,7 @@
 //
 //import kamienica.feature.payment.IPaymentService;
 //import kamienica.feature.security.SecurityServiceImpl;
-//import kamienica.feature.user.IUserService;
+//import kamienica.feature.user.IOwnerService;
 //import kamienica.model.entity.Apartment;
 //import kamienica.model.entity.Tenant;
 //import kamienica.model.enums.Media;
@@ -25,7 +25,7 @@
 //	@Autowired
 //	private SecurityServiceImpl securityService;
 //	@Autowired
-//	private IUserService ownerUserDataService;
+//	private IOwnerService ownerUserDataService;
 //
 //	// ===========OWNER===========================================
 //	@RequestMapping("/Admin/home")
