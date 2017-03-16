@@ -1,8 +1,6 @@
 package kamienica.feature.reading;
 
 import kamienica.model.entity.Apartment;
-import kamienica.model.entity.Invoice;
-import kamienica.model.entity.Meter;
 import kamienica.model.entity.Reading;
 import kamienica.model.entity.ReadingDetails;
 import kamienica.model.entity.Residence;

@@ -9,7 +9,6 @@ import kamienica.model.exception.NoMainCounterException;
 import org.joda.time.LocalDate;
 
 import java.util.List;
-import java.util.Map;
 
 public interface IReadingService  {
 

@@ -1,18 +1,14 @@
 package kamienica.feature.reading;
 
 import kamienica.model.entity.Apartment;
-import kamienica.model.entity.Invoice;
-import kamienica.model.entity.Meter;
 import kamienica.model.entity.Reading;
 import kamienica.model.entity.ReadingDetails;
 import kamienica.model.entity.Residence;
 import kamienica.model.enums.Media;
-import kamienica.model.enums.Status;
 import kamienica.model.jpa.dao.BasicDaoImpl;
 import org.hibernate.Criteria;
 import org.hibernate.Query;
 import org.hibernate.criterion.Order;
-import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
 import org.joda.time.LocalDate;
 import org.springframework.stereotype.Repository;
