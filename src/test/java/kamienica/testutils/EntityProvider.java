@@ -1,6 +1,10 @@
 package kamienica.testutils;
 
-import kamienica.model.entity.*;
+import kamienica.model.entity.Apartment;
+import kamienica.model.entity.Meter;
+import kamienica.model.entity.Reading;
+import kamienica.model.entity.ReadingDetails;
+import kamienica.model.entity.Residence;
 import kamienica.model.enums.Media;
 import kamienica.model.enums.Resolvement;
 import kamienica.model.enums.Status;

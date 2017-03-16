@@ -7,5 +7,4 @@
 .classpath
 *.iml
 *.idea
-/.idea/
 /out/

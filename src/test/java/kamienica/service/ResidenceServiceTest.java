@@ -2,7 +2,11 @@ package kamienica.service;
 
 import kamienica.configuration.ServiceTest;
 import kamienica.core.util.SecurityDetails;
-import kamienica.model.entity.*;
+import kamienica.model.entity.Apartment;
+import kamienica.model.entity.Meter;
+import kamienica.model.entity.Residence;
+import kamienica.model.entity.ResidenceOwnership;
+import kamienica.model.entity.Tenant;
 import kamienica.model.enums.Media;
 import org.hibernate.exception.ConstraintViolationException;
 import org.junit.Test;
@@ -20,7 +24,7 @@ public class ResidenceServiceTest extends ServiceTest {
     @Test
     @Transactional
     public void save() {
-        final Residence res = new Residence("Świętojańska", "46", "Gdynia");
+        final Residence res = new Residence("New", "Test", "Warszawa");
 
         final Tenant t = getOwner();
         List<Residence> residences = getMockedResidences();

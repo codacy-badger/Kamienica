@@ -6,7 +6,11 @@ import kamienica.model.enums.Media;
 import kamienica.model.enums.Resolvement;
 import kamienica.model.jpa.dao.BasicDaoImpl;
 import org.hibernate.Criteria;
-import org.hibernate.criterion.*;
+import org.hibernate.criterion.Criterion;
+import org.hibernate.criterion.DetachedCriteria;
+import org.hibernate.criterion.Projections;
+import org.hibernate.criterion.Property;
+import org.hibernate.criterion.Restrictions;
 import org.joda.time.LocalDate;
 import org.springframework.stereotype.Repository;
 
