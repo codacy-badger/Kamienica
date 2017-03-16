@@ -49,7 +49,6 @@ public class ResidenceServiceImpl implements IResidenceService {
         saveEssentialData(residence);
     }
 
-    //TODO enabling this fails to save any data in tests
     private void saveEssentialData(Residence residence) {
         final Apartment ap = new Apartment(residence, 0, "0000", "Część Wpólna");
         apartmentDao.save(ap);

@@ -24,7 +24,7 @@ public class ResidenceServiceTest extends ServiceTest {
     @Test
     @Transactional
     public void save() {
-        final Residence res = new Residence("Świętojańska", "46", "Gdynia");
+        final Residence res = new Residence("New", "Test", "Warszawa");
 
         final Tenant t = getOwner();
         List<Residence> residences = getMockedResidences();
