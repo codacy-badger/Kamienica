@@ -1,7 +1,8 @@
 language: java
 sudo: required
 
-CODACY_PROJECT_TOKEN=0f0d846824e04a618b244965e01f40e4
+env:
+- CODACY_PROJECT_TOKEN=0f0d846824e04a618b244965e01f40e4
 
 before_install:
   - curl -sL https://github.com/jpm4j/jpm4j.installers/raw/master/dist/biz.aQute.jpm.run.jar >jpm4j.jar
