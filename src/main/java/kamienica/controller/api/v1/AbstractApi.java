@@ -1,7 +1,7 @@
 package kamienica.controller.api.v1;
 
 import kamienica.core.message.ApiErrorResponse;
-import kamienica.feature.user_admin.IOwnerUserDataService;
+import kamienica.feature.owner.IOwnerUserDataService;
 import kamienica.model.entity.Tenant;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -15,9 +15,9 @@ public abstract class AbstractApi {
     @Autowired
     protected IOwnerUserDataService ownerUserDataService;
 
-    protected static final String DUPLICATE_VALUE = "Istnieje już taka wartość w bazie danych";
-    protected static final String CONSTRAINT_VIOLATION = "Nie można usunąć elementu, dla którego istnieją powiązania w bazie";
-    protected static final String UNEXPECTED_ERROR = "Wystąpił nieoczekiwany błąd podczas zapisu.";
+    protected static final String DUPLICATE_VALUE = "Duplicate";
+    protected static final String CONSTRAINT_VIOLATION = "ConstraintViolation";
+    protected static final String UNEXPECTED_ERROR = "UnexpectedError.";
 
     protected final ResponseEntity<ApiErrorResponse> sendErrorToUser(BindingResult result) {
         ApiErrorResponse message = new ApiErrorResponse();
@@ -25,7 +25,4 @@ public abstract class AbstractApi {
         return new ResponseEntity<>(message, HttpStatus.UNPROCESSABLE_ENTITY);
     }
 
-    protected Tenant techLoggedTenant() {
-        return ownerUserDataService.getLoggedTenant();
-    }
 }

@@ -2,20 +2,22 @@ package kamienica.configuration;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.datatype.joda.JodaModule;
-import kamienica.model.conventer.ApartmentConverter;
-import kamienica.model.conventer.InvoiceConverter;
-import kamienica.model.conventer.MeterEnergyConverter;
-import kamienica.model.conventer.ReadingConverter;
-import kamienica.model.conventer.TenantConverter;
+import kamienica.feature.apartment.ApartmentService;
+import kamienica.feature.apartment.IApartmentService;
+import kamienica.feature.meter.IMeterService;
+import kamienica.feature.meter.MeterService;
+import kamienica.feature.reading.IReadingService;
+import kamienica.feature.reading.ReadingService;
+import kamienica.feature.residence.IResidenceService;
+import kamienica.feature.residence.ResidenceServiceImpl;
+import org.mockito.Mockito;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.support.ResourceBundleMessageSource;
-import org.springframework.format.FormatterRegistry;
 import org.springframework.http.MediaType;
 import org.springframework.http.converter.HttpMessageConverter;
 import org.springframework.http.converter.json.Jackson2ObjectMapperFactoryBean;
@@ -37,31 +39,35 @@ import java.util.List;
 
 @Configuration
 @EnableWebMvc
-@ComponentScan(basePackages = "kamienica.*")
-public class AppConfig extends WebMvcConfigurerAdapter {
+@ComponentScan(basePackages = {"kamienica.*"})
+public class TestAppConfig extends WebMvcConfigurerAdapter {
 
-	private final static Logger LOG = LoggerFactory.getLogger(AppConfig.class);
+	private final static Logger LOG = LoggerFactory.getLogger(TestAppConfig.class);
 
-	public static final String VERSION = "1.2";
-	@Autowired
-	private ReadingConverter readingConverter;
-	@Autowired
-	private InvoiceConverter invoiceConverter;
-	@Autowired
-	private ApartmentConverter apartmentConverter;
-	@Autowired
-	private MeterEnergyConverter meterEnergyConverter;
-	@Autowired
-	private TenantConverter tenantConverter;
 
 	@Override
 	public void configureContentNegotiation(ContentNegotiationConfigurer configurer) {
 		configurer.ignoreAcceptHeader(true).defaultContentType(MediaType.TEXT_HTML);
 	}
+	@Bean
+	public IResidenceService residenceService() {
+		return Mockito.mock(ResidenceServiceImpl.class);
+	}
 
-	/*
-	 * Configure ContentNegotiatingViewResolver
-	 */
+	@Bean
+	public IMeterService meterService() {
+		return Mockito.mock(MeterService.class);
+	}
+	@Bean
+	public IReadingService readingService() {
+		return Mockito.mock(ReadingService.class);
+	}
+
+	@Bean
+	public IApartmentService apartmentService() {
+		return Mockito.mock(ApartmentService.class);
+	}
+
 	@Bean
 	public ViewResolver contentNegotiatingViewResolver(ContentNegotiationManager manager) {
 		ContentNegotiatingViewResolver resolver = new ContentNegotiatingViewResolver();
@@ -84,27 +90,6 @@ public class AppConfig extends WebMvcConfigurerAdapter {
 		return viewResolver;
 	}
 
-	// @Bean
-	// public LocaleResolver localeResolver() {
-	// SessionLocaleResolver localeResolver = new SessionLocaleResolver();
-	// localeResolver.setDefaultLocale(Locale.ENGLISH); // change this
-	// return localeResolver;
-	// }
-	//
-	//
-	// @Override
-	// public void addInterceptors(InterceptorRegistry registry) {
-	// registry.addInterceptor(localeChangeInterceptor());
-	// }
-	//
-	// @Bean
-	// public LocaleChangeInterceptor localeChangeInterceptor(){
-	// LocaleChangeInterceptor localeChangeInterceptor=new
-	// LocaleChangeInterceptor();
-	// localeChangeInterceptor.setParamName("language");
-	// return localeChangeInterceptor;
-	// }
-
 	@Bean(name = "localeResolver")
 	public LocaleResolver getLocaleResolver() {
 		return new CookieLocaleResolver();
@@ -115,16 +100,6 @@ public class AppConfig extends WebMvcConfigurerAdapter {
 		return new JsonViewResolver();
 	}
 
-	@Override
-	public void addFormatters(FormatterRegistry registry) {
-		registry.addConverter(readingConverter);
-		registry.addConverter(invoiceConverter);
-		registry.addConverter(apartmentConverter);
-		registry.addConverter(meterEnergyConverter);
-		registry.addConverter(tenantConverter);
-		LOG.info("Setting entity formatters", registry);
-
-	}
 
 	@Bean
 	public MessageSource messageSource() {

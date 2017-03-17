@@ -11,7 +11,6 @@ public class ApartmentController {
 
 	@RequestMapping(value = "/apartment", method = RequestMethod.GET)
 	public ModelAndView apartmentList() {
-
 		return new ModelAndView("/Admin/Apartment/apartment");
 
 	}

@@ -1,5 +1,7 @@
-package kamienica.feature.user_admin;
+package kamienica.controller.jsp;
 
+import kamienica.feature.owner.IOwnerUserDataService;
+import kamienica.feature.owner.SecurityServiceImpl;
 import kamienica.feature.payment.IPaymentService;
 import kamienica.model.entity.Apartment;
 import kamienica.model.entity.Tenant;

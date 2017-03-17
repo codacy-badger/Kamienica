@@ -1,4 +1,4 @@
-package kamienica.feature.user_admin;
+package kamienica.feature.owner;
 
 import kamienica.feature.residence.IResidenceService;
 import kamienica.feature.tenant.ITenantService;
