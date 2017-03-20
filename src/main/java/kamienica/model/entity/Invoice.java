@@ -12,15 +12,12 @@ import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
+import javax.persistence.UniqueConstraint;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 
 @Entity
-@Table(name = "INVOICE"
-        //TODO see why this fails
-        //, uniqueConstraints = {@UniqueConstraint(columnNames = {"invoiceDate", "media", "residence"})}
-
-)
+@Table(name = "INVOICE", uniqueConstraints = {@UniqueConstraint(columnNames = {"invoiceDate", "media", "residence_id"})})
 public class Invoice extends DBEntity {
 
     @Column(nullable = false, unique = true)

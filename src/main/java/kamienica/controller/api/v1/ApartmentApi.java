@@ -25,7 +25,7 @@ import java.util.Map;
 
 @RestController
 @RequestMapping("/api/v1/apartments")
-public class ApartmentApi  {
+public class ApartmentApi {
 
     private final IApartmentService apartmentService;
 
@@ -78,7 +78,7 @@ public class ApartmentApi  {
     }
 
     @RequestMapping(value = "/{id}", method = RequestMethod.PUT)
-    public ResponseEntity<?> updateUser(@PathVariable("id") final Long id, @RequestBody final Apartment apartment, final BindingResult result) {
+    public ResponseEntity<?> updateApartment(@PathVariable("id") final Long id, @RequestBody final Apartment apartment, final BindingResult result) {
 
         if (result.hasErrors()) {
             ApiErrorResponse message = new ApiErrorResponse();

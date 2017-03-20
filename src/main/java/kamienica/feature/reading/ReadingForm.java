@@ -19,6 +19,9 @@ public class ReadingForm {
                 + newReadings;
     }
 
+    public ReadingForm() {
+    }
+
     public ReadingForm(LocalDate oldDate, LocalDate newDate, List<Reading> currentReadings,
                        List<Reading> previousReadings, List<Reading> newReadings) {
         this.oldDate = oldDate;

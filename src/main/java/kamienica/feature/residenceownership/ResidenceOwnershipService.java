@@ -41,7 +41,6 @@ public class ResidenceOwnershipService implements IResidenceOwnershipService {
 
     @Override
     public void save(final ResidenceOwnership residenceOwnership, final Tenant tenant) {
-
         residenceOwnershipDao.save(residenceOwnership);
     }
 

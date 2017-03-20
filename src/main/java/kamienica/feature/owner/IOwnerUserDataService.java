@@ -1,4 +1,4 @@
-package kamienica.feature.user_admin;
+package kamienica.feature.owner;
 
 import kamienica.model.entity.Apartment;
 import kamienica.model.entity.Reading;

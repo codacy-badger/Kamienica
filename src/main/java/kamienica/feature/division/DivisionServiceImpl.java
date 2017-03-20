@@ -32,16 +32,19 @@ public class DivisionServiceImpl implements IDivisionService {
 
 
     @Override
-    public List<Division> createDivisionForResidence(Residence res) {
+    public List<Division> createDivisionForResidence(final Residence res) {
         final Criterion forResidence = Restrictions.eq("residence", res);
-        List<Apartment> apartments = apartmentDAO.findByCriteria(forResidence);
-
-        final Criterion forTheseApartments = Restrictions.in("apartment", apartments);
-        final Criterion onlyActive = Restrictions.eq("status", Status.ACTIVE);
-        List<Tenant> tenants = tenantDAO.findByCriteria(forTheseApartments, onlyActive);
+        final List<Apartment> apartments = apartmentDAO.findByCriteria(forResidence);
+        final List<Tenant> tenants = tenantDAO.findByCriteria(createCriteria(apartments));
+        
         return prepareDivisionList(tenants, apartments);
     }
 
+    private Criterion[] createCriteria(final List<Apartment> apartments) {
+        final Criterion forTheseApartments = Restrictions.in("apartment", apartments);
+        final Criterion onlyActive = Restrictions.eq("status", Status.ACTIVE);
+        return new Criterion[] {forTheseApartments, onlyActive};
+    }
 
     private List<Division> prepareDivisionList(List<Tenant> tenantList, List<Apartment> apartmentList) {
         List<Division> divisionList = new ArrayList<>();

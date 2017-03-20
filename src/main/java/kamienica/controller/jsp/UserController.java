@@ -1,6 +1,8 @@
-package kamienica.feature.user_admin;
+package kamienica.controller.jsp;
 
+import kamienica.feature.owner.IOwnerUserDataService;
 import kamienica.feature.payment.IPaymentService;
+import kamienica.feature.security.ISecurityService;
 import kamienica.model.entity.Apartment;
 import kamienica.model.entity.Tenant;
 import kamienica.model.enums.Media;
@@ -21,7 +23,7 @@ public class UserController {
 	@Autowired
 	private IPaymentService IPaymentService;
 	@Autowired
-	private SecurityServiceImpl securityService;
+	private ISecurityService securityService;
 	@Autowired
 	private IOwnerUserDataService ownerUserDataService;
 

@@ -1,7 +1,6 @@
 package kamienica.model.jpa.dao;
 
 import kamienica.model.entity.Residence;
-import kamienica.model.entity.Tenant;
 import kamienica.model.enums.Media;
 import org.hibernate.Criteria;
 import org.hibernate.Query;
@@ -77,7 +76,7 @@ public abstract class BasicDaoImpl<T> implements BasicDao<T> {
 
     @Override
     public List<T> getList(final Media media) {
-        Criteria criteria = createEntityCriteria();
+        final Criteria criteria = createEntityCriteria();
         criteria.add(Restrictions.eq("media", media));
         return criteria.list();
     }
@@ -149,16 +148,9 @@ public abstract class BasicDaoImpl<T> implements BasicDao<T> {
     }
 
     @Override
-    public List<T> findForOwner(final Tenant t) {
-        final Criterion forResidence = Restrictions.eq("tenant", t);
-        return findByCriteria(forResidence);
-    }
-
-    @Override
     public List<T> findByCriteria(final Order order, final Criterion... criterion) {
         Session session = getSession();
         Criteria crit = session.createCriteria(persistentClass);
-
         for (final Criterion c : criterion) {
             crit.add(c);
         }

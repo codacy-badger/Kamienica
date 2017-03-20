@@ -21,7 +21,6 @@ public interface IMeterService {
 
 	List<Meter> getListForOwner(Media media);
 
-	//TODO remove media
 	Meter getById(Long id);
 
 	Set<Long> getIdList(final Residence r, final Media media);

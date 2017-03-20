@@ -9,14 +9,12 @@ import kamienica.model.entity.Residence;
 import kamienica.model.enums.Media;
 import org.joda.time.LocalDate;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.fail;
 import static org.powermock.api.mockito.PowerMockito.mockStatic;
 import static org.powermock.api.mockito.PowerMockito.when;
 
@@ -33,7 +31,6 @@ public class InvoiceWaterServiceTest extends ServiceTest {
     public void getList() {
         mockStatic(SecurityDetails.class);
         when(SecurityDetails.getResidencesForOwner()).thenReturn(getMockedResidences());
-
         assertEquals(1, invoiceService.list(Media.WATER).size());
     }
 
@@ -99,15 +96,9 @@ public class InvoiceWaterServiceTest extends ServiceTest {
 
     }
 
-    @Test
-    @Ignore("not implemented yet")
-    public void shouldNotBeAbleToInsertInvoiceWithSameDateResidenceAndMedia() {
-        fail();
-    }
 
     @Test
     public void prepareForRegistration() {
-        // apService.deleteByID(5L);
         List<ReadingDetails> list = readingDetailsService.getUnresolved( r, Media.WATER);
         assertEquals(2, list.size());
     }

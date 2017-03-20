@@ -9,7 +9,6 @@ import kamienica.model.entity.Residence;
 import kamienica.model.enums.Media;
 import org.joda.time.LocalDate;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -17,7 +16,6 @@ import java.util.List;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
 import static org.powermock.api.mockito.PowerMockito.mockStatic;
 import static org.powermock.api.mockito.PowerMockito.when;
 
@@ -104,10 +102,5 @@ public class InvoiceEnergyServiceTest extends ServiceTest {
 
     }
 
-    @Test
-    @Ignore("not implemented yet")
-    public void shouldNotBeAbleToInsertInvoiceWithSameDateResidenceAndMedia() {
-        fail();
-    }
 }
 

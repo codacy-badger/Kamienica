@@ -2,12 +2,10 @@ package kamienica.controller.api.v1;
 
 import kamienica.core.util.SecurityDetails;
 import kamienica.feature.payment.IPaymentService;
-import kamienica.feature.user_admin.IOwnerUserDataService;
-import kamienica.feature.user_admin.SecurityServiceImpl;
+import kamienica.feature.owner.IOwnerUserDataService;
 import kamienica.model.entity.Apartment;
 import kamienica.model.entity.Payment;
 import kamienica.model.entity.Reading;
-import kamienica.model.entity.SecurityUser;
 import kamienica.model.entity.Tenant;
 import kamienica.model.enums.Media;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,64 +22,38 @@ import java.util.List;
 @RequestMapping("/api/v1/home")
 public class AdminUserRestController {
 
-	@Autowired
-	private IPaymentService IPaymentService;
-	@Autowired
-	private SecurityServiceImpl userDetailsService;
-	@Autowired
-	private IOwnerUserDataService ownerUserDataService;
+    private final IPaymentService paymentService;
+    private final  IOwnerUserDataService ownerUserDataService;
 
-	// =====================USER===========================================
-	@RequestMapping(value = "/users", method = RequestMethod.GET)
-	public ResponseEntity<SecurityUser> userHome() {
-		SecurityUser myUser = userDetailsService.getCurrentUser();
-		if (myUser == null) {
-			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-		}
-		return new ResponseEntity<>(myUser, HttpStatus.OK);
-	}
+    @Autowired
+    public AdminUserRestController(IPaymentService paymentService, IOwnerUserDataService ownerUserDataService) {
+        this.paymentService = paymentService;
+        this.ownerUserDataService = ownerUserDataService;
+    }
 
-	@RequestMapping(value = "/user/{media}/readings", method = RequestMethod.GET)
-	public ResponseEntity<List<? extends Reading>> getReadings(@PathVariable(value = "media") String media) {
-	
-		List<? extends Reading> readings = null;
-		Apartment ap = SecurityDetails.getLoggedTenant().getApartment();
-		
-		switch (media) {
 
-		case "energy":
-			readings = ownerUserDataService.getReadingsForTenant(ap, Media.ENERGY);
-			break;
+    @RequestMapping(value = "/user/{media}/readings", method = RequestMethod.GET)
+    public ResponseEntity<?> getReadings(@PathVariable(value = "media") Media media) {
+        final Apartment ap = SecurityDetails.getLoggedTenant().getApartment();
+        final List<Reading> readings = ownerUserDataService.getReadingsForTenant(ap, media);
 
-		case "gas":
-			readings = ownerUserDataService.getReadingsForTenant(ap, Media.GAS);
-			break;
+        if (readings.isEmpty()) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
 
-		case "water":
-			readings = ownerUserDataService.getReadingsForTenant(ap, Media.WATER);
-			break;
-		default:
-			break;
-		}
+        return new ResponseEntity<>(readings, HttpStatus.OK);
+    }
 
-		if (readings.isEmpty()) {
-			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-		}
+    @RequestMapping(value = "/user/{media}/payments", method = RequestMethod.GET)
+    public ResponseEntity<?> userPayment(@PathVariable(value = "media") Media media) {
+        final Tenant tenant = SecurityDetails.getLoggedTenant();
+        final List<Payment> list = paymentService.getPaymentForTenant(tenant, media);
 
-		return new ResponseEntity<>(readings, HttpStatus.OK);
-	}
-
-	@RequestMapping(value = "/user/{media}/payments", method = RequestMethod.GET)
-	public ResponseEntity<List<? extends Payment>> userPayment(@PathVariable(value = "media") Media media) {
-		Tenant tenant = SecurityDetails.getLoggedTenant();
-		List<? extends Payment> list;
-		list = IPaymentService.getPaymentForTenant(tenant, media);
-
-		if (list.isEmpty()) {
-			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-		}
-		return new ResponseEntity<>(list, HttpStatus.OK);
-	}
+        if (list.isEmpty()) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+        return new ResponseEntity<>(list, HttpStatus.OK);
+    }
 
 
 }
