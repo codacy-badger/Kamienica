@@ -3,12 +3,8 @@ package kamienica.feature.invoice;
 import kamienica.model.entity.Invoice;
 import kamienica.model.entity.Residence;
 import kamienica.model.enums.Media;
-import kamienica.model.enums.PaymentStatus;
 import kamienica.model.jpa.dao.BasicDaoImpl;
-import org.hibernate.Criteria;
-import org.hibernate.Query;
 import org.hibernate.criterion.Criterion;
-import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.stereotype.Repository;
 

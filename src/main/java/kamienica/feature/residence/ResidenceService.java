@@ -22,16 +22,16 @@ import java.util.stream.Collectors;
 
 @Service
 @Transactional
-public class ResidenceServiceImpl implements IResidenceService {
+public class ResidenceService implements IResidenceService {
 
-    private final ResidenceDao residenceDao;
+    private final IResidenceDao residenceDao;
     private final IResidenceOwnershipDao residenceOwnershipDao;
     private final IApartmentDao apartmentDao;
     private final IMeterDao meterDao;
 
     @Autowired
-    public ResidenceServiceImpl(ResidenceDao residenceDao, IResidenceOwnershipDao residenceOwnershipDao,
-                                IApartmentDao apartmentDao, IMeterDao meterDao) {
+    public ResidenceService(IResidenceDao residenceDao, IResidenceOwnershipDao residenceOwnershipDao,
+                            IApartmentDao apartmentDao, IMeterDao meterDao) {
         this.residenceDao = residenceDao;
         this.residenceOwnershipDao = residenceOwnershipDao;
         this.apartmentDao = apartmentDao;

@@ -8,6 +8,7 @@ import kamienica.model.entity.Tenant;
 import kamienica.model.enums.Status;
 import org.h2.tools.Server;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 
 import javax.transaction.Transactional;
@@ -19,6 +20,7 @@ import static org.powermock.api.mockito.PowerMockito.mockStatic;
 import static org.powermock.api.mockito.PowerMockito.when;
 
 public class OwnerServiceTest extends ServiceTest {
+
     @Before
     public void mockUser() {
         mockStatic(SecurityDetails.class);
@@ -30,6 +32,7 @@ public class OwnerServiceTest extends ServiceTest {
 
     @Transactional
     @Test
+    @Ignore("Method will be reimplemented")
     public void getEmptyApartments() throws Exception {
         Server.main();
         Tenant t = tenantService.getById(4L);
@@ -38,21 +41,6 @@ public class OwnerServiceTest extends ServiceTest {
         List<Tenant> tenants = tenantService.getActiveTenants();
         List<Apartment> result = ownerService.getEmptyApartments();
         assertEquals(1, result.size());
-    }
-
-    @Test
-    public void getUnresolvedReadings() throws Exception {
-
-    }
-
-    @Test
-    public void getOldestReading() throws Exception {
-
-    }
-
-    @Test
-    public void getOldestPayment() throws Exception {
-
     }
 
 }

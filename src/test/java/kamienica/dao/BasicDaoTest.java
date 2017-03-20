@@ -1,28 +1,17 @@
 package kamienica.dao;
 
 import kamienica.configuration.DaoTest;
-import kamienica.feature.apartment.IApartmentDao;
-import kamienica.feature.residence.ResidenceDao;
 import kamienica.model.entity.Apartment;
 import kamienica.model.entity.Meter;
 import kamienica.model.entity.Residence;
-import kamienica.model.entity.Tenant;
 import kamienica.model.enums.Media;
 import kamienica.model.jpa.dao.BasicDao;
-import org.hibernate.Criteria;
-import org.hibernate.Query;
-import org.hibernate.Session;
 import org.hibernate.criterion.Criterion;
-import org.hibernate.criterion.Order;
-import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
 import org.junit.Ignore;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.transaction.annotation.Transactional;
 
-import java.util.Collections;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 

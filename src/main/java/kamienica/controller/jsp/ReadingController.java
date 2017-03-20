@@ -4,7 +4,6 @@ import kamienica.feature.meter.IMeterService;
 import kamienica.feature.reading.IReadingService;
 import kamienica.feature.reading.ReadingForm;
 import kamienica.feature.reading.ReadingValidator;
-import kamienica.feature.readingdetails.IReadingDetailsService;
 import kamienica.feature.residence.IResidenceService;
 import kamienica.model.entity.Meter;
 import kamienica.model.entity.Reading;
@@ -207,17 +206,17 @@ public class ReadingController {
     // ------------------------------EDIT-----------------------------------
     @RequestMapping(value = "/readingEnergyEdit")
     public ModelAndView readingEnergyEdit(@ModelAttribute("readingForm") ReadingForm readingForm, @RequestParam("residence_id") final Long id) {
-        return MAVForEdit(readingForm, id, Media.ENERGY);
+        return createMAVForEdit(readingForm, id, Media.ENERGY);
     }
 
     @RequestMapping(value = "/readingGasEdit")
     public ModelAndView readingGasEdit(@ModelAttribute("readingForm") ReadingForm readingForm, @RequestParam("residence_id") final Long id) {
-        return MAVForEdit(readingForm, id, Media.GAS);
+        return createMAVForEdit(readingForm, id, Media.GAS);
     }
 
     @RequestMapping(value = "/readingWaterEdit")
     public ModelAndView readingWaterEdit(@ModelAttribute("readingForm") ReadingForm readingForm, @RequestParam("residence_id") final Long id) {
-        return MAVForEdit(readingForm, id, Media.WATER);
+        return createMAVForEdit(readingForm, id, Media.WATER);
     }
 
     // -------------------------OVERWRITE--------------------------------------------
@@ -265,7 +264,7 @@ public class ReadingController {
         return new ReadingDetails(LocalDate.parse(date), Media.ENERGY, residence);
     }
 
-    private ModelAndView MAVForEdit(final ReadingForm readingForm, final Long id, final Media media) {
+    private ModelAndView createMAVForEdit(final ReadingForm readingForm, final Long id, final Media media) {
         final Residence r = residenceService.getById(id);
         final List<Meter> meters = meterService.list(r, media);
         readingForm.setCurrentReadings(readingService.latestEdit(r, media));

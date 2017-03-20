@@ -3,11 +3,9 @@ package kamienica.controller.api.v1;
 import kamienica.core.util.SecurityDetails;
 import kamienica.feature.payment.IPaymentService;
 import kamienica.feature.owner.IOwnerUserDataService;
-import kamienica.feature.security.ISecurityService;
 import kamienica.model.entity.Apartment;
 import kamienica.model.entity.Payment;
 import kamienica.model.entity.Reading;
-import kamienica.model.entity.SecurityUser;
 import kamienica.model.entity.Tenant;
 import kamienica.model.enums.Media;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,14 +22,12 @@ import java.util.List;
 @RequestMapping("/api/v1/home")
 public class AdminUserRestController {
 
-    private final IPaymentService IPaymentService;
-    private final ISecurityService userDetailsService;
+    private final IPaymentService paymentService;
     private final  IOwnerUserDataService ownerUserDataService;
 
     @Autowired
-    public AdminUserRestController(IPaymentService iPaymentService, ISecurityService userDetailsService, IOwnerUserDataService ownerUserDataService) {
-        IPaymentService = iPaymentService;
-        this.userDetailsService = userDetailsService;
+    public AdminUserRestController(IPaymentService paymentService, IOwnerUserDataService ownerUserDataService) {
+        this.paymentService = paymentService;
         this.ownerUserDataService = ownerUserDataService;
     }
 
@@ -49,9 +45,9 @@ public class AdminUserRestController {
     }
 
     @RequestMapping(value = "/user/{media}/payments", method = RequestMethod.GET)
-    public ResponseEntity<List<? extends Payment>> userPayment(@PathVariable(value = "media") Media media) {
+    public ResponseEntity<?> userPayment(@PathVariable(value = "media") Media media) {
         final Tenant tenant = SecurityDetails.getLoggedTenant();
-        final List<Payment> list = IPaymentService.getPaymentForTenant(tenant, media);
+        final List<Payment> list = paymentService.getPaymentForTenant(tenant, media);
 
         if (list.isEmpty()) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);

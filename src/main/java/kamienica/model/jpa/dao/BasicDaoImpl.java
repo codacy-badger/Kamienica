@@ -1,8 +1,6 @@
 package kamienica.model.jpa.dao;
 
-import kamienica.model.entity.Invoice;
 import kamienica.model.entity.Residence;
-import kamienica.model.entity.Tenant;
 import kamienica.model.enums.Media;
 import org.hibernate.Criteria;
 import org.hibernate.Query;

@@ -8,7 +8,6 @@ import kamienica.feature.reading.IReadingDao;
 import kamienica.feature.readingdetails.IReadingDetailsDao;
 import kamienica.model.entity.*;
 import kamienica.model.enums.Media;
-import org.hibernate.criterion.Criterion;
 import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
