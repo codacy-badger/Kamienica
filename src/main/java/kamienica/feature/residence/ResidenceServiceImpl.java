@@ -4,7 +4,11 @@ import kamienica.core.util.SecurityDetails;
 import kamienica.feature.apartment.IApartmentDao;
 import kamienica.feature.meter.IMeterDao;
 import kamienica.feature.residenceownership.IResidenceOwnershipDao;
-import kamienica.model.entity.*;
+import kamienica.model.entity.Apartment;
+import kamienica.model.entity.Meter;
+import kamienica.model.entity.Residence;
+import kamienica.model.entity.ResidenceOwnership;
+import kamienica.model.entity.Tenant;
 import kamienica.model.enums.Media;
 import kamienica.model.enums.Status;
 import org.hibernate.criterion.Criterion;
@@ -45,7 +49,6 @@ public class ResidenceServiceImpl implements IResidenceService {
         saveEssentialData(residence);
     }
 
-    //TODO enabling this fails to save any data in tests
     private void saveEssentialData(Residence residence) {
         final Apartment ap = new Apartment(residence, 0, "0000", "Część Wpólna");
         apartmentDao.save(ap);

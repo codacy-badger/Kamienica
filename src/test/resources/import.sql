@@ -18,22 +18,8 @@ INSERT INTO  tenant  ( id , email , firstName , lastName , movementDate , passwo
 INSERT INTO  tenant  ( id , email , firstName , lastName , movementDate , password , phone , role , status , apartment_id ) VALUES (6,'tenant@rez2','Tenant','2Residence','2010-07-29','witaj','23526564','TENANT','ACTIVE',5);
 INSERT INTO  tenant  ( id , email , firstName , lastName , movementDate , password , phone , role , status , apartment_id ) VALUES (7,'owner@rez2','Owner','2Residence','2010-07-29','witaj','23526564','OWNER','ACTIVE',null);
 
-
 INSERT INTO RESIDENCE_OWNERSHIP (id, owner_id, residenceOwned_id)  VALUES (1,1,1);
 INSERT INTO RESIDENCE_OWNERSHIP (id, owner_id, residenceOwned_id)  VALUES (2,7,2);
-
-INSERT INTO  division  ( id , date , divisionValue , apartment_id , tenant_id ) VALUES (1,'2016-07-01',0.33,1,1);
-INSERT INTO  division  ( id , date , divisionValue , apartment_id , tenant_id ) VALUES (2,'2016-07-01',1,2,1);
-INSERT INTO  division  ( id , date , divisionValue , apartment_id , tenant_id ) VALUES (3,'2016-07-01',0,3,1);
-INSERT INTO  division  ( id , date , divisionValue , apartment_id , tenant_id ) VALUES (4,'2016-07-01',0,4,1);
-INSERT INTO  division  ( id , date , divisionValue , apartment_id , tenant_id ) VALUES (6,'2016-07-01',0.33,1,3);
-INSERT INTO  division  ( id , date , divisionValue , apartment_id , tenant_id ) VALUES (7,'2016-07-01',0,2,3);
-INSERT INTO  division  ( id , date , divisionValue , apartment_id , tenant_id ) VALUES (8,'2016-07-01',0,3,3);
-INSERT INTO  division  ( id , date , divisionValue , apartment_id , tenant_id ) VALUES (9,'2016-07-01',1,4,3);
-INSERT INTO  division  ( id , date , divisionValue , apartment_id , tenant_id ) VALUES (11,'2016-07-01',0.33,1,4);
-INSERT INTO  division  ( id , date , divisionValue , apartment_id , tenant_id ) VALUES (12,'2016-07-01',0,2,4);
-INSERT INTO  division  ( id , date , divisionValue , apartment_id , tenant_id ) VALUES (13,'2016-07-01',1,3,4);
-INSERT INTO  division  ( id , date , divisionValue , apartment_id , tenant_id ) VALUES (14,'2016-07-01',0,4,4);
 
 INSERT INTO  METER  ( id , status , description , main , serialNumber , unit , apartment_id, residence_id, media, isWarmWater, cwu ) VALUES (1,'ACTIVE','Energia Główny',1,'0','kWh',NULL, 1, 'ENERGY', '0', '0');
 INSERT INTO  METER  ( id , status , description , main , serialNumber , unit , apartment_id, residence_id, media, isWarmWater, cwu  ) VALUES (2,'ACTIVE','E Czesc Wspolna',0,'00','kWh',1, 1, 'ENERGY', '0', '0');

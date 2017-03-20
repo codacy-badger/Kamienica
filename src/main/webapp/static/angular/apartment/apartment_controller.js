@@ -1,8 +1,8 @@
-'use strict';
+"use strict";
 
-App.controller('ApartmentController', [
-    '$scope',
-    'Apartment','Residence', '$http',
+App.controller("ApartmentController", [
+    "$scope",
+    "Apartment", "Residence", "$http",
     function($scope, Apartment, Residence, $http) {
 
         $scope.toggle = true;
@@ -15,7 +15,7 @@ App.controller('ApartmentController', [
         self.apartment = new Apartment();
         self.entity;
         self.apartments = [];
-        self.errors = []
+        self.errors = [];
         var arrayIndex;
         self.residences = Residence.query();
 
@@ -25,43 +25,17 @@ App.controller('ApartmentController', [
 
         self.fetchAll();
 
-
-//        var testVar = $http.get('http://localhost:8080/Kamienica/api/v1/apartments/paginated.json?page=1&size=2').
-//        success(function(data, status, headers, config) {
-//                console.log('status');
-//                console.log(status);
-//
-//                console.log('headers');
-//                console.log(headers);
-//
-//                console.log('config');
-//                console.log(config);
-//
-//                console.log('data');
-//                console.log(data);
-//                // this callback will be called asynchronously
-//                // when the response is available
-//                console.log('myData');
-//                console.log(headers()['maxresult']);
-//                console.log(headers()['page']);
-//            })
-//            .error(function(data, status, headers, config) {
-//                // called asynchronously if an error occurs
-//                // or server returns response with an error status.
-   //         });
-
-
         self.createItem = function() {
             self.apartment.$save(function() {}).then(function(ok) {
                 $scope.errorField = true;
-                $scope.errorMsg = 'zapisano do bazy';
+                $scope.errorMsg = "zapisano do bazy";
                 self.apartments.push(ok);
                 self.reset();
                 $scope.toggle = $scope.toggle === false ? true : false;
             }, function(error) {
                 $scope.errors = error.data;
                 $scope.errorField = true;
-                $scope.errorMsg = 'Nie powiódł się zapis do bazy. Popraw dane i spróbuj ponownie';
+                $scope.errorMsg = "Nie powiódł się zapis do bazy. Popraw dane i spróbuj ponownie";
             });
         };
 
@@ -73,7 +47,7 @@ App.controller('ApartmentController', [
             }, function(error) {
                 $scope.errors = error.data;
                 $scope.errorField = true;
-                $scope.errorMsg = 'Nie powiódł się zapis do bazy. Popraw dane i spróbuj ponownie';
+                $scope.errorMsg = "Nie powiódł się zapis do bazy. Popraw dane i spróbuj ponownie";
             });;
 
             self.reset();
@@ -81,28 +55,15 @@ App.controller('ApartmentController', [
         };
 
         self.deleteItem2 = function(identity, indexArray) {
-        	var apartment = self.apartments[indexArray];
-        	
-        	apartment.$delete(function() {}).then(function(ok) {
+            var apartment = self.apartments[indexArray];
+
+            apartment.$delete(function() {}).then(function(ok) {
                 self.apartments.splice(indexArray, 1);
             }, function(error) {
                 $scope.errorField = true;
                 $scope.errorMsg = error.data.message;
             });
-        }; 
-        
-//        self.deleteItem = function(identity, indexArray) {
-//            var apartment = Apartment.get({
-//                id: identity
-//            }, function() {
-//                apartment.$delete(function() {}).then(function(ok) {
-//                    self.apartments.splice(indexArray, 1);
-//                }, function(error) {
-//                    $scope.errorField = true;
-//                    $scope.errorMsg = error.data.message;
-//                })
-//            })
-//        };
+        };
 
         self.submit = function() {
             console.log(self.apartment);
@@ -142,7 +103,7 @@ App.controller('ApartmentController', [
 
         self.clearError = function() {
             $scope.errorField = false;
-            $scope.errorMsg = '';
+            $scope.errorMsg = "";
         }
 
         $scope.toggleFilter = function() {
@@ -150,30 +111,28 @@ App.controller('ApartmentController', [
             $scope.toggle = $scope.toggle === false ? true : false;
 
         }
-        $scope.$watch('toggle', function() {
-            // $scope.toggle ? null : self.reset();
-
-            $scope.text = $scope.toggle ? 'Dodaj' :
-                'Lista';
+        $scope.$watch("toggle", function() {
+            $scope.text = $scope.toggle ? "Dodaj" :
+                "Lista";
         })
 
 
         self.switchForm = function() {
 
-            if ($scope.text === 'Dodaj') {
+            if ($scope.text === "Dodaj") {
 
-                $scope.text = 'Lista';
+                $scope.text = "Lista";
                 self.reset();
                 $scope.toggle = false;
-                $scope.errors = '';
+                $scope.errors = "";
                 $scope.errorField = false;
-                $scope.errorMsg = '';
+                $scope.errorMsg = "";
             } else {
-                $scope.text = 'Dodaj';
+                $scope.text = "Dodaj";
                 $scope.toggle = true;
-                $scope.errors = '';
+                $scope.errors = "";
                 $scope.errorField = false;
-                $scope.errorMsg = '';
+                $scope.errorMsg = "";
             }
 
         }

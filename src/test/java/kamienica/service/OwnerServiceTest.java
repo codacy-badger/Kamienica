@@ -6,6 +6,7 @@ import kamienica.model.entity.Apartment;
 import kamienica.model.entity.Residence;
 import kamienica.model.entity.Tenant;
 import kamienica.model.enums.Status;
+import org.h2.tools.Server;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -30,9 +31,11 @@ public class OwnerServiceTest extends ServiceTest {
     @Transactional
     @Test
     public void getEmptyApartments() throws Exception {
+        Server.main();
         Tenant t = tenantService.getById(4L);
         t.setStatus(Status.INACTIVE);
         tenantService.update(t);
+        List<Tenant> tenants = tenantService.getActiveTenants();
         List<Apartment> result = ownerService.getEmptyApartments();
         assertEquals(1, result.size());
     }

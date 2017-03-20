@@ -15,7 +15,10 @@
 //import java.util.List;
 //import java.util.Map;
 //
-//import static org.junit.Assert.*;
+//import static org.junit.Assert.assertEquals;
+//import static org.junit.Assert.assertNotNull;
+//import static org.junit.Assert.assertNull;
+//import static org.junit.Assert.assertTrue;
 //
 //
 //@Ignore("Owner and Admin serives will be separated")
@@ -30,7 +33,7 @@
 //    @Test
 //    public void emptyApartmentsShouldEqualZero() {
 //
-//        map = userService.getMainData();
+//        map = ownerUserDataService.getMainData();
 //        assertEquals(0, map.get("emptyApartments"));
 //    }
 //
@@ -40,7 +43,7 @@
 //       final Residence res =  residenceService.getById(1L);
 //        final Apartment ap = new Apartment(7,"1234", "test", res);
 //        apartmentService.save(ap);
-//        map = userService.getMainData();
+//        map = ownerUserDataService.getMainData();
 //        assertEquals(1, map.get("emptyApartments"));
 //    }
 //
@@ -50,52 +53,52 @@
 //        Tenant t = tenantService.getById(4L);
 //        t.setStatus(Status.INACTIVE);
 //        tenantService.save(t);
-//        map = userService.getMainData();
+//        map = ownerUserDataService.getMainData();
 //        assertEquals(1, map.get("emptyApartments"));
 //    }
 //
 //    @Test
 //    public void getMainDataShouldNotBeNull() {
-//        map = userService.getMainData();
+//        map = ownerUserDataService.getMainData();
 //        assertNotNull(map);
 //    }
 //
 //    @Ignore("Method will be re-implemented after table merging")
 //    @Test
 //    public void mediaShouldPointToWater() {
-//        map = userService.getMainData();
+//        map = ownerUserDataService.getMainData();
 //        assertEquals("Woda", map.get("readingMedia"));
 //    }
 //    @Ignore("Method will be re-implemented after table merging")
 //    @Test
 //    public void shouldCorrectlyCountDaysFromLastReading() {
-//        map = userService.getMainData();
+//        map = ownerUserDataService.getMainData();
 //        assertEquals(daysFromLastReading, map.get("readingDays"));
 //    }
 //
 //    @Test @Ignore("Method will be re-implemented after table merging")
 //    public void settingShouldBenull() {
-//        map = userService.getMainData();
+//        map = ownerUserDataService.getMainData();
 //        assertNull(map.get("settings"));
 //    }
 //
 //    @Test @Ignore("Method will be re-implemented after table merging")
 //    public void getListsForTenants() {
 //        Apartment apartment = apartmentService.getById(2L);
-//        List<Reading> energy = userService.getReadingEnergyForTenant(apartment);
+//        List<Reading> energy = ownerUserDataService.getReadingEnergyForTenant(apartment);
 //        assertEquals(6, energy.size());
 //        for (Reading Reading : energy) {
 //            int apNum = Reading.getMeter().getApartment().getApartmentNumber();
 //            assertTrue(apNum == 0 || apNum == 1);
 //        }
 //
-//        List<Reading> gas = userService.getReadingGasForTenant(apartment);
+//        List<Reading> gas = ownerUserDataService.getReadingGasForTenant(apartment);
 //        for (Reading Reading : gas) {
 //            int apNum = Reading.getMeter().getApartment().getApartmentNumber();
 //            assertTrue(apNum == 0 || apNum == 1);
 //        }
 //
-//        List<Reading> water = userService.getReadingWaterForTenant(apartment);
+//        List<Reading> water = ownerUserDataService.getReadingWaterForTenant(apartment);
 //        for (Reading Reading : water) {
 //            int apNum = Reading.getMeter().getApartment().getApartmentNumber();
 //            assertTrue(apNum == 0 || apNum == 1);

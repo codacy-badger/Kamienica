@@ -1,5 +1,6 @@
 package kamienica.model.jpa.dao;
 
+import kamienica.model.entity.Invoice;
 import kamienica.model.entity.Residence;
 import kamienica.model.entity.Tenant;
 import kamienica.model.enums.Media;
@@ -27,8 +28,6 @@ public interface BasicDao<T> {
 
     List<T> findForResidence(List<Residence> res);
 
-    List<T> findForOwner(final Tenant t);
-
     List<T> paginatedList(final Integer firstResult, final Integer maxResults);
 
     List<T> findByCriteria(Order order, Criterion... criterion);
@@ -46,6 +45,7 @@ public interface BasicDao<T> {
 
     T getById(final Long id);
 
+    //TODO investigate whether it;s used anymore
     Set<Long> getIdList(final Residence r, final Media media);
 
     long countByCriteria(final Criterion... criterion);

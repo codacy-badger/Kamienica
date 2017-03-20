@@ -33,19 +33,12 @@ public class WaterConsumptionCalculator {
             double sumPrevious = 0;
             double sumNew = 0;
 
-            for (int idx = 0; idx < newRading.size(); idx++) {
-                if (newRading.get(idx).getMeter().getApartment() != null) {
-                    if (newRading.get(idx).getMeter().getApartment().getApartmentNumber() == m.getApartmentNumber()) {
-                        sumNew = sumNew + newRading.get(idx).getValue();
-                    }
+            for (int i = 0; i < newRading.size(); i++) {
+                if (isReadingForApartmentInScope(newRading, m, i)) {
+                    sumNew = sumNew + newRading.get(i).getValue();
                 }
-                if (!oldReading.isEmpty()) {
-                    if (oldReading.get(idx).getMeter().getApartment() != null) {
-                        if (oldReading.get(idx).getMeter().getApartment().getApartmentNumber() == m
-                                .getApartmentNumber()) {
-                            sumPrevious = sumPrevious + oldReading.get(idx).getValue();
-                        }
-                    }
+                if (!oldReading.isEmpty() && isReadingForApartmentInScope(oldReading, m, i)) {
+                    sumPrevious = sumPrevious + oldReading.get(i).getValue();
                 }
             }
             double zuzycie = sumNew - sumPrevious;
@@ -62,16 +55,8 @@ public class WaterConsumptionCalculator {
 
     }
 
-    public static Apartment getSharedApartment(List<Apartment> apartments) {
-        Apartment ap = null;
-        for (Apartment a : apartments) {
-            if (a.getApartmentNumber() == 0) {
-                ap = a;
-                break;
-            }
-        }
-
-        return ap;
+    private static boolean isReadingForApartmentInScope(List<Reading> oldReading, Apartment m, int i) {
+        return oldReading.get(i).getMeter().getApartment() != null && oldReading.get(i).getMeter().getApartment().getApartmentNumber() == m.getApartmentNumber();
     }
 
     // metoda stworzona gdy� nie istnieje fizyczny licznik wody dla czesci

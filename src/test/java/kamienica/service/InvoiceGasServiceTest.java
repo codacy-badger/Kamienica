@@ -2,10 +2,13 @@ package kamienica.service;
 
 import kamienica.configuration.ServiceTest;
 import kamienica.core.util.SecurityDetails;
-import kamienica.model.entity.*;
+import kamienica.model.entity.Invoice;
+import kamienica.model.entity.Payment;
+import kamienica.model.entity.ReadingDetails;
+import kamienica.model.entity.Residence;
+import kamienica.model.entity.Settings;
 import kamienica.model.enums.Media;
 import kamienica.model.enums.WaterHeatingSystem;
-import kamienica.model.exception.InvalidDivisionException;
 import org.joda.time.LocalDate;
 import org.junit.Before;
 import org.junit.Ignore;
@@ -43,7 +46,7 @@ public class InvoiceGasServiceTest extends ServiceTest {
         when(SecurityDetails.getLoggedTenant()).thenReturn(getOwner());
         when(SecurityDetails.getResidencesForOwner()).thenReturn(getMockedResidences());
 
-        List<ReadingDetails> list = readingDetailsService.getUnresolved( r, Media.GAS);
+        List<ReadingDetails> list = readingDetailsService.getUnresolved(r, Media.GAS);
         assertEquals(2, list.size());
         Invoice invoice = new Invoice("112233", TODAY, 200, r, list.get(1), Media.GAS);
 
@@ -57,20 +60,20 @@ public class InvoiceGasServiceTest extends ServiceTest {
         assertEquals(64.55, paymentList.get(4).getPaymentAmount(), DELTA);
         assertEquals(92.06, paymentList.get(5).getPaymentAmount(), DELTA);
 
-        list = readingDetailsService.getUnresolved( r, Media.GAS);
+        list = readingDetailsService.getUnresolved(r, Media.GAS);
         assertEquals(1, list.size());
         assertEquals(LocalDate.parse("2016-07-29"), list.get(0).getReadingDate());
     }
 
     @Test
     @Transactional
-    public void addForFirstReadingWithSharedWaterHeating() throws InvalidDivisionException {
+    public void addForFirstReadingWithSharedWaterHeating() {
         mockStatic(SecurityDetails.class);
         when(SecurityDetails.getLoggedTenant()).thenReturn(getOwner());
         when(SecurityDetails.getResidencesForOwner()).thenReturn(getMockedResidences());
 
 
-        List<ReadingDetails> list = readingDetailsService.getUnresolved( r, Media.GAS);
+        List<ReadingDetails> list = readingDetailsService.getUnresolved(r, Media.GAS);
         assertEquals(2, list.size());
         Invoice invoice = new Invoice("112233", TODAY, 200, r, list.get(0), Media.GAS);
 
@@ -84,22 +87,21 @@ public class InvoiceGasServiceTest extends ServiceTest {
         assertEquals(68.13, paymentList.get(4).getPaymentAmount(), DELTA);
         assertEquals(103.61, paymentList.get(5).getPaymentAmount(), DELTA);
 
-       list = readingDetailsService.getUnresolved( r, Media.GAS);
+        list = readingDetailsService.getUnresolved(r, Media.GAS);
         assertEquals(1, list.size());
         assertEquals(LocalDate.parse("2016-10-01"), list.get(0).getReadingDate());
 
     }
 
 
-
     @Test
     @Transactional
-    public void addForFirstReadingWithSeparateWaterHeating() throws InvalidDivisionException {
+    public void addForFirstReadingWithSeparateWaterHeating() {
         mockStatic(SecurityDetails.class);
         when(SecurityDetails.getLoggedTenant()).thenReturn(getOwner());
         when(SecurityDetails.getResidencesForOwner()).thenReturn(getMockedResidences());
 
-        List<ReadingDetails> list = readingDetailsService.getUnresolved( r, Media.GAS);
+        List<ReadingDetails> list = readingDetailsService.getUnresolved(r, Media.GAS);
         Settings setings = settingsService.getSettings();
         setings.setWaterHeatingSystem(WaterHeatingSystem.INDIVIDUAL_GAS);
         settingsService.save(setings);
@@ -116,7 +118,7 @@ public class InvoiceGasServiceTest extends ServiceTest {
         assertEquals(78.57, paymentList.get(4).getPaymentAmount(), DELTA);
         assertEquals(50.00, paymentList.get(5).getPaymentAmount(), DELTA);
 
-       list = readingDetailsService.getUnresolved( r, Media.GAS);
+        list = readingDetailsService.getUnresolved(r, Media.GAS);
         assertEquals(1, list.size());
         assertEquals(LocalDate.parse("2016-10-01"), list.get(0).getReadingDate());
 
@@ -126,18 +128,20 @@ public class InvoiceGasServiceTest extends ServiceTest {
     @Transactional
     public void remove() {
         invoiceService.delete(1L);
-        List<ReadingDetails> list = readingDetailsService.getUnresolved( r, Media.GAS);
+        List<ReadingDetails> list = readingDetailsService.getUnresolved(r, Media.GAS);
         assertEquals(2, list.size());
     }
 
     @Test
     @Ignore("not implemented yet")
-    public void shouldNotBeAbleToInsertInvoiceWithSameDateResidenceAndMedia() {fail();}
+    public void shouldNotBeAbleToInsertInvoiceWithSameDateResidenceAndMedia() {
+        fail();
+    }
 
     @Transactional
     @Test
-    public void prepareForRegistration() throws InvalidDivisionException {
-        List<ReadingDetails> list = readingDetailsService.getUnresolved( r, Media.GAS);
+    public void prepareForRegistration() {
+        List<ReadingDetails> list = readingDetailsService.getUnresolved(r, Media.GAS);
         assertEquals(2, list.size());
     }
 

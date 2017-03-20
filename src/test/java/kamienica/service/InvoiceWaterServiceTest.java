@@ -7,7 +7,6 @@ import kamienica.model.entity.Payment;
 import kamienica.model.entity.ReadingDetails;
 import kamienica.model.entity.Residence;
 import kamienica.model.enums.Media;
-import kamienica.model.exception.InvalidDivisionException;
 import org.joda.time.LocalDate;
 import org.junit.Before;
 import org.junit.Ignore;
@@ -40,7 +39,7 @@ public class InvoiceWaterServiceTest extends ServiceTest {
 
     @Test
     @Transactional
-    public void add() throws InvalidDivisionException {
+    public void add()  {
         mockStatic(SecurityDetails.class);
         when(SecurityDetails.getLoggedTenant()).thenReturn(getOwner());
         when(SecurityDetails.getResidencesForOwner()).thenReturn(getMockedResidences());
@@ -67,7 +66,7 @@ public class InvoiceWaterServiceTest extends ServiceTest {
 
     @Test
     @Transactional
-    public void addForFirstReading() throws InvalidDivisionException {
+    public void addForFirstReading(){
         mockStatic(SecurityDetails.class);
         when(SecurityDetails.getLoggedTenant()).thenReturn(getOwner());
         when(SecurityDetails.getResidencesForOwner()).thenReturn(getMockedResidences());
@@ -107,7 +106,7 @@ public class InvoiceWaterServiceTest extends ServiceTest {
     }
 
     @Test
-    public void prepareForRegistration() throws InvalidDivisionException {
+    public void prepareForRegistration() {
         // apService.deleteByID(5L);
         List<ReadingDetails> list = readingDetailsService.getUnresolved( r, Media.WATER);
         assertEquals(2, list.size());

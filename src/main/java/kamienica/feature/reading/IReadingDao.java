@@ -1,6 +1,9 @@
 package kamienica.feature.reading;
 
-import kamienica.model.entity.*;
+import kamienica.model.entity.Apartment;
+import kamienica.model.entity.Reading;
+import kamienica.model.entity.ReadingDetails;
+import kamienica.model.entity.Residence;
 import kamienica.model.enums.Media;
 import kamienica.model.jpa.dao.BasicDao;
 import org.joda.time.LocalDate;
@@ -11,21 +14,10 @@ public interface IReadingDao extends BasicDao<Reading> {
 
     List<Reading> getByDate(Residence r, LocalDate date);
 
-    List<Reading> getPrevious(ReadingDetails details, List<Meter> meters);
-
-    List<Reading> getLatestList(Residence r, LocalDate date);
-
     List<Reading> getList(Residence r, Media media);
 
     List<Reading> getListForTenant(Apartment apartment);
 
     List<Reading> list(ReadingDetails details);
 
-    void changeResolvementState(Invoice invoice, boolean resolved);
-
-    int countDaysFromLastReading();
-
-    LocalDate getLatestDate(Residence r, Media m);
-
-    List<Reading> getWaterReadingForGasConsumption(Residence r,ReadingDetails details);
 }

@@ -1,6 +1,10 @@
 package kamienica.testutils;
 
-import kamienica.model.entity.*;
+import kamienica.model.entity.Apartment;
+import kamienica.model.entity.Meter;
+import kamienica.model.entity.Reading;
+import kamienica.model.entity.ReadingDetails;
+import kamienica.model.entity.Residence;
 import kamienica.model.enums.Media;
 import kamienica.model.enums.Resolvement;
 import kamienica.model.enums.Status;
@@ -42,10 +46,10 @@ public class EntityProvider {
 
 
     private static List<Apartment> getApartmentList() {
-        Apartment apartment0 = new Apartment(0, "0000", "Czesc Wspolna", RESIDENCE);
-        Apartment apartment1 = new Apartment(1, "1111", "Piwnica", RESIDENCE);
-        Apartment apartment2 = new Apartment(2, "2222", "Parter", RESIDENCE);
-        Apartment apartment3 = new Apartment(3, "3333", "1 pietro", RESIDENCE);
+        Apartment apartment0 = new Apartment(1L,0, "0000", "Czesc Wspolna", RESIDENCE);
+        Apartment apartment1 = new Apartment(2L,1, "1111", "Piwnica", RESIDENCE);
+        Apartment apartment2 = new Apartment(3L,2, "2222", "Parter", RESIDENCE);
+        Apartment apartment3 = new Apartment(4L,3, "3333", "1 pietro", RESIDENCE);
 
         List<Apartment> apartments = new ArrayList<>();
         apartments.add(apartment0);

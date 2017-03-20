@@ -2,7 +2,11 @@ package kamienica.configuration;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.datatype.joda.JodaModule;
-import kamienica.model.conventer.*;
+import kamienica.model.conventer.ApartmentConverter;
+import kamienica.model.conventer.InvoiceConverter;
+import kamienica.model.conventer.MeterEnergyConverter;
+import kamienica.model.conventer.ReadingConverter;
+import kamienica.model.conventer.TenantConverter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -74,7 +78,7 @@ public class AppConfig extends WebMvcConfigurerAdapter {
 	public ViewResolver viewResolver() {
 		InternalResourceViewResolver viewResolver = new InternalResourceViewResolver();
 		viewResolver.setViewClass(JstlView.class);
-		viewResolver.setPrefix("/WEB-INF/views/");
+		viewResolver.setPrefix("/WEB-INF/views");
 		viewResolver.setSuffix(".jsp");
 		// viewResolver.setContentType("UTF-8");
 		return viewResolver;

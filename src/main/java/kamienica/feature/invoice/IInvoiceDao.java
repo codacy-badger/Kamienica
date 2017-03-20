@@ -10,13 +10,6 @@ import java.util.List;
 
 public interface IInvoiceDao extends BasicDao<Invoice> {
 
-    List<Invoice> getUnpaidInvoices();
-
-    Invoice getLastResolved();
-
-    void setResolvement(Invoice invoice, PaymentStatus status);
-
-    int getDaysOfLastInvoice();
 
     List<Invoice> getList(Residence r, Media m);
 }

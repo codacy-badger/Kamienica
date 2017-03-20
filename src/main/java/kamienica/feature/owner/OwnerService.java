@@ -21,13 +21,9 @@ public class OwnerService implements IOwnerService {
     private final IApartmentDao apartmentDao;
     private final IReadingDetailsDao readingDetailsDao;
     private final IPaymentDao paymentDao;
-    private static final String COUNT_EMPTY_APARTMENTS =
-            "SELECT * FROM apartment WHERE id in (SELECT apartment_id FROM tenant WHERE apartment.id = tenant.apartment_id AND tenant.status='INACTIVE' and residence_id in (%s))";
-    private static final String COUNT_EMPTY_APARTMENTS2 =
-            "SELECT * FROM apartment WHERE NOT EXISTS (SELECT * FROM tenant WHERE apartment.id = tenant.apartment_id AND tenant.status='ACTIVE') and residence_id in (%s)";
 
-
-    private static final String COUNT_EMPTY_APARTMENTS3= "SELECT * FROM apartment WHERE NOT EXISTS (SELECT * FROM tenant WHERE apartment.id = tenant.apartment_id ) and apartmentNumber > 0 and residence_id in(%s)";
+    private static final String EMPTY_APPS = "SELECT * FROM APARTMENT WHERE id in" +
+            "(select A.id from apartment A JOIN TENANT ON tenant.APARTMENT_ID = APARTMENT.ID  where APARTMENT.residence_id in(%s) and apartmentNumber > 0 AND tenant.status='ACTIVE')";
     @Autowired
     public OwnerService(IApartmentDao apartmentDao, IReadingDetailsDao readingDetailsDao, IPaymentDao paymentDao) {
         this.apartmentDao = apartmentDao;
@@ -47,7 +43,7 @@ public class OwnerService implements IOwnerService {
         idList = idList.substring(0, idList.length()-1);
 //        List<Residence> residences = SecurityDetails.getResidencesForOwner();
 //        return apartmentDao.findByCriteria(Restrictions.in("residence", residences), Restrictions.gt("apartmentNumber", 0) );
-        return apartmentDao.getBySQLQuery(String.format(COUNT_EMPTY_APARTMENTS3, idList));
+        return apartmentDao.getBySQLQuery(String.format(EMPTY_APPS, idList));
     }
 
     @Override

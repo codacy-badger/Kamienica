@@ -9,11 +9,8 @@ import kamienica.model.exception.NoMainCounterException;
 import org.joda.time.LocalDate;
 
 import java.util.List;
-import java.util.Map;
 
 public interface IReadingService  {
-
-    void setDates(Map<String, Object> map, List<Reading> list);
 
     Reading getById(Long id);
 

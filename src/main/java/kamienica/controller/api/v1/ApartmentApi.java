@@ -11,7 +11,12 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 
 import javax.validation.Valid;
 import java.util.HashMap;
@@ -20,7 +25,7 @@ import java.util.Map;
 
 @RestController
 @RequestMapping("/api/v1/apartments")
-public class ApartmentApi  {
+public class ApartmentApi {
 
     private final IApartmentService apartmentService;
 
@@ -73,7 +78,7 @@ public class ApartmentApi  {
     }
 
     @RequestMapping(value = "/{id}", method = RequestMethod.PUT)
-    public ResponseEntity<?> updateUser(@PathVariable("id") final Long id, @RequestBody final Apartment apartment, final BindingResult result) {
+    public ResponseEntity<?> updateApartment(@PathVariable("id") final Long id, @RequestBody final Apartment apartment, final BindingResult result) {
 
         if (result.hasErrors()) {
             ApiErrorResponse message = new ApiErrorResponse();
