@@ -24,7 +24,7 @@ public class RentContract extends DBEntity {
     private LocalDate contractStart;
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     @Type(type = "org.jadira.usertype.dateandtime.joda.PersistentLocalDate")
-    private LocalDate contractEnd;
+    private LocalDate contractEnd = LocalDate.parse("2100-01-01");
 
     public RentContract(Apartment apartment, Tenant tenant, double rentCost, LocalDate contractStart, LocalDate contractEnd) {
         this.apartment = apartment;
@@ -33,6 +33,14 @@ public class RentContract extends DBEntity {
         this.contractStart = contractStart;
         this.contractEnd = contractEnd;
     }
+
+    public RentContract(Apartment apartment, Tenant tenant, double rentCost, LocalDate contractStart) {
+        this.apartment = apartment;
+        this.tenant = tenant;
+        this.rentCost = rentCost;
+        this.contractStart = contractStart;
+    }
+
     public RentContract() {
 
     }
@@ -76,6 +84,5 @@ public class RentContract extends DBEntity {
     public void setContractEnd(LocalDate contractEnd) {
         this.contractEnd = contractEnd;
     }
-
 
 }

@@ -1,13 +1,10 @@
 package kamienica.model.entity;
 
-import kamienica.model.enums.Status;
 import kamienica.model.enums.UserRole;
-import org.hibernate.annotations.Type;
 import org.hibernate.validator.constraints.Email;
 import org.hibernate.validator.constraints.Length;
 import org.hibernate.validator.constraints.NotEmpty;
 import org.joda.time.LocalDate;
-import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -25,7 +22,6 @@ import java.io.Serializable;
 public class Tenant implements Serializable {
 
     private static final long serialVersionUID = 1L;
-
     @Id
     @GeneratedValue
     @Column
@@ -44,41 +40,25 @@ public class Tenant implements Serializable {
     @Digits(integer = 100, fraction = 0, message = "Tylko wartości liczbowe")
     private String phone;
     @OneToOne
-    private Apartment apartment;
+    private RentContract rentContract;
     @Column(nullable = false)
     @Enumerated(EnumType.STRING)
     private UserRole role = UserRole.TENANT;
-    @Column(nullable = false)
-    @Enumerated(EnumType.STRING)
-    private Status status = Status.ACTIVE;
-    @Column(nullable = false)
-    @DateTimeFormat(pattern = "yyyy-MM-dd")
-    @Type(type = "org.jadira.usertype.dateandtime.joda.PersistentLocalDate")
-    private LocalDate movementDate;
     @Length(min = 5, message = "Hasło musi mieć minimum 5 znaków")
     @Column(nullable = false)
     @NotEmpty(message = "Wprowadź hasło")
     private String password = "witaj";
 
-    public Tenant(String firstName, String lastName, String email, String phone, Apartment apartment) {
+    public Tenant(String firstName, String lastName, String email, String phone, RentContract rentContract) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;
-        this.apartment = apartment;
         this.phone = phone;
+        this.rentContract = rentContract;
     }
 
     public Tenant() {
-        this.movementDate = new LocalDate();
         this.password = "witaj";
-    }
-
-    public Status getStatus() {
-        return status;
-    }
-
-    public void setStatus(Status status) {
-        this.status = status;
     }
 
     public UserRole getRole() {
@@ -133,21 +113,6 @@ public class Tenant implements Serializable {
         this.id = id;
     }
 
-    public LocalDate getMovementDate() {
-        return movementDate;
-    }
-
-    public void setMovementDate(LocalDate movementDate) {
-        this.movementDate = movementDate;
-    }
-
-    public Apartment getApartment() {
-        return apartment;
-    }
-
-    public void setApartment(Apartment apartment) {
-        this.apartment = apartment;
-    }
 
     public String getPassword() {
         return password;
@@ -157,11 +122,36 @@ public class Tenant implements Serializable {
         this.password = password;
     }
 
-    @Override
-    public String toString() {
-        return "Tenant [id=" + id + ", firstName=" + firstName + ", lastName=" + lastName + ", email=" + email
-                + ", phone=" + phone + ", apartment=" + apartment + ", role=" + role + ", status=" + status
-                + ", movementDate=" + movementDate + ", password=" + password + "]";
+
+    public RentContract getRentContract() {
+        return rentContract;
     }
 
+    public void setRentContract(RentContract rentContract) {
+        this.rentContract = rentContract;
+    }
+
+    @Override
+    public String toString() {
+        return "Tenant{" +
+                "id=" + id +
+                ", firstName='" + firstName + '\'' +
+                ", lastName='" + lastName + '\'' +
+                ", email='" + email + '\'' +
+                ", phone='" + phone + '\'' +
+                ", rentContract=" + rentContract +
+                ", role=" + role +
+                ", password='" + password + '\'' +
+                '}';
+    }
+
+    public Apartment getApartment() {
+        return this.rentContract.getApartment();
+    }
+
+    public boolean isActive() {
+        final LocalDate now = new LocalDate();
+        final RentContract rc = this.getRentContract();
+        return rc.getContractStart().isBefore(now) && rc.getContractEnd().isAfter(now);
+    }
 }

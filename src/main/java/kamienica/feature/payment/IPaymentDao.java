@@ -5,11 +5,11 @@ import kamienica.model.entity.Payment;
 import kamienica.model.entity.Reading;
 import kamienica.model.entity.Tenant;
 import kamienica.model.enums.Media;
-import kamienica.model.jpa.dao.BasicDao;
+import kamienica.model.jpa.dao.IBasicDao;
 
 import java.util.List;
 
-public interface IPaymentDao extends BasicDao<Payment> {
+public interface IPaymentDao extends IBasicDao<Payment> {
 
 	void deleteByDate(String date);
 

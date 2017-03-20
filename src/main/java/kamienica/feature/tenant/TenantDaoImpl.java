@@ -3,23 +3,14 @@ package kamienica.feature.tenant;
 import kamienica.model.entity.Apartment;
 import kamienica.model.entity.Tenant;
 import kamienica.model.enums.Status;
-import kamienica.model.jpa.dao.BasicDaoImpl;
+import kamienica.model.jpa.dao.BasicDao;
 import org.hibernate.Criteria;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.stereotype.Repository;
 
-import java.util.List;
-
 @Repository("tenantDao")
-public class TenantDaoImpl extends BasicDaoImpl<Tenant> implements ITenantDao {
+public class TenantDaoImpl extends BasicDao<Tenant> implements ITenantDao {
 
-    @Override
-    @SuppressWarnings("unchecked")
-    public List<Tenant> getActiveTenants() {
-        final Criteria criteria = createEntityCriteria();
-        criteria.add(Restrictions.eq("status", Status.ACTIVE));
-        return criteria.list();
-    }
 
     @Override
     public Tenant loadByMail(final String mail) {

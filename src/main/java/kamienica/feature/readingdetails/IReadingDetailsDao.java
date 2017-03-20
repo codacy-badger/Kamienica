@@ -3,12 +3,12 @@ package kamienica.feature.readingdetails;
 import kamienica.model.entity.ReadingDetails;
 import kamienica.model.entity.Residence;
 import kamienica.model.enums.Media;
-import kamienica.model.jpa.dao.BasicDao;
+import kamienica.model.jpa.dao.IBasicDao;
 import org.joda.time.LocalDate;
 
 import java.util.List;
 
-public interface IReadingDetailsDao extends BasicDao<ReadingDetails> {
+public interface IReadingDetailsDao extends IBasicDao<ReadingDetails> {
 
     ReadingDetails getLatest(Residence residence, Media media);
 

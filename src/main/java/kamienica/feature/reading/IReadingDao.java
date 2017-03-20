@@ -5,12 +5,12 @@ import kamienica.model.entity.Reading;
 import kamienica.model.entity.ReadingDetails;
 import kamienica.model.entity.Residence;
 import kamienica.model.enums.Media;
-import kamienica.model.jpa.dao.BasicDao;
+import kamienica.model.jpa.dao.IBasicDao;
 import org.joda.time.LocalDate;
 
 import java.util.List;
 
-public interface IReadingDao extends BasicDao<Reading> {
+public interface IReadingDao extends IBasicDao<Reading> {
 
     List<Reading> getByDate(Residence r, LocalDate date);
 

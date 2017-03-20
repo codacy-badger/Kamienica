@@ -8,15 +8,23 @@ insert into apartment(id, apartmentNumber, description, intercom, residence_id) 
 insert into apartment(id, apartmentNumber, description, intercom, residence_id) values(4, 3, 'I Piętro','6666', 1);
 insert into apartment(id, apartmentNumber, description, intercom, residence_id) values(5, 2, 'Mieszkanie z drugiej rezydencji','6666', 2);
 
-INSERT INTO  tenant  ( id , email , firstName , lastName , movementDate , password , phone , role , status , apartment_id ) VALUES (1,'owner@res1','LivesAndOwns','1Residence','2016-07-25','witaj','530081187','OWNER','ACTIVE',2);
-INSERT INTO  tenant  ( id , email , firstName , lastName , movementDate , password , phone , role , status , apartment_id ) VALUES (5,'klej@wp.pl','Piotr','Kulej','2010-07-29','witaj','23526564','TENANT','INACTIVE',2);
+INSERT INTO  tenant  ( id , email , firstName , lastName, password , phone , role) VALUES (1,'owner@res1','LivesAndOwns','1Residence','witaj','530081187','OWNER');
+INSERT INTO  tenant  ( id , email , firstName , lastName, password , phone , role) VALUES (5,'klej@wp.pl','Piotr','Kulej','witaj','23526564','TENANT');
 
-INSERT INTO  tenant  ( id , email , firstName , lastName , movementDate , password , phone , role , status , apartment_id ) VALUES (2,'kow@wp.pl','Andrzej','Kowalski','2014-07-01','witaj','4456','TENANT','INACTIVE',3);
-INSERT INTO  tenant  ( id , email , firstName , lastName , movementDate , password , phone , role , status , apartment_id ) VALUES (4,'kasia@wp.pl','Kasia','Kowalska','2016-07-29','witaj','3456775','TENANT','ACTIVE',3);
+INSERT INTO  tenant  ( id , email , firstName , lastName, password , phone , role) VALUES (2,'kow@wp.pl','Andrzej','Kowalski','witaj','4456','TENANT');
+INSERT INTO  tenant  ( id , email , firstName , lastName, password , phone , role) VALUES (4,'kasia@wp.pl','Kasia','Kowalska','witaj','3456775','TENANT';
 
-INSERT INTO  tenant  ( id , email , firstName , lastName , movementDate , password , phone , role , status , apartment_id ) VALUES (3,'par@wp.pl','Kasia','Para','2015-07-26','witaj','23636','TENANT','ACTIVE',4);
-INSERT INTO  tenant  ( id , email , firstName , lastName , movementDate , password , phone , role , status , apartment_id ) VALUES (6,'tenant@rez2','Tenant','2Residence','2010-07-29','witaj','23526564','TENANT','ACTIVE',5);
-INSERT INTO  tenant  ( id , email , firstName , lastName , movementDate , password , phone , role , status , apartment_id ) VALUES (7,'owner@rez2','Owner','2Residence','2010-07-29','witaj','23526564','OWNER','ACTIVE',null);
+INSERT INTO  tenant  ( id , email , firstName , lastName, password , phone , role) VALUES (3,'par@wp.pl','Kasia','Para','witaj','23636','TENANT');
+INSERT INTO  tenant  ( id , email , firstName , lastName, password , phone , role) VALUES (6,'tenant@rez2','Tenant','2Residence','witaj','23526564','TENANT');
+INSERT INTO  tenant  ( id , email , firstName , lastName, password , phone , role) VALUES (7,'owner@rez2','Owner','2Residence','witaj','23526564','OWNER');
+
+insert into rent_contract(id, apartment_id, tenant_id, rentCost, contractStart, contractEnd) VALUES (1, 2, 1, 0, '2016-07-25', '2100-01-01');
+insert into rent_contract(id, apartment_id, tenant_id, rentCost, contractStart, contractEnd) VALUES (2, 2, 5, 10, '2010-07-29','2016-07-25');
+insert into rent_contract(id, apartment_id, tenant_id, rentCost, contractStart, contractEnd) VALUES (3, 3, 2, 20, '2014-07-01', '2015-01-01');
+insert into rent_contract(id, apartment_id, tenant_id, rentCost, contractStart, contractEnd) VALUES (4, 3, 4, 30, '2016-07-29', '2100-01-01');
+insert into rent_contract(id, apartment_id, tenant_id, rentCost, contractStart, contractEnd) VALUES (5, 4, 3, 25, '2015-07-26', '2100-01-01');
+insert into rent_contract(id, apartment_id, tenant_id, rentCost, contractStart, contractEnd) VALUES (6, 4, 6, 200, '2010-07-29', '2100-01-01');
+insert into rent_contract(id, apartment_id, tenant_id, rentCost, contractStart, contractEnd) VALUES (7, 5, null, 60, '2010-07-29', '2100-01-01');
 
 INSERT INTO RESIDENCE_OWNERSHIP (id, owner_id, residenceOwned_id)  VALUES (1,1,1);
 INSERT INTO RESIDENCE_OWNERSHIP (id, owner_id, residenceOwned_id)  VALUES (2,7,2);

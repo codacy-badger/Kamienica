@@ -2,9 +2,11 @@ package kamienica.feature.tenant;
 
 import kamienica.core.util.SecurityDetails;
 import kamienica.feature.apartment.IApartmentDao;
+import kamienica.feature.rentcontract.IRentContractDao;
 import kamienica.model.entity.Apartment;
+import kamienica.model.entity.RentContract;
+import kamienica.model.entity.Residence;
 import kamienica.model.entity.Tenant;
-import kamienica.model.enums.Status;
 import kamienica.model.enums.UserRole;
 import org.hibernate.criterion.Criterion;
 import org.hibernate.criterion.Restrictions;
@@ -20,11 +22,13 @@ public class TenantServiceImpl implements ITenantService {
 
     private final ITenantDao tenantDao;
     private final IApartmentDao apartmentDao;
+    private final IRentContractDao rentContractDao;
 
     @Autowired
-    public TenantServiceImpl(ITenantDao tenantDao, IApartmentDao apartmentDao) {
+    public TenantServiceImpl(ITenantDao tenantDao, IApartmentDao apartmentDao, IRentContractDao rentContractDao) {
         this.tenantDao = tenantDao;
         this.apartmentDao = apartmentDao;
+        this.rentContractDao = rentContractDao;
     }
 
     @Override
@@ -36,11 +40,10 @@ public class TenantServiceImpl implements ITenantService {
     }
 
     private void compareMovementDatesAndPersist(Tenant newTenant, Tenant currentTenant) {
-        if (currentTenant.getMovementDate().isAfter(newTenant.getMovementDate())) {
-            newTenant.setStatus(Status.INACTIVE);
+
+        if (currentTenant.getRentContract().getContractStart().isAfter(newTenant.getRentContract().getContractStart())) {
             tenantDao.save(newTenant);
         } else {
-            currentTenant.setStatus(Status.INACTIVE);
             tenantDao.save(currentTenant);
             tenantDao.save(newTenant);
         }
@@ -55,8 +58,9 @@ public class TenantServiceImpl implements ITenantService {
     @Override
     public List<Tenant> listForOwner() {
         List<Apartment> apartments = apartmentDao.getListForOwner(SecurityDetails.getResidencesForOwner());
-        Criterion c = Restrictions.in("apartment", apartments);
-        return findByCriteria(c);
+        final Criterion c1 = Restrictions.in("apartment", apartments);
+        List<RentContract> contracts = rentContractDao.findByCriteria(c1);
+        return findByCriteria(Restrictions.in("rentContract", contracts));
     }
 
     @Override
@@ -67,6 +71,12 @@ public class TenantServiceImpl implements ITenantService {
     @Override
     public List<Tenant> findByCriteria(Criterion... crit) {
         return tenantDao.findByCriteria(crit);
+    }
+
+    @Override
+    public List<Tenant> listActiveTenants(Residence residence) {
+
+        return null;
     }
 
     @Override
@@ -85,10 +95,6 @@ public class TenantServiceImpl implements ITenantService {
         return tenantDao.getById(id);
     }
 
-    @Override
-    public List<Tenant> getActiveTenants() {
-        return tenantDao.getActiveTenants();
-    }
 
     @Override
     public Tenant loadByMail(String mail) {

@@ -5,7 +5,7 @@ import kamienica.model.entity.Payment;
 import kamienica.model.entity.Reading;
 import kamienica.model.entity.Tenant;
 import kamienica.model.enums.Media;
-import kamienica.model.jpa.dao.BasicDaoImpl;
+import kamienica.model.jpa.dao.BasicDao;
 import org.hibernate.Criteria;
 import org.hibernate.Query;
 import org.hibernate.criterion.Order;
@@ -15,7 +15,7 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 @Repository("paymentDao")
-public class PaymentDao extends BasicDaoImpl<Payment> implements IPaymentDao {
+public class PaymentDao extends BasicDao<Payment> implements IPaymentDao {
 
     @Override
     public List<Payment> getByInvoice(Invoice invoice) {

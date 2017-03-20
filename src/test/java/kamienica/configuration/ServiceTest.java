@@ -65,6 +65,7 @@ public abstract class ServiceTest {
     protected IReadingDetailsService readingDetailsService;
     @Autowired
     protected IOwnerService ownerService;
+
     /**
      * difference factor for calculated data
      */

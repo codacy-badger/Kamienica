@@ -5,7 +5,7 @@ import kamienica.model.entity.Apartment;
 import kamienica.model.entity.Meter;
 import kamienica.model.entity.Residence;
 import kamienica.model.enums.Media;
-import kamienica.model.jpa.dao.BasicDao;
+import kamienica.model.jpa.dao.IBasicDao;
 import org.hibernate.criterion.Criterion;
 import org.hibernate.criterion.Restrictions;
 import org.junit.Ignore;
@@ -22,11 +22,11 @@ import static org.junit.Assert.assertNotNull;
 public class BasicDaoTest extends DaoTest {
 
     @Autowired
-    private BasicDao<Apartment> apartemtnDao;
+    private IBasicDao<Apartment> apartemtnDao;
     @Autowired
-    private BasicDao<Residence> residenceDao;
+    private IBasicDao<Residence> residenceDao;
     @Autowired
-    private BasicDao<Meter> meterDao;
+    private IBasicDao<Meter> meterDao;
 
     private final static String SQL = "SELECT * FROM RESIDENCE";
 

@@ -2,6 +2,7 @@ package kamienica.service;
 
 import kamienica.configuration.ServiceTest;
 import kamienica.model.entity.Apartment;
+import kamienica.model.entity.RentContract;
 import kamienica.model.entity.Tenant;
 import kamienica.model.enums.Status;
 import kamienica.model.enums.UserRole;
@@ -37,17 +38,11 @@ public class TenantServiceTest extends ServiceTest {
     }
 
     @Test
-    public void getActiveTenants() {
-        List<Tenant> list = tenantService.getActiveTenants();
-        assertEquals(5, list.size());
-    }
-
-    @Test
     public void getOwners() {
         List<Tenant> list = tenantService.getOwners();
         assertEquals(2, list.size());
         final long id = list.get(0).getId();
-        assertEquals(1L, id );
+        assertEquals(1L, id);
     }
 
     @Test
@@ -64,44 +59,33 @@ public class TenantServiceTest extends ServiceTest {
         final Tenant newOwner = createTenant(LocalDate.parse("2018-01-01"));
         tenantService.save(newOwner);
         Tenant previousOwner = tenantService.loadByMail(FIRST_OWNER_MAIL);
-        assertEquals(Status.INACTIVE, previousOwner.getStatus());
+        assertEquals(false, previousOwner.isActive());
     }
-
-//    @Ignore
-//    @Test
-//    public void ownerShouldHaveOneResidence() {
-//        final Tenant owner = tenantService.getById(1L);
-//      //  final List<Residence> residenceList = owner.getResidencesOwned();
-////        assertEquals(1, residenceList.size());
-//    }//
-
 
     @Transactional
     @Test
     public void shouldDeactivateNewTenantWhenMovementDateIsOlderThanCurrentTenant() {
         final Tenant newOwner = createTenant(LocalDate.parse("2015-01-01"));
-        assertEquals(Status.ACTIVE, newOwner.getStatus());
+        assertEquals(true, newOwner.isActive());
         tenantService.save(newOwner);
         Tenant previousOwner = tenantService.loadByMail(FIRST_OWNER_MAIL);
-        assertEquals(Status.ACTIVE, previousOwner.getStatus());
-        assertEquals(Status.INACTIVE, newOwner.getStatus());
+        assertEquals(true, previousOwner.isActive());
+        assertEquals(false, newOwner.isActive());
     }
 
 
-    private Tenant createTenant(LocalDate localDate) {
+    private Tenant createTenant(final LocalDate localDate) {
         final Apartment apartment = apartmentService.getById(2L);
-
         tenantService.loadByMail(FIRST_OWNER_MAIL);
         Tenant tenant = new Tenant();
-        tenant.setApartment(apartment);
+        final RentContract rc = new RentContract(apartment, tenant, 100, localDate);
+
         tenant.setEmail(dummyMail);
         tenant.setFirstName("dummy");
         tenant.setLastName("dumy");
-        tenant.setMovementDate(localDate);
         tenant.setPassword("dummy");
         tenant.setRole(UserRole.TENANT);
-        tenant.setStatus(Status.ACTIVE);
-
+        tenant.setRentContract(rc);
         return tenant;
     }
 }

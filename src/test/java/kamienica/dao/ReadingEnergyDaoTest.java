@@ -20,7 +20,7 @@
 //	@Autowired
 //	IReadingDao<ReadingEnergy, InvoiceEnergy> daoservice;
 //	@Autowired
-//	BasicDao<MeterEnergy> meterDAO;
+//	IBasicDao<MeterEnergy> meterDAO;
 //
 //	
 //

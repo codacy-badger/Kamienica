@@ -2,15 +2,12 @@ package kamienica.feature.tenant;
 
 import kamienica.model.entity.Apartment;
 import kamienica.model.entity.Tenant;
-import kamienica.model.jpa.dao.BasicDao;
+import kamienica.model.jpa.dao.IBasicDao;
 
-import java.util.List;
-
-public interface ITenantDao extends BasicDao<Tenant> {
+public interface ITenantDao extends IBasicDao<Tenant> {
 
 	Tenant getTenantForApartment(Apartment apartment);
 
-	List<Tenant> getActiveTenants();
 
 	Tenant loadByMail(String mail);
 }
