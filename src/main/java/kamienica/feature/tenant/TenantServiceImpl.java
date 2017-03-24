@@ -10,10 +10,12 @@ import kamienica.model.entity.Tenant;
 import kamienica.model.enums.UserRole;
 import org.hibernate.criterion.Criterion;
 import org.hibernate.criterion.Restrictions;
+import org.joda.time.LocalDate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Collections;
 import java.util.List;
 
 @Service
@@ -33,7 +35,7 @@ public class TenantServiceImpl implements ITenantService {
 
     @Override
     public void save(Tenant newTenant) {
-        Tenant currentTenant = tenantDao.getTenantForApartment(newTenant.getApartment());
+        Tenant currentTenant = findCurrentTenant(newTenant.getApartment());
         if (currentTenant == null) {
             tenantDao.save(newTenant);
         } else compareMovementDatesAndPersist(newTenant, currentTenant);
@@ -74,9 +76,24 @@ public class TenantServiceImpl implements ITenantService {
     }
 
     @Override
-    public List<Tenant> listActiveTenants(Residence residence) {
+    public List<Tenant> listActiveTenants(final Residence residence) {
+        final LocalDate now = new LocalDate();
+        final List<Apartment> apartments = apartmentDao.getListForOwner(Collections.singletonList(residence));
+        final Criterion c1 = Restrictions.in("apartment", apartments);
+        final Criterion c2 = Restrictions.lt("contractStart", now);
+        final Criterion c3 = Restrictions.gt("contractEnd", now);
+        List<RentContract> contracts = rentContractDao.findByCriteria(c1, c2, c3);
+        return tenantDao.findByCriteria(Restrictions.in("rentContract", contracts));
+    }
 
-        return null;
+    @Override
+    public Tenant findCurrentTenant(final Apartment apartment) {
+        final LocalDate now = new LocalDate();
+        final Criterion c1 = Restrictions.eq("apartment", apartment);
+        final Criterion c2 = Restrictions.lt("contractStart", now);
+        final Criterion c3 = Restrictions.gt("contractEnd", now);
+        RentContract contract = rentContractDao.findOneByCriteria(c1, c2, c3);
+        return tenantDao.findOneByCriteria(Restrictions.eq("rentContract", contract));
     }
 
     @Override

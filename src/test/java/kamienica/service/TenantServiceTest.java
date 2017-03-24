@@ -3,15 +3,19 @@ package kamienica.service;
 import kamienica.configuration.ServiceTest;
 import kamienica.model.entity.Apartment;
 import kamienica.model.entity.RentContract;
+import kamienica.model.entity.Residence;
 import kamienica.model.entity.Tenant;
 import kamienica.model.enums.Status;
 import kamienica.model.enums.UserRole;
+import org.h2.tools.Server;
 import org.hibernate.criterion.Criterion;
 import org.hibernate.criterion.Restrictions;
 import org.joda.time.LocalDate;
+import org.junit.BeforeClass;
 import org.junit.Test;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.sql.SQLException;
 import java.util.List;
 
 import static org.junit.Assert.assertEquals;
@@ -21,7 +25,6 @@ public class TenantServiceTest extends ServiceTest {
 
     private final static String dummyMail = "dummy@dummy";
 
-
     @Test
     public void getList() {
         List<Tenant> list = tenantService.list();
@@ -30,10 +33,8 @@ public class TenantServiceTest extends ServiceTest {
 
     @Test
     public void shouldGetOnlyAciveTenants() {
-        final Criterion active = Restrictions.eq("status", Status.ACTIVE);
-        final Criterion tenant = Restrictions.eq("role", UserRole.TENANT);
-
-        final List<Tenant> result = tenantService.findByCriteria(active, tenant);
+        final Residence r = residenceService.getById(1L);
+        final List<Tenant> result = tenantService.listActiveTenants(r);
         assertEquals(3, result.size());
     }
 
@@ -78,7 +79,7 @@ public class TenantServiceTest extends ServiceTest {
         final Apartment apartment = apartmentService.getById(2L);
         tenantService.loadByMail(FIRST_OWNER_MAIL);
         Tenant tenant = new Tenant();
-        final RentContract rc = new RentContract(apartment, tenant, 100, localDate);
+        final RentContract rc = new RentContract(apartment,  100, localDate);
 
         tenant.setEmail(dummyMail);
         tenant.setFirstName("dummy");

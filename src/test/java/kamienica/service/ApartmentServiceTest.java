@@ -4,9 +4,11 @@ import kamienica.configuration.ServiceTest;
 import kamienica.core.util.SecurityDetails;
 import kamienica.model.entity.Apartment;
 import kamienica.model.entity.Residence;
+import org.h2.tools.Server;
 import org.junit.Test;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.sql.SQLException;
 import java.util.List;
 
 import static org.junit.Assert.assertEquals;
