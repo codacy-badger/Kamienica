@@ -5,7 +5,6 @@ import kamienica.core.calculator.GasConsumptionCalculator;
 import kamienica.core.calculator.PaymentCalculator;
 import kamienica.core.calculator.WaterConsumptionCalculator;
 import kamienica.core.util.SecurityDetails;
-import kamienica.feature.apartment.IApartmentDao;
 import kamienica.feature.division.IDivisionService;
 import kamienica.feature.meter.IMeterService;
 import kamienica.feature.payment.IPaymentDao;
@@ -13,13 +12,10 @@ import kamienica.feature.reading.IReadingDao;
 import kamienica.feature.reading.IReadingService;
 import kamienica.feature.readingdetails.ReadingDetailsDao;
 import kamienica.feature.settings.ISettingsDao;
-import kamienica.feature.tenant.ITenantDao;
 import kamienica.model.entity.*;
 import kamienica.model.enums.Media;
 import kamienica.model.enums.Resolvement;
-import kamienica.model.enums.Status;
 import kamienica.model.enums.WaterHeatingSystem;
-import org.hibernate.Criteria;
 import org.hibernate.criterion.*;
 import org.joda.time.LocalDate;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -134,8 +130,8 @@ public class InvoiceService implements IInvoiceService {
 
     private void saveWater(Invoice invoice, List<Division> division) {
         final Residence r = invoice.getResidence();
-        final List<Tenant> tenants = division.stream().map(Division::getTenant).distinct().collect(Collectors.toList());
-        final List<Apartment> apartments = division.stream().map(Division::getApartment).distinct().collect(Collectors.toList());
+        final List<Tenant> tenants = extractTenantsFromDivision(division);
+        final List<Apartment> apartments = extractApartmentsFromDivision(division);
         List<Reading> ReadingOld = readingService.getPreviousReading(
                 invoice.getReadingDetails().getReadingDate(), meterService.list(r, Media.WATER));
 
@@ -153,8 +149,8 @@ public class InvoiceService implements IInvoiceService {
     private void saveGas(Invoice invoice, List<Division> division) {
         Settings settings = settingsDao.getList().get(0);
         final Residence r = invoice.getResidence();
-        final List<Tenant> tenants = division.stream().map(Division::getTenant).distinct().collect(Collectors.toList());
-        final List<Apartment> apartments = division.stream().map(Division::getApartment).distinct().collect(Collectors.toList());
+        final List<Tenant> tenants = extractTenantsFromDivision(division);
+        final List<Apartment> apartments = extractApartmentsFromDivision(division);
         List<Reading> ReadingOld = readingService.getPreviousReading(invoice.getReadingDetails().getReadingDate(),
                 meterService.list(r, Media.GAS));
         List<Reading> ReadingNew = readingService.getByDate(invoice.getResidence(), invoice.getReadingDetails().getReadingDate(),
@@ -181,8 +177,8 @@ public class InvoiceService implements IInvoiceService {
     private void saveEnergy(Invoice invoice, List<Division> division) {
         final LocalDate baseReadingDate = invoice.getReadingDetails().getReadingDate();
         final Residence r = invoice.getResidence();
-        final List<Tenant> tenants = division.stream().map(Division::getTenant).distinct().collect(Collectors.toList());
-        final List<Apartment> apartments = division.stream().map(Division::getApartment).distinct().collect(Collectors.toList());
+        final List<Tenant> tenants = extractTenantsFromDivision(division);
+        final List<Apartment> apartments = extractApartmentsFromDivision(division);
 
         List<Reading> ReadingOld = readingService.getPreviousReading(baseReadingDate, meterService.list(r, Media.ENERGY));
         List<Reading> ReadingNew = readingService.getByDate(invoice.getResidence(), baseReadingDate, Media.ENERGY);
@@ -192,6 +188,14 @@ public class InvoiceService implements IInvoiceService {
         List<Payment> payments = PaymentCalculator.createPaymentList(tenants, invoice, division, usageEnergy);
 
         saveAllInvoiceRelatedData(invoice, payments);
+    }
+
+    private List<Tenant> extractTenantsFromDivision(List<Division> division) {
+        return division.stream().map(Division::getTenant).distinct().collect(Collectors.toList());
+    }
+
+    private List<Apartment> extractApartmentsFromDivision(List<Division> division) {
+        return division.stream().map(Division::getApartment).distinct().collect(Collectors.toList());
     }
 
     private void saveAllInvoiceRelatedData(Invoice invoice, List<Payment> payments) {

@@ -5,7 +5,6 @@ import kamienica.core.util.SecurityDetails;
 import kamienica.model.entity.Apartment;
 import kamienica.model.entity.Residence;
 import kamienica.model.entity.Tenant;
-import kamienica.model.enums.Status;
 import org.h2.tools.Server;
 import org.joda.time.LocalDate;
 import org.junit.Before;

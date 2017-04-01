@@ -1,7 +1,6 @@
 package kamienica.feature.tenant;
 
 import kamienica.model.entity.Apartment;
-import kamienica.model.entity.ReadingDetails;
 import kamienica.model.entity.RentContract;
 import kamienica.model.entity.Tenant;
 import kamienica.model.enums.Status;

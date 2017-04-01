@@ -5,17 +5,11 @@ import kamienica.model.entity.Apartment;
 import kamienica.model.entity.RentContract;
 import kamienica.model.entity.Residence;
 import kamienica.model.entity.Tenant;
-import kamienica.model.enums.Status;
 import kamienica.model.enums.UserRole;
-import org.h2.tools.Server;
-import org.hibernate.criterion.Criterion;
-import org.hibernate.criterion.Restrictions;
 import org.joda.time.LocalDate;
-import org.junit.BeforeClass;
 import org.junit.Test;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.sql.SQLException;
 import java.util.List;
 
 import static org.junit.Assert.assertEquals;
