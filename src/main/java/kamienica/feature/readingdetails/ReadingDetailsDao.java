@@ -4,7 +4,7 @@ import kamienica.model.entity.ReadingDetails;
 import kamienica.model.entity.Residence;
 import kamienica.model.enums.Media;
 import kamienica.model.enums.Resolvement;
-import kamienica.model.jpa.dao.BasicDaoImpl;
+import kamienica.model.jpa.dao.BasicDao;
 import org.hibernate.Criteria;
 import org.hibernate.criterion.Criterion;
 import org.hibernate.criterion.DetachedCriteria;
@@ -17,7 +17,7 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 @Repository("readingDetails")
-public class ReadingDetailsDao extends BasicDaoImpl<ReadingDetails> implements IReadingDetailsDao {
+public class ReadingDetailsDao extends BasicDao<ReadingDetails> implements IReadingDetailsDao {
 
     @Override
     public ReadingDetails getLatest(final Residence residence, final Media media) {

@@ -3,7 +3,7 @@ package kamienica.feature.invoice;
 import kamienica.model.entity.Invoice;
 import kamienica.model.entity.Residence;
 import kamienica.model.enums.Media;
-import kamienica.model.jpa.dao.BasicDaoImpl;
+import kamienica.model.jpa.dao.BasicDao;
 import org.hibernate.criterion.Criterion;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.stereotype.Repository;
@@ -11,7 +11,7 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 @Repository("invoiceDao")
-public class InvoiceDao extends BasicDaoImpl<Invoice> implements IInvoiceDao {
+public class InvoiceDao extends BasicDao<Invoice> implements IInvoiceDao {
 
 
     @Override

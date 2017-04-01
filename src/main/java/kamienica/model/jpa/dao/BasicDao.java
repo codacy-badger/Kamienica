@@ -2,51 +2,202 @@ package kamienica.model.jpa.dao;
 
 import kamienica.model.entity.Residence;
 import kamienica.model.enums.Media;
+import org.hibernate.Criteria;
+import org.hibernate.Query;
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
 import org.hibernate.criterion.Criterion;
 import org.hibernate.criterion.Order;
+import org.hibernate.criterion.Projections;
+import org.hibernate.criterion.Restrictions;
+import org.springframework.beans.factory.annotation.Autowired;
 
+import java.lang.reflect.ParameterizedType;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-public interface BasicDao<T> {
+public abstract class BasicDao<T> implements IBasicDao<T> {
 
-    void save(final T object);
+    @Autowired
+    protected SessionFactory sessionFactory;
+    protected final Class<T> persistentClass;
 
-    void deleteById(final Long id);
+    @SuppressWarnings("unchecked")
+    public BasicDao() {
+        this.persistentClass = (Class<T>) ((ParameterizedType) this.getClass().getGenericSuperclass())
+                .getActualTypeArguments()[0];
+    }
 
-    void delete(T entity);
+    @SuppressWarnings("unchecked")
+    @Override
+    public T getById(Long id) {
+        return (T) getSession().get(persistentClass, id);
+    }
 
-    void delete(final Long id);
+    @Override
+    public void save(T entity) {
+        getSession().persist(entity);
+    }
 
-    void update(final T object);
+    @Override
+    public void update(T entity) {
+        getSession().update(entity);
 
-    List<T> getList();
+    }
 
-    List<T> getList(Media media);
+    @Override
+    public void deleteById(Long id) {
+        Query query = getSession()
+                .createSQLQuery("delete from " + persistentClass.getSimpleName().toLowerCase() + " where id = :id");
+        query.setLong("id", id);
+        query.executeUpdate();
+    }
 
-    List<T> findForResidence(List<Residence> res);
+    @Override
+    public void delete(T entity) {
+        getSession().delete(entity);
+    }
 
-    List<T> paginatedList(final Integer firstResult, final Integer maxResults);
 
-    List<T> findByCriteria(Order order, Criterion... criterion);
+    //TODO there are three delete methods...
+    @Override
+    public void delete(Long id) {
+        Object o = getById(id);
+        getSession().delete(o);
+    }
 
-    List<T> findByCriteria(final Criterion... criterion);
+    @Override
+    @SuppressWarnings("unchecked")
+    public List<T> getList() {
+        Criteria criteria = createEntityCriteria();
+        return criteria.list();
+    }
 
-    T findOneByCriteria(final Criterion... criterion);
+    @Override
+    public List<T> getList(final Media media) {
+        final Criteria criteria = createEntityCriteria();
+        criteria.add(Restrictions.eq("media", media));
+        return criteria.list();
+    }
 
-    List<T> getBySQLQuery(final String queryString);
+    @Override
+    @SuppressWarnings("unchecked")
+    public List<T> paginatedList(Integer page, Integer maxResult) {
+        Criteria criteria = createEntityCriteria();
+        criteria.setFirstResult((page * maxResult) - maxResult);
+        criteria.setMaxResults(maxResult);
+        return criteria.list();
+    }
 
-    T getOneBySQLQuery(final String queryString);
+    @Override
+    @SuppressWarnings("unchecked")
+    public Set<Long> getIdList(final Residence r, final Media media) {
+        final Criteria c = createEntityCriteria();
+        c.add(Restrictions.eq("media", media));
+        c.add(Restrictions.eq("residence", r));
+        c.setProjection(Projections.property("id"));
+        return new HashSet<>(c.list());
+    }
 
-    List<T> findByCriteria(final int firstResult, final int maxResults, final Order order,
-                           final Criterion... criterion);
+    @Override
+    public long countByCriteria(final Criterion... criterion) {
+        Criteria criteria = createEntityCriteria();
+        criteria.setProjection(Projections.rowCount());
+        for (final Criterion c : criterion) {
+            criteria.add(c);
+        }
+        return (Long) criteria.list().get(0);
+    }
 
-    T getById(final Long id);
+    @Override
+    public List<T> findByCriteria(final Criterion... criterion) {
+        Criteria criteria = createEntityCriteria();
+        for (final Criterion c : criterion) {
+            criteria.add(c);
+        }
+        return criteria.list();
+    }
 
-    //TODO investigate whether it;s used anymore
-    Set<Long> getIdList(final Residence r, final Media media);
+    @Override
+    public T findOneByCriteria(Criterion... criterion) {
+        Criteria criteria = createEntityCriteria();
+        for (final Criterion c : criterion) {
+            criteria.add(c);
+        }
+        return (T) criteria.uniqueResult();
+    }
 
-    long countByCriteria(final Criterion... criterion);
+    @Override
+    public List<T> getBySQLQuery(final String queryString) {
+        Query query = getSession().createSQLQuery(queryString);
+        return query.list();
+    }
 
+    //TODO done only for readfing details. switch to criteria when possible
+    @Override
+    public T getOneBySQLQuery(final String queryString) {
+        Query query = getSession().createSQLQuery(queryString);
+        return (T) query.uniqueResult();
+    }
+
+    @Override
+    public List<T> findForResidence(final List<Residence> residences) {
+        final Criterion forResidence = Restrictions.in("residence", residences);
+        return findByCriteria(forResidence);
+    }
+
+    @Override
+    public List<T> findByCriteria(final Order order, final Criterion... criterion) {
+        Session session = getSession();
+        Criteria crit = session.createCriteria(persistentClass);
+        for (final Criterion c : criterion) {
+            crit.add(c);
+        }
+
+        if (order != null) {
+            crit.addOrder(order);
+        }
+
+        return crit.list();
+    }
+
+    @Override
+    @SuppressWarnings("unchecked")
+    public List<T> findByCriteria(final int firstResult, final int maxResults, final Order order,
+                                  final Criterion... criterion) {
+        Session session = getSession();
+        Criteria crit = session.createCriteria(persistentClass);
+
+        for (final Criterion c : criterion) {
+            crit.add(c);
+        }
+
+        if (order != null) {
+            crit.addOrder(order);
+        }
+
+        if (firstResult > 0) {
+            crit.setFirstResult(firstResult);
+        }
+
+        if (maxResults > 0) {
+            crit.setMaxResults(maxResults);
+        }
+
+        return crit.list();
+    }
+
+    protected Criteria createEntityCriteria() {
+        return getSession().createCriteria(persistentClass);
+    }
+
+    protected String getTabName() {
+        return persistentClass.getSimpleName().toLowerCase();
+    }
+
+    protected Session getSession() {
+        return sessionFactory.getCurrentSession();
+    }
 
 }

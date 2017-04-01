@@ -4,7 +4,7 @@ import kamienica.model.entity.Meter;
 import kamienica.model.entity.Residence;
 import kamienica.model.enums.Media;
 import kamienica.model.enums.Status;
-import kamienica.model.jpa.dao.BasicDaoImpl;
+import kamienica.model.jpa.dao.BasicDao;
 import org.hibernate.Criteria;
 import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
@@ -14,7 +14,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 @Repository("meter")
-public class MeterDao extends BasicDaoImpl<Meter> implements IMeterDao {
+public class MeterDao extends BasicDao<Meter> implements IMeterDao {
 
     @Override
     public boolean ifMainExists() {

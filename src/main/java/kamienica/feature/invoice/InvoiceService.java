@@ -5,7 +5,6 @@ import kamienica.core.calculator.GasConsumptionCalculator;
 import kamienica.core.calculator.PaymentCalculator;
 import kamienica.core.calculator.WaterConsumptionCalculator;
 import kamienica.core.util.SecurityDetails;
-import kamienica.feature.apartment.IApartmentDao;
 import kamienica.feature.division.IDivisionService;
 import kamienica.feature.meter.IMeterService;
 import kamienica.feature.payment.IPaymentDao;
@@ -13,23 +12,11 @@ import kamienica.feature.reading.IReadingDao;
 import kamienica.feature.reading.IReadingService;
 import kamienica.feature.readingdetails.ReadingDetailsDao;
 import kamienica.feature.settings.ISettingsDao;
-import kamienica.feature.tenant.ITenantDao;
-import kamienica.model.entity.Apartment;
-import kamienica.model.entity.Division;
-import kamienica.model.entity.Invoice;
-import kamienica.model.entity.MediaUsage;
-import kamienica.model.entity.Payment;
-import kamienica.model.entity.Reading;
-import kamienica.model.entity.ReadingDetails;
-import kamienica.model.entity.Residence;
-import kamienica.model.entity.Settings;
-import kamienica.model.entity.Tenant;
+import kamienica.model.entity.*;
 import kamienica.model.enums.Media;
 import kamienica.model.enums.Resolvement;
-import kamienica.model.enums.Status;
 import kamienica.model.enums.WaterHeatingSystem;
-import org.hibernate.criterion.Criterion;
-import org.hibernate.criterion.Restrictions;
+import org.hibernate.criterion.*;
 import org.joda.time.LocalDate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -37,14 +24,13 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 @Service
 @Transactional
 public class InvoiceService implements IInvoiceService {
 
-    private final ITenantDao tenantDao;
     private final IDivisionService divisionService;
-    private final IApartmentDao apartmentDao;
     private final IReadingService readingService;
     private final IMeterService meterService;
     private final IInvoiceDao invoiceDao;
@@ -54,14 +40,11 @@ public class InvoiceService implements IInvoiceService {
     private final ReadingDetailsDao readingDetailsDao;
 
     @Autowired
-    public InvoiceService(ITenantDao tenantDao, IDivisionService divisionService,
-                          IApartmentDao apartmentDao, IReadingService readingService,
+    public InvoiceService(IDivisionService divisionService, IReadingService readingService,
                           IMeterService meterService, IInvoiceDao invoiceDao,
                           IReadingDao readingDao, IPaymentDao paymentDao,
                           ISettingsDao settingsDao, ReadingDetailsDao readingDetailsDao) {
-        this.tenantDao = tenantDao;
         this.divisionService = divisionService;
-        this.apartmentDao = apartmentDao;
         this.readingService = readingService;
         this.meterService = meterService;
         this.invoiceDao = invoiceDao;
@@ -75,23 +58,18 @@ public class InvoiceService implements IInvoiceService {
     @SuppressWarnings("unchecked")
     @Override
     public void save(final Invoice invoice) {
-        final Residence residence = invoice.getResidence();
         final Media media = invoice.getMedia();
-
-        final List<Apartment> apartments = apartmentDao.findByCriteria(Restrictions.eq("residence", residence));
-        final List<Tenant> tenants = tenantDao.findByCriteria(Restrictions.in("apartment", apartments), Restrictions.eq("status", Status.ACTIVE));
-        final List<Division> division = divisionService.createDivisionForResidence(residence);
-        invoice.setResidence(residence);
+        final List<Division> division = divisionService.createDivisionForResidence(invoice);
 
         switch (media) {
             case ENERGY:
-                saveEnergy(invoice, apartments, tenants, division);
+                saveEnergy(invoice, division);
                 break;
             case GAS:
-                saveGas(invoice, apartments, tenants, division);
+                saveGas(invoice, division);
                 break;
             case WATER:
-                saveWater(invoice, apartments, tenants, division);
+                saveWater(invoice, division);
                 break;
             default:
                 break;
@@ -150,8 +128,10 @@ public class InvoiceService implements IInvoiceService {
     }
 
 
-    private void saveWater(Invoice invoice, List<Apartment> apartments, List<Tenant> tenants, List<Division> division) {
-        final Residence r = apartments.get(0).getResidence();
+    private void saveWater(Invoice invoice, List<Division> division) {
+        final Residence r = invoice.getResidence();
+        final List<Tenant> tenants = extractTenantsFromDivision(division);
+        final List<Apartment> apartments = extractApartmentsFromDivision(division);
         List<Reading> ReadingOld = readingService.getPreviousReading(
                 invoice.getReadingDetails().getReadingDate(), meterService.list(r, Media.WATER));
 
@@ -160,21 +140,17 @@ public class InvoiceService implements IInvoiceService {
 
         List<MediaUsage> usageWater = WaterConsumptionCalculator.countConsumption(apartments, ReadingOld,
                 ReadingNew);
-        List<Payment> paymentWater = PaymentCalculator.createPaymentList(tenants, invoice,
+        List<Payment> payments = PaymentCalculator.createPaymentList(tenants, invoice,
                 division, usageWater);
 
-        invoiceDao.save(invoice);
-        ReadingDetails rd = invoice.getReadingDetails();
-        rd.setResolvement(Resolvement.RESOLVED);
-        readingDetailsDao.update(rd);
-        for (Payment payment : paymentWater) {
-            paymentDao.save(payment);
-        }
+        saveAllInvoiceRelatedData(invoice, payments);
     }
 
-    private void saveGas(Invoice invoice, List<Apartment> apartments, List<Tenant> tenants, List<Division> division) {
+    private void saveGas(Invoice invoice, List<Division> division) {
         Settings settings = settingsDao.getList().get(0);
-        final Residence r = apartments.get(0).getResidence();
+        final Residence r = invoice.getResidence();
+        final List<Tenant> tenants = extractTenantsFromDivision(division);
+        final List<Apartment> apartments = extractApartmentsFromDivision(division);
         List<Reading> ReadingOld = readingService.getPreviousReading(invoice.getReadingDetails().getReadingDate(),
                 meterService.list(r, Media.GAS));
         List<Reading> ReadingNew = readingService.getByDate(invoice.getResidence(), invoice.getReadingDetails().getReadingDate(),
@@ -192,36 +168,43 @@ public class InvoiceService implements IInvoiceService {
             usageGas = GasConsumptionCalculator.countConsumption(apartments, ReadingOld, ReadingNew);
         }
 
-        List<Payment> paymentGas = PaymentCalculator.createPaymentList(tenants, invoice,
+        List<Payment> payments = PaymentCalculator.createPaymentList(tenants, invoice,
                 division, usageGas);
 
-        invoiceDao.save(invoice);
-        ReadingDetails rd = invoice.getReadingDetails();
-        rd.setResolvement(Resolvement.RESOLVED);
-        readingDetailsDao.update(rd);
-
-        for (Payment payment : paymentGas) {
-            paymentDao.save(payment);
-        }
+        saveAllInvoiceRelatedData(invoice, payments);
     }
 
-    private void saveEnergy(Invoice invoice, List<Apartment> apartments, List<Tenant> tenants, List<Division> division) {
+    private void saveEnergy(Invoice invoice, List<Division> division) {
         final LocalDate baseReadingDate = invoice.getReadingDetails().getReadingDate();
-        final Residence r = apartments.get(0).getResidence();
+        final Residence r = invoice.getResidence();
+        final List<Tenant> tenants = extractTenantsFromDivision(division);
+        final List<Apartment> apartments = extractApartmentsFromDivision(division);
 
         List<Reading> ReadingOld = readingService.getPreviousReading(baseReadingDate, meterService.list(r, Media.ENERGY));
         List<Reading> ReadingNew = readingService.getByDate(invoice.getResidence(), baseReadingDate, Media.ENERGY);
 
         List<MediaUsage> usageEnergy = EnergyConsumptionCalculator.countConsumption(apartments, ReadingOld,
                 ReadingNew);
-        List<Payment> paymentEnergy = PaymentCalculator.createPaymentList(tenants, invoice, division, usageEnergy);
+        List<Payment> payments = PaymentCalculator.createPaymentList(tenants, invoice, division, usageEnergy);
 
+        saveAllInvoiceRelatedData(invoice, payments);
+    }
+
+    private List<Tenant> extractTenantsFromDivision(List<Division> division) {
+        return division.stream().map(Division::getTenant).distinct().collect(Collectors.toList());
+    }
+
+    private List<Apartment> extractApartmentsFromDivision(List<Division> division) {
+        return division.stream().map(Division::getApartment).distinct().collect(Collectors.toList());
+    }
+
+    private void saveAllInvoiceRelatedData(Invoice invoice, List<Payment> payments) {
         invoiceDao.save(invoice);
         ReadingDetails rd = invoice.getReadingDetails();
         rd.setResolvement(Resolvement.RESOLVED);
         readingDetailsDao.update(rd);
 
-        for (Payment payment : paymentEnergy) {
+        for (Payment payment : payments) {
             paymentDao.save(payment);
         }
     }

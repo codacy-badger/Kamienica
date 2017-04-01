@@ -17,7 +17,7 @@
 //	@Autowired
 //	ReadingWaterDAO daoservice;
 //	@Autowired
-//	BasicDao<MeterWater> meterDAO;
+//	IBasicDao<MeterWater> meterDAO;
 //
 //	@Testing
 //	public void getUnresolvedReadings() {

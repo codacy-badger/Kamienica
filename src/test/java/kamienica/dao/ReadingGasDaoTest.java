@@ -18,7 +18,7 @@
 //	@Autowired
 //	IReadingDao<ReadingGas, InvoiceGas> daoservice;
 //	@Autowired
-//	BasicDao<MeterGas> meterDAO;
+//	IBasicDao<MeterGas> meterDAO;
 //
 //	@Testing
 //	public void getUnresolvedReadings() {

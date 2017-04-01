@@ -5,7 +5,7 @@ import kamienica.model.entity.Reading;
 import kamienica.model.entity.ReadingDetails;
 import kamienica.model.entity.Residence;
 import kamienica.model.enums.Media;
-import kamienica.model.jpa.dao.BasicDaoImpl;
+import kamienica.model.jpa.dao.BasicDao;
 import org.hibernate.Criteria;
 import org.hibernate.Query;
 import org.hibernate.criterion.Order;
@@ -16,7 +16,7 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 @Repository("readingDao")
-public class ReadingDao extends BasicDaoImpl<Reading> implements IReadingDao {
+public class ReadingDao extends BasicDao<Reading> implements IReadingDao {
 
     //TODO what the hell is this...
     private static final String LIST_FOR_TENANT = "select * from reading where meter_id IN(select id from meter where apartment_id IN(SELECT id FROM apartment where apartmentnumber IN(0, :num)));";
