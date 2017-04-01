@@ -34,19 +34,30 @@ public class TenantServiceImpl implements ITenantService {
     }
 
     @Override
-    public void save(Tenant newTenant) {
+    public void save(final Tenant newTenant) {
         Tenant currentTenant = findCurrentTenant(newTenant.getApartment());
-        if (currentTenant == null) {
+        if (ifApartmentIsEmpty(currentTenant)) {
             tenantDao.save(newTenant);
-        } else compareMovementDatesAndPersist(newTenant, currentTenant);
+        } else {
+            compareMovementDatesAndPersist(newTenant, currentTenant);
+        }
+    }
+
+    private boolean ifApartmentIsEmpty(Tenant currentTenant) {
+        return currentTenant == null || currentTenant.getRentContract().getContractEnd().isBefore(new LocalDate());
     }
 
     private void compareMovementDatesAndPersist(Tenant newTenant, Tenant currentTenant) {
-
-        if (currentTenant.getRentContract().getContractStart().isAfter(newTenant.getRentContract().getContractStart())) {
+        final RentContract newRentContract = newTenant.getRentContract();
+        final RentContract oldRentContract = currentTenant.getRentContract();
+        if (newRentContract.getContractStart().isAfter(oldRentContract.getContractStart())) {
+            oldRentContract.setContractEnd(newRentContract.getContractStart().minusDays(1));
+            rentContractDao.save(newRentContract);
+            rentContractDao.update(oldRentContract);
             tenantDao.save(newTenant);
         } else {
-            tenantDao.save(currentTenant);
+            newRentContract.setContractEnd(oldRentContract.getContractStart().minusDays(1));
+            rentContractDao.save(newRentContract);
             tenantDao.save(newTenant);
         }
     }

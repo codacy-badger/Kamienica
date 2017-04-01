@@ -57,7 +57,7 @@ public class TenantServiceTest extends ServiceTest {
     @Transactional
     @Test
     public void shouldDeactivateOldTenantWhenNewIsInserted() {
-        final Tenant newOwner = createTenant(LocalDate.parse("2018-01-01"));
+        final Tenant newOwner = createTenant(LocalDate.parse("2017-03-10"));
         tenantService.save(newOwner);
         Tenant previousOwner = tenantService.loadByMail(FIRST_OWNER_MAIL);
         assertEquals(false, previousOwner.isActive());

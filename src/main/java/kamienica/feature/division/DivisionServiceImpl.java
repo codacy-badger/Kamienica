@@ -3,10 +3,7 @@ package kamienica.feature.division;
 import kamienica.core.util.CommonUtils;
 import kamienica.feature.apartment.IApartmentDao;
 import kamienica.feature.tenant.ITenantDao;
-import kamienica.model.entity.Apartment;
-import kamienica.model.entity.Division;
-import kamienica.model.entity.Residence;
-import kamienica.model.entity.Tenant;
+import kamienica.model.entity.*;
 import kamienica.model.enums.Status;
 import org.hibernate.criterion.Criterion;
 import org.hibernate.criterion.Restrictions;
@@ -25,7 +22,7 @@ public class DivisionServiceImpl implements IDivisionService {
     private final IApartmentDao apartmentDAO;
 
     @Autowired
-    public DivisionServiceImpl( ITenantDao tenantDAO, IApartmentDao apartmentDAO) {
+    public DivisionServiceImpl(ITenantDao tenantDAO, IApartmentDao apartmentDAO) {
         this.tenantDAO = tenantDAO;
         this.apartmentDAO = apartmentDAO;
     }
@@ -36,14 +33,22 @@ public class DivisionServiceImpl implements IDivisionService {
         final Criterion forResidence = Restrictions.eq("residence", res);
         final List<Apartment> apartments = apartmentDAO.findByCriteria(forResidence);
         final List<Tenant> tenants = tenantDAO.findByCriteria(createCriteria(apartments));
-        
+
+        return prepareDivisionList(tenants, apartments);
+    }
+
+    @Override
+    public List<Division> createDivisionForResidence(final Invoice invoice) {
+        final Residence residence = invoice.getResidence();
+        final List<Apartment> apartments = apartmentDAO.findByCriteria(Restrictions.eq("residence", residence));
+        final List<Tenant> tenants = tenantDAO.getActiveTenants(apartments);
         return prepareDivisionList(tenants, apartments);
     }
 
     private Criterion[] createCriteria(final List<Apartment> apartments) {
         final Criterion forTheseApartments = Restrictions.in("apartment", apartments);
         final Criterion onlyActive = Restrictions.eq("status", Status.ACTIVE);
-        return new Criterion[] {forTheseApartments, onlyActive};
+        return new Criterion[]{forTheseApartments, onlyActive};
     }
 
     private List<Division> prepareDivisionList(List<Tenant> tenantList, List<Apartment> apartmentList) {
