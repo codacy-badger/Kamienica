@@ -51,10 +51,13 @@ public class TenantServiceTest extends ServiceTest {
     @Transactional
     @Test
     public void shouldDeactivateOldTenantWhenNewIsInserted() {
-        final Tenant newOwner = createTenant(LocalDate.parse("2017-03-10"));
+        final LocalDate movementDate = LocalDate.parse("2017-03-10");
+        final Tenant newOwner = createTenant(movementDate);
         tenantService.save(newOwner);
         Tenant previousOwner = tenantService.loadByMail(FIRST_OWNER_MAIL);
-        assertEquals(false, previousOwner.isActive());
+        LocalDate previousOwnerContractEnd = previousOwner.getRentContract().getContractEnd();
+        final boolean isOneDayBefore = previousOwnerContractEnd.equals(movementDate.minusDays(1));
+        assertEquals(true, isOneDayBefore);
     }
 
     @Transactional
@@ -68,12 +71,29 @@ public class TenantServiceTest extends ServiceTest {
         assertEquals(false, newOwner.isActive());
     }
 
+    @Transactional
+    @Test
+    public void shouldAddOwnerWithNoContract() {
+        Tenant t = new Tenant("firstName", "lastName", "email", "phone", null);
+        t.setRole(UserRole.OWNER);
+        tenantService.save(t);
+        assertNotNull(t.getId());
+    }
+
+    @Transactional
+    @Test(expected = IllegalArgumentException.class)
+    public void shouldThrowExceptionForAddingTenantWithNoContract() {
+        Tenant t = new Tenant("firstName", "lastName", "email", "phone", null);
+        t.setRole(UserRole.TENANT);
+        tenantService.save(t);
+    }
+
 
     private Tenant createTenant(final LocalDate localDate) {
         final Apartment apartment = apartmentService.getById(2L);
         tenantService.loadByMail(FIRST_OWNER_MAIL);
         Tenant tenant = new Tenant();
-        final RentContract rc = new RentContract(apartment,  100, localDate);
+        final RentContract rc = new RentContract(apartment, 100, localDate);
 
         tenant.setEmail(dummyMail);
         tenant.setFirstName("dummy");

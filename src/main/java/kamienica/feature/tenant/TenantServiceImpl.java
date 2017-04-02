@@ -35,11 +35,23 @@ public class TenantServiceImpl implements ITenantService {
 
     @Override
     public void save(final Tenant newTenant) {
-        Tenant currentTenant = findCurrentTenant(newTenant.getApartment());
-        if (ifApartmentIsEmpty(currentTenant)) {
+        if (newTenant.getRentContract() == null) {
+            savePriviligedTenant(newTenant);
+        } else {
+            final Tenant currentTenant = findCurrentTenant(newTenant.getApartment());
+            if (ifApartmentIsEmpty(currentTenant)) {
+                tenantDao.save(newTenant);
+            } else {
+                compareMovementDatesAndPersist(newTenant, currentTenant);
+            }
+        }
+    }
+
+    private void savePriviligedTenant(Tenant newTenant) {
+        if (newTenant.isOwner() || newTenant.isAdmin()) {
             tenantDao.save(newTenant);
         } else {
-            compareMovementDatesAndPersist(newTenant, currentTenant);
+            throw new IllegalArgumentException("Tenant must have a rentContract");
         }
     }
 

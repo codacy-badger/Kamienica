@@ -8,7 +8,5 @@ import java.util.List;
 
 public interface IDivisionService {
 
-    List<Division> createDivisionForResidence(Residence res);
-
     List<Division> createDivisionForResidence(Invoice invoice);
 }

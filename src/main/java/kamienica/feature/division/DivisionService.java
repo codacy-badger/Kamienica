@@ -16,25 +16,15 @@ import java.util.List;
 
 @Service
 @Transactional
-public class DivisionServiceImpl implements IDivisionService {
+public class DivisionService implements IDivisionService {
 
     private final ITenantDao tenantDAO;
     private final IApartmentDao apartmentDAO;
 
     @Autowired
-    public DivisionServiceImpl(ITenantDao tenantDAO, IApartmentDao apartmentDAO) {
+    public DivisionService(ITenantDao tenantDAO, IApartmentDao apartmentDAO) {
         this.tenantDAO = tenantDAO;
         this.apartmentDAO = apartmentDAO;
-    }
-
-
-    @Override
-    public List<Division> createDivisionForResidence(final Residence res) {
-        final Criterion forResidence = Restrictions.eq("residence", res);
-        final List<Apartment> apartments = apartmentDAO.findByCriteria(forResidence);
-        final List<Tenant> tenants = tenantDAO.findByCriteria(createCriteria(apartments));
-
-        return prepareDivisionList(tenants, apartments);
     }
 
     @Override
@@ -43,12 +33,6 @@ public class DivisionServiceImpl implements IDivisionService {
         final List<Apartment> apartments = apartmentDAO.findByCriteria(Restrictions.eq("residence", residence));
         final List<Tenant> tenants = tenantDAO.getActiveTenants(apartments);
         return prepareDivisionList(tenants, apartments);
-    }
-
-    private Criterion[] createCriteria(final List<Apartment> apartments) {
-        final Criterion forTheseApartments = Restrictions.in("apartment", apartments);
-        final Criterion onlyActive = Restrictions.eq("status", Status.ACTIVE);
-        return new Criterion[]{forTheseApartments, onlyActive};
     }
 
     private List<Division> prepareDivisionList(List<Tenant> tenantList, List<Apartment> apartmentList) {
@@ -62,11 +46,12 @@ public class DivisionServiceImpl implements IDivisionService {
     }
 
     private Division createDivision(List<Tenant> tenantList, Tenant ten, Apartment ap) {
+        final double numOfTenants = (double) tenantList.size();
         Division tmp = new Division();
         tmp.setApartment(ap);
         tmp.setTenant(ten);
         if (ap.getApartmentNumber() == 0) {
-            tmp.setDivisionValue(CommonUtils.decimalFormat(1 / (double) tenantList.size()));
+            tmp.setDivisionValue(CommonUtils.decimalFormat(1 / numOfTenants));
         } else if (ap.getApartmentNumber() == ten.getApartment().getApartmentNumber()) {
             tmp.setDivisionValue(1);
         } else {
@@ -74,6 +59,4 @@ public class DivisionServiceImpl implements IDivisionService {
         }
         return tmp;
     }
-
-
 }
