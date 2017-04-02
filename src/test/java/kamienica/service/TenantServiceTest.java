@@ -77,6 +77,7 @@ public class TenantServiceTest extends ServiceTest {
         Tenant t = new Tenant("firstName", "lastName", "email", "phone", null);
         t.setRole(UserRole.OWNER);
         tenantService.save(t);
+        assertNotNull(t.getId());
     }
 
     @Transactional

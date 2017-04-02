@@ -161,7 +161,6 @@ public class Tenant implements Serializable {
         return this.getRole().equals(UserRole.TENANT);
     }
 
-
     public boolean isActive() {
         if (isAdmin() || isOwner()) {
             return true;
