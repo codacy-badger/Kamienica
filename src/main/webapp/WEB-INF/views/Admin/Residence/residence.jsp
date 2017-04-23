@@ -131,7 +131,7 @@
 										class="btn-xs btn-warning">
 										<i class="fa fa-pencil-square-o" aria-hidden="true"></i>
 									</button>
-									<button type="button" ng-click="ctrl.remove(a.id, $index)"
+									<button type="button" ng-confirm-click="Would you like to say hi?" ng-click="ctrl.remove(a.id, $index)"
 										class="btn-xs btn-danger ">
 										<i class="fa fa-times" aria-hidden="true"></i>
 									</button>

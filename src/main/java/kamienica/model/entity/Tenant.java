@@ -145,24 +145,24 @@ public class Tenant implements Serializable {
                 '}';
     }
 
-    public Apartment getApartment() {
+    public Apartment fetchApartment() {
         return this.rentContract.getApartment();
     }
 
-    public boolean isOwner() {
+    public boolean checkIsOwner() {
         return this.getRole().equals(UserRole.OWNER);
     }
 
-    public boolean isAdmin() {
+    public boolean checkIsAdmin() {
         return this.getRole().equals(UserRole.ADMIN);
     }
 
-    public boolean isTenant() {
+    public boolean checkIsTenant() {
         return this.getRole().equals(UserRole.TENANT);
     }
 
-    public boolean isActive() {
-        if (isAdmin() || isOwner()) {
+    public boolean checkIsActive() {
+        if (checkIsAdmin() || checkIsOwner()) {
             return true;
         }
         final LocalDate now = new LocalDate();

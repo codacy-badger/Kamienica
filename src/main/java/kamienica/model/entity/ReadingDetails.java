@@ -16,7 +16,7 @@ import javax.persistence.UniqueConstraint;
 
 @Entity
 @Table(name = "READING_DETAILS", uniqueConstraints = {@UniqueConstraint(columnNames = {"residence_id", "readingDate", "media"})})
-public class ReadingDetails extends DBEntity {
+public class ReadingDetails extends DBEntity implements Comparable<ReadingDetails> {
 
     @Column(nullable = false)
     @DateTimeFormat(pattern = "yyyy-MM-dd")
@@ -86,5 +86,35 @@ public class ReadingDetails extends DBEntity {
                 ", resolvement=" + resolvement +
                 ", media=" + media +
                 '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        ReadingDetails details = (ReadingDetails) o;
+
+        if (!readingDate.equals(details.readingDate)) return false;
+        if (resolvement != details.resolvement) return false;
+        if (media != details.media) return false;
+        return residence.equals(details.residence);
+    }
+
+    @Override
+    public int hashCode() {
+        int result = readingDate.hashCode();
+        result = 31 * result + resolvement.hashCode();
+        result = 31 * result + media.hashCode();
+        result = 31 * result + residence.hashCode();
+        return result;
+    }
+
+    @Override
+    public int compareTo(ReadingDetails o) {
+        if(!this.media.equals(o.getMedia())) {
+            throw new ClassCastException("Compared ReadingDetails are of different media type");
+        }
+       return this.getReadingDate().compareTo(o.getReadingDate());
     }
 }

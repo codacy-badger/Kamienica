@@ -17,6 +17,8 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotEquals;
@@ -151,4 +153,10 @@ public class ReadingWaterServiceTest extends ServiceTest {
         assertEquals(dateForNewReadings, readingService.getLatestNew(r, Media.WATER).get(0).getReadingDetails().getReadingDate());
     }
 
+    @Test
+    public void shouldRetreiveMapOfReadings() {
+        Map<ReadingDetails, List<Reading>> result = readingService.list(r, Media.ENERGY);
+        Set<ReadingDetails> keys = result.keySet();
+        assertEquals(3, result.size());
+    }
 }

@@ -52,7 +52,7 @@ public class UserController {
 	@RequestMapping("/User/userReadings")
 	public ModelAndView aparmtnetRest(@RequestParam(value = "media") String media) {
 		HashMap<String, Object> model = new HashMap<>();
-		Apartment ap = ownerUserDataService.getLoggedTenant().getApartment();
+		Apartment ap = ownerUserDataService.getLoggedTenant().fetchApartment();
 		switch (media) {
 		case "energy":
 			model.put("media", "Energia");

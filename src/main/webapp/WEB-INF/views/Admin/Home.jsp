@@ -30,16 +30,7 @@
 <!-- Morris Charts CSS -->
 <link href="<c:url value='/static/css/morris.css' />" rel="stylesheet">
 
-
-<!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
-<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
-<!--[if lt IE 9]>
-        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
-        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
-    <![endif]-->
-
 </head>
-
 <body>
 
 	<div id="wrapper">
@@ -47,7 +38,7 @@
 		<div id="page-wrapper">
 			<div class="row">
 				<div class="col-lg-12">
-					<h1 class="page-header">Kamienica - Strona Główna Admina</h1>
+					<h1 class="page-header">Kamienica</h1>
 				</div>
 				<!-- /.col-lg-12 -->
 			</div>
@@ -58,19 +49,19 @@
 						<div class="panel-heading">
 							<div class="row homeLabel" >
 								<div class="col-xs-3">
-									<i class="fa fa-cog fa-4x" aria-hidden="true"></i>
+									<i class="fa fa-building fa-4x" aria-hidden="true"></i>
 								</div>
 								<div class="col-xs-9 text-right">
 									<div>
-										<h3>Konfiguracja</h3>
+										<h3>Liczba nieruchomości</h3>
 									</div>
-									<div id='settingsMsg'>${model.settings }</div>
+									<div id='settingsMsg'>${model.resicences }</div>
 								</div>
 							</div>
 						</div>
-						<a href="#">
+						<a href="${path}/Admin/Residence/residence.html">
 							<div class="panel-footer">
-								<span class="pull-left">View Details</span> <span
+								<span class="pull-left">Sprawdź</span> <span
 									class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
 								<div class="clearfix"></div>
 							</div>
@@ -86,15 +77,15 @@
 								</div>
 								<div class="col-xs-9 text-right">
 									<div>
-										<h3 style="height: 20px" id='invoiceDays'>${model.invoiceDays } dni</h3>
+										<h3 style="height: 20px" id='invoiceDays'>Najstarsza Faktura</h3>
 									</div>
-									<div>Najstarsza opłata: ${model.invoiceMedia }</div>
+									<div>Gaz: 12 dni</div>
 								</div>
 							</div>
 						</div>
 						<a href="#">
 							<div class="panel-footer">
-								<span class="pull-left">Dodaj nową opłatę</span> <span
+								<span class="pull-left">Dodaj nową fakturę</span> <span
 									class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
 								<div class="clearfix"></div>
 							</div>
@@ -110,9 +101,9 @@
 								</div>
 								<div class="col-xs-9 text-right">
 									<div class="huge">
-										<h3 style="height: 20px" id='readingDays'>${model.readingDays } dni</h3>
+										<h3 style="height: 20px" id='readingDays'>Najstarszy Odczyt</h3>
 									</div>
-									<div>Najstarszy odczyt: ${model.readingMedia }</div>
+									<div>Woda: 12 Maj 2014</div>
 								</div>
 							</div>
 						</div>
@@ -134,9 +125,9 @@
 								</div>
 								<div class="col-xs-9 text-right">
 									<div>
-										<h3 style="height: 20px" id='apartmentNumber'>${model.emptyApartments }</h3>
+										<h3 style="height: 20px" id='apartmentNumber'>Puste Mieszkania</h3>
 									</div>
-									<div>Liczba Pustych Mieszkań</div>
+									<div>0</div>
 								</div>
 							</div>
 						</div>

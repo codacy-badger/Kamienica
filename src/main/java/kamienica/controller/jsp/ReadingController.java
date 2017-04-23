@@ -259,6 +259,12 @@ public class ReadingController {
         return new ModelAndView("/Admin/Reading/waterRest");
     }
 
+    @RequestMapping("/rest")
+    public ModelAndView list() {
+        return new ModelAndView("/Admin/Reading/readings");
+    }
+
+
     private ReadingDetails getReadingDetails(final ReadingForm readingForm, final String date) {
         final Residence residence = readingForm.getCurrentReadings().get(0).getResidence();
         return new ReadingDetails(LocalDate.parse(date), Media.ENERGY, residence);

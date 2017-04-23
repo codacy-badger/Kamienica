@@ -40,12 +40,12 @@ public class UserService implements IUserService {
     public Map<String, List<Reading>> getMapOfReadings() {
         final Tenant loggedTenant = SecurityDetails.getLoggedTenant();
 
-        final Residence r = loggedTenant.getApartment().getResidence();
+        final Residence r = loggedTenant.fetchApartment().getResidence();
         final Apartment sharedPart = apartmentDao.findOneByCriteria(Restrictions.eq("residence", r), Restrictions.eq("apartmentNumber", 0));
 
         Map<String, List<Reading>> map = new HashMap<>();
         for (Media m : Media.values()) {
-            final List<Meter> meters = meterDao.findByCriteria(Restrictions.in("apartment", Arrays.asList(sharedPart, loggedTenant.getApartment())), Restrictions.eq("media", m));
+            final List<Meter> meters = meterDao.findByCriteria(Restrictions.in("apartment", Arrays.asList(sharedPart, loggedTenant.fetchApartment())), Restrictions.eq("media", m));
             final List<Reading> readings = readingDao.findByCriteria(Order.desc("readingDetails"), Restrictions.in("meter", meters));
             map.put(m.toString(), readings);
         }

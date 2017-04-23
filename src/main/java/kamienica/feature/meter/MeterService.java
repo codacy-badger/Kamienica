@@ -63,7 +63,7 @@ public class MeterService implements IMeterService {
     @Override
     public void delete(Long id) {
         try {
-            meterDao.deleteById(id);
+            meterDao.delete(id);
         } catch (ConstraintViolationException e) {
             Meter meter = meterDao.getById(id);
             meter.setStatus(Status.INACTIVE);

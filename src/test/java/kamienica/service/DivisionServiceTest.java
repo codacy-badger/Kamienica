@@ -104,7 +104,7 @@
 //        if (a.getApartmentNumber() == 0) {
 //            return 0.33;
 //        }
-//        if (t.getApartment().getId().equals(a.getId())) {
+//        if (t.fetchApartment().getId().equals(a.getId())) {
 //            return 1;
 //        } else return 0;
 //    }

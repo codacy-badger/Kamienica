@@ -18,10 +18,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 @Service
 @Transactional
@@ -41,6 +38,21 @@ public class ReadingService implements IReadingService {
     @Override
     public List<Reading> getList(final Residence r, final Media media) {
         return readingDao.getList(r, media);
+    }
+
+    @Override
+    public Map<ReadingDetails, List<Reading>> list(final Residence r, final Media media) {
+        final Criterion res = Restrictions.eq("residence", r);
+        final Criterion med = Restrictions.eq("media", media);
+        List<ReadingDetails> readingDetails = readingDetailsDao.findByCriteria(res, med);
+
+        final Map<ReadingDetails, List<Reading>> result = new TreeMap<>();
+
+        for (ReadingDetails details : readingDetails) {
+            final List<Reading> readings = readingDao.list(details);
+            result.put(details, readings);
+        }
+        return result;
     }
 
     /**

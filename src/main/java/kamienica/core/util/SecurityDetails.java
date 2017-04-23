@@ -17,7 +17,7 @@ public class SecurityDetails {
 
     public static Apartment getApartmentForLoggedTenant() {
         SecurityUser su = getPrincipal();
-        return su.getTenant().getApartment();
+        return su.getTenant().fetchApartment();
     }
 
     public static List<Residence> getResidencesForOwner() {

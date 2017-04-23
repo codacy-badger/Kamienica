@@ -2,8 +2,8 @@
 
 App.controller("ResidenceController", [
     "$scope",
-    "Residence", "$http",
-    function($scope, Residence, $http) {
+    "Residence", "$http", "$window",
+    function ($scope, Residence, $http, $window) {
 
         $scope.toggle = true;
         $scope.errorField = false;
@@ -19,32 +19,32 @@ App.controller("ResidenceController", [
         var arrayIndex;
 
 
-        self.fetchAll = function() {
+        self.fetchAll = function () {
             self.residences = Residence.query();
         };
 
         self.fetchAll();
 
-        self.createItem = function() {
-            self.residence.$save(function() {}).then(function(ok) {
+        self.createItem = function () {
+            self.residence.$save(function () {}).then(function (ok) {
                 $scope.errorField = true;
                 $scope.errorMsg = "zapisano do bazy";
                 self.residences.push(ok);
                 self.reset();
                 $scope.toggle = $scope.toggle === false ? true : false;
-            }, function(error) {
+            }, function (error) {
                 $scope.errors = error.data;
                 $scope.errorField = true;
                 $scope.errorMsg = "Nie powiódł się zapis do bazy. Popraw dane i spróbuj ponownie";
             });
         };
 
-        self.updateItem = function() {
+        self.updateItem = function () {
 
-            self.residence.$update(function() {}).then(function(ok) {
+            self.residence.$update(function () {}).then(function (ok) {
                 console.log(ok);
                 self.residences.splice(arrayIndex, 1, ok);
-            }, function(error) {
+            }, function (error) {
                 $scope.errors = error.data;
                 $scope.errorField = true;
                 $scope.errorMsg = "Nie powiódł się zapis do bazy. Popraw dane i spróbuj ponownie";
@@ -54,18 +54,21 @@ App.controller("ResidenceController", [
             $scope.toggle = $scope.toggle === false ? true : false;
         };
 
-        self.deleteItem2 = function(identity, indexArray) {
+        self.deleteItem2 = function (identity, indexArray) {
+            var confirmDelete = $window.confirm("UWAGA! Usunięcie nieruchomości spowoduje usunięciem wszystkich powiązanych z nim danych. Kontynuować?");
             var residence = self.residences[indexArray];
 
-            residence.$delete(function() {}).then(function(ok) {
-                self.residences.splice(indexArray, 1);
-            }, function(error) {
-                $scope.errorField = true;
-                $scope.errorMsg = error.data.message;
-            });
+            if (confirmDelete) {
+                residence.$delete(function () {}).then(function (ok) {
+                    self.residences.splice(indexArray, 1);
+                }, function (error) {
+                    $scope.errorField = true;
+                    $scope.errorMsg = error.data.message;
+                });
+            }
         };
 
-        self.submit = function() {
+        self.submit = function () {
             console.log(self.residence);
             if (self.residence.id == null) {
                 self.createItem();
@@ -76,7 +79,7 @@ App.controller("ResidenceController", [
 
         };
 
-        self.edit = function(id, indexOfArray) {
+        self.edit = function (id, indexOfArray) {
             self.clearError();
             $scope.toggle = $scope.toggle === false ? true : false;
             self.residence = angular.copy(self.residences[indexOfArray]);
@@ -85,7 +88,7 @@ App.controller("ResidenceController", [
 
         };
 
-        self.remove = function(id, arrayIndex) {
+        self.remove = function (id, arrayIndex) {
             self.clearError();
             if (self.residence.id === id) { // If it is the one shown on
                 self.reset();
@@ -94,29 +97,29 @@ App.controller("ResidenceController", [
             self.deleteItem2(id, arrayIndex);
         };
 
-        self.reset = function() {
+        self.reset = function () {
             self.residence = new Residence();
             $scope.myForm.$setPristine(); // reset Form
 
         };
 
-        self.clearError = function() {
+        self.clearError = function () {
             $scope.errorField = false;
             $scope.errorMsg = "";
         }
 
-        $scope.toggleFilter = function() {
+        $scope.toggleFilter = function () {
 
             $scope.toggle = $scope.toggle === false ? true : false;
 
         }
-        $scope.$watch("toggle", function() {
+        $scope.$watch("toggle", function () {
             $scope.text = $scope.toggle ? "Dodaj" :
                 "Lista";
         })
 
 
-        self.switchForm = function() {
+        self.switchForm = function () {
 
             if ($scope.text === "Dodaj") {
 

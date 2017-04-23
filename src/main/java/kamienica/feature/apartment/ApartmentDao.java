@@ -12,7 +12,7 @@ import java.util.List;
 public class ApartmentDao extends BasicDao<Apartment> implements IApartmentDao {
 
     //TODO change the method - add owner as the main parameter
-    private static final String COUNT_EMPTY_APARTMENTS = "SELECT count(*) FROM apartment WHERE NOT EXISTS (SELECT * FROM tenant WHERE apartment.id = tenant.apartment_id AND tenant.status='ACTIVE' ) and apartmentNumber > 0";
+    private static final String COUNT_EMPTY_APARTMENTS = "select count(id) from RENT_CONTRACT where not exists (SELECT * FROM RENT_CONTRACT WHERE contractEnd = '2100-01-01');";
 
     @Override
     public int getNumOfEmptyApartment() {

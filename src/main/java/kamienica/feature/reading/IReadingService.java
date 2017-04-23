@@ -9,6 +9,7 @@ import kamienica.model.exception.NoMainCounterException;
 import org.joda.time.LocalDate;
 
 import java.util.List;
+import java.util.Map;
 
 public interface IReadingService  {
 
@@ -19,6 +20,8 @@ public interface IReadingService  {
     void update(List<Reading> readings, LocalDate date);
 
     List<Reading> getList(Residence r, Media media);
+
+    Map<ReadingDetails, List<Reading>> list(Residence r, Media media);
 
     List<Reading> getByDate(Residence r, LocalDate date, Media media);
 

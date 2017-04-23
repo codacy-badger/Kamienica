@@ -43,7 +43,7 @@
                 <li><a href="${path}/Admin/Residence/residence.html"><i class="fa fa-building" aria-hidden="true"></i> Nieruchomości</a></li>
 				<li><a href="${path}/Admin/Apartment/apartment.html"><i class="fa fa-home" aria-hidden="true"></i> Mieszkania</a></li>
 				<li><a href="${path}/Admin/Tenant/tenant.html"><i class="fa fa-users" aria-hidden="true"></i> Najemcy</a>
-				<li><a href="#"><i class="fa fa-wrench fa-fw"></i>
+			<!-- 	<li><a href="#"><i class="fa fa-wrench fa-fw"></i>
 						Konfiguracja<span class="fa arrow"></span></a>
 					<ul class="nav nav-second-level">
 						<li><a href=#>Algorytm Podziału<span class="fa arrow"></span></a>
@@ -53,14 +53,14 @@
 								<li><a href="${path}/Admin/Division/divisionList.html"><i
 										class="fa fa-list" aria-hidden="true"></i> Lista</a></li>
 							</ul></li>
-						<!-- <li><a href=#>Konfiguracja<span class="fa arrow"></span></a>
+						 <li><a href=#>Konfiguracja<span class="fa arrow"></span></a>
 							<ul class="nav nav-third-level">
 								<li><a href="${path}/Admin/Settings/edit.html"><i
 										class="fa fa-plus" aria-hidden="true"></i>Zmień</a></li>
 								<li><a href="${path}/Admin/Settings/list.html"><i
 										class="fa fa-list" aria-hidden="true"></i>Sprawdź</a></li>
-							</ul></li> -->
-					</ul> <!-- /.nav-second-level --></li>
+							</ul></li>
+					</ul> /.nav-second-level </li> -->
 				<li><a href="#"><i class="fa fa-bar-chart"
 						aria-hidden="true"></i> </i>Odczyty<span class="fa arrow"></span></a>
 					<ul class="nav nav-second-level">

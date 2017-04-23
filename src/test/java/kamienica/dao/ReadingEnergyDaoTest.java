@@ -120,7 +120,7 @@
 //	@Rollback
 //	@Testing
 //	public void remove() {
-//		daoservice.deleteById(13L);
+//		daoservice.delete(13L);
 //		Assert.assertEquals(daoservice.getListForOwner().size(), 20);
 //	}
 //

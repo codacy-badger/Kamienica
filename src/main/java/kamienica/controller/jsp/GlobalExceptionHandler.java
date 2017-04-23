@@ -1,14 +1,15 @@
 package kamienica.controller.jsp;
 
+import org.hibernate.JDBCException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.NoHandlerFoundException;
 
 import javax.servlet.http.HttpServletRequest;
-import java.sql.SQLException;
 import java.util.HashMap;
 
 @ControllerAdvice
@@ -16,7 +17,7 @@ public class GlobalExceptionHandler {
 
     private static Logger LOG = LoggerFactory.getLogger(GlobalExceptionHandler.class);
 
-    @ExceptionHandler(SQLException.class)
+    @ExceptionHandler(JDBCException.class)
     public String handleSQLException(HttpServletRequest request, Exception ex) {
 
         LOG.error("SQL exception: ", ex);
@@ -31,7 +32,7 @@ public class GlobalExceptionHandler {
     }
 
     @ExceptionHandler(Exception.class)
-    public ModelAndView generalException(Exception ex) {
+    public ModelAndView generalException(HttpServletRequest request, Exception ex) {
         LOG.error("Exception: ", ex);
         final HashMap<String, Object> model = new HashMap<>();
         model.put("exception", ex.getMessage());

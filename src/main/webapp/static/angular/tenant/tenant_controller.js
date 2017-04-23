@@ -15,13 +15,14 @@ App.controller("TenantController", [
         self.tenant = new Tenant();
         self.entity;
         self.tenants = [];
-        self.errors = []
+        self.errors = [];
         var arrayIndex;
 
         self.apartments = Apartment.query();
 
         self.fetchAllUsers = function() {
             self.tenants = Tenant.query();
+            console.log(self.tenants);
         };
 
         self.fetchAllUsers();
@@ -34,6 +35,7 @@ App.controller("TenantController", [
                 self.reset();
                 $scope.toggle = $scope.toggle === false ? true : false;
             }, function(error) {
+                console.log(error);
                 $scope.errors = error.data;
                 $scope.errorField = true;
                 $scope.errorMsg = "Nie powiódł się zapis do bazy. Popraw dane i spróbuj ponownie";
@@ -44,6 +46,7 @@ App.controller("TenantController", [
             self.tenant.$update(function() {}).then(function(ok) {
                 self.tenants.splice(arrayIndex, 1, ok);
             }, function(error) {
+                console.log(error);
                 $scope.errors = error.data;
                 $scope.errorField = true;
                 $scope.errorMsg = "Nie powiódł się zapis do bazy. Popraw dane i spróbuj ponownie";

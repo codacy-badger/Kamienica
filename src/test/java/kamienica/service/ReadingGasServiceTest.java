@@ -17,6 +17,8 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotEquals;
@@ -145,4 +147,10 @@ public class ReadingGasServiceTest extends ServiceTest {
         assertEquals(LocalDate.parse("2050-01-01"), result.get(0).getReadingDetails().getReadingDate());
     }
 
+    @Test
+    public void shouldRetreiveMapOfReadings() {
+        Map<ReadingDetails, List<Reading>> result = readingService.list(residence, Media.GAS);
+        Set<ReadingDetails> keys = result.keySet();
+        assertEquals(3, result.size());
+    }
 }

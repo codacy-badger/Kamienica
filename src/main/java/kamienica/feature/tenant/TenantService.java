@@ -20,14 +20,14 @@ import java.util.List;
 
 @Service
 @Transactional
-public class TenantServiceImpl implements ITenantService {
+public class TenantService implements ITenantService {
 
     private final ITenantDao tenantDao;
     private final IApartmentDao apartmentDao;
     private final IRentContractDao rentContractDao;
 
     @Autowired
-    public TenantServiceImpl(ITenantDao tenantDao, IApartmentDao apartmentDao, IRentContractDao rentContractDao) {
+    public TenantService(ITenantDao tenantDao, IApartmentDao apartmentDao, IRentContractDao rentContractDao) {
         this.tenantDao = tenantDao;
         this.apartmentDao = apartmentDao;
         this.rentContractDao = rentContractDao;
@@ -38,7 +38,7 @@ public class TenantServiceImpl implements ITenantService {
         if (newTenant.getRentContract() == null) {
             savePriviligedTenant(newTenant);
         } else {
-            final Tenant currentTenant = findCurrentTenant(newTenant.getApartment());
+            final Tenant currentTenant = findCurrentTenant(newTenant.fetchApartment());
             if (ifApartmentIsEmpty(currentTenant)) {
                 tenantDao.save(newTenant);
             } else {
@@ -48,7 +48,7 @@ public class TenantServiceImpl implements ITenantService {
     }
 
     private void savePriviligedTenant(Tenant newTenant) {
-        if (newTenant.isOwner() || newTenant.isAdmin()) {
+        if (newTenant.checkIsOwner() || newTenant.checkIsAdmin()) {
             tenantDao.save(newTenant);
         } else {
             throw new IllegalArgumentException("Tenant must have a rentContract");
@@ -120,8 +120,13 @@ public class TenantServiceImpl implements ITenantService {
     }
 
     @Override
-    public void deleteById(Long id) {
-        tenantDao.deleteById(id);
+    public void delete(Long id) {
+        tenantDao.delete(id);
+    }
+
+    @Override
+    public void delete(Tenant object) {
+        tenantDao.delete(object);
     }
 
     @Override
