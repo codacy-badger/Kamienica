@@ -41,4 +41,9 @@ public class ReadingDetailsService implements IReadingDetailsService {
     public List<ReadingDetails> list(final Media media) {
         return readingDetailsDao.getList(media);
     }
+
+    @Override
+    public List<ReadingDetails> getUnresolved(Media media) {
+        return readingDetailsDao.getUnresolved(media);
+    }
 }

@@ -41,6 +41,11 @@ public class ReadingService implements IReadingService {
     }
 
     @Override
+    public List<Reading> getList(final Media media) {
+        return readingDao.getList(media);
+    }
+
+    @Override
     public Map<ReadingDetails, List<Reading>> list(final Residence r, final Media media) {
         final Criterion res = Restrictions.eq("residence", r);
         final Criterion med = Restrictions.eq("media", media);

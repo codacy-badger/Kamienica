@@ -57,4 +57,11 @@ public class ReadingDetailsDao extends BasicDao<ReadingDetails> implements IRead
         final Criterion unresvldCrit = Restrictions.eq("resolvement", Resolvement.UNRESOLVED);
         return findByCriteria(resCrit, medCrit, unresvldCrit);
     }
+
+    @Override
+    public List<ReadingDetails> getUnresolved(Media media) {
+        final Criterion medCrit = Restrictions.eq("media", media);
+        final Criterion unresvldCrit = Restrictions.eq("resolvement", Resolvement.UNRESOLVED);
+        return findByCriteria(medCrit, unresvldCrit);
+    }
 }

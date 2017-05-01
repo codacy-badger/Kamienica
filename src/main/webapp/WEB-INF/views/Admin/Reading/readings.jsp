@@ -19,7 +19,7 @@
 
                     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
                     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-                    <title>Mieszkania</title>
+                    <title>Odczyty- Restowo</title>
                 </head>
 
                 <body ng-app="myApp">
@@ -145,11 +145,13 @@
                     <script src="<c:url value='/static/js/angular.js' />"></script>
                     <script src="<c:url value='/static/js/angular-resource.js' />"></script>
                     <script src="<c:url value='/static/angular/app.js' />"></script>
-                    <script src="<c:url value='/static/angular/reading/energy/reading_service.js' />"></script>
-                    <script src="<c:url value='/static/angular/reading/energy/reading_controller.js' />"></script>
+                    
+                    <script src="<c:url value='/static/angular/reading/apartmentService.js' />"></script>
+                    <script src="<c:url value='/static/angular/reading/meterService.js' />"></script>
+                    <script src="<c:url value='/static/angular/reading/readingService.js' />"></script>
+                    
+                    <script src="<c:url value='/static/angular/reading/readingController.js' />"></script>
 
-                    <script src="<c:url value='/static/angular/meterEnergy/meterEnergy_service.js' />"></script>
-                    <script src="<c:url value='/static/angular/meterEnergy/meterEnergy__controller.js' />"></script>
                     <!-- jQuery -->
                     <script src="<c:url value='/static/js/jquery.min.js' />"></script>
                     <!-- Bootstrap Core JavaScript -->

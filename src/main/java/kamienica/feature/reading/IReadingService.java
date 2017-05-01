@@ -21,6 +21,8 @@ public interface IReadingService  {
 
     List<Reading> getList(Residence r, Media media);
 
+    List<Reading> getList(Media media);
+
     Map<ReadingDetails, List<Reading>> list(Residence r, Media media);
 
     List<Reading> getByDate(Residence r, LocalDate date, Media media);
@@ -35,5 +37,4 @@ public interface IReadingService  {
     List<Reading> latestEdit(Residence r, Media media);
 
     void deleteLatestReadings(final Residence r, Media media);
-
 }

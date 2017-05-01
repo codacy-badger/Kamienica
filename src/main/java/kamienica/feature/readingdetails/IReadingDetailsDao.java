@@ -16,4 +16,6 @@ public interface IReadingDetailsDao extends IBasicDao<ReadingDetails> {
 
     List<ReadingDetails> getUnresolved(Residence residence, Media media);
 
+    List<ReadingDetails> getUnresolved(Media media);
+
 }

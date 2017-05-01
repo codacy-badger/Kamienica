@@ -64,6 +64,7 @@
 				<li><a href="#"><i class="fa fa-bar-chart"
 						aria-hidden="true"></i> </i>Odczyty<span class="fa arrow"></span></a>
 					<ul class="nav nav-second-level">
+					<li><a href="${path}/Admin/Reading/rest">Rest<span class="fa arrow"></span></a>
 						<li><a href="panels-wells.html">Gaz<span class="fa arrow"></span></a>
 							<ul class="nav nav-third-level">
 								<li><a href="${path}/Admin/Reading/readingGasRegister.html"><i

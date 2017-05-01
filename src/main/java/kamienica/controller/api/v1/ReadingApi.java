@@ -37,9 +37,14 @@ public class ReadingApi {
     @RequestMapping(value = "/{media}", method = RequestMethod.GET)
     public ResponseEntity<?> getList(@PathVariable Media media, @RequestParam(value = "residence_id", required = false) Long id) {
 
-        final Residence r = residenceService.getById(id);
+      final List<Reading> list;
+        if(id != null) {
+        	final Residence r = residenceService.getById(id);
+            list = readingService.getList(r, media);
+        } else {
+            list = readingService.getList(media);
+        }
 
-        List<Reading> list = readingService.getList(r, media);
         if (list.isEmpty()) {
             return new ResponseEntity<Void>(HttpStatus.NOT_FOUND);
         }
@@ -48,10 +53,16 @@ public class ReadingApi {
 
 
     @RequestMapping(value = "/unresolved/{media}", method = RequestMethod.GET)
-    public ResponseEntity<?> getListForInvoice(@PathVariable final Media media, @RequestParam("residence_id") final Long id) {
-        final Residence r = residenceService.getById(id);
-        List<ReadingDetails> list = detailsService.getUnresolved(r, media);
-
+    public ResponseEntity<?> getListForInvoice(@PathVariable final Media media, @RequestParam(value="residence_id", required = false) final Long id) {
+        
+    	 final List<ReadingDetails> list;
+         if(id != null) {
+         	final Residence r = residenceService.getById(id);
+             list = detailsService.getUnresolved(r, media);
+         } else {
+             list = detailsService.getUnresolved(media);
+         }
+    	
         if (list.isEmpty()) {
             return new ResponseEntity<Void>(HttpStatus.NOT_FOUND);
         }
