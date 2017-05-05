@@ -2,8 +2,8 @@
 
 App.controller("ReadingController", [
     "$scope",
-    "Reading", "Meter", "Apartment",
-    function($scope, Reading, Meter, Apartment) {
+    "Reading", 
+    function($scope, Reading) {
 
         $scope.toggle = true;
         $scope.errorField = false;
@@ -11,23 +11,29 @@ App.controller("ReadingController", [
             show: true
         };
 
+        var media = "ENERGY";
         var self = this;
-        self.reading = new Reading();
+        $scope.media = "Energia";
         self.entity;
         self.readings = [];
-        self.meters = Meter.query();
-        self.apartments = Apartments.query();
+       
         self.errors = []
         var arrayIndex;
 
 
-        self.fetchAllUsers = function() {
-            self.readings = Reading.query();
-            console.log(self.meters);
-        };
-
-        self.fetchAllUsers();
-
+        self.switchMedia = function(arg) {
+        	if(arg==="ENERGY") {
+        		$scope.media = "Energia";
+        	} else if (arg==="GAS") {
+        		$scope.media = "Gaz";
+        	} else {
+        		$scope.media = "Woda";
+        	}
+        	media = arg;
+        	console.log(media);
+        }
+   
+    
         self.createItem = function() {
             self.reading.$save(function() {}).then(function(ok) {
                 $scope.errorField = true;
@@ -66,18 +72,7 @@ App.controller("ReadingController", [
             });
         };
 
-        //        self.deleteItem = function(identity, indexArray) {
-        //            var reading = Reading.get({
-        //                id: identity
-        //            }, function() {
-        //                reading.$delete(function() {}).then(function(ok) {
-        //                    self.readings.splice(indexArray, 1);
-        //                }, function(error) {
-        //                    $scope.errorField = true;
-        //                    $scope.errorMsg = error.data.message;
-        //                })
-        //            })
-        //        };
+      
 
         self.submit = function() {
             if (self.reading.id == null) {
