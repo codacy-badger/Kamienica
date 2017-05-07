@@ -2,56 +2,80 @@
 
 App.controller("ReadingController", [
     "$scope",
-    "Reading", 
-    function($scope, Reading) {
+    "Reading", "Residence",
+    function ($scope, Reading, Residence) {
 
+        $scope.res;
         $scope.toggle = true;
         $scope.errorField = false;
         $scope.data = {
             show: true
         };
+        $scope.items = Residence.query();
 
-        var media = "ENERGY";
+
         var self = this;
         $scope.media = "Energia";
         self.entity;
         self.readings = [];
-       
-        self.errors = []
+        self.errors = [];
+
+        var media = "ENERGY";
+        var residence;
         var arrayIndex;
+        var latestDate;
 
-
-        self.switchMedia = function(arg) {
-        	if(arg==="ENERGY") {
-        		$scope.media = "Energia";
-        	} else if (arg==="GAS") {
-        		$scope.media = "Gaz";
-        	} else {
-        		$scope.media = "Woda";
-        	}
-        	media = arg;
-        	console.log(media);
+        self.switchMedia = function (arg) {
+            if (arg === "ENERGY") {
+                $scope.media = "Energia";
+            } else if (arg === "GAS") {
+                $scope.media = "Gaz";
+            } else {
+                $scope.media = "Woda";
+            }
+            media = arg;
+            self.queryReadings();
         }
-   
-    
-        self.createItem = function() {
-            self.reading.$save(function() {}).then(function(ok) {
+
+        self.switchResidence = function (arg) {
+            residence = arg;
+            self.queryReadings();
+        }
+
+        self.queryReadings = function () {
+            if (residence != undefined) {
+
+                self.readings = Reading.query({
+                    media: media,
+                    id: residence.id
+                });
+             //   latestDate = self.readings[0].readingDetails.readingDate;
+                console.log(self.readings);
+                var readings = self.readings;
+                console.log("----------");
+                console.log(readings[0].value);
+            }
+
+        }
+
+        self.createItem = function () {
+            self.reading.$save(function () {}).then(function (ok) {
                 $scope.errorField = true;
                 $scope.errorMsg = "zapisano do bazy";
                 self.readings.push(ok);
                 self.reset();
                 $scope.toggle = $scope.toggle === false ? true : false;
-            }, function(error) {
+            }, function (error) {
                 $scope.errors = error.data;
                 $scope.errorField = true;
                 $scope.errorMsg = "Nie powiódł się zapis do bazy. Popraw dane i spróbuj ponownie";
             });
         };
 
-        self.updateItem = function() {
-            self.reading.$update(function() {}).then(function(ok) {
+        self.updateItem = function () {
+            self.reading.$update(function () {}).then(function (ok) {
                 self.readings.splice(arrayIndex, 1, ok);
-            }, function(error) {
+            }, function (error) {
                 $scope.errors = error.data;
                 $scope.errorField = true;
                 $scope.errorMsg = "Nie powiódł się zapis do bazy. Popraw dane i spróbuj ponownie";
@@ -61,20 +85,20 @@ App.controller("ReadingController", [
             $scope.toggle = $scope.toggle === false ? true : false;
         };
 
-        self.deleteItem = function(identity, indexArray) {
+        self.deleteItem = function (identity, indexArray) {
             var reading = self.readings[indexArray];
 
-            reading.$delete(function() {}).then(function(ok) {
+            reading.$delete(function () {}).then(function (ok) {
                 self.readings.splice(indexArray, 1);
-            }, function(error) {
+            }, function (error) {
                 $scope.errorField = true;
                 $scope.errorMsg = error.data.message;
             });
         };
 
-      
 
-        self.submit = function() {
+
+        self.submit = function () {
             if (self.reading.id == null) {
                 self.createItem();
             } else {
@@ -84,7 +108,7 @@ App.controller("ReadingController", [
 
         };
 
-        self.edit = function(id, indexOfArray) {
+        self.edit = function (id, indexOfArray) {
             self.clearError();
             $scope.toggle = $scope.toggle === false ? true : false;
             self.reading = angular.copy(self.readings[indexOfArray]);
@@ -93,7 +117,7 @@ App.controller("ReadingController", [
 
         };
 
-        self.remove = function(id, arrayIndex) {
+        self.remove = function (id, arrayIndex) {
             self.clearError();
             if (self.reading.id === id) { // If it is the one shown on
                 // screen, reset screen
@@ -103,23 +127,23 @@ App.controller("ReadingController", [
             self.deleteItem(id, arrayIndex);
         };
 
-        self.reset = function() {
+        self.reset = function () {
             self.reading = new Reading();
             $scope.myForm.$setPristine(); // reset Form
 
         };
 
-        self.clearError = function() {
+        self.clearError = function () {
             $scope.errorField = false;
             $scope.errorMsg = "";
         }
 
-        $scope.toggleFilter = function() {
+        $scope.toggleFilter = function () {
 
             $scope.toggle = $scope.toggle === false ? true : false;
 
         }
-        $scope.$watch("toggle", function() {
+        $scope.$watch("toggle", function () {
             // $scope.toggle ? null : self.reset();
 
             $scope.text = $scope.toggle ? "Dodaj" :
@@ -127,7 +151,7 @@ App.controller("ReadingController", [
         })
 
 
-        self.switchForm = function() {
+        self.switchForm = function () {
 
             if ($scope.text === "Dodaj") {
 

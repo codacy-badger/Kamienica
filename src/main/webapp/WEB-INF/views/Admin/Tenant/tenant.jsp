@@ -181,16 +181,16 @@
                                             </p>
                                         </div>
                                     </div>
-                                    
-                                       <div class="form-group">
+
+                                    <div class="form-group">
                                         <label for="inputEmail3" class="col-sm-3 control-label">Cena Najmu</label>
                                         <div class="col-sm-9">
-                                            <input type="text" ng-model="ctrl.tenant.rentContract.rentCost" class="form-control"  ng-required='true' name="cost" ng-pattern="/^[0-9]{1,12}$/" ng-min=0 /> 
+                                            <input type="text" ng-model="ctrl.tenant.rentContract.rentCost" class="form-control" ng-required='true' name="cost" ng-pattern="/^[0-9]{1,12}$/" ng-min=0 />
                                             <p class="help-block">
                                                 <span class='error' ng-show="myForm.cost.$invalid">Pole Wymagane</span> <span class='error'>{{errors.cost}}</span>
                                             </p>
                                         </div>
-                                    </div>                   
+                                    </div>
 
                                     <div class="form-group">
                                         <label for="inputEmail3" class="col-sm-3 control-label">Hasło</label>

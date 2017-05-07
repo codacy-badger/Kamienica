@@ -1,6 +1,6 @@
 "use strict";
 
-App.factory("Reading", ["$resource", function($resource) {
+App.factory("Residence", ["$resource", function($resource) {
 
     //TODO ugly fix to run locally and on heroku. Needs better solution
     var path = location.origin
@@ -9,7 +9,7 @@ App.factory("Reading", ["$resource", function($resource) {
 
     };
     return $resource(
-        path + "/api/v1/readings/ENERGY.json", {
+        path + "/api/v1/residences.json", {
             id: "@id"
         }, //Handy for update & delete. id will be set with id of instance
         {

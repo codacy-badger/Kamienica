@@ -34,16 +34,11 @@ public class ReadingApi {
         this.detailsService = detailsService;
     }
 
-    @RequestMapping(value = "/{media}", method = RequestMethod.GET)
-    public ResponseEntity<?> getList(@PathVariable Media media, @RequestParam(value = "residence_id", required = false) Long id) {
+    @RequestMapping(method = RequestMethod.GET)
+    public ResponseEntity<?> getList(@RequestParam String media, @RequestParam Long residence_id) {
 
-      final List<Reading> list;
-        if(id != null) {
-        	final Residence r = residenceService.getById(id);
-            list = readingService.getList(r, media);
-        } else {
-            list = readingService.getList(media);
-        }
+        final Residence residence = residenceService.getById(residence_id);
+        final List<Reading> list = readingService.getList(residence, Media.valueOf(media));
 
         if (list.isEmpty()) {
             return new ResponseEntity<Void>(HttpStatus.NOT_FOUND);
@@ -53,16 +48,16 @@ public class ReadingApi {
 
 
     @RequestMapping(value = "/unresolved/{media}", method = RequestMethod.GET)
-    public ResponseEntity<?> getListForInvoice(@PathVariable final Media media, @RequestParam(value="residence_id", required = false) final Long id) {
-        
-    	 final List<ReadingDetails> list;
-         if(id != null) {
-         	final Residence r = residenceService.getById(id);
-             list = detailsService.getUnresolved(r, media);
-         } else {
-             list = detailsService.getUnresolved(media);
-         }
-    	
+    public ResponseEntity<?> getListForInvoice(@PathVariable final Media media, @RequestParam(value = "residence_id", required = false) final Long id) {
+
+        final List<ReadingDetails> list;
+        if (id != null) {
+            final Residence r = residenceService.getById(id);
+            list = detailsService.getUnresolved(r, media);
+        } else {
+            list = detailsService.getUnresolved(media);
+        }
+
         if (list.isEmpty()) {
             return new ResponseEntity<Void>(HttpStatus.NOT_FOUND);
         }

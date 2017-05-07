@@ -9,8 +9,9 @@ App.factory("Reading", ["$resource", function($resource) {
 
     };
     return $resource(
-        path + "/api/v1/readings/ENERGY.json", {
-            id: "@id"
+        path + "/api/v1/readings.json?media=:media&residence_id=:id", {
+            id: "@id",
+            media: "@media"
         }, //Handy for update & delete. id will be set with id of instance
         {
             query: {

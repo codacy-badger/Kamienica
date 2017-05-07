@@ -34,33 +34,77 @@
                                     <div class="alert alert-danger" ng-show="errorField">
                                         <strong>BŁĄD: </strong> {{errorMsg}}
                                     </div>
-                                   
-                                    
-                                    <div class="btn-group" role="group" >
-									  <button type="button" ng-click="ctrl.switchMedia('ENERGY')" class="btn btn-default btn-sm">Energia</button>
-									  <button type="button" ng-click="ctrl.switchMedia('GAS')" class="btn btn-default btn-sm">Gaz</button>
-									  <button type="button" ng-click="ctrl.switchMedia('WATER')" class="btn btn-default btn-sm">Woda</button>
-									</div>
-                                    
- 									
+
+
+                                    <div class="btn-group" role="group">
+                                        <button type="button" ng-click="ctrl.switchMedia('ENERGY')" class="btn btn-default btn-sm">Energia</button>
+                                        <button type="button" ng-click="ctrl.switchMedia('GAS')" class="btn btn-default btn-sm">Gaz</button>
+                                        <button type="button" ng-click="ctrl.switchMedia('WATER')" class="btn btn-default btn-sm">Woda</button>
+                                        <select ng-model="res" ng-change="ctrl.switchResidence(res)" ng-options="item as (item.street+' '+item.number+'- '+item.city) for item in items" class="btn btn-default btn-sm dropdown-toggle"></select>
+<!--                                        <pre>{{res | json}}</pre>-->
+                                    </div>
+
+
                                 </div>
                             </div>
-                             <div class='row'>
-                             <div class="col-lg-12">
-                              <button id='mySwitch' ng-click="ctrl.switchForm()" class="btn btn-default btn-sm">{{text}}</button>
-                              </div>
-                             </div>
+
+                            <div class='row'>
+                                <div class="col-lg-12">
+                                    <button id='mySwitch' ng-click="ctrl.switchForm()" class="btn btn-default btn-sm">{{text}}</button>
+                                </div>
+                            </div>
+
+                            <div id='list' class="row fadein fadeout showpanel panel" ng-show="toggle">
+
+                                <div ng-switch on="!!res">
+                                    <div ng-switch-when="false">
+                                        <h2>Wybierz nieruchomość, dla której wyświetlić odczyty</h2>
+                                    </div>
+                                    <div ng-switch-default>
+                                        <div>
+                                            <table class='table table-stripped table-hover'>
+                                                <thead>
+                                                    <tr>
+                                                        <th>Data</th>
+                                                        <th>Wartość Odczytu</th>
+                                                        
+                                                        <th>Licznik</th>
+                                                        <th>Edytuj/Usuń</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <tr ng-repeat="r in ctrl.readings">
+                                                        <td><span ng-bind="r.readingDetails.readingDate"></span></td>
+                                                        <td><span ng-bind="r.value"></span></td>
+                                                        
+                                                        <td><span ng-bind="r.meter.description"></span></td>
+                                                        <td>
+                                                            <button type="button" ng-click="ctrl.edit(a.id, $index)" class="btn-xs btn-warning">
+										<i class="fa fa-pencil-square-o" aria-hidden="true"></i>
+									</button>
+                                                            <button type="button" ng-click="ctrl.remove(a.id, $index)" class="btn-xs btn-danger ">
+										<i class="fa fa-times" aria-hidden="true"></i>
+									</button>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+
                             <div id='form' class="fadein fadeout showpanel panel row" ng-show="!toggle">
 
                                 <!-- http://www.w3schools.com/angular/tryit.asp?filename=try_ng_validate_show -->
 
                                 <form class="form-horizontal" ng-submit="ctrl.submit()" name="myForm">
 
-												<p> formularz </p>
-                                    
-									</form>
+                                    <p> formularz </p>
 
-                            
+                                </form>
+
+
                             </div>
                         </div>
                     </div>
@@ -68,8 +112,8 @@
                     <script src="<c:url value='/static/js/angular.js' />"></script>
                     <script src="<c:url value='/static/js/angular-resource.js' />"></script>
                     <script src="<c:url value='/static/angular/app.js' />"></script>
-                    
-                    
+
+                    <script src="<c:url value='/static/angular/reading/residenceService.js' />"></script>
                     <script src="<c:url value='/static/angular/reading/readingService.js' />"></script>
                     <script src="<c:url value='/static/angular/reading/readingController.js' />"></script>
 
