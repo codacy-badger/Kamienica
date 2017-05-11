@@ -16,6 +16,7 @@ App.controller("ReadingController", [
 
         var self = this;
         $scope.media = "Energia";
+        $scope.latestDate;
         self.entity;
         self.readings = [];
         self.errors = [];
@@ -23,7 +24,7 @@ App.controller("ReadingController", [
         var media = "ENERGY";
         var residence;
         var arrayIndex;
-        var latestDate;
+        
 
         self.switchMedia = function (arg) {
             if (arg === "ENERGY") {
@@ -49,11 +50,15 @@ App.controller("ReadingController", [
                     media: media,
                     id: residence.id
                 });
-             //   latestDate = self.readings[0].readingDetails.readingDate;
-                console.log(self.readings);
-                var readings = self.readings;
-                console.log("----------");
-                console.log(readings[0].value);
+                
+                self.readings.$promise.then(function (result) {
+                   $scope.latestDate = result[0].readingDetails.readingDate;
+                });
+
+                //shows the array
+               // console.log(self.readings);
+                //undefined
+              //  console.log(self.readings[0])
             }
 
         }

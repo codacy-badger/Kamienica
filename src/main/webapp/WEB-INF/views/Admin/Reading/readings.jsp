@@ -41,7 +41,7 @@
                                         <button type="button" ng-click="ctrl.switchMedia('GAS')" class="btn btn-default btn-sm">Gaz</button>
                                         <button type="button" ng-click="ctrl.switchMedia('WATER')" class="btn btn-default btn-sm">Woda</button>
                                         <select ng-model="res" ng-change="ctrl.switchResidence(res)" ng-options="item as (item.street+' '+item.number+'- '+item.city) for item in items" class="btn btn-default btn-sm dropdown-toggle"></select>
-<!--                                        <pre>{{res | json}}</pre>-->
+                                        <!--                                        <pre>{{res | json}}</pre>-->
                                     </div>
 
 
@@ -67,7 +67,7 @@
                                                     <tr>
                                                         <th>Data</th>
                                                         <th>Wartość Odczytu</th>
-                                                        
+
                                                         <th>Licznik</th>
                                                         <th>Edytuj/Usuń</th>
                                                     </tr>
@@ -76,13 +76,13 @@
                                                     <tr ng-repeat="r in ctrl.readings">
                                                         <td><span ng-bind="r.readingDetails.readingDate"></span></td>
                                                         <td><span ng-bind="r.value"></span></td>
-                                                        
+
                                                         <td><span ng-bind="r.meter.description"></span></td>
                                                         <td>
-                                                            <button type="button" ng-click="ctrl.edit(a.id, $index)" class="btn-xs btn-warning">
+                                                            <button ng-if="latestDate == r.readingDetails.readingDate" type="button" ng-click="ctrl.edit(a.id, $index)" class="btn-xs btn-warning">
 										<i class="fa fa-pencil-square-o" aria-hidden="true"></i>
 									</button>
-                                                            <button type="button" ng-click="ctrl.remove(a.id, $index)" class="btn-xs btn-danger ">
+                                                            <button ng-if="latestDate == r.readingDetails.readingDate" type="button" ng-click="ctrl.remove(a.id, $index)" class="btn-xs btn-danger ">
 										<i class="fa fa-times" aria-hidden="true"></i>
 									</button>
                                                     </tr>

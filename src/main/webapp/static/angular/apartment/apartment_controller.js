@@ -21,6 +21,7 @@ App.controller("ApartmentController", [
 
         self.fetchAll = function() {
             self.apartments = Apartment.query();
+            console.log(self.apartments);
         };
 
         self.fetchAll();
