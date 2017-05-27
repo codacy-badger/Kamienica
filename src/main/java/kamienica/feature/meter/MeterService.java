@@ -81,7 +81,8 @@ public class MeterService implements IMeterService {
     public List<Meter> list(final Residence r, final Media media) {
         Criterion c1 = Restrictions.eq("residence", r);
         Criterion c2 = Restrictions.eq("media", media);
-        return meterDao.findByCriteria(c1, c2);
+        Criterion c3 = Restrictions.eq("status", Status.ACTIVE);
+        return meterDao.findByCriteria(c1, c2, c3);
     }
 
     @Override

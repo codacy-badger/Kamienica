@@ -2,10 +2,8 @@ package kamienica.feature.reading;
 
 import kamienica.feature.meter.IMeterDao;
 import kamienica.feature.readingdetails.IReadingDetailsDao;
-import kamienica.model.entity.Meter;
-import kamienica.model.entity.Reading;
-import kamienica.model.entity.ReadingDetails;
-import kamienica.model.entity.Residence;
+import kamienica.model.entity.*;
+import kamienica.model.entity.ReadingForm;
 import kamienica.model.enums.Media;
 import kamienica.model.enums.Resolvement;
 import kamienica.model.enums.Status;
@@ -140,6 +138,18 @@ public class ReadingService implements IReadingService {
     }
 
     @Override
+    public void save(ReadingForm readingForm) {
+        final ReadingDetails details = readingForm.getReadingDetails();
+        readingDetailsDao.save(details);
+        final Set<Reading> readings = readingForm.getReadings();
+        for (Reading r : readings) {
+            validateReadingValue(r);
+            r.setReadingDetails(details);
+            readingDao.save(r);
+        }
+    }
+
+    @Override
     public Reading getById(Long id) {
         return readingDao.getById(id);
     }
@@ -169,5 +179,13 @@ public class ReadingService implements IReadingService {
         final Criterion c = Restrictions.eq("readingDetails", details);
         List<Reading> readingsToDelete = readingDao.findByCriteria(c);
         for (Reading reading : readingsToDelete) readingDao.delete(reading);
+    }
+
+    @Override
+    public void delete(ReadingForm readingForm) {
+        for(Reading r:readingForm.getReadings()) {
+            readingDao.delete(r);
+        }
+        readingDetailsDao.delete(readingForm.getReadingDetails());
     }
 }

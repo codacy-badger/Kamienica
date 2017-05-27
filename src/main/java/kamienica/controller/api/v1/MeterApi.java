@@ -3,11 +3,11 @@ package kamienica.controller.api.v1;
 import kamienica.core.message.ApiErrorResponse;
 import kamienica.core.message.Message;
 import kamienica.feature.meter.IMeterService;
-import kamienica.model.entity.Apartment;
+import kamienica.feature.residence.IResidenceService;
 import kamienica.model.entity.Meter;
+import kamienica.model.entity.Residence;
 import kamienica.model.enums.Media;
 import org.hibernate.exception.ConstraintViolationException;
-import org.joda.time.LocalDate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -30,20 +30,33 @@ import java.util.Map;
 public class MeterApi extends AbstractApi {
 
     private final IMeterService service;
+    private final IResidenceService residenceService;
 
     @Autowired
-    public MeterApi(IMeterService service) {
+    public MeterApi(IMeterService service, IResidenceService residenceService) {
         this.service = service;
+        this.residenceService = residenceService;
     }
 
     @RequestMapping(value = "/{media}", method = RequestMethod.GET)
-    public ResponseEntity<?> getList(@PathVariable Media media, @RequestParam(required = false) final LocalDate date) {
-        final List<? extends Meter> list = service.getListForOwner(media);
+    public ResponseEntity<?> getList(@PathVariable Media media) {
+        final List<Meter> list = service.getListForOwner(media);
         if (list.isEmpty()) {
-            return new ResponseEntity<List<Apartment>>(HttpStatus.NOT_FOUND);
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
 
-        return new ResponseEntity<List<? extends Meter>>(list, HttpStatus.OK);
+        return new ResponseEntity<>(list, HttpStatus.OK);
+    }
+
+    @RequestMapping(method = RequestMethod.GET)
+    public ResponseEntity<?> getList(@RequestParam final Media media, @RequestParam final Long id) {
+        final Residence r = residenceService.getById(id);
+        final List<Meter> list = service.list(r, media);
+        if (list.isEmpty()) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+
+        return new ResponseEntity<>(list, HttpStatus.OK);
     }
 
 

@@ -1,6 +1,6 @@
 "use strict";
 
-App.factory("Meter", ["$resource", function($resource) {
+App.factory("Meter", ["$resource", function ($resource) {
 
     //TODO ugly fix to run locally and on heroku. Needs better solution
     var path = location.origin
@@ -9,10 +9,11 @@ App.factory("Meter", ["$resource", function($resource) {
 
     };
     return $resource(
-        path + "/api/v1/readings/ENERGY.json", {
-            id: "@id"
-        }, //Handy for update & delete. id will be set with id of instance
-        {
+        path + "/api/v1/meters.json?media=:media&id=:id", {
+            id: "@id",
+            media: "@media"
+
+        }, {
             query: {
                 method: "GET",
                 isArray: true
