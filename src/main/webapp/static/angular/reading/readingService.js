@@ -25,16 +25,17 @@ App.factory("Reading", ["$resource", function ($resource) {
             save: {
                 method: "POST",
                 url: path + "/api/v1/readings.json"
-            },
-            delete: {
-                method: "DELETE",
-                url: path + "/api/v1/readings.json",
-                headers: {
-                    'Content-Type': "application/json"
-                },
-                data:  readingDetails
-
             }
+//            ,
+//            delete: {
+//                method: "DELETE",
+//                url: path + "/api/v1/readings.json",
+//                headers: {
+//                    'Content-Type': "application/json"
+//                },
+//                data:  readingDetails
+//
+//            }
         }
     );
 }]);

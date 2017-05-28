@@ -2,7 +2,7 @@
 
 App.controller("ReadingController", [
     "$scope", "$filter",
-    "Reading", "Residence", "Meter","ReadingForm",
+    "Reading", "Residence", "Meter", "ReadingForm",
     function ($scope, $filter, Reading, Residence, Meter, ReadingForm) {
 
         $scope.res;
@@ -99,36 +99,26 @@ App.controller("ReadingController", [
         };
 
         self.deleteItem = function () {
-//            for(var i=0; i < self.readings.length; i++) {
-//                
-//            }
-           
-          var response = ReadingForm.delete(self.newReadingsForm.readingDetails);
+            //            for(var i=0; i < self.readings.length; i++) {
+            //                
+            //            }
+console.log("deleting")
+            var response = ReadingForm.delete(self.newReadingsForm.readingDetails);
             console.log(response);
+            console.log("deleted......")
         };
 
 
 
         self.submit = function () {
-//            console.log(self.newReadingsForm);
-//            console.log(self.reading.id);
-             //Reading.save();
             var readingForm = new Object();
             readingForm = self.newReadingsForm;
             var tmp = $filter('date')(self.newReadingsForm.readingDetails.readingDate, "yyyy-MM-dd")
-            console.log(tmp);
             readingForm.readingDetails.readingDate = tmp;
             var response = ReadingForm.save(readingForm);
-            //var response = $http.post(location.origin+'/Lamienica/api/v1/readings.json', self.newReadingsForm);
-            consolo.log("tralalala");
-            console.log(response);
-//            if (self.reading.id == null) {
-//                Reading.save();
-//                self.createItem();
-//            } else {
-//                self.updateItem();
-//
-//            }
+            console.log(response.$promise);
+            self.queryReadings();
+            self.switchForm();
         };
 
         self.edit = function (id, indexOfArray) {
@@ -137,7 +127,6 @@ App.controller("ReadingController", [
             self.reading = angular.copy(self.readings[indexOfArray]);
             self.entity = angular.copy(self.readings[indexOfArray]);
             arrayIndex = indexOfArray;
-
         };
 
         self.remove = function () {
