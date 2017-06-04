@@ -15,9 +15,16 @@ App.factory("ReadingForm", ["$resource", function ($resource) {
             id: "@id",
             media: "@media"
         }, {
-           
+
             save: {
                 method: "POST"
+            },
+            delete: {
+                method: "DELETE",
+                hasBody: true,
+                headers: {
+                    "Content-Type": "application/json;charset=utf-8"
+                }
             }
         }
     );

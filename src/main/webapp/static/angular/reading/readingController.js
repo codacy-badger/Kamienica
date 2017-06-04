@@ -13,7 +13,6 @@ App.controller("ReadingController", [
         };
         $scope.residences = Residence.query();
 
-
         var self = this;
         $scope.media = "Energia";
         $scope.latestDate;
@@ -75,7 +74,7 @@ App.controller("ReadingController", [
             self.reading.$save(function () {}).then(function (ok) {
                 $scope.errorField = true;
                 $scope.errorMsg = "zapisano do bazy";
-                self.readings.push(ok);
+                self.queryReadings();
                 self.reset();
                 $scope.toggle = $scope.toggle === false ? true : false;
             }, function (error) {
@@ -99,13 +98,17 @@ App.controller("ReadingController", [
         };
 
         self.deleteItem = function () {
-            //            for(var i=0; i < self.readings.length; i++) {
-            //                
-            //            }
-console.log("deleting")
-            var response = ReadingForm.delete(self.newReadingsForm.readingDetails);
-            console.log(response);
-            console.log("deleted......")
+            self.prepareFormForNewReadings();
+            var readingForm = new Object();
+            readingForm = self.newReadingsForm;
+            var tmp = $filter('date')(self.newReadingsForm.readingDetails.readingDate, "yyyy-MM-dd");
+            readingForm.readingDetails.readingDate = tmp;
+            var response = Reading.delete({
+                media: media,
+                id: residence.id
+            });
+            self.queryReadings();
+            self.reset();
         };
 
 
@@ -113,7 +116,7 @@ console.log("deleting")
         self.submit = function () {
             var readingForm = new Object();
             readingForm = self.newReadingsForm;
-            var tmp = $filter('date')(self.newReadingsForm.readingDetails.readingDate, "yyyy-MM-dd")
+            var tmp = $filter('date')(self.newReadingsForm.readingDetails.readingDate, "yyyy-MM-dd");
             readingForm.readingDetails.readingDate = tmp;
             var response = ReadingForm.save(readingForm);
             console.log(response.$promise);

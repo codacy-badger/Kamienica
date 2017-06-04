@@ -69,7 +69,7 @@
                                                         <th>Wartość Odczytu</th>
 
                                                         <th>Licznik</th>
-                                                        <th>Edytuj/Usuń</th>
+                                                        <th>Usuń</th>
                                                     </tr>
                                                 </thead>
                                                 <tbody>
@@ -79,12 +79,10 @@
 
                                                         <td><span ng-bind="r.meter.description"></span></td>
                                                         <td>
-                                                            <button ng-if="latestDate == r.readingDetails.readingDate" type="button" ng-click="ctrl.edit(a.id, $index)" class="btn-xs btn-warning">
-										<i class="fa fa-pencil-square-o" aria-hidden="true"></i>
-									</button>
                                                             <button ng-if="latestDate == r.readingDetails.readingDate" type="button" ng-click="ctrl.remove()" class="btn-xs btn-danger ">
 										<i class="fa fa-times" aria-hidden="true"></i>
-									</button>
+                                                            </button>
+                                                        </td>
                                                     </tr>
                                                 </tbody>
                                             </table>
@@ -106,11 +104,6 @@
                                             <h2>Wybierz nieruchomość, dla której chcesz wprowadzić nowe odczyty</h2>
                                         </div>
                                         <div ng-switch-default>
-
-
-
-
-
                                             <div class="form-group">
                                                 <label class="col-sm-3 control-label">Data</label>
                                                 <div class="col-sm-9">
@@ -175,7 +168,7 @@
                     <script src="<c:url value='/static/angular/reading/meterService.js' />"></script>
                     <script src="<c:url value='/static/angular/reading/residenceService.js' />"></script>
                     <script src="<c:url value='/static/angular/reading/readingService.js' />"></script>
-                     <script src="<c:url value='/static/angular/reading/readingFormService.js' />"></script>
+                    <script src="<c:url value='/static/angular/reading/readingFormService.js' />"></script>
                     <script src="<c:url value='/static/angular/reading/readingController.js' />"></script>
 
                     <!-- jQuery -->

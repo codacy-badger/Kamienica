@@ -45,14 +45,17 @@ public class ReadingApi {
     @RequestMapping(method = RequestMethod.POST)
     public ResponseEntity<?> save(@Valid @RequestBody final ReadingForm readingForm) {
 //        validate()
+        System.out.println("-------------------SAVING-----------------------------------");
         readingService.save(readingForm);
         return new ResponseEntity<>(readingForm, HttpStatus.OK);
     }
 
     @RequestMapping(method = RequestMethod.DELETE)
-    public ResponseEntity<?> delete(@RequestBody final ReadingForm readingForm) {
+    public ResponseEntity<?> delete(@RequestParam String media, @RequestParam Long residence_id) {
 //        validate()
-        readingService.delete(readingForm);
+        final Residence res = residenceService.getById(residence_id);
+        readingService.deleteLatestReadings(res, Media.valueOf(media));
+//        readingService.delete(readingForm);
         return new ResponseEntity<Void>(HttpStatus.OK);
     }
 

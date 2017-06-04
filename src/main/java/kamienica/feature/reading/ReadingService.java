@@ -179,6 +179,7 @@ public class ReadingService implements IReadingService {
         final Criterion c = Restrictions.eq("readingDetails", details);
         List<Reading> readingsToDelete = readingDao.findByCriteria(c);
         for (Reading reading : readingsToDelete) readingDao.delete(reading);
+        readingDetailsDao.delete(details);
     }
 
     @Override
