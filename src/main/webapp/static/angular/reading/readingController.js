@@ -48,23 +48,12 @@ App.controller("ReadingController", [
 
         self.queryReadings = function () {
             if (residence != undefined) {
-
                 self.readings = Reading.query({
                     media: media,
                     id: residence.id
                 });
-                //creating list of latest readings
                 self.readings.$promise.then(function (result) {
-                    $scope.latestDate = result[0].readingDetails.readingDate;
-                    self.latestReadings = [];
-                    for (var i = 0; i < result.length; i++) {
-                        if (result[i].readingDetails.readingDate == $scope.latestDate) {
-                            self.latestReadings.push(result[i]);
-
-                        } else {
-                            break;
-                        }
-                    }
+                   self.prepareLatestReadings(result);
                 });
             }
 
@@ -101,22 +90,19 @@ App.controller("ReadingController", [
             var response = Reading.delete({
                 media: media,
                 id: residence.id
-            });
+            });$scope.latestDate;
         	
             for(var i = 0; i < self.readings.length; i++) {
             	var scopeDate = $filter('date')($scope.latestDate, "yyyy-MM-dd");
             	var indexDate = $filter('date')(self.readings[i].readingDetails.readingDate, "yyyy-MM-dd");
             	if(scopeDate === indexDate) {
-            		console.log(i)
             		self.readings.splice(i,1);
             		i--;
             	}
             }
-            $scope.latestDate = self.readings[0].readingDetails.readingDate;
+            self.prepareLatestReadings(self.readings);
             self.reset();
         };
-
-
 
         self.submit = function () {
             var readingForm = new Object();
@@ -124,8 +110,22 @@ App.controller("ReadingController", [
             var tmp = $filter('date')(self.newReadingsForm.readingDetails.readingDate, "yyyy-MM-dd");
             readingForm.readingDetails.readingDate = tmp;
             var response = ReadingForm.save(readingForm);
-            console.log(response.$promise);
-       //     self.queryReadings();
+            console.log("stara lista");
+            console.log(self.readings);
+            response.$promise.then(function (result) {
+                $scope.latestDate = new Date(result.readingDetails.readingDate);
+                for(var i =0; i<result.readings.length; i++) {
+                	self.readings.unshift(result.readings[i]);
+                }
+                self.prepareLatestReadings(self.readings);
+            });
+        	// !!!!!!!!! console.log(new Date(response.readings[i].readingDetails.readingDate));
+            console.log("nowa lista");
+            console.log(self.readings);
+            
+           // self.queryReadings();
+            
+            console.log($scope.latestDate);
             self.switchForm();
         };
 
@@ -180,7 +180,6 @@ App.controller("ReadingController", [
         }
 
         self.prepareFormForNewReadings = function () {
-            //             console.log("---prepareFormForNewReadings START----");
             if (residence != undefined) {
                 self.loadMeters();
                 self.newReadingsForm.readingDetails = {
@@ -194,7 +193,6 @@ App.controller("ReadingController", [
                     self.newReadingsForm.readings = self.createReadingsForTheNewForm(result);
                 });
             }
-            //               console.log("---prepareFormForNewReadings END----");
         }
 
         self.loadMeters = function () {
@@ -235,5 +233,18 @@ App.controller("ReadingController", [
 
             return r;
         }
+        
+        self.prepareLatestReadings = function(result) {
+       	 $scope.latestDate = result[0].readingDetails.readingDate;
+            self.latestReadings = [];
+            for (var i = 0; i < result.length; i++) {
+                if (result[i].readingDetails.readingDate == $scope.latestDate) {
+                    self.latestReadings.push(result[i]);
+
+                } else {
+                    break;
+                }
+            }
+       }
     }
 ]);
