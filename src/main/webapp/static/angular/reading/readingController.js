@@ -98,16 +98,21 @@ App.controller("ReadingController", [
         };
 
         self.deleteItem = function () {
-            self.prepareFormForNewReadings();
-            var readingForm = new Object();
-            readingForm = self.newReadingsForm;
-            var tmp = $filter('date')(self.newReadingsForm.readingDetails.readingDate, "yyyy-MM-dd");
-            readingForm.readingDetails.readingDate = tmp;
             var response = Reading.delete({
                 media: media,
                 id: residence.id
             });
-            self.queryReadings();
+        	
+            for(var i = 0; i < self.readings.length; i++) {
+            	var scopeDate = $filter('date')($scope.latestDate, "yyyy-MM-dd");
+            	var indexDate = $filter('date')(self.readings[i].readingDetails.readingDate, "yyyy-MM-dd");
+            	if(scopeDate === indexDate) {
+            		console.log(i)
+            		self.readings.splice(i,1);
+            		i--;
+            	}
+            }
+            $scope.latestDate = self.readings[0].readingDetails.readingDate;
             self.reset();
         };
 
@@ -120,7 +125,7 @@ App.controller("ReadingController", [
             readingForm.readingDetails.readingDate = tmp;
             var response = ReadingForm.save(readingForm);
             console.log(response.$promise);
-            self.queryReadings();
+       //     self.queryReadings();
             self.switchForm();
         };
 
