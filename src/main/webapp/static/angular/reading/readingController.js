@@ -180,6 +180,7 @@ App.controller("ReadingController", [
         }
 
         self.prepareFormForNewReadings = function () {
+        	console.log("prepareFormForNewReadings");
             if (residence != undefined) {
                 self.loadMeters();
                 self.newReadingsForm.readingDetails = {
@@ -203,14 +204,18 @@ App.controller("ReadingController", [
 
         }
         self.createReadingsForTheNewForm = function (metersArray) {
+        	console.log("createReadingsForTheNewForm");
             var result = [];
+            var lastIndex =  metersArray.length -1;
             for (var meterIndex = 0; meterIndex < metersArray.length; meterIndex++) {
                 var meterHasNoReadingYet = true;
                 for (var readingIndex = 0; readingIndex < self.latestReadings.length; readingIndex++) {
                     if (self.latestReadings[readingIndex].meter.id === metersArray[meterIndex].id) {
-                        var r = self.latestReadings[readingIndex];
+                        var r = new Object();
                         r.id = null;
-                        result.push(r);
+                        r.value = self.latestReadings[readingIndex].value;
+                        r.meter = self.latestReadings[readingIndex].meter;
+                        result.unshift(r);
                         meterHasNoReadingYet = false;
                     }
 
