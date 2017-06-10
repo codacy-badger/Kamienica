@@ -156,7 +156,6 @@ public class ReadingWaterServiceTest extends ServiceTest {
     @Test
     public void shouldRetreiveMapOfReadings() {
         Map<ReadingDetails, List<Reading>> result = readingService.list(r, Media.ENERGY);
-        Set<ReadingDetails> keys = result.keySet();
         assertEquals(3, result.size());
     }
 }

@@ -53,7 +53,7 @@ App.controller("ReadingController", [
                     id: residence.id
                 });
                 self.readings.$promise.then(function (result) {
-                   self.prepareLatestReadings(result);
+                    self.prepareLatestReadings(result);
                 });
             }
 
@@ -92,14 +92,14 @@ App.controller("ReadingController", [
                 id: residence.id
             });
             // $scope.latestDate;
-        	
-            for(var i = 0; i < self.readings.length; i++) {
-            	var scopeDate = $filter('date')($scope.latestDate, "yyyy-MM-dd");
-            	var indexDate = $filter('date')(self.readings[i].readingDetails.readingDate, "yyyy-MM-dd");
-            	if(scopeDate === indexDate) {
-            		self.readings.splice(i,1);
-            		i--;
-            	}
+
+            for (var i = 0; i < self.readings.length; i++) {
+                var scopeDate = $filter('date')($scope.latestDate, "yyyy-MM-dd");
+                var indexDate = $filter('date')(self.readings[i].readingDetails.readingDate, "yyyy-MM-dd");
+                if (scopeDate === indexDate) {
+                    self.readings.splice(i, 1);
+                    i--;
+                }
             }
             self.prepareLatestReadings(self.readings);
             self.reset();
@@ -110,33 +110,33 @@ App.controller("ReadingController", [
             readingForm = self.newReadingsForm;
             var tmp = $filter('date')(self.newReadingsForm.readingDetails.readingDate, "yyyy-MM-dd");
             readingForm.readingDetails.readingDate = tmp;
-            if(readingForm.readings[0].id == undefined) {
-            	console.log("zapis");
-            	var response = ReadingForm.save(readingForm);
-            	 response.$promise.then(function (result) {
-                   $scope.latestDate = new Date(result.readingDetails.readingDate);
-                   for(var i =0; i<result.readings.length; i++) {
-                   	self.readings.unshift(result.readings[i]);
-                   }
-                   self.prepareLatestReadings(self.readings);
-               });
+            if (readingForm.readings[0].id == undefined) {
+                console.log("zapis");
+                var response = ReadingForm.save(readingForm);
+                response.$promise.then(function (result) {
+                    $scope.latestDate = new Date(result.readingDetails.readingDate);
+                    for (var i = 0; i < result.readings.length; i++) {
+                        self.readings.unshift(result.readings[i]);
+                    }
+                    self.prepareLatestReadings(self.readings);
+                });
             } else {
-            	console.log(readingForm);
-            	var rd = self.newReadingsForm.readingDetails;
-            	$scope.latestDate = rd.readingDate;
-            	for(var i=0; i<readingForm.readings.length; i++) {
-            		 self.newReadingsForm.readings[i].readingDetails = rd;
-            	}
-            	ReadingForm.update(readingForm);
-            	
+                console.log(readingForm);
+                var rd = self.newReadingsForm.readingDetails;
+                $scope.latestDate = rd.readingDate;
+                for (var i = 0; i < readingForm.readings.length; i++) {
+                    self.newReadingsForm.readings[i].readingDetails = rd;
+                }
+                ReadingForm.update(readingForm);
+
             }
-//           
+            //           
             self.switchForm();
         };
 
         self.edit = function () {
             self.clearError();
-// $scope.toggle = $scope.toggle === false ? true : false;
+            // $scope.toggle = $scope.toggle === false ? true : false;
             self.switchForm("edit");
         };
 
@@ -162,7 +162,7 @@ App.controller("ReadingController", [
         $scope.$watch("toggle", function () {
             $scope.text = $scope.toggle ? "Dodaj" :
                 "Lista";
-        })
+        });
 
         self.switchForm = function (action) {
             if ($scope.text === "Dodaj") {
@@ -172,12 +172,12 @@ App.controller("ReadingController", [
                 $scope.errors = "";
                 $scope.errorField = false;
                 $scope.errorMsg = "";
-                if(action == "edit") {
-                	self.prepareFormForEdit()
+                if (action == "edit") {
+                    self.prepareFormForEdit()
                 } else {
-                	self.prepareFormForNewReadings();
+                    self.prepareFormForNewReadings();
                 }
-                
+
             } else {
                 $scope.text = "Dodaj";
                 $scope.toggle = true;
@@ -195,28 +195,28 @@ App.controller("ReadingController", [
                 self.meters.$promise.then(function (result) {
                     self.newReadingsForm.readings = self.latestReadings;
                 });
-                
+
                 // self.removeReadingsForInactiveMeters();
             }
         }
-        self.removeReadingsForInactiveMeters = function() {
-        	var metersInScope = [];
-        	self.meters.$promise.then(function (result) {
-        		metersInScope = result;
+        self.removeReadingsForInactiveMeters = function () {
+            var metersInScope = [];
+            self.meters.$promise.then(function (result) {
+                metersInScope = result;
             });
-        	
-        
-        	for(var i=0; i <  self.newReadingsForm.readings.length; i++) {
-        		var meterId = self.newReadingsForm.readings[i].meter.id;
-        		for(var meterIndx=0; meterIndx<metersInScope.length; i++) {
-        			if(meterId = metersInScope[meterIndx].id) {
-        				break;
-        			}
-        			self.newReadingsForm.readings.splice(i,1);
-        		}
-        	}
+
+
+            for (var i = 0; i < self.newReadingsForm.readings.length; i++) {
+                var meterId = self.newReadingsForm.readings[i].meter.id;
+                for (var meterIndx = 0; meterIndx < metersInScope.length; i++) {
+                    if (meterId = metersInScope[meterIndx].id) {
+                        break;
+                    }
+                    self.newReadingsForm.readings.splice(i, 1);
+                }
+            }
         }
-        
+
         self.prepareFormForNewReadings = function () {
             if (residence != undefined) {
                 self.loadMeters();
@@ -242,7 +242,7 @@ App.controller("ReadingController", [
         }
         self.createReadingsForTheNewForm = function (metersArray) {
             var result = [];
-            var lastIndex =  metersArray.length -1;
+            var lastIndex = metersArray.length - 1;
             for (var meterIndex = 0; meterIndex < metersArray.length; meterIndex++) {
                 var meterHasNoReadingYet = true;
                 for (var readingIndex = 0; readingIndex < self.latestReadings.length; readingIndex++) {
@@ -274,9 +274,9 @@ App.controller("ReadingController", [
 
             return r;
         }
-        
-        self.prepareLatestReadings = function(result) {
-       	 $scope.latestDate = result[0].readingDetails.readingDate;
+
+        self.prepareLatestReadings = function (result) {
+            $scope.latestDate = result[0].readingDetails.readingDate;
             self.latestReadings = [];
             for (var i = 0; i < result.length; i++) {
                 if (result[i].readingDetails.readingDate == $scope.latestDate) {
@@ -286,6 +286,6 @@ App.controller("ReadingController", [
                     break;
                 }
             }
-       }
+        }
     }
 ]);

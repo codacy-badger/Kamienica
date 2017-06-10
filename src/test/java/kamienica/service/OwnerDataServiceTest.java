@@ -2,11 +2,9 @@ package kamienica.service;
 
 import kamienica.configuration.ServiceTest;
 import kamienica.core.util.SecurityDetails;
-import kamienica.feature.ownerdata.IOwnerDataService;
 import kamienica.model.entity.OwnerData;
 import kamienica.model.entity.Residence;
 import org.junit.Test;
-import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.Collections;
 import java.util.List;
