@@ -14,12 +14,6 @@ public interface IOwnerUserDataService {
 
     List<Reading> getReadingsForTenant(Apartment apartment, Media media);
 
-    List<Reading> getReadingEnergyForTenant(Apartment apartment);
-
-    List<Reading> getReadingWaterForTenant(Apartment apartment);
-
-    List<Reading> getReadingGasForTenant(Apartment apartment);
-
     Tenant getLoggedTenant();
 
 }

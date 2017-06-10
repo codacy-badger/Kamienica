@@ -39,7 +39,7 @@ public class OwnerUserDataService implements IOwnerUserDataService {
     }
 
     private void checkConfig(HashMap<String, Object> model) {
-            model.put("resicences", SecurityDetails.getResidencesForOwner().size());
+        model.put("resicences", SecurityDetails.getResidencesForOwner().size());
     }
 
     private void addLatestReadings(HashMap<String, Object> model) {
@@ -100,38 +100,10 @@ public class OwnerUserDataService implements IOwnerUserDataService {
 //
 //    }
 
-    @Override
-    public List<Reading> getReadingEnergyForTenant(Apartment aparmtent) {
-        return readingDao.getListForTenant(aparmtent);
-    }
-
-    @Override
-    public List<Reading> getReadingGasForTenant(Apartment aparmtent) {
-        return readingDao.getListForTenant(aparmtent);
-    }
-
-    @Override
-    public List<Reading> getReadingWaterForTenant(Apartment aparmtent) {
-        return readingDao.getListForTenant(aparmtent);
-    }
 
     @Override
     public List<Reading> getReadingsForTenant(Apartment apartment, Media media) {
-
-        switch (media) {
-            case ENERGY:
-                return readingDao.getListForTenant(apartment);
-
-            case GAS:
-                return readingDao.getListForTenant(apartment);
-
-            case WATER:
-                return readingDao.getListForTenant(apartment);
-
-            default:
-                throw new IllegalArgumentException();
-        }
-
+        return readingDao.getListForTenant(apartment, media);
     }
 
     public SecurityUser getCurrentUser() {
