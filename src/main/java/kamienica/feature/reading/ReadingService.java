@@ -167,6 +167,18 @@ public class ReadingService implements IReadingService {
         }
     }
 
+    @Override
+    public void update(ReadingForm readingForm) {
+        final ReadingDetails details = readingForm.getReadingDetails();
+        readingDetailsDao.update(details);
+        final Set<Reading> readings = readingForm.getReadings();
+        for (Reading r : readings) {
+            validateReadingValue(r);
+            r.setReadingDetails(details);
+            readingDao.update(r);
+        }
+    }
+
     private void validateReadingValue(final Reading r) {
         if (r.getValue() < 0) {
             throw new IllegalArgumentException("Reading value cannot be below zero");

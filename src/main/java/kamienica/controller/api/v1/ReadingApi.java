@@ -50,6 +50,14 @@ public class ReadingApi {
         return new ResponseEntity<>(readingForm, HttpStatus.OK);
     }
 
+    @RequestMapping(method = RequestMethod.PUT)
+    public ResponseEntity<?> delete(@Valid @RequestBody final ReadingForm readingForm) {
+//        validate()
+        System.out.println("-------------------SAVING-----------------------------------");
+        readingService.update(readingForm);
+        return new ResponseEntity<>(readingForm, HttpStatus.OK);
+    }
+
     @RequestMapping(method = RequestMethod.DELETE)
     public ResponseEntity<?> delete(@RequestParam String media, @RequestParam Long residence_id) {
 //        validate()

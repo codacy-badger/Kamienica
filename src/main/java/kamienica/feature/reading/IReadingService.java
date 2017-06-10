@@ -19,6 +19,8 @@ public interface IReadingService {
 
     void update(List<Reading> readings, LocalDate date);
 
+    void update(ReadingForm readingForm);
+
     List<Reading> getList(Residence r, Media media);
 
     List<Reading> getList(Media media);
