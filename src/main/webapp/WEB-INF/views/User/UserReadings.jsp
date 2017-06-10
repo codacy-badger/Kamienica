@@ -49,16 +49,15 @@
 
 							<th>Data</th>
 							<th>Wartość Odczytu</th>
-							<th>Jednostka</th>
 							<th>Licznik</th>
 						</tr>
 					</thead>
 					<c:forEach items="${model.readings}" var="reading">
 						<tr>
 
-							<td><c:out value="${reading.readingDate}" /></td>
+							<td><c:out value="${reading.readingDetails.readingDate}" /></td>
 							<td><c:out value="${reading.value}" /></td>
-							<td><c:out value="${reading.unit}" /></td>
+							
 							<td><c:out value="${reading.meter.description}" /></td>
 						</tr>
 					</c:forEach>

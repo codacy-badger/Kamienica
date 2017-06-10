@@ -18,8 +18,6 @@ import java.util.List;
 @Repository("readingDao")
 public class ReadingDao extends BasicDao<Reading> implements IReadingDao {
 
-    //TODO what the hell is this...
-    private static final String LIST_FOR_TENANT = "select * from reading where meter_id IN(select id from meter where apartment_id IN(SELECT id FROM apartment where apartmentnumber IN(0, :num)));";
 
     @Override
     @SuppressWarnings("unchecked")
@@ -42,9 +40,14 @@ public class ReadingDao extends BasicDao<Reading> implements IReadingDao {
 
     @SuppressWarnings("unchecked")
     @Override
-    public List<Reading> getListForTenant(Apartment apartment) {
-        Query query = getSession().createSQLQuery(LIST_FOR_TENANT).addEntity(Reading.class).setInteger("num",
-                apartment.getApartmentNumber());
+    public List<Reading> getListForTenant(final Apartment apartment, final Media media) {
+
+        //TODO what the hell is this...
+        final String sql = "select * from READING where meter_id IN(select id from METER where apartment_id IN(SELECT id FROM APARTMENT where apartmentnumber IN(0, :num)) AND media=:media);";
+
+        Query query = getSession().createSQLQuery(sql).addEntity(Reading.class)
+                .setInteger("num", apartment.getApartmentNumber())
+                .setString("media", media.toString());
 
         return (List<Reading>) query.list();
     }

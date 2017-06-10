@@ -16,7 +16,7 @@ public interface IReadingDao extends IBasicDao<Reading> {
 
     List<Reading> getList(Residence r, Media media);
 
-    List<Reading> getListForTenant(Apartment apartment);
+    List<Reading> getListForTenant(Apartment apartment, Media media);
 
     List<Reading> list(ReadingDetails details);
 

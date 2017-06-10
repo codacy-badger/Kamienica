@@ -16,12 +16,14 @@ public class GlobalExceptionHandler {
 
     private static Logger LOG = LoggerFactory.getLogger(GlobalExceptionHandler.class);
 
-    @ExceptionHandler(JDBCException.class)
-    public String handleSQLException(HttpServletRequest request, Exception ex) {
-
-        LOG.error("SQL exception: ", ex);
-        return "database_error";
-    }
+//    @ExceptionHandler(JDBCException.class)
+//    public ModelAndView handleSQLException(HttpServletRequest request, Exception ex) {
+//
+//        LOG.error("SQL exception: ", ex);
+//        final HashMap<String, Object> model = new HashMap<>();
+//        model.put("exception", ex.getMessage());
+//        return new ModelAndView("error", "model", model);
+//    }
 
     @ExceptionHandler(NoHandlerFoundException.class)
     public String noHandlerFoundException(HttpServletRequest request, Exception ex) {
