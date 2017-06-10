@@ -14,7 +14,7 @@ public class ResidenceOwnership {
     @GeneratedValue
     private Long id;
     @OneToOne
-    private Residence residenceOwned;
+    private Residence residence;
     @OneToOne
     private Tenant owner;
 
@@ -34,11 +34,11 @@ public class ResidenceOwnership {
         this.owner = owner;
     }
 
-    public Residence getResidenceOwned() {
-        return residenceOwned;
+    public Residence getResidence() {
+        return residence;
     }
 
-    public void setResidenceOwned(Residence residenceOwned) {
-        this.residenceOwned = residenceOwned;
+    public void setResidence(Residence residence) {
+        this.residence = residence;
     }
 }

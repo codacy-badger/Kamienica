@@ -30,8 +30,8 @@ INSERT INTO  TENANT  ( id , email , firstName , lastName, password , phone , rol
 
 
 
-INSERT INTO RESIDENCE_OWNERSHIP (id, owner_id, residenceOwned_id)  VALUES (1,1,1);
-INSERT INTO RESIDENCE_OWNERSHIP (id, owner_id, residenceOwned_id)  VALUES (2,7,2);
+INSERT INTO RESIDENCE_OWNERSHIP (id, owner_id, residence_id)  VALUES (1,1,1);
+INSERT INTO RESIDENCE_OWNERSHIP (id, owner_id, residence_id)  VALUES (2,7,2);
 
 INSERT INTO  METER  ( id , status , description , main , serialNumber , unit , apartment_id, residence_id, media, isWarmWater, cwu ) VALUES (1,'ACTIVE','Energia Główny',1,b'0','kWh',NULL, 1, 'ENERGY', b'0', b'0');
 INSERT INTO  METER  ( id , status , description , main , serialNumber , unit , apartment_id, residence_id, media, isWarmWater, cwu  ) VALUES (2,'ACTIVE','E Czesc Wspolna',0,'00','kWh',1, 1, 'ENERGY', b'0', b'0');
