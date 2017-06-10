@@ -43,62 +43,8 @@
                 <li><a href="${path}/Admin/Residence/residence.html"><i class="fa fa-building" aria-hidden="true"></i> Nieruchomości</a></li>
 				<li><a href="${path}/Admin/Apartment/apartment.html"><i class="fa fa-home" aria-hidden="true"></i> Mieszkania</a></li>
 				<li><a href="${path}/Admin/Tenant/tenant.html"><i class="fa fa-users" aria-hidden="true"></i> Najemcy</a>
-				<li><a href="#"><i class="fa fa-wrench fa-fw"></i>
-						Konfiguracja<span class="fa arrow"></span></a>
-					<ul class="nav nav-second-level">
-						<li><a href=#>Algorytm Podziału<span class="fa arrow"></span></a>
-							<ul class="nav nav-third-level">
-								<li><a href="${path}/Admin/Division/divisionRegister.html"><i
-										class="fa fa-plus" aria-hidden="true"></i> Nowe</a></li>
-								<li><a href="${path}/Admin/Division/divisionList.html"><i
-										class="fa fa-list" aria-hidden="true"></i> Lista</a></li>
-							</ul></li>
-						<!-- <li><a href=#>Konfiguracja<span class="fa arrow"></span></a>
-							<ul class="nav nav-third-level">
-								<li><a href="${path}/Admin/Settings/edit.html"><i
-										class="fa fa-plus" aria-hidden="true"></i>Zmień</a></li>
-								<li><a href="${path}/Admin/Settings/list.html"><i
-										class="fa fa-list" aria-hidden="true"></i>Sprawdź</a></li>
-							</ul></li> -->
-					</ul> <!-- /.nav-second-level --></li>
-				<li><a href="#"><i class="fa fa-bar-chart"
-						aria-hidden="true"></i> </i>Odczyty<span class="fa arrow"></span></a>
-					<ul class="nav nav-second-level">
-						<li><a href="panels-wells.html">Gaz<span class="fa arrow"></span></a>
-							<ul class="nav nav-third-level">
-								<li><a href="${path}/Admin/Reading/readingGasRegister.html"><i
-										class="fa fa-plus" aria-hidden="true"></i> Nowe</a></li>
-								<li><a
-									href="${path}/Admin/Reading/readingList.html?media=GAS"><i
-										class="fa fa-list" aria-hidden="true"></i> Lista</a></li>
-							<!-- 	<li><a href="${path}/Admin/Reading/gasRest.html"><i
-										class="fa fa-plus" aria-hidden="true"></i> Rest</a></li> -->
-							</ul></li>
-						<li><a href="buttons.html">Woda<span class="fa arrow"></a>
-							<ul class="nav nav-third-level">
-								<li><a
-									href="${path}/Admin/Reading/readingWaterRegister.html"><i
-										class="fa fa-plus" aria-hidden="true"></i> Nowe</a></li>
-								<li><a
-									href="${path}/Admin/Reading/readingList.html?media=WATER"><i
-										class="fa fa-list" aria-hidden="true"></i> Lista</a></li>
-								<!-- <li><a href="${path}/Admin/Reading/waterRest.html"><i
-										class="fa fa-plus" aria-hidden="true"></i> Rest</a></li> -->
-							</ul></li>
-						<li><a href="notifications.html">Energia<span
-								class="fa arrow"></a>
-							<ul class="nav nav-third-level">
-								<li><a
-									href="${path}/Admin/Reading/readingEnergyRegister.html"><i
-										class="fa fa-plus" aria-hidden="true"></i> Nowe</a></li>
-								<li><a
-									href="${path}/Admin/Reading/readingList.html?media=ENERGY"><i
-										class="fa fa-list" aria-hidden="true"></i> Lista</a></li>
-								<!-- <li><a href="${path}/Admin/Reading/energyRest.html"><i
-										class="fa fa-plus" aria-hidden="true"></i> Rest</a></li> -->
-							</ul></li>
-
-					</ul> <!-- /.nav-second-level --></li>
+			
+				<li><a href="${path}/Admin/Reading/rest"><i class="fa fa-bar-chart" aria-hidden="true"></i>Odczyty</a></li>
 				<li><a href="#"><i class="fa fa-newspaper-o"
 						aria-hidden="true"></i>Faktury<span class="fa arrow"></span></a>
 					<ul class="nav nav-second-level">

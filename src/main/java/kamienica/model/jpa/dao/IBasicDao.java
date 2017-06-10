@@ -12,8 +12,6 @@ public interface IBasicDao<T> {
 
     void save(final T object);
 
-    void deleteById(final Long id);
-
     void delete(T entity);
 
     void delete(final Long id);

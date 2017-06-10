@@ -4,8 +4,6 @@ import kamienica.core.util.CommonUtils;
 import kamienica.feature.apartment.IApartmentDao;
 import kamienica.feature.tenant.ITenantDao;
 import kamienica.model.entity.*;
-import kamienica.model.enums.Status;
-import org.hibernate.criterion.Criterion;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -52,7 +50,7 @@ public class DivisionService implements IDivisionService {
         tmp.setTenant(ten);
         if (ap.getApartmentNumber() == 0) {
             tmp.setDivisionValue(CommonUtils.decimalFormat(1 / numOfTenants));
-        } else if (ap.getApartmentNumber() == ten.getApartment().getApartmentNumber()) {
+        } else if (ap.getApartmentNumber() == ten.fetchApartment().getApartmentNumber()) {
             tmp.setDivisionValue(1);
         } else {
             tmp.setDivisionValue(0);

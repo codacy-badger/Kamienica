@@ -17,7 +17,7 @@ public class ReadingValidator {
 			if (newReadings.get(i).getValue() < currentReadings.get(i).getValue()) {
 				return true;
 			}
-//			if (newReadings.get(i).getMeter().getApartment() == null) {
+//			if (newReadings.get(i).getMeter().fetchApartment() == null) {
 //				primaryReading += newReadings.get(i).getValue();
 //			} else {
 //				sumOfReadings += newReadings.get(i).getValue();

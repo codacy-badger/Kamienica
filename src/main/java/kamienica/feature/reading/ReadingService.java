@@ -2,10 +2,8 @@ package kamienica.feature.reading;
 
 import kamienica.feature.meter.IMeterDao;
 import kamienica.feature.readingdetails.IReadingDetailsDao;
-import kamienica.model.entity.Meter;
-import kamienica.model.entity.Reading;
-import kamienica.model.entity.ReadingDetails;
-import kamienica.model.entity.Residence;
+import kamienica.model.entity.*;
+import kamienica.model.entity.ReadingForm;
 import kamienica.model.enums.Media;
 import kamienica.model.enums.Resolvement;
 import kamienica.model.enums.Status;
@@ -18,10 +16,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 @Service
 @Transactional
@@ -41,6 +36,26 @@ public class ReadingService implements IReadingService {
     @Override
     public List<Reading> getList(final Residence r, final Media media) {
         return readingDao.getList(r, media);
+    }
+
+    @Override
+    public List<Reading> getList(final Media media) {
+        return readingDao.getList(media);
+    }
+
+    @Override
+    public Map<ReadingDetails, List<Reading>> list(final Residence r, final Media media) {
+        final Criterion res = Restrictions.eq("residence", r);
+        final Criterion med = Restrictions.eq("media", media);
+        List<ReadingDetails> readingDetails = readingDetailsDao.findByCriteria(res, med);
+
+        final Map<ReadingDetails, List<Reading>> result = new TreeMap<>();
+
+        for (ReadingDetails details : readingDetails) {
+            final List<Reading> readings = readingDao.list(details);
+            result.put(details, readings);
+        }
+        return result;
     }
 
     /**
@@ -123,6 +138,18 @@ public class ReadingService implements IReadingService {
     }
 
     @Override
+    public void save(ReadingForm readingForm) {
+        final ReadingDetails details = readingForm.getReadingDetails();
+        readingDetailsDao.save(details);
+        final Set<Reading> readings = readingForm.getReadings();
+        for (Reading r : readings) {
+            validateReadingValue(r);
+            r.setReadingDetails(details);
+            readingDao.save(r);
+        }
+    }
+
+    @Override
     public Reading getById(Long id) {
         return readingDao.getById(id);
     }
@@ -133,6 +160,18 @@ public class ReadingService implements IReadingService {
         final ReadingDetails details = readingDetailsDao.getById(readings.get(0).getReadingDetails().getId());
         details.setReadingDate(date);
         readingDetailsDao.update(details);
+        for (Reading r : readings) {
+            validateReadingValue(r);
+            r.setReadingDetails(details);
+            readingDao.update(r);
+        }
+    }
+
+    @Override
+    public void update(ReadingForm readingForm) {
+        final ReadingDetails details = readingForm.getReadingDetails();
+        readingDetailsDao.update(details);
+        final Set<Reading> readings = readingForm.getReadings();
         for (Reading r : readings) {
             validateReadingValue(r);
             r.setReadingDetails(details);
@@ -152,5 +191,14 @@ public class ReadingService implements IReadingService {
         final Criterion c = Restrictions.eq("readingDetails", details);
         List<Reading> readingsToDelete = readingDao.findByCriteria(c);
         for (Reading reading : readingsToDelete) readingDao.delete(reading);
+        readingDetailsDao.delete(details);
+    }
+
+    @Override
+    public void delete(ReadingForm readingForm) {
+        for(Reading r:readingForm.getReadings()) {
+            readingDao.delete(r);
+        }
+        readingDetailsDao.delete(readingForm.getReadingDetails());
     }
 }

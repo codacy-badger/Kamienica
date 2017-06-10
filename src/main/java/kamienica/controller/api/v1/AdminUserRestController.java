@@ -34,7 +34,7 @@ public class AdminUserRestController {
 
     @RequestMapping(value = "/user/{media}/readings", method = RequestMethod.GET)
     public ResponseEntity<?> getReadings(@PathVariable(value = "media") Media media) {
-        final Apartment ap = SecurityDetails.getLoggedTenant().getApartment();
+        final Apartment ap = SecurityDetails.getLoggedTenant().fetchApartment();
         final List<Reading> readings = ownerUserDataService.getReadingsForTenant(ap, media);
 
         if (readings.isEmpty()) {

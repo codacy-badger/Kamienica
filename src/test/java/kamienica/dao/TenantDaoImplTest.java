@@ -49,7 +49,7 @@
 //		
 //		Assert.assertEquals(tenant.getStatus(), Status.ACTIVE.getUserStatus());
 //
-//		daoservice.deactivateByApparmentId(tenant.getApartment().getId());
+//		daoservice.deactivateByApparmentId(tenant.fetchApartment().getId());
 //		Assert.assertEquals(daoservice.getById(1L).getStatus(), Status.INACTIVE.getUserStatus());
 //	}
 //
@@ -102,16 +102,16 @@
 //
 //	@Rollback
 //	@Testing(dependsOnMethods = { "findAll" })
-//	public void deleteById() {
+//	public void delete() {
 //		Assert.assertEquals(daoservice.getListForOwner().size(), 4);
-//		daoservice.deleteById(1L);
+//		daoservice.delete(1L);
 //		Assert.assertEquals(daoservice.getListForOwner().size(), 3);
 //	}
 //
 //	@Testing(dependsOnMethods = { "findAll" })
 //	public void deleteInvalidId() {
 //		Assert.assertEquals(daoservice.getListForOwner().size(), 4);
-//		daoservice.deleteById(8L);
+//		daoservice.delete(8L);
 //		Assert.assertEquals(daoservice.getListForOwner().size(), 4);
 //	}
 //

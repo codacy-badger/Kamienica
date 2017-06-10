@@ -63,7 +63,7 @@ public class MeterService implements IMeterService {
     @Override
     public void delete(Long id) {
         try {
-            meterDao.deleteById(id);
+            meterDao.delete(id);
         } catch (ConstraintViolationException e) {
             Meter meter = meterDao.getById(id);
             meter.setStatus(Status.INACTIVE);
@@ -81,7 +81,8 @@ public class MeterService implements IMeterService {
     public List<Meter> list(final Residence r, final Media media) {
         Criterion c1 = Restrictions.eq("residence", r);
         Criterion c2 = Restrictions.eq("media", media);
-        return meterDao.findByCriteria(c1, c2);
+        Criterion c3 = Restrictions.eq("status", Status.ACTIVE);
+        return meterDao.findByCriteria(c1, c2, c3);
     }
 
     @Override

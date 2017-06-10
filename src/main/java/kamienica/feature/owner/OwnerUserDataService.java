@@ -1,5 +1,6 @@
 package kamienica.feature.owner;
 
+import kamienica.core.util.SecurityDetails;
 import kamienica.feature.apartment.IApartmentDao;
 import kamienica.feature.reading.IReadingDao;
 import kamienica.model.entity.Apartment;
@@ -31,15 +32,14 @@ public class OwnerUserDataService implements IOwnerUserDataService {
     @Override
     public HashMap<String, Object> getMainData() {
         HashMap<String, Object> model = new HashMap<>();
-        model.put("emptyApartments", apartmentDao.getNumOfEmptyApartment());
+        model.put("emptyApartments", "Brak danych");
         addLatestReadings(model);
         checkConfig(model);
         return model;
     }
 
     private void checkConfig(HashMap<String, Object> model) {
-      //  List<Settings> list = settingsDao.getList();
-            model.put("settings", "BRAK USTAWIEŃ.... Nie ma już algoruytmu podzialui");
+            model.put("resicences", SecurityDetails.getResidencesForOwner().size());
     }
 
     private void addLatestReadings(HashMap<String, Object> model) {
@@ -86,6 +86,7 @@ public class OwnerUserDataService implements IOwnerUserDataService {
 
         model.put("readingMedia", "Błąd");
         model.put("readingDays", 0);
+
         model.put("invoiceMedia", "błąd");
         model.put("invoiceDays", 0);
 

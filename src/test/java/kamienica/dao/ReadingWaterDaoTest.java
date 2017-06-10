@@ -89,7 +89,7 @@
 //		daoservice.save(reading);
 //		Assert.assertEquals(daoservice.getListForOwner().size(), 16);
 //		Assert.assertEquals(daoservice.getById(16L).getValue(), 300.0);
-//		daoservice.deleteById(13L);
+//		daoservice.delete(13L);
 //		Assert.assertEquals(daoservice.getListForOwner().size(), 15);
 //	}
 //

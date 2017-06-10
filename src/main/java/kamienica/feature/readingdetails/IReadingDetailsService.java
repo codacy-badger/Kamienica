@@ -16,4 +16,6 @@ public interface IReadingDetailsService {
     ReadingDetails getLatestPriorToDate(LocalDate date, Residence residence, Media media);
 
     List<ReadingDetails> list(Media media);
+
+    List<ReadingDetails> getUnresolved(Media media);
 }

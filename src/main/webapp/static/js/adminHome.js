@@ -20,13 +20,7 @@ $(document).ready(function() {
 
 	}
 	
-	if (settings > 0) {
-		$("#config").addClass("panel-red");
 
-	} else {
-		$("#config").addClass("panel-green");
-
-	}
 //	
 //	if (apartments > 0) {
 //		$("#apartment").addClass("panel-red");

@@ -85,7 +85,7 @@ public class InvoiceService implements IInvoiceService {
 
         readingDetailsDao.update(details);
         paymentDao.deleteForInvoice(invoice);
-        invoiceDao.deleteById(id);
+        invoiceDao.delete(id);
     }
 
     @Override

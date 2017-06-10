@@ -84,6 +84,6 @@ public class SecurityServiceImpl implements UserDetailsService, ISecurityService
     }
 
     private boolean isActive(Tenant tenant) {
-        return tenant.isActive();
+        return tenant.checkIsActive();
     }
 }

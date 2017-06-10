@@ -64,11 +64,11 @@ public class TenantServiceTest extends ServiceTest {
     @Test
     public void shouldDeactivateNewTenantWhenMovementDateIsOlderThanCurrentTenant() {
         final Tenant newOwner = createTenant(LocalDate.parse("2015-01-01"));
-        assertEquals(true, newOwner.isActive());
+        assertEquals(true, newOwner.checkIsActive());
         tenantService.save(newOwner);
         Tenant previousOwner = tenantService.loadByMail(FIRST_OWNER_MAIL);
-        assertEquals(true, previousOwner.isActive());
-        assertEquals(false, newOwner.isActive());
+        assertEquals(true, previousOwner.checkIsActive());
+        assertEquals(false, newOwner.checkIsActive());
     }
 
     @Transactional

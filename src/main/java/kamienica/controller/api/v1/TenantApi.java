@@ -81,7 +81,8 @@ public class TenantApi extends AbstractApi {
     public ResponseEntity<Message> delete(@PathVariable("id") final Long id) {
         Message message = new Message("OK", null);
         try {
-            service.deleteById(id);
+            final Tenant t = service.getById(id);
+            service.delete(t);
         } catch (Exception e) {
             message.setMessage(CONSTRAINT_VIOLATION);
             message.setException(e.toString());

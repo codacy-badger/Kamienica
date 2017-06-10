@@ -49,8 +49,13 @@ public class ApartmentService implements IApartmentService {
     }
 
     @Override
-    public void deleteById(Long id) {
-        apartmentDAO.deleteById(id);
+    public void delete(Long id) {
+        apartmentDAO.delete(id);
+    }
+
+    @Override
+    public void delete(Apartment object) {
+        apartmentDAO.delete(object);
     }
 
     @Override

@@ -63,7 +63,7 @@
 								<td><span ng-bind="a.paymentDate"></span></td>
 								<td><span ng-bind="a.paymentAmount"></span></td>
 								<td><span ng-bind="a.tenant.firstName + ' '+ a.tenant.lastName"></span></td>
-								<td><span ng-bind="a.invoice.date"></span></td>
+								<td><span ng-bind="a.invoice.invoiceDate"></span></td>
 								<td><span ng-bind="a.invoice.serialNumber"></span></td>
 
 							</tr>
