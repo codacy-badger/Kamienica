@@ -6,6 +6,7 @@ insert into APARTMENT(id, apartmentNumber, description, intercom, residence_id) 
 insert into APARTMENT(id, apartmentNumber, description, intercom, residence_id) values(2, 1, 'Piwnica','6666', 1);
 insert into APARTMENT(id, apartmentNumber, description, intercom, residence_id) values(3, 2, 'Parter','6666', 1);
 insert into APARTMENT(id, apartmentNumber, description, intercom, residence_id) values(4, 3, 'I Piętro','6666', 1);
+insert into APARTMENT(id, apartmentNumber, description, intercom, residence_id) values(6, 4, 'II Piętro puste','6666', 1);
 insert into APARTMENT(id, apartmentNumber, description, intercom, residence_id) values(5, 2, 'Mieszkanie z drugiej rezydencji','6666', 2);
 
 

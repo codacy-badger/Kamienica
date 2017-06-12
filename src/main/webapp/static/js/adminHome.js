@@ -1,16 +1,10 @@
 $(document).ready(function() {
-	var settings = $('#settingsMsg').text().length;
-	
-	var invoice = $('#invoiceDays').text().split(" ", 1);
-	invoice = parseInt(invoice[0]);
 
-	var reading = $('#readingDays').text().split(" ", 1);
-	reading = parseInt(reading[0]);
+	var invoice = (new Date() - new Date($('#invoiceDate').text())) / (1000 * 60 * 60 * 24);
+	var reading =(new Date() - new Date($('#readingDate').text())) / (1000 * 60 * 60 * 24);
+	var apartments = $('#emptyApartments').text();
 
-	var apartments = $('#apartmentNumber').text();
-	apartments = parseInt(apartments);
 
-	// APARTMENTS
 
 	if (apartments > 0) {
 		$("#apartment").addClass("panel-red");
@@ -20,17 +14,6 @@ $(document).ready(function() {
 
 	}
 	
-
-//	
-//	if (apartments > 0) {
-//		$("#apartment").addClass("panel-red");
-//
-//	} else {
-//		$("#apartment").addClass("panel-green");
-//
-//	}
-	
-	// INVOICE
 	if (invoice <= 30) {
 		$("#invoice").addClass("panel-green");
 
@@ -41,7 +24,7 @@ $(document).ready(function() {
 		$("#invoice").addClass("panel-red");
 	}
 	
-	// Reading
+
 	if (reading <= 30) {
 		$("#reading").addClass("panel-green");
 
@@ -50,6 +33,7 @@ $(document).ready(function() {
 
 	} else {
 		$("#reading").addClass("panel-red");
+       
 	}
 	
 });

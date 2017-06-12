@@ -11,12 +11,12 @@ import java.util.List;
 @Repository("apartmentDao")
 public class ApartmentDao extends BasicDao<Apartment> implements IApartmentDao {
 
-    //TODO change the method - add owner as the main parameter
-    private static final String COUNT_EMPTY_APARTMENTS = "select count(id) from RENT_CONTRACT where not exists (SELECT * FROM RENT_CONTRACT WHERE contractEnd = '2100-01-01');";
+
 
     @Override
     public int getNumOfEmptyApartment() {
-        Query query = getSession().createSQLQuery(COUNT_EMPTY_APARTMENTS);
+        final String sql = "SELECT COUNT(id) from Apartment join";
+        Query query = getSession().createSQLQuery(sql);
         return ((Number) query.uniqueResult()).intValue();
     }
 
@@ -24,5 +24,6 @@ public class ApartmentDao extends BasicDao<Apartment> implements IApartmentDao {
     public List<Apartment> getListForOwner(List<Residence> residences) {
         return findForResidence(residences);
     }
+
 
 }

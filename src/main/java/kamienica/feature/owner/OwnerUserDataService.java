@@ -3,10 +3,8 @@ package kamienica.feature.owner;
 import kamienica.core.util.SecurityDetails;
 import kamienica.feature.apartment.IApartmentDao;
 import kamienica.feature.reading.IReadingDao;
-import kamienica.model.entity.Apartment;
-import kamienica.model.entity.Reading;
-import kamienica.model.entity.SecurityUser;
-import kamienica.model.entity.Tenant;
+import kamienica.feature.readingdetails.IReadingDetailsDao;
+import kamienica.model.entity.*;
 import kamienica.model.enums.Media;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -21,21 +19,29 @@ import java.util.List;
 public class OwnerUserDataService implements IOwnerUserDataService {
 
     private final IApartmentDao apartmentDao;
-    private final IReadingDao readingDao;
+    private final IReadingDetailsDao readingDetailsDao;
 
     @Autowired
-    public OwnerUserDataService(IApartmentDao apartmentDao, IReadingDao readingDao) {
+    public OwnerUserDataService(final IApartmentDao apartmentDao, final IReadingDetailsDao readingDetailsDao) {
         this.apartmentDao = apartmentDao;
-        this.readingDao = readingDao;
+        this.readingDetailsDao = readingDetailsDao;
     }
 
     @Override
     public HashMap<String, Object> getMainData() {
+        final OwnerData data = new OwnerData();
         HashMap<String, Object> model = new HashMap<>();
-        model.put("emptyApartments", "Brak danych");
+        model.put("emptyApartments", countEmptyApartments());
         addLatestReadings(model);
         checkConfig(model);
         return model;
+    }
+
+    private int countEmptyApartments() {
+    List<Residence> residences = SecurityDetails.getResidencesForOwner();
+    apartmentDao.getBySQLQuery("from Apartment where resicence_id in (:res)");
+
+        return 0;
     }
 
     private void checkConfig(HashMap<String, Object> model) {
@@ -45,7 +51,7 @@ public class OwnerUserDataService implements IOwnerUserDataService {
     private void addLatestReadings(HashMap<String, Object> model) {
 //TODO implement method after merging the tables
 
-//        final LocalDate energyDate = readingDao.getLatestDate(SecurityDetails.getResidencesForOwner());
+//        final LocalDate energyDate = readingDetailsDao.getLatestDate(SecurityDetails.getResidencesForOwner());
 //        final LocalDate gasDate = gasDao.getLatestDate();
 //        final LocalDate waterDate = waterDao.getLatestDate();
 //
@@ -103,7 +109,7 @@ public class OwnerUserDataService implements IOwnerUserDataService {
 
     @Override
     public List<Reading> getReadingsForTenant(Apartment apartment, Media media) {
-        return readingDao.getListForTenant(apartment, media);
+        return null;
     }
 
     public SecurityUser getCurrentUser() {

@@ -17,14 +17,14 @@ public class ApartmentServiceTest extends ServiceTest {
     @Test
     public void getList() {
         List<Apartment> list = apartmentService.list();
-        assertEquals(5, list.size());
+        assertEquals(6, list.size());
     }
 
     @Test
     public void getListForOwner() {
         when(SecurityDetails.getResidencesForOwner()).thenReturn(getMockedResidences());
         List<Apartment> list = apartmentService.listForOwner();
-        assertEquals(4, list.size());
+        assertEquals(5, list.size());
     }
 
 
