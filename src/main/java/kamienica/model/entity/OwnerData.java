@@ -14,6 +14,9 @@ public class OwnerData {
         this.numOrResidences = numOrResidences;
     }
 
+    public OwnerData() {
+    }
+
     public Invoice getOldestInvoice() {
         return oldestInvoice;
     }

@@ -51,7 +51,7 @@ public class BasicDaoTest extends DaoTest {
         final Residence r = residenceDao.getById(1L);
         final Criterion c = Restrictions.eq("residence", r);
         long result = apartemtnDao.countByCriteria(c);
-        assertEquals(4, result);
+        assertEquals(5, result);
     }
 
     @Test

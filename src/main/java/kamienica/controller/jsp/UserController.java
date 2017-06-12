@@ -1,9 +1,11 @@
 package kamienica.controller.jsp;
 
 import kamienica.feature.owner.IOwnerUserDataService;
+import kamienica.feature.ownerdata.IOwnerDataService;
 import kamienica.feature.payment.IPaymentService;
 import kamienica.feature.security.ISecurityService;
 import kamienica.model.entity.Apartment;
+import kamienica.model.entity.OwnerData;
 import kamienica.model.entity.Tenant;
 import kamienica.model.enums.Media;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,13 +27,16 @@ public class UserController {
 	@Autowired
 	private ISecurityService securityService;
 	@Autowired
+	private IOwnerDataService ownerDataService;
+	@Autowired
 	private IOwnerUserDataService ownerUserDataService;
 
 	// ===========OWNER===========================================
 	@RequestMapping("/Admin/home")
 	public ModelAndView home() {
-		HashMap<String, Object> model = ownerUserDataService.getMainData();
-		return new ModelAndView("/Admin/Home", "model", model);
+		//HashMap<String, Object> model = ownerUserDataService.getMainData();
+		final OwnerData data = ownerDataService.getMainData();
+		return new ModelAndView("/Admin/Home", "model", data);
 	}
 
 	// =====================TENANT===========================================

@@ -55,7 +55,7 @@
 									<div>
 										<h3>Liczba nieruchomości</h3>
 									</div>
-									<div id='settingsMsg'>${model.resicences }</div>
+									<div>${model.numOrResidences}</div>
 								</div>
 							</div>
 						</div>
@@ -77,9 +77,9 @@
 								</div>
 								<div class="col-xs-9 text-right">
 									<div>
-										<h3 style="height: 20px" id='invoiceDays'>Najstarsza Faktura</h3>
+										<h3 style="height: 20px" >Najstarsza Faktura</h3>
 									</div>
-									<div>Gaz: 12 dni</div>
+									<div id='invoiceDate'>${model.oldestInvoice.invoiceDate}</div>
 								</div>
 							</div>
 						</div>
@@ -101,9 +101,9 @@
 								</div>
 								<div class="col-xs-9 text-right">
 									<div class="huge">
-										<h3 style="height: 20px" id='readingDays'>Najstarszy Odczyt</h3>
+										<h3 style="height: 20px" >Najstarszy Odczyt</h3>
 									</div>
-									<div>Woda: 12 Maj 2014</div>
+									<div id='readingDate'>${model.oldestReading.readingDate}</div>
 								</div>
 							</div>
 						</div>
@@ -125,9 +125,9 @@
 								</div>
 								<div class="col-xs-9 text-right">
 									<div>
-										<h3 style="height: 20px" id='apartmentNumber'>Puste Mieszkania</h3>
+										<h3 style="height: 20px" >Puste Mieszkania</h3>
 									</div>
-									<div>0</div>
+									<div id='emptyApartments'>${model.emptyApartments}</div>
 								</div>
 							</div>
 						</div>
