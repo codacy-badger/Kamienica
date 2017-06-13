@@ -22,7 +22,6 @@ App.controller("DivisionController", [
 
         self.fetchAll = function() {
             self.divisions = Division.query();
-            console.log(self.divisions);
         };
 
         self.fetchAll();
@@ -44,7 +43,6 @@ App.controller("DivisionController", [
         self.updateItem = function() {
 
             self.division.$update(function() {}).then(function(ok) {
-                console.log(ok);
                 self.divisions.splice(arrayIndex, 1, ok);
             }, function(error) {
                 $scope.errors = error.data;
@@ -70,7 +68,6 @@ App.controller("DivisionController", [
         };
 
         self.submit = function() {
-            console.log(self.division);
             if (self.division.id == null) {
                 self.createItem();
             } else {

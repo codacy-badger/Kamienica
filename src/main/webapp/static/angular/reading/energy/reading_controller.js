@@ -22,7 +22,6 @@ App.controller("ReadingController", [
 
         self.fetchAllUsers = function() {
             self.readings = Reading.query();
-            console.log(self.meters);
         };
 
         self.fetchAllUsers();

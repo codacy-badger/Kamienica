@@ -10,6 +10,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
 import static org.powermock.api.mockito.PowerMockito.when;
 
 public class ApartmentServiceTest extends ServiceTest {
@@ -66,7 +67,7 @@ public class ApartmentServiceTest extends ServiceTest {
         final Residence r = residenceService.getById(2L);
         Apartment ap = new Apartment(1, "1234", "cośtam", r);
         apartmentService.save(ap);
-
+        assertNotNull(ap.getId());
     }
 
 }

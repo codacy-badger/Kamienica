@@ -15,9 +15,8 @@ App.controller("ResidenceController", [
         self.residence = new Residence();
         self.entity;
         self.residences = [];
-        self.errors = []
+        self.errors = [];
         var arrayIndex;
-
 
         self.fetchAll = function () {
             self.residences = Residence.query();
@@ -42,13 +41,12 @@ App.controller("ResidenceController", [
         self.updateItem = function () {
 
             self.residence.$update(function () {}).then(function (ok) {
-                console.log(ok);
                 self.residences.splice(arrayIndex, 1, ok);
             }, function (error) {
                 $scope.errors = error.data;
                 $scope.errorField = true;
                 $scope.errorMsg = "Nie powiódł się zapis do bazy. Popraw dane i spróbuj ponownie";
-            });;
+            });
 
             self.reset();
             $scope.toggle = $scope.toggle === false ? true : false;
@@ -69,7 +67,6 @@ App.controller("ResidenceController", [
         };
 
         self.submit = function () {
-            console.log(self.residence);
             if (self.residence.id == null) {
                 self.createItem();
             } else {
@@ -116,7 +113,7 @@ App.controller("ResidenceController", [
         $scope.$watch("toggle", function () {
             $scope.text = $scope.toggle ? "Dodaj" :
                 "Lista";
-        })
+        });
 
 
         self.switchForm = function () {

@@ -21,7 +21,6 @@ App.controller("ApartmentController", [
 
         self.fetchAll = function () {
             self.apartments = Apartment.query();
-            console.log(self.apartments);
         };
 
         self.fetchAll();
@@ -30,7 +29,6 @@ App.controller("ApartmentController", [
             self.apartment.$save(function () {}).then(function (ok) {
                 $scope.errorField = true;
                 $scope.errorMsg = "zapisano do bazy";
-                console.log(ok);
                 self.apartments.push(ok);
                 self.reset();
                 $scope.toggle = $scope.toggle === false ? true : false;
@@ -43,7 +41,6 @@ App.controller("ApartmentController", [
 
         self.updateItem = function () {
             self.apartment.$update(function () {}).then(function (ok) {
-                console.log(ok);
                 self.apartments.splice(arrayIndex, 1, ok);
             }, function (error) {
                 $scope.errors = error.data;

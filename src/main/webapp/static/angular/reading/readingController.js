@@ -111,7 +111,6 @@ App.controller("ReadingController", [
             var tmp = $filter('date')(self.newReadingsForm.readingDetails.readingDate, "yyyy-MM-dd");
             readingForm.readingDetails.readingDate = tmp;
             if (readingForm.readings[0].id == undefined) {
-                console.log("zapis");
                 var response = ReadingForm.save(readingForm);
                 response.$promise.then(function (result) {
                     $scope.latestDate = new Date(result.readingDetails.readingDate);
@@ -121,7 +120,6 @@ App.controller("ReadingController", [
                     self.prepareLatestReadings(self.readings);
                 });
             } else {
-                console.log(readingForm);
                 var rd = self.newReadingsForm.readingDetails;
                 $scope.latestDate = rd.readingDate;
                 for (var i = 0; i < readingForm.readings.length; i++) {

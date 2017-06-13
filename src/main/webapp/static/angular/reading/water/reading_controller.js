@@ -42,7 +42,6 @@ App.controller("ReadingController", [
         self.updateItem = function() {
 
             self.reading.$update(function() {}).then(function(ok) {
-                console.log(ok);
                 self.readings.splice(arrayIndex, 1, ok);
             }, function(error) {
                 $scope.errors = error.data;
@@ -66,7 +65,6 @@ App.controller("ReadingController", [
         };
 
         self.submit = function() {
-            console.log(self.reading);
             if (self.reading.id == null) {
                 self.createItem();
             } else {

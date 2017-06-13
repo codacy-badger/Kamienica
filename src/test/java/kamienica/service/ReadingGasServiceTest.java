@@ -150,7 +150,6 @@ public class ReadingGasServiceTest extends ServiceTest {
     @Test
     public void shouldRetreiveMapOfReadings() {
         Map<ReadingDetails, List<Reading>> result = readingService.list(residence, Media.GAS);
-        Set<ReadingDetails> keys = result.keySet();
         assertEquals(3, result.size());
     }
 }
