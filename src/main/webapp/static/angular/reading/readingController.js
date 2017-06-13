@@ -202,12 +202,11 @@ App.controller("ReadingController", [
             self.meters.$promise.then(function (result) {
                 metersInScope = result;
             });
-
-
+            //TODO see what the code review change has impacted
             for (var i = 0; i < self.newReadingsForm.readings.length; i++) {
                 var meterId = self.newReadingsForm.readings[i].meter.id;
                 for (var meterIndx = 0; meterIndx < metersInScope.length; i++) {
-                    if (meterId = metersInScope[meterIndx].id) {
+                    if (meterId == metersInScope[meterIndx].id) {
                         break;
                     }
                     self.newReadingsForm.readings.splice(i, 1);
@@ -224,7 +223,6 @@ App.controller("ReadingController", [
                     readingDate: new Date($scope.latestDate),
                     residence: residence
                 };
-
                 self.meters.$promise.then(function (result) {
                     self.newReadingsForm.readings = self.createReadingsForTheNewForm(result);
                 });

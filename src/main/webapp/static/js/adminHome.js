@@ -1,17 +1,13 @@
 $(document).ready(function() {
 
-	var invoice = (new Date() - new Date($('#invoiceDate').text())) / (1000 * 60 * 60 * 24);
-	var reading =(new Date() - new Date($('#readingDate').text())) / (1000 * 60 * 60 * 24);
-	var apartments = $('#emptyApartments').text();
-
-
+	var invoice = (new Date() - new Date($("#invoiceDate").text())) / (1000 * 60 * 60 * 24);
+	var reading =(new Date() - new Date($("#readingDate").text())) / (1000 * 60 * 60 * 24);
+	var apartments = $("#emptyApartments").text();
 
 	if (apartments > 0) {
 		$("#apartment").addClass("panel-red");
-
 	} else {
 		$("#apartment").addClass("panel-green");
-
 	}
 	
 	if (invoice <= 30) {
@@ -23,7 +19,6 @@ $(document).ready(function() {
 	} else {
 		$("#invoice").addClass("panel-red");
 	}
-	
 
 	if (reading <= 30) {
 		$("#reading").addClass("panel-green");
@@ -35,5 +30,4 @@ $(document).ready(function() {
 		$("#reading").addClass("panel-red");
        
 	}
-	
 });
