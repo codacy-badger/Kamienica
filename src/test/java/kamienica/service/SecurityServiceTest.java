@@ -1,6 +1,7 @@
 package kamienica.service;
 
-import kamienica.model.Tenant;
+import kamienica.configuration.ServiceTest;
+import kamienica.model.entity.Tenant;
 import org.junit.Test;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -13,26 +14,21 @@ import java.util.Collection;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
-/**
- * Created by macfol on 12/3/16.
- */
-public class SecurityServiceTest extends AbstractServiceTest {
+@Transactional
+public class SecurityServiceTest extends ServiceTest {
 
-    private static final String USER_LOGIN = "folik@wp.pl";
     private static final String USER_PASSWD = "witaj";
-    private static final SimpleGrantedAuthority ADMIN =  new SimpleGrantedAuthority("ROLE_ADMIN" );
-
-
+    private static final SimpleGrantedAuthority ADMIN =  new SimpleGrantedAuthority("ROLE_OWNER" );
 
     @Test
     public void loginWithCorrectCredentials() {
-        final UserDetails result = securityService.loadUserByUsername(USER_LOGIN);
+        final UserDetails result = securityService.loadUserByUsername(FIRST_OWNER_MAIL);
         assertEquals(true, result.isAccountNonExpired());
         assertEquals(true, result.isAccountNonLocked());
         assertEquals(true, result.isCredentialsNonExpired());
         assertEquals(true, result.isEnabled());
         assertEquals(USER_PASSWD, result.getPassword());
-        assertEquals(USER_LOGIN, result.getUsername());
+        assertEquals(FIRST_OWNER_MAIL, result.getUsername());
 
         final Collection<? extends GrantedAuthority> authoritiesList = result.getAuthorities();
         assertTrue(authoritiesList.contains(ADMIN));
@@ -41,21 +37,21 @@ public class SecurityServiceTest extends AbstractServiceTest {
 
     @Test(expected = UsernameNotFoundException.class)
     public void loginWithInCorrectCredentials() {
-        final UserDetails result = securityService.loadUserByUsername("dummy");
+        securityService.loadUserByUsername("dummy");
     }
 
     @Transactional
     @Test
     public void changePassword(){
-        securityService.changePassword(USER_LOGIN, "witaj", "nowe");
-        final Tenant tenant = tenantService.loadByMail(USER_LOGIN);
+        securityService.changePassword(FIRST_OWNER_MAIL, "witaj", "nowe");
+        final Tenant tenant = tenantService.loadByMail(FIRST_OWNER_MAIL);
         assertEquals("nowe", tenant.getPassword());
     }
 
     @Test(expected = UsernameNotFoundException.class)
     public void changePasswordWithIncorrectCredentials(){
-        securityService.changePassword(USER_LOGIN, "dummy", "nowe");
-        final Tenant tenant = tenantService.loadByMail(USER_LOGIN);
+        securityService.changePassword(FIRST_OWNER_MAIL, "dummy", "nowe");
+        final Tenant tenant = tenantService.loadByMail(FIRST_OWNER_MAIL);
         assertEquals("nowe", tenant.getPassword());
     }
 }

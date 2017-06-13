@@ -1,6 +1,6 @@
 package kamienica.controller.jsp;
 
-import kamienica.model.Tenant;
+import kamienica.model.entity.Tenant;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;
@@ -17,6 +17,7 @@ import javax.servlet.http.HttpServletResponse;
 @Controller
 public class MainController {
 
+	//TODO do we need these arguments?
 	@RequestMapping("login")
 	public ModelAndView login(@ModelAttribute("tenant") Tenant tenant, BindingResult result) {
 		return new ModelAndView("Login");

@@ -1,6 +1,8 @@
 package kamienica.configuration;
 
 import org.hibernate.SessionFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
@@ -16,6 +18,8 @@ import java.util.Properties;
 @EnableTransactionManagement
 @ComponentScan({ "kamienica.feature" })
 public class JUnitConfig {
+
+	private static final Logger LOGGER = LoggerFactory.getLogger(JUnitConfig.class);
 
 	@Bean
 	public LocalSessionFactoryBean sessionFactory() {
@@ -40,6 +44,7 @@ public class JUnitConfig {
 		Properties properties = new Properties();
 		properties.put("hibernate.dialect", "org.hibernate.dialect.H2Dialect");
 		properties.put("hibernate.hbm2ddl.auto", "create");
+		LOGGER.info("Properties set", properties);
 		return properties;
 	}
 
@@ -47,6 +52,7 @@ public class JUnitConfig {
 	public HibernateTransactionManager transactionManager(SessionFactory s) {
 		HibernateTransactionManager txManager = new HibernateTransactionManager();
 		txManager.setSessionFactory(s);
+		LOGGER.info("Transaction set", txManager);
 		return txManager;
 	}
 

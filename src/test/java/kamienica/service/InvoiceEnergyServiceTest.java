@@ -1,130 +1,106 @@
 package kamienica.service;
 
-import kamienica.core.enums.Media;
-import kamienica.core.exception.InvalidDivisionException;
-import kamienica.feature.payment.Payment;
-import kamienica.feature.reading.Reading;
-import kamienica.feature.reading.ReadingEnergy;
-import kamienica.model.Apartment;
-import kamienica.model.InvoiceEnergy;
+import kamienica.configuration.ServiceTest;
+import kamienica.core.util.SecurityDetails;
+import kamienica.model.entity.Invoice;
+import kamienica.model.entity.Payment;
+import kamienica.model.entity.ReadingDetails;
+import kamienica.model.entity.Residence;
+import kamienica.model.enums.Media;
 import org.joda.time.LocalDate;
-import org.junit.Ignore;
+import org.junit.Before;
 import org.junit.Test;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
+import static org.powermock.api.mockito.PowerMockito.mockStatic;
+import static org.powermock.api.mockito.PowerMockito.when;
 
-public class InvoiceEnergyServiceTest extends AbstractServiceTest {
+public class InvoiceEnergyServiceTest extends ServiceTest {
 
-	@Test
-	public void getList() {
-		assertEquals(1, invoiceService.getList(Media.ENERGY).size());
+    private Residence r;
 
-	}
 
-	@Transactional
-	@Test
-	public void add() throws InvalidDivisionException {
-		List<ReadingEnergy> list = readingService.getUnresolvedReadingsEnergy();
-		assertEquals(true, divisionService.isDivisionCorrect());
-		assertEquals(31, list.get(1).getValue(), 0);
-		InvoiceEnergy invoice = new InvoiceEnergy("112233", "test", new LocalDate(), 200, list.get(1));
+    @Before
+    public void initData() {
+        r = getOWnersResidence();
+    }
 
-		invoiceService.save(invoice, Media.ENERGY);
-		assertEquals(2, invoiceService.getList(Media.ENERGY).size());
-		List<? extends Payment> paymentList = paymentService.getPaymentList(Media.ENERGY);
+    @Test
+    public void getList() {
+        mockStatic(SecurityDetails.class);
+        when(SecurityDetails.getLoggedTenant()).thenReturn(tenantService.getById(1L));
+        when(SecurityDetails.getResidencesForOwner()).thenReturn(getMockedResidences());
 
-		assertEquals(6, paymentList.size());
-		assertEquals(30.30, paymentList.get(3).getPaymentAmount(), DELTA);
-		assertEquals(48.48, paymentList.get(4).getPaymentAmount(), DELTA);
-		assertEquals(121.212, paymentList.get(5).getPaymentAmount(), DELTA);
+        assertEquals(1, invoiceService.list(Media.ENERGY).size());
 
-		list = readingService.getUnresolvedReadingsEnergy();
-		assertEquals(1, list.size());
-		assertEquals(LocalDate.parse("2016-07-01"), list.get(0).getReadingDate());
-	}
+    }
 
-	@Transactional
-	@Test
-	public void addForFirstReading() throws InvalidDivisionException {
-		List<ReadingEnergy> list = readingService.getUnresolvedReadingsEnergy();
-		assertEquals(11, list.get(0).getValue(), 0);
+    @Transactional
+    @Test
+    public void add() {
+        mockStatic(SecurityDetails.class);
+        when(SecurityDetails.getLoggedTenant()).thenReturn(tenantService.getById(1L));
+        when(SecurityDetails.getResidencesForOwner()).thenReturn(getMockedResidences());
 
-		InvoiceEnergy invoice = new InvoiceEnergy("112233", "test", new LocalDate(), 200, list.get(0));
-		invoiceService.save(invoice, Media.ENERGY);
-		assertEquals(2, invoiceService.getList(Media.ENERGY).size());
-		List<? extends Payment> paymentList = paymentService.getPaymentList(Media.ENERGY);
+        List<ReadingDetails> list = readingDetailsService.getUnresolved(r, Media.ENERGY);
+        assertEquals(2, list.size());
 
-		assertEquals(6, paymentList.size());
+        Invoice invoice = new Invoice("112233", TODAY, 200, r, list.get(1), Media.ENERGY);
 
-		assertEquals(48.48, paymentList.get(3).getPaymentAmount(), DELTA);
-		assertEquals(84.85, paymentList.get(4).getPaymentAmount(), DELTA);
-		assertEquals(66.67, paymentList.get(5).getPaymentAmount(), DELTA);
+        invoiceService.save(invoice);
+        assertEquals(2, invoiceService.list(Media.ENERGY).size());
+        List<Payment> paymentList = paymentService.getPaymentList(Media.ENERGY);
 
-		list = readingService.getUnresolvedReadingsEnergy();
-		assertEquals(1, list.size());
-		assertEquals(LocalDate.parse("2016-09-01"), list.get(0).getReadingDate());
-	}
+        assertEquals(6, paymentList.size());
+        assertEquals(30.30, paymentList.get(3).getPaymentAmount(), DELTA);
+        assertEquals(48.48, paymentList.get(4).getPaymentAmount(), DELTA);
+        assertEquals(121.212, paymentList.get(5).getPaymentAmount(), DELTA);
 
-	@Transactional
-	@Test
-	public void remove() {
-		invoiceService.delete(1L, Media.ENERGY);
-		List<ReadingEnergy> list = readingService.getUnresolvedReadingsEnergy();
-		assertEquals(3, list.size());
+        list = readingDetailsService.getUnresolved(r, Media.ENERGY);
+        assertEquals(1, list.size());
+        assertEquals(LocalDate.parse("2016-07-01"), list.get(0).getReadingDate());
+    }
 
-	}
+    @Transactional
+    @Test
+    public void addForFirstReading() {
+        mockStatic(SecurityDetails.class);
+        when(SecurityDetails.getLoggedTenant()).thenReturn(tenantService.getById(1L));
+        when(SecurityDetails.getResidencesForOwner()).thenReturn(getMockedResidences());
 
-	@Transactional
-	@Ignore
-	@Test
-	public void update() {
-		InvoiceEnergy invoice = new InvoiceEnergy("23423423", "test", new LocalDate(), 400,
-                readingService.getById(6L, Media.ENERGY));
-		invoice.setId(1L);
+        List<ReadingDetails> details = readingDetailsService.getUnresolved(r, Media.ENERGY);
+        assertEquals(2, details.size());
 
-		List<? extends Payment> oldList = paymentService.getPaymentList(Media.ENERGY);
+        Invoice invoice = new Invoice("34", new LocalDate(), 200, r, details.get(0), Media.ENERGY);
+        invoiceService.save(invoice);
+        assertEquals(2, invoiceService.list(Media.ENERGY).size());
+        List<Payment> paymentList = paymentService.getPaymentList(Media.ENERGY);
 
-		invoice.setTotalAmount(400.0);
-		invoiceService.update(invoice, Media.ENERGY);
+        assertEquals(6, paymentList.size());
 
-		List<? extends Payment> newList = paymentService.getPaymentList(Media.ENERGY);
+        assertEquals(48.48, paymentList.get(3).getPaymentAmount(), DELTA);
+        assertEquals(84.85, paymentList.get(4).getPaymentAmount(), DELTA);
+        assertEquals(66.67, paymentList.get(5).getPaymentAmount(), DELTA);
 
-		for (int i = 0; i < newList.size(); i++) {
-			double test = newList.get(i).getPaymentAmount() / oldList.get(i).getPaymentAmount();
-			assertEquals(2, test, 0);
-		}
+        details = readingDetailsService.getUnresolved(r, Media.ENERGY);
+        assertEquals(1, details.size());
+        assertEquals(LocalDate.parse("2016-09-01"), details.get(0).getReadingDate());
+    }
 
-	}
+    @Transactional
+    @Test
+    public void remove() {
+        invoiceService.delete(3L);
+        List<ReadingDetails> details = readingDetailsService.getUnresolved(r, Media.ENERGY);
+        List<Invoice> invoices = invoiceService.list(Media.ENERGY);
+        assertTrue(invoices.isEmpty());
+        assertEquals(3, details.size());
 
-	@Transactional
-	@Test(expected = InvalidDivisionException.class)
-	public void prepareForRegistrationWithException() throws InvalidDivisionException {
-		Apartment ap = new Apartment(78, "1234", "dummy");
-		apartmentService.save(ap);
-		List<Reading> list = invoiceService.getUnpaidReadingForNewIncvoice(Media.ENERGY);
-		assertEquals(2, list.size());
-		assertEquals(11, list.get(0).getValue(), 0);
-		assertEquals(31, list.get(1).getValue(), 0);
-	}
-
-	@Test
-	public void prepareForRegistration() throws InvalidDivisionException {
-		// apService.deleteByID(5L);
-		List<Reading> list = invoiceService.getUnpaidReadingForNewIncvoice(Media.ENERGY);
-		assertEquals(2, list.size());
-		assertEquals(11, list.get(0).getValue(), 0);
-		assertEquals(31, list.get(1).getValue(), 0);
-	}
-
-	@Transactional
-	@Test(expected = InvalidDivisionException.class)
-	public void shouldThrowInvalidDivisionExceptionWhilePreparing() throws InvalidDivisionException {
-		divisionService.deleteAll();
-		List<Reading> list = invoiceService.getUnpaidReadingForNewIncvoice(Media.ENERGY);
-		assertEquals(0, list.size());
-	}
+    }
 
 }
+

@@ -1,19 +1,19 @@
 package kamienica.service;
 
-import kamienica.model.Settings;
+import kamienica.configuration.ServiceTest;
+import kamienica.model.entity.Settings;
 import org.junit.Test;
-import org.springframework.transaction.annotation.Transactional;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 
-public class SettingsServiceTest extends AbstractServiceTest {
+public class SettingsServiceTest extends ServiceTest {
 
     @Test
     public void getList() {
         Settings settings = settingsService.getSettings();
 
-        assertEquals(true, settings.isCorrectDivision());
+        assertEquals(true, settings.isGarbage());
 
     }
 
@@ -23,13 +23,5 @@ public class SettingsServiceTest extends AbstractServiceTest {
 
     }
 
-    @Test
-    @Transactional
-    public void changeResolvementState() {
-        settingsService.changeDivisionState(false);
-        assertEquals(false, settingsService.isDivisionCorrect());
-        settingsService.changeDivisionState(true);
-        assertEquals(true, settingsService.isDivisionCorrect());
-    }
 
 }

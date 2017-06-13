@@ -1,29 +1,12 @@
 package kamienica.feature.settings;
 
-import kamienica.core.dao.AbstractDao;
-import kamienica.model.Settings;
-import org.hibernate.Criteria;
-import org.hibernate.Query;
-import org.hibernate.criterion.Projections;
+import kamienica.model.entity.Settings;
+import kamienica.model.jpa.dao.BasicDao;
 import org.springframework.stereotype.Repository;
 
 @Repository("settingsDao")
-public class SettingsDaoImpl extends AbstractDao<Settings> implements SettingsDao {
+public class SettingsDaoImpl extends BasicDao<Settings> implements ISettingsDao {
 
-	@Override
-	public boolean isDivisionCorrect() {
-		Criteria crit = createEntityCriteria();
-		crit.setProjection(Projections.property("correctDivision"));
-		return (boolean) crit.uniqueResult();
-	}
 
-	@Override
-	public void changeDivisionState(boolean state) {
-		Query query = getSession().createSQLQuery("update settings set correctDivision = :state where id > 0");
-		query.setBoolean("state", state);
-		query.executeUpdate();
-
-	}
-	
 
 }

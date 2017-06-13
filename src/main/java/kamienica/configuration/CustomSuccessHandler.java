@@ -42,9 +42,9 @@ public class CustomSuccessHandler extends SimpleUrlAuthenticationSuccessHandler 
 		for (GrantedAuthority a : authorities) {
 			roles.add(a.getAuthority());
 		}
-		if (isAdmin(roles)) {
+		if (isAdmin(roles) || isOwner(roles)) {
 			url = "/Admin/home";
-		} else if (isUser(roles)) {
+		} else if (isTenant(roles)) {
 			url = "/User/userHome";
 		} else {
 			url = "/403";
@@ -52,10 +52,12 @@ public class CustomSuccessHandler extends SimpleUrlAuthenticationSuccessHandler 
 		return url;
 	}
 
-	private boolean isUser(List<String> roles) {
-        return roles.contains("ROLE_USER");
+	private boolean isTenant(List<String> roles) {
+        return roles.contains("ROLE_TENANT");
     }
-
+	private boolean isOwner(List<String> roles) {
+        return roles.contains("ROLE_OWNER");
+    }
 	private boolean isAdmin(List<String> roles) {
         return roles.contains("ROLE_ADMIN");
     }

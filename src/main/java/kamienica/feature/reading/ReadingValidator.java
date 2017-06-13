@@ -1,11 +1,13 @@
 package kamienica.feature.reading;
 
+import kamienica.model.entity.Reading;
+
 import java.util.List;
 
 public class ReadingValidator {
 
-	public static boolean validateMeterReadings(List<? extends Reading> currentReadings,
-			List<? extends Reading> newReadings) {
+	public static boolean validateMeterReadings(List<Reading> currentReadings,
+			List<Reading> newReadings) {
 //		double primaryReading = 0;
 //		double sumOfReadings = 0;
 		/*
@@ -15,7 +17,7 @@ public class ReadingValidator {
 			if (newReadings.get(i).getValue() < currentReadings.get(i).getValue()) {
 				return true;
 			}
-//			if (newReadings.get(i).getMeter().getApartment() == null) {
+//			if (newReadings.get(i).getMeter().fetchApartment() == null) {
 //				primaryReading += newReadings.get(i).getValue();
 //			} else {
 //				sumOfReadings += newReadings.get(i).getValue();

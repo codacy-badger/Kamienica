@@ -11,32 +11,32 @@
 //import org.testng.Assert;
 //import org.testng.annotations.Testing;
 //
-//import kamienica.model.Apartment;
-//import kamienica.feature.apartment.ApartmentDao;
-//import kamienica.model.Tenant;
-//import kamienica.feature.tenant.TenantDao;
+//import kamienica.model.entity.Apartment;
+//import kamienica.feature.apartment.IApartmentDao;
+//import kamienica.model.entity.Tenant;
+//import kamienica.feature.tenant.ITenantDao;
 //import kamienica.feature.tenant.Status;
 //
 //public class TenantDaoImplTest extends EntityDaoImplTest {
 //
 //	@Autowired
-//	TenantDao dao;
+//	ITenantDao daoservice;
 //	@Autowired
-//	ApartmentDao apDao;
+//	IApartmentDao apDao;
 //
 //	@Testing(expectedExceptions = javax.validation.ConstraintViolationException.class)
 //	public void saveNull() {
 //		
-//		dao.save(new Tenant());
+//		daoservice.save(new Tenant());
 //		Tenant tenant = getSample();
 //		// tenant.setEmail("dfg");
-//		dao.save(tenant);
+//		daoservice.save(tenant);
 //
 //	}
 //
 //	@Testing
 //	public void loadByMail() {
-//		Tenant tenant = dao.loadByMail("a@wp");
+//		Tenant tenant = daoservice.loadByMail("a@wp");
 //		Assert.assertNotNull(tenant);
 //		Assert.assertEquals(tenant.getFirstName(), "Maciej");
 //
@@ -45,17 +45,17 @@
 //	@Testing
 //	@Rollback
 //	public void deactivateTenant() {
-//		Tenant tenant = dao.getById(1L);
+//		Tenant tenant = daoservice.getById(1L);
 //		
 //		Assert.assertEquals(tenant.getStatus(), Status.ACTIVE.getUserStatus());
 //
-//		dao.deactivateByApparmentId(tenant.getApartment().getId());
-//		Assert.assertEquals(dao.getById(1L).getStatus(), Status.INACTIVE.getUserStatus());
+//		daoservice.deactivateByApparmentId(tenant.fetchApartment().getId());
+//		Assert.assertEquals(daoservice.getById(1L).getStatus(), Status.INACTIVE.getUserStatus());
 //	}
 //
 //	@Testing
 //	public void getIdList() {
-//		Set<Long> tested = dao.getIdList();
+//		Set<Long> tested = daoservice.getIdList();
 //		Set<Long> expected = new HashSet<>();
 //		expected.addAll(Arrays.asList(1L,2L,3L,4L));
 //
@@ -63,9 +63,9 @@
 //	}
 //
 //	@Testing
-//	public void getCurrentTenant() {
+//	public void getLoggedTenant() {
 //		Apartment ap = apDao.getById(2L);
-//		Tenant ten = dao.getTenantForApartment(ap);
+//		Tenant ten = daoservice.getTenantForApartment(ap);
 //		Assert.assertEquals(ten.getFirstName(), "Maciej");
 //	}
 //
@@ -74,63 +74,63 @@
 //	public void saveWithWrongEmail() {
 //		Tenant tenant = getSample();
 //		tenant.setEmail("dfg");
-//		dao.save(tenant);
+//		daoservice.save(tenant);
 //	}
 //
 //	@Rollback
 //	@Testing
-//	public void updateTenant() {
-//		Tenant ten = dao.getById(1L);
+//	public void update() {
+//		Tenant ten = daoservice.getById(1L);
 //		Assert.assertEquals(ten.getFirstName(), "Maciej");
 //		ten.setFirstName("Karol");
-//		dao.update(ten);
-//		Assert.assertEquals(dao.getById(1l).getFirstName(), "Karol");
+//		daoservice.update(ten);
+//		Assert.assertEquals(daoservice.getById(1l).getFirstName(), "Karol");
 //	}
 //
 //	@Testing
 //	public void findById() {
-//		Assert.assertNotNull(dao.getById(1L));
-//		Assert.assertNull(dao.getById(5L));
+//		Assert.assertNotNull(daoservice.getById(1L));
+//		Assert.assertNull(daoservice.getById(5L));
 //	}
 //
 //	@Rollback
 //	@Testing(dependsOnMethods = { "findAll" })
-//	public void saveTenant() {
-//		dao.save(getSample());
-//		Assert.assertEquals(dao.getList().size(), 5);
+//	public void save() {
+//		daoservice.save(getSample());
+//		Assert.assertEquals(daoservice.getListForOwner().size(), 5);
 //	}
 //
 //	@Rollback
 //	@Testing(dependsOnMethods = { "findAll" })
-//	public void deleteById() {
-//		Assert.assertEquals(dao.getList().size(), 4);
-//		dao.deleteById(1L);
-//		Assert.assertEquals(dao.getList().size(), 3);
+//	public void delete() {
+//		Assert.assertEquals(daoservice.getListForOwner().size(), 4);
+//		daoservice.delete(1L);
+//		Assert.assertEquals(daoservice.getListForOwner().size(), 3);
 //	}
 //
 //	@Testing(dependsOnMethods = { "findAll" })
 //	public void deleteInvalidId() {
-//		Assert.assertEquals(dao.getList().size(), 4);
-//		dao.deleteById(8L);
-//		Assert.assertEquals(dao.getList().size(), 4);
+//		Assert.assertEquals(daoservice.getListForOwner().size(), 4);
+//		daoservice.delete(8L);
+//		Assert.assertEquals(daoservice.getListForOwner().size(), 4);
 //	}
 //
 //	@Testing
 //	public void findAll() {
-//		List<Tenant> list = dao.getList();
+//		List<Tenant> list = daoservice.getListForOwner();
 //		System.out.println(list);
 //		Assert.assertEquals(list.size(), 4);
 //	}
 //
 //	@Testing(dependsOnMethods = { "findAll" })
 //	public void getActiveList() {
-//		Assert.assertEquals(dao.getActiveTenants().size(), 2);
+//		Assert.assertEquals(daoservice.getActiveTenants().size(), 2);
 //	}
 //
 //	@Testing(expectedExceptions = org.hibernate.exception.ConstraintViolationException.class)
 //	public void saveDuplicateEmail() {
-//		dao.save(getDuplcate());
-//		Assert.assertEquals(dao.getList().size(), 4);
+//		daoservice.save(getDuplcate());
+//		Assert.assertEquals(daoservice.getListForOwner().size(), 4);
 //	}
 //
 //	public Tenant getSample() {
@@ -142,7 +142,7 @@
 //		ap.setApartment(null);
 //		ap.setMovementDate(new LocalDate());
 //		ap.setPhone("345");
-//		ap.setRole("ADMIN");
+//		ap.setRole("OWNER");
 //		ap.setStatus("ACTIVE");
 //		ap.setPassword("witaj");
 //		return ap;
@@ -157,7 +157,7 @@
 //		ap.setApartment(null);
 //		ap.setMovementDate(new LocalDate());
 //		ap.setPhone("345");
-//		ap.setRole("ADMIN");
+//		ap.setRole("OWNER");
 //		ap.setStatus("ACTIVE");
 //		ap.setPassword("witaj");
 //		return ap;

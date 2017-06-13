@@ -1,42 +1,15 @@
 $(document).ready(function() {
-	var settings = $('#settingsMsg').text().length;
-	
-	var invoice = $('#invoiceDays').text().split(" ", 1);
-	invoice = parseInt(invoice[0]);
 
-	var reading = $('#readingDays').text().split(" ", 1);
-	reading = parseInt(reading[0]);
-
-	var apartments = $('#apartmentNumber').text();
-	apartments = parseInt(apartments);
-
-	// APARTMENTS
+	var invoice = (new Date() - new Date($("#invoiceDate").text())) / (1000 * 60 * 60 * 24);
+	var reading =(new Date() - new Date($("#readingDate").text())) / (1000 * 60 * 60 * 24);
+	var apartments = $("#emptyApartments").text();
 
 	if (apartments > 0) {
 		$("#apartment").addClass("panel-red");
-
 	} else {
 		$("#apartment").addClass("panel-green");
-
 	}
 	
-	if (settings > 0) {
-		$("#config").addClass("panel-red");
-
-	} else {
-		$("#config").addClass("panel-green");
-
-	}
-//	
-//	if (apartments > 0) {
-//		$("#apartment").addClass("panel-red");
-//
-//	} else {
-//		$("#apartment").addClass("panel-green");
-//
-//	}
-	
-	// INVOICE
 	if (invoice <= 30) {
 		$("#invoice").addClass("panel-green");
 
@@ -46,8 +19,7 @@ $(document).ready(function() {
 	} else {
 		$("#invoice").addClass("panel-red");
 	}
-	
-	// Reading
+
 	if (reading <= 30) {
 		$("#reading").addClass("panel-green");
 
@@ -56,6 +28,6 @@ $(document).ready(function() {
 
 	} else {
 		$("#reading").addClass("panel-red");
+       
 	}
-	
 });

@@ -2,12 +2,13 @@ package kamienica.configuration;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.datatype.joda.JodaModule;
-import kamienica.core.conventer.*;
-import kamienica.feature.invoice.InvoiceEnergyConverter;
-import kamienica.feature.invoice.InvoiceGasConverter;
-import kamienica.feature.meter.MeterEnergyConverter;
-import kamienica.feature.meter.MeterGasConverter;
-import kamienica.feature.meter.MeterWaterConverter;
+import kamienica.model.conventer.ApartmentConverter;
+import kamienica.model.conventer.InvoiceConverter;
+import kamienica.model.conventer.MeterEnergyConverter;
+import kamienica.model.conventer.ReadingConverter;
+import kamienica.model.conventer.TenantConverter;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
 import org.springframework.context.annotation.Bean;
@@ -39,27 +40,17 @@ import java.util.List;
 @ComponentScan(basePackages = "kamienica.*")
 public class AppConfig extends WebMvcConfigurerAdapter {
 
-	public static final String VERSION = "1.0";
+	private final static Logger LOG = LoggerFactory.getLogger(AppConfig.class);
+
+	public static final String VERSION = "1.2";
 	@Autowired
-	private ReadingEnergyConverter readingEnergyConverter;
+	private ReadingConverter readingConverter;
 	@Autowired
-	private ReadingGasConverter readingGasConverter;
-	@Autowired
-	private ReadingWaterConverter readingWaterConverter;
-	@Autowired
-	private InvoiceGasConverter invoiceGasConverter;
-	@Autowired
-	private InvoiceWaterConverter invoiceWaterConverter;
-	@Autowired
-	private InvoiceEnergyConverter invoiceEnergyConverter;
+	private InvoiceConverter invoiceConverter;
 	@Autowired
 	private ApartmentConverter apartmentConverter;
 	@Autowired
-	private MeterGasConverter meterGasConverter;
-	@Autowired
 	private MeterEnergyConverter meterEnergyConverter;
-	@Autowired
-	private MeterWaterConverter meterWaterConverter;
 	@Autowired
 	private TenantConverter tenantConverter;
 
@@ -75,11 +66,11 @@ public class AppConfig extends WebMvcConfigurerAdapter {
 	public ViewResolver contentNegotiatingViewResolver(ContentNegotiationManager manager) {
 		ContentNegotiatingViewResolver resolver = new ContentNegotiatingViewResolver();
 		resolver.setContentNegotiationManager(manager);
-		// Define all possible view resolvers
 		List<ViewResolver> resolvers = new ArrayList<>();
 		resolvers.add(jsonViewResolver());
 		resolvers.add(viewResolver());
 		resolver.setViewResolvers(resolvers);
+		LOG.info("Setting resolvers", resolver);
 		return resolver;
 	}
 
@@ -126,17 +117,12 @@ public class AppConfig extends WebMvcConfigurerAdapter {
 
 	@Override
 	public void addFormatters(FormatterRegistry registry) {
-		registry.addConverter(readingEnergyConverter);
-		registry.addConverter(readingGasConverter);
-		registry.addConverter(readingWaterConverter);
-		registry.addConverter(invoiceEnergyConverter);
-		registry.addConverter(invoiceGasConverter);
-		registry.addConverter(invoiceWaterConverter);
+		registry.addConverter(readingConverter);
+		registry.addConverter(invoiceConverter);
 		registry.addConverter(apartmentConverter);
-		registry.addConverter(meterGasConverter);
 		registry.addConverter(meterEnergyConverter);
-		registry.addConverter(meterWaterConverter);
 		registry.addConverter(tenantConverter);
+		LOG.info("Setting entity formatters", registry);
 
 	}
 

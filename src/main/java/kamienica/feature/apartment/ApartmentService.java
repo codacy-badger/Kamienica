@@ -1,21 +1,72 @@
 package kamienica.feature.apartment;
 
-import kamienica.model.Apartment;
+import kamienica.core.util.SecurityDetails;
+import kamienica.model.entity.Apartment;
+import kamienica.model.entity.Residence;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 
+import javax.validation.constraints.NotNull;
 import java.util.List;
 
-public interface ApartmentService {
+@Service
+@Transactional
+public class ApartmentService implements IApartmentService {
 
-	void save(Apartment apartment);
+    private final IApartmentDao apartmentDAO;
 
-	List<Apartment> getList();
+    @Autowired
+    public ApartmentService(IApartmentDao apartmentDAO) {
+        this.apartmentDAO = apartmentDAO;
+    }
 
-	List<Apartment> paginatedList(Integer firstResult, Integer maxResults);
+    @Override
+    public void save(Apartment apartment) {
+        apartmentDAO.save(apartment);
+    }
 
-	void deleteByID(Long id);
+    @Override
+    public List<Apartment> list() {
+        return apartmentDAO.getList();
+    }
 
-	void update(Apartment apartment);
+    @Override
+    public List<Apartment> listForOwner() {
+        List<Residence> residences = SecurityDetails.getResidencesForOwner();
+        return apartmentDAO.findForResidence(residences);
+    }
 
-	Apartment getById(Long id);
+    @Override
+    public List<Apartment> listForTenant() {
+        throw new NotImplementedException();
+    }
+
+    @Override
+    public List<Apartment> paginatedList(@NotNull final Integer firstResult, @NotNull final Integer maxResults) {
+        return apartmentDAO.paginatedList(firstResult, maxResults);
+    }
+
+    @Override
+    public void delete(Long id) {
+        apartmentDAO.delete(id);
+    }
+
+    @Override
+    public void delete(Apartment object) {
+        apartmentDAO.delete(object);
+    }
+
+    @Override
+    public void update(final Apartment apartment) {
+        apartmentDAO.update(apartment);
+    }
+
+    @Override
+    public Apartment getById(final Long id) {
+        return apartmentDAO.getById(id);
+
+    }
 
 }

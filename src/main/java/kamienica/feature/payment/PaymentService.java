@@ -1,17 +1,34 @@
 package kamienica.feature.payment;
 
-import kamienica.core.enums.Media;
-import kamienica.model.Invoice;
-import kamienica.model.Tenant;
+import kamienica.model.entity.Payment;
+import kamienica.model.entity.Tenant;
+import kamienica.model.enums.Media;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
-public interface PaymentService {
+@Service
+@Transactional
+public class PaymentService implements IPaymentService {
 
-	List<? extends Payment> getPaymentForTenant(Tenant tenant, Media media);
+    private IPaymentDao paymentDao;
 
-	List<? extends Payment> getPaymentByInvoice(Invoice invoice, Media media);
+    @Autowired
+    public PaymentService(IPaymentDao paymentDao) {
+        this.paymentDao = paymentDao;
+    }
 
-	List<? extends Payment> getPaymentList(Media media);
+    @Override
+    public List<Payment> getPaymentList(Media media) {
+        return paymentDao.getList(media);
+    }
+
+
+    @Override
+    public List<Payment> getPaymentForTenant(Tenant tenant, Media media) {
+        return paymentDao.getPaymentForTenant(tenant, media);
+    }
 
 }

@@ -1,39 +1,54 @@
 package kamienica.service;
 
-import kamienica.core.enums.Media;
-import kamienica.core.exception.InvalidDivisionException;
-import kamienica.feature.payment.Payment;
-import kamienica.feature.reading.ReadingWater;
-import kamienica.model.Apartment;
-import kamienica.model.InvoiceWater;
+import kamienica.configuration.ServiceTest;
+import kamienica.core.util.SecurityDetails;
+import kamienica.model.entity.Invoice;
+import kamienica.model.entity.Payment;
+import kamienica.model.entity.ReadingDetails;
+import kamienica.model.entity.Residence;
+import kamienica.model.enums.Media;
 import org.joda.time.LocalDate;
-import org.junit.Ignore;
+import org.junit.Before;
 import org.junit.Test;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
 import static org.junit.Assert.assertEquals;
+import static org.powermock.api.mockito.PowerMockito.mockStatic;
+import static org.powermock.api.mockito.PowerMockito.when;
 
-public class InvoiceWaterServiceTest extends AbstractServiceTest {
+public class InvoiceWaterServiceTest extends ServiceTest {
+
+    private Residence r;
+
+    @Before
+    public void initData() {
+        r = residenceService.getById(1L);
+    }
 
     @Test
     public void getList() {
-        assertEquals(1, invoiceService.getList(Media.WATER).size());
-
+        mockStatic(SecurityDetails.class);
+        when(SecurityDetails.getResidencesForOwner()).thenReturn(getMockedResidences());
+        assertEquals(1, invoiceService.list(Media.WATER).size());
     }
-
 
     @Test
     @Transactional
-    public void add() throws InvalidDivisionException {
-        List<ReadingWater> list = readingService.getUnresolvedReadingsWater();
-        assertEquals(60, list.get(1).getValue(), 0);
-        InvoiceWater invoice = new InvoiceWater("112233", "test", new LocalDate(), 200, list.get(1));
+    public void add()  {
+        mockStatic(SecurityDetails.class);
+        when(SecurityDetails.getLoggedTenant()).thenReturn(getOwner());
+        when(SecurityDetails.getResidencesForOwner()).thenReturn(getMockedResidences());
 
-        invoiceService.save(invoice, Media.WATER);
-        assertEquals(2, invoiceService.getList(Media.WATER).size());
-        List<? extends Payment> paymentList = paymentService.getPaymentList(Media.WATER);
+        List<ReadingDetails> list = readingDetailsService.getUnresolved( r, Media.WATER);
+        assertEquals(2, list.size());
+        Invoice invoice = new Invoice("112233", TODAY, 200, r, list.get(1), Media.WATER);
+
+        invoiceService.save(invoice);
+        when(SecurityDetails.getLoggedTenant()).thenReturn(tenantService.getById(1L));
+        assertEquals(2, invoiceService.list(Media.WATER).size());
+        List<Payment> paymentList = paymentService.getPaymentList(Media.WATER);
 
         assertEquals(6, paymentList.size());
 
@@ -41,31 +56,33 @@ public class InvoiceWaterServiceTest extends AbstractServiceTest {
         assertEquals(52.38, paymentList.get(4).getPaymentAmount(), DELTA);
         assertEquals(109.52, paymentList.get(5).getPaymentAmount(), DELTA);
 
-        list = readingService.getUnresolvedReadingsWater();
+       list = readingDetailsService.getUnresolved( r, Media.WATER);
         assertEquals(1, list.size());
         assertEquals(LocalDate.parse("2016-07-01"), list.get(0).getReadingDate());
     }
 
     @Test
     @Transactional
-    public void addForFirstReading() throws InvalidDivisionException {
-        List<ReadingWater> list = readingService.getUnresolvedReadingsWater();
+    public void addForFirstReading(){
+        mockStatic(SecurityDetails.class);
+        when(SecurityDetails.getLoggedTenant()).thenReturn(getOwner());
+        when(SecurityDetails.getResidencesForOwner()).thenReturn(getMockedResidences());
+        List<ReadingDetails> list = readingDetailsService.getUnresolved( r, Media.WATER);
 
-        assertEquals(33, list.get(0).getValue(), 0);
-        assertEquals(60, list.get(1).getValue(), 1);
-        InvoiceWater invoice = new InvoiceWater("112233", "test", new LocalDate(), 200, list.get(0));
+        assertEquals(2, list.size());
+        Invoice invoice = new Invoice("112233", TODAY, 200, r, list.get(0), Media.WATER);
 
-        invoiceService.save(invoice, Media.WATER);
-        assertEquals(2, invoiceService.getList(Media.WATER).size());
-        List<? extends Payment> paymentList = paymentService.getPaymentList(Media.WATER);
+        invoiceService.save(invoice);
+        when(SecurityDetails.getLoggedTenant()).thenReturn(tenantService.getById(1L));
+        assertEquals(2, invoiceService.list(Media.WATER).size());
+        List<Payment> paymentList = paymentService.getPaymentList(Media.WATER);
 
         assertEquals(6, paymentList.size());
-
         assertEquals(36.36, paymentList.get(3).getPaymentAmount(), DELTA);
         assertEquals(72.72, paymentList.get(4).getPaymentAmount(), DELTA);
         assertEquals(90.90, paymentList.get(5).getPaymentAmount(), DELTA);
 
-        list = readingService.getUnresolvedReadingsWater();
+        list = readingDetailsService.getUnresolved( r, Media.WATER);
         assertEquals(1, list.size());
         assertEquals(LocalDate.parse("2016-09-01"), list.get(0).getReadingDate());
     }
@@ -73,61 +90,18 @@ public class InvoiceWaterServiceTest extends AbstractServiceTest {
     @Test
     @Transactional
     public void remove() {
-        invoiceService.delete(1L, Media.WATER);
-        List<ReadingWater> list = readingService.getUnresolvedReadingsWater();
+        invoiceService.delete(1L);
+        List<ReadingDetails> list = readingDetailsService.getUnresolved( r, Media.WATER);
         assertEquals(3, list.size());
 
     }
 
-    @Transactional
-    @Test
-    @Ignore
-    public void update() {
-        InvoiceWater invoice = new InvoiceWater("23423423", "test", new LocalDate(), 400,
-                readingService.getById(6L, Media.WATER));
-        invoice.setId(1L);
-        List<? extends Payment> oldList = paymentService.getPaymentByInvoice(invoice, Media.WATER);
-
-        invoice.setTotalAmount(400.0);
-        invoiceService.update(invoice, Media.WATER);
-
-        List<? extends Payment> newList = paymentService.getPaymentByInvoice(invoice, Media.WATER);
-
-        for (int i = 0; i < newList.size(); i++) {
-            double test = newList.get(i).getPaymentAmount() / oldList.get(i).getPaymentAmount();
-            assertEquals(2, test, 0);
-        }
-
-    }
-
-
-    @Transactional
-    @Test(expected = InvalidDivisionException.class)
-    public void prepareForRegistrationWithException() throws InvalidDivisionException {
-        Apartment ap = new Apartment(78, "1234", "dummy");
-        apartmentService.save(ap);
-        List<ReadingWater> list = invoiceService.getUnpaidReadingForNewIncvoice(Media.WATER);
-        assertEquals(2, list.size());
-        assertEquals(33, list.get(0).getValue(), 0);
-        assertEquals(56, list.get(1).getValue(), 0);
-    }
 
     @Test
-    public void prepareForRegistration() throws InvalidDivisionException {
-        // apService.deleteByID(5L);
-        List<ReadingWater> list = invoiceService.getUnpaidReadingForNewIncvoice(Media.WATER);
-
+    public void prepareForRegistration() {
+        List<ReadingDetails> list = readingDetailsService.getUnresolved( r, Media.WATER);
         assertEquals(2, list.size());
-        assertEquals(33, list.get(0).getValue(), 0);
-        assertEquals(60, list.get(1).getValue(), 0);
     }
 
-    @Transactional
-    @Test(expected = InvalidDivisionException.class)
-    public void shouldThrowInvalidDivisionExceptionWhilePreparing() throws InvalidDivisionException {
-        divisionService.deleteAll();
-        List<ReadingWater> list = invoiceService.getUnpaidReadingForNewIncvoice(Media.WATER);
-        assertEquals(0, list.size());
-    }
 
 }

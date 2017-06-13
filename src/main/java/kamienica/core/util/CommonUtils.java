@@ -9,14 +9,16 @@ import java.util.Locale;
 
 public class CommonUtils {
 
-	public static double decimalFormat(double input) {
-		NumberFormat nf = NumberFormat.getNumberInstance(Locale.ENGLISH);
-		DecimalFormat df = (DecimalFormat) nf;
-		df.applyPattern("#.00");
-		return Double.parseDouble(df.format(input));
-	}
+    public static double decimalFormat(double input) {
+        NumberFormat nf = NumberFormat.getNumberInstance(Locale.ENGLISH);
+        DecimalFormat df = (DecimalFormat) nf;
+        df.applyPattern("#.00");
+        return Double.parseDouble(df.format(input));
+    }
 
-	public static int countDaysBetween(final LocalDate first, final LocalDate second) {
-		return Days.daysBetween(first, second).getDays();
-	}
+
+    public static int countDaysBetween(final LocalDate first, final LocalDate second) {
+        return Days.daysBetween(first, second).getDays();
+    }
+
 }

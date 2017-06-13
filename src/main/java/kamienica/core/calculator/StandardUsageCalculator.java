@@ -1,11 +1,12 @@
 package kamienica.core.calculator;
 
-import kamienica.core.exception.NegativeConsumptionValue;
-import kamienica.core.exception.UsageCalculationException;
 import kamienica.core.util.CommonUtils;
-import kamienica.feature.reading.Reading;
-import kamienica.model.Apartment;
-import kamienica.model.MediaUsage;
+import kamienica.model.entity.Apartment;
+import kamienica.model.entity.MediaUsage;
+import kamienica.model.entity.Reading;
+import kamienica.model.enums.Media;
+import kamienica.model.exception.NegativeConsumptionValue;
+import kamienica.model.exception.UsageCalculationException;
 import org.joda.time.LocalDate;
 import org.springframework.stereotype.Component;
 
@@ -17,14 +18,14 @@ import java.util.function.Predicate;
 /**
  * Standard calculation method
  */
-@Component
-public class StandardUsageCalculator implements ConsumptionCalculator {
+@Component(value = "standard")
+public class StandardUsageCalculator implements IConsumptionCalculator {
 
     private LocalDate latestDate;
     private LocalDate previousDate;
     private Predicate<Reading> noNullApartment = s -> s.getMeter().getApartment() != null;
-    private Predicate<Reading> maxDate = s -> s.getReadingDate().equals(latestDate);
-    private Predicate<Reading> minDate = s -> s.getReadingDate().equals(previousDate);
+    private Predicate<Reading> maxDate = s -> s.getReadingDetails().getReadingDate().equals(latestDate);
+    private Predicate<Reading> minDate = s -> s.getReadingDetails().getReadingDate().equals(previousDate);
     private double totalUsageCounted = 0;
 
 
@@ -64,9 +65,7 @@ public class StandardUsageCalculator implements ConsumptionCalculator {
     private void validateReadingDates(List<Reading> readings) throws UsageCalculationException {
 
         for (final Reading r : readings) {
-            if(r.getReadingDate().isEqual(latestDate) ||  r.getReadingDate().isEqual(previousDate)) {
-                continue;
-            } else  {
+            if (!(r.getReadingDetails().getReadingDate().isEqual(latestDate) || r.getReadingDetails().getReadingDate().isEqual(previousDate))) {
                 throw new UsageCalculationException("There are more than two reading dates in the collection");
             }
         }
@@ -83,11 +82,11 @@ public class StandardUsageCalculator implements ConsumptionCalculator {
 
     private void addDifferenceToSharedPart(List<MediaUsage> result, double difference) {
 
-        for (int i = 0; i < result.size(); i++) {
-            if(result.get(i).getApartment().getApartmentNumber() == 0) {
-                double usageToChange = result.get(i).getUsage();
+        for (MediaUsage aResult : result) {
+            if (aResult.getApartment().getApartmentNumber() == 0) {
+                double usageToChange = aResult.getUsage();
                 usageToChange += difference;
-                result.get(i).setUsage(usageToChange);
+                aResult.setUsage(usageToChange);
             }
         }
     }
@@ -138,19 +137,19 @@ public class StandardUsageCalculator implements ConsumptionCalculator {
     }
 
     private LocalDate findLatestDate(@NotNull List<Reading> readings) {
-        return readings.stream().map(Reading::getReadingDate).min(LocalDate::compareTo).get();
+        return readings.stream().map(x -> x.getReadingDetails().getReadingDate()).min(LocalDate::compareTo).get();
     }
 
     private LocalDate findNewestDate(@NotNull List<Reading> readings) {
-        return readings.stream().map(Reading::getReadingDate).max(LocalDate::compareTo).get();
+        return readings.stream().map(x -> x.getReadingDetails().getReadingDate()).max(LocalDate::compareTo).get();
     }
 
     private void validateReadingType(List<Reading> readings) throws UsageCalculationException {
-        for (int i = 0; i < readings.size() - 1; i++) {
-            Class clazz1 = readings.get(i).getClass();
-            Class clazz2 = readings.get(i + 1).getClass();
-            if (!clazz1.equals(clazz2)) {
-                throw new UsageCalculationException("List contains readings of different type: " + clazz1.getSimpleName() + " vs. " + clazz2.getSimpleName());
+       final Media m = readings.get(0).getReadingDetails().getMedia();
+        for (int i = 1; i < readings.size(); i++) {
+           final Media tmpMedia = readings.get(i).getReadingDetails().getMedia();
+            if (!m.equals(tmpMedia)) {
+                throw new UsageCalculationException("List contains readings of different type: " + m + " vs. " + tmpMedia);
             }
         }
 

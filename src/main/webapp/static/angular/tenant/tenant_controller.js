@@ -1,8 +1,8 @@
-'use strict';
+"use strict";
 
-App.controller('TenantController', [
-    '$scope',
-    'Tenant', 'Apartment',
+App.controller("TenantController", [
+    "$scope",
+    "Tenant", "Apartment",
     function($scope, Tenant, Apartment) {
 
         $scope.toggle = true;
@@ -15,7 +15,7 @@ App.controller('TenantController', [
         self.tenant = new Tenant();
         self.entity;
         self.tenants = [];
-        self.errors = []
+        self.errors = [];
         var arrayIndex;
 
         self.apartments = Apartment.query();
@@ -23,59 +23,59 @@ App.controller('TenantController', [
         self.fetchAllUsers = function() {
             self.tenants = Tenant.query();
         };
-        
+
         self.fetchAllUsers();
 
         self.createItem = function() {
             self.tenant.$save(function() {}).then(function(ok) {
                 $scope.errorField = true;
-                $scope.errorMsg = 'zapisano do bazy';
+                $scope.errorMsg = "zapisano do bazy";
                 self.tenants.push(ok);
                 self.reset();
                 $scope.toggle = $scope.toggle === false ? true : false;
             }, function(error) {
                 $scope.errors = error.data;
                 $scope.errorField = true;
-                $scope.errorMsg = 'Nie powiódł się zapis do bazy. Popraw dane i spróbuj ponownie';
+                $scope.errorMsg = "Nie powiódł się zapis do bazy. Popraw dane i spróbuj ponownie";
             });
         };
 
         self.updateItem = function() {
-            	self.tenant.$update(function() {}).then(function(ok) {
+            self.tenant.$update(function() {}).then(function(ok) {
                 self.tenants.splice(arrayIndex, 1, ok);
             }, function(error) {
                 $scope.errors = error.data;
                 $scope.errorField = true;
-                $scope.errorMsg = 'Nie powiódł się zapis do bazy. Popraw dane i spróbuj ponownie';
+                $scope.errorMsg = "Nie powiódł się zapis do bazy. Popraw dane i spróbuj ponownie";
             });;
 
             self.reset();
             $scope.toggle = $scope.toggle === false ? true : false;
         };
-        
+
         self.deleteItem = function(identity, indexArray) {
-        	var tenant = self.tenants[indexArray];
-        	
-        	tenant.$delete(function() {}).then(function(ok) {
+            var tenant = self.tenants[indexArray];
+
+            tenant.$delete(function() {}).then(function(ok) {
                 self.tenants.splice(indexArray, 1);
             }, function(error) {
                 $scope.errorField = true;
                 $scope.errorMsg = error.data.message;
             });
-        }; 
+        };
 
-//        self.deleteItem = function(identity, indexArray) {
-//            var tenant = Tenant.get({
-//                id: identity
-//            }, function() {
-//                tenant.$delete(function() {}).then(function(ok) {
-//                    self.tenants.splice(indexArray, 1);
-//                }, function(error) {
-//                    $scope.errorField = true;
-//                    $scope.errorMsg = error.data.message;
-//                })
-//            })
-//        };
+        //        self.deleteItem = function(identity, indexArray) {
+        //            var tenant = Tenant.get({
+        //                id: identity
+        //            }, function() {
+        //                tenant.$delete(function() {}).then(function(ok) {
+        //                    self.tenants.splice(indexArray, 1);
+        //                }, function(error) {
+        //                    $scope.errorField = true;
+        //                    $scope.errorMsg = error.data.message;
+        //                })
+        //            })
+        //        };
 
         self.submit = function() {
             if (self.tenant.id == null) {
@@ -114,7 +114,7 @@ App.controller('TenantController', [
 
         self.clearError = function() {
             $scope.errorField = false;
-            $scope.errorMsg = '';
+            $scope.errorMsg = "";
         }
 
         $scope.toggleFilter = function() {
@@ -122,30 +122,30 @@ App.controller('TenantController', [
             $scope.toggle = $scope.toggle === false ? true : false;
 
         }
-        $scope.$watch('toggle', function() {
+        $scope.$watch("toggle", function() {
             // $scope.toggle ? null : self.reset();
 
-            $scope.text = $scope.toggle ? 'Dodaj' :
-                'Lista';
+            $scope.text = $scope.toggle ? "Dodaj" :
+                "Lista";
         })
 
 
         self.switchForm = function() {
 
-            if ($scope.text === 'Dodaj') {
+            if ($scope.text === "Dodaj") {
 
-                $scope.text = 'Lista';
+                $scope.text = "Lista";
                 self.reset();
                 $scope.toggle = false;
-                $scope.errors = '';
+                $scope.errors = "";
                 $scope.errorField = false;
-                $scope.errorMsg = '';
+                $scope.errorMsg = "";
             } else {
-                $scope.text = 'Dodaj';
+                $scope.text = "Dodaj";
                 $scope.toggle = true;
-                $scope.errors = '';
+                $scope.errors = "";
                 $scope.errorField = false;
-                $scope.errorMsg = '';
+                $scope.errorMsg = "";
             }
 
         }

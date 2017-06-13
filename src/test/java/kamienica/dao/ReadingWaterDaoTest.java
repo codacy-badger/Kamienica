@@ -7,36 +7,36 @@
 //import org.testng.Assert;
 //import org.testng.annotations.Testing;
 //
-//import kamienica.model.Apartment;
+//import kamienica.model.entity.Apartment;
 //import kamienica.feature.meter.MeterWater;
-//import kamienica.feature.reading.ReadingWater;
+//import kamienica.model.ReadingWater;
 //import kamienica.feature.reading.ReadingWaterDAO;
 //
 //public class ReadingWaterDaoTest extends EntityDaoImplTest {
 //
 //	@Autowired
-//	ReadingWaterDAO dao;
+//	ReadingWaterDAO daoservice;
 //	@Autowired
-//	DaoInterface<MeterWater> meterDAO;
+//	IBasicDao<MeterWater> meterDAO;
 //
 //	@Testing
 //	public void getUnresolvedReadings() {
-//		List<ReadingWater> list = dao.getList();
+//		List<ReadingWater> list = daoservice.getListForOwner();
 //		for (ReadingWater readingWater : list) {
 //			System.out.println(readingWater);
 //		}
 //
-//		List<MeterWater> meterList = meterDAO.getList();
+//		List<MeterWater> meterList = meterDAO.getListForOwner();
 //		for (MeterWater meterWater : meterList) {
 //			System.out.println(meterWater);
 //		}
-//		Assert.assertEquals(dao.getUnresolvedReadings().size(), 2);
+//		Assert.assertEquals(daoservice.getUnresolvedReadings().size(), 2);
 //	}
 //
 //	@Testing
 //	public void getByDate() {
-//		ReadingWater reading = dao.getById(1L);
-//		List<ReadingWater> list = dao.getByDate(reading.getReadingDate().toString());
+//		ReadingWater reading = daoservice.getById(1L);
+//		List<ReadingWater> list = daoservice.getByDate(reading.getReadingDate().toString());
 //		Assert.assertEquals(list.size(), 5);
 //		for (ReadingWater readingWater : list) {
 //			Assert.assertEquals(readingWater.getValue(), 100.0);
@@ -46,7 +46,7 @@
 //
 //	@Testing
 //	public void getPrevious() {
-//		List<ReadingWater> list = dao.getPrevious("2010-03-01");
+//		List<ReadingWater> list = daoservice.getPrevious("2010-03-01");
 //		Assert.assertEquals(list.size(), 5);
 //		for (ReadingWater readingWater : list) {
 //			Assert.assertEquals(readingWater.getValue(), 120.0);
@@ -55,7 +55,7 @@
 //
 //	@Testing
 //	public void getLatestList() {
-//		List<ReadingWater> list = dao.getLatestList();
+//		List<ReadingWater> list = daoservice.getLatestList();
 //		Assert.assertEquals(list.size(), 5);
 //		for (ReadingWater readingWater : list) {
 //			Assert.assertEquals(readingWater.getValue(), 145.0);
@@ -65,7 +65,7 @@
 //	@Testing
 //	public void listForTenant() {
 //
-//		List<ReadingWater> list = dao.getListForTenant(getAp());
+//		List<ReadingWater> list = daoservice.getListForTenant(getAp());
 //		double sum = 0.0;
 //		for (ReadingWater readingWater : list) {
 //			sum += readingWater.getValue();
@@ -77,7 +77,7 @@
 ////
 ////	@Testing
 ////	public void getLatestMap() {
-////		HashMap<Integer, ReadingWater> list = dao.getLatestReadingsMap();
+////		HashMap<Integer, ReadingWater> list = daoservice.getLatestReadingsMap();
 ////		Assert.assertEquals(list.get(1).getValue(), 145.0);
 ////
 ////	}
@@ -86,11 +86,11 @@
 //	public void addAndRemove() {
 //		MeterWater test = meterDAO.getById(1L);
 //		ReadingWater reading = new ReadingWater(new LocalDate(), 300, test);
-//		dao.save(reading);
-//		Assert.assertEquals(dao.getList().size(), 16);
-//		Assert.assertEquals(dao.getById(16L).getValue(), 300.0);
-//		dao.deleteById(13L);
-//		Assert.assertEquals(dao.getList().size(), 15);
+//		daoservice.save(reading);
+//		Assert.assertEquals(daoservice.getListForOwner().size(), 16);
+//		Assert.assertEquals(daoservice.getById(16L).getValue(), 300.0);
+//		daoservice.delete(13L);
+//		Assert.assertEquals(daoservice.getListForOwner().size(), 15);
 //	}
 //
 //	private static Apartment getAp() {

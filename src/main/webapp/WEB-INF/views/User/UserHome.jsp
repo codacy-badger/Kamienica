@@ -36,13 +36,13 @@
 
 		<div class="row">
 			<div class="well">
-				<h1>Kamienica - Strona użytkownika</h1>
+				<h1>Kamienica - Strona Najemcy</h1>
 				<p>
-					<strong>Użytkownik:</strong> ${model.user.tenant.fullName() }
+					<strong>Użytkownik:  ${model.user.firstName}  ${model.user.lastName}</strong>
 				</p>
 				<p>
-					<b>Mieszkanie: </b> ${model.user.apartment.apartmentNumber}
-					"${model.user.apartment.description}"
+					<b>Mieszkanie: ${model.user.rentContract.apartment.description}</b>
+				
 				</p>
 			</div>
 		</div>
