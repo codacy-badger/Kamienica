@@ -4,24 +4,17 @@ import kamienica.model.enums.Media;
 import kamienica.model.enums.Status;
 import org.hibernate.validator.constraints.NotEmpty;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.ManyToOne;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 @Entity
-@Table(name = "METER")
+@Table(name = "METER", uniqueConstraints = {@UniqueConstraint(columnNames = {"description", "serialNumber"})})
 public class Meter {
 
     @Id
     @GeneratedValue
     @Column
     private Long id;
-    @Column(nullable = false, unique = true)
+    @Column(nullable = false)
     @NotEmpty(message = "Wprowadź wartość")
     private String description;
     @Column(nullable = false, unique = true)
