@@ -15,6 +15,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import java.lang.reflect.ParameterizedType;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 public abstract class BasicDao<T> implements IBasicDao<T> {
@@ -46,7 +47,6 @@ public abstract class BasicDao<T> implements IBasicDao<T> {
 
     }
 
-  
     @Override
     public void delete(T entity) {
         getSession().delete(entity);
@@ -56,10 +56,17 @@ public abstract class BasicDao<T> implements IBasicDao<T> {
     //TODO there are three delete methods...
     @Override
     public void delete(Long id) {
-    	Query query = getSession()
+        Query query = getSession()
                 .createSQLQuery("delete from " + persistentClass.getSimpleName().toLowerCase() + " where id = :id");
         query.setLong("id", id);
         query.executeUpdate();
+    }
+
+    @Override
+    public void delete(List<T> entities) {
+        for (T object : entities) {
+            getSession().delete(object);
+        }
     }
 
     @Override

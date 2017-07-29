@@ -19,7 +19,5 @@ public interface IResidenceService {
 
     Residence getById(Long id);
 
-    void deleteById(Long id);
-
-
+    void delete(Residence residence);
 }

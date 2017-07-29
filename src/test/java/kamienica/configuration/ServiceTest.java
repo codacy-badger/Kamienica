@@ -9,7 +9,6 @@ import kamienica.feature.ownerdata.IOwnerDataService;
 import kamienica.feature.payment.IPaymentService;
 import kamienica.feature.reading.IReadingService;
 import kamienica.feature.readingdetails.IReadingDetailsService;
-import kamienica.feature.residence.IResidencePurgeService;
 import kamienica.feature.residence.IResidenceService;
 import kamienica.feature.residenceownership.IResidenceOwnershipService;
 import kamienica.feature.security.SecurityServiceImpl;
@@ -69,8 +68,6 @@ public abstract class ServiceTest {
     protected IOwnerService ownerService;
     @Autowired
     protected IOwnerDataService dataService;
-    @Autowired
-    protected IResidencePurgeService purgeService;
     /**
      * difference factor for calculated data
      */

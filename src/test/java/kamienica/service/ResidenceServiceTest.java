@@ -108,13 +108,4 @@ public class ResidenceServiceTest extends ServiceTest {
         final Residence result = residenceService.getById(1L);
         assertNotNull(result);
     }
-
-    @Test(expected = ConstraintViolationException.class)
-    @Transactional
-    public void shouldThrowViolationExcpetionWheTryingToDelete() throws Exception {
-        residenceService.deleteById(1L);
-        final List<Residence> result = residenceService.getList();
-        assertEquals(0, result.size());
-    }
-
 }
