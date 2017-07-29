@@ -28,14 +28,16 @@ public class ResidenceService implements IResidenceService {
     private final IResidenceOwnershipDao residenceOwnershipDao;
     private final IApartmentDao apartmentDao;
     private final IMeterDao meterDao;
+    private final IPurgeService purgeService;
 
     @Autowired
     public ResidenceService(IResidenceDao residenceDao, IResidenceOwnershipDao residenceOwnershipDao,
-                            IApartmentDao apartmentDao, IMeterDao meterDao) {
+                            IApartmentDao apartmentDao, IMeterDao meterDao, IPurgeService purgeService) {
         this.residenceDao = residenceDao;
         this.residenceOwnershipDao = residenceOwnershipDao;
         this.apartmentDao = apartmentDao;
         this.meterDao = meterDao;
+        this.purgeService = purgeService;
     }
 
     @Override
@@ -52,9 +54,9 @@ public class ResidenceService implements IResidenceService {
     private void saveEssentialData(Residence residence) {
         final Apartment ap = new Apartment(residence, 0, "0000", "Część Wpólna");
         apartmentDao.save(ap);
-        final Meter mw = new Meter("Licznik Główny Wody", residence.toString()+"GW", "m3", ap, residence, true, Status.ACTIVE, false, false, Media.WATER);
-        final Meter mg = new Meter("Licznik Główny Gazu", residence.toString()+"GG", "m3", ap, residence, true, Status.ACTIVE, false, false, Media.GAS);
-        final Meter me = new Meter("Licznik Główny Energii", residence.toString()+"GE", "m3", ap, residence, true, Status.ACTIVE, false, false, Media.ENERGY);
+        final Meter mw = new Meter("Licznik Główny Wody", residence.toString() + "GW", "m3", ap, residence, true, Status.ACTIVE, false, false, Media.WATER);
+        final Meter mg = new Meter("Licznik Główny Gazu", residence.toString() + "GG", "m3", ap, residence, true, Status.ACTIVE, false, false, Media.GAS);
+        final Meter me = new Meter("Licznik Główny Energii", residence.toString() + "GE", "m3", ap, residence, true, Status.ACTIVE, false, false, Media.ENERGY);
         meterDao.save(me);
         meterDao.save(mg);
         meterDao.save(mw);
@@ -90,19 +92,7 @@ public class ResidenceService implements IResidenceService {
     }
 
     @Override
-    public void deleteById(final Long id) {
-        final String residenceProperty ="residence";
-        final Residence r = residenceDao.getById(id);
-
-        List<Meter> meters = meterDao.findByCriteria(Restrictions.eq(residenceProperty, r));
-        for(Meter m:meters) meterDao.delete(m);
-
-        List<Apartment> apartments = apartmentDao.findByCriteria(Restrictions.eq(residenceProperty, r));
-        for(Apartment a:apartments) apartmentDao.delete(a);
-
-        final ResidenceOwnership ownership = residenceOwnershipDao.findOneByCriteria(Restrictions.eq(residenceProperty, r));
-        residenceOwnershipDao.delete(ownership);
-        //TODO will need to purge all data related to the residence
-        residenceDao.delete(r);
+    public void delete(Residence residence) {
+        purgeService.purgeData(residence);
     }
 }
