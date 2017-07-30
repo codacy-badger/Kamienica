@@ -17,9 +17,8 @@ import javax.servlet.http.HttpServletResponse;
 @Controller
 public class MainController {
 
-	//TODO do we need these arguments?
 	@RequestMapping("login")
-	public ModelAndView login(@ModelAttribute("tenant") Tenant tenant, BindingResult result) {
+	public ModelAndView login() {
 		return new ModelAndView("Login");
 	}
 

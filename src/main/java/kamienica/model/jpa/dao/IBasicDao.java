@@ -2,12 +2,10 @@ package kamienica.model.jpa.dao;
 
 import kamienica.model.entity.Residence;
 import kamienica.model.enums.Media;
-import org.hibernate.Query;
 import org.hibernate.criterion.Criterion;
 import org.hibernate.criterion.Order;
 
 import java.util.List;
-import java.util.Map;
 import java.util.Set;
 
 public interface IBasicDao<T> {
@@ -45,10 +43,8 @@ public interface IBasicDao<T> {
 
     T getById(final Long id);
 
-    //TODO investigate whether it;s used anymore
     Set<Long> getIdList(final Residence r, final Media media);
 
     long countByCriteria(final Criterion... criterion);
-
 
 }

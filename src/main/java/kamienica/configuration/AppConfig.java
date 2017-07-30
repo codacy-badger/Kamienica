@@ -42,17 +42,17 @@ public class AppConfig extends WebMvcConfigurerAdapter {
 
 	private final static Logger LOG = LoggerFactory.getLogger(AppConfig.class);
 
-	public static final String VERSION = "1.2";
-	@Autowired
-	private ReadingConverter readingConverter;
-	@Autowired
-	private InvoiceConverter invoiceConverter;
-	@Autowired
-	private ApartmentConverter apartmentConverter;
-	@Autowired
-	private MeterEnergyConverter meterEnergyConverter;
-	@Autowired
-	private TenantConverter tenantConverter;
+	public static final String VERSION = "1.2.1";
+//	@Autowired
+//	private ReadingConverter readingConverter;
+//	@Autowired
+//	private InvoiceConverter invoiceConverter;
+//	@Autowired
+//	private ApartmentConverter apartmentConverter;
+//	@Autowired
+//	private MeterEnergyConverter meterEnergyConverter;
+//	@Autowired
+//	private TenantConverter tenantConverter;
 
 	@Override
 	public void configureContentNegotiation(ContentNegotiationConfigurer configurer) {
@@ -115,16 +115,16 @@ public class AppConfig extends WebMvcConfigurerAdapter {
 		return new JsonViewResolver();
 	}
 
-	@Override
-	public void addFormatters(FormatterRegistry registry) {
-		registry.addConverter(readingConverter);
-		registry.addConverter(invoiceConverter);
-		registry.addConverter(apartmentConverter);
-		registry.addConverter(meterEnergyConverter);
-		registry.addConverter(tenantConverter);
-		LOG.info("Setting entity formatters", registry);
-
-	}
+//	@Override
+//	public void addFormatters(FormatterRegistry registry) {
+//		registry.addConverter(readingConverter);
+//		registry.addConverter(invoiceConverter);
+//		registry.addConverter(apartmentConverter);
+//		registry.addConverter(meterEnergyConverter);
+//		registry.addConverter(tenantConverter);
+//		LOG.info("Setting entity formatters", registry);
+//
+//	}
 
 	@Bean
 	public MessageSource messageSource() {

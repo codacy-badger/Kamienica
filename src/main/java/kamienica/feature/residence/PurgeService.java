@@ -1,5 +1,6 @@
 package kamienica.feature.residence;
 
+import kamienica.core.util.SecurityDetails;
 import kamienica.feature.apartment.IApartmentDao;
 import kamienica.feature.invoice.IInvoiceDao;
 import kamienica.feature.meter.IMeterDao;
@@ -62,6 +63,7 @@ public class PurgeService implements IPurgeService {
 
     private void deleteResidence(final Residence residence) {
         final Residence r = residenceDao.getById(residence.getId());
+        SecurityDetails.removeResidenceFromPrincipal(r);
         residenceDao.delete(r);
     }
 
