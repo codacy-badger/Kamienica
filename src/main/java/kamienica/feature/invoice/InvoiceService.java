@@ -129,7 +129,7 @@ public class InvoiceService implements IInvoiceService {
         List<Reading> ReadingNew = readingService.getByDate(invoice.getResidence(), invoice.getReadingDetails().getReadingDate(),
                 Media.GAS);
         List<MediaUsage> usageGas;
-        if (settings.getWaterHeatingSystem().equals(WaterHeatingSystem.SHARED_GAS)) {
+        if (settings.getWaterHeatingSystem().equals(WaterHeatingSystem.SHARED_GAS_HEATER)) {
             ReadingDetails readingDetailsNew = readingDetailsDao.getLatestPriorToDate(invoice.getReadingDetails().getReadingDate(), invoice.getResidence(), Media.WATER);
             ReadingDetails readingDetailsOld = readingDetailsDao.getLatestPriorToDate(readingDetailsNew.getReadingDate(), invoice.getResidence(), Media.WATER);
             List<Reading> waterNew = readingDao.findByCriteria(Restrictions.eq("readingDetails", readingDetailsNew));

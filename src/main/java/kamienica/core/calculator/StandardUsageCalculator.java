@@ -5,6 +5,7 @@ import kamienica.model.entity.Apartment;
 import kamienica.model.entity.MediaUsage;
 import kamienica.model.entity.Reading;
 import kamienica.model.enums.Media;
+import kamienica.model.enums.WaterHeatingSystem;
 import kamienica.model.exception.NegativeConsumptionValue;
 import kamienica.model.exception.UsageCalculationException;
 import org.joda.time.LocalDate;
@@ -43,9 +44,9 @@ public class StandardUsageCalculator implements IConsumptionCalculator {
     public List<MediaUsage> calculateConsumption(@NotNull final List<Apartment> apartment,
                                                  @NotNull final List<Reading> readings) throws NegativeConsumptionValue, UsageCalculationException {
 
-        validateReadings(readings);
         latestDate = findNewestDate(readings);
         previousDate = findLatestDate(readings);
+        validateReadings(readings);
         final List<MediaUsage> result = new ArrayList<>();
 
         for (Apartment ap : apartment) {

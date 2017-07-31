@@ -11,7 +11,7 @@ import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 import java.util.List;
 
 @Component
-public class CentralGasWaterHeatingCalulator implements IConsumptionCalculator {
+public class SharedElectricWaterHeatingCalulator implements IConsumptionCalculator {
     @Override
     public List<MediaUsage> calculateConsumption(final List<Apartment> apartments, final List<Reading> readings) throws NegativeConsumptionValue, UsageCalculationException {
         throw new NotImplementedException();
