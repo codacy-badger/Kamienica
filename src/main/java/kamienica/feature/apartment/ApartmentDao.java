@@ -12,7 +12,7 @@ import java.util.List;
 public class ApartmentDao extends BasicDao<Apartment> implements IApartmentDao {
 
 
-
+    //TODO investigate this method
     @Override
     public int getNumOfEmptyApartment() {
         final String sql = "SELECT COUNT(id) from Apartment join";

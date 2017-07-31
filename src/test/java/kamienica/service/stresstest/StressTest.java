@@ -15,6 +15,7 @@ import org.slf4j.LoggerFactory;
 import java.util.ArrayList;
 import java.util.List;
 
+import static org.junit.Assert.assertEquals;
 import static org.powermock.api.mockito.PowerMockito.mockStatic;
 import static org.powermock.api.mockito.PowerMockito.when;
 
@@ -42,6 +43,7 @@ public class StressTest extends ServiceTest {
         for (Meter m : meters) meterService.save(m);
         final long timeElapsed = (System.currentTimeMillis() - start)/1000;
         LOGGER.info("Time taken: "+ timeElapsed);
+        assertEquals(6, timeElapsed);
     }
 
     private static void prepareData() {

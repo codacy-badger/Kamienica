@@ -2,12 +2,10 @@ package kamienica.model.jpa.dao;
 
 import kamienica.model.entity.Residence;
 import kamienica.model.enums.Media;
-import org.hibernate.Query;
 import org.hibernate.criterion.Criterion;
 import org.hibernate.criterion.Order;
 
 import java.util.List;
-import java.util.Map;
 import java.util.Set;
 
 public interface IBasicDao<T> {
