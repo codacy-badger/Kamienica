@@ -43,10 +43,8 @@ public interface IBasicDao<T> {
 
     T getById(final Long id);
 
-    //TODO investigate whether it;s used anymore
     Set<Long> getIdList(final Residence r, final Media media);
 
     long countByCriteria(final Criterion... criterion);
-
 
 }

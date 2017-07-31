@@ -157,4 +157,4 @@ INSERT INTO PAYMENT  ( id , paymentAmount , paymentDate , tenant_id , invoice_id
 INSERT INTO PAYMENT  ( id , paymentAmount , paymentDate , tenant_id , invoice_id ) VALUES (9,54.55,'2016-07-29',4,1);
 
 
-INSERT INTO SETTINGS  ( id , garbage , gas, internet , waterHeatingSystem ) VALUES (1,'1','1','0','SHARED_GAS');
+INSERT INTO SETTINGS  ( id , garbage , gas, internet , waterHeatingSystem ) VALUES (1,'1','1','0','SHARED_GAS_HEATER');

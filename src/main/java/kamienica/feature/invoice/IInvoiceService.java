@@ -11,8 +11,6 @@ public interface IInvoiceService {
 
     void save(Invoice invoice);
 
-    void list(Residence r, Map<String, Object> model, Media media);
-
     List<Invoice> list( Media media);
 
     void delete(Long id);

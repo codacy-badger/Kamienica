@@ -42,7 +42,7 @@ public class Residence implements Serializable {
 
     @Override
     public String toString() {
-        return new StringBuilder().append(street).append(" ").append(number).append(", ").append(city).toString();
+        return street + " " + number + ", " + city;
     }
 
     public Long getId() {

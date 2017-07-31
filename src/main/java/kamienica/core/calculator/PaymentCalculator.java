@@ -14,7 +14,7 @@ import java.util.List;
 
 public class PaymentCalculator {
 
-
+    //TODO get rid of division
     public static List<Payment> createPaymentList(final List<Tenant> tenants, final Invoice invoice,
                                                   final List<Division> division, final List<MediaUsage> usage) {
         double sumOfExpences = invoice.getTotalAmount();
