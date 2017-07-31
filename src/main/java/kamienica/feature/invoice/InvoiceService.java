@@ -101,33 +101,6 @@ public class InvoiceService implements IInvoiceService {
         return invoiceDao.findByCriteria(forTheseResidences, forMedia);
     }
 
-    @Override
-    public void list(final Residence r, Map<String, Object> model, final Media media) {
-        //TODO get rid of that ugly thing
-        model.put("invoice", invoiceDao.getList(r, media));
-        switch (media) {
-            case GAS:
-                model.put("editlUrl", "/Admin/Invoice/invoiceGasEdit.html?id=");
-                model.put("delUrl", "/Admin/Invoice/invoiceGasDelete.html?id=");
-                model.put("media", "Gaz");
-                break;
-            case WATER:
-                model.put("editlUrl", "/Admin/Invoice/invoiceWaterEdit.html?id=");
-                model.put("delUrl", "/Admin/Invoice/invoiceWaterDelete.html?id=");
-                model.put("media", "Woda");
-                break;
-            case ENERGY:
-                model.put("editlUrl", "/Admin/Invoice/invoiceEnergyEdit.html?id=");
-                model.put("delUrl", "/Admin/Invoice/invoiceEnergyDelete.html?id=");
-                model.put("media", "Energia");
-                break;
-            default:
-                break;
-        }
-
-    }
-
-
     private void saveWater(Invoice invoice, List<Division> division) {
         final Residence r = invoice.getResidence();
         final List<Tenant> tenants = extractTenantsFromDivision(division);
@@ -156,7 +129,7 @@ public class InvoiceService implements IInvoiceService {
         List<Reading> ReadingNew = readingService.getByDate(invoice.getResidence(), invoice.getReadingDetails().getReadingDate(),
                 Media.GAS);
         List<MediaUsage> usageGas;
-        if (settings.getWaterHeatingSystem().equals(WaterHeatingSystem.SHARED_GAS)) {
+        if (settings.getWaterHeatingSystem().equals(WaterHeatingSystem.SHARED_GAS_HEATER)) {
             ReadingDetails readingDetailsNew = readingDetailsDao.getLatestPriorToDate(invoice.getReadingDetails().getReadingDate(), invoice.getResidence(), Media.WATER);
             ReadingDetails readingDetailsOld = readingDetailsDao.getLatestPriorToDate(readingDetailsNew.getReadingDate(), invoice.getResidence(), Media.WATER);
             List<Reading> waterNew = readingDao.findByCriteria(Restrictions.eq("readingDetails", readingDetailsNew));

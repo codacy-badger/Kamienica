@@ -6,8 +6,6 @@ import kamienica.model.entity.Residence;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import static org.junit.Assert.*;
-
 /**
  * Created by maciej on 29/07/17.
  */

@@ -27,7 +27,6 @@ public class OwnerService implements IOwnerService {
         this.readingDetailsDao = readingDetailsDao;
     }
 
-    //TODO will be reimplemented after addding rentContract
     @Override
     public List<Apartment> getEmptyApartments() {
         final List<Residence> residences = SecurityDetails.getResidencesForOwner();

@@ -15,7 +15,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import java.lang.reflect.ParameterizedType;
 import java.util.HashSet;
 import java.util.List;
-import java.util.Map;
 import java.util.Set;
 
 public abstract class BasicDao<T> implements IBasicDao<T> {

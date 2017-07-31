@@ -10,8 +10,6 @@ import java.util.List;
 
 public interface IOwnerUserDataService {
 
-    HashMap<String, Object> getMainData();
-
     List<Reading> getReadingsForTenant(Apartment apartment, Media media);
 
     Tenant getLoggedTenant();
