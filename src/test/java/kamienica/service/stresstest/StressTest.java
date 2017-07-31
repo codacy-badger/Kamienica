@@ -16,6 +16,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 import static org.powermock.api.mockito.PowerMockito.mockStatic;
 import static org.powermock.api.mockito.PowerMockito.when;
 
@@ -26,7 +27,7 @@ public class StressTest extends ServiceTest {
     private static final Logger LOGGER = LoggerFactory.getLogger(StressTest.class);
 
     //test takes much less time locally but it's longer on travis CI
-    private static final int MAX_TIME = 12;
+    private static final int MAX_TIME = 10;
 
     @BeforeClass
     public static void init() {
@@ -46,7 +47,7 @@ public class StressTest extends ServiceTest {
         for (Meter m : meters) meterService.save(m);
         final long timeElapsed = (System.currentTimeMillis() - start) / 1000;
         LOGGER.info("Time taken: " + timeElapsed);
-        assertEquals(MAX_TIME, timeElapsed);
+        assertTrue(timeElapsed < MAX_TIME);
     }
 
     private static void prepareData() {
