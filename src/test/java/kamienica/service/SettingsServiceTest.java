@@ -11,17 +11,12 @@ public class SettingsServiceTest extends ServiceTest {
 
     @Test
     public void getList() {
-        Settings settings = settingsService.getSettings();
+        Settings settings = settingsService.getSettings(getOWnersResidence());
 
         assertEquals(true, settings.isGarbage());
 
     }
 
-    @Test
-    public void getById() {
-        assertNotNull(settingsService.getSettings());
-
-    }
 
 
 }

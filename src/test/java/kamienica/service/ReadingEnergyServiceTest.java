@@ -2,11 +2,7 @@ package kamienica.service;
 
 import kamienica.configuration.ServiceTest;
 import kamienica.core.util.SecurityDetails;
-import kamienica.model.entity.Apartment;
-import kamienica.model.entity.Meter;
-import kamienica.model.entity.Reading;
-import kamienica.model.entity.ReadingDetails;
-import kamienica.model.entity.Residence;
+import kamienica.model.entity.*;
 import kamienica.model.enums.Media;
 import kamienica.model.enums.Status;
 import kamienica.model.exception.NoMainCounterException;
@@ -104,10 +100,11 @@ public class ReadingEnergyServiceTest extends ServiceTest {
 
     @SuppressWarnings("unchecked")
     @Test
-    public void getByDate() {
-        List<Reading> list = readingService.getByDate(r, JULY_FIRST, Media.ENERGY);
+    public void getForInvoice() {
+        final Invoice i = invoiceService.getByID(3L);
+        List<Reading> list = readingService.getForInvoice(i);
         for (Reading Reading : list) {
-            assertEquals(JULY_FIRST, Reading.getReadingDetails().getReadingDate());
+            assertEquals(i.getReadingDetails().getReadingDate(), Reading.getReadingDetails().getReadingDate());
         }
     }
 

@@ -63,6 +63,8 @@ INSERT INTO  METER  ( id , status , description , main , serialNumber , unit , c
 INSERT INTO  READING_DETAILS (id, readingDate, resolvement, media, residence_id) VALUES (1,'2016-07-29','UNRESOLVED','GAS', 1);
 INSERT INTO  READING_DETAILS (id, readingDate, resolvement, media, residence_id) VALUES (2, '2016-09-01','RESOLVED','GAS',1);
 INSERT INTO  READING_DETAILS (id, readingDate, resolvement, media, residence_id) VALUES (3,'2016-10-01','UNRESOLVED','GAS',1);
+INSERT INTO  READING_DETAILS (id, readingDate, resolvement, media, residence_id) VALUES (11,'2016-10-01','UNRESOLVED','GAS',2);
+
 
 INSERT INTO READING ( id , readingDetails_id,  value , meter_id, residence_id ) VALUES (1,1,114,15, 1);
 INSERT INTO READING ( id , readingDetails_id,  value , meter_id, residence_id ) VALUES (2,1,1.5,16, 1);
@@ -84,11 +86,12 @@ INSERT INTO READING ( id , readingDetails_id,  value , meter_id, residence_id ) 
 INSERT INTO READING ( id , readingDetails_id,  value , meter_id, residence_id ) VALUES (16,3,5,18, 1);
 INSERT INTO READING ( id , readingDetails_id,  value , meter_id, residence_id ) VALUES (17,3,10,19, 1);
 INSERT INTO READING ( id , readingDetails_id,  value , meter_id, residence_id ) VALUES (18,3,170,20, 1);
-INSERT INTO READING ( id , readingDetails_id,  value , meter_id, residence_id ) VALUES (19,3,100,21, 2);
+INSERT INTO READING ( id , readingDetails_id,  value , meter_id, residence_id ) VALUES (19,11,100,21, 2);
 
 INSERT INTO  READING_DETAILS (id, readingDate, resolvement, media, residence_id) VALUES (4,'2016-07-01','UNRESOLVED','WATER', 1);
 INSERT INTO  READING_DETAILS (id, readingDate, resolvement, media, residence_id) VALUES (5, '2016-08-01','RESOLVED','WATER',1);
 INSERT INTO  READING_DETAILS (id, readingDate, resolvement, media, residence_id) VALUES (6,'2016-09-01','UNRESOLVED','WATER',1);
+INSERT INTO  READING_DETAILS (id, readingDate, resolvement, media, residence_id) VALUES (12,'2016-09-01','UNRESOLVED','WATER',2);
 
 INSERT INTO READING ( id , readingDetails_id,  value , meter_id, residence_id ) VALUES (20,4, 33,7, 1);
 INSERT INTO READING ( id , readingDetails_id,  value , meter_id, residence_id ) VALUES (21,4,4,8, 1);
@@ -113,11 +116,12 @@ INSERT INTO READING ( id , readingDetails_id,  value , meter_id, residence_id ) 
 INSERT INTO READING ( id , readingDetails_id,  value , meter_id, residence_id ) VALUES (38,6,16,11, 1);
 INSERT INTO READING ( id , readingDetails_id,  value , meter_id, residence_id ) VALUES (39,6,11,12, 1);
 INSERT INTO READING ( id , readingDetails_id,  value , meter_id, residence_id ) VALUES (40,6,9,13, 1);
-INSERT INTO READING ( id , readingDetails_id,  value , meter_id, residence_id ) VALUES (41,6,9,14, 2);
+INSERT INTO READING ( id , readingDetails_id,  value , meter_id, residence_id ) VALUES (41,12,9,14, 2);
 
 INSERT INTO  READING_DETAILS (id, readingDate, resolvement, media, residence_id) VALUES (7,'2016-07-01','UNRESOLVED','ENERGY', 1);
 INSERT INTO  READING_DETAILS (id, readingDate, resolvement, media, residence_id) VALUES (8, '2016-08-01','RESOLVED','ENERGY',1);
 INSERT INTO  READING_DETAILS (id, readingDate, resolvement, media, residence_id) VALUES (9,'2016-09-01','UNRESOLVED','ENERGY',1);
+INSERT INTO  READING_DETAILS (id, readingDate, resolvement, media, residence_id) VALUES (13,'2016-09-01','UNRESOLVED','ENERGY',2);
 
 INSERT INTO READING ( id , readingDetails_id,  value , meter_id, residence_id ) VALUES (42,7,11,1, 1);
 INSERT INTO READING ( id , readingDetails_id,  value , meter_id, residence_id ) VALUES (43,7,5,2, 1);
@@ -136,7 +140,7 @@ INSERT INTO READING ( id , readingDetails_id,  value , meter_id, residence_id ) 
 INSERT INTO READING ( id , readingDetails_id,  value , meter_id, residence_id ) VALUES (54,9,5,3, 1);
 INSERT INTO READING ( id , readingDetails_id,  value , meter_id, residence_id ) VALUES (55,9,9,4, 1);
 INSERT INTO READING ( id , readingDetails_id,  value , meter_id, residence_id ) VALUES (56,9,7,5, 1);
-INSERT INTO READING ( id , readingDetails_id,  value , meter_id, residence_id ) VALUES (57,9,7,6, 2);
+INSERT INTO READING ( id , readingDetails_id,  value , meter_id, residence_id ) VALUES (57,13,7,6, 2);
 
 --String serialNumber, LocalDate invoiceDate, double totalAmount, Residence residence, ReadingDetails readingDetails, Media media
 INSERT INTO INVOICE  ( id , invoiceDate , serialNumber , totalAmount , readingDetails_id , residence_id, media) VALUES (1,'2016-08-01','1',150,5,1, 'WATER');
@@ -157,4 +161,4 @@ INSERT INTO PAYMENT  ( id , paymentAmount , paymentDate , tenant_id , invoice_id
 INSERT INTO PAYMENT  ( id , paymentAmount , paymentDate , tenant_id , invoice_id ) VALUES (9,54.55,'2016-07-29',4,1);
 
 
-INSERT INTO SETTINGS  ( id , garbage , gas, internet , waterHeatingSystem ) VALUES (1,'1','1','0','SHARED_GAS');
+INSERT INTO SETTINGS  ( id , garbage , gas, internet , waterHeatingSystem, residence_id ) VALUES (1,'1','1','0','SHARED_GAS', 1);

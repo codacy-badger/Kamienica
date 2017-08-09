@@ -6,25 +6,25 @@ import java.util.List;
 
 public enum WaterHeatingSystem {
 
-	INDIVIDUAL_GAS("Indywidualny podgrzewacz gazowy"), SHARED_GAS("Wspólny podgrzewacz gazowy"), ELECTRIC(
-			"Indywidualny podgrzewacz elektryczny");
+    INDIVIDUAL("Standard"), SHARED_GAS("Shared gas heating system"), SHARED_ELECTRIC(
+            "Shared Electric System");
 
-	private String system;
+    private String system;
 
-	WaterHeatingSystem(String system) {
-		this.system = system;
-	}
+    WaterHeatingSystem(String system) {
+        this.system = system;
+    }
 
-	public String getSystem() {
-		return system;
-	}
+    public String getSystem() {
+        return system;
+    }
 
-	public void setSystem(String system) {
-		this.system = system;
-	}
+    public void setSystem(String system) {
+        this.system = system;
+    }
 
-	public static List<String> getValues() {
-		return new ArrayList<>(Arrays.asList(WaterHeatingSystem.ELECTRIC.getSystem(),
-				WaterHeatingSystem.INDIVIDUAL_GAS.getSystem(), WaterHeatingSystem.SHARED_GAS.getSystem()));
-	}
+    public static List<String> getValues() {
+        return new ArrayList<>(Arrays.asList(WaterHeatingSystem.SHARED_ELECTRIC.getSystem(),
+                WaterHeatingSystem.INDIVIDUAL.getSystem(), WaterHeatingSystem.SHARED_GAS.getSystem()));
+    }
 }

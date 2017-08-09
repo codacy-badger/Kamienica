@@ -104,6 +104,11 @@ public class StandardUsageCalculator implements IConsumptionCalculator {
         final Predicate<Reading> apartmentPredicate = s -> s.getMeter().getApartment().getId().equals(ap.getId());
 
         final double consumptionOld = sumUsageByDate(readings, apartmentPredicate, minDate);
+
+        if(isTheFirstReading()) {
+            return consumptionOld;
+        }
+
         final double consumptionNew = sumUsageByDate(readings, apartmentPredicate, maxDate);
         final double consumption = consumptionNew - consumptionOld;
 
@@ -111,6 +116,10 @@ public class StandardUsageCalculator implements IConsumptionCalculator {
             throw new NegativeConsumptionValue(consumption, ap);
         }
         return consumption;
+    }
+
+    private boolean isTheFirstReading() {
+        return latestDate.equals(previousDate);
     }
 
     private double countForMainMeter(final List<Reading> readings) throws NegativeConsumptionValue {

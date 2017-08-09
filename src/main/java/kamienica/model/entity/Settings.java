@@ -2,12 +2,7 @@ package kamienica.model.entity;
 
 import kamienica.model.enums.WaterHeatingSystem;
 
-import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 @Entity
 @Table(name = "SETTINGS")
@@ -21,17 +16,20 @@ public class Settings {
 	private boolean garbage = false;
 	@Enumerated(EnumType.STRING)
 	private WaterHeatingSystem waterHeatingSystem;
+	@OneToOne
+	private Residence residence;
 
 	public Settings() {
 	}
 
 	public Settings(Long id, boolean gas, boolean internet, boolean garbage,
-			WaterHeatingSystem waterHeatingSystem) {
+					WaterHeatingSystem waterHeatingSystem, Residence residence) {
 		this.id = id;
 		this.gas = gas;
 		this.internet = internet;
 		this.garbage = garbage;
 		this.waterHeatingSystem = waterHeatingSystem;
+		this.residence = residence;
 	}
 
 	public WaterHeatingSystem getWaterHeatingSystem() {
@@ -41,6 +39,14 @@ public class Settings {
 	public void setWaterHeatingSystem(WaterHeatingSystem waterHeatingSystem) {
 		this.waterHeatingSystem = waterHeatingSystem;
 	}
+
+    public Residence getResidence() {
+        return residence;
+    }
+
+    public void setResidence(Residence residence) {
+        this.residence = residence;
+    }
 
 	public Long getId() {
 		return id;

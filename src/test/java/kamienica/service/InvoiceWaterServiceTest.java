@@ -7,6 +7,8 @@ import kamienica.model.entity.Payment;
 import kamienica.model.entity.ReadingDetails;
 import kamienica.model.entity.Residence;
 import kamienica.model.enums.Media;
+import kamienica.model.exception.NegativeConsumptionValue;
+import kamienica.model.exception.UsageCalculationException;
 import org.joda.time.LocalDate;
 import org.junit.Before;
 import org.junit.Test;
@@ -36,7 +38,7 @@ public class InvoiceWaterServiceTest extends ServiceTest {
 
     @Test
     @Transactional
-    public void add()  {
+    public void add() throws UsageCalculationException, NegativeConsumptionValue {
         mockStatic(SecurityDetails.class);
         when(SecurityDetails.getLoggedTenant()).thenReturn(getOwner());
         when(SecurityDetails.getResidencesForOwner()).thenReturn(getMockedResidences());
@@ -63,7 +65,7 @@ public class InvoiceWaterServiceTest extends ServiceTest {
 
     @Test
     @Transactional
-    public void addForFirstReading(){
+    public void addForFirstReading() throws UsageCalculationException, NegativeConsumptionValue {
         mockStatic(SecurityDetails.class);
         when(SecurityDetails.getLoggedTenant()).thenReturn(getOwner());
         when(SecurityDetails.getResidencesForOwner()).thenReturn(getMockedResidences());

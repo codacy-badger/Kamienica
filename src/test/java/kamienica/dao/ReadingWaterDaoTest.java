@@ -34,9 +34,9 @@
 //	}
 //
 //	@Testing
-//	public void getByDate() {
+//	public void getForInvoice() {
 //		ReadingWater reading = daoservice.getById(1L);
-//		List<ReadingWater> list = daoservice.getByDate(reading.getReadingDate().toString());
+//		List<ReadingWater> list = daoservice.getForInvoice(reading.getReadingDate().toString());
 //		Assert.assertEquals(list.size(), 5);
 //		for (ReadingWater readingWater : list) {
 //			Assert.assertEquals(readingWater.getValue(), 100.0);

@@ -27,7 +27,7 @@ public interface IReadingService {
 
     Map<ReadingDetails, List<Reading>> list(Residence r, Media media);
 
-    List<Reading> getByDate(Residence r, LocalDate date, Media media);
+    List<Reading> getForInvoice(Invoice invoice);
 
     @Deprecated
     List<Reading> getPreviousReading(LocalDate date, List<Meter> meters);

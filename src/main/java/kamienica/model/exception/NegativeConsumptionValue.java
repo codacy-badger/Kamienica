@@ -2,7 +2,7 @@ package kamienica.model.exception;
 
 import kamienica.model.entity.Apartment;
 
-public class NegativeConsumptionValue extends Throwable {
+public class NegativeConsumptionValue extends Exception {
 
 
 	private static final long serialVersionUID = 1L;

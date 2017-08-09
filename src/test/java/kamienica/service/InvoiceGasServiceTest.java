@@ -9,6 +9,8 @@ import kamienica.model.entity.Residence;
 import kamienica.model.entity.Settings;
 import kamienica.model.enums.Media;
 import kamienica.model.enums.WaterHeatingSystem;
+import kamienica.model.exception.NegativeConsumptionValue;
+import kamienica.model.exception.UsageCalculationException;
 import org.joda.time.LocalDate;
 import org.junit.Before;
 import org.junit.Test;
@@ -39,7 +41,7 @@ public class InvoiceGasServiceTest extends ServiceTest {
 
     @Test
     @Transactional
-    public void add() {
+    public void add() throws UsageCalculationException, NegativeConsumptionValue {
         mockStatic(SecurityDetails.class);
         when(SecurityDetails.getLoggedTenant()).thenReturn(getOwner());
         when(SecurityDetails.getResidencesForOwner()).thenReturn(getMockedResidences());
@@ -65,7 +67,7 @@ public class InvoiceGasServiceTest extends ServiceTest {
 
     @Test
     @Transactional
-    public void addForFirstReadingWithSharedWaterHeating() {
+    public void addForFirstReadingWithSharedWaterHeating() throws UsageCalculationException, NegativeConsumptionValue {
         mockStatic(SecurityDetails.class);
         when(SecurityDetails.getLoggedTenant()).thenReturn(getOwner());
         when(SecurityDetails.getResidencesForOwner()).thenReturn(getMockedResidences());
@@ -94,14 +96,14 @@ public class InvoiceGasServiceTest extends ServiceTest {
 
     @Test
     @Transactional
-    public void addForFirstReadingWithSeparateWaterHeating() {
+    public void addForFirstReadingWithSeparateWaterHeating() throws UsageCalculationException, NegativeConsumptionValue {
         mockStatic(SecurityDetails.class);
         when(SecurityDetails.getLoggedTenant()).thenReturn(getOwner());
         when(SecurityDetails.getResidencesForOwner()).thenReturn(getMockedResidences());
 
         List<ReadingDetails> list = readingDetailsService.getUnresolved(r, Media.GAS);
-        Settings setings = settingsService.getSettings();
-        setings.setWaterHeatingSystem(WaterHeatingSystem.INDIVIDUAL_GAS);
+        Settings setings = settingsService.getSettings(getOWnersResidence());
+        setings.setWaterHeatingSystem(WaterHeatingSystem.INDIVIDUAL);
         settingsService.save(setings);
         assertEquals(2, list.size());
         Invoice invoice = new Invoice("112233", TODAY, 200, r, list.get(0), Media.GAS);

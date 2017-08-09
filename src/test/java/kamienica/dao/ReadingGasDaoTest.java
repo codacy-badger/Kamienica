@@ -26,9 +26,9 @@
 //	}
 //
 //	@Testing
-//	public void getByDate() {
+//	public void getForInvoice() {
 //		ReadingGas reading = daoservice.getById(1L);
-//		List<ReadingGas> list = daoservice.getByDate(reading.getReadingDate().toString());
+//		List<ReadingGas> list = daoservice.getForInvoice(reading.getReadingDate().toString());
 //		Assert.assertEquals(list.size(), 5);
 //		for (ReadingGas readingGas : list) {
 //			Assert.assertEquals(readingGas.getValue(), 100.0);

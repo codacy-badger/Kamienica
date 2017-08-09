@@ -122,9 +122,9 @@ public class ReadingService implements IReadingService {
     }
 
     @Override
-    public List<Reading> getByDate(final Residence r, final LocalDate date, final Media media) {
-        final ReadingDetails rd = readingDetailsDao.findOneByCriteria(Restrictions.eq("readingDate", date), Restrictions.eq("media", media), Restrictions.eq("residence", r));
-        return readingDao.findByCriteria(Restrictions.eq("readingDetails", rd), Restrictions.eq("residence", r));
+    public List<Reading> getForInvoice(final Invoice invoice) {
+        final ReadingDetails rd = invoice.getReadingDetails();
+        return readingDao.findByCriteria(Restrictions.eq("readingDetails", rd));
     }
 
     @Override
