@@ -1,28 +1,23 @@
 package kamienica.feature.invoice;
 
-import kamienica.core.calculator.*;
 import kamienica.core.util.SecurityDetails;
-import kamienica.feature.division.IDivisionService;
-import kamienica.feature.meter.IMeterService;
 import kamienica.feature.payment.IPaymentDao;
 import kamienica.feature.payment.IPaymentService;
-import kamienica.feature.reading.IReadingDao;
-import kamienica.feature.reading.IReadingService;
-import kamienica.feature.readingdetails.ReadingDetailsDao;
-import kamienica.feature.settings.ISettingsDao;
-import kamienica.model.entity.*;
+import kamienica.feature.readingdetails.IReadingDetailsDao;
+import kamienica.model.entity.Invoice;
+import kamienica.model.entity.ReadingDetails;
+import kamienica.model.entity.Residence;
 import kamienica.model.enums.Media;
 import kamienica.model.enums.Resolvement;
-import kamienica.model.enums.WaterHeatingSystem;
 import kamienica.model.exception.NegativeConsumptionValue;
 import kamienica.model.exception.UsageCalculationException;
-import org.hibernate.criterion.*;
+import org.hibernate.criterion.Criterion;
+import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
 @Transactional
@@ -30,11 +25,11 @@ public class InvoiceService implements IInvoiceService {
 
     private final IInvoiceDao invoiceDao;
     private final IPaymentDao paymentDao;
-    private final ReadingDetailsDao readingDetailsDao;
+    private final IReadingDetailsDao readingDetailsDao;
     private final IPaymentService paymentService;
 
     @Autowired
-    public InvoiceService(IInvoiceDao invoiceDao, IPaymentDao paymentDao, ReadingDetailsDao readingDetailsDao, IPaymentService paymentService) {
+    public InvoiceService(IInvoiceDao invoiceDao, IPaymentDao paymentDao, IReadingDetailsDao readingDetailsDao, IPaymentService paymentService) {
         this.invoiceDao = invoiceDao;
         this.paymentDao = paymentDao;
         this.readingDetailsDao = readingDetailsDao;

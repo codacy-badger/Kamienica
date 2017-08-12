@@ -1,10 +1,11 @@
-package kamienica.core.calculator;
+package kamienica.feature.payment.calculator;
 
 import kamienica.model.entity.Apartment;
 import kamienica.model.entity.MediaUsage;
 import kamienica.model.entity.Reading;
 import kamienica.model.exception.NegativeConsumptionValue;
 import kamienica.model.exception.UsageCalculationException;
+import org.apache.commons.lang.NotImplementedException;
 import org.joda.time.LocalDate;
 import org.springframework.stereotype.Component;
 
@@ -25,6 +26,6 @@ public class CentralGasWaterHeatingCalulator implements IConsumptionCalculator {
 
     @Override
     public List<MediaUsage> calculateConsumption(final List<Apartment> apartments, final List<Reading> readings) throws NegativeConsumptionValue, UsageCalculationException {
-        return null;
+       throw new NotImplementedException();
     }
 }

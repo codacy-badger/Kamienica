@@ -1,4 +1,4 @@
-package kamienica.core.calculator;
+package kamienica.feature.payment.calculator;
 
 import kamienica.core.util.CommonUtils;
 import kamienica.model.entity.Apartment;

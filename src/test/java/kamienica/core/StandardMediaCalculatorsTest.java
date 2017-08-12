@@ -1,7 +1,7 @@
 package kamienica.core;
 
-import kamienica.core.calculator.IConsumptionCalculator;
-import kamienica.core.calculator.StandardUsageCalculator;
+import kamienica.feature.payment.calculator.IConsumptionCalculator;
+import kamienica.feature.payment.calculator.StandardUsageCalculator;
 import kamienica.model.entity.MediaUsage;
 import kamienica.model.entity.Reading;
 import kamienica.model.exception.NegativeConsumptionValue;
