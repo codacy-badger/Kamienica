@@ -15,16 +15,8 @@ public enum WaterHeatingSystem {
         this.system = system;
     }
 
-    public String getSystem() {
+    public String value() {
         return system;
     }
 
-    public void setSystem(String system) {
-        this.system = system;
-    }
-
-    public static List<String> getValues() {
-        return new ArrayList<>(Arrays.asList(WaterHeatingSystem.SHARED_ELECTRIC.getSystem(),
-                WaterHeatingSystem.INDIVIDUAL.getSystem(), WaterHeatingSystem.SHARED_GAS.getSystem()));
-    }
 }

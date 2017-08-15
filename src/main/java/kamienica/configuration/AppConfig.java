@@ -37,7 +37,7 @@ import java.util.List;
 
 @Configuration
 @EnableWebMvc
-@ComponentScan(basePackages = "kamienica.*")
+@ComponentScan(basePackages = "kamienica")
 public class AppConfig extends WebMvcConfigurerAdapter {
 
 	private final static Logger LOG = LoggerFactory.getLogger(AppConfig.class);

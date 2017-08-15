@@ -21,6 +21,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 @Service
@@ -33,16 +34,18 @@ public class PaymentCalculator implements IPaymentCalculator{
     private final IMeterService meterService;
     private final IReadingDetailsDao readingDetailsDao;
     private final IReadingDao readingDao;
+    private final Map<String, IConsumptionCalculator> consumptionCalculatorMap;
 
     @Autowired
     public PaymentCalculator(ISettingsService settingsService, IDivisionService divisionService, IReadingService readingService,
-                             IMeterService meterService, IReadingDetailsDao readingDetailsDao, IReadingDao readingDao) {
+                             IMeterService meterService, IReadingDetailsDao readingDetailsDao, IReadingDao readingDao, Map<String, IConsumptionCalculator> consumptionCalculatorMap) {
         this.settingsService = settingsService;
         this.divisionService = divisionService;
         this.readingService = readingService;
         this.meterService = meterService;
         this.readingDetailsDao = readingDetailsDao;
         this.readingDao = readingDao;
+        this.consumptionCalculatorMap = consumptionCalculatorMap;
     }
 
     @Override
@@ -60,7 +63,7 @@ public class PaymentCalculator implements IPaymentCalculator{
         readings.addAll(readingService.getPreviousReading(baseReadingDate, meterService.list(r, invoice.getMedia())));
         readings.addAll(readingService.getForInvoice(invoice));
 
-        final IConsumptionCalculator calculator = createCalculator(invoice);
+        final IConsumptionCalculator calculator = consumptionCalculatorMap.get(createCalculator(invoice));
 
         final List<MediaUsage> usage = calculator.calculateConsumption(apartments, readings);
 
@@ -93,7 +96,7 @@ public class PaymentCalculator implements IPaymentCalculator{
     }
 
 
-    private IConsumptionCalculator createCalculator(final Invoice invoice) {
+    private String createCalculator(final Invoice invoice) {
         final Settings settings = settingsService.getSettings(invoice.getResidence());
         return UsageCalculatorProvider.provideCalculator(settings.getWaterHeatingSystem(), invoice.getMedia());
     }

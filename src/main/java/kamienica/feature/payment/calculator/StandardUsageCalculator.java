@@ -1,6 +1,7 @@
 package kamienica.feature.payment.calculator;
 
 import kamienica.core.util.CommonUtils;
+import kamienica.feature.reading.IReadingDao;
 import kamienica.model.entity.Apartment;
 import kamienica.model.entity.MediaUsage;
 import kamienica.model.entity.Reading;
@@ -8,7 +9,9 @@ import kamienica.model.enums.Media;
 import kamienica.model.exception.NegativeConsumptionValue;
 import kamienica.model.exception.UsageCalculationException;
 import org.joda.time.LocalDate;
-import org.springframework.stereotype.Component;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.validation.constraints.NotNull;
 import java.util.ArrayList;
@@ -18,8 +21,11 @@ import java.util.function.Predicate;
 /**
  * Standard calculation method
  */
-@Component(value = "standard")
+@Service(value = StandardUsageCalculator.TYPE)
+@Transactional
 public class StandardUsageCalculator implements IConsumptionCalculator {
+
+    static final String TYPE= "STANDARD";
 
     private LocalDate latestDate;
     private LocalDate previousDate;
@@ -27,7 +33,12 @@ public class StandardUsageCalculator implements IConsumptionCalculator {
     private Predicate<Reading> maxDate = s -> s.getReadingDetails().getReadingDate().equals(latestDate);
     private Predicate<Reading> minDate = s -> s.getReadingDetails().getReadingDate().equals(previousDate);
     private double totalUsageCounted = 0;
+    private final IReadingDao readingDao;
 
+    @Autowired
+    public StandardUsageCalculator(IReadingDao readingDao) {
+        this.readingDao = readingDao;
+    }
 
     /**
      * Counts usage in most standard way.
@@ -105,7 +116,7 @@ public class StandardUsageCalculator implements IConsumptionCalculator {
 
         final double consumptionOld = sumUsageByDate(readings, apartmentPredicate, minDate);
 
-        if(isTheFirstReading()) {
+        if (isTheFirstReading()) {
             return consumptionOld;
         }
 
@@ -154,9 +165,9 @@ public class StandardUsageCalculator implements IConsumptionCalculator {
     }
 
     private void validateReadingType(List<Reading> readings) throws UsageCalculationException {
-       final Media m = readings.get(0).getReadingDetails().getMedia();
+        final Media m = readings.get(0).getReadingDetails().getMedia();
         for (int i = 1; i < readings.size(); i++) {
-           final Media tmpMedia = readings.get(i).getReadingDetails().getMedia();
+            final Media tmpMedia = readings.get(i).getReadingDetails().getMedia();
             if (!m.equals(tmpMedia)) {
                 throw new UsageCalculationException("List contains readings of different type: " + m + " vs. " + tmpMedia);
             }
