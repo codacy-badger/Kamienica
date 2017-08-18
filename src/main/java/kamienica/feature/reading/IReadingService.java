@@ -6,6 +6,7 @@ import kamienica.model.enums.Media;
 import kamienica.model.exception.NoMainCounterException;
 import org.joda.time.LocalDate;
 
+import java.util.EnumMap;
 import java.util.List;
 import java.util.Map;
 
@@ -29,6 +30,8 @@ public interface IReadingService {
 
     List<Reading> getForInvoice(Invoice invoice);
 
+    EnumMap<ReadingAge, List<Reading>> readingsForPayment(Invoice invoice);
+
     @Deprecated
     List<Reading> getPreviousReading(LocalDate date, List<Meter> meters);
 
@@ -41,4 +44,6 @@ public interface IReadingService {
     void deleteLatestReadings(final Residence r, Media media);
 
     void delete(ReadingForm readingForm);
+
+    List<Reading> getPreviousReading(Invoice invoice);
 }

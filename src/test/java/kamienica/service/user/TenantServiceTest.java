@@ -1,4 +1,4 @@
-package kamienica.service;
+package kamienica.service.user;
 
 import kamienica.configuration.ServiceTest;
 import kamienica.model.entity.Apartment;

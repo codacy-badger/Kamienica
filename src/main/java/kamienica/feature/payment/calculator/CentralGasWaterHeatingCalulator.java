@@ -2,6 +2,7 @@ package kamienica.feature.payment.calculator;
 
 import kamienica.feature.reading.IReadingDao;
 import kamienica.model.entity.Apartment;
+import kamienica.model.entity.Invoice;
 import kamienica.model.entity.MediaUsage;
 import kamienica.model.entity.Reading;
 import kamienica.model.exception.NegativeConsumptionValue;
@@ -31,5 +32,10 @@ public class CentralGasWaterHeatingCalulator implements IConsumptionCalculator {
     @Override
     public List<MediaUsage> calculateConsumption(final List<Apartment> apartments, final List<Reading> readings) throws NegativeConsumptionValue, UsageCalculationException {
         throw new NotImplementedException();
+    }
+
+    @Override
+    public List<MediaUsage> calculateConsumption(Invoice invoice) {
+        return null;
     }
 }

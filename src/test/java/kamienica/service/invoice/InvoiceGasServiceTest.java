@@ -1,4 +1,4 @@
-package kamienica.service;
+package kamienica.service.invoice;
 
 import kamienica.configuration.ServiceTest;
 import kamienica.core.util.SecurityDetails;

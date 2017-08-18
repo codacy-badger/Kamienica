@@ -2,12 +2,12 @@ package kamienica.feature.payment.calculator;
 
 import kamienica.core.util.CommonUtils;
 import kamienica.feature.reading.IReadingDao;
-import kamienica.model.entity.Apartment;
-import kamienica.model.entity.MediaUsage;
-import kamienica.model.entity.Reading;
+import kamienica.feature.reading.IReadingService;
+import kamienica.model.entity.*;
 import kamienica.model.enums.Media;
 import kamienica.model.exception.NegativeConsumptionValue;
 import kamienica.model.exception.UsageCalculationException;
+import org.hibernate.criterion.Restrictions;
 import org.joda.time.LocalDate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -25,7 +25,7 @@ import java.util.function.Predicate;
 @Transactional
 public class StandardUsageCalculator implements IConsumptionCalculator {
 
-    static final String TYPE= "STANDARD";
+    public static final String TYPE= "STANDARD";
 
     private LocalDate latestDate;
     private LocalDate previousDate;
@@ -33,11 +33,11 @@ public class StandardUsageCalculator implements IConsumptionCalculator {
     private Predicate<Reading> maxDate = s -> s.getReadingDetails().getReadingDate().equals(latestDate);
     private Predicate<Reading> minDate = s -> s.getReadingDetails().getReadingDate().equals(previousDate);
     private double totalUsageCounted = 0;
-    private final IReadingDao readingDao;
+    private final IReadingService readingService;
 
     @Autowired
-    public StandardUsageCalculator(IReadingDao readingDao) {
-        this.readingDao = readingDao;
+    public StandardUsageCalculator(IReadingService readingService) {
+        this.readingService = readingService;
     }
 
     /**
@@ -67,6 +67,15 @@ public class StandardUsageCalculator implements IConsumptionCalculator {
         checkCalculatedResult(result, readings);
         return result;
     }
+
+    @Override
+    public List<MediaUsage> calculateConsumption(final Invoice invoice) {
+        final List<Reading> newReadings = readingService.getForInvoice(invoice);
+        final List<Reading> oldReadins = readingService.getPreviousReading(invoice);
+        return null;
+    }
+
+
 
     private void validateReadings(List<Reading> readings) throws UsageCalculationException {
         validateReadingType(readings);

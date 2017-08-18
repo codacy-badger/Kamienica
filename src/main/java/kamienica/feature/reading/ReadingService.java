@@ -9,6 +9,7 @@ import kamienica.model.enums.Resolvement;
 import kamienica.model.enums.Status;
 import kamienica.model.exception.NoMainCounterException;
 import org.hibernate.criterion.Criterion;
+import org.hibernate.criterion.DetachedCriteria;
 import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Restrictions;
 import org.joda.time.LocalDate;
@@ -124,7 +125,15 @@ public class ReadingService implements IReadingService {
     @Override
     public List<Reading> getForInvoice(final Invoice invoice) {
         final ReadingDetails rd = invoice.getReadingDetails();
-        return readingDao.findByCriteria(Restrictions.eq("readingDetails", rd));
+        final DetachedCriteria activeMeters = DetachedCriteria.forClass(Meter.class);
+        activeMeters.add(Restrictions.eq("status", Status.ACTIVE));
+        Criterion c = Restrictions.eq()
+        return readingDao.findByCriteria(Restrictions.eq("readingDetails", rd), activeMeters);
+    }
+
+    @Override
+    public EnumMap<ReadingAge, List<Reading>> readingsForPayment(Invoice invoice) {
+        return null;
     }
 
     @Override

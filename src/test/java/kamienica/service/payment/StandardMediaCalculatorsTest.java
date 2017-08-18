@@ -1,7 +1,9 @@
-package kamienica.core;
+package kamienica.service.payment;
 
+import kamienica.configuration.ServiceTest;
 import kamienica.feature.payment.calculator.IConsumptionCalculator;
 import kamienica.feature.payment.calculator.StandardUsageCalculator;
+import kamienica.feature.reading.ReadingDao;
 import kamienica.model.entity.MediaUsage;
 import kamienica.model.entity.Reading;
 import kamienica.model.exception.NegativeConsumptionValue;
@@ -10,6 +12,7 @@ import kamienica.testutils.EntityProvider;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
@@ -18,12 +21,11 @@ import java.util.List;
 
 import static org.junit.Assert.assertEquals;
 
-@RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(classes = StandardUsageCalculator.class)
-public class StandardMediaCalculatorsTest {
+public class StandardMediaCalculatorsTest extends ServiceTest {
 
 
     @Autowired
+    @Qualifier(value = "STANDARD")
     private IConsumptionCalculator consumptionCalc;
 
     @Test
