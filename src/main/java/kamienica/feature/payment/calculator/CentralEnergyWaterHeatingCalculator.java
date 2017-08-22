@@ -26,13 +26,9 @@ public class CentralEnergyWaterHeatingCalculator implements IConsumptionCalculat
         this.readingDao = readingDao;
     }
 
-    @Override
-    public List<MediaUsage> calculateConsumption(List<Apartment> apartments, List<Reading> readings) throws NegativeConsumptionValue, UsageCalculationException {
-       throw new NotImplementedException();
-    }
 
     @Override
-    public List<MediaUsage> calculateConsumption(Invoice invoice) {
+    public List<MediaUsage> calculateConsumption(Invoice invoice,  List<Apartment> apartments) {
         return null;
     }
 }

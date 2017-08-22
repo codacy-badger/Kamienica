@@ -1,13 +1,11 @@
 package kamienica.feature.payment.calculator;
 
 import kamienica.core.util.CommonUtils;
-import kamienica.feature.reading.IReadingDao;
 import kamienica.feature.reading.IReadingService;
 import kamienica.model.entity.*;
 import kamienica.model.enums.Media;
 import kamienica.model.exception.NegativeConsumptionValue;
 import kamienica.model.exception.UsageCalculationException;
-import org.hibernate.criterion.Restrictions;
 import org.joda.time.LocalDate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -25,14 +23,7 @@ import java.util.function.Predicate;
 @Transactional
 public class StandardUsageCalculator implements IConsumptionCalculator {
 
-    public static final String TYPE= "STANDARD";
-
-    private LocalDate latestDate;
-    private LocalDate previousDate;
-    private Predicate<Reading> noNullApartment = s -> s.getMeter().getApartment() != null;
-    private Predicate<Reading> maxDate = s -> s.getReadingDetails().getReadingDate().equals(latestDate);
-    private Predicate<Reading> minDate = s -> s.getReadingDetails().getReadingDate().equals(previousDate);
-    private double totalUsageCounted = 0;
+    static final String TYPE= "STANDARD";
     private final IReadingService readingService;
 
     @Autowired
@@ -44,143 +35,51 @@ public class StandardUsageCalculator implements IConsumptionCalculator {
      * Counts usage in most standard way.
      * The difference between main meter and the sum of submeters will be divided evenly among the tenants.
      *
-     * @param apartment
-     * @param readings
+     * @param invoice
+     * @param apartments
      * @return List<MediaUsage>
-     * @throws NegativeConsumptionValue
-     * @throws UsageCalculationException
      */
     @Override
-    public List<MediaUsage> calculateConsumption(@NotNull final List<Apartment> apartment,
-                                                 @NotNull final List<Reading> readings) throws NegativeConsumptionValue, UsageCalculationException {
-
-        latestDate = findNewestDate(readings);
-        previousDate = findLatestDate(readings);
-        validateReadings(readings);
-        List<MediaUsage> result = new ArrayList<>();
+    public List<MediaUsage> calculateConsumption(final Invoice invoice, final List<Apartment> apartments) {
+        final List<Reading> newReadings = readingService.getForInvoice(invoice);
+        final List<Reading> oldReadins = readingService.getPreviousReading(invoice);
+        final List<MediaUsage> result = new ArrayList<>();
 
 
-        for (Apartment ap : apartment) {
-            MediaUsage value = countUsageForApartment(ap, readings);
+        for (final Apartment ap : apartments) {
+            final MediaUsage value = countUsageForApartment(ap, oldReadins, newReadings);
             result.add(value);
         }
-        checkCalculatedResult(result, readings);
+        recalculateSharedPartConsuption(oldReadins, newReadings, result);
         return result;
     }
 
-    @Override
-    public List<MediaUsage> calculateConsumption(final Invoice invoice) {
-        final List<Reading> newReadings = readingService.getForInvoice(invoice);
-        final List<Reading> oldReadins = readingService.getPreviousReading(invoice);
-        return null;
-    }
-
-
-
-    private void validateReadings(List<Reading> readings) throws UsageCalculationException {
-        validateReadingType(readings);
-        validateReadingDates(readings);
-    }
-
-    private void validateReadingDates(List<Reading> readings) throws UsageCalculationException {
-
-        for (final Reading r : readings) {
-            if (!(r.getReadingDetails().getReadingDate().isEqual(latestDate) || r.getReadingDetails().getReadingDate().isEqual(previousDate))) {
-                throw new UsageCalculationException("There are more than two reading dates in the collection");
-            }
-        }
-
-    }
-
-    private void checkCalculatedResult(final List<MediaUsage> result, final List<Reading> readings) throws NegativeConsumptionValue {
-        final double mainMeterUsage = countForMainMeter(readings);
-        if (totalUsageCounted < mainMeterUsage) {
-            final double difference = mainMeterUsage - totalUsageCounted;
-            addDifferenceToSharedPart(result, difference);
+    private void recalculateSharedPartConsuption(final List<Reading> oldReadins, final List<Reading> newReadings, final List<MediaUsage> result) {
+        final double oldMainMeterUsage = oldReadins.stream().filter(x ->x.getMeter().getApartment() == null).mapToDouble(x->x.getValue()).sum();
+        final double newMainMeterUsage = newReadings.stream().filter(x ->x.getMeter().getApartment() == null).mapToDouble(x->x.getValue()).sum();
+        final double mainMeterUsage = newMainMeterUsage - oldMainMeterUsage;
+        final double calculatedResult = result.stream().mapToDouble(x -> x.getUsage()).sum();
+        if(mainMeterUsage > calculatedResult) {
+            final MediaUsage sharedPart = result.stream().filter(x -> x.getApartment().getApartmentNumber()==0).findFirst().get();
+            final double currentUsage = sharedPart.getUsage();
+            sharedPart.setUsage(currentUsage + (mainMeterUsage - calculatedResult));
         }
     }
 
-    private void addDifferenceToSharedPart(List<MediaUsage> result, double difference) {
-
-        for (MediaUsage aResult : result) {
-            if (aResult.getApartment().getApartmentNumber() == 0) {
-                double usageToChange = aResult.getUsage();
-                usageToChange += difference;
-                aResult.setUsage(usageToChange);
-            }
-        }
+    private MediaUsage countUsageForApartment(final Apartment ap, final List<Reading> oldReadins, final List<Reading> newReadings) {
+        final double totalUsageForNewReadings = getSum(newReadings, ap);
+        final double totalUsageForOldReadings = getSum(oldReadins, ap);
+        final double consumption = totalUsageForNewReadings - totalUsageForOldReadings;
+        return new MediaUsage(consumption,  ap);
     }
 
-
-    private MediaUsage countUsageForApartment(final Apartment ap, final List<Reading> readings) throws NegativeConsumptionValue {
-        double consumption = countUsage(ap, readings);
-        final int daysBetween = CommonUtils.countDaysBetween(previousDate, latestDate);
-        totalUsageCounted += consumption;
-        return new MediaUsage("Użycie za " + ap.getDescription(), consumption, "unit", daysBetween, ap);
-    }
-
-
-    private double countUsage(final Apartment ap, final List<Reading> readings) throws NegativeConsumptionValue {
-        final Predicate<Reading> apartmentPredicate = s -> s.getMeter().getApartment().getId().equals(ap.getId());
-
-        final double consumptionOld = sumUsageByDate(readings, apartmentPredicate, minDate);
-
-        if (isTheFirstReading()) {
-            return consumptionOld;
-        }
-
-        final double consumptionNew = sumUsageByDate(readings, apartmentPredicate, maxDate);
-        final double consumption = consumptionNew - consumptionOld;
-
-        if (consumption < 0) {
-            throw new NegativeConsumptionValue(consumption, ap);
-        }
-        return consumption;
-    }
-
-    private boolean isTheFirstReading() {
-        return latestDate.equals(previousDate);
-    }
-
-    private double countForMainMeter(final List<Reading> readings) throws NegativeConsumptionValue {
-        final Predicate<Reading> apartmentPredicate = s -> s.getMeter().getApartment() == null;
-
-        final double consumptionOld = sumUsageForMain(readings, apartmentPredicate, minDate);
-        final double consumptionNew = sumUsageForMain(readings, apartmentPredicate, maxDate);
-        final double consumption = consumptionNew - consumptionOld;
-
-        if (consumption < 0) {
-            throw new NegativeConsumptionValue(consumption, null);
-        }
-        return consumption;
-    }
-
-    private double sumUsageByDate(List<Reading> readings, Predicate<Reading> apartmentPredicate, Predicate<Reading> pred) {
-        return readings.stream().filter(noNullApartment).filter(apartmentPredicate).filter(pred)
-                .mapToDouble(o -> o.getValue()).sum();
-    }
-
-    private double sumUsageForMain(List<Reading> readings, Predicate<Reading> apartmentPredicate, Predicate<Reading> pred) {
-        return readings.stream().filter(apartmentPredicate).filter(pred)
-                .mapToDouble(o -> o.getValue()).sum();
-    }
-
-    private LocalDate findLatestDate(@NotNull List<Reading> readings) {
-        return readings.stream().map(x -> x.getReadingDetails().getReadingDate()).min(LocalDate::compareTo).get();
-    }
-
-    private LocalDate findNewestDate(@NotNull List<Reading> readings) {
-        return readings.stream().map(x -> x.getReadingDetails().getReadingDate()).max(LocalDate::compareTo).get();
-    }
-
-    private void validateReadingType(List<Reading> readings) throws UsageCalculationException {
-        final Media m = readings.get(0).getReadingDetails().getMedia();
-        for (int i = 1; i < readings.size(); i++) {
-            final Media tmpMedia = readings.get(i).getReadingDetails().getMedia();
-            if (!m.equals(tmpMedia)) {
-                throw new UsageCalculationException("List contains readings of different type: " + m + " vs. " + tmpMedia);
-            }
-        }
-
+    private double getSum(List<Reading> newReadings, final Apartment ap) {
+        final Predicate<Reading> notNull = x -> x.getMeter().getApartment() != null;
+        final Predicate<Reading> thisApartment = x -> x.getMeter().getApartment().equals(ap);
+        return newReadings.stream()
+                .filter(notNull)
+                .filter(thisApartment)
+                .mapToDouble(x -> x.getValue())
+                .sum();
     }
 }

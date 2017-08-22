@@ -11,7 +11,5 @@ import java.util.List;
 
 public interface IConsumptionCalculator {
 
-    List<MediaUsage> calculateConsumption(List<Apartment> apartments, List<Reading> readings) throws NegativeConsumptionValue, UsageCalculationException;
-
-    List<MediaUsage> calculateConsumption(Invoice invoice);
+    List<MediaUsage> calculateConsumption(Invoice invoice, List<Apartment> apartments);
 }

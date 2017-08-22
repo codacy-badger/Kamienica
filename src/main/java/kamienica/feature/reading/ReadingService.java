@@ -8,10 +8,8 @@ import kamienica.model.enums.Media;
 import kamienica.model.enums.Resolvement;
 import kamienica.model.enums.Status;
 import kamienica.model.exception.NoMainCounterException;
-import org.hibernate.criterion.Criterion;
-import org.hibernate.criterion.DetachedCriteria;
-import org.hibernate.criterion.Order;
-import org.hibernate.criterion.Restrictions;
+import org.hibernate.Criteria;
+import org.hibernate.criterion.*;
 import org.joda.time.LocalDate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -125,10 +123,7 @@ public class ReadingService implements IReadingService {
     @Override
     public List<Reading> getForInvoice(final Invoice invoice) {
         final ReadingDetails rd = invoice.getReadingDetails();
-        final DetachedCriteria activeMeters = DetachedCriteria.forClass(Meter.class);
-        activeMeters.add(Restrictions.eq("status", Status.ACTIVE));
-        Criterion c = Restrictions.eq()
-        return readingDao.findByCriteria(Restrictions.eq("readingDetails", rd), activeMeters);
+        return readingDao.findByCriteria(Restrictions.eq("readingDetails", rd));
     }
 
     @Override
@@ -209,5 +204,20 @@ public class ReadingService implements IReadingService {
             readingDao.delete(r);
         }
         readingDetailsDao.delete(readingForm.getReadingDetails());
+    }
+
+    @Override
+    public List<Reading> getPreviousReading(final Invoice invoice) {
+        final DetachedCriteria detachedCriteria = DetachedCriteria.forClass(ReadingDetails.class);
+        detachedCriteria.add(Restrictions.eq("residence", invoice.getResidence()));
+        detachedCriteria.add(Restrictions.eq("media", invoice.getMedia()));
+        detachedCriteria.add(Restrictions.lt("readingDate", invoice.getReadingDetails().getReadingDate()));
+        detachedCriteria.setProjection(Projections.max("readingDate"));
+
+        final Criterion one  = Restrictions.eq("residence", invoice.getResidence());
+        final Criterion two  =Restrictions.eq("media", invoice.getMedia());
+        final Criterion three  =Property.forName("readingDate").eq(detachedCriteria);
+        final ReadingDetails rd = readingDetailsDao.findOneByCriteria(one, two, three);
+        return readingDao.findByCriteria(Restrictions.eq("readingDetails", rd));
     }
 }

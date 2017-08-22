@@ -31,18 +31,16 @@ public class PaymentCalculator implements IPaymentCalculator{
     private final ISettingsService settingsService;
     private final IDivisionService divisionService;
     private final IReadingService readingService;
-    private final IMeterService meterService;
     private final IReadingDetailsDao readingDetailsDao;
     private final IReadingDao readingDao;
     private final Map<String, IConsumptionCalculator> consumptionCalculatorMap;
 
     @Autowired
     public PaymentCalculator(ISettingsService settingsService, IDivisionService divisionService, IReadingService readingService,
-                             IMeterService meterService, IReadingDetailsDao readingDetailsDao, IReadingDao readingDao, Map<String, IConsumptionCalculator> consumptionCalculatorMap) {
+                             IReadingDetailsDao readingDetailsDao, IReadingDao readingDao, Map<String, IConsumptionCalculator> consumptionCalculatorMap) {
         this.settingsService = settingsService;
         this.divisionService = divisionService;
         this.readingService = readingService;
-        this.meterService = meterService;
         this.readingDetailsDao = readingDetailsDao;
         this.readingDao = readingDao;
         this.consumptionCalculatorMap = consumptionCalculatorMap;
@@ -50,22 +48,14 @@ public class PaymentCalculator implements IPaymentCalculator{
 
     @Override
     public List<Payment> createPaymentList(final Invoice invoice) throws UsageCalculationException, NegativeConsumptionValue {
-
         if(invoice.getMedia().equals(Media.GAS)) {
             return createGasPayments(invoice);
         }
 
-        final LocalDate baseReadingDate = invoice.getReadingDetails().getReadingDate();
-        final Residence r = invoice.getResidence();
         final List<Division> division = divisionService.createDivisionForResidence(invoice);
         final List<Apartment> apartments = extractApartmentsFromDivision(division);
-        final List<Reading> readings = new ArrayList<>();
-        readings.addAll(readingService.getPreviousReading(baseReadingDate, meterService.list(r, invoice.getMedia())));
-        readings.addAll(readingService.getForInvoice(invoice));
-
-        final IConsumptionCalculator calculator = consumptionCalculatorMap.get(createCalculator(invoice));
-
-        final List<MediaUsage> usage = calculator.calculateConsumption(apartments, readings);
+        final IConsumptionCalculator calculator = createCalculator(invoice);
+        final List<MediaUsage> usage = calculator.calculateConsumption(invoice, apartments);
 
         return generatePayments(invoice, division, usage);
     }
@@ -73,11 +63,9 @@ public class PaymentCalculator implements IPaymentCalculator{
 
     private List<Payment> createGasPayments(final Invoice invoice) {
         Settings settings = settingsService.getSettings(invoice.getResidence());
-        final Residence r = invoice.getResidence();
         List<Division> division = divisionService.createDivisionForResidence(invoice);
         final List<Apartment> apartments = extractApartmentsFromDivision(division);
-        List<Reading> ReadingOld = readingService.getPreviousReading(invoice.getReadingDetails().getReadingDate(),
-                meterService.list(r, Media.GAS));
+        List<Reading> ReadingOld = readingService.getPreviousReading(invoice);
         List<Reading> ReadingNew = readingService.getForInvoice(invoice);
         List<MediaUsage> usageGas;
         if (settings.getWaterHeatingSystem().equals(WaterHeatingSystem.SHARED_GAS)) {
@@ -96,9 +84,10 @@ public class PaymentCalculator implements IPaymentCalculator{
     }
 
 
-    private String createCalculator(final Invoice invoice) {
+    private IConsumptionCalculator createCalculator(final Invoice invoice) {
         final Settings settings = settingsService.getSettings(invoice.getResidence());
-        return UsageCalculatorProvider.provideCalculator(settings.getWaterHeatingSystem(), invoice.getMedia());
+        final String key = UsageCalculatorProvider.provideCalculator(settings.getWaterHeatingSystem(), invoice.getMedia());
+        return consumptionCalculatorMap.get(key);
     }
 
     private List<Payment> generatePayments(final Invoice invoice,
@@ -135,13 +124,13 @@ public class PaymentCalculator implements IPaymentCalculator{
         return division.stream().map(Division::getApartment).distinct().collect(Collectors.toList());
     }
 
-    private double sumUsage(List<MediaUsage> listaZuzycia) {
-        double suma = 0;
-        for (MediaUsage i : listaZuzycia) {
-            suma += i.getUsage();
+    private double sumUsage(List<MediaUsage> usage) {
+        double sum = 0;
+        for (MediaUsage i : usage) {
+            sum += i.getUsage();
         }
 
-        return suma;
+        return sum;
     }
 
     private HashMap<Integer, Double> setTenantDivision(List<Division> division, Tenant tenant) {

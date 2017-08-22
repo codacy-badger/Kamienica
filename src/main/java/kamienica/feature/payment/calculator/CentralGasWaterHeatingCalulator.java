@@ -30,12 +30,7 @@ public class CentralGasWaterHeatingCalulator implements IConsumptionCalculator {
     }
 
     @Override
-    public List<MediaUsage> calculateConsumption(final List<Apartment> apartments, final List<Reading> readings) throws NegativeConsumptionValue, UsageCalculationException {
-        throw new NotImplementedException();
-    }
-
-    @Override
-    public List<MediaUsage> calculateConsumption(Invoice invoice) {
+    public List<MediaUsage> calculateConsumption(Invoice invoice, List<Apartment> apartments) {
         return null;
     }
 }
