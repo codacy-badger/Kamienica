@@ -55,7 +55,7 @@ INSERT INTO  METER  ( id , status , description , main , serialNumber , unit , c
 INSERT INTO  METER  ( id , status , description , main , serialNumber , unit , cwu , apartment_id, residence_id, media, isWarmWater  ) VALUES (17,'ACTIVE','G Piwnica',0,'gaz3','m3','0',2, 1, 'GAS', '0');
 INSERT INTO  METER  ( id , status , description , main , serialNumber , unit , cwu , apartment_id, residence_id, media , isWarmWater ) VALUES (18,'ACTIVE','G Parter',0,'gaz4','m3','0',3, 1, 'GAS', '0');
 INSERT INTO  METER  ( id , status , description , main , serialNumber , unit , cwu , apartment_id, residence_id, media, isWarmWater  ) VALUES (19,'ACTIVE','G I pietro',0,'gaz5','m3','0',4, 1, 'GAS', '0');
-INSERT INTO  METER  ( id , status , description , main , serialNumber , unit , cwu , apartment_id, residence_id, media , isWarmWater ) VALUES (20,'ACTIVE','CWU',0,'gaz6','m3','1',1, 1, 'GAS', '0');
+INSERT INTO  METER  ( id , status , description , main , serialNumber , unit , cwu , apartment_id, residence_id, media , isWarmWater ) VALUES (20,'ACTIVE','CWU',0,'gaz6','m3','1',null, 1, 'GAS', '0');
 INSERT INTO  METER  ( id , status , description , main , serialNumber , unit , cwu , apartment_id, residence_id, media , isWarmWater ) VALUES (21,'ACTIVE','G 2res',0,'gaz7','m3','0',5, 2, 'GAS', '0');
 
 

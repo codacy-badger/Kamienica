@@ -33,7 +33,7 @@ public interface IReadingService {
     EnumMap<ReadingAge, List<Reading>> readingsForPayment(Invoice invoice);
 
     @Deprecated
-    List<Reading> getPreviousReading(LocalDate date, List<Meter> meters);
+    List<Reading> getPreviousReadingForWarmWater(LocalDate date, List<Meter> meters);
 
     @Deprecated
     List<Reading> getLatestNew(Residence r, Media media) throws NoMainCounterException;
@@ -45,5 +45,7 @@ public interface IReadingService {
 
     void delete(ReadingForm readingForm);
 
-    List<Reading> getPreviousReading(Invoice invoice);
+    public List<Reading> getPreviousReadingForWarmWater(final Invoice invoice);
+
+    List<Reading> getPreviousReadingForWarmWater(Residence r, Media m, LocalDate date);
 }

@@ -1,6 +1,7 @@
 package kamienica.feature.payment.calculator;
 
 import kamienica.feature.reading.IReadingDao;
+import kamienica.feature.reading.IReadingService;
 import kamienica.model.entity.Apartment;
 import kamienica.model.entity.Invoice;
 import kamienica.model.entity.MediaUsage;
@@ -16,19 +17,22 @@ import java.util.List;
 
 @Service(value = CentralEnergyWaterHeatingCalculator.TYPE)
 @Transactional
-public class CentralEnergyWaterHeatingCalculator implements IConsumptionCalculator {
+public class CentralEnergyWaterHeatingCalculator extends ConsumptionCalculator {
 
     static final String TYPE= "CENTRAL_ENERGY";
-    private final IReadingDao readingDao;
 
     @Autowired
-    public CentralEnergyWaterHeatingCalculator(IReadingDao readingDao) {
-        this.readingDao = readingDao;
+    public CentralEnergyWaterHeatingCalculator(IReadingService readingService, IReadingDao readingDao){
+        super(readingService, readingDao);
     }
-
 
     @Override
     public List<MediaUsage> calculateConsumption(Invoice invoice,  List<Apartment> apartments) {
-        return null;
+        throw new NotImplementedException();
+    }
+
+    @Override
+    protected void recalculateSharedPartConsuption(List<MediaUsage> result) {
+
     }
 }

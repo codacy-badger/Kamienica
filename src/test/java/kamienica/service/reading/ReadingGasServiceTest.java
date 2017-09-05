@@ -76,7 +76,7 @@ public class ReadingGasServiceTest extends ServiceTest {
     @Test
     public void shouldRetrieviePreviousReadings() {
         List<Meter> meters = meterService.list(residence, Media.GAS);
-        List<Reading> list = readingService.getPreviousReading(PREVIOUS_DATE, meters);
+        List<Reading> list = readingService.getPreviousReadingForWarmWater(PREVIOUS_DATE, meters);
 
         for (Reading readingGas : list) {
             assertEquals(TWENTYNINGTH_JULY, readingGas.getReadingDetails().getReadingDate());
@@ -114,7 +114,7 @@ public class ReadingGasServiceTest extends ServiceTest {
     @Test
     public void getPreviousReadings() {
         List<Meter> meters = meterService.list(residence, Media.GAS);
-        List<Reading> list = readingService.getPreviousReading(FIRST_OCTOBER, meters);
+        List<Reading> list = readingService.getPreviousReadingForWarmWater(FIRST_OCTOBER, meters);
         assertEquals(6, list.size());
         for (Reading readingGas : list) {
             assertEquals("2016-09-01", readingGas.getReadingDetails().getReadingDate().toString());

@@ -274,7 +274,7 @@ public class ReadingController {
         final Residence r = residenceService.getById(id);
         final List<Meter> meters = meterService.list(r, media);
         readingForm.setCurrentReadings(readingService.latestEdit(r, media));
-        readingForm.setPreviousReadings(readingService.getPreviousReading(readingForm.getDate(), meters));
+        readingForm.setPreviousReadings(readingService.getPreviousReadingForWarmWater(readingForm.getDate(), meters));
 
         Map<String, Object> model = new HashMap<>();
         model.put("date", readingForm.getCurrentReadings().get(0).getReadingDetails().getReadingDate());

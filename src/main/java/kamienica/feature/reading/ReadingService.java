@@ -108,7 +108,7 @@ public class ReadingService implements IReadingService {
 
 
     @Override
-    public List<Reading> getPreviousReading(LocalDate date, List<Meter> meters) {
+    public List<Reading> getPreviousReadingForWarmWater(LocalDate date, List<Meter> meters) {
         //TODO very bas solution but this method gets kicked soon anyway so no point of refactoring it
         final Media m = meters.get(0).getMedia();
         List<ReadingDetails> details = readingDetailsDao.findByCriteria(Order.desc("readingDate"), Restrictions.lt("readingDate", date), Restrictions.eq("media", m));
@@ -200,24 +200,40 @@ public class ReadingService implements IReadingService {
 
     @Override
     public void delete(ReadingForm readingForm) {
-        for(Reading r:readingForm.getReadings()) {
+        for (Reading r : readingForm.getReadings()) {
             readingDao.delete(r);
         }
         readingDetailsDao.delete(readingForm.getReadingDetails());
     }
 
     @Override
-    public List<Reading> getPreviousReading(final Invoice invoice) {
+    public List<Reading> getPreviousReadingForWarmWater(final Invoice invoice) {
         final DetachedCriteria detachedCriteria = DetachedCriteria.forClass(ReadingDetails.class);
         detachedCriteria.add(Restrictions.eq("residence", invoice.getResidence()));
         detachedCriteria.add(Restrictions.eq("media", invoice.getMedia()));
         detachedCriteria.add(Restrictions.lt("readingDate", invoice.getReadingDetails().getReadingDate()));
         detachedCriteria.setProjection(Projections.max("readingDate"));
 
-        final Criterion one  = Restrictions.eq("residence", invoice.getResidence());
-        final Criterion two  =Restrictions.eq("media", invoice.getMedia());
-        final Criterion three  =Property.forName("readingDate").eq(detachedCriteria);
+        final Criterion one = Restrictions.eq("residence", invoice.getResidence());
+        final Criterion two = Restrictions.eq("media", invoice.getMedia());
+        final Criterion three = Property.forName("readingDate").eq(detachedCriteria);
         final ReadingDetails rd = readingDetailsDao.findOneByCriteria(one, two, three);
+        return readingDao.findByCriteria(Restrictions.eq("readingDetails", rd));
+    }
+
+    @Override
+    public List<Reading> getPreviousReadingForWarmWater(final Residence r, final Media m, final LocalDate date) {
+        final DetachedCriteria detachedCriteria = DetachedCriteria.forClass(ReadingDetails.class);
+        detachedCriteria.add(Restrictions.eq("residence", r));
+        detachedCriteria.add(Restrictions.eq("media", m));
+        detachedCriteria.add(Restrictions.lt("readingDate", date));
+        detachedCriteria.setProjection(Projections.max("readingDate"));
+
+        final Criterion one = Restrictions.eq("residence", r);
+        final Criterion two = Restrictions.eq("media", m);
+        final Criterion three = Property.forName("readingDate").eq(detachedCriteria);
+        final ReadingDetails rd = readingDetailsDao.findOneByCriteria(one, two, three);
+
         return readingDao.findByCriteria(Restrictions.eq("readingDetails", rd));
     }
 }
