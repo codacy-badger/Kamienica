@@ -1,13 +1,10 @@
 package kamienica.model.enums;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-
 public enum WaterHeatingSystem {
 
-	INDIVIDUAL_GAS("Indywidualny podgrzewacz gazowy"), SHARED_GAS("Wspólny podgrzewacz gazowy"), ELECTRIC(
-			"Indywidualny podgrzewacz elektryczny");
+	SEPARATE_HEATER("Individual heating system"),
+	SHARED_GAS_HEATER("Shared gas heater"),
+	SHARED_ELECTRIC_HEATER("Shared electric heater");
 
 	private String system;
 
@@ -23,8 +20,4 @@ public enum WaterHeatingSystem {
 		this.system = system;
 	}
 
-	public static List<String> getValues() {
-		return new ArrayList<>(Arrays.asList(WaterHeatingSystem.ELECTRIC.getSystem(),
-				WaterHeatingSystem.INDIVIDUAL_GAS.getSystem(), WaterHeatingSystem.SHARED_GAS.getSystem()));
-	}
 }

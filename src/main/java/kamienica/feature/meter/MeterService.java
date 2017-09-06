@@ -30,20 +30,13 @@ public class MeterService implements IMeterService {
     public void save(Meter meter) {
         //TODO think on a better way to do this...
         meter.setResidence(meter.getApartment().getResidence());
-        //TODO this check shoudl be removed in #138
-        if (meter.getApartment() == null) {
-            meter.setMain(true);
-        }
         meterDao.save(meter);
     }
 
     @Override
     public void update(Meter meter) {
-        //TODO this should be moved out of dao
         meter.setMain(meter.getApartment() == null);
-
         meterDao.update(meter);
-
     }
 
     @Override
@@ -52,7 +45,6 @@ public class MeterService implements IMeterService {
         final Criterion c1 = Restrictions.in("residence", residences);
         final Criterion c2 = Restrictions.eq("media", media);
         return meterDao.findByCriteria(c1, c2);
-
     }
 
     @Override

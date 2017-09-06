@@ -46,11 +46,10 @@ public class StandardUsageCalculator implements IConsumptionCalculator {
         latestDate = findNewestDate(readings);
         previousDate = findLatestDate(readings);
         validateReadings(readings);
-        List<MediaUsage> result = new ArrayList<>();
-
+        final List<MediaUsage> result = new ArrayList<>();
 
         for (Apartment ap : apartment) {
-            MediaUsage value = countUsageForApartment(ap, readings);
+            final MediaUsage value = countUsageForApartment(ap, readings);
             result.add(value);
         }
         checkCalculatedResult(result, readings);
@@ -69,7 +68,6 @@ public class StandardUsageCalculator implements IConsumptionCalculator {
                 throw new UsageCalculationException("There are more than two reading dates in the collection");
             }
         }
-
     }
 
     private void checkCalculatedResult(final List<MediaUsage> result, final List<Reading> readings) throws NegativeConsumptionValue {
@@ -145,9 +143,9 @@ public class StandardUsageCalculator implements IConsumptionCalculator {
     }
 
     private void validateReadingType(List<Reading> readings) throws UsageCalculationException {
-       final Media m = readings.get(0).getReadingDetails().getMedia();
+        final Media m = readings.get(0).getReadingDetails().getMedia();
         for (int i = 1; i < readings.size(); i++) {
-           final Media tmpMedia = readings.get(i).getReadingDetails().getMedia();
+            final Media tmpMedia = readings.get(i).getReadingDetails().getMedia();
             if (!m.equals(tmpMedia)) {
                 throw new UsageCalculationException("List contains readings of different type: " + m + " vs. " + tmpMedia);
             }

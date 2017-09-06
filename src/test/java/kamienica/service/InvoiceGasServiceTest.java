@@ -101,7 +101,7 @@ public class InvoiceGasServiceTest extends ServiceTest {
 
         List<ReadingDetails> list = readingDetailsService.getUnresolved(r, Media.GAS);
         Settings setings = settingsService.getSettings();
-        setings.setWaterHeatingSystem(WaterHeatingSystem.INDIVIDUAL_GAS);
+        setings.setWaterHeatingSystem(WaterHeatingSystem.SEPARATE_HEATER);
         settingsService.save(setings);
         assertEquals(2, list.size());
         Invoice invoice = new Invoice("112233", TODAY, 200, r, list.get(0), Media.GAS);

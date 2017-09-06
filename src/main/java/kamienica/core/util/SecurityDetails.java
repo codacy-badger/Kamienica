@@ -25,6 +25,17 @@ public class SecurityDetails {
         return su.getResidencesOwned();
     }
 
+    public static void removeResidenceFromPrincipal(final Residence r) {
+        final List<Residence> residences = getPrincipal().getResidencesOwned();
+        for (int i = 0; i < residences.size(); i++) {
+            if (residences.get(i).equals(r)) {
+                residences.remove(i);
+                break;
+            }
+        }
+
+    }
+
     private static SecurityUser getPrincipal() {
         return (SecurityUser) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
     }

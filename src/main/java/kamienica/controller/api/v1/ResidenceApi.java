@@ -92,7 +92,9 @@ public class ResidenceApi {
     public ResponseEntity<Message> delete(@PathVariable("id") final Long id) {
         final Message message = new Message("OK", null);
         try {
-            residenceService.deleteById(id);
+            final Residence r = residenceService.getById(id);
+            residenceService.delete(r);
+//            residenceService.deleteById(id);
         } catch (Exception e) {
             message.setMessage(ControllerMessages.CONSTRAINT_VIOLATION);
             message.setException(e.toString());
