@@ -11,15 +11,13 @@ import java.util.function.Predicate;
 public abstract class ConsumptionCalculator implements IConsumptionCalculator {
 
     protected final IReadingService readingService;
-    protected final IReadingDao readingDao;
     protected List<Reading> newReadings;
     protected List<Reading> oldReadins;
     protected List<Apartment> apartments;
     protected Invoice invoice;
 
-    public ConsumptionCalculator(final IReadingService readingService, IReadingDao readingDao) {
+    public ConsumptionCalculator(final IReadingService readingService) {
         this.readingService = readingService;
-        this.readingDao = readingDao;
     }
 
     public List<MediaUsage> calculateConsumption(final Invoice invoice, final List<Apartment> apartments) {

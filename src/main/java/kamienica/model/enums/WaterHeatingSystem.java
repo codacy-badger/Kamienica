@@ -1,9 +1,5 @@
 package kamienica.model.enums;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-
 public enum WaterHeatingSystem {
 
     INDIVIDUAL("Standard"), SHARED_GAS("Shared gas heating system"), SHARED_ELECTRIC(

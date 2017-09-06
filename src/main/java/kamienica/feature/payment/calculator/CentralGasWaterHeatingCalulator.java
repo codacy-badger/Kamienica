@@ -18,8 +18,8 @@ public class CentralGasWaterHeatingCalulator extends ConsumptionCalculator {
     static final String TYPE = "CENTRAL_GAS";
 
     @Autowired
-    public CentralGasWaterHeatingCalulator(IReadingService readingService, IReadingDao readingDao) {
-        super(readingService, readingDao);
+    public CentralGasWaterHeatingCalulator(IReadingService readingService) {
+        super(readingService);
     }
 
     protected void recalculateSharedPartConsuption(final List<MediaUsage> result) {

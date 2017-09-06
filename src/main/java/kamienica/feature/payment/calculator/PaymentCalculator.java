@@ -2,16 +2,10 @@ package kamienica.feature.payment.calculator;
 
 import kamienica.core.util.CommonUtils;
 import kamienica.feature.division.IDivisionService;
-import kamienica.feature.reading.IReadingDao;
-import kamienica.feature.reading.IReadingService;
-import kamienica.feature.readingdetails.IReadingDetailsDao;
 import kamienica.feature.settings.ISettingsService;
 import kamienica.model.entity.*;
-import kamienica.model.enums.Media;
-import kamienica.model.enums.WaterHeatingSystem;
 import kamienica.model.exception.NegativeConsumptionValue;
 import kamienica.model.exception.UsageCalculationException;
-import org.hibernate.criterion.Restrictions;
 import org.joda.time.LocalDate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

@@ -45,7 +45,7 @@ public interface IReadingService {
 
     void delete(ReadingForm readingForm);
 
-    public List<Reading> getPreviousReadingForWarmWater(final Invoice invoice);
+    List<Reading> getPreviousReadingForWarmWater(final Invoice invoice);
 
     List<Reading> getPreviousReadingForWarmWater(Residence r, Media m, LocalDate date);
 }

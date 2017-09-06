@@ -20,8 +20,8 @@ public class StandardUsageCalculator extends ConsumptionCalculator {
     static final String TYPE = "STANDARD";
 
     @Autowired
-    public StandardUsageCalculator(IReadingService readingService, IReadingDao readingDao) {
-        super(readingService, readingDao);
+    public StandardUsageCalculator(IReadingService readingService) {
+        super(readingService);
     }
 
     protected void recalculateSharedPartConsuption(final List<MediaUsage> result) {

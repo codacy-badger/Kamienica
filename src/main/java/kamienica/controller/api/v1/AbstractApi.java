@@ -10,7 +10,7 @@ public abstract class AbstractApi {
     @Autowired
     protected IUserService ownerUserDataService;
 
-    protected static final String DUPLICATE_VALUE = "Duplicate";
-    protected static final String CONSTRAINT_VIOLATION = "ConstraintViolation";
+    static final String DUPLICATE_VALUE = "Duplicate";
+    static final String CONSTRAINT_VIOLATION = "ConstraintViolation";
 
 }

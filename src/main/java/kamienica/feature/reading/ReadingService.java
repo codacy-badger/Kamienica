@@ -8,7 +8,6 @@ import kamienica.model.enums.Media;
 import kamienica.model.enums.Resolvement;
 import kamienica.model.enums.Status;
 import kamienica.model.exception.NoMainCounterException;
-import org.hibernate.Criteria;
 import org.hibernate.criterion.*;
 import org.joda.time.LocalDate;
 import org.springframework.beans.factory.annotation.Autowired;

@@ -15,10 +15,4 @@ public class CommonUtils {
         df.applyPattern("#.00");
         return Double.parseDouble(df.format(input));
     }
-
-
-    public static int countDaysBetween(final LocalDate first, final LocalDate second) {
-        return Days.daysBetween(first, second).getDays();
-    }
-
 }
