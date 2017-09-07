@@ -8,7 +8,5 @@ import java.util.List;
 
 public interface IApartmentDao extends IBasicDao<Apartment> {
 
-	int getNumOfEmptyApartment();
-
 	List<Apartment> getListForOwner(List<Residence> residences);
 }
