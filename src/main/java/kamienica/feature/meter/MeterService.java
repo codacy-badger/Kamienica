@@ -78,11 +78,6 @@ public class MeterService implements IMeterService {
     }
 
     @Override
-    public Set<Long> getIdList(final Residence r, final Media media) {
-        return meterDao.getIdList(r, media);
-    }
-
-    @Override
     public Set<Long> getIdListForActiveMeters(final Residence r, final Media media) {
         return meterDao.getIdListForActiveMeters(r, media);
     }

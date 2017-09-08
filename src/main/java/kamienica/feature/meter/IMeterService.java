@@ -23,8 +23,6 @@ public interface IMeterService {
 
 	Meter getById(Long id);
 
-	Set<Long> getIdList(final Residence r, final Media media);
-
 	Set<Long> getIdListForActiveMeters(Residence r, Media media);
 
 	boolean ifMainExists(Media media);

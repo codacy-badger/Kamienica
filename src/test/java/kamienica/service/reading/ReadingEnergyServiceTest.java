@@ -32,7 +32,6 @@ public class ReadingEnergyServiceTest extends ServiceTest {
         r = getOWnersResidence();
     }
 
-
     @Test
     public void getLatestNew() throws NoMainCounterException {
         List<Reading> list = readingService.getLatestNew(r, Media.ENERGY);

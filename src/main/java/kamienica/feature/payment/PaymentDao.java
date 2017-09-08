@@ -2,7 +2,6 @@ package kamienica.feature.payment;
 
 import kamienica.model.entity.Invoice;
 import kamienica.model.entity.Payment;
-import kamienica.model.entity.Reading;
 import kamienica.model.entity.Tenant;
 import kamienica.model.enums.Media;
 import kamienica.model.jpa.dao.BasicDao;
@@ -16,22 +15,6 @@ import java.util.List;
 
 @Repository("paymentDao")
 public class PaymentDao extends BasicDao<Payment> implements IPaymentDao {
-
-    @Override
-    public List<Payment> getByInvoice(Invoice invoice) {
-        Criteria crit = createEntityCriteria();
-        crit.add(Restrictions.eq("invoice", invoice.getId()));
-        //noinspection unchecked
-        return crit.list();
-    }
-
-    @Override
-    public List<Payment> getByReading(Reading reading) {
-        Criteria crit = createEntityCriteria();
-        crit.add(Restrictions.eq("readingDate", reading.getReadingDetails().getReadingDate()));
-        //noinspection unchecked
-        return crit.list();
-    }
 
     @Override
     public List<Payment> getList(final Media media) {
@@ -54,28 +37,9 @@ public class PaymentDao extends BasicDao<Payment> implements IPaymentDao {
     }
 
     @Override
-    public Payment getLatestPayment() {
-        //TODO change the logic here and add test!!!
-        @SuppressWarnings("unchecked") List<Payment> list = getSession().createCriteria(persistentClass).addOrder(Order.desc("readingDate"))
-                .list();
-        if (list.isEmpty()) {
-            return new Payment();
-        }
-        return list.get(0);
-
-    }
-
-    @Override
     public void deleteForInvoice(Invoice invoice) {
         String sql = String.format("delete from %s where invoice_id = :inv", getTabName());
         Query query = getSession().createSQLQuery(sql).addEntity(persistentClass).setLong("inv", invoice.getId());
-        query.executeUpdate();
-    }
-
-    @Override
-    public void deleteByDate(String date) {
-        String sql = String.format("delete from %s where paymentdate >= :date", getTabName());
-        Query query = getSession().createSQLQuery(sql).addEntity(persistentClass).setString("date", date);
         query.executeUpdate();
     }
 }

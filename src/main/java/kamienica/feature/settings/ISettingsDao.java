@@ -6,5 +6,4 @@ import kamienica.model.jpa.dao.IBasicDao;
 
 public interface ISettingsDao extends IBasicDao<Settings> {
 
-
 }

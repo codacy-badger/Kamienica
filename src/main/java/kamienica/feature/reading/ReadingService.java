@@ -3,7 +3,6 @@ package kamienica.feature.reading;
 import kamienica.feature.meter.IMeterDao;
 import kamienica.feature.readingdetails.IReadingDetailsDao;
 import kamienica.model.entity.*;
-import kamienica.model.entity.ReadingForm;
 import kamienica.model.enums.Media;
 import kamienica.model.enums.Resolvement;
 import kamienica.model.enums.Status;
@@ -123,11 +122,6 @@ public class ReadingService implements IReadingService {
     public List<Reading> getForInvoice(final Invoice invoice) {
         final ReadingDetails rd = invoice.getReadingDetails();
         return readingDao.findByCriteria(Restrictions.eq("readingDetails", rd));
-    }
-
-    @Override
-    public EnumMap<ReadingAge, List<Reading>> readingsForPayment(Invoice invoice) {
-        return null;
     }
 
     @Override
