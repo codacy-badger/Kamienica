@@ -14,7 +14,8 @@ public class ResidenceDao extends BasicDao<Residence> implements IResidenceDao {
     @Override
     public List<Residence> listForOwner(Tenant t) {
 
-       return createEntityCriteria()
+        //noinspection unchecked
+        return createEntityCriteria()
                 .setFetchMode("RESIDENCE_OWNERSHIP", FetchMode.JOIN)
                 .add(Restrictions.eq("owner", t))
                 .list();

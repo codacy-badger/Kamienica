@@ -79,6 +79,7 @@ public abstract class BasicDao<T> implements IBasicDao<T> {
     public List<T> getList(final Media media) {
         final Criteria criteria = createEntityCriteria();
         criteria.add(Restrictions.eq("media", media));
+        //noinspection unchecked
         return criteria.list();
     }
 
@@ -117,6 +118,7 @@ public abstract class BasicDao<T> implements IBasicDao<T> {
         for (final Criterion c : criterion) {
             criteria.add(c);
         }
+        //noinspection unchecked
         return criteria.list();
     }
 
@@ -126,12 +128,14 @@ public abstract class BasicDao<T> implements IBasicDao<T> {
         for (final Criterion c : criterion) {
             criteria.add(c);
         }
+        //noinspection unchecked
         return (T) criteria.uniqueResult();
     }
 
     @Override
     public List<T> getBySQLQuery(final String queryString) {
         Query query = getSession().createSQLQuery(queryString);
+        //noinspection unchecked
         return query.list();
     }
 
@@ -139,6 +143,7 @@ public abstract class BasicDao<T> implements IBasicDao<T> {
     @Override
     public T getOneBySQLQuery(final String queryString) {
         Query query = getSession().createSQLQuery(queryString);
+        //noinspection unchecked
         return (T) query.uniqueResult();
     }
 
@@ -160,6 +165,7 @@ public abstract class BasicDao<T> implements IBasicDao<T> {
             crit.addOrder(order);
         }
 
+        //noinspection unchecked
         return crit.list();
     }
 

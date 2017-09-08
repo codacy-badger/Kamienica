@@ -21,6 +21,7 @@ public class PaymentDao extends BasicDao<Payment> implements IPaymentDao {
     public List<Payment> getByInvoice(Invoice invoice) {
         Criteria crit = createEntityCriteria();
         crit.add(Restrictions.eq("invoice", invoice.getId()));
+        //noinspection unchecked
         return crit.list();
     }
 
@@ -28,6 +29,7 @@ public class PaymentDao extends BasicDao<Payment> implements IPaymentDao {
     public List<Payment> getByReading(Reading reading) {
         Criteria crit = createEntityCriteria();
         crit.add(Restrictions.eq("readingDate", reading.getReadingDetails().getReadingDate()));
+        //noinspection unchecked
         return crit.list();
     }
 
@@ -37,6 +39,7 @@ public class PaymentDao extends BasicDao<Payment> implements IPaymentDao {
         c.addOrder(Order.asc("paymentDate"));
         c.addOrder(Order.asc("tenant"));
         c.createCriteria("invoice").add(Restrictions.eq("media", media));
+        //noinspection unchecked
         return c.list();
     }
 
@@ -46,13 +49,14 @@ public class PaymentDao extends BasicDao<Payment> implements IPaymentDao {
         c.add(Restrictions.eq("tenant", tenant));
         c.addOrder(Order.asc("paymentDate")).addOrder(Order.asc("tenant"));
         c.createCriteria("invoice").add(Restrictions.eq("media", media));
+        //noinspection unchecked
         return c.list();
     }
 
     @Override
     public Payment getLatestPayment() {
         //TODO change the logic here and add test!!!
-        List<Payment> list = getSession().createCriteria(persistentClass).addOrder(Order.desc("readingDate"))
+        @SuppressWarnings("unchecked") List<Payment> list = getSession().createCriteria(persistentClass).addOrder(Order.desc("readingDate"))
                 .list();
         if (list.isEmpty()) {
             return new Payment();

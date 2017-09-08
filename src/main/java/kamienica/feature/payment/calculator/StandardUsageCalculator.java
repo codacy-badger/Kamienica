@@ -1,6 +1,5 @@
 package kamienica.feature.payment.calculator;
 
-import kamienica.feature.reading.IReadingDao;
 import kamienica.feature.reading.IReadingService;
 import kamienica.model.entity.MediaUsage;
 import org.springframework.beans.factory.annotation.Autowired;

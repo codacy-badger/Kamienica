@@ -47,6 +47,7 @@ public class TenantDaoImpl extends BasicDao<Tenant> implements ITenantDao {
 
         final Criteria c = createEntityCriteria();
         c.add(Property.forName("rentContract").in(detachedCriteria));
+        //noinspection unchecked
         return c.list();
     }
 
