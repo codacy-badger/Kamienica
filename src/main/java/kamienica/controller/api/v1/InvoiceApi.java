@@ -6,6 +6,8 @@ import kamienica.feature.residence.IResidenceService;
 import kamienica.model.entity.Invoice;
 import kamienica.model.entity.Residence;
 import kamienica.model.enums.Media;
+import kamienica.model.exception.NegativeConsumptionValue;
+import kamienica.model.exception.UsageCalculationException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -44,7 +46,7 @@ public class InvoiceApi extends AbstractApi {
     }
 
     @RequestMapping(value = "/ENERGY", method = RequestMethod.POST)
-    public ResponseEntity<?> saveEnergy(@Valid @RequestBody final Invoice invoice, final BindingResult result, @RequestParam("residence") final Long residenceId) {
+    public ResponseEntity<?> saveEnergy(@Valid @RequestBody final Invoice invoice, final BindingResult result, @RequestParam("residence") final Long residenceId) throws UsageCalculationException, NegativeConsumptionValue {
 
         if (result.hasErrors()) {
             final ApiErrorResponse message = new ApiErrorResponse();
@@ -61,7 +63,7 @@ public class InvoiceApi extends AbstractApi {
     }
 
     @RequestMapping(value = "/GAS", method = RequestMethod.POST)
-    public ResponseEntity<?> saveGas(@Valid @RequestBody final Invoice invoice, final BindingResult result, @RequestParam("residence") final Long residenceId) {
+    public ResponseEntity<?> saveGas(@Valid @RequestBody final Invoice invoice, final BindingResult result, @RequestParam("residence") final Long residenceId) throws UsageCalculationException, NegativeConsumptionValue {
         if (result.hasErrors()) {
             final ApiErrorResponse message = new ApiErrorResponse();
             message.setErrors(result.getFieldErrors());
@@ -77,7 +79,7 @@ public class InvoiceApi extends AbstractApi {
     }
 
     @RequestMapping(value = "/WATER", method = RequestMethod.POST)
-    public ResponseEntity<?> saveWater(@Valid @RequestBody final Invoice invoice, final BindingResult result, @RequestParam("residence") final Long residenceId) {
+    public ResponseEntity<?> saveWater(@Valid @RequestBody final Invoice invoice, final BindingResult result, @RequestParam("residence") final Long residenceId) throws UsageCalculationException, NegativeConsumptionValue {
         if (result.hasErrors()) {
             final ApiErrorResponse message = new ApiErrorResponse();
             message.setErrors(result.getFieldErrors());

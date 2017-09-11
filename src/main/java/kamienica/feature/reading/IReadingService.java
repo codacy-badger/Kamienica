@@ -1,7 +1,6 @@
 package kamienica.feature.reading;
 
 import kamienica.model.entity.*;
-import kamienica.model.entity.ReadingForm;
 import kamienica.model.enums.Media;
 import kamienica.model.exception.NoMainCounterException;
 import org.joda.time.LocalDate;
@@ -27,10 +26,10 @@ public interface IReadingService {
 
     Map<ReadingDetails, List<Reading>> list(Residence r, Media media);
 
-    List<Reading> getByDate(Residence r, LocalDate date, Media media);
+    List<Reading> getForInvoice(Invoice invoice);
 
     @Deprecated
-    List<Reading> getPreviousReading(LocalDate date, List<Meter> meters);
+    List<Reading> getPreviousReadingForWarmWater(LocalDate date, List<Meter> meters);
 
     @Deprecated
     List<Reading> getLatestNew(Residence r, Media media) throws NoMainCounterException;
@@ -41,4 +40,8 @@ public interface IReadingService {
     void deleteLatestReadings(final Residence r, Media media);
 
     void delete(ReadingForm readingForm);
+
+    List<Reading> getPreviousReadingForWarmWater(final Invoice invoice);
+
+    List<Reading> getPreviousReadingForWarmWater(Residence r, Media m, LocalDate date);
 }

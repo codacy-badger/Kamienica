@@ -1,12 +1,8 @@
-package kamienica.service;
+package kamienica.service.reading;
 
 import kamienica.configuration.ServiceTest;
 import kamienica.core.util.SecurityDetails;
-import kamienica.model.entity.Apartment;
-import kamienica.model.entity.Meter;
-import kamienica.model.entity.Reading;
-import kamienica.model.entity.ReadingDetails;
-import kamienica.model.entity.Residence;
+import kamienica.model.entity.*;
 import kamienica.model.enums.Media;
 import kamienica.model.enums.Status;
 import kamienica.model.exception.NoMainCounterException;
@@ -82,7 +78,7 @@ public class ReadingWaterServiceTest extends ServiceTest {
     @Test
     public void shouldRetrieviePreviousReadings() {
         List<Meter> meters = meterService.list(r, Media.WATER);
-        List<Reading> list = readingService.getPreviousReading(LocalDate.parse("2016-08-01"), meters);
+        List<Reading> list = readingService.getPreviousReadingForWarmWater(LocalDate.parse("2016-08-01"), meters);
         for (Reading readingWater : list) {
             assertEquals(LocalDate.parse("2016-07-01"), readingWater.getReadingDetails().getReadingDate());
         }
@@ -90,11 +86,11 @@ public class ReadingWaterServiceTest extends ServiceTest {
 
     @SuppressWarnings("unchecked")
     @Test
-    public void getByDate() {
-
-        List<Reading> list = readingService.getByDate(r, LocalDate.parse("2016-07-01"), Media.WATER);
+    public void getForInvoice() {
+        final Invoice i = invoiceService.getByID(1L);
+        List<Reading> list = readingService.getForInvoice(i);
         for (Reading readingWater : list) {
-            assertEquals(LocalDate.parse("2016-07-01"), readingWater.getReadingDetails().getReadingDate());
+            assertEquals(i.getReadingDetails().getReadingDate(), readingWater.getReadingDetails().getReadingDate());
         }
     }
 
@@ -122,7 +118,7 @@ public class ReadingWaterServiceTest extends ServiceTest {
     @Test
     public void getPreviousReadings() {
         List<Meter> meters = meterService.list(r, Media.WATER);
-        List<Reading> list = readingService.getPreviousReading(LocalDate.parse("2016-09-01"), meters);
+        List<Reading> list = readingService.getPreviousReadingForWarmWater(LocalDate.parse("2016-09-01"), meters);
         assertEquals(7, list.size());
         for (Reading readingWater : list) {
             assertEquals("2016-08-01", readingWater.getReadingDetails().getReadingDate().toString());

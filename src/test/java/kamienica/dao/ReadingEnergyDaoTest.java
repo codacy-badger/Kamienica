@@ -32,9 +32,9 @@
 //	}
 //
 //	@Testing
-//	public void getByDate() {
+//	public void getForInvoice() {
 //
-//		List<ReadingEnergy> list = daoservice.getByDate(new LocalDate(2010, 01, 01).toString());
+//		List<ReadingEnergy> list = daoservice.getForInvoice(new LocalDate(2010, 01, 01).toString());
 //		Assert.assertEquals(list.size(), 5);
 //		for (int i = 0; i < list.size(); i++) {
 //			if (i > 0) {
@@ -63,7 +63,7 @@
 //		daoservice.resolveReadings(invoice);
 //		daoservice.getUnresolvedReadings();
 //
-//		List<ReadingEnergy> list = daoservice.getByDate(new LocalDate(2010, 04, 01).toString());
+//		List<ReadingEnergy> list = daoservice.getForInvoice(new LocalDate(2010, 04, 01).toString());
 //		Assert.assertEquals(list.size(), 5);
 //		for (ReadingEnergy readingEnergy : list) {
 //			Assert.assertTrue(readingEnergy.getResolvement());

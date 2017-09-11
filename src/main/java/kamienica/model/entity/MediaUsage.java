@@ -48,6 +48,11 @@ public class MediaUsage {
 		this.apartment = apartment;
 	}
 
+	public MediaUsage(double usage, Apartment apartment) {
+		this.usage = usage;
+		this.apartment = apartment;
+	}
+
 	public MediaUsage() {
 	}
 

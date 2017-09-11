@@ -1,8 +1,5 @@
 package kamienica.core.util;
 
-import org.joda.time.Days;
-import org.joda.time.LocalDate;
-
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
 import java.util.Locale;
@@ -15,10 +12,4 @@ public class CommonUtils {
         df.applyPattern("#.00");
         return Double.parseDouble(df.format(input));
     }
-
-
-    public static int countDaysBetween(final LocalDate first, final LocalDate second) {
-        return Days.daysBetween(first, second).getDays();
-    }
-
 }

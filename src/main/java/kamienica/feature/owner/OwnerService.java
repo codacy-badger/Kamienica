@@ -2,10 +2,8 @@ package kamienica.feature.owner;
 
 import kamienica.core.util.SecurityDetails;
 import kamienica.feature.apartment.IApartmentDao;
-import kamienica.feature.readingdetails.IReadingDetailsDao;
-import kamienica.model.entity.*;
-import kamienica.model.enums.Resolvement;
-import org.hibernate.criterion.Restrictions;
+import kamienica.model.entity.Apartment;
+import kamienica.model.entity.Residence;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -17,14 +15,12 @@ import java.util.List;
 public class OwnerService implements IOwnerService {
 
     private final IApartmentDao apartmentDao;
-    private final IReadingDetailsDao readingDetailsDao;
 
     private static final String EMPTY_APPS = "SELECT * FROM APARTMENT WHERE id in" +
             "(select A.id from apartment A JOIN TENANT ON tenant.APARTMENT_ID = APARTMENT.ID  where APARTMENT.residence_id in(%s) and apartmentNumber > 0 AND tenant.status='ACTIVE')";
     @Autowired
-    public OwnerService(IApartmentDao apartmentDao, IReadingDetailsDao readingDetailsDao) {
+    public OwnerService(IApartmentDao apartmentDao) {
         this.apartmentDao = apartmentDao;
-        this.readingDetailsDao = readingDetailsDao;
     }
 
     @Override
@@ -40,19 +36,4 @@ public class OwnerService implements IOwnerService {
         return apartmentDao.getBySQLQuery(String.format(EMPTY_APPS, idList));
     }
 
-    @Override
-    public List<ReadingDetails> getUnresolvedReadings() {
-        final List<Residence> residences = SecurityDetails.getResidencesForOwner();
-        return readingDetailsDao.findByCriteria(Restrictions.in("residence", residences), Restrictions.eq("resolvement", Resolvement.UNRESOLVED));
-    }
-
-    @Override
-    public ReadingDetails getOldestReading() {
-        return null;
-    }
-
-    @Override
-    public Payment getOldestPayment() {
-        return null;
-    }
 }

@@ -1,4 +1,4 @@
-package kamienica.service;
+package kamienica.service.payment;
 
 import kamienica.configuration.ServiceTest;
 import kamienica.model.entity.Payment;

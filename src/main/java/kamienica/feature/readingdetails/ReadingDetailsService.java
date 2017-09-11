@@ -3,7 +3,6 @@ package kamienica.feature.readingdetails;
 import kamienica.model.entity.ReadingDetails;
 import kamienica.model.entity.Residence;
 import kamienica.model.enums.Media;
-import org.joda.time.LocalDate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -30,11 +29,6 @@ public class ReadingDetailsService implements IReadingDetailsService {
     @Override
     public ReadingDetails getLatest(final Residence residence, final Media media) {
         return readingDetailsDao.getLatest(residence, media);
-    }
-
-    @Override
-    public ReadingDetails getLatestPriorToDate(LocalDate date, Residence residence, Media media) {
-        return readingDetailsDao.getLatestPriorToDate(date, residence, media);
     }
 
     @Override

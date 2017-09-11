@@ -3,7 +3,6 @@ package kamienica.feature.tenant;
 import kamienica.model.entity.Apartment;
 import kamienica.model.entity.RentContract;
 import kamienica.model.entity.Tenant;
-import kamienica.model.enums.Status;
 import kamienica.model.jpa.dao.BasicDao;
 import org.hibernate.Criteria;
 import org.hibernate.criterion.DetachedCriteria;
@@ -18,21 +17,10 @@ import java.util.List;
 @Repository("tenantDao")
 public class TenantDaoImpl extends BasicDao<Tenant> implements ITenantDao {
 
-
     @Override
     public Tenant loadByMail(final String mail) {
         final Criteria criteria = createEntityCriteria();
         criteria.add(Restrictions.eq("email", mail));
-        return (Tenant) criteria.uniqueResult();
-    }
-
-
-    @Override
-    public Tenant getTenantForApartment(final Apartment ap) {
-        final Criteria criteria = createEntityCriteria();
-        criteria.add(Restrictions.eq("apartment", ap))
-                .add(Restrictions.eq("status", Status.ACTIVE));
-
         return (Tenant) criteria.uniqueResult();
     }
 
@@ -47,7 +35,7 @@ public class TenantDaoImpl extends BasicDao<Tenant> implements ITenantDao {
 
         final Criteria c = createEntityCriteria();
         c.add(Property.forName("rentContract").in(detachedCriteria));
+        //noinspection unchecked
         return c.list();
     }
-
 }

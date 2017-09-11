@@ -3,14 +3,11 @@ package kamienica.feature.reading;
 import kamienica.feature.meter.IMeterDao;
 import kamienica.feature.readingdetails.IReadingDetailsDao;
 import kamienica.model.entity.*;
-import kamienica.model.entity.ReadingForm;
 import kamienica.model.enums.Media;
 import kamienica.model.enums.Resolvement;
 import kamienica.model.enums.Status;
 import kamienica.model.exception.NoMainCounterException;
-import org.hibernate.criterion.Criterion;
-import org.hibernate.criterion.Order;
-import org.hibernate.criterion.Restrictions;
+import org.hibernate.criterion.*;
 import org.joda.time.LocalDate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -109,7 +106,7 @@ public class ReadingService implements IReadingService {
 
 
     @Override
-    public List<Reading> getPreviousReading(LocalDate date, List<Meter> meters) {
+    public List<Reading> getPreviousReadingForWarmWater(LocalDate date, List<Meter> meters) {
         //TODO very bas solution but this method gets kicked soon anyway so no point of refactoring it
         final Media m = meters.get(0).getMedia();
         List<ReadingDetails> details = readingDetailsDao.findByCriteria(Order.desc("readingDate"), Restrictions.lt("readingDate", date), Restrictions.eq("media", m));
@@ -122,9 +119,9 @@ public class ReadingService implements IReadingService {
     }
 
     @Override
-    public List<Reading> getByDate(final Residence r, final LocalDate date, final Media media) {
-        final ReadingDetails rd = readingDetailsDao.findOneByCriteria(Restrictions.eq("readingDate", date), Restrictions.eq("media", media), Restrictions.eq("residence", r));
-        return readingDao.findByCriteria(Restrictions.eq("readingDetails", rd), Restrictions.eq("residence", r));
+    public List<Reading> getForInvoice(final Invoice invoice) {
+        final ReadingDetails rd = invoice.getReadingDetails();
+        return readingDao.findByCriteria(Restrictions.eq("readingDetails", rd));
     }
 
     @Override
@@ -196,9 +193,40 @@ public class ReadingService implements IReadingService {
 
     @Override
     public void delete(ReadingForm readingForm) {
-        for(Reading r:readingForm.getReadings()) {
+        for (Reading r : readingForm.getReadings()) {
             readingDao.delete(r);
         }
         readingDetailsDao.delete(readingForm.getReadingDetails());
+    }
+
+    @Override
+    public List<Reading> getPreviousReadingForWarmWater(final Invoice invoice) {
+        final DetachedCriteria detachedCriteria = DetachedCriteria.forClass(ReadingDetails.class);
+        detachedCriteria.add(Restrictions.eq("residence", invoice.getResidence()));
+        detachedCriteria.add(Restrictions.eq("media", invoice.getMedia()));
+        detachedCriteria.add(Restrictions.lt("readingDate", invoice.getReadingDetails().getReadingDate()));
+        detachedCriteria.setProjection(Projections.max("readingDate"));
+
+        final Criterion one = Restrictions.eq("residence", invoice.getResidence());
+        final Criterion two = Restrictions.eq("media", invoice.getMedia());
+        final Criterion three = Property.forName("readingDate").eq(detachedCriteria);
+        final ReadingDetails rd = readingDetailsDao.findOneByCriteria(one, two, three);
+        return readingDao.findByCriteria(Restrictions.eq("readingDetails", rd));
+    }
+
+    @Override
+    public List<Reading> getPreviousReadingForWarmWater(final Residence r, final Media m, final LocalDate date) {
+        final DetachedCriteria detachedCriteria = DetachedCriteria.forClass(ReadingDetails.class);
+        detachedCriteria.add(Restrictions.eq("residence", r));
+        detachedCriteria.add(Restrictions.eq("media", m));
+        detachedCriteria.add(Restrictions.lt("readingDate", date));
+        detachedCriteria.setProjection(Projections.max("readingDate"));
+
+        final Criterion one = Restrictions.eq("residence", r);
+        final Criterion two = Restrictions.eq("media", m);
+        final Criterion three = Property.forName("readingDate").eq(detachedCriteria);
+        final ReadingDetails rd = readingDetailsDao.findOneByCriteria(one, two, three);
+
+        return readingDao.findByCriteria(Restrictions.eq("readingDetails", rd));
     }
 }

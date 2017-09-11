@@ -9,6 +9,7 @@ import kamienica.feature.reading.IReadingDao;
 import kamienica.feature.readingdetails.IReadingDetailsDao;
 import kamienica.feature.rentcontract.IRentContractDao;
 import kamienica.feature.residenceownership.IResidenceOwnershipDao;
+import kamienica.feature.settings.ISettingsDao;
 import kamienica.feature.tenant.ITenantDao;
 import kamienica.model.entity.*;
 import kamienica.model.enums.Media;
@@ -34,9 +35,10 @@ public class PurgeService implements IPurgeService {
     private final IReadingDao readingDao;
     private final IRentContractDao rentContractDao;
     private final IResidenceOwnershipDao residenceOwnershipDao;
+    private final ISettingsDao settingsDao;
 
     @Autowired
-    public PurgeService(IResidenceDao residenceDao, IMeterDao meterDao, IReadingDetailsDao details, IApartmentDao apartmentDao, ITenantDao tenantDao, IInvoiceDao invoiceDao, IPaymentDao paymentDao, IReadingDao readingDao, IRentContractDao rentContractDao, IResidenceOwnershipDao residenceOwnershipDao) {
+    public PurgeService(IResidenceDao residenceDao, IMeterDao meterDao, IReadingDetailsDao details, IApartmentDao apartmentDao, ITenantDao tenantDao, IInvoiceDao invoiceDao, IPaymentDao paymentDao, IReadingDao readingDao, IRentContractDao rentContractDao, IResidenceOwnershipDao residenceOwnershipDao, ISettingsDao settingsDao) {
         this.residenceDao = residenceDao;
         this.meterDao = meterDao;
         this.readingDetailsDao = details;
@@ -47,6 +49,7 @@ public class PurgeService implements IPurgeService {
         this.readingDao = readingDao;
         this.rentContractDao = rentContractDao;
         this.residenceOwnershipDao = residenceOwnershipDao;
+        this.settingsDao = settingsDao;
     }
 
     @Override
@@ -57,8 +60,14 @@ public class PurgeService implements IPurgeService {
         deleteMeters(res);
         deleteInvoices(residence);
         deleteOwnership(res);
+        deleteSetting(res);
         deleteApartmentsAndTenants(res);
         deleteResidence(residence);
+    }
+
+    private void deleteSetting(final Criterion res) {
+        final Settings s = settingsDao.findOneByCriteria(res);
+        settingsDao.delete(s);
     }
 
     private void deleteResidence(final Residence residence) {
