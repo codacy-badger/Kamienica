@@ -28,8 +28,7 @@ public class MeterService implements IMeterService {
 
     @Override
     public void save(Meter meter) {
-        //TODO think on a better way to do this...
-        meter.setResidence(meter.getApartment().getResidence());
+       // meter.setResidence(meter.getApartment().getResidence());
         meterDao.save(meter);
     }
 
