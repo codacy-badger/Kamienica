@@ -14,26 +14,38 @@ import org.springframework.web.filter.CharacterEncodingFilter;
 @EnableWebSecurity
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
-    @Autowired
-    private UserDetailsService userDetailsService;
+    private final UserDetailsService userDetailsService;
+    private final CustomSuccessHandler customSuccessHandler;
+    private final BasicAuthenticationPoint basicAuthenticationPoint;
 
     @Autowired
-    private CustomSuccessHandler customSuccessHandler;
+    public SecurityConfig(final UserDetailsService userDetailsService, final CustomSuccessHandler customSuccessHandler, BasicAuthenticationPoint basicAuthenticationPoint) {
+        this.userDetailsService = userDetailsService;
+        this.customSuccessHandler = customSuccessHandler;
+        this.basicAuthenticationPoint = basicAuthenticationPoint;
+    }
 
     @Autowired
-    public void configureGlobalSecurity(AuthenticationManagerBuilder auth) throws Exception {
+    public void configureGlobalSecurity(final AuthenticationManagerBuilder auth) throws Exception {
         auth.inMemoryAuthentication().withUser("superuser").password("override").roles("ADMIN");
         auth.userDetailsService(userDetailsService);
 
     }
 
     @Override
-    protected void configure(HttpSecurity http) throws Exception {
+    protected void configure(final HttpSecurity http) throws Exception {
         // added to handle local characters
-        CharacterEncodingFilter filter = new CharacterEncodingFilter();
+        final CharacterEncodingFilter filter = new CharacterEncodingFilter();
         filter.setEncoding("UTF-8");
         filter.setForceEncoding(true);
         http.addFilterBefore(filter, CsrfFilter.class);
+
+
+
+//        http.csrf().disable();
+//        http.authorizeRequests().antMatchers("/", "/api/**").permitAll()
+//                .anyRequest().authenticated();
+//        http.httpBasic().authenticationEntryPoint(basicAuthenticationPoint);
 
         http.authorizeRequests()
                 .antMatchers("/", "/index").permitAll()
@@ -44,12 +56,18 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .successHandler(customSuccessHandler)
                 .and().csrf()
                 .and().exceptionHandling().accessDeniedPage("/403");
-
-        // added to make rest part work
-        // more on link:
-        // https://spring.io/guides/tutorials/spring-security-and-angular-js/
-        http.httpBasic().and().authorizeRequests().antMatchers("/api/**").access("hasRole('OWNER') or hasRole('TENANT') or hasRole('ADMIN')")
-                .and().csrf().disable();
+        http.httpBasic().authenticationEntryPoint(basicAuthenticationPoint);
+//         added to make rest part work
+//         more on link:
+//         https://spring.io/guides/tutorials/spring-security-and-angular-js/
+        http.httpBasic()
+                .and()
+                .authorizeRequests()
+                .antMatchers("/api/**")
+                .access("hasRole('OWNER') or hasRole('TENANT') or hasRole('ADMIN')")
+                .and()
+                .csrf()
+                .disable();
 
 
     }

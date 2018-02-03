@@ -20,9 +20,10 @@ public class CustomSuccessHandler extends SimpleUrlAuthenticationSuccessHandler 
 	private RedirectStrategy redirectStrategy = new DefaultRedirectStrategy();
 
 	@Override
-	protected void handle(HttpServletRequest request, HttpServletResponse response, Authentication authentication)
+	protected void handle(final HttpServletRequest request, final HttpServletResponse response,
+						  final Authentication authentication)
 			throws IOException {
-		String targetUrl = determineTargetUrl(authentication);
+		final String targetUrl = determineTargetUrl(authentication);
 		if (response.isCommitted()) {
 			return;
 		}
@@ -34,22 +35,20 @@ public class CustomSuccessHandler extends SimpleUrlAuthenticationSuccessHandler 
 	 * appropriate URL according to his/her role.
 	 */
 	protected String determineTargetUrl(Authentication authentication) {
-		String url;
+		final Collection<? extends GrantedAuthority> authorities = authentication.getAuthorities();
+		final List<String> roles = new ArrayList<>();
 
-		Collection<? extends GrantedAuthority> authorities = authentication.getAuthorities();
-		List<String> roles = new ArrayList<>();
-
-		for (GrantedAuthority a : authorities) {
+		for (final GrantedAuthority a : authorities) {
 			roles.add(a.getAuthority());
 		}
+
 		if (isAdmin(roles) || isOwner(roles)) {
-			url = "/Admin/home";
+			return "views/Admin/home.html";
 		} else if (isTenant(roles)) {
-			url = "/User/userHome";
+			return"views/User/userHome";
 		} else {
-			url = "/403";
+			return "/403";
 		}
-		return url;
 	}
 
 	private boolean isTenant(List<String> roles) {
