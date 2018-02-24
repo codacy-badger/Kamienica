@@ -16,6 +16,15 @@
 <!-- MetisMenu CSS -->
 <link href="<c:url value='/static/css/metisMenu.min.css' />"
 	rel="stylesheet">
+
+		<!-- jQuery -->
+    	<script src="<c:url value='/static/js/jquery.min.js' />"></script>
+    	<!-- Bootstrap Core JavaScript -->
+    	<script src="<c:url value='/static/js/bootstrap.min.js' />"></script>
+    	<!-- Metis Menu Plugin JavaScript -->
+    	<script src="<c:url value='/static/js/metisMenu.min.js' />"></script>
+    	<!-- Custom Theme JavaScript -->
+    	<script src="<c:url value='/static/js/sb-admin-2.js' />"></script>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Rejestracja Odczytów Gazu</title>
@@ -87,13 +96,6 @@
 			</div>
 		</div>
 	</div>
-	<!-- jQuery -->
-	<script src="<c:url value='/static/js/jquery.min.js' />"></script>
-	<!-- Bootstrap Core JavaScript -->
-	<script src="<c:url value='/static/js/bootstrap.min.js' />"></script>
-	<!-- Metis Menu Plugin JavaScript -->
-	<script src="<c:url value='/static/js/metisMenu.min.js' />"></script>
-	<!-- Custom Theme JavaScript -->
-	<script src="<c:url value='/static/js/sb-admin-2.js' />"></script>
+
 </body>
 </html>

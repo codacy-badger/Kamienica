@@ -45,7 +45,6 @@ public class ReadingApi {
     @RequestMapping(method = RequestMethod.POST)
     public ResponseEntity<?> save(@Valid @RequestBody final ReadingForm readingForm) {
 //        validate()
-        System.out.println("-------------------SAVING-----------------------------------");
         readingService.save(readingForm);
         return new ResponseEntity<>(readingForm, HttpStatus.OK);
     }
@@ -53,7 +52,6 @@ public class ReadingApi {
     @RequestMapping(method = RequestMethod.PUT)
     public ResponseEntity<?> delete(@Valid @RequestBody final ReadingForm readingForm) {
 //        validate()
-        System.out.println("-------------------SAVING-----------------------------------");
         readingService.update(readingForm);
         return new ResponseEntity<>(readingForm, HttpStatus.OK);
     }
