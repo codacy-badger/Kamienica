@@ -131,6 +131,9 @@
                                         <div class="col-sm-9">
                                             <select name='apartment' ng-model="ctrl.tenant.rentContract.apartment" ng-required='true' class="form-control" ng-options="a.description for a in ctrl.apartments"><option>{{ctrl.tenant.rentContract.apartment}}</option>
 							</select>
+							 <p class="help-block">
+                                                                            <span class='error' ng-show="myForm.apartment.$invalid">Pole wymagane</span> <span class='error'>{{errors.apartment}}</span>
+                                                                        </p>
 
 
 
@@ -174,7 +177,7 @@
                                     <div class="form-group">
                                         <label for="inputEmail3" class="col-sm-3 control-label">Koniec Umowy</label>
                                         <div class="col-sm-9">
-                                            <input type="text" datetime="yyyy-MM-dd" ng-model="ctrl.tenant.rentContract.contractEnd" class="form-control" placeholder="YYYY/MM/DD" name="contractEnd" ng-required='true' />
+                                            <input type="text" datetime="yyyy-MM-dd" ng-model="ctrl.tenant.rentContract.contractEnd" class="form-control" placeholder="YYYY/MM/DD" name="contractEnd" />
                                             <p class="help-block">
                                                 <span class='error' ng-show="myForm.contractEnd.$invalid">Pole
 									wymagane</span> <span class='error'>{{errors.contractEnd}}</span>
