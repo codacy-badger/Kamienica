@@ -6,14 +6,7 @@ import org.hibernate.validator.constraints.Length;
 import org.hibernate.validator.constraints.NotEmpty;
 import org.joda.time.LocalDate;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.OneToOne;
-import javax.persistence.Table;
+import javax.persistence.*;
 import javax.validation.constraints.Digits;
 import java.io.Serializable;
 
@@ -39,7 +32,7 @@ public class Tenant implements Serializable {
     @Column
     @Digits(integer = 100, fraction = 0, message = "Tylko wartości liczbowe")
     private String phone;
-    @OneToOne
+    @OneToOne(cascade = CascadeType.ALL)
     private RentContract rentContract;
     @Column(nullable = false)
     @Enumerated(EnumType.STRING)
