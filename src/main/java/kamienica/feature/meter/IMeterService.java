@@ -15,6 +15,8 @@ public interface IMeterService {
 
 	void delete(Long id);
 
+	void delete(Meter meter);
+
 	List<Meter> list(Media media);
 
 	List<Meter> list(final Residence r, Media media);

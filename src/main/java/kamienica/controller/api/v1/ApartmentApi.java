@@ -3,6 +3,7 @@ package kamienica.controller.api.v1;
 import kamienica.controller.ControllerMessages;
 import kamienica.core.message.ApiErrorResponse;
 import kamienica.core.message.Message;
+import kamienica.core.util.SecurityDetails;
 import kamienica.feature.apartment.IApartmentService;
 import kamienica.model.entity.Apartment;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -76,10 +77,10 @@ public class ApartmentApi {
 
         return new ResponseEntity<>(apartment, HttpStatus.CREATED);
     }
-
+//todo id redundant???
     @RequestMapping(value = "/{id}", method = RequestMethod.PUT)
     public ResponseEntity<?> updateApartment(@PathVariable("id") final Long id, @RequestBody final Apartment apartment, final BindingResult result) {
-
+        SecurityDetails.checkIfOwnsResidence(apartment.getResidence());
         if (result.hasErrors()) {
             ApiErrorResponse message = new ApiErrorResponse();
             message.setErrors(result.getFieldErrors());
@@ -103,6 +104,7 @@ public class ApartmentApi {
         final Message message = new Message("OK", null);
         try {
             final Apartment a = apartmentService.getById(id);
+            SecurityDetails.checkIfOwnsResidence(a.getResidence());
             apartmentService.delete(a);
         } catch (Exception e) {
             message.setMessage(ControllerMessages.CONSTRAINT_VIOLATION);

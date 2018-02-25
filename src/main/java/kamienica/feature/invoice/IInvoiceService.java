@@ -5,6 +5,7 @@ import kamienica.model.enums.Media;
 import kamienica.model.exception.NegativeConsumptionValue;
 import kamienica.model.exception.UsageCalculationException;
 
+import javax.persistence.criteria.CriteriaBuilder;
 import java.util.List;
 
 public interface IInvoiceService {
@@ -14,6 +15,8 @@ public interface IInvoiceService {
     List<Invoice> list( Media media);
 
     void delete(Long id);
+
+    void delete(Invoice invoice);
 
     Invoice getByID(Long id);
 

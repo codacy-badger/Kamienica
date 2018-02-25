@@ -2,6 +2,7 @@ package kamienica.controller.api.v1;
 
 import kamienica.core.message.ApiErrorResponse;
 import kamienica.core.message.Message;
+import kamienica.core.util.SecurityDetails;
 import kamienica.feature.meter.IMeterService;
 import kamienica.feature.residence.IResidenceService;
 import kamienica.model.entity.Meter;
@@ -51,6 +52,7 @@ public class MeterApi extends AbstractApi {
     @RequestMapping(method = RequestMethod.GET)
     public ResponseEntity<?> getList(@RequestParam final Media media, @RequestParam final Long id) {
         final Residence r = residenceService.getById(id);
+        SecurityDetails.checkIfOwnsResidence(r);
         final List<Meter> list = service.list(r, media);
         if (list.isEmpty()) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
@@ -62,6 +64,7 @@ public class MeterApi extends AbstractApi {
 
     @RequestMapping(value = "/{media}", method = RequestMethod.POST)
     public ResponseEntity<?> create(@PathVariable final Media media, @Valid @RequestBody final Meter meter, final BindingResult result) {
+        SecurityDetails.checkIfOwnsResidence(meter.getResidence());
         if (result.hasErrors()) {
             final ApiErrorResponse message = new ApiErrorResponse();
             message.setErrors(result.getFieldErrors());
@@ -83,6 +86,7 @@ public class MeterApi extends AbstractApi {
 
     @RequestMapping(value = "/{media}/{id}", method = RequestMethod.PUT)
     public ResponseEntity<?> update(@PathVariable final Media media, @Valid @RequestBody final Meter meter, final BindingResult result) {
+        SecurityDetails.checkIfOwnsResidence(meter.getResidence());
         if (result.hasErrors()) {
             final ApiErrorResponse message = new ApiErrorResponse();
             message.setErrors(result.getFieldErrors());
@@ -105,7 +109,9 @@ public class MeterApi extends AbstractApi {
     public ResponseEntity<Message> delete(@PathVariable("media") final Media media, @PathVariable("id") final Long id) {
         final Message message = new Message("OK", null);
         try {
-            service.delete(id);
+            final Meter m = service.getById(id);
+            SecurityDetails.checkIfOwnsResidence(m.getResidence());
+            service.delete(m);
         } catch (Exception e) {
             message.setMessage(CONSTRAINT_VIOLATION);
             message.setException(e.toString());

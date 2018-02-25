@@ -3,6 +3,7 @@ package kamienica.controller.api.v1;
 import kamienica.controller.ControllerMessages;
 import kamienica.core.message.ApiErrorResponse;
 import kamienica.core.message.Message;
+import kamienica.core.util.SecurityDetails;
 import kamienica.feature.residence.IResidenceService;
 import kamienica.model.entity.Residence;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -76,6 +77,7 @@ public class ResidenceApi {
             return new ResponseEntity<>(message, HttpStatus.UNPROCESSABLE_ENTITY);
         }
         try {
+            SecurityDetails.checkIfOwnsResidence(residence);
             residenceService.update(residence);
         } catch (Exception e) {
             result.rejectValue("residenceNumber", "error.residence", ControllerMessages.UNEXPECTED_ERROR);
@@ -93,6 +95,7 @@ public class ResidenceApi {
         final Message message = new Message("OK", null);
         try {
             final Residence r = residenceService.getById(id);
+            SecurityDetails.checkIfOwnsResidence(r);
             residenceService.delete(r);
 //            residenceService.deleteById(id);
         } catch (Exception e) {

@@ -2,6 +2,7 @@ package kamienica.controller.api.v1;
 
 import kamienica.core.message.ApiErrorResponse;
 import kamienica.core.message.Message;
+import kamienica.core.util.SecurityDetails;
 import kamienica.feature.tenant.ITenantService;
 import kamienica.model.entity.Tenant;
 import org.hibernate.exception.ConstraintViolationException;
@@ -39,8 +40,6 @@ public class TenantApi extends AbstractApi {
         if (list.isEmpty()) {
             return new ResponseEntity<List<Tenant>>(HttpStatus.NOT_FOUND);
         }
-//        final ApiResponse<Tenant> response = new ApiResponse<>();
-//        response.setObjectList(list);
         return new ResponseEntity<>(list, HttpStatus.OK);
     }
 
@@ -50,8 +49,6 @@ public class TenantApi extends AbstractApi {
         if (list.isEmpty()) {
             return new ResponseEntity<List<Tenant>>(HttpStatus.NOT_FOUND);
         }
-//        final ApiResponse<Tenant> response = new ApiResponse<>();
-//        response.setObjectList(list);
         return new ResponseEntity<>(list, HttpStatus.OK);
     }
 
@@ -64,6 +61,7 @@ public class TenantApi extends AbstractApi {
             return new ResponseEntity<>(message, HttpStatus.UNPROCESSABLE_ENTITY);
         }
         try {
+            SecurityDetails.checkIfOwnsResidence(tenant.getRentContract().getApartment().getResidence());
             service.save(tenant);
         } catch (ConstraintViolationException e) {
             result.rejectValue("apartmentNumber", "error.apartment", DUPLICATE_VALUE);
@@ -82,6 +80,7 @@ public class TenantApi extends AbstractApi {
         Message message = new Message("OK", null);
         try {
             final Tenant t = service.getById(id);
+            SecurityDetails.checkIfOwnsResidence(t.getRentContract().getApartment().getResidence());
             service.delete(t);
         } catch (Exception e) {
             message.setMessage(CONSTRAINT_VIOLATION);
@@ -100,6 +99,7 @@ public class TenantApi extends AbstractApi {
             message.setErrors(result.getFieldErrors());
             return new ResponseEntity<>(message, HttpStatus.UNPROCESSABLE_ENTITY);
         }
+        SecurityDetails.checkIfOwnsResidence(tenant.getRentContract().getApartment().getResidence());
         service.update(tenant);
         return new ResponseEntity<>(tenant, HttpStatus.OK);
     }
