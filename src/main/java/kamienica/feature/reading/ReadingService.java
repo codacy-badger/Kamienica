@@ -44,7 +44,7 @@ public class ReadingService implements IReadingService {
     public Map<ReadingDetails, List<Reading>> list(final Residence r, final Media media) {
         final Criterion res = Restrictions.eq("residence", r);
         final Criterion med = Restrictions.eq("media", media);
-        List<ReadingDetails> readingDetails = readingDetailsDao.findByCriteria(res, med);
+        final List<ReadingDetails> readingDetails = readingDetailsDao.findByCriteria(res, med);
 
         final Map<ReadingDetails, List<Reading>> result = new TreeMap<>();
 

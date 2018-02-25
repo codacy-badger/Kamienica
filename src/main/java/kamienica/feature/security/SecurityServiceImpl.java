@@ -25,21 +25,18 @@ public class SecurityServiceImpl implements UserDetailsService, ISecurityService
     private final IResidenceService residenceService;
 
     @Autowired
-    public SecurityServiceImpl(ITenantService tenantService, IResidenceService residenceService) {
+    public SecurityServiceImpl(final ITenantService tenantService, final IResidenceService residenceService) {
         this.tenantService = tenantService;
         this.residenceService = residenceService;
     }
 
     @Override
     public UserDetails loadUserByUsername(final String email) throws UsernameNotFoundException {
-
         final Tenant tenant = findTenant(email);
-
         final List<GrantedAuthority> authorities = new ArrayList<>();
+        final List<Residence> residencesOwned = getResidnecesForOwner(tenant);
+
         authorities.add(new SimpleGrantedAuthority("ROLE_" + tenant.getRole()));
-
-        List<Residence> residencesOwned = getResidnecesForOwner(tenant);
-
         return new SecurityUser(tenant, isActive(tenant), authorities, residencesOwned);
     }
 
@@ -48,7 +45,6 @@ public class SecurityServiceImpl implements UserDetailsService, ISecurityService
         final Tenant tenant = findTenant(mail);
         checkOldPassword(tenant, oldPassowrd);
         comparePasswords(oldPassowrd, newPwassword);
-
 
         tenant.setPassword(newPwassword);
         tenantService.update(tenant);
@@ -65,10 +61,6 @@ public class SecurityServiceImpl implements UserDetailsService, ISecurityService
             throw new UsernameNotFoundException("Nowe hasło musi być inne niż stare");
         }
 
-    }
-
-    public SecurityUser getCurrentUser() {
-        return (SecurityUser) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
     }
 
     private List<Residence> getResidnecesForOwner(final Tenant t) {

@@ -11,32 +11,33 @@ import java.util.List;
 public class SecurityDetails {
 
     public static Tenant getLoggedTenant() {
-        SecurityUser su = getPrincipal();
+        final SecurityUser su = getPrincipal();
         return su.getTenant();
     }
 
     public static Apartment getApartmentForLoggedTenant() {
-        SecurityUser su = getPrincipal();
+        final SecurityUser su = getPrincipal();
         return su.getTenant().fetchApartment();
     }
 
     public static List<Residence> getResidencesForOwner() {
-        SecurityUser su = getPrincipal();
+        final SecurityUser su = getPrincipal();
         return su.getResidencesOwned();
     }
 
     public static void removeResidenceFromPrincipal(final Residence r) {
         final List<Residence> residences = getPrincipal().getResidencesOwned();
-        for (int i = 0; i < residences.size(); i++) {
-            if (residences.get(i).equals(r)) {
-                residences.remove(i);
-                break;
-            }
-        }
-
+        residences.remove(r);
     }
 
     private static SecurityUser getPrincipal() {
         return (SecurityUser) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+    }
+
+    public static void checkIfOwnsResidence(final Residence residence) {
+        final SecurityUser su = getPrincipal();
+        if (!su.getResidencesOwned().contains(residence)) {
+            throw new SecurityException("Resource does not belong to the logged user");
+        }
     }
 }

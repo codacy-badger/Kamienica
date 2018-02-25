@@ -64,6 +64,11 @@ public class MeterService implements IMeterService {
     }
 
     @Override
+    public void delete(Meter meter) {
+        meterDao.delete(meter);
+    }
+
+    @Override
     public List<Meter> list(Media media) {
         return meterDao.getList(media);
     }
