@@ -5,7 +5,6 @@ import kamienica.model.enums.Media;
 import kamienica.model.exception.NegativeConsumptionValue;
 import kamienica.model.exception.UsageCalculationException;
 
-import javax.persistence.criteria.CriteriaBuilder;
 import java.util.List;
 
 public interface IInvoiceService {

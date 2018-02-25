@@ -89,11 +89,6 @@ public class TenantService implements ITenantService {
     }
 
     @Override
-    public List<Tenant> listForTenant() {
-        return null;
-    }
-
-    @Override
     public List<Tenant> findByCriteria(final Criterion... crit) {
         return tenantDao.findByCriteria(crit);
     }
