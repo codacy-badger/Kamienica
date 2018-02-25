@@ -17,14 +17,18 @@ import java.util.List;
 @RequestMapping("api/v1/payments")
 public class PaymentApi {
 
+    private final IPaymentService service;
+
     @Autowired
-    private IPaymentService service;
+    public PaymentApi(IPaymentService service) {
+        this.service = service;
+    }
 
 
     @RequestMapping(method = RequestMethod.GET)
     public ResponseEntity<?> getList2(@RequestParam("media") Media media) {
 
-        List<? extends Payment> list = service.getPaymentList(media);
+        final List<Payment> list = service.getPaymentList(media);
 
         if (list.isEmpty()) {
             return new ResponseEntity<Void>(HttpStatus.NO_CONTENT);

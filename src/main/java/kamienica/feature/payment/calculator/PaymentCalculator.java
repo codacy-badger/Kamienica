@@ -34,7 +34,7 @@ public class PaymentCalculator implements IPaymentCalculator{
     }
 
     @Override
-    public List<Payment> createPaymentList(final Invoice invoice) throws UsageCalculationException, NegativeConsumptionValue {
+    public List<Payment> createPaymentList(final Invoice invoice) {
         final List<Division> division = divisionService.createDivisionForResidence(invoice);
         final List<Apartment> apartments = extractApartmentsFromDivision(division);
         final IConsumptionCalculator calculator = createCalculator(invoice);

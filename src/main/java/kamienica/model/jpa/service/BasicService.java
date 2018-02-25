@@ -8,8 +8,6 @@ public interface BasicService<T> {
 
     List<T> listForOwner();
 
-    List<T> listForTenant();
-
     T getById(Long id);
 
     void delete(Long id);

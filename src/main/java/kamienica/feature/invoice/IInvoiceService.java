@@ -15,6 +15,8 @@ public interface IInvoiceService {
 
     void delete(Long id);
 
+    void delete(Invoice invoice);
+
     Invoice getByID(Long id);
 
 }

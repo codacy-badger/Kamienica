@@ -58,6 +58,11 @@ public class InvoiceService implements IInvoiceService {
     }
 
     @Override
+    public void delete(Invoice invoice) {
+        invoiceDao.delete(invoice);
+    }
+
+    @Override
     public Invoice getByID(Long id) {
         return invoiceDao.getById(id);
     }

@@ -13,7 +13,20 @@
                     <link href="<c:url value='/static/css/style.css' />" rel="stylesheet">
                     <link href="<c:url value='/static/css/sb-admin-2.css' />" rel="stylesheet">
                     <link href="<c:url value='/static/css/font-awesome.min.css' />" rel="stylesheet" type="text/css">
-
+    <script src="<c:url value='/static/js/angular.js' />"></script>
+                    <script src="<c:url value='/static/js/angular-resource.js' />"></script>
+                    <script src="<c:url value='/static/angular/app.js' />"></script>
+                    <script src="<c:url value='/static/angular/invoice/water/baseReading_service.js' />"></script>
+                    <script src="<c:url value='/static/angular/invoice/water/invoice_service.js' />"></script>
+                    <script src="<c:url value='/static/angular/invoice/water/invoice_controller.js' />"></script>
+                    <!-- jQuery -->
+                    <script src="<c:url value='/static/js/jquery.min.js' />"></script>
+                    <!-- Bootstrap Core JavaScript -->
+                    <script src="<c:url value='/static/js/bootstrap.min.js' />"></script>
+                    <!-- Metis Menu Plugin JavaScript -->
+                    <script src="<c:url value='/static/js/metisMenu.min.js' />"></script>
+                    <!-- Custom Theme JavaScript -->
+                    <script src="<c:url value='/static/js/sb-admin-2.js' />"></script>
                     <!-- MetisMenu CSS -->
                     <link href="<c:url value='/static/css/metisMenu.min.css' />" rel="stylesheet">
 
@@ -145,20 +158,7 @@
                         </div>
                     </div>
 
-                    <script src="<c:url value='/static/js/angular.js' />"></script>
-                    <script src="<c:url value='/static/js/angular-resource.js' />"></script>
-                    <script src="<c:url value='/static/angular/app.js' />"></script>
-                    <script src="<c:url value='/static/angular/invoice/water/baseReading_service.js' />"></script>
-                    <script src="<c:url value='/static/angular/invoice/water/invoice_service.js' />"></script>
-                    <script src="<c:url value='/static/angular/invoice/water/invoice_controller.js' />"></script>
-                    <!-- jQuery -->
-                    <script src="<c:url value='/static/js/jquery.min.js' />"></script>
-                    <!-- Bootstrap Core JavaScript -->
-                    <script src="<c:url value='/static/js/bootstrap.min.js' />"></script>
-                    <!-- Metis Menu Plugin JavaScript -->
-                    <script src="<c:url value='/static/js/metisMenu.min.js' />"></script>
-                    <!-- Custom Theme JavaScript -->
-                    <script src="<c:url value='/static/js/sb-admin-2.js' />"></script>
+
 
                 </body>
 

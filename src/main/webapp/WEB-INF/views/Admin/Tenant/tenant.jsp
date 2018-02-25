@@ -14,7 +14,22 @@
                     <link href="<c:url value='/static/css/font-awesome.min.css' />" rel="stylesheet" type="text/css">
                     <!-- MetisMenu CSS -->
                     <link href="<c:url value='/static/css/metisMenu.min.css' />" rel="stylesheet">
+  <script src="<c:url value='/static/js/angular.js' />"></script>
+                    <script src="<c:url value='/static/js/angular-resource.js' />"></script>
+                    <script src="<c:url value='/static/angular/app.js' />"></script>
+                    <script src="<c:url value='/static/angular/apartment/apartment_service.js' />"></script>
+                    <script src="<c:url value='/static/angular/tenant/tenant_service.js' />"></script>
 
+                    <script src="<c:url value='/static/angular/tenant/tenant_controller.js' />"></script>
+
+                    <!-- jQuery -->
+                    <script src="<c:url value='/static/js/jquery.min.js' />"></script>
+                    <!-- Bootstrap Core JavaScript -->
+                    <script src="<c:url value='/static/js/bootstrap.min.js' />"></script>
+                    <!-- Metis Menu Plugin JavaScript -->
+                    <script src="<c:url value='/static/js/metisMenu.min.js' />"></script>
+                    <!-- Custom Theme JavaScript -->
+                    <script src="<c:url value='/static/js/sb-admin-2.js' />"></script>
                     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
                     <meta name="viewport" content="width=device-width, initial-scale=1.0">
                     <title>Najemcy</title>
@@ -131,6 +146,9 @@
                                         <div class="col-sm-9">
                                             <select name='apartment' ng-model="ctrl.tenant.rentContract.apartment" ng-required='true' class="form-control" ng-options="a.description for a in ctrl.apartments"><option>{{ctrl.tenant.rentContract.apartment}}</option>
 							</select>
+							 <p class="help-block">
+                                                                            <span class='error' ng-show="myForm.apartment.$invalid">Pole wymagane</span> <span class='error'>{{errors.apartment}}</span>
+                                                                        </p>
 
 
 
@@ -174,7 +192,7 @@
                                     <div class="form-group">
                                         <label for="inputEmail3" class="col-sm-3 control-label">Koniec Umowy</label>
                                         <div class="col-sm-9">
-                                            <input type="text" datetime="yyyy-MM-dd" ng-model="ctrl.tenant.rentContract.contractEnd" class="form-control" placeholder="YYYY/MM/DD" name="contractEnd" ng-required='true' />
+                                            <input type="text" datetime="yyyy-MM-dd" ng-model="ctrl.tenant.rentContract.contractEnd" class="form-control" placeholder="YYYY/MM/DD" name="contractEnd" />
                                             <p class="help-block">
                                                 <span class='error' ng-show="myForm.contractEnd.$invalid">Pole
 									wymagane</span> <span class='error'>{{errors.contractEnd}}</span>
@@ -214,22 +232,7 @@
                             </div>
                         </div>
                     </div>
-                    <script src="<c:url value='/static/js/angular.js' />"></script>
-                    <script src="<c:url value='/static/js/angular-resource.js' />"></script>
-                    <script src="<c:url value='/static/angular/app.js' />"></script>
-                    <script src="<c:url value='/static/angular/apartment/apartment_service.js' />"></script>
-                    <script src="<c:url value='/static/angular/tenant/tenant_service.js' />"></script>
 
-                    <script src="<c:url value='/static/angular/tenant/tenant_controller.js' />"></script>
-
-                    <!-- jQuery -->
-                    <script src="<c:url value='/static/js/jquery.min.js' />"></script>
-                    <!-- Bootstrap Core JavaScript -->
-                    <script src="<c:url value='/static/js/bootstrap.min.js' />"></script>
-                    <!-- Metis Menu Plugin JavaScript -->
-                    <script src="<c:url value='/static/js/metisMenu.min.js' />"></script>
-                    <!-- Custom Theme JavaScript -->
-                    <script src="<c:url value='/static/js/sb-admin-2.js' />"></script>
                 </body>
 
                 </html>

@@ -25,7 +25,11 @@
 <c:set var="path" value="${pageContext.request.contextPath}" />
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<!-- jQuery -->
+	<script src="<c:url value='/static/js/jquery.min.js' />"></script>
 
+	<!-- Bootstrap Core JavaScript -->
+	<script src="<c:url value='/static/js/bootstrap.min.js' />"></script>
 </head>
 <body class='userBody'>
 
@@ -75,11 +79,7 @@
 			</div>
 		</div>
 	</div>
-	<!-- jQuery -->
-	<script src="<c:url value='/static/js/jquery.min.js' />"></script>
 
-	<!-- Bootstrap Core JavaScript -->
-	<script src="<c:url value='/static/js/bootstrap.min.js' />"></script>
 </body>
 </body>
 </html>
