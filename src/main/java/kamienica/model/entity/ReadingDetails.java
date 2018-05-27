@@ -13,6 +13,7 @@ import javax.persistence.Enumerated;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
+import java.util.Objects;
 
 @Entity
 @Table(name = "READING_DETAILS", uniqueConstraints = {@UniqueConstraint(columnNames = {"residence_id", "readingDate", "media"})})
@@ -92,22 +93,16 @@ public class ReadingDetails extends DBEntity implements Comparable<ReadingDetail
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-
-        ReadingDetails details = (ReadingDetails) o;
-
-        if (!readingDate.equals(details.readingDate)) return false;
-        if (resolvement != details.resolvement) return false;
-        if (media != details.media) return false;
-        return residence.equals(details.residence);
+        final ReadingDetails details = (ReadingDetails) o;
+        return Objects.equals(readingDate, details.readingDate) &&
+                resolvement == details.resolvement &&
+                media == details.media &&
+                Objects.equals(residence, details.residence);
     }
 
     @Override
     public int hashCode() {
-        int result = readingDate.hashCode();
-        result = 31 * result + resolvement.hashCode();
-        result = 31 * result + media.hashCode();
-        result = 31 * result + residence.hashCode();
-        return result;
+        return Objects.hash(readingDate, resolvement, media, residence);
     }
 
     @Override

@@ -8,5 +8,5 @@ import kamienica.model.exception.UsageCalculationException;
 import java.util.List;
 
 public interface IPaymentCalculator {
-    List<Payment> createPaymentList(Invoice invoice) throws UsageCalculationException, NegativeConsumptionValue;
+    List<Payment> createPaymentList(Invoice invoice);
 }

@@ -19,7 +19,21 @@
 <!-- MetisMenu CSS -->
 <link href="<c:url value='/static/css/metisMenu.min.css' />"
 	rel="stylesheet">
-
+	<script src="<c:url value='/static/js/angular.js' />"></script>
+	<script src="<c:url value='/static/js/angular-resource.js' />"></script>
+	<script src="<c:url value='/static/angular/app.js' />"></script>
+	<script
+		src="<c:url value='/static/angular/reading/water/reading_service.js' />"></script>
+	<script
+		src="<c:url value='/static/angular/reading/water/reading_controller.js' />"></script>
+	<!-- jQuery -->
+	<script src="<c:url value='/static/js/jquery.min.js' />"></script>
+	<!-- Bootstrap Core JavaScript -->
+	<script src="<c:url value='/static/js/bootstrap.min.js' />"></script>
+	<!-- Metis Menu Plugin JavaScript -->
+	<script src="<c:url value='/static/js/metisMenu.min.js' />"></script>
+	<!-- Custom Theme JavaScript -->
+	<script src="<c:url value='/static/js/sb-admin-2.js' />"></script>
 
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -152,21 +166,5 @@
 		</div>
 	</div>
 	
-	<script src="<c:url value='/static/js/angular.js' />"></script>
-	<script src="<c:url value='/static/js/angular-resource.js' />"></script>
-	<script src="<c:url value='/static/angular/app.js' />"></script>
-	<script
-		src="<c:url value='/static/angular/reading/water/reading_service.js' />"></script>
-	<script
-		src="<c:url value='/static/angular/reading/water/reading_controller.js' />"></script>
-	<!-- jQuery -->
-	<script src="<c:url value='/static/js/jquery.min.js' />"></script>
-	<!-- Bootstrap Core JavaScript -->
-	<script src="<c:url value='/static/js/bootstrap.min.js' />"></script>
-	<!-- Metis Menu Plugin JavaScript -->
-	<script src="<c:url value='/static/js/metisMenu.min.js' />"></script>
-	<!-- Custom Theme JavaScript -->
-	<script src="<c:url value='/static/js/sb-admin-2.js' />"></script>
-
 </body>
 </html>

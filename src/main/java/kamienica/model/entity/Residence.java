@@ -7,6 +7,7 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 import java.io.Serializable;
+import java.util.Objects;
 
 @Entity
 @Table(name = "RESIDENCE", uniqueConstraints = {@UniqueConstraint(columnNames = {"street", "number", "city"})})
@@ -81,19 +82,15 @@ public class Residence implements Serializable {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-
-        Residence residence = (Residence) o;
-
-        if (!getId().equals(residence.getId())) return false;
-        return getStreet().equals(residence.getStreet()) && getNumber().equals(residence.getNumber()) && getCity().equals(residence.getCity());
+        final Residence residence = (Residence) o;
+        return Objects.equals(id, residence.id) &&
+                Objects.equals(street, residence.street) &&
+                Objects.equals(number, residence.number) &&
+                Objects.equals(city, residence.city);
     }
 
     @Override
     public int hashCode() {
-        int result = getId().hashCode();
-        result = 31 * result + getStreet().hashCode();
-        result = 31 * result + getNumber().hashCode();
-        result = 31 * result + getCity().hashCode();
-        return result;
+        return Objects.hash(id, street, number, city);
     }
 }

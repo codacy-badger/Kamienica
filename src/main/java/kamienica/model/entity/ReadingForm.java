@@ -18,7 +18,6 @@ public class ReadingForm {
 
     public ReadingForm(ReadingDetails readingDetails, List<Reading> readings) {
         this.readingDetails = readingDetails;
-        //noinspection unchecked
         this.readings = (Set<Reading>) readings;
     }
 

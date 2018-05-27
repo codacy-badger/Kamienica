@@ -82,19 +82,14 @@ public class TenantService implements ITenantService {
 
     @Override
     public List<Tenant> listForOwner() {
-        List<Apartment> apartments = apartmentDao.getListForOwner(SecurityDetails.getResidencesForOwner());
+        final List<Apartment> apartments = apartmentDao.getListForOwner(SecurityDetails.getResidencesForOwner());
         final Criterion c1 = Restrictions.in("apartment", apartments);
-        List<RentContract> contracts = rentContractDao.findByCriteria(c1);
+        final List<RentContract> contracts = rentContractDao.findByCriteria(c1);
         return findByCriteria(Restrictions.in("rentContract", contracts));
     }
 
     @Override
-    public List<Tenant> listForTenant() {
-        return null;
-    }
-
-    @Override
-    public List<Tenant> findByCriteria(Criterion... crit) {
+    public List<Tenant> findByCriteria(final Criterion... crit) {
         return tenantDao.findByCriteria(crit);
     }
 
@@ -115,40 +110,40 @@ public class TenantService implements ITenantService {
         final Criterion c1 = Restrictions.eq("apartment", apartment);
         final Criterion c2 = Restrictions.lt("contractStart", now);
         final Criterion c3 = Restrictions.gt("contractEnd", now);
-        RentContract contract = rentContractDao.findOneByCriteria(c1, c2, c3);
+        final RentContract contract = rentContractDao.findOneByCriteria(c1, c2, c3);
         return tenantDao.findOneByCriteria(Restrictions.eq("rentContract", contract));
     }
 
     @Override
-    public void delete(Long id) {
+    public void delete(final Long id) {
         tenantDao.delete(id);
     }
 
     @Override
-    public void delete(Tenant object) {
+    public void delete(final Tenant object) {
         tenantDao.delete(object);
     }
 
     @Override
-    public void update(Tenant tenant) {
+    public void update(final Tenant tenant) {
         tenantDao.update(tenant);
 
     }
 
     @Override
-    public Tenant getById(Long id) {
+    public Tenant getById(final Long id) {
         return tenantDao.getById(id);
     }
 
 
     @Override
-    public Tenant loadByMail(String mail) {
+    public Tenant loadByMail(final String mail) {
         return tenantDao.loadByMail(mail);
     }
 
     @Override
     public List<Tenant> getOwners() {
-        Criterion onlyOwners = Restrictions.eq("role", UserRole.OWNER);
+        final Criterion onlyOwners = Restrictions.eq("role", UserRole.OWNER);
         return tenantDao.findByCriteria(onlyOwners);
     }
 

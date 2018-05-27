@@ -39,11 +39,6 @@ public class ApartmentService implements IApartmentService {
     }
 
     @Override
-    public List<Apartment> listForTenant() {
-        throw new NotImplementedException();
-    }
-
-    @Override
     public List<Apartment> paginatedList(@NotNull final Integer firstResult, @NotNull final Integer maxResults) {
         return apartmentDAO.paginatedList(firstResult, maxResults);
     }

@@ -22,6 +22,7 @@
 <link href="<c:url value='/static/css/timeline.css' />" rel="stylesheet">
 <!-- Morris Charts CSS -->
 <link href="<c:url value='/static/css/morris.css' />" rel="stylesheet">
+	<script src="<c:url value='/static/js/bootstrap.min.js' />"></script>
 
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -104,6 +105,5 @@
 	<script src="<c:url value='/static/js/jquery.min.js' />"></script>
 
 	<!-- Bootstrap Core JavaScript -->
-	<script src="<c:url value='/static/js/bootstrap.min.js' />"></script>
 </body>
 </html>

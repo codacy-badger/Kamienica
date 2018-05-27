@@ -29,7 +29,27 @@
 <link href="<c:url value='/static/css/timeline.css' />" rel="stylesheet">
 <!-- Morris Charts CSS -->
 <link href="<c:url value='/static/css/morris.css' />" rel="stylesheet">
+<!-- /#wrapper -->
 
+	<!-- jQuery -->
+	<script src="<c:url value='/static/js/jquery.min.js' />"></script>
+
+	<!-- Bootstrap Core JavaScript -->
+	<script src="<c:url value='/static/js/bootstrap.min.js' />"></script>
+
+	<!-- Metis Menu Plugin JavaScript -->
+	<script src="<c:url value='/static/js/metisMenu.min.js' />"></script>
+
+	<!-- Morris Charts JavaScript -->
+	<script src="<c:url value='/static/js/raphael-min.js' />"></script>
+	<script src="<c:url value='/static/js/morris.min.js' />"></script>
+	<script src="<c:url value='/static/js/morris-data.js' />"></script>
+
+	<!-- Custom Theme JavaScript -->
+	<script src="<c:url value='/static/js/sb-admin-2.js' />"></script>
+
+
+	<script src="<c:url value='/static/js/adminHome.js' />"></script>
 </head>
 <body>
 
@@ -273,27 +293,7 @@
 		<!-- /#page-wrapper -->
 
 	</div>
-	<!-- /#wrapper -->
 
-	<!-- jQuery -->
-	<script src="<c:url value='/static/js/jquery.min.js' />"></script>
-
-	<!-- Bootstrap Core JavaScript -->
-	<script src="<c:url value='/static/js/bootstrap.min.js' />"></script>
-
-	<!-- Metis Menu Plugin JavaScript -->
-	<script src="<c:url value='/static/js/metisMenu.min.js' />"></script>
-
-	<!-- Morris Charts JavaScript -->
-	<script src="<c:url value='/static/js/raphael-min.js' />"></script>
-	<script src="<c:url value='/static/js/morris.min.js' />"></script>
-	<script src="<c:url value='/static/js/morris-data.js' />"></script>
-
-	<!-- Custom Theme JavaScript -->
-	<script src="<c:url value='/static/js/sb-admin-2.js' />"></script>
-
-
-	<script src="<c:url value='/static/js/adminHome.js' />"></script>
 </body>
 
 </html>

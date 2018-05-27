@@ -1,5 +1,6 @@
 package kamienica.controller.api.v1;
 
+import kamienica.core.util.SecurityDetails;
 import kamienica.feature.reading.IReadingService;
 import kamienica.feature.readingdetails.IReadingDetailsService;
 import kamienica.feature.residence.IResidenceService;
@@ -34,6 +35,7 @@ public class ReadingApi {
     public ResponseEntity<?> getList(@RequestParam String media, @RequestParam Long residence_id) {
 
         final Residence residence = residenceService.getById(residence_id);
+        SecurityDetails.checkIfOwnsResidence(residence);
         final List<Reading> list = readingService.getList(residence, Media.valueOf(media));
 
         if (list.isEmpty()) {
@@ -45,7 +47,7 @@ public class ReadingApi {
     @RequestMapping(method = RequestMethod.POST)
     public ResponseEntity<?> save(@Valid @RequestBody final ReadingForm readingForm) {
 //        validate()
-        System.out.println("-------------------SAVING-----------------------------------");
+        SecurityDetails.checkIfOwnsResidence(readingForm.getReadingDetails().getResidence());
         readingService.save(readingForm);
         return new ResponseEntity<>(readingForm, HttpStatus.OK);
     }
@@ -53,7 +55,7 @@ public class ReadingApi {
     @RequestMapping(method = RequestMethod.PUT)
     public ResponseEntity<?> delete(@Valid @RequestBody final ReadingForm readingForm) {
 //        validate()
-        System.out.println("-------------------SAVING-----------------------------------");
+        SecurityDetails.checkIfOwnsResidence(readingForm.getReadingDetails().getResidence());
         readingService.update(readingForm);
         return new ResponseEntity<>(readingForm, HttpStatus.OK);
     }
@@ -62,6 +64,7 @@ public class ReadingApi {
     public ResponseEntity<?> delete(@RequestParam String media, @RequestParam Long residence_id) {
 //        validate()
         final Residence res = residenceService.getById(residence_id);
+        SecurityDetails.checkIfOwnsResidence(res);
         readingService.deleteLatestReadings(res, Media.valueOf(media));
 //        readingService.delete(readingForm);
         return new ResponseEntity<Void>(HttpStatus.OK);
@@ -74,6 +77,7 @@ public class ReadingApi {
         final List<ReadingDetails> list;
         if (id != null) {
             final Residence r = residenceService.getById(id);
+            SecurityDetails.checkIfOwnsResidence(r);
             list = readingDetailsService.getUnresolved(r, media);
         } else {
             list = readingDetailsService.getUnresolved(media);

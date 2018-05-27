@@ -1,6 +1,7 @@
 package kamienica.controller.api.v1;
 
 import kamienica.core.message.ApiErrorResponse;
+import kamienica.core.util.SecurityDetails;
 import kamienica.feature.invoice.IInvoiceService;
 import kamienica.feature.residence.IResidenceService;
 import kamienica.model.entity.Invoice;
@@ -24,7 +25,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/v1/invoices")
-public class InvoiceApi extends AbstractApi {
+public class InvoiceApi {
 
     private final IInvoiceService invoiceService;
     private final IResidenceService residenceService;
@@ -44,7 +45,7 @@ public class InvoiceApi extends AbstractApi {
         }
         return new ResponseEntity<List<? extends Invoice>>(list, HttpStatus.OK);
     }
-
+//todo reduce duplication
     @RequestMapping(value = "/ENERGY", method = RequestMethod.POST)
     public ResponseEntity<?> saveEnergy(@Valid @RequestBody final Invoice invoice, final BindingResult result, @RequestParam("residence") final Long residenceId) throws UsageCalculationException, NegativeConsumptionValue {
 
@@ -86,6 +87,7 @@ public class InvoiceApi extends AbstractApi {
             return new ResponseEntity<>(message, HttpStatus.UNPROCESSABLE_ENTITY);
         }
         final Residence r = residenceService.getById(residenceId);
+        SecurityDetails.checkIfOwnsResidence(r);
         invoice.setResidence(r);
         invoice.setMedia(Media.ENERGY);
         invoiceService.save(invoice);
@@ -95,7 +97,9 @@ public class InvoiceApi extends AbstractApi {
 
     @RequestMapping(value = "/{media}", method = RequestMethod.DELETE)
     public ResponseEntity<?> delete(@PathVariable final Media media, final Long id) {
-        invoiceService.delete(id);
+        final Invoice invoice = invoiceService.getByID(id);
+        SecurityDetails.checkIfOwnsResidence(invoice.getResidence());
+        invoiceService.delete(invoice);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
