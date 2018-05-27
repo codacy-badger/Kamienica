@@ -1,11 +1,13 @@
 package kamienica.configuration;
 
+import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.View;
 import org.springframework.web.servlet.ViewResolver;
 import org.springframework.web.servlet.view.json.MappingJackson2JsonView;
 
 import java.util.Locale;
 
+@Component
 public class JsonViewResolver implements ViewResolver{
 
 	@Override
