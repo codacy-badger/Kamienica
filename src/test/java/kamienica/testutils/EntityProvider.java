@@ -61,7 +61,7 @@ public class EntityProvider {
 
 //    private static List<Tenant> getTenantList() {
 //        final List<Tenant> tenants = new ArrayList<>();
-//        Tenant tenant2 = new Tenant("Maciej (Admin)", "Fol", "kowalski@wp.pl", "222222", APARTMENTS.get(1));
+//        Tenant tenant2 = new Tenant("Maciej (owner)", "Fol", "kowalski@wp.pl", "222222", APARTMENTS.get(1));
 //        tenant2.setStatus(Status.ACTIVE);
 //        tenant2.setRole(UserRole.OWNER);
 //        Tenant tenant3 = new Tenant("Adam", "Nowak", "nowak@wp.pl", "111111", APARTMENTS.get(2));

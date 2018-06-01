@@ -17,7 +17,7 @@
 //import java.util.Map;
 //
 //@Controller
-//@RequestMapping("/Admin/Settings")
+//@RequestMapping("/owner/Settings")
 //public class SettingsController {
 //
 //	private ArrayList<Boolean> values = new ArrayList<>(Arrays.asList(true, false));
@@ -29,7 +29,7 @@
 //	public ModelAndView list(@ModelAttribute("settings") Settings settings, BindingResult result) {
 //		Map<String, Object> model = new HashMap<>();
 //		model.put("settings", service.list());
-//		return new ModelAndView("/Admin/Settings/SettingsList", "model", model);
+//		return new ModelAndView("/owner/Settings/SettingsList", "model", model);
 //
 //	}
 //
@@ -37,8 +37,8 @@
 //	// public ModelAndView apartmentEdit(@RequestParam(value = "id") Long id,
 //	// @ModelAttribute("apartment") Apartment apartment) {
 //	// ModelAndView mvc = new
-//	// ModelAndView("/Admin/Apartment/ApartmentRegister");
-//	// mvc.addObject("url", "/Admin/Apartment/apartmentOverwrite.html");
+//	// ModelAndView("/owner/Apartment/ApartmentRegister");
+//	// mvc.addObject("url", "/owner/Apartment/apartmentOverwrite.html");
 //	// mvc.addObject("apartment", apartmentService.getById(id));
 //	// return mvc;
 //	// }
@@ -50,7 +50,7 @@
 //		model.put("values", values);
 //		model.put("labels", labels);
 //		model.put("cwu", WaterHeatingSystem.values());
-//		return new ModelAndView("/Admin/Settings/SettingsRegister", "model", model);
+//		return new ModelAndView("/owner/Settings/SettingsRegister", "model", model);
 //
 //	}
 //	// \
@@ -60,7 +60,7 @@
 //	// Map<String, Object> model = new HashMap<String, Object>();
 //	// model.put("values", values);
 //	// model.put("labels", labels);
-//	// return new ModelAndView("/Admin/Settings/SettingsRegister", "model",
+//	// return new ModelAndView("/owner/Settings/SettingsRegister", "model",
 //	// model);
 //	//
 //	// }
@@ -69,9 +69,9 @@
 //	public ModelAndView save(@Valid @ModelAttribute("settings") Settings settings, BindingResult result) {
 //
 //		if (result.hasErrors()) {
-//			return new ModelAndView("/Admin/Settings/SettingsRegister");
+//			return new ModelAndView("/owner/Settings/SettingsRegister");
 //		}
 //		service.save(settings);
-//		return new ModelAndView("redirect:/Admin/Settings/list.html");
+//		return new ModelAndView("redirect:/owner/Settings/list.html");
 //	}
 //}

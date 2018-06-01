@@ -59,11 +59,6 @@
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-web</artifactId>
 		</dependency>
-		<dependency>
-			<groupId>com.opencsv</groupId>
-			<artifactId>opencsv</artifactId>
-			<version>3.8</version>
-		</dependency>
 
 		<dependency>
 			<groupId>com.fasterxml.jackson.datatype</groupId>
@@ -80,11 +75,6 @@
 			<artifactId>springfox-swagger-ui</artifactId>
 			<version>2.6.1</version>
 			<scope>compile</scope>
-		</dependency>
-		<dependency>
-			<groupId>org.apache.pdfbox</groupId>
-			<artifactId>pdfbox</artifactId>
-			<version>2.0.4</version>
 		</dependency>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
@@ -119,34 +109,11 @@
 			<artifactId>usertype.core</artifactId>
 			<version>5.0.0.GA</version>
 		</dependency>
-		<!-- Servlet+JSP+JSTL -->
-		<dependency>
-			<groupId>javax.servlet</groupId>
-			<artifactId>javax.servlet-api</artifactId>
-			<version>3.1.0</version>
-		</dependency>
-		<dependency>
-			<groupId>javax.servlet</groupId>
-			<artifactId>jsp-api</artifactId>
-			<version>2.0</version>
-			<scope>provided</scope>
-		</dependency>
-		<dependency>
-			<groupId>javax.servlet</groupId>
-			<artifactId>jstl</artifactId>
-			<version>1.2</version>
-		</dependency>
-		<dependency>
-			<groupId>taglibs</groupId>
-			<artifactId>standard</artifactId>
-			<version>1.1.2</version>
-			<scope>compile</scope>
-		</dependency>
-		<dependency>
-			<groupId>com.fasterxml.jackson.datatype</groupId>
-			<artifactId>jackson-datatype-joda</artifactId>
-			<version>2.4.0</version>
-		</dependency>
+		<!--<dependency>-->
+			<!--<groupId>com.fasterxml.jackson.datatype</groupId>-->
+			<!--<artifactId>jackson-datatype-joda</artifactId>-->
+			<!--<version>2.4.0</version>-->
+		<!--</dependency>-->
 		<!-- Testing dependencies -->
 		<dependency>
 			<groupId>junit</groupId>
@@ -178,27 +145,11 @@
 			<scope>test</scope>
 		</dependency>
 		<dependency>
-			<groupId>org.jacoco</groupId>
-			<artifactId>jacoco-maven-plugin</artifactId>
-			<version>0.7.9</version>
-			<!--<scope>test</scope>-->
-		</dependency>
-		<dependency>
 			<groupId>org.hamcrest</groupId>
 			<artifactId>hamcrest-all</artifactId>
 			<version>1.3</version>
 			<scope>test</scope>
 		</dependency>
-		<!--<dependency>-->
-			<!--<groupId>org.slf4j</groupId>-->
-			<!--<artifactId>slf4j-api</artifactId>-->
-			<!--<version>${log4j.version}</version>-->
-		<!--</dependency>-->
-		<!--<dependency>-->
-			<!--<groupId>org.slf4j</groupId>-->
-			<!--<artifactId>slf4j-log4j12</artifactId>-->
-			<!--<version>${log4j.version}</version>-->
-		<!--</dependency>-->
 	</dependencies>
 	<build>
 		<finalName>kamienica</finalName>
@@ -216,88 +167,6 @@
 				</configuration>
 			</plugin>
 		</plugins>
-
 	</build>
-
-	<!--<build>-->
-		<!--<finalName>Kamienica</finalName>-->
-		<!--<plugins>-->
-			<!--<plugin>-->
-				<!--<groupId>org.apache.maven.plugins</groupId>-->
-				<!--<artifactId>maven-compiler-plugin</artifactId>-->
-				<!--<version>3.3</version>-->
-				<!--<configuration>-->
-					<!--<source>${java.version}</source>-->
-					<!--<target>${java.version}</target>-->
-					<!--<encoding>UTF-8</encoding>-->
-				<!--</configuration>-->
-			<!--</plugin>-->
-			<!--<plugin>-->
-				<!--<groupId>org.apache.maven.plugins</groupId>-->
-				<!--<artifactId>maven-war-plugin</artifactId>-->
-				<!--<version>2.6</version>-->
-				<!--<configuration>-->
-					<!--<warSourceDirectory>src/main/webapp</warSourceDirectory>-->
-					<!--<warName>Kamienica</warName>-->
-					<!--<failOnMissingWebXml>false</failOnMissingWebXml>-->
-				<!--</configuration>-->
-			<!--</plugin>-->
-			<!--<plugin>-->
-				<!--<groupId>org.apache.maven.plugins</groupId>-->
-				<!--<artifactId>maven-surefire-plugin</artifactId>-->
-				<!--<configuration>-->
-					<!--&lt;!&ndash; Travis build workaround &ndash;&gt;-->
-					<!--<argLine>-Xms1024m -Xmx2048m</argLine>-->
-				<!--</configuration>-->
-			<!--</plugin>-->
-			<!--<plugin>-->
-				<!--<groupId>org.apache.maven.plugins</groupId>-->
-				<!--<artifactId>maven-dependency-plugin</artifactId>-->
-				<!--<version>2.3</version>-->
-				<!--<executions>-->
-					<!--<execution>-->
-						<!--<phase>package</phase>-->
-						<!--<goals>-->
-							<!--<goal>copy</goal>-->
-						<!--</goals>-->
-						<!--<configuration>-->
-							<!--<artifactItems>-->
-								<!--<artifactItem>-->
-									<!--<groupId>com.github.jsimone</groupId>-->
-									<!--<artifactId>webapp-runner</artifactId>-->
-									<!--<version>8.0.33.0</version>-->
-									<!--<destFileName>webapp-runner.jar</destFileName>-->
-								<!--</artifactItem>-->
-							<!--</artifactItems>-->
-						<!--</configuration>-->
-					<!--</execution>-->
-				<!--</executions>-->
-			<!--</plugin>-->
-            <!--<plugin>-->
-                <!--<groupId>org.jacoco</groupId>-->
-                <!--<artifactId>jacoco-maven-plugin</artifactId>-->
-                <!--<version>0.7.9</version>-->
-                <!--<configuration>-->
-                    <!--<destFile>${basedir}/target/coverage-reports/jacoco-unit.exec</destFile>-->
-                    <!--<dataFile>${basedir}/target/coverage-reports/jacoco-unit.exec</dataFile>-->
-                <!--</configuration>-->
-                <!--<executions>-->
-                    <!--<execution>-->
-                        <!--<id>jacoco-initialize</id>-->
-                        <!--<goals>-->
-                            <!--<goal>prepare-agent</goal>-->
-                        <!--</goals>-->
-                    <!--</execution>-->
-                    <!--<execution>-->
-                        <!--<id>jacoco-site</id>-->
-                        <!--<phase>package</phase>-->
-                        <!--<goals>-->
-                            <!--<goal>report</goal>-->
-                        <!--</goals>-->
-                    <!--</execution>-->
-                <!--</executions>-->
-            <!--</plugin>-->
-		<!--</plugins>-->
-	<!--</build>-->
 </project>
 

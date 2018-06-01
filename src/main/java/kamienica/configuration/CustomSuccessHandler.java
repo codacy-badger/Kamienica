@@ -43,11 +43,11 @@ public class CustomSuccessHandler extends SimpleUrlAuthenticationSuccessHandler 
 		}
 
 		if (isAdmin(roles) || isOwner(roles)) {
-			return "views/Admin/home.html";
+			return "/views/owner/home.html";
 		} else if (isTenant(roles)) {
-			return"views/User/userHome";
+			return"/views/user/home.html";
 		} else {
-			return "/403";
+			return "/403.html";
 		}
 	}
 

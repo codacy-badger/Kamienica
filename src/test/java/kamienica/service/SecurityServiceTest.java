@@ -23,10 +23,10 @@ public class SecurityServiceTest extends ServiceTest {
     @Test
     public void loginWithCorrectCredentials() {
         final UserDetails result = securityService.loadUserByUsername(FIRST_OWNER_MAIL);
-        assertEquals(true, result.isAccountNonExpired());
-        assertEquals(true, result.isAccountNonLocked());
-        assertEquals(true, result.isCredentialsNonExpired());
-        assertEquals(true, result.isEnabled());
+        assertTrue(result.isAccountNonExpired());
+        assertTrue(result.isAccountNonLocked());
+        assertTrue(result.isCredentialsNonExpired());
+        assertTrue(result.isEnabled());
         assertEquals(USER_PASSWD, result.getPassword());
         assertEquals(FIRST_OWNER_MAIL, result.getUsername());
 
@@ -43,9 +43,9 @@ public class SecurityServiceTest extends ServiceTest {
     @Transactional
     @Test
     public void changePassword(){
-        securityService.changePassword(FIRST_OWNER_MAIL, "witaj", "nowe");
+        securityService.changePassword(FIRST_OWNER_MAIL, USER_PASSWD, "nowee");
         final Tenant tenant = tenantService.loadByMail(FIRST_OWNER_MAIL);
-        assertEquals("nowe", tenant.getPassword());
+        assertEquals("nowee", tenant.getPassword());
     }
 
     @Test(expected = UsernameNotFoundException.class)

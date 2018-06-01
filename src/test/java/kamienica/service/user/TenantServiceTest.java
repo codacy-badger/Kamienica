@@ -74,7 +74,7 @@ public class TenantServiceTest extends ServiceTest {
     @Transactional
     @Test
     public void shouldAddOwnerWithNoContract() {
-        Tenant t = new Tenant("firstName", "lastName", "email", "phone", null);
+        Tenant t = new Tenant("firstName", "lastName", "email@mail", "111", null);
         t.setRole(UserRole.OWNER);
         tenantService.save(t);
         assertNotNull(t.getId());
@@ -83,7 +83,7 @@ public class TenantServiceTest extends ServiceTest {
     @Transactional
     @Test(expected = IllegalArgumentException.class)
     public void shouldThrowExceptionForAddingTenantWithNoContract() {
-        Tenant t = new Tenant("firstName", "lastName", "email", "phone", null);
+        Tenant t = new Tenant("firstName", "lastName", "email@mail", "1111", null);
         t.setRole(UserRole.TENANT);
         tenantService.save(t);
     }

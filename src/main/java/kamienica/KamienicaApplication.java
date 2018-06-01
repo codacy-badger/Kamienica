@@ -25,73 +25,46 @@ import static springfox.documentation.builders.PathSelectors.regex;
 @EnableSwagger2
 public class KamienicaApplication {
 
-	public static void main(String[] args) {
-		SpringApplication.run(KamienicaApplication.class, args);
-	}
+    public static void main(String[] args) {
+        SpringApplication.run(KamienicaApplication.class, args);
+    }
 
-//	@Bean
-//	public Docket newsApi() {
-//		return new Docket(DocumentationType.SWAGGER_2)
-//				.apiInfo(apiInfo())
-//				.select()
-//				.paths(regex("/api/*.*"))
-//				.build();
-//	}
-//
-//	@Bean
-//	public WebMvcConfigurer corsConfigurer() {
-//		return new WebMvcConfigurerAdapter() {
-//			@Override
-//			public void addCorsMappings(CorsRegistry registry) {
-//				registry.addMapping("/**");
-//			}
-//		};
-//	}
-//
-//	private ApiInfo apiInfo() {
-//		return new ApiInfoBuilder()
-//				.title("Kamienica API")
-//				.description("Spring Boot App")
-//				.version("1.0")
-//				.build();
-//	}
+//    @Bean
+//    public Docket v1Api() {
+//        return new Docket(DocumentationType.SWAGGER_2)
+//                .groupName("Api Version 1")
+//                .apiInfo(apiInfo())
+//                .select()
+//                .paths(regex(AbstractController.V1_PATH + "*.*"))
+//                .build();
+//    }
 
-	@Bean
-	public Docket newsApi() {
-		return new Docket(DocumentationType.SWAGGER_2)
-				.select()
-				.apis(RequestHandlerSelectors.any())
-				.paths(PathSelectors.any())
-				.build()
-				.securitySchemes(Lists.newArrayList(apiKey()))
-				.apiInfo(apiInfo());
+    @Bean
+    public Docket other() {
+        return new Docket(DocumentationType.SWAGGER_2)
+                .groupName("Budget All Endpoints")
+                .apiInfo(apiInfo())
+                .select()
+//				.paths(regex("*"))
+                .build();
+    }
 
-	}
+    @Bean
+    public WebMvcConfigurer corsConfigurer() {
+        return new WebMvcConfigurerAdapter() {
+            @Override
+            public void addCorsMappings(CorsRegistry registry) {
+                registry.addMapping("/**");
+            }
+        };
+    }
 
-	@Bean
-	SecurityConfiguration security() {
-		return new SecurityConfiguration(
-				"test-app-client-id",
-				"test-app-client-secret",
-				"test-app-realm",
-				"test-app",
-				"",
-				ApiKeyVehicle.HEADER,
-				"Authorization",
-				"," /*scope separator*/);
-	}
-
-	@Bean
-	SecurityScheme apiKey() {
-		return new ApiKey("token", "token", "header");
-	}
-
-	private ApiInfo apiInfo() {
-		return new ApiInfoBuilder()
-				.title("Spring REST Sample with Swagger")
-				.description("Spring REST Sample with Swagger")
-				.version("2.0")
-				.build();
-	}
+    private ApiInfo apiInfo() {
+        return new ApiInfoBuilder()
+                .title("Budget API")
+                .description("Spring Boot App")
+                .version("2.0")
+                .build();
+    }
 
 }
