@@ -1,12 +1,14 @@
 package kamienica.feature.apartment;
 
 import kamienica.core.util.SecurityDetails;
+import kamienica.feature.residence.IResidenceDao;
 import kamienica.model.entity.Apartment;
 import kamienica.model.entity.Residence;
+import org.hibernate.criterion.Criterion;
+import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 
 import javax.validation.constraints.NotNull;
 import java.util.List;
@@ -16,10 +18,12 @@ import java.util.List;
 public class ApartmentService implements IApartmentService {
 
     private final IApartmentDao apartmentDAO;
+    private final IResidenceDao residenceDao;
 
     @Autowired
-    public ApartmentService(IApartmentDao apartmentDAO) {
+    public ApartmentService(final IApartmentDao apartmentDAO, final IResidenceDao residenceDao) {
         this.apartmentDAO = apartmentDAO;
+        this.residenceDao = residenceDao;
     }
 
     @Override
@@ -41,6 +45,13 @@ public class ApartmentService implements IApartmentService {
     @Override
     public List<Apartment> paginatedList(@NotNull final Integer firstResult, @NotNull final Integer maxResults) {
         return apartmentDAO.paginatedList(firstResult, maxResults);
+    }
+
+    @Override
+    public List<Apartment> getByResidence(Long residenceId) {
+        final Residence r = residenceDao.getById(residenceId);
+        final Criterion c = Restrictions.eq("residence", r);
+        return apartmentDAO.findByCriteria(c);
     }
 
     @Override

@@ -32,8 +32,14 @@ public class ApartmentApi {
     }
 
     @RequestMapping(method = RequestMethod.GET)
-    public ResponseEntity<?> list() {
-        final List<Apartment> list = apartmentService.list();
+    public ResponseEntity<?> list(@RequestParam(required = false, value = "residence") final Long residenceId) {
+        final List<Apartment> list;
+        if (residenceId == null) {
+            list = apartmentService.list();
+        } else {
+            list = apartmentService.getByResidence(residenceId);
+        }
+
         if (list.isEmpty()) {
             return new ResponseEntity<List<Apartment>>(HttpStatus.NOT_FOUND);
         }
@@ -73,7 +79,8 @@ public class ApartmentApi {
 
         return new ResponseEntity<>(apartment, HttpStatus.CREATED);
     }
-//todo id redundant???
+
+    //todo id redundant???
     @RequestMapping(value = "/{id}", method = RequestMethod.PUT)
     public ResponseEntity<?> updateApartment(@PathVariable("id") final Long id, @RequestBody final Apartment apartment, final BindingResult result) {
         SecurityDetails.checkIfOwnsResidence(apartment.getResidence());

@@ -1,8 +1,8 @@
 const formText = "Dodaj nowy element";
 const tableText = "Przejdź do tabeli";
-const url = "/api/v1/apartments";
+const url = "/api/v1/apartments?residence=";
 let table;
-
+let residenceArrayIndex;
 let residences = [];
 
 $(document).ready(function () {
@@ -18,12 +18,6 @@ $(document).ready(function () {
             $("#toggler").text(formText);
         }
 
-
-        if (table) {
-            table.destroy();
-        }
-
-        table = drawTable();
         $("#list").removeAttr('hidden');
     });
 
@@ -35,6 +29,10 @@ $(document).ready(function () {
         } else {
             residences = result;
             fillForm()
+            if (result.length === 1) {
+                residenceArrayIndex = 0;
+                drawTable();
+            }
         }
     }).fail(function (response) {
         showError(response.responseJSON.message);
@@ -42,36 +40,19 @@ $(document).ready(function () {
 
 
     $('select').change(function () {
-        // alert($(this).val());
-
         if (table) {
             table.destroy();
         }
-
+        residenceArrayIndex = $(this).val();
         table = drawTable();
-        $("#tableContent").removeAttr('hidden');
 
     });
-
-    // $("#analizeBtn").click(function () {
-    //     const accountChosen = $("#DLState").val();
-    //     const dateStart = $("#dateStart").val();
-    //     const dateEnd = $("#dateEnd").val();
-    // });
-
 
     $(".dropdown-menu li").click(function () {
         $(this).parents(".dropdown").find('.btn').html($(this).text() + ' <span class="caret"></span>');
         $(this).parents(".dropdown").find('.btn').val($(this).data('value'));
         $("#tableContent").removeAttr('hidden');
     });
-
-
-    // $( ".residences" ).change(function() {
-    //     alert( "Handler for .change() called." );
-    //   });
-
-
 });
 
 
@@ -82,9 +63,12 @@ showError = function (msg) {
 }
 
 fillForm = function () {
+    if (residences.length > 1) {
+        $("#residences").append(
+            $('<option></option>').html("Wybierz nieruchomość...")
+        );
+    }
 
-
-    // let listItems = "";
     for (let i = 0; i < residences.length; i++) {
         //const item = "<li><a href='#' class='dropdown-item' data-value='" + data[i].street + " " + data[i].number + "' value='" + data[i].id     +"'>" + data[i].street +" " + data[i].number + "</a></li>";
         //    const item = "<li><a href='#' class='dropdown-item' data-value='" + data[i].street + " " + data[i].number + "' value='" + data[i].id     +"'>" + data[i].street +" " + data[i].number + "</a></li>";
@@ -97,52 +81,47 @@ fillForm = function () {
 }
 
 drawTable = function () {
-
-
-    if (url) {
-        return $('#dataTable').DataTable({
-            ajax: {
-                url: url,
-                dataSrc: '',
-            },
-            columns: [
-                {
-                    data: null,
-                    render: function (data, type, row) {
-                        console.log(data);
-                        // Combine the first and last names into a single table field
-                        return data.residence.city + ', ' + data.residence.street + ' ' + data.residence.number;
-                    }
-                },
-                { data: 'apartmentNumber' },
-                { data: 'intercom' },
-                { data: 'description' },
-                // { data: 'countryCode' }
-            ],
-            language: {
-                decimal: ",",
-                processing: "Przetwarzanie...",
-                search: "Szukaj:",
-                lengthMenu: "Pokaż _MENU_ pozycji",
-                info: "Pozycje od _START_ do _END_ z _TOTAL_ łącznie",
-                infoEmpty: "Pozycji 0 z 0 dostępnych",
-                infoFiltered: "(filtrowanie spośród _MAX_ dostępnych pozycji)",
-                infoPostFix: "",
-                loadingRecords: "Wczytywanie...",
-                zeroRecords: "Nie znaleziono pasujących pozycji",
-                emptyTable: "Brak danych",
-                paginate: {
-                    first: "Pierwsza",
-                    previous: "Poprzednia",
-                    next: "Następna",
-                    last: "Ostatnia"
-                },
-                aria: {
-                    sortAscending: ": aktywuj, by posortować kolumnę rosnąco",
-                    sortDescending: ": aktywuj, by posortować kolumnę malejąco"
+    const completeUrl = url + residences[residenceArrayIndex].id;
+    $("#tableContent").removeAttr('hidden');
+    return $('#dataTable').DataTable({
+        ajax: {
+            url: completeUrl,
+            dataSrc: '',
+        },
+        columns: [
+            {
+                data: null,
+                render: function (data, type, row) {
+                    return data.residence.city + ', ' + data.residence.street + ' ' + data.residence.number;
                 }
+            },
+            { data: 'apartmentNumber' },
+            { data: 'intercom' },
+            { data: 'description' },
+            // { data: 'countryCode' }
+        ],
+        language: {
+            decimal: ",",
+            processing: "Przetwarzanie...",
+            search: "Szukaj:",
+            lengthMenu: "Pokaż _MENU_ pozycji",
+            info: "Pozycje od _START_ do _END_ z _TOTAL_ łącznie",
+            infoEmpty: "Pozycji 0 z 0 dostępnych",
+            infoFiltered: "(filtrowanie spośród _MAX_ dostępnych pozycji)",
+            infoPostFix: "",
+            loadingRecords: "Wczytywanie...",
+            zeroRecords: "Nie znaleziono pasujących pozycji",
+            emptyTable: "Brak danych",
+            paginate: {
+                first: "Pierwsza",
+                previous: "Poprzednia",
+                next: "Następna",
+                last: "Ostatnia"
+            },
+            aria: {
+                sortAscending: ": aktywuj, by posortować kolumnę rosnąco",
+                sortDescending: ": aktywuj, by posortować kolumnę malejąco"
             }
-
-        });
-    }
+        }
+    });
 }
