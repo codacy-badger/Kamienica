@@ -28,7 +28,7 @@ $(document).ready(function () {
             showError("Brak nieruchomości - dodaj przynajmniej jedną pozycję.");
         } else {
             residences = result;
-            fillForm()
+            createResidencesChoice()
             if (result.length === 1) {
                 residenceArrayIndex = 0;
                 drawTable();
@@ -53,6 +53,12 @@ $(document).ready(function () {
         $(this).parents(".dropdown").find('.btn').val($(this).data('value'));
         $("#tableContent").removeAttr('hidden');
     });
+
+
+    $("#submitButtion").click(function(e) {
+        e.preventDefault();
+        console.log("tadam");
+    })
 });
 
 
@@ -62,7 +68,7 @@ showError = function (msg) {
     $('#messageModal').modal('show');
 }
 
-fillForm = function () {
+createResidencesChoice = function () {
     if (residences.length > 1) {
         $("#residences").append(
             $('<option></option>').html("Wybierz nieruchomość...")
