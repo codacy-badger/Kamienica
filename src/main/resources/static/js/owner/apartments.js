@@ -4,24 +4,15 @@ const url = "/api/v1/apartments?residence=";
 let table;
 let residenceArrayIndex;
 let residences = [];
+let apartments = [];
+const apartmentStorageKey = "apartments";
 
 $(document).ready(function () {
     $("#form").toggle();
     $("#toggler").text(formText);
     $("#toggler").click(function () {
-        $("#form").toggle();
-        $("#list").toggle();
-
-        if ($("#toggler").text() === formText) {
-            $("#toggler").text(tableText);
-        } else {
-            $("#toggler").text(formText);
-        }
-
-        $("#list").removeAttr('hidden');
+        toggleForm()
     });
-
-
 
     $.getJSON("/api/v1/residences", function (result) {
         if (result.length === 0) {
@@ -31,7 +22,8 @@ $(document).ready(function () {
             createResidencesChoice()
             if (result.length === 1) {
                 residenceArrayIndex = 0;
-                drawTable();
+                drawTableForApartments();
+                //drawTable();
             }
         }
     }).fail(function (response) {
@@ -40,11 +32,9 @@ $(document).ready(function () {
 
 
     $('select').change(function () {
-        if (table) {
-            table.destroy();
-        }
         residenceArrayIndex = $(this).val();
-        table = drawTable();
+        drawTableForApartments();
+        //drawTable();
 
     });
 
@@ -55,45 +45,89 @@ $(document).ready(function () {
     });
 
 
-    $("#submitButtion").click(function(e) {
+    $("#submitButton").click(function (e) {
         e.preventDefault();
-        console.log("tadam");
+        const apartmentToSave = {
+            residence: residences[residenceArrayIndex],
+            apartmentNumber: $("#apartmentNumber").val(),
+            intercom: $("#intercom").val(),
+            description: $("#description").val()
+        }
+
+        $.ajax({
+            contentType: 'application/json',
+            data: JSON.stringify(apartmentToSave),
+            dataType: 'json',
+            success: function (data) {
+                console.log(data);
+                $("#messageModalLabel").text("Zapisano dane")
+                $('#messageModal').modal('show');
+                $("#messageModalMessage").text("Nowe mieszkanie zostało zapisane w bazie");
+                apartments.push(data);
+                drawTable();
+                toggleForm();
+            },
+            error: function (error) {
+                $("#messageModalMessage").text(error.responseJSON.responseText);
+                $("#messageModalLabel").text("Błąd podczas zapisu danych")
+                $('#messageModal').modal('show');
+            },
+            processData: false,
+            type: 'POST',
+            url: '/api/v1/apartments'
+        });
     })
 });
 
-
 showError = function (msg) {
     $("#messageModalMessage").text(msg);
-    $("#messageModalLabel").text("Błąd podczas pobierania nieruchomości")
+    $("#messageModalLabel").text("Błąd podczas pobierania nieruchomości");
     $('#messageModal').modal('show');
-}
+};
 
 createResidencesChoice = function () {
     if (residences.length > 1) {
         $("#residences").append(
             $('<option></option>').html("Wybierz nieruchomość...")
         );
-    }
+    };
 
     for (let i = 0; i < residences.length; i++) {
-        //const item = "<li><a href='#' class='dropdown-item' data-value='" + data[i].street + " " + data[i].number + "' value='" + data[i].id     +"'>" + data[i].street +" " + data[i].number + "</a></li>";
-        //    const item = "<li><a href='#' class='dropdown-item' data-value='" + data[i].street + " " + data[i].number + "' value='" + data[i].id     +"'>" + data[i].street +" " + data[i].number + "</a></li>";
         $("#residences").append(
             $('<option></option>').val(i).html(residences[i].street + " " + residences[i].number)
         );
+    };
+};
+
+toggleForm = function () {
+    $("#form").toggle();
+    $("#list").toggle();
+
+    if ($("#toggler").text() === formText) {
+        $("#toggler").text(tableText);
+    } else {
+        $("#toggler").text(formText);
     }
 
-    // $("#residenceChoice").append(listItems);
+    $("#list").removeAttr('hidden');
 }
 
+drawTableForApartments = function () {
+    const finalUrl = url + residences[residenceArrayIndex].id;
+    $.getJSON(finalUrl, function (result) {
+        apartments = result;
+        drawTable();
+    });
+};
+
 drawTable = function () {
-    const completeUrl = url + residences[residenceArrayIndex].id;
+    if (table) {
+        table.destroy();
+    };
+
     $("#tableContent").removeAttr('hidden');
-    return $('#dataTable').DataTable({
-        ajax: {
-            url: completeUrl,
-            dataSrc: '',
-        },
+    table = $('#dataTable').DataTable({
+        data: apartments,
         columns: [
             {
                 data: null,
@@ -130,4 +164,4 @@ drawTable = function () {
             }
         }
     });
-}
+};

@@ -17,7 +17,8 @@
   <!-- Custom styles for this template-->
   <link href="/css/sb-admin.css" rel="stylesheet">
   <link href="/css/index.css" rel="stylesheet">
-  <link rel="stylesheet" href="/css/bootstrap-datepicker.css">
+
+
   <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/smoothness/jquery-ui.css">
 
   <script src="/vendor/jquery/jquery.min.js"></script>
@@ -157,101 +158,61 @@
   <div class="content-wrapper">
     <div class="container-fluid">
       <div class="row">
-
         <div class="col-sm-5 mb-5">
-          <!-- <div class="dropdown">
-              <button class="btn btn-secondary dropdown-toggle btn-block" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-                Wybierz nieruchomość
-                <span class="caret"></span>
-              </button>
-              <ul class="dropdown-menu" id="residenceChoice"  aria-labelledby="dropdownMenu1">
-                <li id="residences"></li>
-                <li class="dropdown-item" data-value="action">Action</li>
-                <li class='dropdown-item' data-value='duppa 45' value='1'>duppa</li>
-              </ul>
-            </div> -->
-
-          <div>
-            <select id='residences' class="btn btn-secondary dropdown-toggle btn-block">
-            </select>
-
-          </div>
+          <select id='residences' class="btn btn-secondary dropdown-toggle btn-block">
+          </select>
         </div>
-
-
         <div class="col-sm-4 mb-4">
           <button id="toggler" class="btn btn-info btn-block "></button>
         </div>
       </div>
 
       <div class="row" id="form">
-        <div class="col-xl-3 col-sm-12 mb-12">
+        <div class="col-xl-12 col-sm-12 mb-12">
+          <div class="col-lg-12">
+            <div class="card mb-3">
+              <div class="card-header">
+                <i class="fa fa-table"></i> Dodaj/Edytuj</div>
+              <div class="card-body">
+                <form class="form-horizontal" name="myForm">
 
+                  <div class="form-group">
+                    <label class="col-sm-3 control-label">Numer Mieszkania</label>
+                    <div class="col-sm-6">
+                      <input id="apartmentNumber" type="text" class="form-control" placeholder="Pole wymagane" />
+                    </div>
+                  </div>
 
-          <form class="form-horizontal" ng-submit="ctrl.submit()" name="myForm">
-            <input path="id" readonly="true" type='hidden' />
-            <input type="hidden" ng-model="ctrl.apartment.id" />
+                  <!-- https://scotch.io/tutorials/angularjs-form-validation -->
+                  <div class="form-group">
+                    <label class="col-sm-3 control-label">Opis</label>
+                    <div class="col-sm-6">
+                      <input type="text" class="form-control" id='description' placeholder="Pole wymagane" />
+                    </div>
+                  </div>
 
-            <!-- <span class="error" ng-show="myForm.intercom.$error.minlength">
-                    Musi zawierać 4 cyfry</span> <span
-                    ng-show="myForm.intercom.$error.pattern">Tylko cyfry</span> <span
-                    ng-show="myForm.intercom.$error.maxlength">Musi zawierać
-                    4 cyfry</span> -->
-            <div class="form-group">
-              <label for="inputEmail3" class="col-sm-3 control-label">Numer Mieszkania
-              </label>
-              <div class="col-sm-9">
-                <input type="text" ng-model="ctrl.apartment.apartmentNumber" class="form-control" path='apartmentNumber' placeholder="Pole wymagane"
-                  name="apartmentNumber" ng-required='true' ng-pattern="/^[0-9]{1,7}$/" ng-min=0 />
+                  <div class="form-group">
+                    <label class="col-sm-3 control-label">Domofon</label>
+                    <div class="col-sm-6">
+                      <input type="text" class="form-control" id="intercom" placeholder="Pole wymagane" />
+                    </div>
+                  </div>
 
-                <!-- ng-required='true' ng-pattern="/^[0-9]{1,7}$/"  -->
-                <!-- <p class="help-block">
-                  <span class='error' ng-show="myForm.apartmentNumber.$invalid">Tylko
-                    liczby nieujemne</span> <span class='error'>{{errors.apartmentNumber}}</span>
-                </p> -->
+                  <div class="form-group ">
+                    <div class="col-lg-12">
+                      <input id="submitButton" type="submit" value="Dodaj" class="btn btn-info ">
+                      <button type="button" class="btn btn-warning ">Reset</button>
+                    </div>
+                  </div>
+
+                </form>
               </div>
             </div>
-            <!-- https://scotch.io/tutorials/angularjs-form-validation -->
-            <div class="form-group">
-              <label for="inputEmail3" class="col-sm-3 control-label">Opis</label>
-              <div class="col-sm-9">
-                <input type="text" ng-model="ctrl.apartment.description" class="form-control" path='description' placeholder="Pole wymagane"
-                  ng-required='true' name="description" />
-                <!-- <p class="help-block">
-                  <span class='error' ng-show="myForm.description.$invalid">Pole
-                    wymagane</span> <span class='error'>{{errors.description}}</span>
-                </p> -->
-              </div>
-            </div>
-
-
-            <div class="form-group">
-              <label for="inputEmail3" class="col-sm-3 control-label">Domofon</label>
-              <div class="col-sm-9">
-                <input type="text" ng-model="ctrl.apartment.intercom" class="form-control" name="intercom" path='intercom' ng-pattern="/^[0-9]{1,7}$/"
-                  placeholder="Pole wymagane" ng-required='true' ng-minlength="4" ng-maxlength="4" />
-                <!-- <p class="help-block">
-                  <span class='error' ng-show="myForm.intercom.$invalid">Domofon
-                    musi zawierać 4 cyfry</span><span class='error'>{{errors.intercom}}</span>
-                </p> -->
-              </div>
-            </div>
-
-            <div class="form-group ">
-              <div class="col-lg-12">
-                <input id="submitButton" type="submit" value="Dodaj" class="btn btn-default ">
-                <button type="button" ng-click="ctrl.reset()" class="btn btn-default " ng-disabled="myForm.$pristine">Reset
-                </button>
-              </div>
-
-            </div>
-
-          </form>
-
-
-
+          </div>
         </div>
       </div>
+
+
       <div class="row" id="list">
         <div class="col-xl-12 col-sm-12 mb-12">
           <div class="col-lg-12" id="tableContent" hidden>
