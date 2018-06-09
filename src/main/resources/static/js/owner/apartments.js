@@ -3,6 +3,7 @@ const tableText = "Przejdź do tabeli";
 const url = "/api/v1/apartments?residence=";
 let table;
 let residenceArrayIndex;
+let apartmentArrayIndex;
 let residences = [];
 let apartments = [];
 const apartmentStorageKey = "apartments";
@@ -22,20 +23,16 @@ $(document).ready(function () {
             createResidencesChoice()
             if (result.length === 1) {
                 residenceArrayIndex = 0;
-                drawTableForApartments();
-                //drawTable();
-            }
-        }
+                drawTableFromEndpoint();
+            };
+        };
     }).fail(function (response) {
         showError(response.responseJSON.message);
     });
 
-
     $('select').change(function () {
         residenceArrayIndex = $(this).val();
-        drawTableForApartments();
-        //drawTable();
-
+        drawTableFromEndpoint();
     });
 
     $(".dropdown-menu li").click(function () {
@@ -44,14 +41,22 @@ $(document).ready(function () {
         $("#tableContent").removeAttr('hidden');
     });
 
-
     $("#submitButton").click(function (e) {
         e.preventDefault();
+        let appartmentId = $("#appartmentId").val();
+        let httpMethod = "POST";
+        let url = "/api/v1/apartments";
+        const edit = parseInt(appartmentId) > 0;
+        if (edit) {
+            httpMethod = "PUT";
+            url += "/" + appartmentId;
+        };
         const apartmentToSave = {
             residence: residences[residenceArrayIndex],
             apartmentNumber: $("#apartmentNumber").val(),
             intercom: $("#intercom").val(),
-            description: $("#description").val()
+            description: $("#description").val(),
+            id: appartmentId,
         }
 
         $.ajax({
@@ -59,22 +64,25 @@ $(document).ready(function () {
             data: JSON.stringify(apartmentToSave),
             dataType: 'json',
             success: function (data) {
-                console.log(data);
                 $("#messageModalLabel").text("Zapisano dane")
                 $('#messageModal').modal('show');
-                $("#messageModalMessage").text("Nowe mieszkanie zostało zapisane w bazie");
-                apartments.push(data);
+                $("#messageModalMessage").text("Mieszkanie zostało zapisane w bazie");
+                if (edit) {
+                    apartments[apartmentArrayIndex] = data;
+                } else {
+                    apartments.push(data);
+                }
                 drawTable();
                 toggleForm();
             },
             error: function (error) {
-                $("#messageModalMessage").text(error.responseJSON.responseText);
+                $("#messageModalMessage").text(error.responseText);
                 $("#messageModalLabel").text("Błąd podczas zapisu danych")
                 $('#messageModal').modal('show');
             },
             processData: false,
-            type: 'POST',
-            url: '/api/v1/apartments'
+            type: httpMethod,
+            url: url
         });
     })
 });
@@ -112,13 +120,45 @@ toggleForm = function () {
     $("#list").removeAttr('hidden');
 }
 
-drawTableForApartments = function () {
+drawTableFromEndpoint = function () {
     const finalUrl = url + residences[residenceArrayIndex].id;
     $.getJSON(finalUrl, function (result) {
         apartments = result;
         drawTable();
     });
 };
+
+deleteEntity = function (row) {
+    entity = apartments[row];
+    $.ajax({
+        url: "/api/v1/apartments/" + entity.id,
+        type: "DELETE",
+        success: function (result) {
+            $("#messageModalLabel").text("Usunięto dane")
+            $('#messageModal').modal('show');
+            $("#messageModalMessage").text("Mieszkanie zostało usunięte z bazy");
+            apartments.splice(row, 1);
+            drawTable();
+        },
+        error: function (error) {
+            $("#messageModalMessage").text(error.responseText);
+            $("#messageModalLabel").text("Błąd podczas usuwania danych")
+            $('#messageModal').modal('show');
+        }
+    });
+};
+
+
+editEntity = function (row) {
+    entity = apartments[row];
+    apartmentArrayIndex = row;
+    toggleForm();
+    $("#apartmentNumber").val(entity.apartmentNumber);
+    $("#intercom").val(entity.intercom);
+    $("#description").val(entity.description);
+    $("#appartmentId").val(entity.id);
+}
+
 
 drawTable = function () {
     if (table) {
@@ -138,7 +178,13 @@ drawTable = function () {
             { data: 'apartmentNumber' },
             { data: 'intercom' },
             { data: 'description' },
-            // { data: 'countryCode' }
+            {
+                data: null,
+                render: function (data, type, row, meta) {
+                    return "<button type='button' class='btn-xs btn-warning' onClick=editEntity(" + meta.row + ")><i class='fa fa-pencil-square-o fa-1' aria-hidden='true'></i></button>" +
+                        "<button type='button' class='btn-xs btn-danger' onClick=deleteEntity(" + meta.row + ")><i class='fa fa-times fa-1' aria-hidden='true'></button>";
+                }
+            }
         ],
         language: {
             decimal: ",",

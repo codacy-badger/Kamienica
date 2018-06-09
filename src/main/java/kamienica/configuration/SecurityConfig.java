@@ -93,9 +93,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(final HttpSecurity http) throws Exception {
         http.authorizeRequests()
                 .antMatchers("/login.html").permitAll()
+                .antMatchers("/*").authenticated()
                 .antMatchers("/swagger-ui.html").access("hasRole('ADMIN') or hasRole('OWNER')")
                 .antMatchers("/h2-console/*").access("hasRole('ADMIN')")
-                .antMatchers("/*").authenticated()
                 .and()
                 .formLogin()
                 .loginPage("/login.html")
@@ -104,7 +104,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .usernameParameter("username")
                 .passwordParameter("password")
                 .successHandler(customSuccessHandler)
-//                .defaultSuccessUrl("/index.html")
                 .and()
                 .logout()
                 .logoutRequestMatcher(new AntPathRequestMatcher("/logout"));
