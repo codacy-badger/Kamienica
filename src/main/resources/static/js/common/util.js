@@ -91,4 +91,4 @@ tableTranslation = {
         sortAscending: ": aktywuj, by posortować kolumnę rosnąco",
         sortDescending: ": aktywuj, by posortować kolumnę malejąco"
     }
-}
+};
