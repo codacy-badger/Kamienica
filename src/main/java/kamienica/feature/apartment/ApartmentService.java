@@ -48,7 +48,7 @@ public class ApartmentService implements IApartmentService {
     }
 
     @Override
-    public List<Apartment> getByResidence(Long residenceId) {
+    public List<Apartment> getByResidence(final Long residenceId) {
         final Residence r = residenceDao.getById(residenceId);
         final Criterion c = Restrictions.eq("residence", r);
         return apartmentDAO.findByCriteria(c);

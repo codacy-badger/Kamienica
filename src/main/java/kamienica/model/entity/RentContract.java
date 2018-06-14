@@ -1,5 +1,8 @@
 package kamienica.model.entity;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import kamienica.core.util.JodaDateSerializer;
 import org.hibernate.annotations.Type;
 import org.joda.time.LocalDate;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -17,11 +20,13 @@ public class RentContract extends DBEntity {
     private Apartment apartment;
     private double rentCost;
     @Column(nullable = false)
-    @DateTimeFormat(pattern = "yyyy-MM-dd")
     @Type(type = "org.jadira.usertype.dateandtime.joda.PersistentLocalDate")
+    @DateTimeFormat(pattern = "dd-MM-yyyy")
+    @JsonSerialize(using = JodaDateSerializer.class)
     private LocalDate contractStart;
-    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    @DateTimeFormat(pattern = "dd-MM-yyyy")
     @Type(type = "org.jadira.usertype.dateandtime.joda.PersistentLocalDate")
+    @JsonSerialize(using = JodaDateSerializer.class)
     private LocalDate contractEnd = LocalDate.parse("2100-01-01");
 
     public RentContract(Apartment apartment, double rentCost, LocalDate contractStart, LocalDate contractEnd) {

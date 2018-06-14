@@ -1,5 +1,7 @@
 package kamienica.model.entity;
 
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import kamienica.core.util.JodaDateSerializer;
 import org.hibernate.annotations.Type;
 import org.joda.time.LocalDate;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -20,6 +22,7 @@ public class Payment extends DBEntity {
     @Temporal(TemporalType.DATE)
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     @Type(type = "org.jadira.usertype.dateandtime.joda.PersistentLocalDate")
+    @JsonSerialize(using = JodaDateSerializer.class)
     private LocalDate paymentDate;
     @Column
     private double paymentAmount;

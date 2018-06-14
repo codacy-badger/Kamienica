@@ -1,5 +1,6 @@
 package kamienica.feature.tenant;
 
+import com.google.common.collect.Lists;
 import kamienica.core.util.SecurityDetails;
 import kamienica.feature.apartment.IApartmentDao;
 import kamienica.feature.rentcontract.IRentContractDao;
@@ -22,12 +23,16 @@ import java.util.List;
 @Transactional
 public class TenantService implements ITenantService {
 
+    private static final String SELECT_TENANTS_BY_RESIDENCE = "select * from TENANT where rentContract_id in" +
+            "(SELECT id FROM RENT_CONTRACT where apartment_id in" +
+            "(select  id from APARTMENT where RESIDENCE_id = %s )" +
+            ");";
     private final ITenantDao tenantDao;
     private final IApartmentDao apartmentDao;
     private final IRentContractDao rentContractDao;
 
     @Autowired
-    public TenantService(ITenantDao tenantDao, IApartmentDao apartmentDao, IRentContractDao rentContractDao) {
+    public TenantService(final ITenantDao tenantDao, final IApartmentDao apartmentDao, final IRentContractDao rentContractDao) {
         this.tenantDao = tenantDao;
         this.apartmentDao = apartmentDao;
         this.rentContractDao = rentContractDao;
@@ -47,7 +52,7 @@ public class TenantService implements ITenantService {
         }
     }
 
-    private void savePriviligedTenant(Tenant newTenant) {
+    private void savePriviligedTenant(final Tenant newTenant) {
         if (newTenant.checkIsOwner() || newTenant.checkIsAdmin()) {
             tenantDao.save(newTenant);
         } else {
@@ -91,6 +96,27 @@ public class TenantService implements ITenantService {
     @Override
     public List<Tenant> findByCriteria(final Criterion... crit) {
         return tenantDao.findByCriteria(crit);
+    }
+
+    @Override
+    public List<Tenant> findForSpecifiedResicence(final Long residenceId) {
+        //TODO UGLY WORKAROUND!!!
+        final List<Residence> residences = Lists.newArrayList(getResidence(residenceId));
+        final List<Apartment> apartments = apartmentDao.findForResidence(residences);
+        final Criterion c = Restrictions.in("apartment", apartments);
+        final List<RentContract> contracts = rentContractDao.findByCriteria(c);
+        if (contracts.isEmpty()) {
+            return Lists.newArrayList();
+        }
+        final Criterion tenantCriteria = Restrictions.in("rentContract", contracts);
+        return tenantDao.findByCriteria(tenantCriteria);
+    }
+
+    private Residence getResidence(Long residenceId) {
+        return SecurityDetails.getResidencesForOwner()
+                .stream()
+                .filter(x -> x.getId().equals(residenceId))
+                .findFirst().get();
     }
 
     @Override

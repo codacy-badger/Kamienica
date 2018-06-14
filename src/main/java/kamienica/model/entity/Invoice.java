@@ -1,5 +1,7 @@
 package kamienica.model.entity;
 
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import kamienica.core.util.JodaDateSerializer;
 import kamienica.model.enums.Media;
 import org.hibernate.annotations.Type;
 import org.hibernate.validator.constraints.NotEmpty;
@@ -27,6 +29,7 @@ public class Invoice extends DBEntity {
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     @NotNull(message = "Wprowadź datę")
     @Type(type = "org.jadira.usertype.dateandtime.joda.PersistentLocalDate")
+    @JsonSerialize(using = JodaDateSerializer.class)
     private LocalDate invoiceDate;
     @Column(nullable = false)
     @Min(value = 0, message = "Tylko wartości dodatnie")

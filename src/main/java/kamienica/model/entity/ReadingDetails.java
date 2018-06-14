@@ -1,5 +1,7 @@
 package kamienica.model.entity;
 
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import kamienica.core.util.JodaDateSerializer;
 import kamienica.model.enums.Media;
 import kamienica.model.enums.Resolvement;
 import org.hibernate.annotations.Type;
@@ -22,6 +24,7 @@ public class ReadingDetails extends DBEntity implements Comparable<ReadingDetail
     @Column(nullable = false)
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     @Type(type = "org.jadira.usertype.dateandtime.joda.PersistentLocalDate")
+    @JsonSerialize(using = JodaDateSerializer.class)
     private LocalDate readingDate;
     @Column(nullable = false)
     @Enumerated(EnumType.STRING)

@@ -12,6 +12,8 @@ public interface ITenantService extends BasicService<Tenant> {
 
 	List<Tenant> findByCriteria(Criterion... crit);
 
+	List<Tenant> findForSpecifiedResicence(Long residenceId);
+
 	List<Tenant> listActiveTenants(Residence residence);
 
 	Tenant findCurrentTenant(final Apartment apartment);

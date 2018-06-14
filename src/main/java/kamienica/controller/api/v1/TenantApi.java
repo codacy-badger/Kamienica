@@ -3,19 +3,19 @@ package kamienica.controller.api.v1;
 import kamienica.core.message.ApiErrorResponse;
 import kamienica.core.message.Message;
 import kamienica.core.util.SecurityDetails;
+import kamienica.feature.residence.IResidenceService;
 import kamienica.feature.tenant.ITenantService;
+import kamienica.model.entity.Residence;
 import kamienica.model.entity.Tenant;
+import org.hibernate.criterion.Criterion;
+import org.hibernate.criterion.Restrictions;
 import org.hibernate.exception.ConstraintViolationException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.util.HashMap;
@@ -26,26 +26,28 @@ import java.util.Map;
 @RequestMapping("/api/v1/tenants")
 public class TenantApi extends AbstractApi {
 
-    private final ITenantService service;
+    private final ITenantService tenantService;
 
     @Autowired
-    public TenantApi(ITenantService service) {
-        this.service = service;
+    public TenantApi(ITenantService tenantService) {
+        this.tenantService = tenantService;
     }
 
     @RequestMapping(method = RequestMethod.GET)
-    public ResponseEntity<?> list() {
-        final List<Tenant> list = service.listForOwner();
+    public ResponseEntity<?> list(@RequestParam(required = false, value = "residence") final Long residenceId) {
+        final List<Tenant> list;
+        if(residenceId == null) {
+            list =  tenantService.listForOwner();
+        } else {
 
-        if (list.isEmpty()) {
-            return new ResponseEntity<List<Tenant>>(HttpStatus.NOT_FOUND);
+            list = tenantService.findForSpecifiedResicence(residenceId);
         }
         return new ResponseEntity<>(list, HttpStatus.OK);
     }
 
     @RequestMapping(value = "/owners", method = RequestMethod.GET)
     public ResponseEntity<?> listOwners() {
-        final List<Tenant> list = service.getOwners();
+        final List<Tenant> list = tenantService.getOwners();
         if (list.isEmpty()) {
             return new ResponseEntity<List<Tenant>>(HttpStatus.NOT_FOUND);
         }
@@ -62,7 +64,7 @@ public class TenantApi extends AbstractApi {
         }
         try {
             SecurityDetails.checkIfOwnsResidence(tenant.getRentContract().getApartment().getResidence());
-            service.save(tenant);
+            tenantService.save(tenant);
         } catch (ConstraintViolationException e) {
             result.rejectValue("apartmentNumber", "error.apartment", DUPLICATE_VALUE);
 
@@ -79,9 +81,9 @@ public class TenantApi extends AbstractApi {
     public ResponseEntity<Message> delete(@PathVariable("id") final Long id) {
         Message message = new Message("OK", null);
         try {
-            final Tenant t = service.getById(id);
+            final Tenant t = tenantService.getById(id);
             SecurityDetails.checkIfOwnsResidence(t.getRentContract().getApartment().getResidence());
-            service.delete(t);
+            tenantService.delete(t);
         } catch (Exception e) {
             message.setMessage(CONSTRAINT_VIOLATION);
             message.setException(e.toString());
@@ -100,7 +102,7 @@ public class TenantApi extends AbstractApi {
             return new ResponseEntity<>(message, HttpStatus.UNPROCESSABLE_ENTITY);
         }
         SecurityDetails.checkIfOwnsResidence(tenant.getRentContract().getApartment().getResidence());
-        service.update(tenant);
+        tenantService.update(tenant);
         return new ResponseEntity<>(tenant, HttpStatus.OK);
     }
 }
