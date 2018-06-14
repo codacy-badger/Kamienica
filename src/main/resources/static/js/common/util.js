@@ -18,7 +18,7 @@ $(document).ready(function () {
             showModal("Błąd podczas pobierania nieruchomości", "Brak nieruchomości - dodaj przynajmniej jedną pozycję.");
         } else {
             residences = result;
-            createResidencesChoice()
+            createResidencesChoice();
             if (result.length === 1) {
                 residenceArrayIndex = 0;
                 drawTableFromEndpoint();
@@ -33,8 +33,15 @@ $(document).ready(function () {
         $(this).parents(".dropdown").find('.btn').val($(this).data('value'));
         $("#tableContent").removeAttr('hidden');
     });
+
+    $("#resetButton").click(function () {
+        clearForm();
+    });
 });
 
+clearForm = function () {
+    $("#myForm").trigger("reset");
+};
 
 showModal = function (title, message) {
     $("#messageModalMessage").text(message);
@@ -62,6 +69,7 @@ toggleForm = function () {
 
     if ($(toggler).text() === formText) {
         $(toggler).text(tableText);
+        clearForm();
     } else {
         $(toggler).text(formText);
     }

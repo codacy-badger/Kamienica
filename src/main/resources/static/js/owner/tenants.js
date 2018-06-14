@@ -1,41 +1,68 @@
 const residenceUrl = "/api/v1/tenants?residence=";
 const tenantsUrl = "/api/v1/tenants";
+const apartmentForResidenceBaseUrl = "/api/v1/apartments?residence=";
 
 let table;
 let tenantArrayIndex;
 let tenants = [];
 const tenantstorageKey = "tenants";
 
+
+let apartmentsChoiceIndex;
+let apartmentsChoice = [];
+
+
 $(document).ready(function () {
-    $('select').change(function () {
+    $('#residences').change(function () {
         residenceArrayIndex = $(this).val();
         drawTableFromEndpoint();
     });
 
     $("#submitButton").click(function (e) {
         e.preventDefault();
-        let appartmentId = $("#appartmentId").val();
+        let entityId = $("#entityId").val();
         let httpMethod = "POST";
         let url = tenantsUrl;
-        const edit = parseInt(appartmentId) > 0;
+        console.log(apartmentsChoice);
+        const edit = parseInt(entityId) > 0;
         if (edit) {
             httpMethod = "PUT";
-            url += "/" + appartmentId;
+            url += "/" + entityId;
         };
         const tenantToSave = {
-            residence: residences[residenceArrayIndex],
-            tenantNumber: $("#tenantNumber").val(),
-            intercom: $("#intercom").val(),
-            description: $("#description").val(),
-            id: appartmentId,
-        }
+            // $("#firstName").val(entity.firstName);
+            // $("#lastName").val(entity.lastName);
+            // $("#email").val(entity.email);
+            // $("#phone").val(entity.phone);
+            // $("#apartment").val(entity.rentContract.apartment.description);
+            // $("#password").val(entity.password);
+            // $("#entityId").val(entity.id);
+            // $("#contractStart").val(entity.rentContract.contractStart);
+            // $("#contractEnd").val(entity.rentContract.contractEnd);
+            // $("#rentCost").val(entity.rentContract.rentCost);
+
+
+            firstName: $("#firstName").val(),
+            lastName: $("#lastName").val(),
+            email: $("#email").val(),
+            phone: $("#phone").val(),
+            id: entityId, 
+            password: $("#password").val(),
+            rentContract: {
+                apartment: $("#apartment").val(),
+                contractStart: $("#contractStart").val(),
+                contractEnd: $("#contractEnd").val(),
+                rentCost: $("#rentCost").val(),
+            }
+        };
+console.log(tenantToSave);
 
         $.ajax({
             contentType: 'application/json',
             data: JSON.stringify(tenantToSave),
             dataType: 'json',
             success: function (data) {
-                showModal("Zapisano dane", "Mieszkanie zostało zapisane w bazie");
+                showModal("Sukces", "Dane zostały zapisane w bazie");
                 if (edit) {
                     tenants[tenantArrayIndex] = data;
                 } else {
@@ -60,7 +87,7 @@ deleteEntity = function (row) {
         url: tenantsUrl + "/" + entity.id,
         type: "DELETE",
         success: function (result) {
-            showModal("Usunięto dane", "Mieszkanie zostało usunięte z bazy");
+            showModal("Usunięto", "Dane zostały usunięte z bazy");
             tenants.splice(row, 1);
             drawTable();
         },
@@ -74,34 +101,53 @@ editEntity = function (row) {
     entity = tenants[row];
     tenantArrayIndex = row;
     toggleForm();
-    $("#tenantNumber").val(entity.tenantNumber);
-    $("#intercom").val(entity.intercom);
-    $("#description").val(entity.description);
-    $("#appartmentId").val(entity.id);
-}
+
+    $("#firstName").val(entity.firstName);
+    $("#lastName").val(entity.lastName);
+    $("#email").val(entity.email);
+    $("#phone").val(entity.phone);
+    $("#apartmentsInput").val(entity.rentContract.apartment.description);
+    $("#password").val(entity.password);
+    $("#entityId").val(entity.id);
+    $("#contractStart").val(entity.rentContract.contractStart);
+    $("#contractEnd").val(entity.rentContract.contractEnd);
+    $("#rentCost").val(entity.rentContract.rentCost);
+};
 
 drawTableFromEndpoint = function () {
     const finalUrl = residenceUrl + residences[residenceArrayIndex].id;
     $.getJSON(finalUrl, function (result) {
-        tenants = result;
-        drawTable();
+        if (result.length === 0) {
+            $("#tableContent").hide();
+            $('#apartmentsInput').children().remove();
+        } else {
+            tenants = result;
+            drawTable();
+            createApartmentsChoice();
+        };
     });
 };
 
-{/* <th>Najemca</th>
-<th>E-mail</th>
-<th>Telefon</th>
-<th>Mieszkanie</th>
-<th>Cena Najmu</th>
-<th>Początek umowy</th>
-<th>Koniec Umowy</th>
-<th>Edytuj/Usuń</th> */}
+
+createApartmentsChoice = function () {
+    const finalUrl = apartmentForResidenceBaseUrl + residences[residenceArrayIndex].id;
+
+    $.getJSON(finalUrl, function (result) {
+        apartmentsChoice = result;
+        $('#apartmentsInput').children().remove();
+        for (let i = 0; i < result.length; i++) {
+            $("#apartmentsInput").append(
+                $('<option></option>').val(result[i].description).html(result[i].description)
+            );
+        };
+    });
+};
 
 drawTable = function () {
     if (table) {
         table.destroy();
     };
-
+    $("#tableContent").show();
     $("#tableContent").removeAttr('hidden');
     table = $('#dataTable').DataTable({
         data: tenants,
@@ -129,13 +175,13 @@ drawTable = function () {
             {
                 data: null,
                 render: function (data, type, row) {
-                    return data.rentContract.constractStart;
+                    return data.rentContract.contractStart;
                 }
             },
             {
                 data: null,
                 render: function (data, type, row) {
-                    return data.rentContract.constracEnd;
+                    return data.rentContract.contractEnd;
                 }
             },
             {

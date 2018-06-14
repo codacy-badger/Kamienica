@@ -1,5 +1,5 @@
-const residenceUrl = "/api/v1/apartments?residence=";
 const apartmentsUrl = "/api/v1/apartments";
+const apartmentForResidenceBaseUrl = "/api/v1/apartments?residence=";
 
 let table;
 let apartmentArrayIndex;
@@ -81,7 +81,7 @@ editEntity = function (row) {
 }
 
 drawTableFromEndpoint = function () {
-    const finalUrl = residenceUrl + residences[residenceArrayIndex].id;
+    const finalUrl = apartmentForResidenceBaseUrl + residences[residenceArrayIndex].id;
     $.getJSON(finalUrl, function (result) {
         apartments = result;
         drawTable();
