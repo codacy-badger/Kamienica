@@ -3,6 +3,7 @@ package kamienica.controller.api.v1;
 import kamienica.core.message.ApiErrorResponse;
 import kamienica.core.message.Message;
 import kamienica.core.util.SecurityDetails;
+import kamienica.feature.residence.IPurgeService;
 import kamienica.feature.residence.IResidenceService;
 import kamienica.model.entity.Residence;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,10 +25,12 @@ import static kamienica.controller.api.v1.AbstractApi.*;
 public class ResidenceApi {
 
     private final IResidenceService residenceService;
+    private final IPurgeService purgeService;
 
     @Autowired
-    public ResidenceApi(IResidenceService residenceService) {
+    public ResidenceApi(final IResidenceService residenceService, final IPurgeService purgeService) {
         this.residenceService = residenceService;
+        this.purgeService = purgeService;
     }
 
     @RequestMapping(method = RequestMethod.GET)
@@ -77,12 +80,12 @@ public class ResidenceApi {
             SecurityDetails.checkIfOwnsResidence(residence);
             residenceService.update(residence);
         } catch (Exception e) {
-            result.rejectValue("residenceNumber", "error.residence", UNEXPECTED_ERROR);
-            final Map<String, String> test = new HashMap<>();
+            final Map<String, String> errorList = new HashMap<>();
+            errorList.put("general error", e.getMessage());
             for (FieldError fieldError : result.getFieldErrors()) {
-                test.put(fieldError.getField(), fieldError.getDefaultMessage());
+                errorList.put(fieldError.getField(), fieldError.getDefaultMessage());
             }
-            return new ResponseEntity<>(test, HttpStatus.CONFLICT);
+            return new ResponseEntity<>(errorList, HttpStatus.CONFLICT);
         }
         return new ResponseEntity<>(residence, HttpStatus.OK);
     }
@@ -93,8 +96,7 @@ public class ResidenceApi {
         try {
             final Residence r = residenceService.getById(id);
             SecurityDetails.checkIfOwnsResidence(r);
-            residenceService.delete(r);
-//            residenceService.deleteById(id);
+            purgeService.purgeData(r);
         } catch (Exception e) {
             message.setMessage(CONSTRAINT_VIOLATION);
             message.setException(e.toString());

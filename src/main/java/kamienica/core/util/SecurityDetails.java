@@ -36,8 +36,10 @@ public class SecurityDetails {
 
     public static void checkIfOwnsResidence(final Residence residence) {
         final SecurityUser su = getPrincipal();
-        if (!su.getResidencesOwned().contains(residence)) {
-            throw new SecurityException("Resource does not belong to the logged user");
-        }
+
+        su.getResidencesOwned().stream()
+                .filter(x -> x.getId().equals(residence.getId()))
+                .findFirst()
+                .orElseThrow(() -> new SecurityException("Resource does not belong to the logged user"));
     }
 }
