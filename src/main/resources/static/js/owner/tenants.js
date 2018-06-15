@@ -7,10 +7,8 @@ let tenantArrayIndex;
 let tenants = [];
 const tenantstorageKey = "tenants";
 
-
 let apartmentsChoiceIndex;
 let apartmentsChoice = [];
-
 
 $(document).ready(function () {
     $('#residences').change(function () {
@@ -23,25 +21,12 @@ $(document).ready(function () {
         let entityId = $("#entityId").val();
         let httpMethod = "POST";
         let url = tenantsUrl;
-        console.log(apartmentsChoice);
         const edit = parseInt(entityId) > 0;
         if (edit) {
             httpMethod = "PUT";
             url += "/" + entityId;
         };
         const tenantToSave = {
-            // $("#firstName").val(entity.firstName);
-            // $("#lastName").val(entity.lastName);
-            // $("#email").val(entity.email);
-            // $("#phone").val(entity.phone);
-            // $("#apartment").val(entity.rentContract.apartment.description);
-            // $("#password").val(entity.password);
-            // $("#entityId").val(entity.id);
-            // $("#contractStart").val(entity.rentContract.contractStart);
-            // $("#contractEnd").val(entity.rentContract.contractEnd);
-            // $("#rentCost").val(entity.rentContract.rentCost);
-
-
             firstName: $("#firstName").val(),
             lastName: $("#lastName").val(),
             email: $("#email").val(),
@@ -49,13 +34,12 @@ $(document).ready(function () {
             id: entityId, 
             password: $("#password").val(),
             rentContract: {
-                apartment: $("#apartment").val(),
+                apartment: findChosenApartment(),
                 contractStart: $("#contractStart").val(),
                 contractEnd: $("#contractEnd").val(),
                 rentCost: $("#rentCost").val(),
             }
         };
-console.log(tenantToSave);
 
         $.ajax({
             contentType: 'application/json',
@@ -80,6 +64,15 @@ console.log(tenantToSave);
         });
     })
 });
+
+findChosenApartment= () => {
+    const chosenApartment = $("#apartmentsInput").val();
+    for(i=0;i<apartmentsChoice.length;i++) {
+        if(apartmentsChoice[i].description === chosenApartment) {
+            return apartmentsChoice[i];
+        }
+    }
+}
 
 deleteEntity = function (row) {
     entity = tenants[row];
@@ -117,13 +110,13 @@ editEntity = function (row) {
 drawTableFromEndpoint = function () {
     const finalUrl = residenceUrl + residences[residenceArrayIndex].id;
     $.getJSON(finalUrl, function (result) {
+        createApartmentsChoice();
         if (result.length === 0) {
             $("#tableContent").hide();
             $('#apartmentsInput').children().remove();
         } else {
             tenants = result;
             drawTable();
-            createApartmentsChoice();
         };
     });
 };

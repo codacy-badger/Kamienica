@@ -22,9 +22,11 @@ public class RentContract extends DBEntity {
     @Column(nullable = false)
     @Type(type = "org.jadira.usertype.dateandtime.joda.PersistentLocalDate")
     @DateTimeFormat(pattern = "dd-MM-yyyy")
+    @JsonFormat(pattern="dd-MM-yyyy")
     @JsonSerialize(using = JodaDateSerializer.class)
     private LocalDate contractStart;
     @DateTimeFormat(pattern = "dd-MM-yyyy")
+    @JsonFormat(pattern="dd-MM-yyyy")
     @Type(type = "org.jadira.usertype.dateandtime.joda.PersistentLocalDate")
     @JsonSerialize(using = JodaDateSerializer.class)
     private LocalDate contractEnd = LocalDate.parse("2100-01-01");
