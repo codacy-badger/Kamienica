@@ -1,5 +1,5 @@
 const residenceUrl = "/api/v1/tenants?residence=";
-const tenantsUrl = "/api/v1/tenants";
+const baseUrl = "/api/v1/tenants";
 const apartmentForResidenceBaseUrl = "/api/v1/apartments?residence=";
 
 let table;
@@ -48,9 +48,9 @@ $(document).ready(function () {
             success: function (data) {
                 showModal("Sukces", "Dane zostały zapisane w bazie");
                 if (edit) {
-                    objectList[objectListIndex] = data;
+                    tenants[tenantArrayIndex] = data;
                 } else {
-                    objectList.push(data);
+                    tenants.push(data);
                 }
                 drawTable();
                 toggleForm();
@@ -75,13 +75,13 @@ findChosenApartment= () => {
 }
 
 deleteEntity = function (row) {
-    entity = objectList[row];
+    entity = tenants[row];
     $.ajax({
         url: baseUrl + "/" + entity.id,
         type: "DELETE",
         success: function (result) {
             showModal("Usunięto", "Dane zostały usunięte z bazy");
-            objectList.splice(row, 1);
+            tenants.splice(row, 1);
             drawTable();
         },
         error: function (error) {
@@ -91,8 +91,8 @@ deleteEntity = function (row) {
 };
 
 editEntity = function (row) {
-    entity = objectList[row];
-    objectListIndex = row;
+    entity = tenants[row];
+    tenantArrayIndex = row;
     toggleForm();
 
     $("#firstName").val(entity.firstName);
@@ -115,7 +115,7 @@ drawTableFromEndpoint = function () {
             $("#tableContent").hide();
             $('#apartmentsInput').children().remove();
         } else {
-            objectList = result;
+            tenants = result;
             drawTable();
         };
     });
@@ -143,7 +143,7 @@ drawTable = function () {
     $("#tableContent").show();
     $("#tableContent").removeAttr('hidden');
     table = $('#dataTable').DataTable({
-        data: objectList,
+        data: tenants,
         columns: [
             {
                 data: null,

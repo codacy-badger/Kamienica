@@ -34,7 +34,7 @@ public class CustomSuccessHandler extends SimpleUrlAuthenticationSuccessHandler 
 	 * This method extracts the roles of currently logged-in user and returns
 	 * appropriate URL according to his/her role.
 	 */
-	protected String determineTargetUrl(Authentication authentication) {
+	private String determineTargetUrl(Authentication authentication) {
 		final Collection<? extends GrantedAuthority> authorities = authentication.getAuthorities();
 		final List<String> roles = new ArrayList<>();
 

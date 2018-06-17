@@ -57,8 +57,8 @@ public class MeterApi extends AbstractApi {
     }
 
 
-    @RequestMapping(value = "/{media}", method = RequestMethod.POST)
-    public ResponseEntity<?> create(@PathVariable final Media media, @Valid @RequestBody final Meter meter, final BindingResult result) {
+    @RequestMapping(method = RequestMethod.POST)
+    public ResponseEntity<?> create(@Valid @RequestBody final Meter meter, final BindingResult result) {
         SecurityDetails.checkIfOwnsResidence(meter.getResidence());
         if (result.hasErrors()) {
             final ApiErrorResponse message = new ApiErrorResponse();
@@ -79,8 +79,8 @@ public class MeterApi extends AbstractApi {
     }
 
 
-    @RequestMapping(value = "/{media}/{id}", method = RequestMethod.PUT)
-    public ResponseEntity<?> update(@PathVariable final Media media, @Valid @RequestBody final Meter meter, final BindingResult result) {
+    @RequestMapping(method = RequestMethod.PUT)
+    public ResponseEntity<?> update(@Valid @RequestBody final Meter meter, final BindingResult result) {
         SecurityDetails.checkIfOwnsResidence(meter.getResidence());
         if (result.hasErrors()) {
             final ApiErrorResponse message = new ApiErrorResponse();
@@ -100,8 +100,8 @@ public class MeterApi extends AbstractApi {
         return new ResponseEntity<>(meter, HttpStatus.CREATED);
     }
 
-    @RequestMapping(value = "{media}/{id}", method = RequestMethod.DELETE)
-    public ResponseEntity<Message> delete(@PathVariable("media") final Media media, @PathVariable("id") final Long id) {
+    @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
+    public ResponseEntity<Message> delete(@PathVariable("id") final Long id) {
         final Message message = new Message("OK", null);
         try {
             final Meter m = service.getById(id);

@@ -1,19 +1,26 @@
-const residenceUrl = "/api/v1/tenants?residence=";
-const tenantsUrl = "/api/v1/tenants";
+
+const baseUrl = "/api/v1/meters";
 const apartmentForResidenceBaseUrl = "/api/v1/apartments?residence=";
 
 let table;
-let tenantArrayIndex;
-let tenants = [];
-const tenantstorageKey = "tenants";
-
+let listIndex;
+let objectList = [];
+let media = "ENERGY";
 let apartmentsChoiceIndex;
 let apartmentsChoice = [];
 
 $(document).ready(function () {
     $('#residences').change(function () {
         residenceArrayIndex = $(this).val();
+        media = $('input[name=mediaChoice]:checked').val();
         drawTableFromEndpoint();
+    });
+
+    $('#mediaRadio').change(function () {
+        media = $('input[name=mediaChoice]:checked').val();
+        drawTableFromEndpoint();
+        setMediaSpecificInput();
+        clearForm();
     });
 
     $("#submitButton").click(function (e) {
@@ -24,31 +31,29 @@ $(document).ready(function () {
         const edit = parseInt(entityId) > 0;
         if (edit) {
             httpMethod = "PUT";
-            url += "/" + entityId;
         };
-        const tenantToSave = {
-            firstName: $("#firstName").val(),
-            lastName: $("#lastName").val(),
-            email: $("#email").val(),
-            phone: $("#phone").val(),
-            id: entityId, 
-            password: $("#password").val(),
-            rentContract: {
-                apartment: findChosenApartment(),
-                contractStart: $("#contractStart").val(),
-                contractEnd: $("#contractEnd").val(),
-                rentCost: $("#rentCost").val(),
-            }
+
+        const entityToSave = {
+            description: $("#description").val(),
+            unit: $("#unit").val(),
+            serialNumber: $("#serialNumber").val(),
+            id: entityId,
+            apartment: findChosenApartment(),
+            residence: findChosenApartment().residence,
+            status: "ACTIVE",
+            media: media,
+            warmWater: setIsWarmWater(),
+            cwu: setIsCwu()
         };
 
         $.ajax({
             contentType: 'application/json',
-            data: JSON.stringify(tenantToSave),
+            data: JSON.stringify(entityToSave),
             dataType: 'json',
             success: function (data) {
                 showModal("Sukces", "Dane zostały zapisane w bazie");
                 if (edit) {
-                    objectList[objectListIndex] = data;
+                    objectList[listIndex] = data;
                 } else {
                     objectList.push(data);
                 }
@@ -65,10 +70,36 @@ $(document).ready(function () {
     })
 });
 
-findChosenApartment= () => {
+setIsWarmWater = function () {
+    if (media === "ENERGY" || media === "GAS") {
+        return false;
+    }
+    return $('input[name=waterOrGasAdditionalInput]:checked').val();
+}
+setIsCwu = function () {
+    if (media === "ENERGY" || media === "WATER") {
+        return false;
+    }
+    return $('input[name=waterOrGasAdditionalInput]:checked').val();
+}
+
+setMediaSpecificInput = function () {
+    if (media === "ENERGY") {
+        $("#radioInputMeterDiv").hide();
+    } else {
+        $("#radioInputMeterDiv").show();
+        if (media === "GAS") {
+            $("#radioInputMeterLabel").text("Piec ciepłej wody użytkowej (CWU)");
+        } else {
+            $("#radioInputMeterLabel").text("Ciepła Woda");
+        }
+    }
+}
+
+findChosenApartment = () => {
     const chosenApartment = $("#apartmentsInput").val();
-    for(i=0;i<apartmentsChoice.length;i++) {
-        if(apartmentsChoice[i].description === chosenApartment) {
+    for (i = 0; i < apartmentsChoice.length; i++) {
+        if (apartmentsChoice[i].description === chosenApartment) {
             return apartmentsChoice[i];
         }
     }
@@ -92,23 +123,24 @@ deleteEntity = function (row) {
 
 editEntity = function (row) {
     entity = objectList[row];
-    objectListIndex = row;
+    listIndex = row;
     toggleForm();
-
-    $("#firstName").val(entity.firstName);
-    $("#lastName").val(entity.lastName);
-    $("#email").val(entity.email);
-    $("#phone").val(entity.phone);
-    $("#apartmentsInput").val(entity.rentContract.apartment.description);
-    $("#password").val(entity.password);
+    $("#description").val(entity.description);
+    $("#unit").val(entity.unit);
+    $("#serialNumber").val(entity.serialNumber);
+    $("#apartmentsInput").val(entity.apartment.description);
     $("#entityId").val(entity.id);
-    $("#contractStart").val(entity.rentContract.contractStart);
-    $("#contractEnd").val(entity.rentContract.contractEnd);
-    $("#rentCost").val(entity.rentContract.rentCost);
+    if (entity.warmWater || entity.cwu) {
+        $('input[name=waterOrGasAdditionalInput][value=true]').attr('checked', true);
+        $('input[name=waterOrGasAdditionalInput][value=false]').attr('checked', false);
+    } else {
+        $('input[name=waterOrGasAdditionalInput][value=true]').attr('checked', false);
+        $('input[name=waterOrGasAdditionalInput][value=false]').attr('checked', true);
+    }
 };
 
 drawTableFromEndpoint = function () {
-    const finalUrl = residenceUrl + residences[residenceArrayIndex].id;
+    const finalUrl = `${baseUrl}?media=${media}&id=${residences[residenceArrayIndex].id}`;
     $.getJSON(finalUrl, function (result) {
         createApartmentsChoice();
         if (result.length === 0) {
@@ -121,10 +153,8 @@ drawTableFromEndpoint = function () {
     });
 };
 
-
 createApartmentsChoice = function () {
     const finalUrl = apartmentForResidenceBaseUrl + residences[residenceArrayIndex].id;
-
     $.getJSON(finalUrl, function (result) {
         apartmentsChoice = result;
         $('#apartmentsInput').children().remove();
@@ -144,37 +174,42 @@ drawTable = function () {
     $("#tableContent").removeAttr('hidden');
     table = $('#dataTable').DataTable({
         data: objectList,
+        "columnDefs": [
+            {
+                "targets": [4],
+                "visible": media === "GAS",
+                "searchable": media === "GAS"
+            },
+            {
+                "targets": [5],
+                "visible": media === "WATER",
+                "searchable": media === "WATER"
+            }
+        ],
         columns: [
+            { data: 'serialNumber' },
+            { data: 'description' },
             {
                 data: null,
                 render: function (data, type, row) {
-                    return data.firstName + " " + data.lastName;
+                    const a = data.apartment;
+                    if (!a) {
+                        return "";
+                    }
+                    return a.description;
                 }
             },
-            { data: 'email' },
-            { data: 'phone' },
+            { data: 'unit' },
             {
                 data: null,
                 render: function (data, type, row) {
-                    return data.rentContract.apartment.description;
-                }
-            },
-            {
-                data: null,
-                render: function (data, type, row) {
-                    return data.rentContract.rentCost;
-                }
-            },
-            {
-                data: null,
-                render: function (data, type, row) {
-                    return data.rentContract.contractStart;
+                    return translate(data.cwu);
                 }
             },
             {
                 data: null,
                 render: function (data, type, row) {
-                    return data.rentContract.contractEnd;
+                    return translate(data.warmWater);
                 }
             },
             {
@@ -188,3 +223,11 @@ drawTable = function () {
         language: tableTranslation
     });
 };
+
+translate = function (bool) {
+    console.log("asdasd");
+    if (bool) {
+        return "Tak";
+    }
+    return "Nie"
+}
