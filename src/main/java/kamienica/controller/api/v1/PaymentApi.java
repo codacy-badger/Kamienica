@@ -26,13 +26,8 @@ public class PaymentApi {
 
 
     @RequestMapping(method = RequestMethod.GET)
-    public ResponseEntity<?> getList2(@RequestParam("media") Media media) {
-
-        final List<Payment> list = service.getPaymentList(media);
-
-        if (list.isEmpty()) {
-            return new ResponseEntity<Void>(HttpStatus.NO_CONTENT);
-        }
+    public ResponseEntity<?> getList(@RequestParam("media") final Media media, @RequestParam("residence") final Long residenceId) {
+        final List<Payment> list = service.getPaymentList(media, residenceId);
         return new ResponseEntity<List<? extends Payment>>(list, HttpStatus.OK);
 
     }
