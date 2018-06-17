@@ -17,5 +17,5 @@ public interface IPaymentService {
 
 	List<Payment> getPaymentList(Media media, Long residenceId);
 
-	void savePayments(Invoice invoice) throws UsageCalculationException, NegativeConsumptionValue;
+	void savePayments(Invoice invoice);
 }

@@ -1,5 +1,6 @@
 package kamienica.model.entity;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import kamienica.core.util.JodaDateSerializer;
 import kamienica.model.enums.Media;
@@ -8,13 +9,7 @@ import org.hibernate.validator.constraints.NotEmpty;
 import org.joda.time.LocalDate;
 import org.springframework.format.annotation.DateTimeFormat;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
-import javax.persistence.OneToOne;
-import javax.persistence.Table;
-import javax.persistence.UniqueConstraint;
+import javax.persistence.*;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 
@@ -26,7 +21,8 @@ public class Invoice extends DBEntity {
     @NotEmpty(message = "Podaj wartość")
     private String serialNumber;
     @Column(nullable = false)
-    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    @DateTimeFormat(pattern = "dd-MM-yyyy")
+    @JsonFormat(pattern="dd-MM-yyyy")
     @NotNull(message = "Wprowadź datę")
     @Type(type = "org.jadira.usertype.dateandtime.joda.PersistentLocalDate")
     @JsonSerialize(using = JodaDateSerializer.class)

@@ -38,7 +38,7 @@ public class InvoiceService implements IInvoiceService {
 
     @SuppressWarnings("unchecked")
     @Override
-    public void save(final Invoice invoice) throws UsageCalculationException, NegativeConsumptionValue {
+    public void save(final Invoice invoice) {
         paymentService.savePayments(invoice);
         invoiceDao.save(invoice);
         final ReadingDetails rd = invoice.getReadingDetails();
@@ -68,9 +68,9 @@ public class InvoiceService implements IInvoiceService {
     }
 
     @Override
-    public List<Invoice> list(final Media media) {
-        final List<Residence> residences = SecurityDetails.getResidencesForOwner();
-        final Criterion forTheseResidences = Restrictions.in("residence", residences);
+    public List<Invoice> list(final Media media, final Long residenceId) {
+        final Residence residence = SecurityDetails.getResidenceForOwner(residenceId);
+        final Criterion forTheseResidences = Restrictions.eq("residence", residence);
         final Criterion forMedia = Restrictions.eq("media", media);
         return invoiceDao.findByCriteria(forTheseResidences, forMedia);
     }

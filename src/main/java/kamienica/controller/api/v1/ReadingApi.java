@@ -72,7 +72,7 @@ public class ReadingApi {
 
 
     @RequestMapping(value = "/unresolved/{media}", method = RequestMethod.GET)
-    public ResponseEntity<?> getListForInvoice(@PathVariable final Media media, @RequestParam(value = "residence_id", required = false) final Long id) {
+    public ResponseEntity<?> getListForInvoice(@PathVariable final Media media, @RequestParam(value = "residence", required = false) final Long id) {
 
         final List<ReadingDetails> list;
         if (id != null) {

@@ -33,7 +33,7 @@ public class InvoiceWaterServiceTest extends ServiceTest {
     public void getList() {
         mockStatic(SecurityDetails.class);
         when(SecurityDetails.getResidencesForOwner()).thenReturn(getMockedResidences());
-        assertEquals(1, invoiceService.list(Media.WATER).size());
+        assertEquals(1, invoiceService.list(Media.WATER, r.getId()).size());
     }
 
     @Test
@@ -49,7 +49,7 @@ public class InvoiceWaterServiceTest extends ServiceTest {
 
         invoiceService.save(invoice);
         when(SecurityDetails.getLoggedTenant()).thenReturn(tenantService.getById(1L));
-        assertEquals(2, invoiceService.list(Media.WATER).size());
+        assertEquals(2, invoiceService.list(Media.WATER, r.getId()).size());
         List<Payment> paymentList = paymentService.getPaymentList(Media.WATER);
 
         assertEquals(6, paymentList.size());
@@ -76,7 +76,7 @@ public class InvoiceWaterServiceTest extends ServiceTest {
 
         invoiceService.save(invoice);
         when(SecurityDetails.getLoggedTenant()).thenReturn(tenantService.getById(1L));
-        assertEquals(2, invoiceService.list(Media.WATER).size());
+        assertEquals(2, invoiceService.list(Media.WATER, r.getId()).size());
         List<Payment> paymentList = paymentService.getPaymentList(Media.WATER);
 
         assertEquals(6, paymentList.size());

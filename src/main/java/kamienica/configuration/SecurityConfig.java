@@ -94,6 +94,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http.authorizeRequests()
                 .antMatchers("/login.html").permitAll()
                 .antMatchers("/*").authenticated()
+                .antMatchers("/views/owner/*").access("hasRole('OWNER')")
+                .antMatchers("/views/user/*").access("hasRole('USER')")
                 .antMatchers("/swagger-ui.html").access("hasRole('ADMIN') or hasRole('OWNER')")
                 .antMatchers("/h2-console/*").access("hasRole('ADMIN')")
                 .and()

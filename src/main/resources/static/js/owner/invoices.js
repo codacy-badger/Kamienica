@@ -1,56 +1,52 @@
-const residenceUrl = "/api/v1/tenants?residence=";
-const baseUrl = "/api/v1/tenants";
-const apartmentForResidenceBaseUrl = "/api/v1/apartments?residence=";
+
+const baseUrl = "/api/v1/invoices";
+const unresolvedReadingsUrl = "/api/v1/readings/unresolved/";
 
 let table;
-let tenantArrayIndex;
-let tenants = [];
-const tenantstorageKey = "tenants";
-
-let apartmentsChoiceIndex;
-let apartmentsChoice = [];
+let listIndex;
+let objectList = [];
+let media = "ENERGY";
+let unresolvedReadingsIndex;
+let unresolvedReadings = [];
 
 $(document).ready(function () {
     $('#residences').change(function () {
         residenceArrayIndex = $(this).val();
+        media = $('input[name=mediaChoice]:checked').val();
         drawTableFromEndpoint();
+    });
+
+    $('#mediaRadio').change(function () {
+        media = $('input[name=mediaChoice]:checked').val();
+        drawTableFromEndpoint();
+        clearForm();
     });
 
     $("#submitButton").click(function (e) {
         e.preventDefault();
-        let entityId = $("#entityId").val();
         let httpMethod = "POST";
-        let url = baseUrl;
-        const edit = parseInt(entityId) > 0;
-        if (edit) {
-            httpMethod = "PUT";
-            url += "/" + entityId;
-        };
-        const tenantToSave = {
-            firstName: $("#firstName").val(),
-            lastName: $("#lastName").val(),
-            email: $("#email").val(),
-            phone: $("#phone").val(),
-            id: entityId, 
-            password: $("#password").val(),
-            rentContract: {
-                apartment: findChosenApartment(),
-                contractStart: $("#contractStart").val(),
-                contractEnd: $("#contractEnd").val(),
-                rentCost: $("#rentCost").val(),
-            }
+
+        const entityToSave = {
+            invoiceDate: $("#invoiceDate").val(),
+            media: media,
+            serialNumber: $("#serialNumber").val(),
+            totalAmount: $("#totalAmount").val(),
+            readingDetails: unresolvedReadings[$("#unresolvedReadings").val()],
+            residence: unresolvedReadings[$("#unresolvedReadings").val()].residence,
+            status: "ACTIVE",
+            media: media
         };
 
         $.ajax({
             contentType: 'application/json',
-            data: JSON.stringify(tenantToSave),
+            data: JSON.stringify(entityToSave),
             dataType: 'json',
             success: function (data) {
                 showModal("Sukces", "Dane zostały zapisane w bazie");
                 if (edit) {
-                    tenants[tenantArrayIndex] = data;
+                    objectList[listIndex] = data;
                 } else {
-                    tenants.push(data);
+                    objectList.push(data);
                 }
                 drawTable();
                 toggleForm();
@@ -60,28 +56,21 @@ $(document).ready(function () {
             },
             processData: false,
             type: httpMethod,
-            url: url
+            url: baseUrl
         });
     })
 });
 
-findChosenApartment= () => {
-    const chosenApartment = $("#apartmentsInput").val();
-    for(i=0;i<apartmentsChoice.length;i++) {
-        if(apartmentsChoice[i].description === chosenApartment) {
-            return apartmentsChoice[i];
-        }
-    }
-}
-
 deleteEntity = function (row) {
-    entity = tenants[row];
+    entity = objectList[row];
+   const deleteUrl = `${baseUrl}/${entity.id}`;
+   console.log(deleteUrl);
     $.ajax({
-        url: baseUrl + "/" + entity.id,
+        url: deleteUrl,
         type: "DELETE",
         success: function (result) {
             showModal("Usunięto", "Dane zostały usunięte z bazy");
-            tenants.splice(row, 1);
+            objectList.splice(row, 1);
             drawTable();
         },
         error: function (error) {
@@ -90,47 +79,29 @@ deleteEntity = function (row) {
     });
 };
 
-editEntity = function (row) {
-    entity = tenants[row];
-    tenantArrayIndex = row;
-    toggleForm();
-
-    $("#firstName").val(entity.firstName);
-    $("#lastName").val(entity.lastName);
-    $("#email").val(entity.email);
-    $("#phone").val(entity.phone);
-    $("#apartmentsInput").val(entity.rentContract.apartment.description);
-    $("#password").val(entity.password);
-    $("#entityId").val(entity.id);
-    $("#contractStart").val(entity.rentContract.contractStart);
-    $("#contractEnd").val(entity.rentContract.contractEnd);
-    $("#rentCost").val(entity.rentContract.rentCost);
-};
 
 drawTableFromEndpoint = function () {
-    const finalUrl = residenceUrl + residences[residenceArrayIndex].id;
+    const finalUrl = `${baseUrl}?media=${media}&residence=${residences[residenceArrayIndex].id}`;
     $.getJSON(finalUrl, function (result) {
-        createApartmentsChoice();
+        createUnresolvedReadingsChoice();
         if (result.length === 0) {
             $("#tableContent").hide();
-            $('#apartmentsInput').children().remove();
+            $('#unresolvedReadings').children().remove();
         } else {
-            tenants = result;
+            objectList = result;
             drawTable();
         };
     });
 };
 
-
-createApartmentsChoice = function () {
-    const finalUrl = apartmentForResidenceBaseUrl + residences[residenceArrayIndex].id;
-
+createUnresolvedReadingsChoice = function () {
+    const finalUrl =  `${unresolvedReadingsUrl}${media}?residence=${residences[residenceArrayIndex].id}`;
     $.getJSON(finalUrl, function (result) {
-        apartmentsChoice = result;
-        $('#apartmentsInput').children().remove();
+        unresolvedReadings = result;
+        $('#unresolvedReadings').children().remove();
         for (let i = 0; i < result.length; i++) {
-            $("#apartmentsInput").append(
-                $('<option></option>').val(result[i].description).html(result[i].description)
+            $("#unresolvedReadings").append(
+                $('<option></option>').val(i).html(result[i].readingDate)
             );
         };
     });
@@ -143,45 +114,21 @@ drawTable = function () {
     $("#tableContent").show();
     $("#tableContent").removeAttr('hidden');
     table = $('#dataTable').DataTable({
-        data: tenants,
+        data: objectList,
         columns: [
+            { data: 'invoiceDate' },
+            { data: 'serialNumber' },
+            { data: 'totalAmount' },
             {
                 data: null,
                 render: function (data, type, row) {
-                    return data.firstName + " " + data.lastName;
-                }
-            },
-            { data: 'email' },
-            { data: 'phone' },
-            {
-                data: null,
-                render: function (data, type, row) {
-                    return data.rentContract.apartment.description;
-                }
-            },
-            {
-                data: null,
-                render: function (data, type, row) {
-                    return data.rentContract.rentCost;
-                }
-            },
-            {
-                data: null,
-                render: function (data, type, row) {
-                    return data.rentContract.contractStart;
-                }
-            },
-            {
-                data: null,
-                render: function (data, type, row) {
-                    return data.rentContract.contractEnd;
+                    return `${data.residence.street} ${data.residence.number}, ${data.residence.city}`;
                 }
             },
             {
                 data: null,
                 render: function (data, type, row, meta) {
-                    return "<button type='button' class='btn-xs btn-warning' onClick=editEntity(" + meta.row + ")><i class='fa fa-pencil-square-o fa-1' aria-hidden='true'></i></button>" +
-                        "<button type='button' class='btn-xs btn-danger' onClick=deleteEntity(" + meta.row + ")><i class='fa fa-times fa-1' aria-hidden='true'></button>";
+                    return "<button type='button' class='btn-xs btn-danger' onClick=deleteEntity(" + meta.row + ")><i class='fa fa-times fa-1' aria-hidden='true'></button>";
                 }
             }
         ],

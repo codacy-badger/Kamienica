@@ -7,7 +7,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   <meta name="description" content="">
   <meta name="author" content="">
-  <title>Kamienica - Liczniki</title>
+  <title>Kamienica - Faktury</title>
   <!-- Bootstrap core CSS-->
   <link href="/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
   <!-- Custom fonts for this template-->
@@ -28,7 +28,7 @@
   <script src="/js/sb-admin.min.js"></script>
   <script src="/vendor/jquery/jquery-ui.js"></script>
   <script src="/js/common/util.js"></script>
-  <script src="/js/owner/meters.js"></script>
+  <script src="/js/owner/invoices.js"></script>
   <script src="/vendor/datatables/jquery.dataTables.js"></script>
   <script src="/vendor/datatables/dataTables.bootstrap4.js"></script>
 </head>
@@ -72,49 +72,34 @@
                 <form class="form-horizontal" name="myForm" id="myForm">
 
                   <div class="form-group">
-                    <input id="entityId" type="text" hidden/>
-                  </div>
-
-                  <div class="form-group">
-                    <label class="col-sm-3 control-label">Mieszkanie</label>
-                    <div class="col-sm-6">
-                      <select id='apartmentsInput' class="btn btn-outline-secondary dropdown-toggle btn-block">
-                      </select>
-                    </div>
-                  </div>
-
-                  <div class="form-group">
-                    <label class="col-sm-3 control-label">Opis</label>
-                    <div class="col-sm-6">
-                      <input id="description" type="text" class="form-control" placeholder="Pole wymagane" />
-                    </div>
-                  </div>
-
-                  <div class="form-group">
-                    <label class="col-sm-3 control-label">Jednostka</label>
-                    <div class="col-sm-6">
-                      <input type="text" id="unit" class="form-control" placeholder="Pole wymagane" />
-                    </div>
-                  </div>
-
-                  <div class="form-group">
-                    <label class="col-sm-3 control-label">Nr Seryjny</label>
+                    <label class="col-sm-3 control-label">Numer Faktury</label>
                     <div class="col-sm-6">
                       <input id="serialNumber" type="text" class="form-control" placeholder="Pole wymagane" />
                     </div>
                   </div>
 
-                  <div class="form-group" id="radioInputMeterDiv" style="display: none">
-                    <label id="radioInputMeterLabel" class="col-sm-3 control-label">CWU</label>
+                  <div class="form-group">
+                    <label class="col-sm-3 control-label">Data Wystawienia</label>
                     <div class="col-sm-6">
-                      <label class="radio-inline">
-                        <input name=waterOrGasAdditionalInput value="true" type="radio" name="optradio" />Tak
-                      </label>
-                      <label class="radio-inline">
-                        <input name=waterOrGasAdditionalInput value="false" type="radio" name="optradio" checked/>Nie
-                      </label>
+                      <input id="invoiceDate" type="text" class="form-control" placeholder="Pole wymagane" />
                     </div>
                   </div>
+
+                  <div class="form-group">
+                    <label class="col-sm-3 control-label">Kwota</label>
+                    <div class="col-sm-6">
+                      <input id="totalAmount" type="number" class="form-control" placeholder="Pole wymagane" />
+                    </div>
+                  </div>
+
+                  <div class="form-group">
+                    <label class="col-sm-3 control-label">Odczyty</label>
+                    <div class="col-sm-6">
+                      <select id='unresolvedReadings' class="btn btn-outline-secondary dropdown-toggle btn-block">
+                      </select>
+                    </div>
+                  </div>
+
 
                   <div class="form-group ">
                     <div class="col-lg-12">
@@ -136,30 +121,26 @@
           <div class="col-lg-12" id="tableContent" hidden>
             <div class="card mb-3">
               <div class="card-header">
-                <i class="fa fa-table"></i> Lista liczników</div>
+                <i class="fa fa-table"></i> Lista Faktur</div>
               <div class="card-body">
                 <div class="table-responsive">
                   <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                     <thead>
                       <tr>
-                        <th>Nr Seryjny</th>
-                        <th>Opis</th>
-                        <th>Mieszkanie</th>
-                        <th>Jednostka</th>
-                        <th>CWU</th>
-                        <th>Ciepła Woda</th>
-                        <th>Edytuj/Usuń</th>
+                        <th>Data</th>
+                        <th>Nr Faktury</th>
+                        <th>Kwota</th>
+                        <th>Nieruchomość</th>
+                        <th>Usuń</th>
                       </tr>
                     </thead>
                     <tfoot>
                       <tr>
-                        <th>Nr Seryjny</th>
-                        <th>Opis</th>
-                        <th>Mieszkanie</th>
-                        <th>Jednostka</th>
-                        <th>CWU</th>
-                        <th>Ciepła Woda</th>
-                        <th>Edytuj/Usuń</th>
+                        <th>Data</th>
+                        <th>Nr Faktury</th>
+                        <th>Kwota</th>
+                        <th>Nieruchomość</th>
+                        <th>Usuń</th>
                       </tr>
                     </tfoot>
                     <tbody>

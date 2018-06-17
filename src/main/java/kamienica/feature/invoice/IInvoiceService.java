@@ -9,9 +9,9 @@ import java.util.List;
 
 public interface IInvoiceService {
 
-    void save(Invoice invoice) throws UsageCalculationException, NegativeConsumptionValue;
+    void save(Invoice invoice);
 
-    List<Invoice> list( Media media);
+    List<Invoice> list( Media media, Long residenceID);
 
     void delete(Long id);
 

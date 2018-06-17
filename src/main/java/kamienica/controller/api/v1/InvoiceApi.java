@@ -1,24 +1,14 @@
 package kamienica.controller.api.v1;
 
-import kamienica.core.message.ApiErrorResponse;
 import kamienica.core.util.SecurityDetails;
 import kamienica.feature.invoice.IInvoiceService;
 import kamienica.feature.residence.IResidenceService;
 import kamienica.model.entity.Invoice;
-import kamienica.model.entity.Residence;
 import kamienica.model.enums.Media;
-import kamienica.model.exception.NegativeConsumptionValue;
-import kamienica.model.exception.UsageCalculationException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.util.List;
@@ -36,71 +26,23 @@ public class InvoiceApi {
         this.residenceService = residenceService;
     }
 
-    @RequestMapping(value = "/{media}", method = RequestMethod.GET)
-    public ResponseEntity<?> getList(@PathVariable final Media media) {
-
-        List<? extends Invoice> list = invoiceService.list(media);
-        if (list.isEmpty()) {
-            return new ResponseEntity<List<? extends Invoice>>(HttpStatus.NO_CONTENT);
-        }
-        return new ResponseEntity<List<? extends Invoice>>(list, HttpStatus.OK);
+    @GetMapping
+    public ResponseEntity<?> getList(@RequestParam("media") final Media media, @RequestParam("residence") final Long residenceId) {
+        final List<Invoice> list = invoiceService.list(media, residenceId);
+        return new ResponseEntity<>(list, HttpStatus.OK);
     }
-//todo reduce duplication
-    @RequestMapping(value = "/ENERGY", method = RequestMethod.POST)
-    public ResponseEntity<?> saveEnergy(@Valid @RequestBody final Invoice invoice, final BindingResult result, @RequestParam("residence") final Long residenceId) throws UsageCalculationException, NegativeConsumptionValue {
 
-        if (result.hasErrors()) {
-            final ApiErrorResponse message = new ApiErrorResponse();
-            message.setErrors(result.getFieldErrors());
-            return new ResponseEntity<>(message, HttpStatus.UNPROCESSABLE_ENTITY);
-        }
-
-        final Residence r = residenceService.getById(residenceId);
-        invoice.setResidence(r);
-        invoice.setMedia(Media.ENERGY);
+    @PostMapping
+    public ResponseEntity<?> save(@Valid @RequestBody final Invoice invoice) {
         invoiceService.save(invoice);
-
         return new ResponseEntity<>(invoice, HttpStatus.OK);
     }
 
-    @RequestMapping(value = "/GAS", method = RequestMethod.POST)
-    public ResponseEntity<?> saveGas(@Valid @RequestBody final Invoice invoice, final BindingResult result, @RequestParam("residence") final Long residenceId) throws UsageCalculationException, NegativeConsumptionValue {
-        if (result.hasErrors()) {
-            final ApiErrorResponse message = new ApiErrorResponse();
-            message.setErrors(result.getFieldErrors());
-            return new ResponseEntity<>(message, HttpStatus.UNPROCESSABLE_ENTITY);
-        }
-
-        final Residence r = residenceService.getById(residenceId);
-        invoice.setResidence(r);
-        invoice.setMedia(Media.GAS);
-        invoiceService.save(invoice);
-
-        return new ResponseEntity<>(invoice, HttpStatus.OK);
-    }
-
-    @RequestMapping(value = "/WATER", method = RequestMethod.POST)
-    public ResponseEntity<?> saveWater(@Valid @RequestBody final Invoice invoice, final BindingResult result, @RequestParam("residence") final Long residenceId) throws UsageCalculationException, NegativeConsumptionValue {
-        if (result.hasErrors()) {
-            final ApiErrorResponse message = new ApiErrorResponse();
-            message.setErrors(result.getFieldErrors());
-            return new ResponseEntity<>(message, HttpStatus.UNPROCESSABLE_ENTITY);
-        }
-        final Residence r = residenceService.getById(residenceId);
-        SecurityDetails.checkIfOwnsResidence(r);
-        invoice.setResidence(r);
-        invoice.setMedia(Media.ENERGY);
-        invoiceService.save(invoice);
-
-        return new ResponseEntity<>(invoice, HttpStatus.OK);
-    }
-
-    @RequestMapping(value = "/{media}", method = RequestMethod.DELETE)
-    public ResponseEntity<?> delete(@PathVariable final Media media, final Long id) {
+    @DeleteMapping("/{id}")
+    public ResponseEntity<?> delete(@PathVariable("id")  final Long id) {
         final Invoice invoice = invoiceService.getByID(id);
         SecurityDetails.checkIfOwnsResidence(invoice.getResidence());
         invoiceService.delete(invoice);
         return new ResponseEntity<>(HttpStatus.OK);
     }
-
 }

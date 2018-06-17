@@ -98,9 +98,9 @@ setMediaSpecificInput = function () {
 
 findChosenApartment = () => {
     const chosenApartment = $("#apartmentsInput").val();
-    for (i = 0; i < apartmentsChoice.length; i++) {
-        if (apartmentsChoice[i].description === chosenApartment) {
-            return apartmentsChoice[i];
+    for (i = 0; i < unresolvedReadings.length; i++) {
+        if (unresolvedReadings[i].description === chosenApartment) {
+            return unresolvedReadings[i];
         }
     }
 }
@@ -154,9 +154,9 @@ drawTableFromEndpoint = function () {
 };
 
 createApartmentsChoice = function () {
-    const finalUrl = apartmentForResidenceBaseUrl + residences[residenceArrayIndex].id;
+    const finalUrl = unresolvedReadingsUrl + residences[residenceArrayIndex].id;
     $.getJSON(finalUrl, function (result) {
-        apartmentsChoice = result;
+        unresolvedReadings = result;
         $('#apartmentsInput').children().remove();
         for (let i = 0; i < result.length; i++) {
             $("#apartmentsInput").append(
@@ -225,7 +225,6 @@ drawTable = function () {
 };
 
 translate = function (bool) {
-    console.log("asdasd");
     if (bool) {
         return "Tak";
     }
