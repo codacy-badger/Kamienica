@@ -36,7 +36,7 @@ public class InvoiceEnergyServiceTest extends ServiceTest {
         mockStatic(SecurityDetails.class);
         when(SecurityDetails.getLoggedTenant()).thenReturn(tenantService.getById(1L));
         when(SecurityDetails.getResidencesForOwner()).thenReturn(getMockedResidences());
-
+        when(SecurityDetails.getResidenceForOwner(1L)).thenReturn(residence);
         assertEquals(1, invoiceService.list(Media.ENERGY, residence.getId()).size());
 
     }
@@ -47,7 +47,7 @@ public class InvoiceEnergyServiceTest extends ServiceTest {
         mockStatic(SecurityDetails.class);
         when(SecurityDetails.getLoggedTenant()).thenReturn(tenantService.getById(1L));
         when(SecurityDetails.getResidencesForOwner()).thenReturn(getMockedResidences());
-
+        when(SecurityDetails.getResidenceForOwner(1L)).thenReturn(residence);
         List<ReadingDetails> list = readingDetailsService.getUnresolved(residence, Media.ENERGY);
         assertEquals(2, list.size());
 
@@ -73,7 +73,7 @@ public class InvoiceEnergyServiceTest extends ServiceTest {
         mockStatic(SecurityDetails.class);
         when(SecurityDetails.getLoggedTenant()).thenReturn(tenantService.getById(1L));
         when(SecurityDetails.getResidencesForOwner()).thenReturn(getMockedResidences());
-
+        when(SecurityDetails.getResidenceForOwner(1L)).thenReturn(residence);
         List<ReadingDetails> details = readingDetailsService.getUnresolved(residence, Media.ENERGY);
         assertEquals(2, details.size());
 

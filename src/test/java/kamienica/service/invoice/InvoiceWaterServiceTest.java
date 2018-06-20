@@ -32,6 +32,7 @@ public class InvoiceWaterServiceTest extends ServiceTest {
     @Test
     public void getList() {
         mockStatic(SecurityDetails.class);
+        when(SecurityDetails.getResidenceForOwner(1L)).thenReturn(r);
         when(SecurityDetails.getResidencesForOwner()).thenReturn(getMockedResidences());
         assertEquals(1, invoiceService.list(Media.WATER, r.getId()).size());
     }
@@ -40,6 +41,7 @@ public class InvoiceWaterServiceTest extends ServiceTest {
     @Transactional
     public void add() throws UsageCalculationException, NegativeConsumptionValue {
         mockStatic(SecurityDetails.class);
+        when(SecurityDetails.getResidenceForOwner(1L)).thenReturn(r);
         when(SecurityDetails.getLoggedTenant()).thenReturn(getOwner());
         when(SecurityDetails.getResidencesForOwner()).thenReturn(getMockedResidences());
 
@@ -67,6 +69,7 @@ public class InvoiceWaterServiceTest extends ServiceTest {
     @Transactional
     public void addForFirstReading() throws UsageCalculationException, NegativeConsumptionValue {
         mockStatic(SecurityDetails.class);
+        when(SecurityDetails.getResidenceForOwner(1L)).thenReturn(r);
         when(SecurityDetails.getLoggedTenant()).thenReturn(getOwner());
         when(SecurityDetails.getResidencesForOwner()).thenReturn(getMockedResidences());
         List<ReadingDetails> list = readingDetailsService.getUnresolved( r, Media.WATER);

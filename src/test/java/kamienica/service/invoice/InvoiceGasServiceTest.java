@@ -30,7 +30,7 @@ public class InvoiceGasServiceTest extends ServiceTest {
     public void getList() {
         mockStatic(SecurityDetails.class);
         when(SecurityDetails.getResidencesForOwner()).thenReturn(getMockedResidences());
-
+        when(SecurityDetails.getResidenceForOwner(1L)).thenReturn(r);
         assertEquals(1, invoiceService.list(Media.GAS, r.getId()).size());
     }
 
@@ -40,7 +40,7 @@ public class InvoiceGasServiceTest extends ServiceTest {
         mockStatic(SecurityDetails.class);
         when(SecurityDetails.getLoggedTenant()).thenReturn(getOwner());
         when(SecurityDetails.getResidencesForOwner()).thenReturn(getMockedResidences());
-
+        when(SecurityDetails.getResidenceForOwner(1L)).thenReturn(r);
         List<ReadingDetails> list = readingDetailsService.getUnresolved(r, Media.GAS);
         assertEquals(2, list.size());
         Invoice invoice = new Invoice("112233", TODAY, 200, r, list.get(1), Media.GAS);
@@ -66,7 +66,7 @@ public class InvoiceGasServiceTest extends ServiceTest {
         mockStatic(SecurityDetails.class);
         when(SecurityDetails.getLoggedTenant()).thenReturn(getOwner());
         when(SecurityDetails.getResidencesForOwner()).thenReturn(getMockedResidences());
-
+        when(SecurityDetails.getResidenceForOwner(1L)).thenReturn(r);
 
         List<ReadingDetails> list = readingDetailsService.getUnresolved(r, Media.GAS);
         assertEquals(2, list.size());
