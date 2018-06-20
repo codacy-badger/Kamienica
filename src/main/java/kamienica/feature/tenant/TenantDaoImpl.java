@@ -5,7 +5,6 @@ import kamienica.model.entity.RentContract;
 import kamienica.model.entity.Tenant;
 import kamienica.model.jpa.dao.BasicDao;
 import org.hibernate.Criteria;
-import org.hibernate.Query;
 import org.hibernate.criterion.DetachedCriteria;
 import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Property;
@@ -13,7 +12,6 @@ import org.hibernate.criterion.Restrictions;
 import org.joda.time.LocalDate;
 import org.springframework.stereotype.Repository;
 
-import java.sql.PreparedStatement;
 import java.util.List;
 
 @Repository("tenantDao")

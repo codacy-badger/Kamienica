@@ -13,7 +13,9 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
 
 public class TenantServiceTest extends ServiceTest {
 
@@ -57,18 +59,18 @@ public class TenantServiceTest extends ServiceTest {
         Tenant previousOwner = tenantService.loadByMail(FIRST_OWNER_MAIL);
         LocalDate previousOwnerContractEnd = previousOwner.getRentContract().getContractEnd();
         final boolean isOneDayBefore = previousOwnerContractEnd.equals(movementDate.minusDays(1));
-        assertEquals(true, isOneDayBefore);
+        assertTrue(isOneDayBefore);
     }
 
     @Transactional
     @Test
     public void shouldDeactivateNewTenantWhenMovementDateIsOlderThanCurrentTenant() {
         final Tenant newOwner = createTenant(LocalDate.parse("2015-01-01"));
-        assertEquals(true, newOwner.checkIsActive());
+        assertTrue(newOwner.checkIsActive());
         tenantService.save(newOwner);
         Tenant previousOwner = tenantService.loadByMail(FIRST_OWNER_MAIL);
-        assertEquals(true, previousOwner.checkIsActive());
-        assertEquals(false, newOwner.checkIsActive());
+        assertTrue(previousOwner.checkIsActive());
+        assertFalse(newOwner.checkIsActive());
     }
 
     @Transactional

@@ -13,6 +13,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 import static org.powermock.api.mockito.PowerMockito.mockStatic;
 import static org.powermock.api.mockito.PowerMockito.when;
 
@@ -41,7 +42,7 @@ public class MeterWaterServiceTest extends ServiceTest {
     @Test
     public void ifMainExcists() {
         final boolean result = meterService.ifMainExists(Media.WATER);
-        assertEquals(true, result);
+        assertTrue(result);
     }
 
     @Test

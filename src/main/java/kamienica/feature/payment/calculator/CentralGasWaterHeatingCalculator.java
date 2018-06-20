@@ -1,39 +1,47 @@
 package kamienica.feature.payment.calculator;
 
+import java.util.List;
 import kamienica.feature.reading.IReadingService;
-import kamienica.model.entity.*;
+import kamienica.model.entity.Apartment;
+import kamienica.model.entity.MediaUsage;
+import kamienica.model.entity.Reading;
+import kamienica.model.entity.Residence;
 import kamienica.model.enums.Media;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.List;
-
 //TODO investigate whether this implementation could be used for electric central heating system
-@Service(value = CentralGasWaterHeatingCalulator.TYPE)
+@Service(value = CentralGasWaterHeatingCalculator.TYPE)
 @Transactional
-public class CentralGasWaterHeatingCalulator extends ConsumptionCalculator {
+public class CentralGasWaterHeatingCalculator extends ConsumptionCalculator {
 
     static final String TYPE = "CENTRAL_GAS";
 
     @Autowired
-    public CentralGasWaterHeatingCalulator(IReadingService readingService) {
+    public CentralGasWaterHeatingCalculator(IReadingService readingService) {
         super(readingService);
     }
 
-    protected void recalculateSharedPartConsuption(final List<MediaUsage> result) {
-        final double mainMeterUsage = getMainMeterUsage();
-        calculateForCWU(result);
+  protected void recalculateSharedPartConsumption(final List<MediaUsage> result) {
+    final double mainMeterUsage = getMainMeterUsage();
+    calculateForCWU(result);
 
-        final double calculatedResult = result.stream().mapToDouble(x -> x.getUsage()).sum();
+    final double calculatedResult = result.stream().mapToDouble(x -> x.getUsage()).sum();
 
+    if (mainMeterUsage > calculatedResult) {
+      result.stream()
+          .filter(x -> x.getApartment().getApartmentNumber() == 0)
+          .findFirst()
+          .ifPresent(
+              x -> {
+                final double currentUsage = x.getUsage();
+                x.setUsage(currentUsage + (mainMeterUsage - calculatedResult));
+              }
+          );
 
-        if (mainMeterUsage > calculatedResult) {
-            final MediaUsage sharedPart = result.stream().filter(x -> x.getApartment().getApartmentNumber() == 0).findFirst().get();
-            final double currentUsage = sharedPart.getUsage();
-            sharedPart.setUsage(currentUsage + (mainMeterUsage - calculatedResult));
-        }
     }
+  }
 
     private void calculateForCWU(List<MediaUsage> result) {
         final Residence r = invoice.getResidence();

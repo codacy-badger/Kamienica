@@ -1,5 +1,6 @@
 package kamienica.feature.invoice;
 
+import java.util.List;
 import kamienica.core.util.SecurityDetails;
 import kamienica.feature.payment.IPaymentDao;
 import kamienica.feature.payment.IPaymentService;
@@ -9,15 +10,11 @@ import kamienica.model.entity.ReadingDetails;
 import kamienica.model.entity.Residence;
 import kamienica.model.enums.Media;
 import kamienica.model.enums.Resolvement;
-import kamienica.model.exception.NegativeConsumptionValue;
-import kamienica.model.exception.UsageCalculationException;
 import org.hibernate.criterion.Criterion;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
-import java.util.List;
 
 @Service
 @Transactional

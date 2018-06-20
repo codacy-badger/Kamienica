@@ -8,8 +8,6 @@ import kamienica.model.entity.Payment;
 import kamienica.model.entity.Residence;
 import kamienica.model.entity.Tenant;
 import kamienica.model.enums.Media;
-import kamienica.model.exception.NegativeConsumptionValue;
-import kamienica.model.exception.UsageCalculationException;
 import org.hibernate.criterion.Criterion;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;

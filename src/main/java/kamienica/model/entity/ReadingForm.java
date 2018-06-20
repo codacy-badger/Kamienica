@@ -1,5 +1,6 @@
 package kamienica.model.entity;
 
+import com.google.common.collect.Sets;
 import java.util.List;
 import java.util.Set;
 
@@ -18,7 +19,7 @@ public class ReadingForm {
 
     public ReadingForm(ReadingDetails readingDetails, List<Reading> readings) {
         this.readingDetails = readingDetails;
-        this.readings = (Set<Reading>) readings;
+        this.readings = Sets.newHashSet(readings);
     }
 
     public ReadingDetails getReadingDetails() {

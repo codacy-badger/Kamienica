@@ -4,8 +4,6 @@ import kamienica.core.util.CommonUtils;
 import kamienica.feature.division.IDivisionService;
 import kamienica.feature.settings.ISettingsService;
 import kamienica.model.entity.*;
-import kamienica.model.exception.NegativeConsumptionValue;
-import kamienica.model.exception.UsageCalculationException;
 import org.joda.time.LocalDate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

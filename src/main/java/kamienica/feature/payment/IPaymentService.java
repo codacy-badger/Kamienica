@@ -1,13 +1,10 @@
 package kamienica.feature.payment;
 
+import java.util.List;
 import kamienica.model.entity.Invoice;
 import kamienica.model.entity.Payment;
 import kamienica.model.entity.Tenant;
 import kamienica.model.enums.Media;
-import kamienica.model.exception.NegativeConsumptionValue;
-import kamienica.model.exception.UsageCalculationException;
-
-import java.util.List;
 
 public interface IPaymentService {
 

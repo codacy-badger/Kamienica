@@ -27,11 +27,11 @@ public abstract class ConsumptionCalculator implements IConsumptionCalculator {
 
         final List<MediaUsage> result = calculateUsage();
 
-        recalculateSharedPartConsuption(result);
+        recalculateSharedPartConsumption(result);
         return result;
     }
 
-    protected abstract void recalculateSharedPartConsuption(List<MediaUsage> result);
+    protected abstract void recalculateSharedPartConsumption(List<MediaUsage> result);
 
     protected MediaUsage countUsageForApartment(final Apartment ap) {
         final double totalUsageForNewReadings = getSumForApartment(newReadings, ap);

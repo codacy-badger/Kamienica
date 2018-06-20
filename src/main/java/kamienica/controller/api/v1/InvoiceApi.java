@@ -18,12 +18,10 @@ import java.util.List;
 public class InvoiceApi {
 
     private final IInvoiceService invoiceService;
-    private final IResidenceService residenceService;
 
     @Autowired
-    public InvoiceApi(IInvoiceService invoiceService, IResidenceService residenceService) {
+    public InvoiceApi(final IInvoiceService invoiceService) {
         this.invoiceService = invoiceService;
-        this.residenceService = residenceService;
     }
 
     @GetMapping
