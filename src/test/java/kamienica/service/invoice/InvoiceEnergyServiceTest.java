@@ -94,7 +94,8 @@ public class InvoiceEnergyServiceTest extends ServiceTest {
     @Transactional
     @Test
     public void remove() {
-        invoiceService.delete(3L);
+        final Invoice invoice = invoiceService.getByID(3L);
+        invoiceService.delete(invoice);
         List<ReadingDetails> details = readingDetailsService.getUnresolved(residence, Media.ENERGY);
         List<Invoice> invoices = invoiceService.list(Media.ENERGY, residence.getId());
         assertTrue(invoices.isEmpty());

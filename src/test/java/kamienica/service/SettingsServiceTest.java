@@ -2,6 +2,7 @@ package kamienica.service;
 
 import kamienica.configuration.ServiceTest;
 import kamienica.model.entity.Settings;
+import kamienica.model.enums.WaterHeatingSystem;
 import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
@@ -13,7 +14,7 @@ public class SettingsServiceTest extends ServiceTest {
     public void getList() {
         Settings settings = settingsService.getSettings(getOWnersResidence());
 
-        assertTrue(settings.isGarbage());
+        assertEquals(WaterHeatingSystem.SHARED_GAS, settings.getWaterHeatingSystem());
 
     }
 

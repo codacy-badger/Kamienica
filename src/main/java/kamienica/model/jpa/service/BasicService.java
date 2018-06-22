@@ -10,8 +10,6 @@ public interface BasicService<T> {
 
     T getById(Long id);
 
-    void delete(Long id);
-
     void delete(T object);
 
     void update(T t);

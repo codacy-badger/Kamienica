@@ -43,11 +43,7 @@ $(document).ready(function () {
             dataType: 'json',
             success: function (data) {
                 showModal("Sukces", "Dane zostały zapisane w bazie");
-                if (edit) {
-                    objectList[listIndex] = data;
-                } else {
-                    objectList.push(data);
-                }
+                objectList.push(data);
                 drawTable();
                 toggleForm();
             },
@@ -63,8 +59,8 @@ $(document).ready(function () {
 
 deleteEntity = function (row) {
     entity = objectList[row];
-   const deleteUrl = `${baseUrl}/${entity.id}`;
-   console.log(deleteUrl);
+    const deleteUrl = `${baseUrl}/${entity.id}`;
+    console.log(deleteUrl);
     $.ajax({
         url: deleteUrl,
         type: "DELETE",
@@ -72,6 +68,7 @@ deleteEntity = function (row) {
             showModal("Usunięto", "Dane zostały usunięte z bazy");
             objectList.splice(row, 1);
             drawTable();
+            createUnresolvedReadingsChoice();
         },
         error: function (error) {
             showModal("Błąd podczas usuwania danych", error.responseText);
@@ -95,7 +92,7 @@ drawTableFromEndpoint = function () {
 };
 
 createUnresolvedReadingsChoice = function () {
-    const finalUrl =  `${unresolvedReadingsUrl}${media}?residence=${residences[residenceArrayIndex].id}`;
+    const finalUrl = `${unresolvedReadingsUrl}${media}?residence=${residences[residenceArrayIndex].id}`;
     $.getJSON(finalUrl, function (result) {
         unresolvedReadings = result;
         $('#unresolvedReadings').children().remove();

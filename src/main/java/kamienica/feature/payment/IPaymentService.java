@@ -15,4 +15,6 @@ public interface IPaymentService {
 	List<Payment> getPaymentList(Media media, Long residenceId);
 
 	void savePayments(Invoice invoice);
+
+	void deleteForInvoice(Invoice invoice);
 }

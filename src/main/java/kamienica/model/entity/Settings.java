@@ -11,9 +11,6 @@ public class Settings {
 	@Id
 	@GeneratedValue
 	private Long id;
-	private boolean gas = true;
-	private boolean internet = false;
-	private boolean garbage = false;
 	@Enumerated(EnumType.STRING)
 	private WaterHeatingSystem waterHeatingSystem;
 	@OneToOne
@@ -22,12 +19,8 @@ public class Settings {
 	public Settings() {
 	}
 
-	public Settings(Long id, boolean gas, boolean internet, boolean garbage,
-					WaterHeatingSystem waterHeatingSystem, Residence residence) {
+	public Settings(Long id, WaterHeatingSystem waterHeatingSystem, Residence residence) {
 		this.id = id;
-		this.gas = gas;
-		this.internet = internet;
-		this.garbage = garbage;
 		this.waterHeatingSystem = waterHeatingSystem;
 		this.residence = residence;
 	}
@@ -54,36 +47,6 @@ public class Settings {
 
 	public void setId(Long id) {
 		this.id = id;
-	}
-
-	public boolean isGas() {
-		return gas;
-	}
-
-	public void setGas(boolean gas) {
-		this.gas = gas;
-	}
-
-	public boolean isInternet() {
-		return internet;
-	}
-
-	public void setInternet(boolean internet) {
-		this.internet = internet;
-	}
-
-	public boolean isGarbage() {
-		return garbage;
-	}
-
-	public void setGarbage(boolean garbage) {
-		this.garbage = garbage;
-	}
-
-	@Override
-	public String toString() {
-		return "Settings [id=" + id + ", gas=" + gas + ", internet=" + internet
-				+ ", garbage=" + garbage + ", waterHeatingSystem=" + waterHeatingSystem + "]";
 	}
 
 }

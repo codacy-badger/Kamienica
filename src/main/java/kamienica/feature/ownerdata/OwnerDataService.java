@@ -40,7 +40,7 @@ public class OwnerDataService implements IOwnerDataService {
     @Override
     public OwnerData getMainData() {
         final List<Residence> ownerResidences = SecurityDetails.getResidencesForOwner();
-        if(ownerResidences.isEmpty()) {
+        if (ownerResidences.isEmpty()) {
             return new OwnerData();
         }
         final int emptyApartments = countEmptyApartments(ownerResidences);

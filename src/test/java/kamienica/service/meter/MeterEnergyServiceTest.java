@@ -76,7 +76,7 @@ public class MeterEnergyServiceTest extends ServiceTest {
         Meter meter = createDummyMeter();
         meterService.save(meter);
         assertEquals(6, meterService.getListForOwner(Media.ENERGY).size());
-        meterService.delete(meter.getId());
+        meterService.delete(meter);
         assertEquals(5, meterService.getListForOwner(Media.ENERGY).size());
 
     }

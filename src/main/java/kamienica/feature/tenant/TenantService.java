@@ -141,11 +141,6 @@ public class TenantService implements ITenantService {
     }
 
     @Override
-    public void delete(final Long id) {
-        tenantDao.delete(id);
-    }
-
-    @Override
     public void delete(final Tenant object) {
         tenantDao.delete(object);
     }

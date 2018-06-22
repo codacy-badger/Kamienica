@@ -65,4 +65,9 @@ public class PaymentService implements IPaymentService {
             paymentDao.save(p);
         }
     }
+
+    @Override
+    public void deleteForInvoice(final Invoice invoice) {
+        paymentDao.deleteForInvoice(invoice);
+    }
 }

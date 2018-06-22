@@ -1,6 +1,5 @@
 package kamienica.feature.invoice;
 
-import java.util.List;
 import kamienica.core.util.SecurityDetails;
 import kamienica.feature.payment.IPaymentDao;
 import kamienica.feature.payment.IPaymentService;
@@ -16,51 +15,40 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+
 @Service
 @Transactional
 public class InvoiceService implements IInvoiceService {
 
     private final IInvoiceDao invoiceDao;
-    private final IPaymentDao paymentDao;
     private final IReadingDetailsDao readingDetailsDao;
     private final IPaymentService paymentService;
 
     @Autowired
-    public InvoiceService(IInvoiceDao invoiceDao, IPaymentDao paymentDao, IReadingDetailsDao readingDetailsDao, IPaymentService paymentService) {
+    public InvoiceService(final IInvoiceDao invoiceDao, final IReadingDetailsDao readingDetailsDao, final IPaymentService paymentService) {
         this.invoiceDao = invoiceDao;
-        this.paymentDao = paymentDao;
         this.readingDetailsDao = readingDetailsDao;
         this.paymentService = paymentService;
     }
 
-    @SuppressWarnings("unchecked")
     @Override
     public void save(final Invoice invoice) {
+        updateReadingDetails(invoice, Resolvement.RESOLVED);
         paymentService.savePayments(invoice);
         invoiceDao.save(invoice);
-        final ReadingDetails rd = invoice.getReadingDetails();
-        rd.setResolvement(Resolvement.RESOLVED);
-        readingDetailsDao.update(rd);
     }
 
     @Override
-    public void delete(final Long id) {
-        final Invoice invoice = invoiceDao.getById(id);
-        final ReadingDetails details = invoice.getReadingDetails();
-        details.setResolvement(Resolvement.UNRESOLVED);
+    public void delete(final Invoice invoice) {
+        updateReadingDetails(invoice, Resolvement.UNRESOLVED);
 
-        readingDetailsDao.update(details);
-        paymentDao.deleteForInvoice(invoice);
-        invoiceDao.delete(id);
-    }
-
-    @Override
-    public void delete(Invoice invoice) {
+        paymentService.deleteForInvoice(invoice);
         invoiceDao.delete(invoice);
     }
 
     @Override
-    public Invoice getByID(Long id) {
+    public Invoice getByID(final Long id) {
         return invoiceDao.getById(id);
     }
 
@@ -70,5 +58,11 @@ public class InvoiceService implements IInvoiceService {
         final Criterion forTheseResidences = Restrictions.eq("residence", residence);
         final Criterion forMedia = Restrictions.eq("media", media);
         return invoiceDao.findByCriteria(forTheseResidences, forMedia);
+    }
+
+    private void updateReadingDetails(final Invoice invoice, final Resolvement resolved) {
+        final ReadingDetails rd = invoice.getReadingDetails();
+        rd.setResolvement(resolved);
+        readingDetailsDao.update(rd);
     }
 }

@@ -93,7 +93,8 @@ public class InvoiceWaterServiceTest extends ServiceTest {
     @Test
     @Transactional
     public void remove() {
-        invoiceService.delete(1L);
+        final Invoice invoice = invoiceService.getByID(1L);
+        invoiceService.delete(invoice);
         List<ReadingDetails> list = readingDetailsService.getUnresolved( r, Media.WATER);
         assertEquals(3, list.size());
 

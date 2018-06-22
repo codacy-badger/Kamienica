@@ -200,7 +200,7 @@ public abstract class BasicDao<T> implements IBasicDao<T> {
     }
 
     protected String getTabName() {
-        return persistentClass.getSimpleName().toLowerCase();
+        return persistentClass.getSimpleName().toUpperCase();
     }
 
     protected Session getSession() {
