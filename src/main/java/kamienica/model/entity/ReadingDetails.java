@@ -24,7 +24,7 @@ public class ReadingDetails extends DBEntity implements Comparable<ReadingDetail
     private LocalDate readingDate;
     @Column(nullable = false)
     @Enumerated(EnumType.STRING)
-    private Resolvement resolvement;
+    private Resolvement resolvement = Resolvement.UNRESOLVED;
     @Column(nullable = false)
     @Enumerated(EnumType.STRING)
     private Media media;

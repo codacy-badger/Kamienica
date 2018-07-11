@@ -154,7 +154,7 @@ drawTableFromEndpoint = function () {
 };
 
 createApartmentsChoice = function () {
-    const finalUrl = unresolvedReadingsUrl + residences[residenceArrayIndex].id;
+    const finalUrl = apartmentForResidenceBaseUrl + residences[residenceArrayIndex].id;
     $.getJSON(finalUrl, function (result) {
         unresolvedReadings = result;
         $('#apartmentsInput').children().remove();
