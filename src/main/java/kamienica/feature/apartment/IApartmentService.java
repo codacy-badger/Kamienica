@@ -9,6 +9,6 @@ public interface IApartmentService extends BasicService<Apartment> {
 
     List<Apartment> paginatedList(Integer firstResult, Integer maxResults);
 
-    List<Apartment> getByResidence(Long residenceId);
+    List<Apartment> getByResidence(Long residenceId, boolean showSharedPart);
 
 }

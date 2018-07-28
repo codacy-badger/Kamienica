@@ -1,5 +1,5 @@
 const apartmentsUrl = "/api/v1/apartments";
-const apartmentForResidenceBaseUrl = "/api/v1/apartments?residence=";
+const apartmentForResidenceBaseUrl = "/api/v1/apartments?showSharedPart=false&residence=";
 
 let table;
 let apartmentArrayIndex;

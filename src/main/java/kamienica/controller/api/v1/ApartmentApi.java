@@ -32,12 +32,13 @@ public class ApartmentApi {
     }
 
     @RequestMapping(method = RequestMethod.GET)
-    public ResponseEntity<?> list(@RequestParam(required = false, value = "residence") final Long residenceId) {
+    public ResponseEntity<?> list(@RequestParam(required = false, value = "residence") final Long residenceId,
+        @RequestParam(required = false, value = "showSharedPart", defaultValue = "false") final boolean showSharedPart) {
         final List<Apartment> list;
         if (residenceId == null) {
             list = apartmentService.list();
         } else {
-            list = apartmentService.getByResidence(residenceId);
+            list = apartmentService.getByResidence(residenceId, showSharedPart);
         }
 
         if (list.isEmpty()) {

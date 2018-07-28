@@ -48,10 +48,14 @@ public class ApartmentService implements IApartmentService {
     }
 
     @Override
-    public List<Apartment> getByResidence(final Long residenceId) {
+    public List<Apartment> getByResidence(final Long residenceId, final boolean showSharedPart) {
         final Residence r = residenceDao.getById(residenceId);
         final Criterion c = Restrictions.eq("residence", r);
-        return apartmentDAO.findByCriteria(c);
+        if(showSharedPart) {
+            return apartmentDAO.findByCriteria(c);
+        }
+        final Criterion noSharedPart = Restrictions.ne("apartmentNumber", 0);
+        return apartmentDAO.findByCriteria(c, noSharedPart);
     }
 
     @Override
