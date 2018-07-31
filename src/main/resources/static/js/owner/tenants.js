@@ -20,7 +20,7 @@ $(document).ready(function () {
         e.preventDefault();
         let entityId = $("#entityId").val();
         let httpMethod = "POST";
-        let url = baseUrl;
+        let url = tenantsUrl;
         const edit = parseInt(entityId) > 0;
         if (edit) {
             httpMethod = "PUT";
@@ -30,17 +30,27 @@ $(document).ready(function () {
             firstName: $("#firstName").val(),
             lastName: $("#lastName").val(),
             email: $("#email").val(),
-            phone: $("#phone").val(),
-            id: entityId, 
+            id: entityId,
             password: $("#password").val(),
             rentContract: {
                 apartment: findChosenApartment(),
                 contractStart: $("#contractStart").val(),
-                contractEnd: $("#contractEnd").val(),
                 rentCost: $("#rentCost").val(),
             }
         };
 
+        const  contractEnd = $("#contractEnd").val();
+        const phone = $("#phone").val();
+
+        if(contractEnd !== "") {
+          tenantToSave.phone = phone;
+        }
+        if(contractEnd !== "") {
+          tenantToSave.rentContract.contractEnd = contractEnd;
+        }
+
+
+      console.log(tenantToSave);
         $.ajax({
             contentType: 'application/json',
             data: JSON.stringify(tenantToSave),
@@ -77,7 +87,7 @@ findChosenApartment= () => {
 deleteEntity = function (row) {
     entity = objectList[row];
     $.ajax({
-        url: baseUrl + "/" + entity.id,
+        url: tenantsUrl + "/" + entity.id,
         type: "DELETE",
         success: function (result) {
             showModal("Usunięto", "Dane zostały usunięte z bazy");
@@ -174,6 +184,9 @@ drawTable = function () {
             {
                 data: null,
                 render: function (data, type, row) {
+                    if(data.rentContract.contractEnd == "01-01-2100") {
+                        return "";
+                    }
                     return data.rentContract.contractEnd;
                 }
             },
