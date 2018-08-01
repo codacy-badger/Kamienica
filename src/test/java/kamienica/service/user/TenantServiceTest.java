@@ -55,6 +55,7 @@ public class TenantServiceTest extends ServiceTest {
     public void shouldDeactivateOldTenantWhenNewIsInserted() {
         final LocalDate movementDate = LocalDate.parse("2017-03-10");
         final Tenant newOwner = createTenant(movementDate);
+        newOwner.setRole(UserRole.OWNER);
         tenantService.save(newOwner);
         Tenant previousOwner = tenantService.loadByMail(FIRST_OWNER_MAIL);
         LocalDate previousOwnerContractEnd = previousOwner.getRentContract().getContractEnd();
@@ -93,7 +94,6 @@ public class TenantServiceTest extends ServiceTest {
 
     private Tenant createTenant(final LocalDate localDate) {
         final Apartment apartment = apartmentService.getById(2L);
-        tenantService.loadByMail(FIRST_OWNER_MAIL);
         Tenant tenant = new Tenant();
         final RentContract rc = new RentContract(apartment, 100, localDate);
 

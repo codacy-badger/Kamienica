@@ -17,7 +17,7 @@ public class PurgeServiceTest extends ServiceTest {
     private IPurgeService service;
 
     @Test
-    public void purgeData() throws Exception {
+    public void purgeData() {
         final Residence r = getOWnersResidence();
         service.purgeData(r);
 
