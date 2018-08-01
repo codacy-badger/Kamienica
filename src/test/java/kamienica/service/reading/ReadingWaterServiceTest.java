@@ -96,7 +96,7 @@ public class ReadingWaterServiceTest extends ServiceTest {
             Reading reading = new Reading(details, 800, r, meter);
             toSave.add(reading);
         }
-        final ReadingForm form = new ReadingForm(details, toSave);
+        final ReadingForm form = new ReadingForm(toSave);
         readingService.save(form);
 
 

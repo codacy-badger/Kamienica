@@ -81,7 +81,7 @@ public class ReadingGasServiceTest extends ServiceTest {
             readingsToSave.add(reading);
         }
 
-        final ReadingForm form = new ReadingForm(details, readingsToSave);
+        final ReadingForm form = new ReadingForm(readingsToSave);
         readingService.save(form);
         assertEquals(24, readingService.getList(residence, Media.GAS).size());
     }

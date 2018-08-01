@@ -98,7 +98,7 @@ public class ReadingEnergyServiceTest extends ServiceTest {
             Reading reading = new Reading(details, 800, r, meter);
             toSave.add(reading);
         }
-        final ReadingForm form = new ReadingForm(details, toSave);
+        final ReadingForm form = new ReadingForm(toSave);
         readingService.save(form);
         List<Reading> actual = readingService.getList(r, Media.ENERGY);
         assertEquals(20, actual.size());

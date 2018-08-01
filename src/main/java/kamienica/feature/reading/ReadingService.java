@@ -44,15 +44,6 @@ public class ReadingService implements IReadingService {
         return readingDao.findByCriteria(Restrictions.eq("readingDetails", rd));
     }
 
-    @Override
-    public void save(final List<Reading> reading, final ReadingDetails details) {
-        readingDetailsDao.save(details);
-        for (Reading r : reading) {
-            validateReadingValue(r);
-            r.setReadingDetails(details);
-            readingDao.save(r);
-        }
-    }
 
 
     @Override
@@ -77,7 +68,6 @@ public class ReadingService implements IReadingService {
             readingDao.save(r);
         }
     }
-
 
     @Override
     public Reading getById(Long id) {
@@ -111,13 +101,6 @@ public class ReadingService implements IReadingService {
         readingDetailsDao.delete(details);
     }
 
-    @Override
-    public void delete(final ReadingForm readingForm) {
-        for (Reading r : readingForm.getReadings()) {
-            readingDao.delete(r);
-        }
-        readingDetailsDao.delete(readingForm.getReadings().get(0).getReadingDetails());
-    }
 
     @Override
     public List<Reading> getPreviousReadingForWarmWater(final Invoice invoice) {
