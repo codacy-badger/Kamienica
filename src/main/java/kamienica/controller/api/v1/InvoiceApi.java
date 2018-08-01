@@ -2,7 +2,6 @@ package kamienica.controller.api.v1;
 
 import kamienica.core.util.SecurityDetails;
 import kamienica.feature.invoice.IInvoiceService;
-import kamienica.feature.residence.IResidenceService;
 import kamienica.model.entity.Invoice;
 import kamienica.model.enums.Media;
 import org.springframework.beans.factory.annotation.Autowired;

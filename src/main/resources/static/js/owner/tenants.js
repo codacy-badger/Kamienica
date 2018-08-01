@@ -50,7 +50,6 @@ $(document).ready(function () {
         }
 
 
-      console.log(tenantToSave);
         $.ajax({
             contentType: 'application/json',
             data: JSON.stringify(tenantToSave),
@@ -62,7 +61,8 @@ $(document).ready(function () {
                 } else {
                     objectList.push(data);
                 }
-                drawTable();
+
+                drawTableFromEndpoint();
                 toggleForm();
             },
             error: function (error) {
@@ -82,7 +82,7 @@ findChosenApartment= () => {
             return apartmentsChoice[i];
         }
     }
-}
+};
 
 deleteEntity = function (row) {
     entity = objectList[row];

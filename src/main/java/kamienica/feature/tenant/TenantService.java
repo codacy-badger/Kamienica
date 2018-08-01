@@ -183,5 +183,4 @@ public class TenantService implements ITenantService {
         final Criterion onlyOwners = Restrictions.eq("role", UserRole.OWNER);
         return tenantDao.findByCriteria(onlyOwners);
     }
-
 }
