@@ -1,18 +1,15 @@
 package kamienica.model.entity;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import kamienica.core.util.JodaDateSerializer;
 import kamienica.model.enums.Media;
 import kamienica.model.enums.Resolvement;
 import org.hibernate.annotations.Type;
 import org.joda.time.LocalDate;
 import org.springframework.format.annotation.DateTimeFormat;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
-import javax.persistence.ManyToOne;
-import javax.persistence.Table;
-import javax.persistence.UniqueConstraint;
+import javax.persistence.*;
 import java.util.Objects;
 
 @Entity
@@ -20,12 +17,14 @@ import java.util.Objects;
 public class ReadingDetails extends DBEntity implements Comparable<ReadingDetails> {
 
     @Column(nullable = false)
-    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    @DateTimeFormat(pattern = "dd-MM-yyyy")
+    @JsonFormat(pattern="dd-MM-yyyy")
     @Type(type = "org.jadira.usertype.dateandtime.joda.PersistentLocalDate")
+    @JsonSerialize(using = JodaDateSerializer.class)
     private LocalDate readingDate;
     @Column(nullable = false)
     @Enumerated(EnumType.STRING)
-    private Resolvement resolvement;
+    private Resolvement resolvement = Resolvement.UNRESOLVED;
     @Column(nullable = false)
     @Enumerated(EnumType.STRING)
     private Media media;

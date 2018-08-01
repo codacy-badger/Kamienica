@@ -26,7 +26,7 @@ public class UserServiceTest extends ServiceTest {
     }
 //TODO investigate why gas size was 9
     @Test
-    public void getMapOfReadings() throws Exception {
+    public void getMapOfReadings() {
         Map<String, List<Reading>> map = userService.getMapOfReadings();
         assertEquals(3, map.size());
 

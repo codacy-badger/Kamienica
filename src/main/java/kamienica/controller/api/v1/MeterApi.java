@@ -14,12 +14,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.util.HashMap;
@@ -62,8 +57,8 @@ public class MeterApi extends AbstractApi {
     }
 
 
-    @RequestMapping(value = "/{media}", method = RequestMethod.POST)
-    public ResponseEntity<?> create(@PathVariable final Media media, @Valid @RequestBody final Meter meter, final BindingResult result) {
+    @RequestMapping(method = RequestMethod.POST)
+    public ResponseEntity<?> create(@Valid @RequestBody final Meter meter, final BindingResult result) {
         SecurityDetails.checkIfOwnsResidence(meter.getResidence());
         if (result.hasErrors()) {
             final ApiErrorResponse message = new ApiErrorResponse();
@@ -84,8 +79,8 @@ public class MeterApi extends AbstractApi {
     }
 
 
-    @RequestMapping(value = "/{media}/{id}", method = RequestMethod.PUT)
-    public ResponseEntity<?> update(@PathVariable final Media media, @Valid @RequestBody final Meter meter, final BindingResult result) {
+    @RequestMapping(method = RequestMethod.PUT)
+    public ResponseEntity<?> update(@Valid @RequestBody final Meter meter, final BindingResult result) {
         SecurityDetails.checkIfOwnsResidence(meter.getResidence());
         if (result.hasErrors()) {
             final ApiErrorResponse message = new ApiErrorResponse();
@@ -105,8 +100,8 @@ public class MeterApi extends AbstractApi {
         return new ResponseEntity<>(meter, HttpStatus.CREATED);
     }
 
-    @RequestMapping(value = "{media}/{id}", method = RequestMethod.DELETE)
-    public ResponseEntity<Message> delete(@PathVariable("media") final Media media, @PathVariable("id") final Long id) {
+    @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
+    public ResponseEntity<Message> delete(@PathVariable("id") final Long id) {
         final Message message = new Message("OK", null);
         try {
             final Meter m = service.getById(id);

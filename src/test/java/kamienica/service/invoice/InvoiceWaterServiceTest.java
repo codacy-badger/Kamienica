@@ -7,8 +7,6 @@ import kamienica.model.entity.Payment;
 import kamienica.model.entity.ReadingDetails;
 import kamienica.model.entity.Residence;
 import kamienica.model.enums.Media;
-import kamienica.model.exception.NegativeConsumptionValue;
-import kamienica.model.exception.UsageCalculationException;
 import org.joda.time.LocalDate;
 import org.junit.Before;
 import org.junit.Test;
@@ -32,14 +30,16 @@ public class InvoiceWaterServiceTest extends ServiceTest {
     @Test
     public void getList() {
         mockStatic(SecurityDetails.class);
+        when(SecurityDetails.getResidenceForOwner(1L)).thenReturn(r);
         when(SecurityDetails.getResidencesForOwner()).thenReturn(getMockedResidences());
-        assertEquals(1, invoiceService.list(Media.WATER).size());
+        assertEquals(1, invoiceService.list(Media.WATER, r.getId()).size());
     }
 
     @Test
     @Transactional
-    public void add() throws UsageCalculationException, NegativeConsumptionValue {
+    public void add() {
         mockStatic(SecurityDetails.class);
+        when(SecurityDetails.getResidenceForOwner(1L)).thenReturn(r);
         when(SecurityDetails.getLoggedTenant()).thenReturn(getOwner());
         when(SecurityDetails.getResidencesForOwner()).thenReturn(getMockedResidences());
 
@@ -49,7 +49,7 @@ public class InvoiceWaterServiceTest extends ServiceTest {
 
         invoiceService.save(invoice);
         when(SecurityDetails.getLoggedTenant()).thenReturn(tenantService.getById(1L));
-        assertEquals(2, invoiceService.list(Media.WATER).size());
+        assertEquals(2, invoiceService.list(Media.WATER, r.getId()).size());
         List<Payment> paymentList = paymentService.getPaymentList(Media.WATER);
 
         assertEquals(6, paymentList.size());
@@ -65,8 +65,9 @@ public class InvoiceWaterServiceTest extends ServiceTest {
 
     @Test
     @Transactional
-    public void addForFirstReading() throws UsageCalculationException, NegativeConsumptionValue {
+    public void addForFirstReading() {
         mockStatic(SecurityDetails.class);
+        when(SecurityDetails.getResidenceForOwner(1L)).thenReturn(r);
         when(SecurityDetails.getLoggedTenant()).thenReturn(getOwner());
         when(SecurityDetails.getResidencesForOwner()).thenReturn(getMockedResidences());
         List<ReadingDetails> list = readingDetailsService.getUnresolved( r, Media.WATER);
@@ -76,7 +77,7 @@ public class InvoiceWaterServiceTest extends ServiceTest {
 
         invoiceService.save(invoice);
         when(SecurityDetails.getLoggedTenant()).thenReturn(tenantService.getById(1L));
-        assertEquals(2, invoiceService.list(Media.WATER).size());
+        assertEquals(2, invoiceService.list(Media.WATER, r.getId()).size());
         List<Payment> paymentList = paymentService.getPaymentList(Media.WATER);
 
         assertEquals(6, paymentList.size());
@@ -92,7 +93,8 @@ public class InvoiceWaterServiceTest extends ServiceTest {
     @Test
     @Transactional
     public void remove() {
-        invoiceService.delete(1L);
+        final Invoice invoice = invoiceService.getByID(1L);
+        invoiceService.delete(invoice);
         List<ReadingDetails> list = readingDetailsService.getUnresolved( r, Media.WATER);
         assertEquals(3, list.size());
 

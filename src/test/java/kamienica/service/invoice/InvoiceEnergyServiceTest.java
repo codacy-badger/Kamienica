@@ -7,8 +7,6 @@ import kamienica.model.entity.Payment;
 import kamienica.model.entity.ReadingDetails;
 import kamienica.model.entity.Residence;
 import kamienica.model.enums.Media;
-import kamienica.model.exception.NegativeConsumptionValue;
-import kamienica.model.exception.UsageCalculationException;
 import org.joda.time.LocalDate;
 import org.junit.Before;
 import org.junit.Test;
@@ -36,25 +34,25 @@ public class InvoiceEnergyServiceTest extends ServiceTest {
         mockStatic(SecurityDetails.class);
         when(SecurityDetails.getLoggedTenant()).thenReturn(tenantService.getById(1L));
         when(SecurityDetails.getResidencesForOwner()).thenReturn(getMockedResidences());
-
-        assertEquals(1, invoiceService.list(Media.ENERGY).size());
+        when(SecurityDetails.getResidenceForOwner(1L)).thenReturn(residence);
+        assertEquals(1, invoiceService.list(Media.ENERGY, residence.getId()).size());
 
     }
 
     @Transactional
     @Test
-    public void add() throws UsageCalculationException, NegativeConsumptionValue {
+    public void add() {
         mockStatic(SecurityDetails.class);
         when(SecurityDetails.getLoggedTenant()).thenReturn(tenantService.getById(1L));
         when(SecurityDetails.getResidencesForOwner()).thenReturn(getMockedResidences());
-
+        when(SecurityDetails.getResidenceForOwner(1L)).thenReturn(residence);
         List<ReadingDetails> list = readingDetailsService.getUnresolved(residence, Media.ENERGY);
         assertEquals(2, list.size());
 
         Invoice invoice = new Invoice("112233", TODAY, 200, residence, list.get(1), Media.ENERGY);
 
         invoiceService.save(invoice);
-        assertEquals(2, invoiceService.list(Media.ENERGY).size());
+        assertEquals(2, invoiceService.list(Media.ENERGY, residence.getId()).size());
         List<Payment> paymentList = paymentService.getPaymentList(Media.ENERGY);
 
         assertEquals(6, paymentList.size());
@@ -69,17 +67,17 @@ public class InvoiceEnergyServiceTest extends ServiceTest {
 
     @Transactional
     @Test
-    public void addForFirstReading() throws UsageCalculationException, NegativeConsumptionValue {
+    public void addForFirstReading() {
         mockStatic(SecurityDetails.class);
         when(SecurityDetails.getLoggedTenant()).thenReturn(tenantService.getById(1L));
         when(SecurityDetails.getResidencesForOwner()).thenReturn(getMockedResidences());
-
+        when(SecurityDetails.getResidenceForOwner(1L)).thenReturn(residence);
         List<ReadingDetails> details = readingDetailsService.getUnresolved(residence, Media.ENERGY);
         assertEquals(2, details.size());
 
         Invoice invoice = new Invoice("34", new LocalDate(), 200, residence, details.get(0), Media.ENERGY);
         invoiceService.save(invoice);
-        assertEquals(2, invoiceService.list(Media.ENERGY).size());
+        assertEquals(2, invoiceService.list(Media.ENERGY, residence.getId()).size());
         List<Payment> paymentList = paymentService.getPaymentList(Media.ENERGY);
 
         assertEquals(6, paymentList.size());
@@ -96,9 +94,10 @@ public class InvoiceEnergyServiceTest extends ServiceTest {
     @Transactional
     @Test
     public void remove() {
-        invoiceService.delete(3L);
+        final Invoice invoice = invoiceService.getByID(3L);
+        invoiceService.delete(invoice);
         List<ReadingDetails> details = readingDetailsService.getUnresolved(residence, Media.ENERGY);
-        List<Invoice> invoices = invoiceService.list(Media.ENERGY);
+        List<Invoice> invoices = invoiceService.list(Media.ENERGY, residence.getId());
         assertTrue(invoices.isEmpty());
         assertEquals(3, details.size());
 

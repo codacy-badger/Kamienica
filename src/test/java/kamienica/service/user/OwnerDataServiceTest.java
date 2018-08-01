@@ -17,7 +17,7 @@ import static org.powermock.api.mockito.PowerMockito.when;
 public class OwnerDataServiceTest extends ServiceTest {
 
     @Test
-    public void getMainData() throws Exception {
+    public void getMainData(){
         List<Residence> residences = Collections.singletonList(getOWnersResidence());
         mockStatic(SecurityDetails.class);
         when(SecurityDetails.getResidencesForOwner()).thenReturn(residences);

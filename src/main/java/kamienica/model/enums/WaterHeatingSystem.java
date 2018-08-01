@@ -2,8 +2,9 @@ package kamienica.model.enums;
 
 public enum WaterHeatingSystem {
 
-    INDIVIDUAL("Standard"), SHARED_GAS("Shared gas heating system"), SHARED_ELECTRIC(
-            "Shared Electric System");
+    INDIVIDUAL("Standard"),
+    SHARED_GAS("Shared gas heating system"),
+    SHARED_ELECTRIC("Shared Electric System");
 
     private String system;
 

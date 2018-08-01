@@ -32,7 +32,7 @@ public class JUnitConfig {
 
 	@Bean(name = "dataSource")
 	public DataSource dataSource() {
-		DriverManagerDataSource dataSource = new DriverManagerDataSource();
+		final DriverManagerDataSource dataSource = new DriverManagerDataSource();
 		dataSource.setDriverClassName("org.h2.Driver");
 		dataSource.setUrl("jdbc:h2:mem:kamienica;MODE=MySQL;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=FALSE");
 		dataSource.setUsername("sa");
@@ -41,7 +41,7 @@ public class JUnitConfig {
 	}
 
 	private Properties hibernateProperties() {
-		Properties properties = new Properties();
+		final Properties properties = new Properties();
 		properties.put("hibernate.dialect", "org.hibernate.dialect.H2Dialect");
 		properties.put("hibernate.hbm2ddl.auto", "create");
 		LOGGER.info("Properties set", properties);
@@ -49,8 +49,8 @@ public class JUnitConfig {
 	}
 
 	@Bean
-	public HibernateTransactionManager transactionManager(SessionFactory s) {
-		HibernateTransactionManager txManager = new HibernateTransactionManager();
+	public HibernateTransactionManager transactionManager(final SessionFactory s) {
+		final HibernateTransactionManager txManager = new HibernateTransactionManager();
 		txManager.setSessionFactory(s);
 		LOGGER.info("Transaction set", txManager);
 		return txManager;

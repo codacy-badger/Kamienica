@@ -13,11 +13,14 @@ import java.util.List;
 @Repository("rentDao")
 public class RentDao extends BasicDao<RentContract> implements IRentContractDao {
 
+    public static final String COTRACT_START = "cotractStart";
+    public static final String COTRACT_END = "cotractEnd";
+
     @Override
     public List<RentContract> findCurrentContract(Residence residence) {
         final LocalDate now = new LocalDate();
-        final Criterion startDate = Restrictions.gt("cotractStart", now);
-        final Criterion endDate = Restrictions.lt("cotractEnd", now);
+        final Criterion startDate = Restrictions.gt(COTRACT_START, now);
+        final Criterion endDate = Restrictions.lt(COTRACT_END, now);
         return findByCriteria(startDate, endDate);
     }
 }

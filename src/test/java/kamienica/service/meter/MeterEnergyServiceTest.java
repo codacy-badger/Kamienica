@@ -13,6 +13,7 @@ import java.util.List;
 import java.util.Set;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 import static org.powermock.api.mockito.PowerMockito.mockStatic;
 import static org.powermock.api.mockito.PowerMockito.when;
 
@@ -75,7 +76,7 @@ public class MeterEnergyServiceTest extends ServiceTest {
         Meter meter = createDummyMeter();
         meterService.save(meter);
         assertEquals(6, meterService.getListForOwner(Media.ENERGY).size());
-        meterService.delete(meter.getId());
+        meterService.delete(meter);
         assertEquals(5, meterService.getListForOwner(Media.ENERGY).size());
 
     }
@@ -83,7 +84,7 @@ public class MeterEnergyServiceTest extends ServiceTest {
     @Test
     public void ifMainExcists() {
         final boolean result = meterService.ifMainExists(Media.ENERGY);
-        assertEquals(true, result);
+        assertTrue(result);
     }
 
     @Test

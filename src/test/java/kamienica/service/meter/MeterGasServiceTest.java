@@ -13,6 +13,7 @@ import java.util.List;
 import java.util.Set;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 import static org.powermock.api.mockito.PowerMockito.mockStatic;
 import static org.powermock.api.mockito.PowerMockito.when;
 
@@ -50,7 +51,7 @@ public class MeterGasServiceTest extends ServiceTest {
     @Test
     public void ifMainExcists() {
         final boolean result = meterService.ifMainExists(Media.GAS);
-        assertEquals(true, result);
+        assertTrue(result);
     }
 
 

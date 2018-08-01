@@ -13,7 +13,9 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
 
 public class TenantServiceTest extends ServiceTest {
 
@@ -53,28 +55,29 @@ public class TenantServiceTest extends ServiceTest {
     public void shouldDeactivateOldTenantWhenNewIsInserted() {
         final LocalDate movementDate = LocalDate.parse("2017-03-10");
         final Tenant newOwner = createTenant(movementDate);
+        newOwner.setRole(UserRole.OWNER);
         tenantService.save(newOwner);
         Tenant previousOwner = tenantService.loadByMail(FIRST_OWNER_MAIL);
         LocalDate previousOwnerContractEnd = previousOwner.getRentContract().getContractEnd();
         final boolean isOneDayBefore = previousOwnerContractEnd.equals(movementDate.minusDays(1));
-        assertEquals(true, isOneDayBefore);
+        assertTrue(isOneDayBefore);
     }
 
     @Transactional
     @Test
     public void shouldDeactivateNewTenantWhenMovementDateIsOlderThanCurrentTenant() {
         final Tenant newOwner = createTenant(LocalDate.parse("2015-01-01"));
-        assertEquals(true, newOwner.checkIsActive());
+        assertTrue(newOwner.checkIsActive());
         tenantService.save(newOwner);
         Tenant previousOwner = tenantService.loadByMail(FIRST_OWNER_MAIL);
-        assertEquals(true, previousOwner.checkIsActive());
-        assertEquals(false, newOwner.checkIsActive());
+        assertTrue(previousOwner.checkIsActive());
+        assertFalse(newOwner.checkIsActive());
     }
 
     @Transactional
     @Test
     public void shouldAddOwnerWithNoContract() {
-        Tenant t = new Tenant("firstName", "lastName", "email", "phone", null);
+        Tenant t = new Tenant("firstName", "lastName", "email@mail", "111", null);
         t.setRole(UserRole.OWNER);
         tenantService.save(t);
         assertNotNull(t.getId());
@@ -83,7 +86,7 @@ public class TenantServiceTest extends ServiceTest {
     @Transactional
     @Test(expected = IllegalArgumentException.class)
     public void shouldThrowExceptionForAddingTenantWithNoContract() {
-        Tenant t = new Tenant("firstName", "lastName", "email", "phone", null);
+        Tenant t = new Tenant("firstName", "lastName", "email@mail", "1111", null);
         t.setRole(UserRole.TENANT);
         tenantService.save(t);
     }
@@ -91,7 +94,6 @@ public class TenantServiceTest extends ServiceTest {
 
     private Tenant createTenant(final LocalDate localDate) {
         final Apartment apartment = apartmentService.getById(2L);
-        tenantService.loadByMail(FIRST_OWNER_MAIL);
         Tenant tenant = new Tenant();
         final RentContract rc = new RentContract(apartment, 100, localDate);
 

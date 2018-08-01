@@ -4,8 +4,6 @@ import kamienica.core.util.CommonUtils;
 import kamienica.feature.division.IDivisionService;
 import kamienica.feature.settings.ISettingsService;
 import kamienica.model.entity.*;
-import kamienica.model.exception.NegativeConsumptionValue;
-import kamienica.model.exception.UsageCalculationException;
 import org.joda.time.LocalDate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -45,6 +43,9 @@ public class PaymentCalculator implements IPaymentCalculator{
 
     private IConsumptionCalculator createCalculator(final Invoice invoice) {
         final Settings settings = settingsService.getSettings(invoice.getResidence());
+        if(settings == null || settings.getWaterHeatingSystem() == null) {
+            throw new RuntimeException("Setting must be set first");
+        }
         final String key = UsageCalculatorProvider.provideCalculator(settings.getWaterHeatingSystem(), invoice.getMedia());
         return consumptionCalculatorMap.get(key);
     }

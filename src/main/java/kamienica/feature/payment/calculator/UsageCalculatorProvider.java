@@ -10,7 +10,7 @@ class UsageCalculatorProvider {
         if (system.equals(WaterHeatingSystem.SHARED_ELECTRIC) && calculatedMedia.equals(Media.ENERGY)) {
             return CentralEnergyWaterHeatingCalculator.TYPE;
         } else if (system.equals(WaterHeatingSystem.SHARED_GAS) && calculatedMedia.equals(Media.GAS)) {
-            return CentralGasWaterHeatingCalulator.TYPE;
+            return CentralGasWaterHeatingCalculator.TYPE;
         } else {
             return StandardUsageCalculator.TYPE;
         }

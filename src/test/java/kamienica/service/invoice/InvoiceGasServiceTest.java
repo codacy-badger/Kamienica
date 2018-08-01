@@ -2,15 +2,9 @@ package kamienica.service.invoice;
 
 import kamienica.configuration.ServiceTest;
 import kamienica.core.util.SecurityDetails;
-import kamienica.model.entity.Invoice;
-import kamienica.model.entity.Payment;
-import kamienica.model.entity.ReadingDetails;
-import kamienica.model.entity.Residence;
-import kamienica.model.entity.Settings;
+import kamienica.model.entity.*;
 import kamienica.model.enums.Media;
 import kamienica.model.enums.WaterHeatingSystem;
-import kamienica.model.exception.NegativeConsumptionValue;
-import kamienica.model.exception.UsageCalculationException;
 import org.joda.time.LocalDate;
 import org.junit.Before;
 import org.junit.Ignore;
@@ -36,23 +30,23 @@ public class InvoiceGasServiceTest extends ServiceTest {
     public void getList() {
         mockStatic(SecurityDetails.class);
         when(SecurityDetails.getResidencesForOwner()).thenReturn(getMockedResidences());
-
-        assertEquals(1, invoiceService.list(Media.GAS).size());
+        when(SecurityDetails.getResidenceForOwner(1L)).thenReturn(r);
+        assertEquals(1, invoiceService.list(Media.GAS, r.getId()).size());
     }
 
     @Test
     @Transactional
-    public void add() throws UsageCalculationException, NegativeConsumptionValue {
+    public void add() {
         mockStatic(SecurityDetails.class);
         when(SecurityDetails.getLoggedTenant()).thenReturn(getOwner());
         when(SecurityDetails.getResidencesForOwner()).thenReturn(getMockedResidences());
-
+        when(SecurityDetails.getResidenceForOwner(1L)).thenReturn(r);
         List<ReadingDetails> list = readingDetailsService.getUnresolved(r, Media.GAS);
         assertEquals(2, list.size());
         Invoice invoice = new Invoice("112233", TODAY, 200, r, list.get(1), Media.GAS);
 
         invoiceService.save(invoice);
-        assertEquals(2, invoiceService.list(Media.GAS).size());
+        assertEquals(2, invoiceService.list(Media.GAS, r.getId()).size());
         List<Payment> paymentList = paymentService.getPaymentList(Media.GAS);
 
         assertEquals(6, paymentList.size());
@@ -68,18 +62,18 @@ public class InvoiceGasServiceTest extends ServiceTest {
 
     @Test
     @Transactional
-    public void addForFirstReadingWithSharedWaterHeating() throws UsageCalculationException, NegativeConsumptionValue {
+    public void addForFirstReadingWithSharedWaterHeating() {
         mockStatic(SecurityDetails.class);
         when(SecurityDetails.getLoggedTenant()).thenReturn(getOwner());
         when(SecurityDetails.getResidencesForOwner()).thenReturn(getMockedResidences());
-
+        when(SecurityDetails.getResidenceForOwner(1L)).thenReturn(r);
 
         List<ReadingDetails> list = readingDetailsService.getUnresolved(r, Media.GAS);
         assertEquals(2, list.size());
         Invoice invoice = new Invoice("112233", TODAY, 200, r, list.get(0), Media.GAS);
 
         invoiceService.save(invoice);
-        assertEquals(2, invoiceService.list(Media.GAS).size());
+        assertEquals(2, invoiceService.list(Media.GAS, r.getId()).size());
 
         List<Payment> paymentList = paymentService.getPaymentList(Media.GAS);
         assertEquals(6, paymentList.size());
@@ -104,7 +98,7 @@ public class InvoiceGasServiceTest extends ServiceTest {
     @Ignore
     @Test
     @Transactional
-    public void addForFirstReadingWithSeparateWaterHeating() throws UsageCalculationException, NegativeConsumptionValue {
+    public void addForFirstReadingWithSeparateWaterHeating() {
         mockStatic(SecurityDetails.class);
         when(SecurityDetails.getLoggedTenant()).thenReturn(getOwner());
         when(SecurityDetails.getResidencesForOwner()).thenReturn(getMockedResidences());
@@ -117,7 +111,7 @@ public class InvoiceGasServiceTest extends ServiceTest {
         Invoice invoice = new Invoice("112233", TODAY, 200, r, list.get(0), Media.GAS);
 
         invoiceService.save(invoice);
-        assertEquals(2, invoiceService.list(Media.GAS).size());
+        assertEquals(2, invoiceService.list(Media.GAS, r.getId()).size());
         List<Payment> paymentList = paymentService.getPaymentList(Media.GAS);
 
         assertEquals(6, paymentList.size());
@@ -135,8 +129,9 @@ public class InvoiceGasServiceTest extends ServiceTest {
     @Test
     @Transactional
     public void remove() {
-        invoiceService.delete(1L);
-        List<ReadingDetails> list = readingDetailsService.getUnresolved(r, Media.GAS);
+        final Invoice invoice = invoiceService.getByID(1L);
+        invoiceService.delete(invoice);
+        final List<ReadingDetails> list = readingDetailsService.getUnresolved(r, Media.GAS);
         assertEquals(2, list.size());
     }
 

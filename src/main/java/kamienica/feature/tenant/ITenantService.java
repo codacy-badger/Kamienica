@@ -12,9 +12,9 @@ public interface ITenantService extends BasicService<Tenant> {
 
 	List<Tenant> findByCriteria(Criterion... crit);
 
-	List<Tenant> listActiveTenants(Residence residence);
+	List<Tenant> findForSpecifiedResicence(Long residenceId);
 
-	Tenant findCurrentTenant(final Apartment apartment);
+	List<Tenant> listActiveTenants(Residence residence);
 
 	Tenant loadByMail(String mail);
 

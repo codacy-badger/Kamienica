@@ -50,7 +50,7 @@ public class ResidenceServiceTest extends ServiceTest {
 
     @Test(expected = ConstraintViolationException.class)
     @Transactional
-    public void shouldThrowException() throws Exception {
+    public void shouldThrowException() {
         mockStatic(SecurityDetails.class);
         Tenant t = tenantService.getById(1L);
         when(SecurityDetails.getLoggedTenant()).thenReturn(t);

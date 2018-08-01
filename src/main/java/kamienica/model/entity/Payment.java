@@ -1,25 +1,25 @@
 package kamienica.model.entity;
 
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import kamienica.core.util.JodaDateSerializer;
 import org.hibernate.annotations.Type;
 import org.joda.time.LocalDate;
 import org.springframework.format.annotation.DateTimeFormat;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.ManyToOne;
-import javax.persistence.OneToOne;
-import javax.persistence.Table;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
+import javax.persistence.*;
 
 @Table(name = "PAYMENT")
 @Entity
-public class Payment extends DBEntity {
+public class Payment {
 
+    @Id
+    @GeneratedValue
+    private Long id;
     @Column
     @Temporal(TemporalType.DATE)
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     @Type(type = "org.jadira.usertype.dateandtime.joda.PersistentLocalDate")
+    @JsonSerialize(using = JodaDateSerializer.class)
     private LocalDate paymentDate;
     @Column
     private double paymentAmount;
@@ -36,6 +36,14 @@ public class Payment extends DBEntity {
         this.paymentAmount = paymentAmount;
         this.tenant = tenant;
         this.invoice = invoice;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public LocalDate getPaymentDate() {

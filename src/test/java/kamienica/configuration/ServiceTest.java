@@ -27,7 +27,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -77,7 +76,7 @@ public abstract class ServiceTest {
     private static final long RESIDENCE_ID = 1L;
 
     @BeforeClass
-    public static void init() throws SQLException {
+    public static void init() {
         mockStatic(SecurityDetails.class);
     }
 

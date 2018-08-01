@@ -28,7 +28,7 @@ public class CentralEnergyWaterHeatingCalculator extends ConsumptionCalculator {
     }
 
     @Override
-    protected void recalculateSharedPartConsuption(List<MediaUsage> result) {
+    protected void recalculateSharedPartConsumption(List<MediaUsage> result) {
 
     }
 }
