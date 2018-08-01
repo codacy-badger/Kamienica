@@ -16,8 +16,6 @@ public interface ITenantService extends BasicService<Tenant> {
 
 	List<Tenant> listActiveTenants(Residence residence);
 
-	Tenant findCurrentTenant(final Apartment apartment);
-
 	Tenant loadByMail(String mail);
 
 	List<Tenant> getOwners();

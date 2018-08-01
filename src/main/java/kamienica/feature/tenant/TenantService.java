@@ -1,6 +1,8 @@
 package kamienica.feature.tenant;
 
 import com.google.common.collect.Lists;
+import java.util.Collections;
+import java.util.List;
 import kamienica.core.util.SecurityDetails;
 import kamienica.feature.apartment.IApartmentDao;
 import kamienica.feature.rentcontract.IRentContractDao;
@@ -15,9 +17,6 @@ import org.joda.time.LocalDate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
-import java.util.Collections;
-import java.util.List;
 
 @Service
 @Transactional
@@ -40,45 +39,63 @@ public class TenantService implements ITenantService {
 
     @Override
     public void save(final Tenant newTenant) {
-        if (newTenant.getRentContract() == null) {
-            savePriviligedTenant(newTenant);
-        } else {
-            final Tenant currentTenant = findCurrentTenant(newTenant.fetchApartment());
-            if (ifApartmentIsEmpty(currentTenant)) {
-                tenantDao.save(newTenant);
-            } else {
-                compareMovementDatesAndPersist(newTenant, currentTenant);
-            }
+        validateTenant(newTenant);
+        if(newTenant.getRole().equals(UserRole.OWNER) && newTenant.getRentContract() == null) {
+            tenantDao.save(newTenant);
+            return;
+        }
+
+        final Tenant currentTenant = findCurrentTenant(newTenant);
+        if(shouldDeactiveCurentTenant(currentTenant, newTenant)) {
+            final LocalDate deactivationDate = newTenant.getRentContract().getContractStart().minusDays(1);
+            currentTenant.getRentContract().setContractEnd(deactivationDate);
+            tenantDao.update(currentTenant);
+            tenantDao.save(newTenant);
+        } else if(shouldDeactivateNewTenant(currentTenant, newTenant)) {
+            final LocalDate deactivationDate = currentTenant.getRentContract().getContractStart().minusDays(1);
+            newTenant.getRentContract().setContractEnd(deactivationDate);
+            tenantDao.save(newTenant);
+        }else {
+            tenantDao.save(newTenant);
         }
     }
 
-    private void savePriviligedTenant(final Tenant newTenant) {
-        if (newTenant.checkIsOwner() || newTenant.checkIsAdmin()) {
-            tenantDao.save(newTenant);
-        } else {
+    private boolean shouldDeactivateNewTenant(final Tenant currentTenant, final Tenant newTenant) {
+        final RentContract newContract = newTenant.getRentContract();
+        final RentContract currentContract = currentTenant.getRentContract();
+        //new tenant actually lives before the current one (in case the historical data is being inserted)
+        if (newContract.getContractEnd().isBefore(currentContract.getContractStart()) ||
+            newContract.getContractStart().isBefore(currentContract.getContractStart())) {
+//            newContract.setContractEnd(currentContract.getContractStart().minusDays(1));
+            return true;
+        }
+        return false;
+    }
+
+    private boolean shouldDeactiveCurentTenant(final Tenant currentTenant, final Tenant newTenant) {
+        //no tenant
+        if(currentTenant == null) {
+            return false;
+        }
+        final RentContract newContract = newTenant.getRentContract();
+        final RentContract currentContract = currentTenant.getRentContract();
+        //tenant already left
+        if(currentContract.getContractEnd().isBefore(newContract.getContractStart())) {
+            return false;
+        }
+        //inserting historical data
+        if(newContract.getContractStart().isBefore(currentContract.getContractStart())) {
+            return false;
+        }
+
+        return true;
+    }
+
+    private void validateTenant(final Tenant newTenant) {
+        if (newTenant.getRole().equals(UserRole.TENANT) && newTenant.getRentContract() == null) {
             throw new IllegalArgumentException("Tenant must have a rentContract");
         }
     }
-
-    private boolean ifApartmentIsEmpty(Tenant currentTenant) {
-        return currentTenant == null || currentTenant.getRentContract().getContractEnd().isBefore(new LocalDate());
-    }
-
-    private void compareMovementDatesAndPersist(Tenant newTenant, Tenant currentTenant) {
-        final RentContract newRentContract = newTenant.getRentContract();
-        final RentContract oldRentContract = currentTenant.getRentContract();
-        if (newRentContract.getContractStart().isAfter(oldRentContract.getContractStart())) {
-            oldRentContract.setContractEnd(newRentContract.getContractStart().minusDays(1));
-            rentContractDao.save(newRentContract);
-            rentContractDao.update(oldRentContract);
-            tenantDao.save(newTenant);
-        } else {
-            newRentContract.setContractEnd(oldRentContract.getContractStart().minusDays(1));
-            rentContractDao.save(newRentContract);
-            tenantDao.save(newTenant);
-        }
-    }
-
 
     @Override
     public List<Tenant> list() {
@@ -130,10 +147,9 @@ public class TenantService implements ITenantService {
         return tenantDao.findByCriteria(Restrictions.in("rentContract", contracts));
     }
 
-    @Override
-    public Tenant findCurrentTenant(final Apartment apartment) {
+    private Tenant findCurrentTenant(final Tenant tenant) {
         final LocalDate now = new LocalDate();
-        final Criterion c1 = Restrictions.eq("apartment", apartment);
+        final Criterion c1 = Restrictions.eq("apartment", tenant.getRentContract().getApartment());
         final Criterion c2 = Restrictions.lt("contractStart", now);
         final Criterion c3 = Restrictions.gt("contractEnd", now);
         final RentContract contract = rentContractDao.findOneByCriteria(c1, c2, c3);
