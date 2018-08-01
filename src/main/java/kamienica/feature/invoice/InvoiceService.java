@@ -1,7 +1,6 @@
 package kamienica.feature.invoice;
 
 import kamienica.core.util.SecurityDetails;
-import kamienica.feature.payment.IPaymentDao;
 import kamienica.feature.payment.IPaymentService;
 import kamienica.feature.readingdetails.IReadingDetailsDao;
 import kamienica.model.entity.Invoice;

@@ -1,44 +1,18 @@
 package kamienica.model.entity;
 
-import org.hibernate.annotations.Type;
+import java.io.Serializable;
 import org.joda.time.LocalDate;
 import org.springframework.format.annotation.DateTimeFormat;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.ManyToOne;
-import javax.persistence.Table;
-import java.io.Serializable;
-
-@Entity
-@Table(name = "DIVISION")
 public class Division implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
-    @Id
-    @GeneratedValue
-    private Long id;
-    @Column(nullable = false)
     @DateTimeFormat(pattern = "yyyy-MM-dd")
-    @Type(type = "org.jadira.usertype.dateandtime.joda.PersistentLocalDate")
     private LocalDate date;
-    @ManyToOne
     private Tenant tenant;
-    @ManyToOne
     private Apartment apartment;
-    @Column(nullable = false)
     private double divisionValue;
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
 
     public LocalDate getDate() {
         return date;
@@ -79,21 +53,6 @@ public class Division implements Serializable {
         this.divisionValue = divisionValue;
     }
 
-    public Division(Long id, LocalDate LocalDate, Tenant tenant, Apartment apartment, double divisionValue) {
-        this.id = id;
-        this.date = LocalDate;
-        this.tenant = tenant;
-        this.apartment = apartment;
-        this.divisionValue = divisionValue;
-    }
-
     public Division() {
     }
-
-	@Override
-	public String toString() {
-		return "Division [id=" + id + ", date=" + date + ", tenant=" + tenant + ", apartment=" + apartment
-				+ ", divisionValue=" + divisionValue + "]";
-	}
-
 }
