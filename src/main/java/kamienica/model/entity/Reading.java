@@ -19,6 +19,7 @@ public class Reading {
     private ReadingDetails readingDetails;
     @Column(nullable = false)
     private double value;
+    //TODO Meter already have a reference to residence
     @ManyToOne
     private Residence residence;
     @ManyToOne

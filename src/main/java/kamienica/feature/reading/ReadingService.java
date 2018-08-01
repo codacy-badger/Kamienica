@@ -45,16 +45,39 @@ public class ReadingService implements IReadingService {
     }
 
     @Override
-    public void save(ReadingForm readingForm) {
-        final ReadingDetails details = readingForm.getReadingDetails();
+    public void save(final List<Reading> reading, final ReadingDetails details) {
         readingDetailsDao.save(details);
-        final Set<Reading> readings = readingForm.getReadings();
-        for (Reading r : readings) {
+        for (Reading r : reading) {
             validateReadingValue(r);
             r.setReadingDetails(details);
             readingDao.save(r);
         }
     }
+
+
+    @Override
+    public void save(List<Reading> readings) {
+        final ReadingDetails details = readings.get(0).getReadingDetails();
+        readingDetailsDao.save(details);
+        for (final Reading r : readings) {
+            validateReadingValue(r);
+            r.setReadingDetails(details);
+            readingDao.save(r);
+        }
+    }
+
+    @Override
+    public void save(ReadingForm readingForm) {
+        final ReadingDetails details = readingForm.getReadings().get(0).getReadingDetails();
+        readingDetailsDao.save(details);
+        final List<Reading> readings = readingForm.getReadings();
+        for (final Reading r : readings) {
+            validateReadingValue(r);
+            r.setReadingDetails(details);
+            readingDao.save(r);
+        }
+    }
+
 
     @Override
     public Reading getById(Long id) {
@@ -63,10 +86,10 @@ public class ReadingService implements IReadingService {
 
     @Override
     public void update(ReadingForm readingForm) {
-        final ReadingDetails details = readingForm.getReadingDetails();
+        final ReadingDetails details = readingForm.getReadings().get(0).getReadingDetails();
         readingDetailsDao.update(details);
-        final Set<Reading> readings = readingForm.getReadings();
-        for (Reading r : readings) {
+        final List<Reading> readings = readingForm.getReadings();
+        for (final Reading r : readings) {
             validateReadingValue(r);
             r.setReadingDetails(details);
             readingDao.update(r);
@@ -86,6 +109,14 @@ public class ReadingService implements IReadingService {
         List<Reading> readingsToDelete = readingDao.findByCriteria(c);
         for (Reading reading : readingsToDelete) readingDao.delete(reading);
         readingDetailsDao.delete(details);
+    }
+
+    @Override
+    public void delete(final ReadingForm readingForm) {
+        for (Reading r : readingForm.getReadings()) {
+            readingDao.delete(r);
+        }
+        readingDetailsDao.delete(readingForm.getReadings().get(0).getReadingDetails());
     }
 
     @Override

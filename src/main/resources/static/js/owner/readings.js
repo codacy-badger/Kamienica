@@ -31,14 +31,7 @@ $(document).ready(function () {
             httpMethod = "PUT";
         };
 
-        const entityToSave = {
-            description: $("#description").val(),
-            unit: $("#unit").val(),
-            serialNumber: $("#serialNumber").val(),
-            id: entityId,
-            status: "ACTIVE",
-            media: media
-        };
+        const entityToSave =  getReadingsFromForm();
 
         $.ajax({
             contentType: 'application/json',
@@ -62,10 +55,34 @@ $(document).ready(function () {
             url: url
         });
     });
-    if(residences.length === 1) {
+    if (residences.length === 1) {
         residenceArrayIndex = 0;
     }
 });
+
+getReadingsFromForm = function () {
+    newReadings = [];
+    const readingDetails = {
+        residence: residences[residenceArrayIndex],
+        readingDate: $("#date").val(),
+        unit: $("#unit").val(),
+        resolvement: "UNRESOLVED",
+        media: media
+    }
+
+    for (i = 0; i < meters.length; i++) {
+        const meterFormId = `#meter${meters[i].id}`;
+        const reading = {
+            meter: meters[i],
+            readingDetails: readingDetails,
+            value: $(meterFormId).val(),
+            residence: residences[residenceArrayIndex]
+        }
+        newReadings.push(reading);
+    }
+
+    return newReadings;
+}
 
 deleteEntity = function (row) {
     entity = objectList[row];
@@ -110,11 +127,11 @@ drawTableFromEndpoint = function () {
     });
 };
 
-findLatestReadings = function(list) {
+findLatestReadings = function (list) {
     latestReadings.length = 0;
     const latestDate = objectList[0].readingDetails.readingDate;
-    for(var i=0; i<list.length; i++) {
-        if(list[i].readingDetails.readingDate === latestDate) {
+    for (var i = 0; i < list.length; i++) {
+        if (list[i].readingDetails.readingDate === latestDate) {
             latestReadings.push(list[i]);
         }
     }
@@ -130,12 +147,27 @@ findActiveMeters = function () {
 
 prepareForm = function () {
     $("#readingsInput").empty();
-    console.log("prepareFoirm");
-    console.log(latestReadings);
+    //new meters do not have readings yet. We have to add them individually
+    idOfMetersThatAlreadyHaveReadings = [];
     for (i = 0; i < latestReadings.length; i++) {
         $("#readingsInput").append(
-            `<label class='col-sm-3 control-label'>${latestReadings[i].meter.description}</label><div class='col-sm-6'><input id='date' type='number' min=${latestReadings[i].value} step='0.01' value=${latestReadings[i].value} class='form-control'/></div>`
+            `<label class='col-sm-3 control-label'>${latestReadings[i].meter.description}</label><div class='col-sm-6'><input id='meter${latestReadings[i].meter.id}' type='number' min='${latestReadings[i].value}' step='0.01' value='${latestReadings[i].value}' class='form-control'/></div>`
         );
+        idOfMetersThatAlreadyHaveReadings.push(latestReadings[i].meter.id);
+    }
+    for (i = 0; i < meters.length; i++) {
+        let foundNewMeter = true;
+        for (y = 0; y < idOfMetersThatAlreadyHaveReadings.length; y++) {
+            if (idOfMetersThatAlreadyHaveReadings[y] === meters[i].id) {
+                foundNewMeter = false;
+            }
+        }
+
+        if (foundNewMeter) {
+            $("#readingsInput").append(
+                `<label class='col-sm-3 control-label'>${meters[i].description}</label><div class='col-sm-6'><input id='meter${meters[i].id}' type='number' min=0 step='0.01' value=0 class='form-control'/></div>`
+            );
+        }
     }
 }
 
@@ -146,7 +178,7 @@ drawTable = function () {
     const latestDate = objectList[0].readingDetails.readingDate;
     $("#tableContent").show();
     $("#tableContent").removeAttr('hidden');
-   
+
     table = $('#dataTable').DataTable({
         data: objectList,
         "order": [[0, "desc"]],

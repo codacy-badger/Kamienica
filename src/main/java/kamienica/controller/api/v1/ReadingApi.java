@@ -33,7 +33,6 @@ public class ReadingApi {
 
     @RequestMapping(method = RequestMethod.GET)
     public ResponseEntity<?> getList(@RequestParam String media, @RequestParam Long residence_id) {
-
         final Residence residence = residenceService.getById(residence_id);
         SecurityDetails.checkIfOwnsResidence(residence);
         final List<Reading> list = readingService.getList(residence, Media.valueOf(media));
@@ -45,24 +44,21 @@ public class ReadingApi {
     }
 
     @RequestMapping(method = RequestMethod.POST)
-    public ResponseEntity<?> save(@Valid @RequestBody final ReadingForm readingForm) {
-//        validate()
-        SecurityDetails.checkIfOwnsResidence(readingForm.getReadingDetails().getResidence());
-        readingService.save(readingForm);
-        return new ResponseEntity<>(readingForm, HttpStatus.OK);
+    public ResponseEntity<?> save(@Valid @RequestBody final List<Reading> readings) {
+        SecurityDetails.checkIfOwnsResidence(readings.get(0).getResidence());
+        readingService.save(readings);
+        return new ResponseEntity<>(readings, HttpStatus.OK);
     }
 
     @RequestMapping(method = RequestMethod.PUT)
     public ResponseEntity<?> delete(@Valid @RequestBody final ReadingForm readingForm) {
-//        validate()
-        SecurityDetails.checkIfOwnsResidence(readingForm.getReadingDetails().getResidence());
+        SecurityDetails.checkIfOwnsResidence(readingForm.getReadings().get(0).getResidence());
         readingService.update(readingForm);
         return new ResponseEntity<>(readingForm, HttpStatus.OK);
     }
 
     @RequestMapping(method = RequestMethod.DELETE)
     public ResponseEntity<?> delete(@RequestParam String media, @RequestParam Long residence_id) {
-//        validate()
         final Residence res = residenceService.getById(residence_id);
         SecurityDetails.checkIfOwnsResidence(res);
         readingService.deleteLatestReadings(res, Media.valueOf(media));
@@ -73,7 +69,6 @@ public class ReadingApi {
 
     @RequestMapping(value = "/unresolved/{media}", method = RequestMethod.GET)
     public ResponseEntity<?> getListForInvoice(@PathVariable final Media media, @RequestParam(value = "residence", required = false) final Long id) {
-
         final List<ReadingDetails> list;
         if (id != null) {
             final Residence r = residenceService.getById(id);
@@ -88,5 +83,4 @@ public class ReadingApi {
         }
         return new ResponseEntity<>(list, HttpStatus.OK);
     }
-
 }
