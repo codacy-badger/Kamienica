@@ -3,10 +3,12 @@ const metersUrl = "/api/v1/meters?";
 
 let meters = [];
 let latestReadings = [];
+let secondLatestReadings = [];
 let table;
 let listIndex;
 let objectList = [];
 let media = "ENERGY";
+let isNewEntity = true;
 
 $(document).ready(function () {
     $("#residences").change(function () {
@@ -23,12 +25,11 @@ $(document).ready(function () {
 
     $("#submitButton").click(function (e) {
         e.preventDefault();
-        let entityId = $("#entityId").val();
-        let httpMethod = "POST";
-        let url = baseUrl;
-        const edit = parseInt(entityId) > 0;
-        if (edit) {
-            httpMethod = "PUT";
+        let httpMethod;
+        if (isNewEntity) {
+            httpMethod = "POST";
+        } else {
+            httpMethod = "PUT"
         }
 
         const entityToSave =  getReadingsFromForm();
@@ -52,37 +53,46 @@ $(document).ready(function () {
             },
             processData: false,
             type: httpMethod,
-            url: url
+            url: baseUrl
         });
     });
     if (residences.length === 1) {
         residenceArrayIndex = 0;
     }
+
+  $(toggler).click(function () {
+      if($(toggler).text() === formText) {
+        prepareForm();
+        isNewEntity = true;
+      }
+  });
 });
 
 getReadingsFromForm = function () {
-    newReadings = [];
+    let newReadings = [];
     const readingDetails = {
         residence: residences[residenceArrayIndex],
         readingDate: $("#date").val(),
         unit: $("#unit").val(),
         resolvement: "UNRESOLVED",
-        media: media
-    }
+        media: media,
+        id: $("#date").attr("databaseId")
+    };
 
-    for (i = 0; i < meters.length; i++) {
-        const meterFormId = `#meter${meters[i].id}`;
+    for (let i = 0; i < meters.length; i++) {
+        const meterFromId = `#meter${meters[i].id}`;
         const reading = {
             meter: meters[i],
             readingDetails: readingDetails,
-            value: $(meterFormId).val(),
+            value: $(meterFromId).val(),
+            id: $(meterFromId).attr("databaseId"),
             residence: residences[residenceArrayIndex]
-        }
+        };
         newReadings.push(reading);
     }
 
     return newReadings;
-}
+};
 
 deleteEntity = function (row) {
     entity = objectList[row];
@@ -100,16 +110,24 @@ deleteEntity = function (row) {
     });
 };
 
-editEntity = function (row) {
-    const entity = objectList[row];
-    listIndex = row;
+editEntity = function () {
+    isNewEntity = false;
     toggleForm();
-    $("#description").val(entity.description);
-    $("#unit").val(entity.unit);
-    $("#serialNumber").val(entity.serialNumber);
-    $("#apartmentsInput").val(entity.apartment.description);
-    $("#entityId").val(entity.id);
+    for(let i =0; i < secondLatestReadings.length; i++) {
+      $(`#meter${secondLatestReadings[i].meter.id}`).attr({
+        "min" : secondLatestReadings[i].value
+      });
+    }
+  for(let i =0; i < latestReadings.length; i++) {
+    $(`#meter${latestReadings[i].meter.id}`).attr({
+      "databaseId" : latestReadings[i].id
+    });
+  }
 
+  $("#date").val(latestReadings[0].readingDetails.readingDate);
+  $("#date").attr({
+    "databaseId": latestReadings[0].readingDetails.id
+  });
 };
 
 drawTableFromEndpoint = function () {
@@ -128,14 +146,25 @@ drawTableFromEndpoint = function () {
 };
 
 findLatestReadings = function (list) {
-    latestReadings.length = 0;
-    const latestDate = objectList[0].readingDetails.readingDate;
-    for (var i = 0; i < list.length; i++) {
-        if (list[i].readingDetails.readingDate === latestDate) {
-            latestReadings.push(list[i]);
-        }
+  latestReadings.length = 0;
+  secondLatestReadings.length = 0;
+  const latestDate = objectList[0].readingDetails.readingDate;
+  let secondLatestDate;
+  for (let i = 0; i < list.length; i++) {
+    if (list[i].readingDetails.readingDate === latestDate) {
+      latestReadings.push(list[i]);
+    } else {
+      //TODO not a good idea but it will have to be fixed with api 2.0 that has pagination
+      secondLatestDate = list[i].readingDetails.readingDate;
+      break;
     }
-}
+  }
+  for (let i = 0; i < list.length; i++) {
+    if (list[i].readingDetails.readingDate === secondLatestDate) {
+      secondLatestReadings.push(list[i]);
+    }
+  }
+};
 
 findActiveMeters = function () {
     const finalUrl = `${metersUrl}media=${media}&id=${residences[residenceArrayIndex].id}`;
@@ -143,7 +172,7 @@ findActiveMeters = function () {
         meters = result;
         prepareForm();
     });
-}
+};
 
 prepareForm = function () {
     $("#readingsInput").empty();
@@ -151,7 +180,7 @@ prepareForm = function () {
     idOfMetersThatAlreadyHaveReadings = [];
     for (i = 0; i < latestReadings.length; i++) {
         $("#readingsInput").append(
-            `<label class='col-sm-3 control-label'>${latestReadings[i].meter.description}</label><div class='col-sm-6'><input id='meter${latestReadings[i].meter.id}' type='number' min='${latestReadings[i].value}' step='0.01' value='${latestReadings[i].value}' class='form-control'/></div>`
+            `<label class='col-sm-3 control-label'>${latestReadings[i].meter.description}</label><div class='col-lg-6 col-sm-12'><input id='meter${latestReadings[i].meter.id}' type='number' min='${latestReadings[i].value}' step='0.01' value='${latestReadings[i].value}' class='form-control'/></div>`
         );
         idOfMetersThatAlreadyHaveReadings.push(latestReadings[i].meter.id);
     }
@@ -165,16 +194,16 @@ prepareForm = function () {
 
         if (foundNewMeter) {
             $("#readingsInput").append(
-                `<label class='col-sm-3 control-label'>${meters[i].description}</label><div class='col-sm-6'><input id='meter${meters[i].id}' type='number' min=0 step='0.01' value=0 class='form-control'/></div>`
+                `<label class='col-sm-3 control-label'>${meters[i].description}</label><div class='col-lg-6 col-sm-12'><input id='meter${meters[i].id}' type='number' min=0 step='0.01' value=0 class='form-control'/></div>`
             );
         }
     }
-}
+};
 
 drawTable = function () {
     if (table) {
         table.destroy();
-    };
+    }
     const latestDate = objectList[0].readingDetails.readingDate;
     $("#tableContent").show();
     $("#tableContent").removeAttr('hidden');

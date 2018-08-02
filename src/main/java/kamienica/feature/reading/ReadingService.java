@@ -58,6 +58,17 @@ public class ReadingService implements IReadingService {
     }
 
     @Override
+    public void update(final List<Reading> readings) {
+        final ReadingDetails details = readings.get(0).getReadingDetails();
+        readingDetailsDao.update(details);
+        readings.forEach(r -> {
+            validateReadingValue(r);
+            r.setReadingDetails(details);
+            readingDao.update(r);
+        });
+    }
+
+    @Override
     public void save(ReadingForm readingForm) {
         final ReadingDetails details = readingForm.getReadings().get(0).getReadingDetails();
         readingDetailsDao.save(details);
@@ -72,18 +83,6 @@ public class ReadingService implements IReadingService {
     @Override
     public Reading getById(Long id) {
         return readingDao.getById(id);
-    }
-
-    @Override
-    public void update(ReadingForm readingForm) {
-        final ReadingDetails details = readingForm.getReadings().get(0).getReadingDetails();
-        readingDetailsDao.update(details);
-        final List<Reading> readings = readingForm.getReadings();
-        for (final Reading r : readings) {
-            validateReadingValue(r);
-            r.setReadingDetails(details);
-            readingDao.update(r);
-        }
     }
 
     private void validateReadingValue(final Reading r) {

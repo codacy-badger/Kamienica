@@ -11,6 +11,7 @@ let apartmentsChoice = [];
 
 $(document).ready(function () {
     $("#residences").change(function () {
+        /*global*/
         residenceArrayIndex = $(this).val();
         media = $("input[name=mediaChoice]:checked").val();
         drawTableFromEndpoint();

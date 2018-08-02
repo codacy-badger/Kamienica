@@ -51,10 +51,10 @@ public class ReadingApi {
     }
 
     @RequestMapping(method = RequestMethod.PUT)
-    public ResponseEntity<?> delete(@Valid @RequestBody final ReadingForm readingForm) {
-        SecurityDetails.checkIfOwnsResidence(readingForm.getReadings().get(0).getResidence());
-        readingService.update(readingForm);
-        return new ResponseEntity<>(readingForm, HttpStatus.OK);
+    public ResponseEntity<?> edit(@RequestBody final List<Reading> readings) {
+        SecurityDetails.checkIfOwnsResidence(readings.get(0).getResidence());
+        readingService.update(readings);
+        return new ResponseEntity<>(readings, HttpStatus.OK);
     }
 
     @RequestMapping(method = RequestMethod.DELETE)
@@ -62,7 +62,6 @@ public class ReadingApi {
         final Residence res = residenceService.getById(residence_id);
         SecurityDetails.checkIfOwnsResidence(res);
         readingService.deleteLatestReadings(res, Media.valueOf(media));
-//        readingService.delete(readingForm);
         return new ResponseEntity<Void>(HttpStatus.OK);
     }
 
