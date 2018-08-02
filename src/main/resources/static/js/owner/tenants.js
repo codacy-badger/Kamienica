@@ -6,6 +6,7 @@ let table;
 let tenantArrayIndex;
 let tenants = [];
 let objectListIndex;
+let objectList = [];
 const tenantstorageKey = "tenants";
 
 let apartmentsChoiceIndex;
