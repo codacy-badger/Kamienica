@@ -16,7 +16,7 @@ public interface IReadingService {
 
     void save(List<Reading> readings);
 
-    void update(ReadingForm readingForm);
+    void update(List<Reading> readings);
 
     List<Reading> getList(Residence r, Media media);
 

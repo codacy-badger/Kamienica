@@ -1,11 +1,11 @@
 $(document).ready(function () {
 
-  $('.input-daterange').datepicker({
+  $(".input-daterange").datepicker({
     //weekStart: 0,
     minViewMode: 1,
     todayBtn: true,
     language: "pl",
-    format: 'yyyy-mm-dd'
+    format: "yyyy-mm-dd"
   });
 
  

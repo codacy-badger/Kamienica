@@ -186,7 +186,7 @@ drawTable = function () {
             {
                 data: null,
                 render: function (data, type, row) {
-                    if(data.rentContract.contractEnd == "01-01-2100") {
+                    if(data.rentContract.contractEnd === "01-01-2100") {
                         return "";
                     }
                     return data.rentContract.contractEnd;
