@@ -5,13 +5,14 @@ const apartmentForResidenceBaseUrl = "/api/v1/apartments?residence=";
 let table;
 let tenantArrayIndex;
 let tenants = [];
+let objectListIndex;
 const tenantstorageKey = "tenants";
 
 let apartmentsChoiceIndex;
 let apartmentsChoice = [];
 
 $(document).ready(function () {
-    $('#residences').change(function () {
+    $("#residences").change(function () {
         residenceArrayIndex = $(this).val();
         drawTableFromEndpoint();
     });
@@ -25,7 +26,7 @@ $(document).ready(function () {
         if (edit) {
             httpMethod = "PUT";
             url += "/" + entityId;
-        };
+        }
         const tenantToSave = {
             firstName: $("#firstName").val(),
             lastName: $("#lastName").val(),
@@ -51,9 +52,9 @@ $(document).ready(function () {
 
 
         $.ajax({
-            contentType: 'application/json',
+            contentType: "application/json",
             data: JSON.stringify(tenantToSave),
-            dataType: 'json',
+            dataType: "json",
             success: function (data) {
                 showModal("Sukces", "Dane zostały zapisane w bazie");
                 if (edit) {
@@ -85,7 +86,7 @@ findChosenApartment= () => {
 };
 
 deleteEntity = function (row) {
-    entity = objectList[row];
+    const entity = objectList[row];
     $.ajax({
         url: tenantsUrl + "/" + entity.id,
         type: "DELETE",
@@ -101,7 +102,7 @@ deleteEntity = function (row) {
 };
 
 editEntity = function (row) {
-    entity = objectList[row];
+    const entity = objectList[row];
     objectListIndex = row;
     toggleForm();
 
@@ -127,7 +128,7 @@ drawTableFromEndpoint = function () {
         } else {
             objectList = result;
             drawTable();
-        };
+        }
     });
 };
 
@@ -137,19 +138,19 @@ createApartmentsChoice = function () {
 
     $.getJSON(finalUrl, function (result) {
         apartmentsChoice = result;
-        $('#apartmentsInput').children().remove();
+        $("#apartmentsInput").children().remove();
         for (let i = 0; i < result.length; i++) {
             $("#apartmentsInput").append(
-                $('<option></option>').val(result[i].description).html(result[i].description)
+                $("<option></option>").val(result[i].description).html(result[i].description)
             );
-        };
+        }
     });
 };
 
 drawTable = function () {
     if (table) {
         table.destroy();
-    };
+    }
     $("#tableContent").show();
     $("#tableContent").removeAttr('hidden');
     table = $('#dataTable').DataTable({
@@ -161,8 +162,8 @@ drawTable = function () {
                     return data.firstName + " " + data.lastName;
                 }
             },
-            { data: 'email' },
-            { data: 'phone' },
+            { data: "email" },
+            { data: "phone" },
             {
                 data: null,
                 render: function (data, type, row) {

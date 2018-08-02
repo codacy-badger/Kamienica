@@ -10,14 +10,14 @@ let apartmentsChoiceIndex;
 let apartmentsChoice = [];
 
 $(document).ready(function () {
-    $('#residences').change(function () {
+    $("#residences").change(function () {
         residenceArrayIndex = $(this).val();
-        media = $('input[name=mediaChoice]:checked').val();
+        media = $("input[name=mediaChoice]:checked").val();
         drawTableFromEndpoint();
     });
 
-    $('#mediaRadio').change(function () {
-        media = $('input[name=mediaChoice]:checked').val();
+    $("#mediaRadio").change(function () {
+        media = $("input[name=mediaChoice]:checked").val();
         drawTableFromEndpoint();
         setMediaSpecificInput();
         clearForm();
@@ -31,7 +31,7 @@ $(document).ready(function () {
         const edit = parseInt(entityId) > 0;
         if (edit) {
             httpMethod = "PUT";
-        };
+        }
 
         const entityToSave = {
             description: $("#description").val(),
@@ -47,9 +47,9 @@ $(document).ready(function () {
         };
 
         $.ajax({
-            contentType: 'application/json',
+            contentType: "application/json",
             data: JSON.stringify(entityToSave),
-            dataType: 'json',
+            dataType: "json",
             success: function (data) {
                 showModal("Sukces", "Dane zostały zapisane w bazie");
                 if (edit) {
@@ -74,14 +74,14 @@ setIsWarmWater = function () {
     if (media === "ENERGY" || media === "GAS") {
         return false;
     }
-    return $('input[name=waterOrGasAdditionalInput]:checked').val();
-}
+    return $("input[name=waterOrGasAdditionalInput]:checked").val();
+};
 setIsCwu = function () {
     if (media === "ENERGY" || media === "WATER") {
         return false;
     }
-    return $('input[name=waterOrGasAdditionalInput]:checked').val();
-}
+    return $("input[name=waterOrGasAdditionalInput]:checked").val();
+};
 
 setMediaSpecificInput = function () {
     if (media === "ENERGY") {
@@ -94,7 +94,7 @@ setMediaSpecificInput = function () {
             $("#radioInputMeterLabel").text("Ciepła Woda");
         }
     }
-}
+};
 
 findChosenApartment = () => {
     const chosenApartment = $("#apartmentsInput").val();
@@ -103,10 +103,10 @@ findChosenApartment = () => {
             return unresolvedReadings[i];
         }
     }
-}
+};
 
 deleteEntity = function (row) {
-    entity = objectList[row];
+    const entity = objectList[row];
     $.ajax({
         url: baseUrl + "/" + entity.id,
         type: "DELETE",
@@ -131,11 +131,11 @@ editEntity = function (row) {
     $("#apartmentsInput").val(entity.apartment.description);
     $("#entityId").val(entity.id);
     if (entity.warmWater || entity.cwu) {
-        $('input[name=waterOrGasAdditionalInput][value=true]').attr('checked', true);
-        $('input[name=waterOrGasAdditionalInput][value=false]').attr('checked', false);
+        $("input[name=waterOrGasAdditionalInput][value=true]").attr("checked", true);
+        $("input[name=waterOrGasAdditionalInput][value=false]").attr("checked", false);
     } else {
-        $('input[name=waterOrGasAdditionalInput][value=true]').attr('checked', false);
-        $('input[name=waterOrGasAdditionalInput][value=false]').attr('checked', true);
+        $("input[name=waterOrGasAdditionalInput][value=true]").attr("checked", false);
+        $("input[name=waterOrGasAdditionalInput][value=false]").attr("checked", true);
     }
 };
 
@@ -145,11 +145,11 @@ drawTableFromEndpoint = function () {
         createApartmentsChoice();
         if (result.length === 0) {
             $("#tableContent").hide();
-            $('#apartmentsInput').children().remove();
+            $("#apartmentsInput").children().remove();
         } else {
             objectList = result;
             drawTable();
-        };
+        }
     });
 };
 
@@ -157,19 +157,19 @@ createApartmentsChoice = function () {
     const finalUrl = apartmentForResidenceBaseUrl + residences[residenceArrayIndex].id;
     $.getJSON(finalUrl, function (result) {
         unresolvedReadings = result;
-        $('#apartmentsInput').children().remove();
+        $("#apartmentsInput").children().remove();
         for (let i = 0; i < result.length; i++) {
             $("#apartmentsInput").append(
-                $('<option></option>').val(result[i].description).html(result[i].description)
+                $("<option></option>").val(result[i].description).html(result[i].description)
             );
-        };
+        }
     });
 };
 
 drawTable = function () {
     if (table) {
         table.destroy();
-    };
+    }
     $("#tableContent").show();
     $("#tableContent").removeAttr('hidden');
     table = $('#dataTable').DataTable({
@@ -229,4 +229,4 @@ translate = function (bool) {
         return "Tak";
     }
     return "Nie"
-}
+};

@@ -9,14 +9,14 @@ let objectList = [];
 let media = "ENERGY";
 
 $(document).ready(function () {
-    $('#residences').change(function () {
+    $("#residences").change(function () {
         residenceArrayIndex = $(this).val();
-        media = $('input[name=mediaChoice]:checked').val();
+        media = $("input[name=mediaChoice]:checked").val();
         drawTableFromEndpoint();
     });
 
-    $('#mediaRadio').change(function () {
-        media = $('input[name=mediaChoice]:checked').val();
+    $("#mediaRadio").change(function () {
+        media = $("input[name=mediaChoice]:checked").val();
         drawTableFromEndpoint();
         clearForm();
     });
@@ -29,7 +29,7 @@ $(document).ready(function () {
         const edit = parseInt(entityId) > 0;
         if (edit) {
             httpMethod = "PUT";
-        };
+        }
 
         const entityToSave = {
             description: $("#description").val(),
@@ -41,9 +41,9 @@ $(document).ready(function () {
         };
 
         $.ajax({
-            contentType: 'application/json',
+            contentType: "application/json",
             data: JSON.stringify(entityToSave),
-            dataType: 'json',
+            dataType: "json",
             success: function (data) {
                 showModal("Sukces", "Dane zostały zapisane w bazie");
                 if (edit) {
@@ -72,7 +72,7 @@ deleteEntity = function (row) {
     $.ajax({
         url: `${baseUrl}/?media=${media}&residence_id=${residences[residenceArrayIndex].id}`,
         type: "DELETE",
-        success: function (result) {
+        success: function () {
             showModal("Usunięto", "Dane zostały usunięte z bazy");
             objectList.splice(row, 1);
             drawTable();
@@ -84,7 +84,7 @@ deleteEntity = function (row) {
 };
 
 editEntity = function (row) {
-    entity = objectList[row];
+    const entity = objectList[row];
     listIndex = row;
     toggleForm();
     $("#description").val(entity.description);
@@ -106,7 +106,7 @@ drawTableFromEndpoint = function () {
             findLatestReadings(result);
             drawTable();
             findActiveMeters();
-        };
+        }
     });
 };
 

@@ -22,10 +22,6 @@ import org.springframework.transaction.annotation.Transactional;
 @Transactional
 public class TenantService implements ITenantService {
 
-    private static final String SELECT_TENANTS_BY_RESIDENCE = "select * from TENANT where rentContract_id in" +
-            "(SELECT id FROM RENT_CONTRACT where apartment_id in" +
-            "(select  id from APARTMENT where RESIDENCE_id = %s )" +
-            ");";
     private final ITenantDao tenantDao;
     private final IApartmentDao apartmentDao;
     private final IRentContractDao rentContractDao;
@@ -64,12 +60,8 @@ public class TenantService implements ITenantService {
         final RentContract newContract = newTenant.getRentContract();
         final RentContract currentContract = currentTenant.getRentContract();
         //new tenant actually lives before the current one (in case the historical data is being inserted)
-        if (newContract.getContractEnd().isBefore(currentContract.getContractStart()) ||
-            newContract.getContractStart().isBefore(currentContract.getContractStart())) {
-//            newContract.setContractEnd(currentContract.getContractStart().minusDays(1));
-            return true;
-        }
-        return false;
+        return newContract.getContractEnd().isBefore(currentContract.getContractStart()) ||
+            newContract.getContractStart().isBefore(currentContract.getContractStart());
     }
 
     private boolean shouldDeactiveCurentTenant(final Tenant currentTenant, final Tenant newTenant) {
@@ -84,11 +76,7 @@ public class TenantService implements ITenantService {
             return false;
         }
         //inserting historical data
-        if(newContract.getContractStart().isBefore(currentContract.getContractStart())) {
-            return false;
-        }
-
-        return true;
+        return !newContract.getContractStart().isBefore(currentContract.getContractStart());
     }
 
     private void validateTenant(final Tenant newTenant) {

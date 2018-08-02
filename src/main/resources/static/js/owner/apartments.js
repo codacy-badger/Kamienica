@@ -7,7 +7,7 @@ let apartments = [];
 const apartmentStorageKey = "apartments";
 
 $(document).ready(function () {
-    $('select').change(function () {
+    $("select").change(function () {
         residenceArrayIndex = $(this).val();
         drawTableFromEndpoint();
     });
@@ -21,19 +21,19 @@ $(document).ready(function () {
         if (edit) {
             httpMethod = "PUT";
             url += "/" + appartmentId;
-        };
+        }
         const apartmentToSave = {
             residence: residences[residenceArrayIndex],
             apartmentNumber: $("#apartmentNumber").val(),
             intercom: $("#intercom").val(),
             description: $("#description").val(),
             id: appartmentId,
-        }
+        };
 
         $.ajax({
-            contentType: 'application/json',
+            contentType: "application/json",
             data: JSON.stringify(apartmentToSave),
-            dataType: 'json',
+            dataType: "json",
             success: function (data) {
                 showModal("Zapisano dane", "Mieszkanie zostało zapisane w bazie");
                 if (edit) {
@@ -55,11 +55,11 @@ $(document).ready(function () {
 });
 
 deleteEntity = function (row) {
-    entity = apartments[row];
+  const entity = apartments[row];
     $.ajax({
         url: apartmentsUrl + "/" + entity.id,
         type: "DELETE",
-        success: function (result) {
+        success: function () {
             showModal("Usunięto dane", "Mieszkanie zostało usunięte z bazy");
             apartments.splice(row, 1);
             drawTable();
@@ -71,14 +71,14 @@ deleteEntity = function (row) {
 };
 
 editEntity = function (row) {
-    entity = apartments[row];
+    const entity = apartments[row];
     apartmentArrayIndex = row;
     toggleForm();
     $("#apartmentNumber").val(entity.apartmentNumber);
     $("#intercom").val(entity.intercom);
     $("#description").val(entity.description);
     $("#appartmentId").val(entity.id);
-}
+};
 
 drawTableFromEndpoint = function () {
     const finalUrl = apartmentForResidenceBaseUrl + residences[residenceArrayIndex].id;
@@ -91,7 +91,7 @@ drawTableFromEndpoint = function () {
 drawTable = function () {
     if (table) {
         table.destroy();
-    };
+    }
 
     $("#tableContent").removeAttr('hidden');
     table = $('#dataTable').DataTable({
@@ -103,9 +103,9 @@ drawTable = function () {
                     return data.residence.city + ', ' + data.residence.street + ' ' + data.residence.number;
                 }
             },
-            { data: 'apartmentNumber' },
-            { data: 'intercom' },
-            { data: 'description' },
+            { data: "apartmentNumber" },
+            { data: "intercom" },
+            { data: "description" },
             {
                 data: null,
                 render: function (data, type, row, meta) {

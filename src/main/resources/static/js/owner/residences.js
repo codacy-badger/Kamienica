@@ -21,7 +21,7 @@ $(document).ready(function () {
             residences = result;
             drawTable();
 
-        };
+        }
     }).fail(function (response) {
         showModal("Błąd podczas pobierania nieruchomości", response.responseJSON.message);
     });
@@ -35,18 +35,18 @@ $(document).ready(function () {
         if (edit) {
             httpMethod = "PUT";
             url += "/" + entityId;
-        };
+        }
         const entityToSave = {
             street: $("#street").val(),
             number: $("#number").val(),
             city: $("#city").val(),
             id: entityId
-        }
+        };
 
         $.ajax({
-            contentType: 'application/json',
+            contentType: "application/json",
             data: JSON.stringify(entityToSave),
-            dataType: 'json',
+            dataType: "json",
             success: function (data) {
                 showModal("Zapisano dane", "Dane zostały poprawnie zapisane w bazie");
                 if (edit) {
@@ -64,15 +64,15 @@ $(document).ready(function () {
             type: httpMethod,
             url: url
         });
-    })
+    });
 
 
     deleteEntity = function (row) {
-        entity = residences[row];
+        const entity = residences[row];
         $.ajax({
             url: baseUrl + "/" + entity.id,
             type: "DELETE",
-            success: function (result) {
+            success: function () {
                 showModal("Usunięto", "Dane zostały usunięte z bazy");
                 residences.splice(row, 1);
                 drawTable();
@@ -99,16 +99,14 @@ showModal = function (title, message) {
 };
 
 editEntity = function (row) {
-    console.log(residences);
-    entity = residences[row];
+    const entity = residences[row];
     residencesArrayIndex = row;
-    console.log(entity)
     toggleForm();
     $("#street").val(entity.street);
     $("#number").val(entity.number);
     $("#city").val(entity.city);
     $("#entityId").val(entity.id);
-}
+};
 
 toggleForm = function () {
     $("#form").toggle();
@@ -120,14 +118,14 @@ toggleForm = function () {
     } else {
         $(toggler).text(formText);
     }
-    $("#list").removeAttr('hidden');
+    $("#list").removeAttr("hidden");
 };
 
 
 drawTable = function () {
     if (table) {
         table.destroy();
-    };
+    }
 
     $("#tableContent").removeAttr('hidden');
     table = $('#dataTable').DataTable({

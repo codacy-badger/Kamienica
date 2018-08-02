@@ -3,21 +3,19 @@ const baseUrl = "/api/v1/invoices";
 const unresolvedReadingsUrl = "/api/v1/readings/unresolved/";
 
 let table;
-let listIndex;
 let objectList = [];
 let media = "ENERGY";
-let unresolvedReadingsIndex;
 let unresolvedReadings = [];
 
 $(document).ready(function () {
-    $('#residences').change(function () {
+    $("#residences").change(function () {
         residenceArrayIndex = $(this).val();
-        media = $('input[name=mediaChoice]:checked').val();
+        media = $("input[name=mediaChoice]:checked").val();
         drawTableFromEndpoint();
     });
 
-    $('#mediaRadio').change(function () {
-        media = $('input[name=mediaChoice]:checked').val();
+    $("#mediaRadio").change(function () {
+        media = $("input[name=mediaChoice]:checked").val();
         drawTableFromEndpoint();
         clearForm();
     });
@@ -28,7 +26,6 @@ $(document).ready(function () {
 
         const entityToSave = {
             invoiceDate: $("#invoiceDate").val(),
-            media: media,
             serialNumber: $("#serialNumber").val(),
             totalAmount: $("#totalAmount").val(),
             readingDetails: unresolvedReadings[$("#unresolvedReadings").val()],
@@ -38,9 +35,9 @@ $(document).ready(function () {
         };
 
         $.ajax({
-            contentType: 'application/json',
+            contentType: "application/json",
             data: JSON.stringify(entityToSave),
-            dataType: 'json',
+            dataType: "json",
             success: function (data) {
                 showModal("Sukces", "Dane zostały zapisane w bazie");
                 objectList.push(data);
@@ -87,7 +84,7 @@ drawTableFromEndpoint = function () {
         } else {
             objectList = result;
             drawTable();
-        };
+        }
     });
 };
 
@@ -100,22 +97,22 @@ createUnresolvedReadingsChoice = function () {
             $("#unresolvedReadings").append(
                 $('<option></option>').val(i).html(result[i].readingDate)
             );
-        };
+        }
     });
 };
 
 drawTable = function () {
     if (table) {
         table.destroy();
-    };
+    }
     $("#tableContent").show();
-    $("#tableContent").removeAttr('hidden');
+    $("#tableContent").removeAttr("hidden");
     table = $('#dataTable').DataTable({
         data: objectList,
         columns: [
-            { data: 'invoiceDate' },
-            { data: 'serialNumber' },
-            { data: 'totalAmount' },
+            { data: "invoiceDate" },
+            { data: "serialNumber" },
+            { data: "totalAmount" },
             {
                 data: null,
                 render: function (data, type, row) {
