@@ -1,12 +1,10 @@
 package kamienica.feature.tenant;
 
-import kamienica.model.entity.Apartment;
+import java.util.List;
 import kamienica.model.entity.Residence;
 import kamienica.model.entity.Tenant;
 import kamienica.model.jpa.service.BasicService;
 import org.hibernate.criterion.Criterion;
-
-import java.util.List;
 
 public interface ITenantService extends BasicService<Tenant> {
 

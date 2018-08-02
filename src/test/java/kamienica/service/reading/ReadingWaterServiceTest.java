@@ -45,7 +45,6 @@ public class ReadingWaterServiceTest extends ServiceTest {
 
     @Test
     public void shouldRetrieviePreviousReadings() {
-        List<Meter> meters = meterService.list(r, Media.WATER);
         List<Reading> list = readingService.getPreviousReadingForWarmWater(r, Media.WATER, LocalDate.parse("2016-08-01"));
         for (Reading readingWater : list) {
             assertEquals(LocalDate.parse("2016-07-01"), readingWater.getReadingDetails().getReadingDate());
@@ -98,7 +97,6 @@ public class ReadingWaterServiceTest extends ServiceTest {
         }
         final ReadingForm form = new ReadingForm(toSave);
         readingService.save(form);
-
 
         assertEquals(28, readingService.getList(r, Media.WATER).size());
     }

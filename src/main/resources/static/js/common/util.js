@@ -22,8 +22,8 @@ $(document).ready(function () {
             if (result.length === 1) {
                 residenceArrayIndex = 0;
                 drawTableFromEndpoint();
-            };
-        };
+            }
+        }
     }).fail(function (response) {
         showModal("Błąd podczas pobierania nieruchomości", response.responseJSON.message);
     });
@@ -52,15 +52,15 @@ showModal = function (title, message) {
 createResidencesChoice = function () {
     if (residences.length > 1) {
         $("#residences").append(
-            $('<option></option>').html("Wybierz nieruchomość...")
+            $("<option></option>").html("Wybierz nieruchomość...")
         );
-    };
+    }
 
     for (let i = 0; i < residences.length; i++) {
         $("#residences").append(
             $('<option></option>').val(i).html(residences[i].street + " " + residences[i].number)
         );
-    };
+    }
 };
 
 toggleForm = function () {
@@ -74,7 +74,7 @@ toggleForm = function () {
         $(toggler).text(formText);
     }
 
-    $("#list").removeAttr('hidden');
+    $("#list").removeAttr("hidden");
 };
 
 tableTranslation = {
