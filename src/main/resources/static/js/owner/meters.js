@@ -68,7 +68,7 @@ $(document).ready(function () {
             type: httpMethod,
             url: url
         });
-    })
+    });
 });
 
 setIsWarmWater = function () {
@@ -123,7 +123,7 @@ deleteEntity = function (row) {
 };
 
 editEntity = function (row) {
-    entity = objectList[row];
+    const entity = objectList[row];
     listIndex = row;
     toggleForm();
     $("#description").val(entity.description);

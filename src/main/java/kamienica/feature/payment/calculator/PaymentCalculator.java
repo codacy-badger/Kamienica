@@ -44,7 +44,7 @@ public class PaymentCalculator implements IPaymentCalculator{
     private IConsumptionCalculator createCalculator(final Invoice invoice) {
         final Settings settings = settingsService.getSettings(invoice.getResidence());
         if(settings == null || settings.getWaterHeatingSystem() == null) {
-            throw new RuntimeException("Setting must be set first");
+            throw new NoSettingsException("Setting must be set first");
         }
         final String key = UsageCalculatorProvider.provideCalculator(settings.getWaterHeatingSystem(), invoice.getMedia());
         return consumptionCalculatorMap.get(key);

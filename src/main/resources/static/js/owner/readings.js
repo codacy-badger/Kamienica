@@ -95,7 +95,7 @@ getReadingsFromForm = function () {
 };
 
 deleteEntity = function (row) {
-    entity = objectList[row];
+    const entity = objectList[row];
     $.ajax({
         url: `${baseUrl}/?media=${media}&residence_id=${residences[residenceArrayIndex].id}`,
         type: "DELETE",
@@ -135,7 +135,7 @@ drawTableFromEndpoint = function () {
     $.getJSON(finalUrl, function (result) {
         if (result.length === 0) {
             $("#tableContent").hide();
-            $('#apartmentsInput').children().remove();
+            $("#apartmentsInput").children().remove();
         } else {
             objectList = result;
             findLatestReadings(result);
@@ -184,7 +184,7 @@ prepareForm = function () {
         );
         idOfMetersThatAlreadyHaveReadings.push(latestReadings[i].meter.id);
     }
-    for (i = 0; i < meters.length; i++) {
+    for (let i = 0; i < meters.length; i++) {
         let foundNewMeter = true;
         for (y = 0; y < idOfMetersThatAlreadyHaveReadings.length; y++) {
             if (idOfMetersThatAlreadyHaveReadings[y] === meters[i].id) {
@@ -206,9 +206,9 @@ drawTable = function () {
     }
     const latestDate = objectList[0].readingDetails.readingDate;
     $("#tableContent").show();
-    $("#tableContent").removeAttr('hidden');
+    $("#tableContent").removeAttr("hidden");
 
-    table = $('#dataTable').DataTable({
+    table = $("#dataTable").DataTable({
         data: objectList,
         "order": [[0, "desc"]],
         columns: [
@@ -218,7 +218,7 @@ drawTable = function () {
                     return data.readingDetails.readingDate;
                 }
             },
-            { data: 'value' },
+            { data: "value" },
             {
                 data: null,
                 render: function (data, type, row) {

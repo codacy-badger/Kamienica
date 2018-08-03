@@ -80,7 +80,7 @@ drawTableFromEndpoint = function () {
         createUnresolvedReadingsChoice();
         if (result.length === 0) {
             $("#tableContent").hide();
-            $('#unresolvedReadings').children().remove();
+            $("#unresolvedReadings").children().remove();
         } else {
             objectList = result;
             drawTable();
@@ -92,10 +92,10 @@ createUnresolvedReadingsChoice = function () {
     const finalUrl = `${unresolvedReadingsUrl}${media}?residence=${residences[residenceArrayIndex].id}`;
     $.getJSON(finalUrl, function (result) {
         unresolvedReadings = result;
-        $('#unresolvedReadings').children().remove();
+        $("#unresolvedReadings").children().remove();
         for (let i = 0; i < result.length; i++) {
             $("#unresolvedReadings").append(
-                $('<option></option>').val(i).html(result[i].readingDate)
+                $("<option></option>").val(i).html(result[i].readingDate)
             );
         }
     });
