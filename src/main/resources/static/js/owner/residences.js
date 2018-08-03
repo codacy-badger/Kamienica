@@ -11,7 +11,7 @@ $(document).ready(function () {
     $("#form").toggle();
     $(toggler).text(formText);
     $(toggler).click(function () {
-        toggleForm()
+        toggleForm();
     });
 
     $.getJSON(baseUrl, function (result) {

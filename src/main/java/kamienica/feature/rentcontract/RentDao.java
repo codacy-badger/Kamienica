@@ -13,8 +13,8 @@ import java.util.List;
 @Repository("rentDao")
 public class RentDao extends BasicDao<RentContract> implements IRentContractDao {
 
-    public static final String COTRACT_START = "cotractStart";
-    public static final String COTRACT_END = "cotractEnd";
+    private static final String COTRACT_START = "cotractStart";
+    private static final String COTRACT_END = "cotractEnd";
 
     @Override
     public List<RentContract> findCurrentContract(Residence residence) {

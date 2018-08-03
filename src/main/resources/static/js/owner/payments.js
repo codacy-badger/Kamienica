@@ -36,7 +36,7 @@ drawTableFromEndpoint = function () {
     $.getJSON(finalUrl, function (result) {
         if (result.length === 0) {
             $("#tableContent").hide();
-            $('#apartmentsInput').children().remove();
+            $("#apartmentsInput").children().remove();
         } else {
             objectList = result;
             drawTable();

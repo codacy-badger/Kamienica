@@ -51,7 +51,7 @@ $(document).ready(function () {
             type: httpMethod,
             url: url
         });
-    })
+    });
 });
 
 deleteEntity = function (row) {
@@ -100,7 +100,7 @@ drawTable = function () {
             {
                 data: null,
                 render: function (data, type, row) {
-                    return data.residence.city + ', ' + data.residence.street + ' ' + data.residence.number;
+                    return data.residence.city + ", " + data.residence.street + " " + data.residence.number;
                 }
             },
             { data: "apartmentNumber" },

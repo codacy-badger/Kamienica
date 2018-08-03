@@ -40,7 +40,7 @@ public class UserServiceTest extends ServiceTest {
     }
 
     @Test
-    public void getMapOfPayments() throws Exception {
+    public void getMapOfPayments() {
         Map<String, List<Payment>> map = userService.getMapOfPayments();
         assertEquals(3, map.size());
 
@@ -61,7 +61,7 @@ public class UserServiceTest extends ServiceTest {
     }
 
     @Test
-    public void getTenantInfo() throws Exception {
+    public void getTenantInfo() {
         final Tenant expected = getOwner();
         final Tenant actual = userService.getTenantInfo();
         assertEquals(expected.getId(), actual.getId());
@@ -69,7 +69,7 @@ public class UserServiceTest extends ServiceTest {
     }
 
     @Test
-    public void getLatestReadingDates() throws Exception {
+    public void getLatestReadingDates() {
         when(SecurityDetails.getApartmentForLoggedTenant()).thenReturn(apartmentService.getById(2L));
         final Map<String, ReadingDetails> map = userService.getLatestReadingDates();
         assertEquals(3, map.size());

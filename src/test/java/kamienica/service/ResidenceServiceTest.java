@@ -104,7 +104,7 @@ public class ResidenceServiceTest extends ServiceTest {
 
     @Test
     @Transactional
-    public void getById() throws Exception {
+    public void getById() {
         final Residence result = residenceService.getById(1L);
         assertNotNull(result);
     }
