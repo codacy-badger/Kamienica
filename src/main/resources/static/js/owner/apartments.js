@@ -93,8 +93,8 @@ drawTable = function () {
         table.destroy();
     }
 
-    $("#tableContent").removeAttr('hidden');
-    table = $('#dataTable').DataTable({
+    $("#tableContent").removeAttr("hidden");
+    table = $("#dataTable").DataTable({
         data: apartments,
         columns: [
             {

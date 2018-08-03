@@ -95,7 +95,7 @@ clearForm = function () {
 showModal = function (title, message) {
     $("#messageModalMessage").text(message);
     $("#messageModalLabel").text(title);
-    $('#messageModal').modal('show');
+    $("#messageModal").modal("show");
 };
 
 editEntity = function (row) {
@@ -127,13 +127,13 @@ drawTable = function () {
         table.destroy();
     }
 
-    $("#tableContent").removeAttr('hidden');
-    table = $('#dataTable').DataTable({
+    $("#tableContent").removeAttr("hidden");
+    table = $("#dataTable").DataTable({
         data: residences,
         columns: [
-            { data: 'street' },
-            { data: 'number' },
-            { data: 'city' },
+            { data: "street" },
+            { data: "number" },
+            { data: "city" },
             {
                 data: null,
                 render: function (data, type, row, meta) {

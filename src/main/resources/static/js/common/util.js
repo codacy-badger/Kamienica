@@ -10,7 +10,7 @@ $(document).ready(function () {
     $("#form").toggle();
     $(toggler).text(formText);
     $(toggler).click(function () {
-        toggleForm()
+        toggleForm();
     });
 
     $.getJSON("/api/v1/residences", function (result) {
@@ -29,9 +29,9 @@ $(document).ready(function () {
     });
 
     $(".dropdown-menu li").click(function () {
-        $(this).parents(".dropdown").find('.btn').html($(this).text() + ' <span class="caret"></span>');
-        $(this).parents(".dropdown").find('.btn').val($(this).data('value'));
-        $("#tableContent").removeAttr('hidden');
+        $(this).parents(".dropdown").find(".btn").html($(this).text() + " <span class='caret'></span>");
+        $(this).parents(".dropdown").find(".btn").val($(this).data("value"));
+        $("#tableContent").removeAttr("hidden");
     });
 
     $("#resetButton").click(function () {
@@ -46,7 +46,7 @@ clearForm = function () {
 showModal = function (title, message) {
     $("#messageModalMessage").text(message);
     $("#messageModalLabel").text(title);
-    $('#messageModal').modal('show');
+    $("#messageModal").modal("show");
 };
 
 createResidencesChoice = function () {
@@ -58,7 +58,7 @@ createResidencesChoice = function () {
 
     for (let i = 0; i < residences.length; i++) {
         $("#residences").append(
-            $('<option></option>').val(i).html(residences[i].street + " " + residences[i].number)
+            $("<option></option>").val(i).html(residences[i].street + " " + residences[i].number)
         );
     }
 };
