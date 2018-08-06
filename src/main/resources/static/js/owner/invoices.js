@@ -51,13 +51,12 @@ $(document).ready(function () {
             type: httpMethod,
             url: baseUrl
         });
-    })
+    });
 });
 
 deleteEntity = function (row) {
     entity = objectList[row];
     const deleteUrl = `${baseUrl}/${entity.id}`;
-    console.log(deleteUrl);
     $.ajax({
         url: deleteUrl,
         type: "DELETE",
@@ -107,7 +106,7 @@ drawTable = function () {
     }
     $("#tableContent").show();
     $("#tableContent").removeAttr("hidden");
-    table = $('#dataTable').DataTable({
+    table = $("#dataTable").DataTable({
         data: objectList,
         columns: [
             { data: "invoiceDate" },

@@ -1,5 +1,11 @@
 package kamienica.service.stresstest;
 
+import static org.junit.Assert.assertTrue;
+import static org.powermock.api.mockito.PowerMockito.mockStatic;
+import static org.powermock.api.mockito.PowerMockito.when;
+
+import java.util.ArrayList;
+import java.util.List;
 import kamienica.configuration.ServiceTest;
 import kamienica.core.util.SecurityDetails;
 import kamienica.model.entity.Apartment;
@@ -12,13 +18,6 @@ import org.junit.Ignore;
 import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import java.util.ArrayList;
-import java.util.List;
-
-import static org.junit.Assert.assertTrue;
-import static org.powermock.api.mockito.PowerMockito.mockStatic;
-import static org.powermock.api.mockito.PowerMockito.when;
 
 public class StressTest extends ServiceTest {
     private static final List<Residence> residences = new ArrayList<>();
@@ -63,7 +62,7 @@ public class StressTest extends ServiceTest {
 
     private static void createApartments(final Residence r) {
         for (int i = 1; i < 5; i++) {
-            final Apartment ap = new Apartment(null, i, String.valueOf(i), String.valueOf(i), r);
+            final Apartment ap = new Apartment(i, String.valueOf(i), String.valueOf(i), r);
             apartments.add(ap);
             createMetersForApartment(ap);
         }

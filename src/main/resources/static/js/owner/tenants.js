@@ -74,7 +74,7 @@ $(document).ready(function () {
             type: httpMethod,
             url: url
         });
-    })
+    });
 });
 
 findChosenApartment= () => {
@@ -153,8 +153,8 @@ drawTable = function () {
         table.destroy();
     }
     $("#tableContent").show();
-    $("#tableContent").removeAttr('hidden');
-    table = $('#dataTable').DataTable({
+    $("#tableContent").removeAttr("hidden");
+    table = $("#dataTable").DataTable({
         data: objectList,
         columns: [
             {

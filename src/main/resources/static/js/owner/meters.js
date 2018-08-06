@@ -172,8 +172,8 @@ drawTable = function () {
         table.destroy();
     }
     $("#tableContent").show();
-    $("#tableContent").removeAttr('hidden');
-    table = $('#dataTable').DataTable({
+    $("#tableContent").removeAttr("hidden");
+    table = $("#dataTable").DataTable({
         data: objectList,
         "columnDefs": [
             {
@@ -188,8 +188,8 @@ drawTable = function () {
             }
         ],
         columns: [
-            { data: 'serialNumber' },
-            { data: 'description' },
+            { data: "serialNumber" },
+            { data: "description" },
             {
                 data: null,
                 render: function (data, type, row) {
@@ -200,7 +200,7 @@ drawTable = function () {
                     return a.description;
                 }
             },
-            { data: 'unit' },
+            { data: "unit" },
             {
                 data: null,
                 render: function (data, type, row) {

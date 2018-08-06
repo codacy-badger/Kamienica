@@ -29,7 +29,7 @@ $(document).ready(function () {
         if (isNewEntity) {
             httpMethod = "POST";
         } else {
-            httpMethod = "PUT"
+            httpMethod = "PUT";
         }
 
         const entityToSave =  getReadingsFromForm();

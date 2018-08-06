@@ -1,7 +1,6 @@
 package kamienica.model.entity;
 
 import org.hibernate.validator.constraints.NotEmpty;
-import org.springframework.beans.factory.annotation.Autowired;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -35,8 +34,6 @@ public class Apartment extends DBEntity implements Serializable {
     @NotEmpty(message = "Wprowadź opis")
     private String description;
 
-
-    @Autowired
     public Apartment(Long id, int apartmentNumber, String intecom, String description, Residence residence) {
         this.id = id;
         this.apartmentNumber = apartmentNumber;
@@ -45,7 +42,6 @@ public class Apartment extends DBEntity implements Serializable {
         this.residence = residence;
     }
 
-    @Autowired
     public Apartment(int apartmentNumber, String intecom, String description, Residence residence) {
         this.apartmentNumber = apartmentNumber;
         this.intercom = intecom;
@@ -56,7 +52,6 @@ public class Apartment extends DBEntity implements Serializable {
     public Apartment() {
     }
 
-    @Autowired
     public Apartment(Residence res, int apartmentNumber, String intecom, String description) {
         this.apartmentNumber = apartmentNumber;
         this.intercom = intecom;
