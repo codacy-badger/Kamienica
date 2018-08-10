@@ -97,7 +97,10 @@ public class ResidenceApi {
             final Residence r = residenceService.getById(id);
             SecurityDetails.checkIfOwnsResidence(r);
             purgeService.purgeData(r);
-        } catch (Exception e) {
+        }catch (final SecurityException se) {
+            message.setException(se.toString());
+            return new ResponseEntity<>(message, HttpStatus.UNPROCESSABLE_ENTITY);
+        } catch (final Exception e) {
             message.setMessage(CONSTRAINT_VIOLATION);
             message.setException(e.toString());
             return new ResponseEntity<>(message, HttpStatus.UNPROCESSABLE_ENTITY);

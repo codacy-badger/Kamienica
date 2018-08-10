@@ -42,12 +42,12 @@ public class ResidenceService implements IResidenceService {
 
     @Override
     public void save(final Residence residence) {
-        ResidenceOwnership ro = new ResidenceOwnership();
+        final ResidenceOwnership ro = new ResidenceOwnership();
         ro.setResidence(residence);
         ro.setOwner(SecurityDetails.getLoggedTenant());
         residenceDao.save(residence);
         residenceOwnershipDao.save(ro);
-
+        SecurityDetails.addNewlyCreatedResidenceToSecurityContext(residence);
         saveEssentialData(residence);
     }
 

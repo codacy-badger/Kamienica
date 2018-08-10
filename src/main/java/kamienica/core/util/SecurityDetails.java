@@ -32,6 +32,11 @@ public class SecurityDetails {
         return su.getResidencesOwned().stream().filter(x -> x.getId().equals(id)).findFirst().orElseThrow(() -> new SecurityException(SECURITY_ERROR_MSG));
     }
 
+    public static void addNewlyCreatedResidenceToSecurityContext(final Residence residence) {
+        final SecurityUser su = getPrincipal();
+        su.addResidence(residence);
+    }
+
     public static void removeResidenceFromPrincipal(final Residence r) {
         final List<Residence> residences = getPrincipal().getResidencesOwned();
         residences.remove(r);
