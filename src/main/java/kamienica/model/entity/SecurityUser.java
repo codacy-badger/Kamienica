@@ -29,6 +29,10 @@ public class SecurityUser extends User {
         this.residencesOwned.add(residence);
     }
 
+    public void removeResidence(final Residence residence) {
+        residencesOwned.remove(residence);
+    }
+
     @Override
     public void eraseCredentials() {
         super.eraseCredentials();

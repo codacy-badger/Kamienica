@@ -38,8 +38,8 @@ public class SecurityDetails {
     }
 
     public static void removeResidenceFromPrincipal(final Residence r) {
-        final List<Residence> residences = getPrincipal().getResidencesOwned();
-        residences.remove(r);
+        final SecurityUser su = getPrincipal();
+        su.removeResidence(r);
     }
 
     private static SecurityUser getPrincipal() {

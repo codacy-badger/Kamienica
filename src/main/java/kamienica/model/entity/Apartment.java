@@ -14,7 +14,7 @@ import javax.validation.constraints.Size;
 import java.io.Serializable;
 
 @Entity
-@Table(name = "APARTMENT", uniqueConstraints = {@UniqueConstraint(columnNames = {"apartmentNumber", "residence_id"})})
+@Table(name = "APARTMENT", uniqueConstraints = {@UniqueConstraint(columnNames = {"apartmentNumber", "residence_id"}, name="UNIQUE_APARTMENT_NUM_FOR_RESIDENCE_CONSTRAINT")})
 public class Apartment extends DBEntity implements Serializable {
 
     private static final long serialVersionUID = 1L;

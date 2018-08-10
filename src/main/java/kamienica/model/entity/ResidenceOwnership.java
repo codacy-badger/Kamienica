@@ -1,8 +1,10 @@
 package kamienica.model.entity;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
@@ -13,9 +15,9 @@ public class ResidenceOwnership {
     @Id
     @GeneratedValue
     private Long id;
-    @OneToOne
+    @OneToOne(cascade = CascadeType.ALL)
     private Residence residence;
-    @OneToOne
+    @ManyToOne
     private Tenant owner;
 
     public Long getId() {

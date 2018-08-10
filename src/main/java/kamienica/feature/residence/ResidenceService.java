@@ -1,5 +1,7 @@
 package kamienica.feature.residence;
 
+import java.util.List;
+import java.util.stream.Collectors;
 import kamienica.core.util.SecurityDetails;
 import kamienica.feature.apartment.IApartmentDao;
 import kamienica.feature.meter.IMeterDao;
@@ -17,9 +19,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.List;
-import java.util.stream.Collectors;
-
 @Service
 @Transactional
 public class ResidenceService implements IResidenceService {
@@ -31,8 +30,8 @@ public class ResidenceService implements IResidenceService {
     private final IPurgeService purgeService;
 
     @Autowired
-    public ResidenceService(IResidenceDao residenceDao, IResidenceOwnershipDao residenceOwnershipDao,
-                            IApartmentDao apartmentDao, IMeterDao meterDao, IPurgeService purgeService) {
+    public ResidenceService(final IResidenceDao residenceDao, final IResidenceOwnershipDao residenceOwnershipDao,
+                            final IApartmentDao apartmentDao, final IMeterDao meterDao, final IPurgeService purgeService) {
         this.residenceDao = residenceDao;
         this.residenceOwnershipDao = residenceOwnershipDao;
         this.apartmentDao = apartmentDao;
@@ -45,13 +44,12 @@ public class ResidenceService implements IResidenceService {
         final ResidenceOwnership ro = new ResidenceOwnership();
         ro.setResidence(residence);
         ro.setOwner(SecurityDetails.getLoggedTenant());
-        residenceDao.save(residence);
         residenceOwnershipDao.save(ro);
         SecurityDetails.addNewlyCreatedResidenceToSecurityContext(residence);
         saveEssentialData(residence);
     }
 
-    private void saveEssentialData(Residence residence) {
+    private void saveEssentialData(final Residence residence) {
         final Apartment ap = new Apartment(residence, 0, "0000", "Część Wpólna");
         apartmentDao.save(ap);
         final Meter mw = new Meter("Licznik Główny Wody", residence.toString() + "GW", "m3", ap, residence, true, Status.ACTIVE, false, false, Media.WATER);
@@ -63,7 +61,7 @@ public class ResidenceService implements IResidenceService {
     }
 
     @Override
-    public void update(Residence residence) {
+    public void update(final Residence residence) {
         residenceDao.update(residence);
     }
 
@@ -74,25 +72,25 @@ public class ResidenceService implements IResidenceService {
 
     @Override
     public List<Residence> listForOwner() {
-        Criterion forOwner = Restrictions.eq("owner", SecurityDetails.getLoggedTenant());
-        List<ResidenceOwnership> owned = residenceOwnershipDao.findByCriteria(forOwner);
+        final Criterion forOwner = Restrictions.eq("owner", SecurityDetails.getLoggedTenant());
+        final List<ResidenceOwnership> owned = residenceOwnershipDao.findByCriteria(forOwner);
         return owned.stream().map(ResidenceOwnership::getResidence).collect(Collectors.toList());
     }
 
     @Override
-    public List<Residence> listForFirstLogin(Tenant tenant) {
-        Criterion forOwner = Restrictions.eq("owner", tenant);
-        List<ResidenceOwnership> owned = residenceOwnershipDao.findByCriteria(forOwner);
+    public List<Residence> listForFirstLogin(final Tenant tenant) {
+        final Criterion forOwner = Restrictions.eq("owner", tenant);
+        final List<ResidenceOwnership> owned = residenceOwnershipDao.findByCriteria(forOwner);
         return owned.stream().map(ResidenceOwnership::getResidence).collect(Collectors.toList());
     }
 
     @Override
-    public Residence getById(Long id) {
+    public Residence getById(final Long id) {
         return residenceDao.getById(id);
     }
 
     @Override
-    public void delete(Residence residence) {
+    public void delete(final Residence residence) {
         purgeService.purgeData(residence);
     }
 }

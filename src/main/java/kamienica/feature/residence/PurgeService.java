@@ -63,6 +63,7 @@ public class PurgeService implements IPurgeService {
         deleteSetting(res);
         deleteApartmentsAndTenants(res);
         deleteResidence(residence);
+        SecurityDetails.removeResidenceFromPrincipal(residence);
     }
 
     private void deleteSetting(final Criterion res) {

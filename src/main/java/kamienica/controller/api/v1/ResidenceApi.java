@@ -46,24 +46,12 @@ public class ResidenceApi {
 
 
     @RequestMapping(method = RequestMethod.POST)
-    public ResponseEntity<?> create(@Valid @RequestBody final Residence residence, final BindingResult result) {
-
-        if (result.hasErrors()) {
-            final ApiErrorResponse message = new ApiErrorResponse();
-            message.setErrors(result.getFieldErrors());
-            return new ResponseEntity<>(message, HttpStatus.UNPROCESSABLE_ENTITY);
-        }
+    public ResponseEntity<?> create(@RequestBody final Residence residence) {
         try {
             residenceService.save(residence);
-        } catch (Exception e) {
-            result.rejectValue("residenceNumber", "error.residence", DUPLICATE_VALUE);
-            final Map<String, String> test = new HashMap<>();
-            for (FieldError fieldError : result.getFieldErrors()) {
-                test.put(fieldError.getField(), fieldError.getDefaultMessage());
-            }
-            return new ResponseEntity<>(test, HttpStatus.CONFLICT);
+        } catch (final Exception e) {
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.CONFLICT);
         }
-
         return new ResponseEntity<>(residence, HttpStatus.CREATED);
     }
 
