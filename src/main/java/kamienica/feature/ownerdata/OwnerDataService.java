@@ -8,6 +8,7 @@ import kamienica.feature.tenant.ITenantDao;
 import kamienica.model.entity.*;
 import kamienica.model.enums.Media;
 import org.hibernate.criterion.Criterion;
+import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -52,18 +53,18 @@ public class OwnerDataService implements IOwnerDataService {
     }
 
     private int countEmptyApartments(final List<Residence> ownerResidences) {
-        List<Apartment> apartments = apartmentDao.findByCriteria(Restrictions.in("residence", ownerResidences));
+        final List<Apartment> apartments = apartmentDao.findByCriteria(Restrictions.in("residence", ownerResidences));
         for (int i = 0; i < apartments.size(); i++) {
             if (apartments.get(i).getApartmentNumber() == 0) {
                 apartments.remove(i);
                 i--;
             }
         }
-        List<Tenant> activeTenants = tenantDao.getActiveTenants(apartments);
+        final List<Tenant> activeTenants = tenantDao.getActiveTenants(apartments);
         int numOfEmptyApartments = apartments.size();
-        for (Apartment a : apartments) {
+        for (final Apartment a : apartments) {
             final Long appId = a.getId();
-            for (Tenant t : activeTenants) {
+            for (final Tenant t : activeTenants) {
                 if (Objects.equals(t.getRentContract().getApartment().getId(), appId)) {
                     numOfEmptyApartments--;
                 }
@@ -74,20 +75,22 @@ public class OwnerDataService implements IOwnerDataService {
 
     private Invoice findOldestInvoice(final List<Residence> ownerResidences) {
         final List<Invoice> invoiceList = new ArrayList<>();
-        final Criterion residences = Restrictions.in("residence", ownerResidences);
 
-        for (Media media : Media.values()) {
-            final Criterion mediaCrit = Restrictions.eq("media", media);
-            final Invoice invoice = invoiceDao.findOneByCriteria(residences, mediaCrit);
-            invoiceList.add(invoice);
+        for (final Media media : Media.values()) {
+            ownerResidences.forEach(residence -> {
+                final Invoice invoice = invoiceDao.getLatest(residence, media);
+                invoiceList.add(invoice);
+            });
         }
-        return invoiceList.stream().min(Comparator.comparing(Invoice::getInvoiceDate)).get();
+        return invoiceList.stream()
+            .min(Comparator.comparing(Invoice::getInvoiceDate))
+            .get();
     }
 
     private ReadingDetails findOldestReading(final List<Residence> ownerResidences) {
         final List<ReadingDetails> readingDetailsList = new ArrayList<>();
-        for (Residence r : ownerResidences) {
-            for (Media media : Media.values()) {
+        for (final Residence r : ownerResidences) {
+            for (final Media media : Media.values()) {
                 final ReadingDetails details = readingDetailsDao.getLatest(r, media);
                 readingDetailsList.add(details);
             }

@@ -5,13 +5,13 @@ public class OwnerData {
     private Invoice oldestInvoice;
     private ReadingDetails oldestReading;
     private int emptyApartments;
-    private int numOrResidences;
+    private int numOfResidences;
 
-    public OwnerData(Invoice oldestInvoice, ReadingDetails oldestReading, int emptyApartments, int numOrResidences) {
+    public OwnerData(Invoice oldestInvoice, ReadingDetails oldestReading, int emptyApartments, int numOfResidences) {
         this.oldestInvoice = oldestInvoice;
         this.oldestReading = oldestReading;
         this.emptyApartments = emptyApartments;
-        this.numOrResidences = numOrResidences;
+        this.numOfResidences = numOfResidences;
     }
 
     public OwnerData() {
@@ -41,12 +41,12 @@ public class OwnerData {
         this.emptyApartments = emptyApartments;
     }
 
-    public int getNumOrResidences() {
-        return numOrResidences;
+    public int getNumOfResidences() {
+        return numOfResidences;
     }
 
-    public void setNumOrResidences(int numOrResidences) {
-        this.numOrResidences = numOrResidences;
+    public void setNumOfResidences(int numOfResidences) {
+        this.numOfResidences = numOfResidences;
     }
 
     @Override
@@ -55,7 +55,7 @@ public class OwnerData {
                 "oldestInvoice=" + oldestInvoice +
                 ", oldestReading=" + oldestReading +
                 ", emptyApartments=" + emptyApartments +
-                ", numOrResidences=" + numOrResidences +
+                ", numOfResidences=" + numOfResidences +
                 '}';
     }
 }
