@@ -71,7 +71,7 @@ public class StressTest extends ServiceTest {
     private static void createMetersForApartment(Apartment ap) {
         final String uniqueFlag = ap.getDescription() + ap.getResidence().getNumber();
         final Meter energy = new Meter("energy" + uniqueFlag, "energy" + uniqueFlag, "", ap, Media.ENERGY);
-        final Meter water = new Meter("watre" + uniqueFlag, "water" + uniqueFlag, "", ap, Media.WATER);
+        final Meter water = new Meter("water" + uniqueFlag, "water" + uniqueFlag, "", ap, Media.WATER);
         final Meter gas = new Meter("gas" + uniqueFlag, "gas" + uniqueFlag, "", ap, Media.GAS);
         meters.add(energy);
         meters.add(water);

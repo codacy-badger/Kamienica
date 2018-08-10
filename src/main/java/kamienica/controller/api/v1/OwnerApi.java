@@ -1,6 +1,8 @@
 package kamienica.controller.api.v1;
 
 
+import java.util.List;
+import java.util.Map;
 import kamienica.feature.user.IUserService;
 import kamienica.model.entity.Payment;
 import kamienica.model.entity.Reading;
@@ -12,9 +14,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
-
-import java.util.List;
-import java.util.Map;
 
 @RestController
 @RequestMapping("/api/v1/home/owner")
@@ -29,14 +28,14 @@ public class OwnerApi {
 
     @RequestMapping(value = "/readings", method = RequestMethod.GET)
     public ResponseEntity<?> userReadings() {
-        final Map<String, List<Reading>> map = userService.getMapOfReadings();
-        return new ResponseEntity<>(map, HttpStatus.OK);
+        final List<Reading> list = userService.getReadings();
+        return new ResponseEntity<>(list, HttpStatus.OK);
     }
 
     @RequestMapping(value = "/payments", method = RequestMethod.GET)
     public ResponseEntity<?> userPayment() {
-        Map<String, List<Payment>> map = userService.getMapOfPayments();
-        return new ResponseEntity<>(map, HttpStatus.OK);
+        final List<Payment> list = userService.getPayments();
+        return new ResponseEntity<>(list, HttpStatus.OK);
     }
 
     @RequestMapping(value = "/details", method = RequestMethod.GET)

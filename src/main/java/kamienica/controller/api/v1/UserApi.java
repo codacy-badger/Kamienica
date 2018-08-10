@@ -16,37 +16,37 @@ import java.util.List;
 import java.util.Map;
 
 @RestController
-@RequestMapping("/api/v1/home/user")
+@RequestMapping("/api/v1/user")
 public class UserApi {
 
-    private final IUserService userService;
+  private final IUserService userService;
 
-    @Autowired
-    public UserApi(IUserService userService) {
-        this.userService = userService;
-    }
+  @Autowired
+  public UserApi(IUserService userService) {
+    this.userService = userService;
+  }
 
-    @RequestMapping(value = "/readings", method = RequestMethod.GET)
-    public ResponseEntity<?> userReadings() {
-        Map<String, List<Reading>> map = userService.getMapOfReadings();
-        return new ResponseEntity<>(map, HttpStatus.OK);
-    }
+  @RequestMapping(value = "/readings", method = RequestMethod.GET)
+  public ResponseEntity<?> userReadings() {
+    final List<Reading> list = userService.getReadings();
+    return new ResponseEntity<>(list, HttpStatus.OK);
+  }
 
-    @RequestMapping(value = "/payments", method = RequestMethod.GET)
-    public ResponseEntity<?> userPayment() {
-        Map<String, List<Payment>> map = userService.getMapOfPayments();
-        return new ResponseEntity<>(map, HttpStatus.OK);
-    }
+  @RequestMapping(value = "/payments", method = RequestMethod.GET)
+  public ResponseEntity<?> userPayment() {
+    final List<Payment> list = userService.getPayments();
+    return new ResponseEntity<>(list, HttpStatus.OK);
+  }
 
-    @RequestMapping(value = "/details", method = RequestMethod.GET)
-    public ResponseEntity<?> userDetails() {
-        final Tenant t = userService.getTenantInfo();
-        return new ResponseEntity<>(t, HttpStatus.OK);
-    }
+  @RequestMapping(value = "/details", method = RequestMethod.GET)
+  public ResponseEntity<?> userDetails() {
+    final Tenant t = userService.getTenantInfo();
+    return new ResponseEntity<>(t, HttpStatus.OK);
+  }
 
-    @RequestMapping(value = "/readingDetails", method = RequestMethod.GET)
-    public ResponseEntity<?> userReadingDetails() {
-        Map<String, ReadingDetails> map = userService.getLatestReadingDates();
-        return new ResponseEntity<>(map, HttpStatus.OK);
-    }
+  @RequestMapping(value = "/readingDetails", method = RequestMethod.GET)
+  public ResponseEntity<?> userReadingDetails() {
+    Map<String, ReadingDetails> map = userService.getLatestReadingDates();
+    return new ResponseEntity<>(map, HttpStatus.OK);
+  }
 }

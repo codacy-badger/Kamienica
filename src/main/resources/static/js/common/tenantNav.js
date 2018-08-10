@@ -1,6 +1,6 @@
 $(document).ready(function () {
-//TODO should be renamed to ownerNav!!
-    $.get("/js/common/adminNav.html", function (data) {
+
+    $.get("/js/common/tenantNav.html", function (data) {
         $("#mainNav").html(data);
     });
 
