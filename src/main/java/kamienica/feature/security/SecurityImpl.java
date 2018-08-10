@@ -1,5 +1,7 @@
 package kamienica.feature.security;
 
+import java.util.ArrayList;
+import java.util.List;
 import kamienica.feature.residence.IResidenceService;
 import kamienica.feature.tenant.ITenantService;
 import kamienica.model.entity.Residence;
@@ -9,22 +11,18 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Component;
 
-import java.util.ArrayList;
-import java.util.List;
-
 @Component
-public class SecurityServiceImpl implements UserDetailsService, ISecurityService {
+public class SecurityImpl implements Security {
 
     private static final String ERROR_MSG = "Login or Passowords are invalid";
     private final ITenantService tenantService;
     private final IResidenceService residenceService;
 
     @Autowired
-    public SecurityServiceImpl(final ITenantService tenantService, final IResidenceService residenceService) {
+    public SecurityImpl(final ITenantService tenantService, final IResidenceService residenceService) {
         this.tenantService = tenantService;
         this.residenceService = residenceService;
     }
@@ -39,6 +37,7 @@ public class SecurityServiceImpl implements UserDetailsService, ISecurityService
         return new SecurityUser(tenant, isActive(tenant), authorities, residencesOwned);
     }
 
+    @Override
     public void changePassword(final String mail, final String oldPassowrd, final String newPwassword)
             throws UsernameNotFoundException {
         final Tenant tenant = findTenant(mail);
@@ -49,8 +48,8 @@ public class SecurityServiceImpl implements UserDetailsService, ISecurityService
         tenantService.update(tenant);
     }
 
-    private void checkOldPassword(Tenant tenant, String oldPassowrd) {
-        if (!tenant.getPassword().equals(oldPassowrd)) {
+    private void checkOldPassword(Tenant tenant, String oldPassword) {
+        if (!tenant.getPassword().equals(oldPassword)) {
             throw new UsernameNotFoundException(ERROR_MSG);
         }
     }

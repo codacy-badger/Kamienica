@@ -214,20 +214,20 @@ drawTable = function () {
         columns: [
             {
                 data: null,
-                render: function (data, type, row) {
+                render: function (data) {
                     return data.readingDetails.readingDate;
                 }
             },
             { data: "value" },
             {
                 data: null,
-                render: function (data, type, row) {
+                render: function (data) {
                     return data.meter.description;
                 }
             },
             {
                 data: null,
-                render: function (data, type, row, meta) {
+                render: function (data) {
                     if (data.readingDetails.readingDate !== latestDate) {
                         return "";
                     }

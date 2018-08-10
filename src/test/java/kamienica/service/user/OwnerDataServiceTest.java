@@ -27,7 +27,7 @@ public class OwnerDataServiceTest extends ServiceTest {
         final LocalDate expectedInvoiceDate = new LocalDate("2016-08-01");
 
         assertEquals(1, result.getEmptyApartments());
-        assertEquals(1, result.getNumOrResidences());
+        assertEquals(1, result.getNumOfResidences());
         assertEquals(expectedInvoiceDate, result.getOldestInvoice().getInvoiceDate());
         assertEquals(expectedReadingDate, result.getOldestReading().getReadingDate());
     }

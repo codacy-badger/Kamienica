@@ -11,7 +11,7 @@ import kamienica.feature.reading.IReadingService;
 import kamienica.feature.readingdetails.IReadingDetailsService;
 import kamienica.feature.residence.IResidenceService;
 import kamienica.feature.residenceownership.IResidenceOwnershipService;
-import kamienica.feature.security.SecurityServiceImpl;
+import kamienica.feature.security.SecurityImpl;
 import kamienica.feature.settings.ISettingsService;
 import kamienica.feature.tenant.ITenantService;
 import kamienica.feature.user.IUserService;
@@ -54,7 +54,7 @@ public abstract class ServiceTest {
     @Autowired
     protected IMeterService meterService;
     @Autowired
-    protected SecurityServiceImpl securityService;
+    protected SecurityImpl securityService;
     @Autowired
     protected IUserService userService;
     @Autowired

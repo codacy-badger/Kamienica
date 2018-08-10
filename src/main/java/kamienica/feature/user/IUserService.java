@@ -10,9 +10,9 @@ import java.util.Map;
 
 public interface IUserService {
 
-    Map<String, List<Reading>> getMapOfReadings();
+   List<Reading> getReadings();
 
-    Map<String, List<Payment>> getMapOfPayments();
+    List<Payment> getPayments();
 
     Tenant getTenantInfo();
 

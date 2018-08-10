@@ -1,5 +1,11 @@
 package kamienica.service.user;
 
+import static org.junit.Assert.assertEquals;
+import static org.powermock.api.mockito.PowerMockito.mockStatic;
+import static org.powermock.api.mockito.PowerMockito.when;
+
+import java.util.List;
+import java.util.Map;
 import kamienica.configuration.ServiceTest;
 import kamienica.core.util.SecurityDetails;
 import kamienica.model.entity.Payment;
@@ -9,13 +15,6 @@ import kamienica.model.entity.Tenant;
 import org.joda.time.LocalDate;
 import org.junit.Before;
 import org.junit.Test;
-
-import java.util.List;
-import java.util.Map;
-
-import static org.junit.Assert.assertEquals;
-import static org.powermock.api.mockito.PowerMockito.mockStatic;
-import static org.powermock.api.mockito.PowerMockito.when;
 
 public class UserServiceTest extends ServiceTest {
 
@@ -27,38 +26,18 @@ public class UserServiceTest extends ServiceTest {
 //TODO investigate why gas size was 9
     @Test
     public void getMapOfReadings() {
-        Map<String, List<Reading>> map = userService.getMapOfReadings();
-        assertEquals(3, map.size());
-
-        List<Reading> energy = map.get("ENERGY");
-        List<Reading> gas = map.get("GAS");
-        List<Reading> water = map.get("WATER");
-
-        assertEquals(6, energy.size());
-        assertEquals(6, gas.size());
-        assertEquals(6, water.size());
+      final List<Reading> list = userService.getReadings();
+      assertEquals(18, list.size());
     }
 
-    @Test
-    public void getMapOfPayments() {
-        Map<String, List<Payment>> map = userService.getMapOfPayments();
-        assertEquals(3, map.size());
-
-        List<Payment> energy = map.get("ENERGY");
-        List<Payment> gas = map.get("GAS");
-        List<Payment> water = map.get("WATER");
-
-        final Tenant tenant = getOwner();
-        for (Payment p : energy) {
-            assertEquals(tenant.getId(), p.getTenant().getId());
-        }
-        for (Payment p : gas) {
-            assertEquals(tenant.getId(), p.getTenant().getId());
-        }
-        for (Payment p : water) {
-            assertEquals(tenant.getId(), p.getTenant().getId());
-        }
+  @Test
+  public void getMapOfPayments() {
+    final List<Payment> list = userService.getPayments();
+    final Tenant tenant = getOwner();
+    for (Payment p : list) {
+      assertEquals(tenant.getId(), p.getTenant().getId());
     }
+  }
 
     @Test
     public void getTenantInfo() {

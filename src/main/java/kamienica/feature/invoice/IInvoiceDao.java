@@ -10,4 +10,6 @@ import java.util.List;
 public interface IInvoiceDao extends IBasicDao<Invoice> {
 
     List<Invoice> getList(Residence r, Media m);
+
+    Invoice getLatest(Residence r, Media m);
 }
