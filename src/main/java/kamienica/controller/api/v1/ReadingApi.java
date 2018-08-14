@@ -36,10 +36,6 @@ public class ReadingApi {
         final Residence residence = residenceService.getById(residence_id);
         SecurityDetails.checkIfOwnsResidence(residence);
         final List<Reading> list = readingService.getList(residence, Media.valueOf(media));
-
-        if (list.isEmpty()) {
-            return new ResponseEntity<Void>(HttpStatus.NOT_FOUND);
-        }
         return new ResponseEntity<>(list, HttpStatus.OK);
     }
 

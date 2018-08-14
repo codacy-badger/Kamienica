@@ -2,13 +2,10 @@ package kamienica.service.reading;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotEquals;
-import static org.powermock.api.mockito.PowerMockito.mockStatic;
-import static org.powermock.api.mockito.PowerMockito.when;
 
 import java.util.ArrayList;
 import java.util.List;
 import kamienica.configuration.ServiceTest;
-import kamienica.core.util.SecurityDetails;
 import kamienica.model.entity.Invoice;
 import kamienica.model.entity.Meter;
 import kamienica.model.entity.Reading;
@@ -19,8 +16,10 @@ import kamienica.model.enums.Media;
 import org.joda.time.LocalDate;
 import org.junit.Before;
 import org.junit.Test;
+import org.springframework.security.test.context.support.WithUserDetails;
 import org.springframework.transaction.annotation.Transactional;
 
+@WithUserDetails(ServiceTest.OWNER)
 public class ReadingGasServiceTest extends ServiceTest {
 
     private static final LocalDate FIRST_OCTOBER = LocalDate.parse("2016-10-01");
@@ -70,8 +69,6 @@ public class ReadingGasServiceTest extends ServiceTest {
     @Transactional
     @Test
     public void add() {
-        mockStatic(SecurityDetails.class);
-        when(SecurityDetails.getResidencesForOwner()).thenReturn(getMockedResidences());
         List<Meter> list = meterService.getListForOwner(Media.GAS);
         List<Reading> readingsToSave = new ArrayList<>();
         final ReadingDetails details = new ReadingDetails(LocalDate.parse("2050-01-01"), Media.GAS, residence);

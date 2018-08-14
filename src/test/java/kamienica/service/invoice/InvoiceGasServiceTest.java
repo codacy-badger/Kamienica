@@ -1,22 +1,24 @@
 package kamienica.service.invoice;
 
+import static org.junit.Assert.assertEquals;
+
+import java.util.List;
 import kamienica.configuration.ServiceTest;
-import kamienica.core.util.SecurityDetails;
-import kamienica.model.entity.*;
+import kamienica.model.entity.Invoice;
+import kamienica.model.entity.Payment;
+import kamienica.model.entity.ReadingDetails;
+import kamienica.model.entity.Residence;
+import kamienica.model.entity.Settings;
 import kamienica.model.enums.Media;
 import kamienica.model.enums.WaterHeatingSystem;
 import org.joda.time.LocalDate;
 import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
+import org.springframework.security.test.context.support.WithUserDetails;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.List;
-
-import static org.junit.Assert.assertEquals;
-import static org.powermock.api.mockito.PowerMockito.mockStatic;
-import static org.powermock.api.mockito.PowerMockito.when;
-
+@WithUserDetails(ServiceTest.OWNER)
 public class InvoiceGasServiceTest extends ServiceTest {
 
     private Residence r;
@@ -28,19 +30,12 @@ public class InvoiceGasServiceTest extends ServiceTest {
 
     @Test
     public void getList() {
-        mockStatic(SecurityDetails.class);
-        when(SecurityDetails.getResidencesForOwner()).thenReturn(getMockedResidences());
-        when(SecurityDetails.getResidenceForOwner(1L)).thenReturn(r);
         assertEquals(1, invoiceService.list(Media.GAS, r.getId()).size());
     }
 
     @Test
     @Transactional
     public void add() {
-        mockStatic(SecurityDetails.class);
-        when(SecurityDetails.getLoggedTenant()).thenReturn(getOwner());
-        when(SecurityDetails.getResidencesForOwner()).thenReturn(getMockedResidences());
-        when(SecurityDetails.getResidenceForOwner(1L)).thenReturn(r);
         List<ReadingDetails> list = readingDetailsService.getUnresolved(r, Media.GAS);
         assertEquals(2, list.size());
         Invoice invoice = new Invoice("112233", TODAY, 200, r, list.get(1), Media.GAS);
@@ -63,11 +58,6 @@ public class InvoiceGasServiceTest extends ServiceTest {
     @Test
     @Transactional
     public void addForFirstReadingWithSharedWaterHeating() {
-        mockStatic(SecurityDetails.class);
-        when(SecurityDetails.getLoggedTenant()).thenReturn(getOwner());
-        when(SecurityDetails.getResidencesForOwner()).thenReturn(getMockedResidences());
-        when(SecurityDetails.getResidenceForOwner(1L)).thenReturn(r);
-
         List<ReadingDetails> list = readingDetailsService.getUnresolved(r, Media.GAS);
         assertEquals(2, list.size());
         Invoice invoice = new Invoice("112233", TODAY, 200, r, list.get(0), Media.GAS);
@@ -94,15 +84,10 @@ public class InvoiceGasServiceTest extends ServiceTest {
      * Since there is still a CWU meter and it's readings that impacy the final value
      *
      * */
-
     @Ignore
     @Test
     @Transactional
     public void addForFirstReadingWithSeparateWaterHeating() {
-        mockStatic(SecurityDetails.class);
-        when(SecurityDetails.getLoggedTenant()).thenReturn(getOwner());
-        when(SecurityDetails.getResidencesForOwner()).thenReturn(getMockedResidences());
-
         List<ReadingDetails> list = readingDetailsService.getUnresolved(r, Media.GAS);
         Settings setings = settingsService.getSettings(getOWnersResidence());
         setings.setWaterHeatingSystem(WaterHeatingSystem.INDIVIDUAL);
@@ -141,6 +126,4 @@ public class InvoiceGasServiceTest extends ServiceTest {
         List<ReadingDetails> list = readingDetailsService.getUnresolved(r, Media.GAS);
         assertEquals(2, list.size());
     }
-
-
 }

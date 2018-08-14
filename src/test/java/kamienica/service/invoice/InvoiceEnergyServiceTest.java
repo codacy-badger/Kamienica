@@ -1,7 +1,10 @@
 package kamienica.service.invoice;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
+
+import java.util.List;
 import kamienica.configuration.ServiceTest;
-import kamienica.core.util.SecurityDetails;
 import kamienica.model.entity.Invoice;
 import kamienica.model.entity.Payment;
 import kamienica.model.entity.ReadingDetails;
@@ -10,19 +13,13 @@ import kamienica.model.enums.Media;
 import org.joda.time.LocalDate;
 import org.junit.Before;
 import org.junit.Test;
+import org.springframework.security.test.context.support.WithUserDetails;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.List;
-
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
-import static org.powermock.api.mockito.PowerMockito.mockStatic;
-import static org.powermock.api.mockito.PowerMockito.when;
-
+@WithUserDetails(ServiceTest.OWNER)
 public class InvoiceEnergyServiceTest extends ServiceTest {
 
     private Residence residence;
-
 
     @Before
     public void initData() {
@@ -31,21 +28,12 @@ public class InvoiceEnergyServiceTest extends ServiceTest {
 
     @Test
     public void getList() {
-        mockStatic(SecurityDetails.class);
-        when(SecurityDetails.getLoggedTenant()).thenReturn(tenantService.getById(1L));
-        when(SecurityDetails.getResidencesForOwner()).thenReturn(getMockedResidences());
-        when(SecurityDetails.getResidenceForOwner(1L)).thenReturn(residence);
         assertEquals(1, invoiceService.list(Media.ENERGY, residence.getId()).size());
-
     }
 
     @Transactional
     @Test
     public void add() {
-        mockStatic(SecurityDetails.class);
-        when(SecurityDetails.getLoggedTenant()).thenReturn(tenantService.getById(1L));
-        when(SecurityDetails.getResidencesForOwner()).thenReturn(getMockedResidences());
-        when(SecurityDetails.getResidenceForOwner(1L)).thenReturn(residence);
         List<ReadingDetails> list = readingDetailsService.getUnresolved(residence, Media.ENERGY);
         assertEquals(2, list.size());
 
@@ -68,10 +56,6 @@ public class InvoiceEnergyServiceTest extends ServiceTest {
     @Transactional
     @Test
     public void addForFirstReading() {
-        mockStatic(SecurityDetails.class);
-        when(SecurityDetails.getLoggedTenant()).thenReturn(tenantService.getById(1L));
-        when(SecurityDetails.getResidencesForOwner()).thenReturn(getMockedResidences());
-        when(SecurityDetails.getResidenceForOwner(1L)).thenReturn(residence);
         List<ReadingDetails> details = readingDetailsService.getUnresolved(residence, Media.ENERGY);
         assertEquals(2, details.size());
 
@@ -100,8 +84,6 @@ public class InvoiceEnergyServiceTest extends ServiceTest {
         List<Invoice> invoices = invoiceService.list(Media.ENERGY, residence.getId());
         assertTrue(invoices.isEmpty());
         assertEquals(3, details.size());
-
     }
-
 }
 

@@ -1,7 +1,9 @@
 package kamienica.service.invoice;
 
+import static org.junit.Assert.assertEquals;
+
+import java.util.List;
 import kamienica.configuration.ServiceTest;
-import kamienica.core.util.SecurityDetails;
 import kamienica.model.entity.Invoice;
 import kamienica.model.entity.Payment;
 import kamienica.model.entity.ReadingDetails;
@@ -10,14 +12,10 @@ import kamienica.model.enums.Media;
 import org.joda.time.LocalDate;
 import org.junit.Before;
 import org.junit.Test;
+import org.springframework.security.test.context.support.WithUserDetails;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.List;
-
-import static org.junit.Assert.assertEquals;
-import static org.powermock.api.mockito.PowerMockito.mockStatic;
-import static org.powermock.api.mockito.PowerMockito.when;
-
+@WithUserDetails(ServiceTest.OWNER)
 public class InvoiceWaterServiceTest extends ServiceTest {
 
     private Residence r;
@@ -29,26 +27,17 @@ public class InvoiceWaterServiceTest extends ServiceTest {
 
     @Test
     public void getList() {
-        mockStatic(SecurityDetails.class);
-        when(SecurityDetails.getResidenceForOwner(1L)).thenReturn(r);
-        when(SecurityDetails.getResidencesForOwner()).thenReturn(getMockedResidences());
         assertEquals(1, invoiceService.list(Media.WATER, r.getId()).size());
     }
 
     @Test
     @Transactional
     public void add() {
-        mockStatic(SecurityDetails.class);
-        when(SecurityDetails.getResidenceForOwner(1L)).thenReturn(r);
-        when(SecurityDetails.getLoggedTenant()).thenReturn(getOwner());
-        when(SecurityDetails.getResidencesForOwner()).thenReturn(getMockedResidences());
-
         List<ReadingDetails> list = readingDetailsService.getUnresolved( r, Media.WATER);
         assertEquals(2, list.size());
         Invoice invoice = new Invoice("112233", TODAY, 200, r, list.get(1), Media.WATER);
 
         invoiceService.save(invoice);
-        when(SecurityDetails.getLoggedTenant()).thenReturn(tenantService.getById(1L));
         assertEquals(2, invoiceService.list(Media.WATER, r.getId()).size());
         List<Payment> paymentList = paymentService.getPaymentList(Media.WATER);
 
@@ -66,17 +55,12 @@ public class InvoiceWaterServiceTest extends ServiceTest {
     @Test
     @Transactional
     public void addForFirstReading() {
-        mockStatic(SecurityDetails.class);
-        when(SecurityDetails.getResidenceForOwner(1L)).thenReturn(r);
-        when(SecurityDetails.getLoggedTenant()).thenReturn(getOwner());
-        when(SecurityDetails.getResidencesForOwner()).thenReturn(getMockedResidences());
         List<ReadingDetails> list = readingDetailsService.getUnresolved( r, Media.WATER);
 
         assertEquals(2, list.size());
         Invoice invoice = new Invoice("112233", TODAY, 200, r, list.get(0), Media.WATER);
 
         invoiceService.save(invoice);
-        when(SecurityDetails.getLoggedTenant()).thenReturn(tenantService.getById(1L));
         assertEquals(2, invoiceService.list(Media.WATER, r.getId()).size());
         List<Payment> paymentList = paymentService.getPaymentList(Media.WATER);
 
@@ -100,12 +84,9 @@ public class InvoiceWaterServiceTest extends ServiceTest {
 
     }
 
-
     @Test
     public void prepareForRegistration() {
         List<ReadingDetails> list = readingDetailsService.getUnresolved( r, Media.WATER);
         assertEquals(2, list.size());
     }
-
-
 }

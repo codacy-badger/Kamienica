@@ -1,22 +1,25 @@
 package kamienica.service.reading;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotEquals;
+
+import java.util.ArrayList;
+import java.util.List;
 import kamienica.configuration.ServiceTest;
-import kamienica.core.util.SecurityDetails;
-import kamienica.model.entity.*;
+import kamienica.model.entity.Invoice;
+import kamienica.model.entity.Meter;
+import kamienica.model.entity.Reading;
+import kamienica.model.entity.ReadingDetails;
+import kamienica.model.entity.ReadingForm;
+import kamienica.model.entity.Residence;
 import kamienica.model.enums.Media;
 import org.joda.time.LocalDate;
 import org.junit.Before;
 import org.junit.Test;
+import org.springframework.security.test.context.support.WithUserDetails;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotEquals;
-import static org.powermock.api.mockito.PowerMockito.mockStatic;
-import static org.powermock.api.mockito.PowerMockito.when;
-
+@WithUserDetails(ServiceTest.OWNER)
 public class ReadingWaterServiceTest extends ServiceTest {
 
     private Residence r;
@@ -71,7 +74,6 @@ public class ReadingWaterServiceTest extends ServiceTest {
 
     @Test
     public void getPreviousReadings() {
-        List<Meter> meters = meterService.list(r, Media.WATER);
         List<Reading> list = readingService.getPreviousReadingForWarmWater(r, Media.WATER, LocalDate.parse("2016-09-01"));
         assertEquals(7, list.size());
         for (Reading readingWater : list) {
@@ -83,9 +85,7 @@ public class ReadingWaterServiceTest extends ServiceTest {
     @Transactional
     @Test
     public void add() {
-        mockStatic(SecurityDetails.class);
         List<Residence> residences = getMockedResidences();
-        when(SecurityDetails.getResidencesForOwner()).thenReturn(residences);
         List<Meter> list = meterService.getListForOwner(Media.WATER);
         List<Reading> toSave = new ArrayList<>();
         final LocalDate dateForNewReadings = LocalDate.parse("2050-01-01");

@@ -19,48 +19,55 @@ import java.util.List;
 @Repository("readingDetails")
 public class ReadingDetailsDao extends BasicDao<ReadingDetails> implements IReadingDetailsDao {
 
+    private static final String RESIDENCE = "residence";
+    private static final String MEDIA = "media";
+    private static final String READING_DATE = "readingDate";
+
     @Override
     public ReadingDetails getLatest(final Residence residence, final Media media) {
         final DetachedCriteria detachedCriteria = DetachedCriteria.forClass(ReadingDetails.class);
-        detachedCriteria.add(Restrictions.eq("residence", residence));
-        detachedCriteria.add(Restrictions.eq("media", media));
-        detachedCriteria.setProjection(Projections.max("readingDate"));
+        detachedCriteria.add(Restrictions.eq(RESIDENCE, residence));
+        detachedCriteria.add(Restrictions.eq(MEDIA, media));
+        detachedCriteria.setProjection(Projections.max(READING_DATE));
 
-        final Criteria c = createEntityCriteria();
-        c.add(Restrictions.eq("residence", residence));
-        c.add(Restrictions.eq("media", media));
-        c.add(Property.forName("readingDate").eq(detachedCriteria));
+        final Criteria c = createCriteria(residence, media, detachedCriteria);
 
         return (ReadingDetails) c.uniqueResult();
     }
 
     @Override
-    public ReadingDetails getLatestPriorToDate(LocalDate date, Residence residence, Media media) {
+    public ReadingDetails getLatestPriorToDate(final LocalDate date, final Residence residence, final Media media) {
         final DetachedCriteria detachedCriteria = DetachedCriteria.forClass(ReadingDetails.class);
-        detachedCriteria.add(Restrictions.eq("residence", residence));
-        detachedCriteria.add(Restrictions.eq("media", media));
-        detachedCriteria.add(Restrictions.lt("readingDate", date));
-        detachedCriteria.setProjection(Projections.max("readingDate"));
+        detachedCriteria.add(Restrictions.eq(RESIDENCE, residence));
+        detachedCriteria.add(Restrictions.eq(MEDIA, media));
+        detachedCriteria.add(Restrictions.lt(READING_DATE, date));
+        detachedCriteria.setProjection(Projections.max(READING_DATE));
 
-        final Criteria c = createEntityCriteria();
-        c.add(Restrictions.eq("residence", residence));
-        c.add(Restrictions.eq("media", media));
-        c.add(Property.forName("readingDate").eq(detachedCriteria));
+        final Criteria c = createCriteria(residence, media, detachedCriteria);
 
         return (ReadingDetails) c.uniqueResult();
+    }
+
+    private Criteria createCriteria(Residence residence, Media media,
+        DetachedCriteria detachedCriteria) {
+        final Criteria c = createEntityCriteria();
+        c.add(Restrictions.eq(RESIDENCE, residence));
+        c.add(Restrictions.eq(MEDIA, media));
+        c.add(Property.forName(READING_DATE).eq(detachedCriteria));
+        return c;
     }
 
     @Override
     public List<ReadingDetails> getUnresolved(final Residence residence, final Media media) {
-        final Criterion resCrit = Restrictions.eq("residence", residence);
-        final Criterion medCrit = Restrictions.eq("media", media);
+        final Criterion resCrit = Restrictions.eq(RESIDENCE, residence);
+        final Criterion medCrit = Restrictions.eq(MEDIA, media);
         final Criterion unresvldCrit = Restrictions.eq("resolvement", Resolvement.UNRESOLVED);
         return findByCriteria(resCrit, medCrit, unresvldCrit);
     }
 
     @Override
     public List<ReadingDetails> getUnresolved(Media media) {
-        final Criterion medCrit = Restrictions.eq("media", media);
+        final Criterion medCrit = Restrictions.eq(MEDIA, media);
         final Criterion unresvldCrit = Restrictions.eq("resolvement", Resolvement.UNRESOLVED);
         return findByCriteria(medCrit, unresvldCrit);
     }

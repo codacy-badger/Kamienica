@@ -1,5 +1,6 @@
 package kamienica.feature.settings;
 
+import java.util.List;
 import kamienica.model.entity.Residence;
 import kamienica.model.entity.Settings;
 import org.hibernate.criterion.Restrictions;
@@ -7,16 +8,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.List;
-
 @Service
 @Transactional
-public class SettingsServiceImpl implements ISettingsService {
+public class SettingsService implements ISettingsService {
 
 	private final ISettingsDao dao;
 
 	@Autowired
-	public SettingsServiceImpl(ISettingsDao dao) {
+	public SettingsService(ISettingsDao dao) {
 		this.dao = dao;
 	}
 
@@ -31,7 +30,7 @@ public class SettingsServiceImpl implements ISettingsService {
     }
 
     @Override
-    public void save(Settings settings) {
+    public void save(final Settings settings) {
         if (settings.getId() == null) {
             dao.save(settings);
         } else {

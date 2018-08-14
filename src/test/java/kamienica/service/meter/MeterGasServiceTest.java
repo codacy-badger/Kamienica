@@ -1,36 +1,30 @@
 package kamienica.service.meter;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
+
+import java.util.List;
+import java.util.Set;
 import kamienica.configuration.ServiceTest;
-import kamienica.core.util.SecurityDetails;
 import kamienica.model.entity.Meter;
 import kamienica.model.entity.Residence;
 import kamienica.model.enums.Media;
 import kamienica.model.enums.Status;
 import org.junit.Test;
+import org.springframework.security.test.context.support.WithUserDetails;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.List;
-import java.util.Set;
-
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
-import static org.powermock.api.mockito.PowerMockito.mockStatic;
-import static org.powermock.api.mockito.PowerMockito.when;
-
+@WithUserDetails(ServiceTest.OWNER)
 public class MeterGasServiceTest extends ServiceTest {
 
     @Test
     public void getListForOwner() {
-        List<Residence> residenceList = getMockedResidences();
-        mockStatic(SecurityDetails.class);
-        when(SecurityDetails.getResidencesForOwner()).thenReturn(residenceList);
         assertEquals(6, meterService.getListForOwner(Media.GAS).size());
-
     }
 
     @Test
     public void getList() {
-        List<Meter> list = meterService.list(Media.GAS);
+        final List<Meter> list = meterService.list(Media.GAS);
         assertEquals(7, list.size());
     }
 
@@ -53,7 +47,6 @@ public class MeterGasServiceTest extends ServiceTest {
         final boolean result = meterService.ifMainExists(Media.GAS);
         assertTrue(result);
     }
-
 
     @Test
     @Transactional

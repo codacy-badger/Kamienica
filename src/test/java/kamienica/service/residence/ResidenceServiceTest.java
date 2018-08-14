@@ -1,37 +1,27 @@
-package kamienica.service;
+package kamienica.service.residence;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+
+import java.util.List;
 import kamienica.configuration.ServiceTest;
-import kamienica.core.util.SecurityDetails;
 import kamienica.model.entity.Apartment;
 import kamienica.model.entity.Meter;
 import kamienica.model.entity.Residence;
 import kamienica.model.entity.ResidenceOwnership;
-import kamienica.model.entity.Tenant;
 import kamienica.model.enums.Media;
 import org.hibernate.exception.ConstraintViolationException;
 import org.junit.Test;
+import org.springframework.security.test.context.support.WithUserDetails;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.List;
-
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.powermock.api.mockito.PowerMockito.mockStatic;
-import static org.powermock.api.mockito.PowerMockito.when;
-
+@WithUserDetails(ServiceTest.OWNER)
 public class ResidenceServiceTest extends ServiceTest {
 
     @Test
     @Transactional
     public void save() {
         final Residence res = new Residence("New", "Test", "Warszawa");
-
-        final Tenant t = getOwner();
-        List<Residence> residences = getMockedResidences();
-
-        mockStatic(SecurityDetails.class);
-        when(SecurityDetails.getResidencesForOwner()).thenReturn(residences);
-        when(SecurityDetails.getLoggedTenant()).thenReturn(t);
         residenceService.save(res);
 
         final List<Residence> result = residenceService.getList();
@@ -44,23 +34,16 @@ public class ResidenceServiceTest extends ServiceTest {
         assertEquals(7, ap.size());
 
         final List<Meter> meterEnergies = meterService.getListForOwner(Media.ENERGY);
-        assertEquals(5, meterEnergies.size());
-
+        assertEquals(6, meterEnergies.size());
     }
 
     @Test(expected = ConstraintViolationException.class)
-    @Transactional
     public void shouldThrowException() {
-        mockStatic(SecurityDetails.class);
-        Tenant t = tenantService.getById(1L);
-        when(SecurityDetails.getLoggedTenant()).thenReturn(t);
-
-        final Residence res = new Residence("Świętojańska", "45", "Gdynia");
-
-
+        final Residence res = new Residence("Swietojanska", "45", "Gdynia");
+        System.out.println(residenceService.getList());
         residenceService.save(res);
-
         final List<Residence> result = residenceService.getList();
+        System.out.println(residenceService.getList());
         assertEquals(2, result.size());
     }
 
@@ -68,42 +51,32 @@ public class ResidenceServiceTest extends ServiceTest {
     @Transactional
     public void update() {
         final String city = "Sopot";
-        Residence residence = residenceService.getById(1L);
+        final Residence residence = residenceService.getById(1L);
         residence.setCity(city);
         residenceService.update(residence);
-        residence = residenceService.getById(1L);
-        assertEquals(city, residence.getCity());
+        final Residence result = residenceService.getById(1L);
+        assertEquals(city, result.getCity());
     }
 
     @Test
-    @Transactional
     public void getList() {
         final List<Residence> result = residenceService.getList();
         assertEquals(2, result.size());
     }
 
     @Test
-    @Transactional
     public void getListForTenant() {
-        Tenant t = tenantService.getById(1L);
-        mockStatic(SecurityDetails.class);
-        when(SecurityDetails.getLoggedTenant()).thenReturn(t);
-
         final List<Residence> result = residenceService.listForOwner();
         assertEquals(1, result.size());
     }
 
     @Test
     public void getListForOwner() {
-        Tenant t = tenantService.getById(1L);
-        when(SecurityDetails.getLoggedTenant()).thenReturn(t);
-
         final List<Residence> residences = residenceService.listForOwner();
         assertEquals(1, residences.size());
     }
 
     @Test
-    @Transactional
     public void getById() {
         final Residence result = residenceService.getById(1L);
         assertNotNull(result);

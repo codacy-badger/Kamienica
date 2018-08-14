@@ -79,7 +79,7 @@ public class OwnerDataService implements IOwnerDataService {
         for (final Media media : Media.values()) {
             ownerResidences.forEach(residence -> {
                 final Invoice invoice = invoiceDao.getLatest(residence, media);
-                invoiceList.add(invoice);
+                if(invoice != null) invoiceList.add(invoice);
             });
         }
         return invoiceList.stream()
@@ -92,7 +92,7 @@ public class OwnerDataService implements IOwnerDataService {
         for (final Residence r : ownerResidences) {
             for (final Media media : Media.values()) {
                 final ReadingDetails details = readingDetailsDao.getLatest(r, media);
-                readingDetailsList.add(details);
+                if(details != null) readingDetailsList.add(details);
             }
         }
         return readingDetailsList.stream().min(Comparator.comparing(ReadingDetails::getReadingDate)).get();

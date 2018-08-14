@@ -1,5 +1,8 @@
 package kamienica.service.reading;
 
+import static org.junit.Assert.assertEquals;
+
+import java.util.List;
 import kamienica.configuration.ServiceTest;
 import kamienica.model.entity.ReadingDetails;
 import kamienica.model.entity.Residence;
@@ -7,10 +10,6 @@ import kamienica.model.enums.Media;
 import org.joda.time.LocalDate;
 import org.junit.Before;
 import org.junit.Test;
-
-import java.util.List;
-
-import static org.junit.Assert.assertEquals;
 
 public class ReadingDetailsServiceTest extends ServiceTest {
 
@@ -69,6 +68,4 @@ public class ReadingDetailsServiceTest extends ServiceTest {
         assertEquals(2, water.size());
 
     }
-
-
 }

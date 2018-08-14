@@ -1,5 +1,9 @@
-package kamienica.service;
+package kamienica.service.security;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
+
+import java.util.Collection;
 import kamienica.configuration.ServiceTest;
 import kamienica.model.entity.Tenant;
 import org.junit.Test;
@@ -7,14 +11,10 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.test.context.support.WithUserDetails;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.Collection;
-
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
-
-@Transactional
+@WithUserDetails(ServiceTest.OWNER)
 public class SecurityServiceTest extends ServiceTest {
 
     private static final String USER_PASSWD = "witaj";

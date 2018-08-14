@@ -1,17 +1,13 @@
 package kamienica.service.stresstest;
 
 import static org.junit.Assert.assertTrue;
-import static org.powermock.api.mockito.PowerMockito.mockStatic;
-import static org.powermock.api.mockito.PowerMockito.when;
 
 import java.util.ArrayList;
 import java.util.List;
 import kamienica.configuration.ServiceTest;
-import kamienica.core.util.SecurityDetails;
 import kamienica.model.entity.Apartment;
 import kamienica.model.entity.Meter;
 import kamienica.model.entity.Residence;
-import kamienica.model.entity.Tenant;
 import kamienica.model.enums.Media;
 import org.junit.BeforeClass;
 import org.junit.Ignore;
@@ -36,9 +32,6 @@ public class StressTest extends ServiceTest {
     @Ignore("unable to pass on travis CI")
     @Test
     public void stressTest() {
-        mockStatic(SecurityDetails.class);
-        Tenant t = tenantService.getById(1L);
-        when(SecurityDetails.getLoggedTenant()).thenReturn(t);
 
         final long start = System.currentTimeMillis();
         LOGGER.info("Start");

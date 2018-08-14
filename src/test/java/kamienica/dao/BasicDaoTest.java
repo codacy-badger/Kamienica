@@ -68,5 +68,4 @@ public class BasicDaoTest extends DaoTest {
         final long resultedId = result.getId();
         assertEquals(1L, resultedId);
     }
-
 }

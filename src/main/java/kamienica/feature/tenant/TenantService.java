@@ -42,6 +42,7 @@ public class TenantService implements ITenantService {
         }
 
         final Tenant currentTenant = findCurrentTenant(newTenant);
+
         if(shouldDeactiveCurentTenant(currentTenant, newTenant)) {
             final LocalDate deactivationDate = newTenant.getRentContract().getContractStart().minusDays(1);
             currentTenant.getRentContract().setContractEnd(deactivationDate);
@@ -57,6 +58,9 @@ public class TenantService implements ITenantService {
     }
 
     private boolean shouldDeactivateNewTenant(final Tenant currentTenant, final Tenant newTenant) {
+        if(currentTenant == null) {
+            return false;
+        }
         final RentContract newContract = newTenant.getRentContract();
         final RentContract currentContract = currentTenant.getRentContract();
         //new tenant actually lives before the current one (in case the historical data is being inserted)

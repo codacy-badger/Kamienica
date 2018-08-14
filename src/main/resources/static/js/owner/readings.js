@@ -15,6 +15,7 @@ $(document).ready(function () {
         residenceArrayIndex = $(this).val();
         media = $("input[name=mediaChoice]:checked").val();
         drawTableFromEndpoint();
+        clearForm();
     });
 
     $("#mediaRadio").change(function () {
@@ -40,10 +41,10 @@ $(document).ready(function () {
             dataType: "json",
             success: function (data) {
                 showModal("Sukces", "Dane zostały zapisane w bazie");
-                if (edit) {
-                    objectList[listIndex] = data;
+                if (isNewEntity) {
+                  objectList.push(data);
                 } else {
-                    objectList.push(data);
+                  objectList[listIndex] = data;
                 }
                 drawTable();
                 toggleForm();
@@ -140,14 +141,15 @@ drawTableFromEndpoint = function () {
             objectList = result;
             findLatestReadings(result);
             drawTable();
-            findActiveMeters();
         }
+      latestReadings.length = 0;
+      secondLatestReadings.length = 0;
+      findActiveMeters();
     });
 };
 
 findLatestReadings = function (list) {
-  latestReadings.length = 0;
-  secondLatestReadings.length = 0;
+
   const latestDate = objectList[0].readingDetails.readingDate;
   let secondLatestDate;
   for (let i = 0; i < list.length; i++) {

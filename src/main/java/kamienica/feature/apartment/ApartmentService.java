@@ -38,7 +38,7 @@ public class ApartmentService implements IApartmentService {
 
     @Override
     public List<Apartment> listForOwner() {
-        List<Residence> residences = SecurityDetails.getResidencesForOwner();
+        final List<Residence> residences = SecurityDetails.getResidencesForOwner();
         return apartmentDAO.findForResidence(residences);
     }
 

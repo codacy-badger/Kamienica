@@ -62,7 +62,6 @@ public class PurgeService implements IPurgeService {
         deleteOwnership(res);
         deleteSetting(res);
         deleteApartmentsAndTenants(res);
-        deleteResidence(residence);
         SecurityDetails.removeResidenceFromPrincipal(residence);
     }
 
