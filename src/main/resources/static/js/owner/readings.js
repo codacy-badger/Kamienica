@@ -134,6 +134,8 @@ editEntity = function () {
 drawTableFromEndpoint = function () {
     const finalUrl = `${baseUrl}?media=${media}&residence_id=${residences[residenceArrayIndex].id}`;
     $.getJSON(finalUrl, function (result) {
+      latestReadings.length = 0;
+      secondLatestReadings.length = 0;
         if (result.length === 0) {
             $("#tableContent").hide();
             $("#apartmentsInput").children().remove();
@@ -142,8 +144,6 @@ drawTableFromEndpoint = function () {
             findLatestReadings(result);
             drawTable();
         }
-      latestReadings.length = 0;
-      secondLatestReadings.length = 0;
       findActiveMeters();
     });
 };
