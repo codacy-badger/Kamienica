@@ -96,11 +96,15 @@ public class PurgeService implements IPurgeService {
         final List<Invoice> invoices = invoiceDao.getList(residence, Media.ENERGY);
         invoices.addAll(invoiceDao.getList(residence, Media.GAS));
         invoices.addAll(invoiceDao.getList(residence, Media.WATER));
-        final Criterion invoiceCriterion = Restrictions.in("invoice", invoices);
 
-        final List<Payment> payments = paymentDao.findByCriteria(invoiceCriterion);
-        paymentDao.delete(payments);
-        invoiceDao.delete(invoices);
+        if(!invoices.isEmpty()) {
+            final Criterion invoiceCriterion = Restrictions.in("invoice", invoices);
+
+            final List<Payment> payments = paymentDao.findByCriteria(invoiceCriterion);
+
+            payments.forEach(paymentDao::delete);
+            invoices.forEach(invoiceDao::delete);
+        }
     }
 
     private void deleteMeters(final Criterion res) {

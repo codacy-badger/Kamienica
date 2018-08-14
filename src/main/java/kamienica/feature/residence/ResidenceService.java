@@ -6,13 +6,16 @@ import kamienica.core.util.SecurityDetails;
 import kamienica.feature.apartment.IApartmentDao;
 import kamienica.feature.meter.IMeterDao;
 import kamienica.feature.residenceownership.IResidenceOwnershipDao;
+import kamienica.feature.settings.ISettingsDao;
 import kamienica.model.entity.Apartment;
 import kamienica.model.entity.Meter;
 import kamienica.model.entity.Residence;
 import kamienica.model.entity.ResidenceOwnership;
+import kamienica.model.entity.Settings;
 import kamienica.model.entity.Tenant;
 import kamienica.model.enums.Media;
 import kamienica.model.enums.Status;
+import kamienica.model.enums.WaterHeatingSystem;
 import org.hibernate.criterion.Criterion;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,16 +30,18 @@ public class ResidenceService implements IResidenceService {
     private final IResidenceOwnershipDao residenceOwnershipDao;
     private final IApartmentDao apartmentDao;
     private final IMeterDao meterDao;
-    private final IPurgeService purgeService;
+    private final ISettingsDao settingsDao;
 
     @Autowired
-    public ResidenceService(final IResidenceDao residenceDao, final IResidenceOwnershipDao residenceOwnershipDao,
-                            final IApartmentDao apartmentDao, final IMeterDao meterDao, final IPurgeService purgeService) {
+    public ResidenceService(final IResidenceDao residenceDao,
+        final IResidenceOwnershipDao residenceOwnershipDao,
+        final IApartmentDao apartmentDao, final IMeterDao meterDao,
+        final ISettingsDao settingsDao) {
         this.residenceDao = residenceDao;
         this.residenceOwnershipDao = residenceOwnershipDao;
         this.apartmentDao = apartmentDao;
         this.meterDao = meterDao;
-        this.purgeService = purgeService;
+        this.settingsDao = settingsDao;
     }
 
     @Override
@@ -58,6 +63,9 @@ public class ResidenceService implements IResidenceService {
         meterDao.save(me);
         meterDao.save(mg);
         meterDao.save(mw);
+
+        final Settings settings = new Settings(WaterHeatingSystem.INDIVIDUAL, residence);
+        settingsDao.save(settings);
     }
 
     @Override
@@ -89,8 +97,4 @@ public class ResidenceService implements IResidenceService {
         return residenceDao.getById(id);
     }
 
-    @Override
-    public void delete(final Residence residence) {
-        purgeService.purgeData(residence);
-    }
 }

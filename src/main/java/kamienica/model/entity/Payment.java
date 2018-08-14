@@ -1,6 +1,7 @@
 package kamienica.model.entity;
 
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import kamienica.core.util.CommonUtils;
 import kamienica.core.util.JodaDateSerializer;
 import org.hibernate.annotations.Type;
 import org.joda.time.LocalDate;
@@ -31,9 +32,9 @@ public class Payment {
     public Payment() {
     }
 
-    public Payment(LocalDate paymentDate, double paymentAmount, Tenant tenant, Invoice invoice) {
-        this.paymentDate = paymentDate;
-        this.paymentAmount = paymentAmount;
+    public Payment(final double paymentAmount, final Tenant tenant, final Invoice invoice) {
+        this.paymentDate = LocalDate.now();
+        setPaymentAmount(paymentAmount);
         this.tenant = tenant;
         this.invoice = invoice;
     }
@@ -59,7 +60,7 @@ public class Payment {
     }
 
     public void setPaymentAmount(double paymentAmount) {
-        this.paymentAmount = paymentAmount;
+        this.paymentAmount = CommonUtils.decimalFormat(paymentAmount);;
     }
 
     public Tenant getTenant() {

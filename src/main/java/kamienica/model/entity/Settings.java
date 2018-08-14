@@ -19,8 +19,7 @@ public class Settings {
 	public Settings() {
 	}
 
-	public Settings(Long id, WaterHeatingSystem waterHeatingSystem, Residence residence) {
-		this.id = id;
+	public Settings(final WaterHeatingSystem waterHeatingSystem, final Residence residence) {
 		this.waterHeatingSystem = waterHeatingSystem;
 		this.residence = residence;
 	}
