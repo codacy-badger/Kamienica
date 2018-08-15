@@ -47,7 +47,7 @@ public class ApartmentApiTest {
     private static final List<Apartment> APARTMENTS_FOR_RES_1 = new ArrayList<>();
 
     @BeforeClass
-    public static void setup() {
+    public static void setUp() {
         IntStream.range(1, 4).forEach(i -> {
             final Apartment forResOne = new Apartment(RESIDENCE_ONE, i, "a", String.valueOf(i));
             final Apartment forResTwo = new Apartment(RESIDENCE_TWO, i, "a", String.valueOf(i));
