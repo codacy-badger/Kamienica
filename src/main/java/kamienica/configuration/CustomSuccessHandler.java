@@ -17,16 +17,18 @@ import java.util.List;
 @Component
 public class CustomSuccessHandler extends SimpleUrlAuthenticationSuccessHandler {
 
-	private RedirectStrategy redirectStrategy = new DefaultRedirectStrategy();
+	private final RedirectStrategy redirectStrategy = new DefaultRedirectStrategy();
 
 	@Override
 	protected void handle(final HttpServletRequest request, final HttpServletResponse response,
-						  final Authentication authentication)
-			throws IOException {
+						  final Authentication authentication) throws IOException {
+
 		final String targetUrl = determineTargetUrl(authentication);
+
 		if (response.isCommitted()) {
 			return;
 		}
+
 		redirectStrategy.sendRedirect(request, response, targetUrl);
 	}
 
@@ -60,15 +62,5 @@ public class CustomSuccessHandler extends SimpleUrlAuthenticationSuccessHandler 
 	private boolean isAdmin(List<String> roles) {
         return roles.contains("ROLE_ADMIN");
     }
-
-	@Override
-	public void setRedirectStrategy(RedirectStrategy redirectStrategy) {
-		this.redirectStrategy = redirectStrategy;
-	}
-
-	@Override
-	protected RedirectStrategy getRedirectStrategy() {
-		return redirectStrategy;
-	}
 
 }
