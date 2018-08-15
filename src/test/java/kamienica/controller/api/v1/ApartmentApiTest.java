@@ -17,6 +17,7 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.MvcResult;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -24,6 +25,7 @@ import java.util.stream.IntStream;
 
 import static org.hamcrest.Matchers.is;
 import static org.hamcrest.collection.IsCollectionWithSize.hasSize;
+import static org.junit.Assert.assertNotNull;
 import static org.mockito.BDDMockito.given;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
@@ -37,7 +39,7 @@ public class ApartmentApiTest {
     private MockMvc mvc;
 
     @MockBean
-    IApartmentService apartmentService;
+    private IApartmentService apartmentService;
 
     private static final Residence RESIDENCE_ONE = new Residence(1L, null, null, "Gdynia");
     private static final Residence RESIDENCE_TWO = new Residence(2L, null, null, "Sopot");
@@ -62,11 +64,14 @@ public class ApartmentApiTest {
     public void shouldReturnListOfAllApartments() throws Exception {
         given(apartmentService.list()).willReturn(ALL_APARTMENTS);
 
-        mvc.perform(get("/api/v1/apartments")
+        final MvcResult result = mvc.perform(get("/api/v1/apartments")
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$", hasSize(6)))
-                .andExpect(jsonPath("$[0].description", is("1")));
+                .andExpect(jsonPath("$[0].description", is("1")))
+                .andReturn();
+
+           assertNotNull(result.getResponse().getContentAsString());
     }
 
 
@@ -74,11 +79,14 @@ public class ApartmentApiTest {
     public void shouldReturnListOfAllApartmentsForResOne() throws Exception {
         given(apartmentService.getByResidence(RESIDENCE_ONE.getId(), false)).willReturn(APARTMENTS_FOR_RES_1);
 
-        mvc.perform(get("/api/v1/apartments?residence=1&showSharedPart=false")
+        final MvcResult result = mvc.perform(get("/api/v1/apartments?residence=1&showSharedPart=false")
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$", hasSize(3)))
-                .andExpect(jsonPath("$[0].description", is("1")));
+                .andExpect(jsonPath("$[0].description", is("1")))
+                .andReturn();
+
+        assertNotNull(result.getResponse().getContentAsString());
     }
 
     @Test
@@ -86,19 +94,24 @@ public class ApartmentApiTest {
         final Apartment apartment = new Apartment(RESIDENCE_ONE, 12, "1234", "new");
         final String requestBody = prepareRequestBody(apartment);
 
-        mvc.perform(post("/api/v1/apartments")
+        final MvcResult result = mvc.perform(post("/api/v1/apartments")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(requestBody))
-                .andExpect(status().isCreated());
+                .andExpect(status().isCreated())
+                .andReturn();
+
+        assertNotNull(result.getResponse().getContentAsString());
     }
 
     @Ignore
     @Test
     public void shouldDeleteApartment() throws Exception {
-
-        mvc.perform(delete("/api/v1/apartments/1")
+        final MvcResult result = mvc.perform(delete("/api/v1/apartments/1")
                 .contentType(MediaType.APPLICATION_JSON))
-                .andExpect(status().isOk());
+                .andExpect(status().isOk())
+                .andReturn();
+
+        assertNotNull(result.getResponse().getContentAsString());
     }
 
     private String prepareRequestBody(final Apartment apartment) throws JsonProcessingException {
