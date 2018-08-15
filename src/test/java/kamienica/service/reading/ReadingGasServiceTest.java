@@ -28,7 +28,7 @@ public class ReadingGasServiceTest extends ServiceTest {
 
     @Before
     public void initData() {
-        residence =getOWnersResidence();
+        residence = getOwnersResidence();
     }
 
     @Test

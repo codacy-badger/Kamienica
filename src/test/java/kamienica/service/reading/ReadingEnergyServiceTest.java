@@ -29,7 +29,7 @@ public class ReadingEnergyServiceTest extends ServiceTest {
 
     @Before
     public void initData() {
-        r = getOWnersResidence();
+        r = getOwnersResidence();
     }
 
     @Test

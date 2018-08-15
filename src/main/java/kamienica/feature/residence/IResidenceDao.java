@@ -8,5 +8,4 @@ import java.util.List;
 
 public interface IResidenceDao extends IBasicDao<Residence> {
 
-    List<Residence> listForOwner(Tenant t);
 }

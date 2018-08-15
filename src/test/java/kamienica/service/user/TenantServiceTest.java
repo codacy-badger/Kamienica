@@ -20,8 +20,6 @@ import org.springframework.transaction.annotation.Transactional;
 @WithUserDetails(ServiceTest.OWNER)
 public class TenantServiceTest extends ServiceTest {
 
-    private final static String dummyMail = "dummy@dummy";
-
     @Test
     public void getList() {
         final List<Tenant> list = tenantService.list();

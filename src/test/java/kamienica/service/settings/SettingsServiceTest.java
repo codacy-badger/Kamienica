@@ -12,7 +12,7 @@ public class SettingsServiceTest extends ServiceTest {
     //TODO settings should be limited to one owner
     @Test
     public void getList() {
-        Settings settings = settingsService.getSettings(getOWnersResidence());
+        Settings settings = settingsService.getSettings(getOwnersResidence());
         assertEquals(WaterHeatingSystem.SHARED_GAS, settings.getWaterHeatingSystem());
     }
 }

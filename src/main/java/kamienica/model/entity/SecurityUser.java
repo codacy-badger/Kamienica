@@ -33,8 +33,4 @@ public class SecurityUser extends User {
         residencesOwned.remove(residence);
     }
 
-    @Override
-    public void eraseCredentials() {
-        super.eraseCredentials();
-    }
 }

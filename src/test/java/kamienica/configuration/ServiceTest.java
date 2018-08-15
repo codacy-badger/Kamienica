@@ -71,17 +71,11 @@ public abstract class ServiceTest {
     protected final static String FIRST_OWNER_MAIL = "owner@res1";
     private static final long RESIDENCE_ID = 1L;
 
-    protected List<Residence> getMockedResidences() {
-        List<Residence> residences = new ArrayList<>();
-        residences.add(residenceService.getById(1L));
-        return residences;
-    }
-
     protected Tenant getOwner() {
         return tenantService.getById(1L);
     }
 
-    protected Residence getOWnersResidence() {
+    protected Residence getOwnersResidence() {
         return residenceService.getById(RESIDENCE_ID);
     }
 }

@@ -19,7 +19,7 @@ public class PurgeServiceTest extends ServiceTest {
 
     @Test
     public void purgeData() {
-        final Residence r = getOWnersResidence();
+        final Residence r = getOwnersResidence();
         service.purgeData(r);
 
         final List<Apartment> apartments = apartmentService.list();

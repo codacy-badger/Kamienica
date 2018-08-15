@@ -60,7 +60,7 @@ public class Payment {
     }
 
     public void setPaymentAmount(double paymentAmount) {
-        this.paymentAmount = CommonUtils.decimalFormat(paymentAmount);;
+        this.paymentAmount = CommonUtils.decimalFormat(paymentAmount);
     }
 
     public Tenant getTenant() {

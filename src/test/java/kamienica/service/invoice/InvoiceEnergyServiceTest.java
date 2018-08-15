@@ -23,7 +23,7 @@ public class InvoiceEnergyServiceTest extends ServiceTest {
 
     @Before
     public void initData() {
-        residence = getOWnersResidence();
+        residence = getOwnersResidence();
     }
 
     @Test

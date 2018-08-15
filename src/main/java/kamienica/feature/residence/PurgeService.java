@@ -70,12 +70,6 @@ public class PurgeService implements IPurgeService {
         settingsDao.delete(s);
     }
 
-    private void deleteResidence(final Residence residence) {
-        final Residence r = residenceDao.getById(residence.getId());
-        SecurityDetails.removeResidenceFromPrincipal(r);
-        residenceDao.delete(r);
-    }
-
     private void deleteApartmentsAndTenants(final Criterion res) {
         final List<Apartment> apartments = apartmentDao.findByCriteria(res);
         final Criterion apartmentCriterion = Restrictions.in("apartment", apartments);

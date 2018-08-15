@@ -19,7 +19,7 @@ public class ReadingDetailsServiceTest extends ServiceTest {
 
     @Before
     public void setResidence() {
-        r = getOWnersResidence();
+        r = getOwnersResidence();
     }
 
     @Test

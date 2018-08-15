@@ -55,7 +55,7 @@ public class MeterEnergyServiceTest extends ServiceTest {
     public void add() {
         final Meter meter = createDummyMeter();
         meterService.save(meter);
-        final Residence r = getOWnersResidence();
+        final Residence r = getOwnersResidence();
         final List<Meter> meters = meterService.list(r, Media.ENERGY);
         assertEquals(6, meters.size());
     }
@@ -95,7 +95,7 @@ public class MeterEnergyServiceTest extends ServiceTest {
     }
 
     private Meter createDummyMeter() {
-        final Residence r = getOWnersResidence();
+        final Residence r = getOwnersResidence();
         //String description, String serialNumber, String unit, Apartment apartment, Residence residence, boolean main, Status status, boolean cwu, boolean isWarmWater, Media media
         final Meter m = new Meter("test", "test", "test", meterService.getById(3L).getApartment(), r, false, Status.ACTIVE, false, false, Media.ENERGY);
         m.setResidence(residenceService.getById(1L));

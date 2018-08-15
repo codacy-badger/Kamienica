@@ -8,5 +8,4 @@ import java.util.List;
 
 public interface IRentContractDao extends IBasicDao<RentContract> {
 
-    List<RentContract> findCurrentContract(Residence residence);
 }

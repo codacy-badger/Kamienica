@@ -18,22 +18,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     private final UserDetailsService userDetailsService;
     private final CustomSuccessHandler customSuccessHandler;
-//    private final BasicAuthenticationPoint basicAuthenticationPoint;
 
-//    @Autowired
-//    public SecurityConfig(final UserDetailsService userDetailsService/*, final CustomSuccessHandler customSuccessHandler, BasicAuthenticationPoint basicAuthenticationPoint*/) {
-//        this.userDetailsService = userDetailsService;
-////        this.customSuccessHandler = customSuccessHandler;
-////        this.basicAuthenticationPoint = basicAuthenticationPoint;
-//    }
-//
-////    @Autowired
-////    public void configureGlobalSecurity(final AuthenticationManagerBuilder auth) throws Exception {
-////        auth.inMemoryAuthentication().withUser("superuser").password("override").roles("ADMIN");
-////        auth.userDetailsService(userDetailsService);
-////
-////    }
-//
 //    @Override
 //    protected void configure(final HttpSecurity http) throws Exception {
 //
@@ -55,7 +40,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 //                .logout()
 //                .logoutRequestMatcher(new AntPathRequestMatcher("/logout"));
 //
-//        //TODO add csrf protection https://docs.spring.io/spring-security/site/docs/current/reference/html/csrf.html
 //        http.csrf().disable();
 //        http.headers().frameOptions().disable();
 //
@@ -74,14 +58,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 //
 //
 //    }
-//
-//    @Autowired
-//    public void configureGlobal(final AuthenticationManagerBuilder auth) throws Exception {
-//        auth.inMemoryAuthentication().withUser("superuser").password("override").roles("ADMIN");
-//        auth.userDetailsService(userDetailsService)
-//                /*.passwordEncoder(passwordEncoder())*/;
-//    }
-
 
     @Autowired
     public SecurityConfig(final UserDetailsService userDetailsService, final CustomSuccessHandler customSuccessHandler) {
@@ -119,8 +95,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     public void configureGlobal(final AuthenticationManagerBuilder auth) throws Exception {
         auth.inMemoryAuthentication().withUser("superuser").password("override").roles("ADMIN");
         auth.userDetailsService(userDetailsService);
-
-
 //                .passwordEncoder(passwordEncoder());
     }
 

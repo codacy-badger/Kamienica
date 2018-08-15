@@ -89,7 +89,7 @@ public class InvoiceGasServiceTest extends ServiceTest {
     @Transactional
     public void addForFirstReadingWithSeparateWaterHeating() {
         List<ReadingDetails> list = readingDetailsService.getUnresolved(r, Media.GAS);
-        Settings setings = settingsService.getSettings(getOWnersResidence());
+        Settings setings = settingsService.getSettings(getOwnersResidence());
         setings.setWaterHeatingSystem(WaterHeatingSystem.INDIVIDUAL);
         settingsService.save(setings);
         assertEquals(2, list.size());
